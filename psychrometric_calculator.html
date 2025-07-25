@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refrigeration Psychrometric Pressure Chart Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .controls-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .chart-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-bottom: 20px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .results {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .results h3 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #2196F3;
+            padding-bottom: 8px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .result-value {
+            font-weight: 600;
+            color: #2196F3;
+        }
+
+        #psychrometricChart {
+            width: 100%;
+            height: 500px;
+        }
+
+        .unit-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .unit-btn {
+            padding: 8px 16px;
+            border: 2px solid #2196F3;
+            background: white;
+            color: #2196F3;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .unit-btn.active {
+            background: #2196F3;
+            color: white;
+        }
+
+        .refrigerant-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .refrigerant-info h4 {
+            color: #1976D2;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-size: 16px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lark-logo {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .company-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .company-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4A90E2;
+            line-height: 1;
+        }
+
+        .company-subtitle {
+            font-size: 16px;
+            font-weight: bold;
+            color: #95A5A6;
+            line-height: 1;
+            margin-top: -2px;
+        }
+
+        .company-tagline {
+            font-size: 10px;
+            color: #BDC3C7;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Refrigeration Psychrometric Calculator</h1>
+            <p>Advanced Pressure Chart Analysis Tool</p>
+        </div>
+
+        <div class="main-content">
+            <div class="controls-panel">
+                <div class="unit-toggle">
+                    <button class="unit-btn active" onclick="toggleUnits('metric')">Metric</button>
+                    <button class="unit-btn" onclick="toggleUnits('imperial')">Imperial</button>
+                </div>
+
+                <div class="refrigerant-info">
+                    <h4>Refrigerant Properties</h4>
+                    <div class="input-group">
+                        <label for="refrigerant">Refrigerant Type:</label>
+                        <select id="refrigerant" onchange="updateRefrigerantInfo()">
+                            <option value="R22">R-22 (HCFC-22)</option>
+                            <option value="R134a">R-134a (HFC-134a)</option>
+                            <option value="R410A">R-410A (HFC-410A)</option>
+                            <option value="R404A">R-404A (HFC-404A)</option>
+                            <option value="R507A">R-507A (HFC-507A)</option>
+                            <option value="R407C">R-407C (HFC-407C)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="temperature">Temperature (<span id="tempUnit">°C</span>):</label>
+                    <input type="number" id="temperature" value="25" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="pressure">Pressure (<span id="pressureUnit">kPa</span>):</label>
+                    <input type="number" id="pressure" value="101.325" step="0.001">
+                </div>
+
+                <div class="input-group">
+                    <label for="humidity">Relative Humidity (%):</label>
+                    <input type="number" id="humidity" value="50" min="0" max="100" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="elevation">Elevation (<span id="elevationUnit">m</span>):</label>
+                    <input type="number" id="elevation" value="0" step="1">
+                </div>
+
+                <button class="calculate-btn" onclick="calculateProperties()">Calculate Properties</button>
+
+                <div class="results" id="results">
+                    <h3>Calculated Properties</h3>
+                    <div id="resultsContent">
+                        <p>Enter values and click Calculate to see results</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-panel">
+                <canvas id="psychrometricChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-content">
+                <span>Created by</span>
+                <div class="logo-container">
+                    <svg width="40" height="40" viewBox="0 0 100 100" class="lark-logo">
+                        <!-- Bird body -->
+                        <ellipse cx="35" cy="50" rx="25" ry="18" fill="#4A90E2"/>
+                        <ellipse cx="35" cy="50" rx="20" ry="14" fill="#5BA3F5"/>
+                        
+                        <!-- Bird head -->
+                        <circle cx="15" cy="42" r="12" fill="#4A90E2"/>
+                        <circle cx="15" cy="42" r="9" fill="#5BA3F5"/>
+                        
+                        <!-- Beak -->
+                        <polygon points="3,42 12,40 12,44" fill="#E74C3C"/>
+                        
+                        <!-- Eye -->
+                        <circle cx="18" cy="40" r="2.5" fill="white"/>
+                        <circle cx="19" cy="39.5" r="1.5" fill="#333"/>
+                        
+                        <!-- Wing details -->
+                        <ellipse cx="40" cy="48" rx="15" ry="8" fill="#2E5C8A" opacity="0.6"/>
+                        
+                        <!-- Sound waves -->
+                        <path d="M65 35 Q70 40 65 45" stroke="#E74C3C" stroke-width="2" fill="none"/>
+                        <path d="M70 32 Q77 40 70 48" stroke="#E74C3C" stroke-width="2" fill="none"/>
+                        <path d="M75 30 Q84 40 75 50" stroke="#E74C3C" stroke-width="2" fill="none"/>
+                    </svg>
+                    <div class="company-text">
+                        <span class="company-name">LARK</span>
+                        <span class="company-subtitle">LABS</span>
+                        <span class="company-tagline">SOFTWARE DEVELOPMENT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUnits = 'metric';
+        let chart = null;
+        let calculatedData = [];
+
+        // Refrigerant properties database
+        const refrigerantData = {
+            'R22': { name: 'R-22 (HCFC-22)', mw: 86.47, criticalTemp: 96.2, criticalPressure: 4990 },
+            'R134a': { name: 'R-134a (HFC-134a)', mw: 102.03, criticalTemp: 101.1, criticalPressure: 4059 },
+            'R410A': { name: 'R-410A (HFC-410A)', mw: 72.58, criticalTemp: 71.3, criticalPressure: 4901 },
+            'R404A': { name: 'R-404A (HFC-404A)', mw: 97.6, criticalTemp: 72.1, criticalPressure: 3734 },
+            'R507A': { name: 'R-507A (HFC-507A)', mw: 98.86, criticalTemp: 70.6, criticalPressure: 3705 },
+            'R407C': { name: 'R-407C (HFC-407C)', mw: 86.2, criticalTemp: 86.7, criticalPressure: 4630 }
+        };
+
+        function toggleUnits(unit) {
+            currentUnits = unit;
+            document.querySelectorAll('.unit-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            updateUnitLabels();
+            convertCurrentValues();
+        }
+
+        function updateUnitLabels() {
+            if (currentUnits === 'metric') {
+                document.getElementById('tempUnit').textContent = '°C';
+                document.getElementById('pressureUnit').textContent = 'kPa';
+                document.getElementById('elevationUnit').textContent = 'm';
+            } else {
+                document.getElementById('tempUnit').textContent = '°F';
+                document.getElementById('pressureUnit').textContent = 'psi';
+                document.getElementById('elevationUnit').textContent = 'ft';
+            }
+        }
+
+        function convertCurrentValues() {
+            const tempInput = document.getElementById('temperature');
+            const pressureInput = document.getElementById('pressure');
+            const elevationInput = document.getElementById('elevation');
+
+            if (currentUnits === 'imperial') {
+                // Convert to imperial
+                tempInput.value = (parseFloat(tempInput.value) * 9/5 + 32).toFixed(1);
+                pressureInput.value = (parseFloat(pressureInput.value) * 0.145038).toFixed(3);
+                elevationInput.value = (parseFloat(elevationInput.value) * 3.28084).toFixed(0);
+            } else {
+                // Convert to metric
+                tempInput.value = ((parseFloat(tempInput.value) - 32) * 5/9).toFixed(1);
+                pressureInput.value = (parseFloat(pressureInput.value) / 0.145038).toFixed(3);
+                elevationInput.value = (parseFloat(elevationInput.value) / 3.28084).toFixed(0);
+            }
+        }
+
+        function updateRefrigerantInfo() {
+            const refrigerant = document.getElementById('refrigerant').value;
+            const info = refrigerantData[refrigerant];
+            // Could add more detailed refrigerant info display here
+        }
+
+        function calculateProperties() {
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const pressure = parseFloat(document.getElementById('pressure').value);
+            const humidity = parseFloat(document.getElementById('humidity').value);
+            const elevation = parseFloat(document.getElementById('elevation').value);
+            const refrigerant = document.getElementById('refrigerant').value;
+
+            // Convert to metric for calculations
+            let tempC = currentUnits === 'imperial' ? (temperature - 32) * 5/9 : temperature;
+            let pressureKPa = currentUnits === 'imperial' ? pressure / 0.145038 : pressure;
+            let elevationM = currentUnits === 'imperial' ? elevation / 3.28084 : elevation;
+
+            // Psychrometric calculations
+            const results = performPsychrometricCalculations(tempC, pressureKPa, humidity, elevationM, refrigerant);
+            
+            displayResults(results);
+            updateChart(results);
+        }
+
+        function performPsychrometricCalculations(tempC, pressureKPa, humidity, elevationM, refrigerant) {
+            // Atmospheric pressure correction for elevation
+            const correctedPressure = pressureKPa * Math.pow((1 - 0.0065 * elevationM / 288.15), 5.257);
+            
+            // Saturation vapor pressure (Antoine equation approximation)
+            const satVaporPressure = 0.61078 * Math.exp(17.27 * tempC / (tempC + 237.3));
+            
+            // Actual vapor pressure
+            const vaporPressure = (humidity / 100) * satVaporPressure;
+            
+            // Absolute humidity (kg water/kg dry air)
+            const absoluteHumidity = 0.622 * vaporPressure / (correctedPressure - vaporPressure);
+            
+            // Dew point temperature
+            const dewPoint = 237.3 * Math.log(vaporPressure / 0.61078) / (17.27 - Math.log(vaporPressure / 0.61078));
+            
+            // Wet bulb temperature (approximation)
+            const wetBulb = tempC * Math.atan(0.151977 * Math.sqrt(humidity + 8.313659)) +
+                           Math.atan(tempC + humidity) - Math.atan(humidity - 1.676331) +
+                           0.00391838 * Math.pow(humidity, 1.5) * Math.atan(0.023101 * humidity) - 4.686035;
+            
+            // Enthalpy (kJ/kg dry air)
+            const enthalpy = 1.006 * tempC + absoluteHumidity * (2501 + 1.86 * tempC);
+            
+            // Specific volume (m³/kg dry air)
+            const specificVolume = (287.055 * (tempC + 273.15) * (1 + 1.607858 * absoluteHumidity)) / (correctedPressure * 1000);
+            
+            // Refrigerant specific calculations
+            const refData = refrigerantData[refrigerant];
+            const saturatedPressure = calculateSaturatedPressure(tempC, refData);
+            
+            return {
+                temperature: tempC,
+                pressure: correctedPressure,
+                humidity: humidity,
+                absoluteHumidity: absoluteHumidity,
+                dewPoint: dewPoint,
+                wetBulb: wetBulb,
+                enthalpy: enthalpy,
+                specificVolume: specificVolume,
+                vaporPressure: vaporPressure,
+                saturatedPressure: saturatedPressure,
+                refrigerant: refrigerant
+            };
+        }
+
+        function calculateSaturatedPressure(tempC, refData) {
+            // Simplified Antoine equation for refrigerant vapor pressure
+            // This is a basic approximation - real systems would use more complex equations
+            const A = 8.0, B = 1500, C = 230; // Generic coefficients
+            return Math.exp(A - B / (tempC + 273.15 + C));
+        }
+
+        function displayResults(results) {
+            const resultsContent = document.getElementById('resultsContent');
+            
+            // Convert results based on current units
+            let displayTemp = currentUnits === 'imperial' ? results.temperature * 9/5 + 32 : results.temperature;
+            let displayPressure = currentUnits === 'imperial' ? results.pressure * 0.145038 : results.pressure;
+            let displayDewPoint = currentUnits === 'imperial' ? results.dewPoint * 9/5 + 32 : results.dewPoint;
+            let displayWetBulb = currentUnits === 'imperial' ? results.wetBulb * 9/5 + 32 : results.wetBulb;
+            
+            const tempUnit = currentUnits === 'imperial' ? '°F' : '°C';
+            const pressureUnit = currentUnits === 'imperial' ? 'psi' : 'kPa';
+            const humidityUnit = currentUnits === 'imperial' ? 'lb/lb' : 'kg/kg';
+            const enthalpyUnit = currentUnits === 'imperial' ? 'BTU/lb' : 'kJ/kg';
+            const volumeUnit = currentUnits === 'imperial' ? 'ft³/lb' : 'm³/kg';
+
+            resultsContent.innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">Dry Bulb Temperature:</span>
+                    <span class="result-value">${displayTemp.toFixed(2)} ${tempUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Corrected Pressure:</span>
+                    <span class="result-value">${displayPressure.toFixed(3)} ${pressureUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Relative Humidity:</span>
+                    <span class="result-value">${results.humidity.toFixed(1)} %</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Absolute Humidity:</span>
+                    <span class="result-value">${results.absoluteHumidity.toFixed(4)} ${humidityUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Dew Point:</span>
+                    <span class="result-value">${displayDewPoint.toFixed(2)} ${tempUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Wet Bulb Temperature:</span>
+                    <span class="result-value">${displayWetBulb.toFixed(2)} ${tempUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Enthalpy:</span>
+                    <span class="result-value">${results.enthalpy.toFixed(2)} ${enthalpyUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Specific Volume:</span>
+                    <span class="result-value">${results.specificVolume.toFixed(4)} ${volumeUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Vapor Pressure:</span>
+                    <span class="result-value">${results.vaporPressure.toFixed(3)} kPa</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Refrigerant Sat. Pressure:</span>
+                    <span class="result-value">${results.saturatedPressure.toFixed(3)} kPa</span>
+                </div>
+            `;
+            
+            calculatedData.push(results);
+        }
+
+        function updateChart(results) {
+            const ctx = document.getElementById('psychrometricChart').getContext('2d');
+            
+            // Generate psychrometric chart data
+            const chartData = generateChartData(results);
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Constant RH Lines',
+                            data: chartData.rhLines,
+                            borderColor: 'rgba(75, 192, 192, 0.6)',
+                            backgroundColor: 'transparent',
+                            showLine: true,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Constant Enthalpy Lines',
+                            data: chartData.enthalpyLines,
+                            borderColor: 'rgba(255, 99, 132, 0.6)',
+                            backgroundColor: 'transparent',
+                            showLine: true,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Current State Point',
+                            data: [{
+                                x: results.temperature,
+                                y: results.absoluteHumidity * 1000 // Convert to g/kg for display
+                            }],
+                            backgroundColor: 'rgba(255, 206, 86, 1)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            pointRadius: 8
+                        },
+                        {
+                            label: 'Saturation Line',
+                            data: chartData.saturationLine,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'transparent',
+                            showLine: true,
+                            pointRadius: 0,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: currentUnits === 'imperial' ? 'Dry Bulb Temperature (°F)' : 'Dry Bulb Temperature (°C)'
+                            },
+                            min: currentUnits === 'imperial' ? 32 : 0,
+                            max: currentUnits === 'imperial' ? 140 : 60
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Absolute Humidity (g/kg dry air)'
+                            },
+                            min: 0,
+                            max: 30
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Psychrometric Chart - ${results.refrigerant}`,
+                            font: {
+                                size: 18
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateChartData(results) {
+            const rhLines = [];
+            const enthalpyLines = [];
+            const saturationLine = [];
+            
+            const tempRange = currentUnits === 'imperial' ? 
+                { min: 32, max: 140, step: 2 } : 
+                { min: 0, max: 60, step: 1 };
+            
+            // Generate saturation line
+            for (let t = tempRange.min; t <= tempRange.max; t += tempRange.step) {
+                const tempC = currentUnits === 'imperial' ? (t - 32) * 5/9 : t;
+                const satVaporPressure = 0.61078 * Math.exp(17.27 * tempC / (tempC + 237.3));
+                const maxHumidity = 0.622 * satVaporPressure / (101.325 - satVaporPressure) * 1000;
+                saturationLine.push({ x: t, y: maxHumidity });
+            }
+            
+            // Generate constant RH lines (20%, 40%, 60%, 80%)
+            [20, 40, 60, 80].forEach(rh => {
+                const line = [];
+                for (let t = tempRange.min; t <= tempRange.max; t += tempRange.step * 2) {
+                    const tempC = currentUnits === 'imperial' ? (t - 32) * 5/9 : t;
+                    const satVaporPressure = 0.61078 * Math.exp(17.27 * tempC / (tempC + 237.3));
+                    const vaporPressure = (rh / 100) * satVaporPressure;
+                    const humidity = 0.622 * vaporPressure / (101.325 - vaporPressure) * 1000;
+                    if (humidity > 0 && humidity < 30) {
+                        line.push({ x: t, y: humidity });
+                    }
+                }
+                rhLines.push(...line);
+            });
+            
+            // Generate constant enthalpy lines
+            [40, 60, 80, 100, 120].forEach(h => {
+                const line = [];
+                for (let humidity = 0; humidity < 25; humidity += 1) {
+                    // Solve for temperature given enthalpy and humidity
+                    const humidityRatio = humidity / 1000;
+                    const tempC = (h - humidityRatio * 2501) / (1.006 + humidityRatio * 1.86);
+                    const tempDisplay = currentUnits === 'imperial' ? tempC * 9/5 + 32 : tempC;
+                    if (tempDisplay >= tempRange.min && tempDisplay <= tempRange.max) {
+                        line.push({ x: tempDisplay, y: humidity });
+                    }
+                }
+                enthalpyLines.push(...line);
+            });
+            
+            return { rhLines, enthalpyLines, saturationLine };
+        }
+
+        // Initialize chart on load
+        window.onload = function() {
+            updateRefrigerantInfo();
+            calculateProperties();
+        };
+    </script>
+</body>
+</html>
