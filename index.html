@@ -87,7 +87,7 @@
 
         /* Hero Section */
         .hero {
-            padding: 120px 0 80px 0;
+            padding: 220px 0 80px 0;
             text-align: center;
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
                         radial-gradient(circle at 30% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
@@ -139,6 +139,11 @@
         /* Main Content */
         .main-content {
             padding: 80px 0;
+        }
+
+        /* Updated padding for main sections to prevent header obstruction */
+        .main-content-with-header {
+            padding: 250px 0 80px 0;
         }
 
         .section {
@@ -1474,6 +1479,10 @@
             .pt-chart-container {
                 height: 400px;
             }
+
+            .main-content-with-header {
+                padding: 220px 0 80px 0;
+            }
         }
 
         /* External Link Icon */
@@ -1590,7 +1599,7 @@
 
         <!-- TOOLS SECTION -->
         <section id="tools" class="section">
-            <div class="container main-content">
+            <div class="container main-content-with-header">
                 <h2 class="section-title">HVAC Tools & Calculators</h2>
                 
                 <div class="tools-grid">
@@ -1642,7 +1651,7 @@
 
         <!-- TRAINING SECTION -->
         <section id="training" class="section">
-            <div class="container main-content" style="padding-top: 100px;">
+            <div class="container main-content-with-header">
                 <h2 class="section-title">HVAC Training & Certification</h2>
                 
                 <div class="tools-grid">
@@ -1661,7 +1670,7 @@
                     <div class="tool-card" onclick="showCSAChapterQuestions()">
                         <div class="tool-icon">📚</div>
                         <h3>CSA Gas Technician Chapter Questions</h3>
-                        <p>Interactive study guides covering Units 1-5+ with chapter-by-chapter questions</p>
+                        <p>Interactive study guides covering Units 1-9 with chapter-by-chapter questions</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
                     <div class="tool-card">
@@ -1692,7 +1701,7 @@
 
         <!-- CSA CHAPTER QUESTIONS SECTION -->
         <section id="csa-chapters" class="section">
-            <div class="container main-content" style="padding-top: 100px;">
+            <div class="container main-content-with-header">
                 <h2 class="section-title">CSA Gas Technician Chapter Questions</h2>
                 <p style="text-align: center; margin-bottom: 2rem; color: #bdc3c7;">
                     Interactive chapter-by-chapter study guides for CSA Gas Trade Training. Each unit contains comprehensive questions to help you master the material.
@@ -1729,29 +1738,29 @@
                         <p>Electrical Safety, Theory, Circuits, Magnetism, AC/DC & Instruments</p>
                         <span class="tool-status status-available external-link">Study Now</span>
                     </div>
-                    <div class="tool-card">
-                        <div class="tool-icon">🔩</div>
-                        <h3>Unit 6 - Pipe & Tubing</h3>
-                        <p>Materials, Joining Methods, Installation & Testing Procedures</p>
-                        <span class="tool-status status-coming-soon">Coming Soon</span>
-                    </div>
-                    <div class="tool-card">
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html', '_blank')">
                         <div class="tool-icon">📐</div>
-                        <h3>Unit 7 - Pipe Sizing</h3>
-                        <p>Load Calculations, Pressure Drop, Sizing Methods & Tables</p>
-                        <span class="tool-status status-coming-soon">Coming Soon</span>
+                        <h3>Unit 6 - Technical Drawings, Manuals and Graphs</h3>
+                        <p>Technical Drawings, Reference Manuals, Charts & Graph Interpretation</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
                     </div>
-                    <div class="tool-card">
-                        <div class="tool-icon">🔗</div>
-                        <h3>Unit 8 - Pipe Fittings</h3>
-                        <p>Types, Applications, Installation & Connection Methods</p>
-                        <span class="tool-status status-coming-soon">Coming Soon</span>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_7_Customer_Relations_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🤝</div>
+                        <h3>Unit 7 - Customer Relations</h3>
+                        <p>Professional Communication, Customer Service & Workplace Relations</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
                     </div>
-                    <div class="tool-card">
-                        <div class="tool-icon">🌬️</div>
-                        <h3>Unit 9 - Venting</h3>
-                        <p>Vent Systems, Sizing, Installation & Safety Requirements</p>
-                        <span class="tool-status status-coming-soon">Coming Soon</span>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_8_Intro_to_Piping_Reviews.html', '_blank')">
+                        <div class="tool-icon">🔩</div>
+                        <h3>Unit 8 - Intro to Gas Piping Systems</h3>
+                        <p>Gas Piping Materials, Installation Methods & System Components</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html', '_blank')">
+                        <div class="tool-icon">🔥</div>
+                        <h3>Unit 9 - Intro to Gas Appliances</h3>
+                        <p>Gas Appliance Types, Components, Operation & Safety Features</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
                     </div>
                 </div>
 
@@ -1767,7 +1776,7 @@
 
         <!-- COMMUNITY SECTION -->
         <section id="community" class="section">
-            <div class="container main-content">
+            <div class="container main-content-with-header">
                 <h2 class="section-title">HVAC Community Hub</h2>
                 <p style="text-align: center; margin-bottom: 2rem; color: #bdc3c7;">
                     Connect with fellow HVAC professionals, students, and educators. Share knowledge, ask questions, and build your network.
@@ -1796,7 +1805,7 @@
                             <h4 style="color: #3498db; margin-bottom: 1rem;">Start a New Discussion</h4>
                             <div class="thread-input-group">
                                 <label>Thread Title</label>
-="thread-title-input" placeholder="Enter a descriptive title for your discussion...">
+                                <input type="text" id="threadTitle" class="thread-title-input" placeholder="Enter a descriptive title for your discussion...">
                             </div>
                             <div class="thread-input-group" style="display: flex; gap: 1rem; align-items: center;">
                                 <div>
@@ -2109,7 +2118,7 @@
 
         <!-- RESOURCES SECTION -->
         <section id="resources" class="section">
-            <div class="container main-content">
+            <div class="container main-content-with-header">
                 <h2 class="section-title">Codes & Resources</h2>
                 
                 <div class="tools-grid">
@@ -2141,7 +2150,7 @@
 
         <!-- ABOUT SECTION -->
         <section id="about" class="section">
-            <div class="container main-content">
+            <div class="container main-content-with-header">
                 <h2 class="section-title">About LARK Labs</h2>
                 
                 <div class="about-content">
