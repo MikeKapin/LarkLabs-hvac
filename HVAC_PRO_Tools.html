@@ -333,6 +333,43 @@
             margin: 5px;
             cursor: pointer;
         }
+
+        /* Hide download section when app is installed */
+        .app-installed .download-section {
+            display: none;
+        }
+
+        /* Psychrometric and Unit Converter specific styles */
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-label {
+            font-weight: 500;
+            color: #555;
+        }
+        .result-value {
+            font-weight: 600;
+            color: #2196F3;
+        }
+        .unit-btn {
+            padding: 8px 16px;
+            border: 2px solid #2196F3;
+            background: white;
+            color: #2196F3;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .unit-btn.active {
+            background: #2196F3 !important;
+            color: white !important;
+        }
     </style>
 </head>
 <body>
@@ -342,7 +379,7 @@
             <p class="app-subtitle">Professional HVAC Calculation Suite</p>
         </header>
 
-        <div class="download-section">
+        <div class="download-section" id="downloadSection">
             <h2>📱 Install as Mobile App</h2>
             <p>Get instant access to all HVAC tools on your mobile device</p>
             <button class="download-btn" onclick="showInstallModal()">📲 Install App</button>
@@ -351,7 +388,7 @@
         <main class="tools-grid">
             <!-- Heat/Cool Load Calculator -->
             <div class="tool-card" onclick="openTool('load-calculator')">
-                <span class="tool-icon">🌡️</span>
+                <span class="tool-icon">🏠</span>
                 <h3 class="tool-title">Heat/Cool Load Calculator</h3>
                 <p class="tool-description">Calculate heating and cooling loads for residential and commercial spaces.</p>
                 <ul class="tool-features">
@@ -388,6 +425,32 @@
                 </ul>
             </div>
 
+            <!-- Psychrometric Calculator -->
+            <div class="tool-card" onclick="openTool('psychrometric')">
+                <span class="tool-icon">💧</span>
+                <h3 class="tool-title">Psychrometric Calculator</h3>
+                <p class="tool-description">Advanced pressure chart analysis and air property calculations.</p>
+                <ul class="tool-features">
+                    <li>Humidity calculations</li>
+                    <li>Dew point analysis</li>
+                    <li>Enthalpy calculations</li>
+                    <li>Interactive psychrometric charts</li>
+                </ul>
+            </div>
+
+            <!-- Universal Unit Converter -->
+            <div class="tool-card" onclick="openTool('unit-converter')">
+                <span class="tool-icon">🔄</span>
+                <h3 class="tool-title">Universal Unit Converter</h3>
+                <p class="tool-description">Convert between Imperial, Metric, Temperature, Pressure, Energy & Power units.</p>
+                <ul class="tool-features">
+                    <li>Length & weight conversion</li>
+                    <li>Temperature conversion</li>
+                    <li>Pressure & energy units</li>
+                    <li>Power calculations</li>
+                </ul>
+            </div>
+
             <!-- Pipe/Tube Sizing Calculator -->
             <div class="tool-card coming-soon" onclick="showComingSoon('Pipe/Tube Sizing Calculator')">
                 <span class="tool-icon">🔧</span>
@@ -411,19 +474,6 @@
                     <li>Supply air calculations</li>
                     <li>Static pressure analysis</li>
                     <li>Code compliance check</li>
-                </ul>
-            </div>
-
-            <!-- Psychrometric Pressure Calculator -->
-            <div class="tool-card coming-soon" onclick="showComingSoon('Psychrometric Pressure Calculator')">
-                <span class="tool-icon">💧</span>
-                <h3 class="tool-title">Psychrometric Pressure Calculator</h3>
-                <p class="tool-description">Analyze air properties and psychrometric calculations.</p>
-                <ul class="tool-features">
-                    <li>Humidity calculations</li>
-                    <li>Dew point analysis</li>
-                    <li>Enthalpy calculations</li>
-                    <li>Air mixing processes</li>
                 </ul>
             </div>
         </main>
@@ -501,39 +551,57 @@
     <!-- Tool Content Areas -->
     <div id="load-calculator" class="app-content">
         <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
-        <div id="load-calculator-content">
-            <!-- Heat/Cool Load calculator content will be loaded here -->
-        </div>
+        <div id="load-calculator-content"></div>
     </div>
 
     <div id="superheat-subcool" class="app-content">
         <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
-        <div id="superheat-subcool-content">
-            <!-- SuperHeat/SubCool calculator content will be loaded here -->
-        </div>
+        <div id="superheat-subcool-content"></div>
     </div>
 
     <div id="pt-chart" class="app-content">
         <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
-        <div id="pt-chart-content">
-            <!-- P-T Chart content will be loaded here -->
-        </div>
+        <div id="pt-chart-content"></div>
     </div>
 
+    <div id="psychrometric" class="app-content">
+        <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
+        <div id="psychrometric-content"></div>
+    </div>
+
+    <div id="unit-converter" class="app-content">
+        <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
+        <div id="unit-converter-content"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
         let deferredPrompt;
         let isInstalled = false;
+
+        // Check if already installed
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+            isInstalled = true;
+            document.body.classList.add('app-installed');
+        }
 
         // PWA Installation
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            showPWAPrompt();
+            if (!isInstalled) {
+                showPWAPrompt();
+            }
         });
 
         window.addEventListener('appinstalled', () => {
             isInstalled = true;
+            document.body.classList.add('app-installed');
             hidePWAPrompt();
+            const downloadSection = document.getElementById('downloadSection');
+            if (downloadSection) {
+                downloadSection.style.display = 'none';
+            }
         });
 
         function showPWAPrompt() {
@@ -561,7 +629,6 @@
                     deferredPrompt = null;
                 });
             } else {
-                // Fallback for iOS or if prompt not available
                 showInstallModal();
             }
             closeModal();
@@ -607,9 +674,16 @@
             } else if (toolId === 'pt-chart') {
                 contentDiv.innerHTML = getPTChartContent();
                 initializePTChart();
+            } else if (toolId === 'psychrometric') {
+                contentDiv.innerHTML = getPsychrometricContent();
+                initializePsychrometric();
+            } else if (toolId === 'unit-converter') {
+                contentDiv.innerHTML = getUnitConverterContent();
+                initializeUnitConverter();
             }
         }
 
+        // Load Calculator Content
         function getLoadCalculatorContent() {
             return `
                 <div style="max-width: 1200px; margin: 0 auto;">
@@ -622,7 +696,7 @@
                             
                             <div style="margin-bottom: 20px;">
                                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #e0e0e0;">Refrigerant Type:</label>
-                                <select id="lc-sh-refrigerant" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px; transition: all 0.3s ease;">
+                                <select id="lc-sh-refrigerant" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px;">
                                     <option value="">Select Refrigerant</option>
                                     <optgroup label="Traditional Refrigerants">
                                         <option value="R22">R-22 (HCFC)</option>
@@ -649,16 +723,16 @@
 
                             <div style="margin-bottom: 20px;">
                                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #e0e0e0;">Suction Pressure (PSIG):</label>
-                                <input type="number" id="lc-suction-pressure" placeholder="Enter suction pressure" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px; transition: all 0.3s ease;">
+                                <input type="number" id="lc-suction-pressure" placeholder="Enter suction pressure" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px;">
                             </div>
 
                             <div style="margin-bottom: 20px;">
                                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #e0e0e0;">Suction Line Temperature (°F):</label>
-                                <input type="number" id="lc-suction-temp" placeholder="Enter suction line temp" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px; transition: all 0.3s ease;">
+                                <input type="number" id="lc-suction-temp" placeholder="Enter suction line temp" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px;">
                             </div>
 
-                            <button onclick="calculateSuperheatLC()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px 5px; transition: all 0.3s ease;">Calculate Super-Heat</button>
-                            <button onclick="resetSuperheatLC()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px 5px; transition: all 0.3s ease;">Reset</button>
+                            <button onclick="calculateSuperheatLC()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px 5px;">Calculate Super-Heat</button>
+                            <button onclick="resetSuperheatLC()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px 5px;">Reset</button>
 
                             <div id="lc-superheat-result" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); border-radius: 10px; padding: 15px; margin-top: 20px; text-align: center; font-size: 1.3em; font-weight: bold; min-height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
                                 Enter values to calculate super-heat
@@ -671,7 +745,7 @@
                             
                             <div style="margin-bottom: 20px;">
                                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #e0e0e0;">Refrigerant Type:</label>
-                                <select id="lc-sc-refrigerant" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px; transition: all 0.3s ease;">
+                                <select id="lc-sc-refrigerant" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px;">
                                     <option value="">Select Refrigerant</option>
                                     <optgroup label="Traditional Refrigerants">
                                         <option value="R22">R-22 (HCFC)</option>
@@ -698,16 +772,16 @@
 
                             <div style="margin-bottom: 20px;">
                                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #e0e0e0;">Discharge Pressure (PSIG):</label>
-                                <input type="number" id="lc-discharge-pressure" placeholder="Enter discharge pressure" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px; transition: all 0.3s ease;">
+                                <input type="number" id="lc-discharge-pressure" placeholder="Enter discharge pressure" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px;">
                             </div>
 
                             <div style="margin-bottom: 20px;">
                                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #e0e0e0;">Liquid Line Temperature (°F):</label>
-                                <input type="number" id="lc-liquid-temp" placeholder="Enter liquid line temp" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px; transition: all 0.3s ease;">
+                                <input type="number" id="lc-liquid-temp" placeholder="Enter liquid line temp" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.9); color: #333; font-size: 16px;">
                             </div>
 
-                            <button onclick="calculateSubcoolingLC()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px 5px; transition: all 0.3s ease;">Calculate Sub-Cooling</button>
-                            <button onclick="resetSubcoolingLC()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px 5px; transition: all 0.3s ease;">Reset</button>
+                            <button onclick="calculateSubcoolingLC()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px 5px;">Calculate Sub-Cooling</button>
+                            <button onclick="resetSubcoolingLC()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px 5px;">Reset</button>
 
                             <div id="lc-subcooling-result" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); border-radius: 10px; padding: 15px; margin-top: 20px; text-align: center; font-size: 1.3em; font-weight: bold; min-height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
                                 Enter values to calculate sub-cooling
@@ -759,6 +833,7 @@
             `;
         }
 
+        // SuperHeat/SubCool Content
         function getSuperheatSubcoolContent() {
             return `
                 <div style="max-width: 1200px; margin: 0 auto;">
@@ -902,6 +977,7 @@
             `;
         }
 
+        // P-T Chart Content
         function getPTChartContent() {
             return `
                 <div style="max-width: 1400px; margin: 0 auto;">
@@ -987,12 +1063,304 @@
             `;
         }
 
-        // Initialize Load Calculator
+        // Psychrometric Content
+        function getPsychrometricContent() {
+            return `
+                <div style="max-width: 1400px; margin: 0 auto; background: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden;">
+                    <div style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 30px; text-align: center;">
+                        <h1 style="font-size: 2.5em; margin-bottom: 10px; font-weight: 300;">Refrigeration Psychrometric Calculator</h1>
+                        <p style="font-size: 1.1em; opacity: 0.9;">Advanced Pressure Chart Analysis Tool</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; padding: 30px;">
+                        <div style="background: #f8f9fa; border-radius: 15px; padding: 25px; height: fit-content;">
+                            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                                <button class="unit-btn active" onclick="toggleUnits('metric')">Metric</button>
+                                <button class="unit-btn" onclick="toggleUnits('imperial')">Imperial</button>
+                            </div>
+
+                            <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                                <h4 style="color: #1976D2; margin-bottom: 10px;">Refrigerant Properties</h4>
+                                <div style="margin-bottom: 20px;">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Refrigerant Type:</label>
+                                    <select id="refrigerant" onchange="updateRefrigerantInfo()" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;">
+                                        <option value="R22">R-22 (HCFC-22)</option>
+                                        <option value="R134a">R-134a (HFC-134a)</option>
+                                        <option value="R410A">R-410A (HFC-410A)</option>
+                                        <option value="R404A">R-404A (HFC-404A)</option>
+                                        <option value="R507A">R-507A (HFC-507A)</option>
+                                        <option value="R407C">R-407C (HFC-407C)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Temperature (<span id="tempUnit">°C</span>):</label>
+                                <input type="number" id="temperature" value="25" step="0.1" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;">
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Pressure (<span id="pressureUnit">kPa</span>):</label>
+                                <input type="number" id="pressure" value="101.325" step="0.001" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;">
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Relative Humidity (%):</label>
+                                <input type="number" id="humidity" value="50" min="0" max="100" step="0.1" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;">
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Elevation (<span id="elevationUnit">m</span>):</label>
+                                <input type="number" id="elevation" value="0" step="1" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;">
+                            </div>
+
+                            <button onclick="calculateProperties()" style="width: 100%; padding: 15px; background: linear-gradient(135deg, #4CAF50, #45a049); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; margin-bottom: 20px;">Calculate Properties</button>
+
+                            <div id="results" style="background: white; border-radius: 10px; padding: 20px; margin-top: 20px;">
+                                <h3 style="color: #333; margin-bottom: 15px; border-bottom: 2px solid #2196F3; padding-bottom: 8px;">Calculated Properties</h3>
+                                <div id="resultsContent">
+                                    <p>Enter values and click Calculate to see results</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);">
+                            <canvas id="psychrometricChart" style="width: 100%; height: 500px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    @media (max-width: 768px) {
+                        #psychrometric-content > div > div:nth-child(2) {
+                            grid-template-columns: 1fr !important;
+                        }
+                    }
+                </style>
+            `;
+        }
+
+        // Unit Converter Content
+        function getUnitConverterContent() {
+            return `
+                <div style="max-width: 1200px; margin: 0 auto; background: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden;">
+                    <div style="background: linear-gradient(135deg, #2c3e50, #3498db); color: white; padding: 30px; text-align: center;">
+                        <h1 style="font-size: 2.5rem; margin-bottom: 10px; font-weight: 300;">Universal Unit Converter</h1>
+                        <p style="opacity: 0.9; font-size: 1.1rem;">Convert between Imperial, Metric, Temperature, Pressure, Energy & Power units</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; padding: 30px;">
+                        <!-- Length Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>Length Conversion</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Feet</label>
+                                    <input type="number" id="length1" step="any" placeholder="Enter feet" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapLength()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Meters</label>
+                                    <input type="number" id="length2" step="any" placeholder="Enter meters" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Inches</label>
+                                    <input type="number" id="length3" step="any" placeholder="Enter inches" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapLengthInchCm()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Centimeters</label>
+                                    <input type="number" id="length4" step="any" placeholder="Enter cm" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearLength()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+
+                        <!-- Weight Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>Weight Conversion</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Pounds</label>
+                                    <input type="number" id="weight1" step="any" placeholder="Enter pounds" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapWeight()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Kilograms</label>
+                                    <input type="number" id="weight2" step="any" placeholder="Enter kg" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Ounces</label>
+                                    <input type="number" id="weight3" step="any" placeholder="Enter ounces" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapWeightOzGram()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Grams</label>
+                                    <input type="number" id="weight4" step="any" placeholder="Enter grams" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearWeight()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+
+                        <!-- Temperature Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>Temperature Conversion</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Celsius</label>
+                                    <input type="number" id="temp1" step="any" placeholder="Enter °C" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapTemperature()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Fahrenheit</label>
+                                    <input type="number" id="temp2" step="any" placeholder="Enter °F" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Kelvin</label>
+                                    <input type="number" id="temp3" step="any" placeholder="Enter K" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearTemperature()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                            <div id="tempResult" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 8px; padding: 15px; margin-top: 15px; border-left: 4px solid #28a745; font-family: 'Courier New', monospace; font-size: 0.95rem;"></div>
+                        </div>
+
+                        <!-- Pressure Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>Pressure Conversion</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">PSI</label>
+                                    <input type="number" id="pressure1" step="any" placeholder="Enter PSI" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapPressurePsiBar()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Bar</label>
+                                    <input type="number" id="pressure2" step="any" placeholder="Enter bar" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">kPa</label>
+                                    <input type="number" id="pressure3" step="any" placeholder="Enter kPa" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapPressureKpaPa()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Pascal</label>
+                                    <input type="number" id="pressure4" step="any" placeholder="Enter Pa" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearPressure()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+
+                        <!-- Energy Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>Energy Conversion</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">BTU</label>
+                                    <input type="number" id="energy1" step="any" placeholder="Enter BTU" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapEnergyBtuJoule()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Joules</label>
+                                    <input type="number" id="energy2" step="any" placeholder="Enter J" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">kWh</label>
+                                    <input type="number" id="energy3" step="any" placeholder="Enter kWh" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapEnergyKwhCal()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Calories</label>
+                                    <input type="number" id="energy4" step="any" placeholder="Enter cal" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearEnergy()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+
+                        <!-- Power Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>Power Conversion</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">BTU/h</label>
+                                    <input type="number" id="power1" step="any" placeholder="Enter BTU/h" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapPowerBtuKw()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Kilowatts</label>
+                                    <input type="number" id="power2" step="any" placeholder="Enter kW" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Horsepower</label>
+                                    <input type="number" id="power3" step="any" placeholder="Enter HP" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapPowerHpWatt()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Watts</label>
+                                    <input type="number" id="power4" step="any" placeholder="Enter W" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearPower()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    @media (max-width: 768px) {
+                        #unit-converter-content > div > div:nth-child(2) {
+                            grid-template-columns: 1fr !important;
+                        }
+                        #unit-converter-content .conversion-row {
+                            flex-direction: column !important;
+                            align-items: stretch !important;
+                        }
+                        #unit-converter-content .swap-btn {
+                            align-self: center !important;
+                            margin: 10px 0 !important;
+                        }
+                    }
+                </style>
+            `;
+        }
+
+        // Initialize functions
         function initializeLoadCalculator() {
             initializeRefrigerantDataLC();
             setupEventListenersLC();
         }
 
+        function initializeSuperheatSubcool() {
+            console.log('SuperHeat/SubCool calculator initialized');
+        }
+
+        function initializePTChart() {
+            console.log('P-T Chart tool initialized');
+        }
+
+        function initializePsychrometric() {
+            setTimeout(() => {
+                if (document.getElementById('psychrometric-content').style.display !== 'none') {
+                    calculateProperties();
+                }
+            }, 100);
+        }
+
+        function initializeUnitConverter() {
+            setupUnitConverterListeners();
+        }
+
+        // Refrigerant data for Load Calculator
         let refrigerantDataLC = {};
         
         function initializeRefrigerantDataLC() {
@@ -1211,7 +1579,6 @@
             const pressures = Object.keys(pressureTempData).map(Number).sort(function(a, b) { return a - b; });
             const temperatures = pressures.map(function(p) { return pressureTempData[p]; });
             
-            // Find the two pressures that bracket our input
             let lowerIndex = -1;
             for (let i = 0; i < temperatures.length - 1; i++) {
                 if (pressure >= temperatures[i] && pressure <= temperatures[i + 1]) {
@@ -1221,7 +1588,6 @@
             }
             
             if (lowerIndex === -1) {
-                // Extrapolate
                 if (pressure < temperatures[0]) {
                     return pressures[0];
                 } else {
@@ -1229,7 +1595,6 @@
                 }
             }
             
-            // Linear interpolation
             const p1 = temperatures[lowerIndex];
             const p2 = temperatures[lowerIndex + 1];
             const t1 = pressures[lowerIndex];
@@ -1238,6 +1603,7 @@
             return t1 + (pressure - p1) * (t2 - t1) / (p2 - p1);
         }
 
+        // Load Calculator Functions
         window.calculateSuperheatLC = function() {
             const refrigerant = document.getElementById('lc-sh-refrigerant').value;
             const suctionPressure = parseFloat(document.getElementById('lc-suction-pressure').value);
@@ -1246,26 +1612,23 @@
 
             if (!refrigerant || isNaN(suctionPressure) || isNaN(suctionTemp)) {
                 resultDiv.textContent = 'Please fill in all fields';
-                resultDiv.className = 'result';
+                resultDiv.style.background = 'linear-gradient(45deg, #ff6b6b, #ee5a24)';
                 return;
             }
 
             const refData = refrigerantDataLC[refrigerant];
             if (!refData) {
                 resultDiv.textContent = 'Refrigerant data not available';
-                resultDiv.className = 'result';
+                resultDiv.style.background = 'linear-gradient(45deg, #ff6b6b, #ee5a24)';
                 return;
             }
 
-            // Convert gauge pressure to absolute pressure for calculation
             const absolutePressure = suctionPressure + 14.7;
             const saturatedTemp = interpolateTemperatureLC(absolutePressure, refData.pressureTemp);
             const superheat = suctionTemp - saturatedTemp;
 
-            let className = 'result';
             let message = 'Super-Heat: ' + superheat.toFixed(1) + '°F';
 
-            // Determine if superheat is in acceptable range
             if (superheat >= 5 && superheat <= 20) {
                 resultDiv.style.background = 'linear-gradient(45deg, #2ecc71, #27ae60)';
                 message += ' ✓ GOOD';
@@ -1280,8 +1643,7 @@
                 message += ' ❌ TOO HIGH';
             }
 
-            message += '\\nSaturated Temp: ' + saturatedTemp.toFixed(1) + '°F';
-
+            message += '\nSaturated Temp: ' + saturatedTemp.toFixed(1) + '°F';
             resultDiv.textContent = message;
         };
 
@@ -1304,14 +1666,12 @@
                 return;
             }
 
-            // Convert gauge pressure to absolute pressure for calculation
             const absolutePressure = dischargePressure + 14.7;
             const saturatedTemp = interpolateTemperatureLC(absolutePressure, refData.pressureTemp);
             const subcooling = saturatedTemp - liquidTemp;
 
             let message = 'Sub-Cooling: ' + subcooling.toFixed(1) + '°F';
 
-            // Determine if subcooling is in acceptable range
             if (subcooling >= 5 && subcooling <= 20) {
                 resultDiv.style.background = 'linear-gradient(45deg, #2ecc71, #27ae60)';
                 message += ' ✓ GOOD';
@@ -1326,8 +1686,7 @@
                 message += ' ❌ TOO HIGH';
             }
 
-            message += '\\nSaturated Temp: ' + saturatedTemp.toFixed(1) + '°F';
-
+            message += '\nSaturated Temp: ' + saturatedTemp.toFixed(1) + '°F';
             resultDiv.textContent = message;
         };
 
@@ -1336,8 +1695,8 @@
             const infoDiv = document.getElementById('lc-refrigerant-info');
             const detailsDiv = document.getElementById('lc-refrigerant-details');
 
-            if (!refrigerant) {
-                infoDiv.style.display = 'none';
+            if (!refrigerant || !infoDiv || !detailsDiv) {
+                if (infoDiv) infoDiv.style.display = 'none';
                 return;
             }
 
@@ -1368,7 +1727,8 @@
             document.getElementById('lc-suction-temp').value = '';
             document.getElementById('lc-superheat-result').textContent = 'Enter values to calculate super-heat';
             document.getElementById('lc-superheat-result').style.background = 'linear-gradient(45deg, #ff6b6b, #ee5a24)';
-            document.getElementById('lc-refrigerant-info').style.display = 'none';
+            const infoDiv = document.getElementById('lc-refrigerant-info');
+            if (infoDiv) infoDiv.style.display = 'none';
         };
 
         window.resetSubcoolingLC = function() {
@@ -1377,49 +1737,1044 @@
             document.getElementById('lc-liquid-temp').value = '';
             document.getElementById('lc-subcooling-result').textContent = 'Enter values to calculate sub-cooling';
             document.getElementById('lc-subcooling-result').style.background = 'linear-gradient(45deg, #ff6b6b, #ee5a24)';
-            document.getElementById('lc-refrigerant-info').style.display = 'none';
+            const infoDiv = document.getElementById('lc-refrigerant-info');
+            if (infoDiv) infoDiv.style.display = 'none';
         };
 
-        // Initialize SuperHeat/SubCool Calculator
-        function initializeSuperheatSubcool() {
-            // Load Chart.js if not already loaded
-            if (typeof Chart === 'undefined') {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js';
-                script.onload = setupSuperheatSubcoolListeners;
-                document.head.appendChild(script);
-            } else {
-                setupSuperheatSubcoolListeners();
+        // Unit Converter Functions
+        function setupUnitConverterListeners() {
+            setupLengthConverters();
+            setupWeightConverters();
+            setupTemperatureConverters();
+            setupPressureConverters();
+            setupEnergyConverters();
+            setupPowerConverters();
+        }
+
+        function setupLengthConverters() {
+            const length1 = document.getElementById('length1');
+            const length2 = document.getElementById('length2');
+            const length3 = document.getElementById('length3');
+            const length4 = document.getElementById('length4');
+
+            if (length1) {
+                length1.addEventListener('input', function() {
+                    const feet = parseFloat(this.value);
+                    if (!isNaN(feet) && length2) {
+                        length2.value = (feet * 0.3048).toFixed(6);
+                    }
+                });
+            }
+
+            if (length2) {
+                length2.addEventListener('input', function() {
+                    const meters = parseFloat(this.value);
+                    if (!isNaN(meters) && length1) {
+                        length1.value = (meters / 0.3048).toFixed(6);
+                    }
+                });
+            }
+
+            if (length3) {
+                length3.addEventListener('input', function() {
+                    const inches = parseFloat(this.value);
+                    if (!isNaN(inches) && length4) {
+                        length4.value = (inches * 2.54).toFixed(6);
+                    }
+                });
+            }
+
+            if (length4) {
+                length4.addEventListener('input', function() {
+                    const cm = parseFloat(this.value);
+                    if (!isNaN(cm) && length3) {
+                        length3.value = (cm / 2.54).toFixed(6);
+                    }
+                });
             }
         }
 
-        // Initialize P-T Chart
-        function initializePTChart() {
-            // Load Chart.js if not already loaded
-            if (typeof Chart === 'undefined') {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js';
-                script.onload = () => {
-                    setupPTChartFunctionality();
-                    generateChart(); // Generate initial chart
-                };
-                document.head.appendChild(script);
-            } else {
-                setupPTChartFunctionality();
-                generateChart(); // Generate initial chart
+        function setupWeightConverters() {
+            const weight1 = document.getElementById('weight1');
+            const weight2 = document.getElementById('weight2');
+            const weight3 = document.getElementById('weight3');
+            const weight4 = document.getElementById('weight4');
+
+            if (weight1) {
+                weight1.addEventListener('input', function() {
+                    const pounds = parseFloat(this.value);
+                    if (!isNaN(pounds) && weight2) {
+                        weight2.value = (pounds * 0.453592).toFixed(6);
+                    }
+                });
+            }
+
+            if (weight2) {
+                weight2.addEventListener('input', function() {
+                    const kg = parseFloat(this.value);
+                    if (!isNaN(kg) && weight1) {
+                        weight1.value = (kg / 0.453592).toFixed(6);
+                    }
+                });
+            }
+
+            if (weight3) {
+                weight3.addEventListener('input', function() {
+                    const ounces = parseFloat(this.value);
+                    if (!isNaN(ounces) && weight4) {
+                        weight4.value = (ounces * 28.3495).toFixed(6);
+                    }
+                });
+            }
+
+            if (weight4) {
+                weight4.addEventListener('input', function() {
+                    const grams = parseFloat(this.value);
+                    if (!isNaN(grams) && weight3) {
+                        weight3.value = (grams / 28.3495).toFixed(6);
+                    }
+                });
             }
         }
 
-        function setupSuperheatSubcoolListeners() {
-            // Initialize refrigerant data and setup event listeners for SuperHeat/SubCool calculator
-            // This would include all the JavaScript from the original SuperHeat/SubCool calculator
-            console.log('SuperHeat/SubCool calculator initialized');
+        function setupTemperatureConverters() {
+            const temp1 = document.getElementById('temp1');
+            const temp2 = document.getElementById('temp2');
+            const temp3 = document.getElementById('temp3');
+
+            if (temp1) {
+                temp1.addEventListener('input', updateTemperature);
+            }
+            if (temp2) {
+                temp2.addEventListener('input', updateTemperature);
+            }
+            if (temp3) {
+                temp3.addEventListener('input', updateTemperature);
+            }
         }
 
-        function setupPTChartFunctionality() {
-            // Initialize refrigerant data and setup functionality for P-T Chart
-            // This would include all the JavaScript from the original P-T Chart tool
-            console.log('P-T Chart tool initialized');
+        function setupPressureConverters() {
+            const pressure1 = document.getElementById('pressure1');
+            const pressure2 = document.getElementById('pressure2');
+            const pressure3 = document.getElementById('pressure3');
+            const pressure4 = document.getElementById('pressure4');
+
+            if (pressure1) {
+                pressure1.addEventListener('input', function() {
+                    const psi = parseFloat(this.value);
+                    if (!isNaN(psi)) {
+                        if (pressure2) pressure2.value = (psi * 0.0689476).toFixed(6);
+                        if (pressure3) pressure3.value = (psi * 6.89476).toFixed(6);
+                        if (pressure4) pressure4.value = (psi * 6894.76).toFixed(2);
+                    }
+                });
+            }
+
+            if (pressure2) {
+                pressure2.addEventListener('input', function() {
+                    const bar = parseFloat(this.value);
+                    if (!isNaN(bar)) {
+                        if (pressure1) pressure1.value = (bar / 0.0689476).toFixed(6);
+                        if (pressure3) pressure3.value = (bar * 100).toFixed(6);
+                        if (pressure4) pressure4.value = (bar * 100000).toFixed(2);
+                    }
+                });
+            }
+
+            if (pressure3) {
+                pressure3.addEventListener('input', function() {
+                    const kpa = parseFloat(this.value);
+                    if (!isNaN(kpa)) {
+                        if (pressure1) pressure1.value = (kpa / 6.89476).toFixed(6);
+                        if (pressure2) pressure2.value = (kpa / 100).toFixed(6);
+                        if (pressure4) pressure4.value = (kpa * 1000).toFixed(2);
+                    }
+                });
+            }
+
+            if (pressure4) {
+                pressure4.addEventListener('input', function() {
+                    const pa = parseFloat(this.value);
+                    if (!isNaN(pa)) {
+                        if (pressure1) pressure1.value = (pa / 6894.76).toFixed(6);
+                        if (pressure2) pressure2.value = (pa / 100000).toFixed(6);
+                        if (pressure3) pressure3.value = (pa / 1000).toFixed(6);
+                    }
+                });
+            }
+        }
+
+        function setupEnergyConverters() {
+            const energy1 = document.getElementById('energy1');
+            const energy2 = document.getElementById('energy2');
+            const energy3 = document.getElementById('energy3');
+            const energy4 = document.getElementById('energy4');
+
+            if (energy1) {
+                energy1.addEventListener('input', function() {
+                    const btu = parseFloat(this.value);
+                    if (!isNaN(btu)) {
+                        if (energy2) energy2.value = (btu * 1055.06).toFixed(2);
+                        if (energy3) energy3.value = (btu * 0.000293071).toFixed(8);
+                        if (energy4) energy4.value = (btu * 252.164).toFixed(2);
+                    }
+                });
+            }
+
+            if (energy2) {
+                energy2.addEventListener('input', function() {
+                    const joules = parseFloat(this.value);
+                    if (!isNaN(joules)) {
+                        if (energy1) energy1.value = (joules / 1055.06).toFixed(8);
+                        if (energy3) energy3.value = (joules / 3600000).toFixed(8);
+                        if (energy4) energy4.value = (joules / 4.184).toFixed(2);
+                    }
+                });
+            }
+
+            if (energy3) {
+                energy3.addEventListener('input', function() {
+                    const kwh = parseFloat(this.value);
+                    if (!isNaN(kwh)) {
+                        if (energy1) energy1.value = (kwh / 0.000293071).toFixed(2);
+                        if (energy2) energy2.value = (kwh * 3600000).toFixed(2);
+                        if (energy4) energy4.value = (kwh * 860421).toFixed(2);
+                    }
+                });
+            }
+
+            if (energy4) {
+                energy4.addEventListener('input', function() {
+                    const cal = parseFloat(this.value);
+                    if (!isNaN(cal)) {
+                        if (energy1) energy1.value = (cal / 252.164).toFixed(6);
+                        if (energy2) energy2.value = (cal * 4.184).toFixed(2);
+                        if (energy3) energy3.value = (cal / 860421).toFixed(8);
+                    }
+                });
+            }
+        }
+
+        function setupPowerConverters() {
+            const power1 = document.getElementById('power1');
+            const power2 = document.getElementById('power2');
+            const power3 = document.getElementById('power3');
+            const power4 = document.getElementById('power4');
+
+            if (power1) {
+                power1.addEventListener('input', function() {
+                    const btuh = parseFloat(this.value);
+                    if (!isNaN(btuh)) {
+                        if (power2) power2.value = (btuh * 0.000293071).toFixed(6);
+                        if (power3) power3.value = (btuh * 0.000393014).toFixed(6);
+                        if (power4) power4.value = (btuh * 0.293071).toFixed(3);
+                    }
+                });
+            }
+
+            if (power2) {
+                power2.addEventListener('input', function() {
+                    const kw = parseFloat(this.value);
+                    if (!isNaN(kw)) {
+                        if (power1) power1.value = (kw / 0.000293071).toFixed(2);
+                        if (power3) power3.value = (kw * 1.34102).toFixed(6);
+                        if (power4) power4.value = (kw * 1000).toFixed(3);
+                    }
+                });
+            }
+
+            if (power3) {
+                power3.addEventListener('input', function() {
+                    const hp = parseFloat(this.value);
+                    if (!isNaN(hp)) {
+                        if (power1) power1.value = (hp / 0.000393014).toFixed(2);
+                        if (power2) power2.value = (hp * 0.745699).toFixed(6);
+                        if (power4) power4.value = (hp * 745.699).toFixed(3);
+                    }
+                });
+            }
+
+            if (power4) {
+                power4.addEventListener('input', function() {
+                    const watts = parseFloat(this.value);
+                    if (!isNaN(watts)) {
+                        if (power1) power1.value = (watts / 0.293071).toFixed(2);
+                        if (power2) power2.value = (watts / 1000).toFixed(6);
+                        if (power3) power3.value = (watts / 745.699).toFixed(6);
+                    }
+                });
+            }
+        }
+
+        // Unit Converter Swap Functions
+        window.swapLength = function() {
+            const val1 = document.getElementById('length1').value;
+            const val2 = document.getElementById('length2').value;
+            document.getElementById('length1').value = val2;
+            document.getElementById('length2').value = val1;
+        };
+
+        window.swapLengthInchCm = function() {
+            const val3 = document.getElementById('length3').value;
+            const val4 = document.getElementById('length4').value;
+            document.getElementById('length3').value = val4;
+            document.getElementById('length4').value = val3;
+        };
+
+        window.clearLength = function() {
+            document.getElementById('length1').value = '';
+            document.getElementById('length2').value = '';
+            document.getElementById('length3').value = '';
+            document.getElementById('length4').value = '';
+        };
+
+        window.swapWeight = function() {
+            const val1 = document.getElementById('weight1').value;
+            const val2 = document.getElementById('weight2').value;
+            document.getElementById('weight1').value = val2;
+            document.getElementById('weight2').value = val1;
+        };
+
+        window.swapWeightOzGram = function() {
+            const val3 = document.getElementById('weight3').value;
+            const val4 = document.getElementById('weight4').value;
+            document.getElementById('weight3').value = val4;
+            document.getElementById('weight4').value = val3;
+        };
+
+        window.clearWeight = function() {
+            document.getElementById('weight1').value = '';
+            document.getElementById('weight2').value = '';
+            document.getElementById('weight3').value = '';
+            document.getElementById('weight4').value = '';
+        };
+
+        window.updateTemperature = function() {
+            const resultDiv = document.getElementById('tempResult');
+            if (!resultDiv) return;
+            
+            const celsius = parseFloat(document.getElementById('temp1').value);
+            const fahrenheit = parseFloat(document.getElementById('temp2').value);
+            const kelvin = parseFloat(document.getElementById('temp3').value);
+
+            let results = [];
+            
+            if (!isNaN(celsius)) {
+                const f = (celsius * 9/5) + 32;
+                const k = celsius + 273.15;
+                document.getElementById('temp2').value = f.toFixed(2);
+                document.getElementById('temp3').value = k.toFixed(2);
+                results.push(`${celsius}°C = ${f.toFixed(2)}°F = ${k.toFixed(2)}K`);
+            } else if (!isNaN(fahrenheit)) {
+                const c = (fahrenheit - 32) * 5/9;
+                const k = c + 273.15;
+                document.getElementById('temp1').value = c.toFixed(2);
+                document.getElementById('temp3').value = k.toFixed(2);
+                results.push(`${fahrenheit}°F = ${c.toFixed(2)}°C = ${k.toFixed(2)}K`);
+            } else if (!isNaN(kelvin)) {
+                const c = kelvin - 273.15;
+                const f = (c * 9/5) + 32;
+                document.getElementById('temp1').value = c.toFixed(2);
+                document.getElementById('temp2').value = f.toFixed(2);
+                results.push(`${kelvin}K = ${c.toFixed(2)}°C = ${f.toFixed(2)}°F`);
+            }
+
+            resultDiv.innerHTML = results.join('<br>');
+        };
+
+        window.swapTemperature = function() {
+            const val1 = document.getElementById('temp1').value;
+            const val2 = document.getElementById('temp2').value;
+            document.getElementById('temp1').value = val2;
+            document.getElementById('temp2').value = val1;
+            updateTemperature();
+        };
+
+        window.clearTemperature = function() {
+            document.getElementById('temp1').value = '';
+            document.getElementById('temp2').value = '';
+            document.getElementById('temp3').value = '';
+            const resultDiv = document.getElementById('tempResult');
+            if (resultDiv) resultDiv.innerHTML = '';
+        };
+
+        window.swapPressurePsiBar = function() {
+            const val1 = document.getElementById('pressure1').value;
+            const val2 = document.getElementById('pressure2').value;
+            document.getElementById('pressure1').value = val2;
+            document.getElementById('pressure2').value = val1;
+        };
+
+        window.swapPressureKpaPa = function() {
+            const val3 = document.getElementById('pressure3').value;
+            const val4 = document.getElementById('pressure4').value;
+            document.getElementById('pressure3').value = val4;
+            document.getElementById('pressure4').value = val3;
+        };
+
+        window.clearPressure = function() {
+            document.getElementById('pressure1').value = '';
+            document.getElementById('pressure2').value = '';
+            document.getElementById('pressure3').value = '';
+            document.getElementById('pressure4').value = '';
+        };
+
+        window.swapEnergyBtuJoule = function() {
+            const val1 = document.getElementById('energy1').value;
+            const val2 = document.getElementById('energy2').value;
+            document.getElementById('energy1').value = val2;
+            document.getElementById('energy2').value = val1;
+        };
+
+        window.swapEnergyKwhCal = function() {
+            const val3 = document.getElementById('energy3').value;
+            const val4 = document.getElementById('energy4').value;
+            document.getElementById('energy3').value = val4;
+            document.getElementById('energy4').value = val3;
+        };
+
+        window.clearEnergy = function() {
+            document.getElementById('energy1').value = '';
+            document.getElementById('energy2').value = '';
+            document.getElementById('energy3').value = '';
+            document.getElementById('energy4').value = '';
+        };
+
+        window.swapPowerBtuKw = function() {
+            const val1 = document.getElementById('power1').value;
+            const val2 = document.getElementById('power2').value;
+            document.getElementById('power1').value = val2;
+            document.getElementById('power2').value = val1;
+        };
+
+        window.swapPowerHpWatt = function() {
+            const val3 = document.getElementById('power3').value;
+            const val4 = document.getElementById('power4').value;
+            document.getElementById('power3').value = val4;
+            document.getElementById('power4').value = val3;
+        };
+
+        window.clearPower = function() {
+            document.getElementById('power1').value = '';
+            document.getElementById('power2').value = '';
+            document.getElementById('power3').value = '';
+            document.getElementById('power4').value = '';
+        };
+
+        // Psychrometric Calculator Functions
+        let currentUnits = 'metric';
+        let psychChart = null;
+        let calculatedData = [];
+
+        const refrigerantData = {
+            'R22': { name: 'R-22 (HCFC-22)', mw: 86.47, criticalTemp: 96.2, criticalPressure: 4990 },
+            'R134a': { name: 'R-134a (HFC-134a)', mw: 102.03, criticalTemp: 101.1, criticalPressure: 4059 },
+            'R410A': { name: 'R-410A (HFC-410A)', mw: 72.58, criticalTemp: 71.3, criticalPressure: 4901 },
+            'R404A': { name: 'R-404A (HFC-404A)', mw: 97.6, criticalTemp: 72.1, criticalPressure: 3734 },
+            'R507A': { name: 'R-507A (HFC-507A)', mw: 98.86, criticalTemp: 70.6, criticalPressure: 3705 },
+            'R407C': { name: 'R-407C (HFC-407C)', mw: 86.2, criticalTemp: 86.7, criticalPressure: 4630 }
+        };
+
+        window.toggleUnits = function(unit) {
+            currentUnits = unit;
+            document.querySelectorAll('.unit-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            updateUnitLabels();
+            convertCurrentValues();
+        };
+
+        function updateUnitLabels() {
+            const tempUnit = document.getElementById('tempUnit');
+            const pressureUnit = document.getElementById('pressureUnit');
+            const elevationUnit = document.getElementById('elevationUnit');
+            
+            if (tempUnit && pressureUnit && elevationUnit) {
+                if (currentUnits === 'metric') {
+                    tempUnit.textContent = '°C';
+                    pressureUnit.textContent = 'kPa';
+                    elevationUnit.textContent = 'm';
+                } else {
+                    tempUnit.textContent = '°F';
+                    pressureUnit.textContent = 'psi';
+                    elevationUnit.textContent = 'ft';
+                }
+            }
+        }
+
+        function convertCurrentValues() {
+            const tempInput = document.getElementById('temperature');
+            const pressureInput = document.getElementById('pressure');
+            const elevationInput = document.getElementById('elevation');
+
+            if (tempInput && pressureInput && elevationInput) {
+                if (currentUnits === 'imperial') {
+                    tempInput.value = (parseFloat(tempInput.value) * 9/5 + 32).toFixed(1);
+                    pressureInput.value = (parseFloat(pressureInput.value) * 0.145038).toFixed(3);
+                    elevationInput.value = (parseFloat(elevationInput.value) * 3.28084).toFixed(0);
+                } else {
+                    tempInput.value = ((parseFloat(tempInput.value) - 32) * 5/9).toFixed(1);
+                    pressureInput.value = (parseFloat(pressureInput.value) / 0.145038).toFixed(3);
+                    elevationInput.value = (parseFloat(elevationInput.value) / 3.28084).toFixed(0);
+                }
+            }
+        }
+
+        window.updateRefrigerantInfo = function() {
+            const refrigerant = document.getElementById('refrigerant').value;
+            const info = refrigerantData[refrigerant];
+        };
+
+        window.calculateProperties = function() {
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const pressure = parseFloat(document.getElementById('pressure').value);
+            const humidity = parseFloat(document.getElementById('humidity').value);
+            const elevation = parseFloat(document.getElementById('elevation').value);
+            const refrigerant = document.getElementById('refrigerant').value;
+
+            let tempC = currentUnits === 'imperial' ? (temperature - 32) * 5/9 : temperature;
+            let pressureKPa = currentUnits === 'imperial' ? pressure / 0.145038 : pressure;
+            let elevationM = currentUnits === 'imperial' ? elevation / 3.28084 : elevation;
+
+            const results = performPsychrometricCalculations(tempC, pressureKPa, humidity, elevationM, refrigerant);
+            
+            displayResults(results);
+            updatePsychChart(results);
+        };
+
+        function performPsychrometricCalculations(tempC, pressureKPa, humidity, elevationM, refrigerant) {
+            const correctedPressure = pressureKPa * Math.pow((1 - 0.0065 * elevationM / 288.15), 5.257);
+            const satVaporPressure = 0.61078 * Math.exp(17.27 * tempC / (tempC + 237.3));
+            const vaporPressure = (humidity / 100) * satVaporPressure;
+            const absoluteHumidity = 0.622 * vaporPressure / (correctedPressure - vaporPressure);
+            const dewPoint = 237.3 * Math.log(vaporPressure / 0.61078) / (17.27 - Math.log(vaporPressure / 0.61078));
+            const wetBulb = tempC * Math.atan(0.151977 * Math.sqrt(humidity + 8.313659)) +
+                           Math.atan(tempC + humidity) - Math.atan(humidity - 1.676331) +
+                           0.00391838 * Math.pow(humidity, 1.5) * Math.atan(0.023101 * humidity) - 4.686035;
+            const enthalpy = 1.006 * tempC + absoluteHumidity * (2501 + 1.86 * tempC);
+            const specificVolume = (287.055 * (tempC + 273.15) * (1 + 1.607858 * absoluteHumidity)) / (correctedPressure * 1000);
+            const refData = refrigerantData[refrigerant];
+            const saturatedPressure = calculateSaturatedPressure(tempC, refData);
+            
+            return {
+                temperature: tempC,
+                pressure: correctedPressure,
+                humidity: humidity,
+                absoluteHumidity: absoluteHumidity,
+                dewPoint: dewPoint,
+                wetBulb: wetBulb,
+                enthalpy: enthalpy,
+                specificVolume: specificVolume,
+                vaporPressure: vaporPressure,
+                saturatedPressure: saturatedPressure,
+                refrigerant: refrigerant
+            };
+        }
+
+        function calculateSaturatedPressure(tempC, refData) {
+            const A = 8.0, B = 1500, C = 230;
+            return Math.exp(A - B / (tempC + 273.15 + C));
+        }
+
+        function displayResults(results) {
+            const resultsContent = document.getElementById('resultsContent');
+            if (!resultsContent) return;
+            
+            let displayTemp = currentUnits === 'imperial' ? results.temperature * 9/5 + 32 : results.temperature;
+            let displayPressure = currentUnits === 'imperial' ? results.pressure * 0.145038 : results.pressure;
+            let displayDewPoint = currentUnits === 'imperial' ? results.dewPoint * 9/5 + 32 : results.dewPoint;
+            let displayWetBulb = currentUnits === 'imperial' ? results.wetBulb * 9/5 + 32 : results.wetBulb;
+            
+            const tempUnit = currentUnits === 'imperial' ? '°F' : '°C';
+            const pressureUnit = currentUnits === 'imperial' ? 'psi' : 'kPa';
+            const humidityUnit = currentUnits === 'imperial' ? 'lb/lb' : 'kg/kg';
+            const enthalpyUnit = currentUnits === 'imperial' ? 'BTU/lb' : 'kJ/kg';
+            const volumeUnit = currentUnits === 'imperial' ? 'ft³/lb' : 'm³/kg';
+
+            resultsContent.innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">Dry Bulb Temperature:</span>
+                    <span class="result-value">${displayTemp.toFixed(2)} ${tempUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Corrected Pressure:</span>
+                    <span class="result-value">${displayPressure.toFixed(3)} ${pressureUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Relative Humidity:</span>
+                    <span class="result-value">${results.humidity.toFixed(1)} %</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Absolute Humidity:</span>
+                    <span class="result-value">${results.absoluteHumidity.toFixed(4)} ${humidityUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Dew Point:</span>
+                    <span class="result-value">${displayDewPoint.toFixed(2)} ${tempUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Wet Bulb Temperature:</span>
+                    <span class="result-value">${displayWetBulb.toFixed(2)} ${tempUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Enthalpy:</span>
+                    <span class="result-value">${results.enthalpy.toFixed(2)} ${enthalpyUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Specific Volume:</span>
+                    <span class="result-value">${results.specificVolume.toFixed(4)} ${volumeUnit}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Vapor Pressure:</span>
+                    <span class="result-value">${results.vaporPressure.toFixed(3)} kPa</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Refrigerant Sat. Pressure:</span>
+                    <span class="result-value">${results.saturatedPressure.toFixed(3)} kPa</span>
+                </div>
+            `;
+            
+            calculatedData.push(results);
+        }
+
+        function updatePsychChart(results) {
+            const ctx = document.getElementById('psychrometricChart');
+            if (!ctx) return;
+            
+            const chartCtx = ctx.getContext('2d');
+            const chartData = generateChartData(results);
+            
+            if (psychChart) {
+                psychChart.destroy();
+            }
+            
+            psychChart = new Chart(chartCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Constant RH Lines',
+                            data: chartData.rhLines,
+                            borderColor: 'rgba(75, 192, 192, 0.6)',
+                            backgroundColor: 'transparent',
+                            showLine: true,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Constant Enthalpy Lines',
+                            data: chartData.enthalpyLines,
+                            borderColor: 'rgba(255, 99, 132, 0.6)',
+                            backgroundColor: 'transparent',
+                            showLine: true,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Current State Point',
+                            data: [{
+                                x: results.temperature,
+                                y: results.absoluteHumidity * 1000
+                            }],
+                            backgroundColor: 'rgba(255, 206, 86, 1)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            pointRadius: 8
+                        },
+                        {
+                            label: 'Saturation Line',
+                            data: chartData.saturationLine,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'transparent',
+                            showLine: true,
+                            pointRadius: 0,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: currentUnits === 'imperial' ? 'Dry Bulb Temperature (°F)' : 'Dry Bulb Temperature (°C)'
+                            },
+                            min: currentUnits === 'imperial' ? 32 : 0,
+                            max: currentUnits === 'imperial' ? 140 : 60
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Absolute Humidity (g/kg dry air)'
+                            },
+                            min: 0,
+                            max: 30
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Psychrometric Chart - ${results.refrigerant}`,
+                            font: {
+                                size: 18
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateChartData(results) {
+            const rhLines = [];
+            const enthalpyLines = [];
+            const saturationLine = [];
+            
+            const tempRange = currentUnits === 'imperial' ? 
+                { min: 32, max: 140, step: 2 } : 
+                { min: 0, max: 60, step: 1 };
+            
+            for (let t = tempRange.min; t <= tempRange.max; t += tempRange.step) {
+                const tempC = currentUnits === 'imperial' ? (t - 32) * 5/9 : t;
+                const satVaporPressure = 0.61078 * Math.exp(17.27 * tempC / (tempC + 237.3));
+                const maxHumidity = 0.622 * satVaporPressure / (101.325 - satVaporPressure) * 1000;
+                saturationLine.push({ x: t, y: maxHumidity });
+            }
+            
+            [20, 40, 60, 80].forEach(rh => {
+                const line = [];
+                for (let t = tempRange.min; t <= tempRange.max; t += tempRange.step * 2) {
+                    const tempC = currentUnits === 'imperial' ? (t - 32) * 5/9 : t;
+                    const satVaporPressure = 0.61078 * Math.exp(17.27 * tempC / (tempC + 237.3));
+                    const vaporPressure = (rh / 100) * satVaporPressure;
+                    const humidity = 0.622 * vaporPressure / (101.325 - vaporPressure) * 1000;
+                    if (humidity > 0 && humidity < 30) {
+                        line.push({ x: t, y: humidity });
+                    }
+                }
+                rhLines.push(...line);
+            });
+            
+            [40, 60, 80, 100, 120].forEach(h => {
+                const line = [];
+                for (let humidity = 0; humidity < 25; humidity += 1) {
+                    const humidityRatio = humidity / 1000;
+                    const tempC = (h - humidityRatio * 2501) / (1.006 + humidityRatio * 1.86);
+                    const tempDisplay = currentUnits === 'imperial' ? tempC * 9/5 + 32 : tempC;
+                    if (tempDisplay >= tempRange.min && tempDisplay <= tempRange.max) {
+                        line.push({ x: tempDisplay, y: humidity });
+                    }
+                }
+                enthalpyLines.push(...line);
+            });
+            
+            return { rhLines, enthalpyLines, saturationLine };
+        }
+
+        // Placeholder functions for other tools
+        window.calculateSuperheat = function() {
+            console.log('Calculate superheat function would be implemented here');
+            const resultDiv = document.getElementById('superheat-result');
+            if (resultDiv) {
+                resultDiv.innerHTML = 'Calculation functionality would be implemented here';
+            }
+        };
+
+        window.calculateSubcooling = function() {
+            console.log('Calculate subcooling function would be implemented here');
+            const resultDiv = document.getElementById('subcooling-result');
+            if (resultDiv) {
+                resultDiv.innerHTML = 'Calculation functionality would be implemented here';
+            }
+        };
+
+        window.resetSuperheat = function() {
+            const shRefrigerant = document.getElementById('sh-refrigerant');
+            const suctionPressure = document.getElementById('suction-pressure');
+            const suctionTemp = document.getElementById('suction-temp');
+            const superheatResult = document.getElementById('superheat-result');
+            
+            if (shRefrigerant) shRefrigerant.value = '';
+            if (suctionPressure) suctionPressure.value = '';
+            if (suctionTemp) suctionTemp.value = '';
+            if (superheatResult) superheatResult.innerHTML = 'Enter values to calculate super-heat';
+        };
+
+        window.resetSubcooling = function() {
+            const scRefrigerant = document.getElementById('sc-refrigerant');
+            const dischargePressure = document.getElementById('discharge-pressure');
+            const liquidTemp = document.getElementById('liquid-temp');
+            const subcoolingResult = document.getElementById('subcooling-result');
+            
+            if (scRefrigerant) scRefrigerant.value = '';
+            if (dischargePressure) dischargePressure.value = '';
+            if (liquidTemp) liquidTemp.value = '';
+            if (subcoolingResult) subcoolingResult.innerHTML = 'Enter values to calculate sub-cooling';
+        };
+
+        // P-T Chart Generator Functions
+        let ptChart = null;
+
+        window.generateChart = function() {
+            const refrigerant = document.getElementById('refrigerant').value;
+            const tempMin = parseFloat(document.getElementById('tempMin').value);
+            const tempMax = parseFloat(document.getElementById('tempMax').value);
+            const chartType = document.getElementById('chartType').value;
+            
+            const ctx = document.getElementById('ptChart');
+            if (!ctx) return;
+            
+            const chartCtx = ctx.getContext('2d');
+            
+            // Simplified refrigerant pressure data (pressure in PSI at various temperatures in °C)
+            const refrigerantPTData = {
+                'R22': {
+                    name: 'R-22 (HCFC-22)',
+                    data: [
+                        {temp: -40, pressure: 10.1}, {temp: -30, pressure: 16.9}, {temp: -20, pressure: 26.5},
+                        {temp: -10, pressure: 39.7}, {temp: 0, pressure: 57.7}, {temp: 10, pressure: 81.6},
+                        {temp: 20, pressure: 112.7}, {temp: 30, pressure: 152.6}, {temp: 40, pressure: 203.1},
+                        {temp: 50, pressure: 266.2}, {temp: 60, pressure: 343.8}
+                    ]
+                },
+                'R134a': {
+                    name: 'R-134a (HFC-134a)',
+                    data: [
+                        {temp: -40, pressure: 2.6}, {temp: -30, pressure: 5.5}, {temp: -20, pressure: 10.3},
+                        {temp: -10, pressure: 17.7}, {temp: 0, pressure: 28.4}, {temp: 10, pressure: 43.2},
+                        {temp: 20, pressure: 63.0}, {temp: 30, pressure: 88.8}, {temp: 40, pressure: 121.7},
+                        {temp: 50, pressure: 163.0}, {temp: 60, pressure: 214.0}
+                    ]
+                },
+                'R410A': {
+                    name: 'R-410A (HFC-410A)',
+                    data: [
+                        {temp: -40, pressure: 32.4}, {temp: -30, pressure: 48.0}, {temp: -20, pressure: 68.5},
+                        {temp: -10, pressure: 94.8}, {temp: 0, pressure: 128.0}, {temp: 10, pressure: 169.5},
+                        {temp: 20, pressure: 220.9}, {temp: 30, pressure: 283.7}, {temp: 40, pressure: 359.3},
+                        {temp: 50, pressure: 449.1}, {temp: 60, pressure: 554.7}
+                    ]
+                },
+                'R407C': {
+                    name: 'R-407C (HFC-407C)',
+                    data: [
+                        {temp: -40, pressure: 8.7}, {temp: -30, pressure: 14.8}, {temp: -20, pressure: 23.5},
+                        {temp: -10, pressure: 35.4}, {temp: 0, pressure: 51.2}, {temp: 10, pressure: 71.8},
+                        {temp: 20, pressure: 98.1}, {temp: 30, pressure: 131.0}, {temp: 40, pressure: 172.4},
+                        {temp: 50, pressure: 223.4}, {temp: 60, pressure: 285.9}
+                    ]
+                },
+                'R404A': {
+                    name: 'R-404A (HFC-404A)',
+                    data: [
+                        {temp: -40, pressure: 18.6}, {temp: -30, pressure: 28.4}, {temp: -20, pressure: 41.4},
+                        {temp: -10, pressure: 58.3}, {temp: 0, pressure: 79.9}, {temp: 10, pressure: 107.0},
+                        {temp: 20, pressure: 140.5}, {temp: 30, pressure: 181.4}, {temp: 40, pressure: 230.8},
+                        {temp: 50, pressure: 289.7}, {temp: 60, pressure: 359.2}
+                    ]
+                }
+            };
+
+            const refData = refrigerantPTData[refrigerant] || refrigerantPTData['R22'];
+            
+            // Filter data within temperature range
+            const filteredData = refData.data.filter(point => 
+                point.temp >= tempMin && point.temp <= tempMax
+            );
+
+            // If no data in range, extend the range
+            if (filteredData.length < 2) {
+                // Use all available data
+                filteredData.push(...refData.data);
+            }
+
+            // Create saturation curve data
+            const saturationData = filteredData.map(point => ({
+                x: point.temp,
+                y: point.pressure
+            }));
+
+            // Generate isotherm data (simplified - just vertical lines at key temperatures)
+            const isothermData = [];
+            const keyTemps = [-20, -10, 0, 10, 20, 30, 40, 50];
+            
+            keyTemps.forEach(temp => {
+                if (temp >= tempMin && temp <= tempMax) {
+                    // Find pressure at this temperature
+                    let pressure = 0;
+                    for (let i = 0; i < refData.data.length - 1; i++) {
+                        const p1 = refData.data[i];
+                        const p2 = refData.data[i + 1];
+                        if (temp >= p1.temp && temp <= p2.temp) {
+                            // Linear interpolation
+                            pressure = p1.pressure + (p2.pressure - p1.pressure) * 
+                                      (temp - p1.temp) / (p2.temp - p1.temp);
+                            break;
+                        }
+                    }
+                    
+                    if (pressure > 0) {
+                        // Create a short vertical line to represent isotherm
+                        isothermData.push({
+                            label: `${temp}°C`,
+                            data: [
+                                {x: temp, y: pressure * 0.5},
+                                {x: temp, y: pressure * 1.5}
+                            ],
+                            borderColor: temp < 0 ? 'rgba(54, 162, 235, 0.8)' : 'rgba(255, 99, 132, 0.8)',
+                            backgroundColor: 'transparent',
+                            showLine: true,
+                            pointRadius: 0,
+                            borderWidth: 2,
+                            borderDash: [5, 5]
+                        });
+                    }
+                }
+            });
+
+            // Destroy existing chart
+            if (ptChart) {
+                ptChart.destroy();
+            }
+
+            // Create datasets based on chart type
+            let datasets = [];
+            
+            if (chartType === 'saturation' || chartType === 'both') {
+                datasets.push({
+                    label: 'Saturation Curve',
+                    data: saturationData,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                    showLine: true,
+                    pointRadius: 3,
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.4
+                });
+            }
+
+            if (chartType === 'isotherms' || chartType === 'both') {
+                datasets.push(...isothermData);
+            }
+
+            // Create the chart
+            ptChart = new Chart(chartCtx, {
+                type: 'line',
+                data: {
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Temperature (°C)',
+                                font: { size: 14, weight: 'bold' }
+                            },
+                            min: tempMin,
+                            max: tempMax,
+                            ticks: {
+                                stepSize: Math.max(1, Math.round((tempMax - tempMin) / 10)),
+                                callback: function(value) {
+                                    return value + '°C';
+                                }
+                            },
+                            grid: {
+                                display: true,
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                drawBorder: true
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Pressure (PSI)',
+                                font: { size: 14, weight: 'bold' }
+                            },
+                            min: 0,
+                            ticks: {
+                                stepSize: 50,
+                                callback: function(value) {
+                                    return value + ' PSI';
+                                }
+                            },
+                            grid: {
+                                display: true,
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                drawBorder: true
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `P-T Chart for ${refData.name}`,
+                            font: { size: 18, weight: 'bold' },
+                            color: '#333'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.x.toFixed(1)}°C, ${context.parsed.y.toFixed(1)} PSI`;
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'nearest'
+                    }
+                }
+            });
+
+            // Update info displays
+            updateChartInfo(refData, tempMin, tempMax, filteredData.length);
+        };
+
+        function updateChartInfo(refData, tempMin, tempMax, dataPoints) {
+            const chartInfo = document.getElementById('chartInfo');
+            const refProperties = document.getElementById('refProperties');
+            
+            if (chartInfo) {
+                chartInfo.innerHTML = `
+                    <strong>Chart Generated Successfully!</strong><br>
+                    Temperature Range: ${tempMin}°C to ${tempMax}°C<br>
+                    Data Points: ${dataPoints} pressure-temperature pairs<br>
+                    <small>Interactive chart with hover tooltips for precise readings</small>
+                `;
+            }
+            
+            if (refProperties) {
+                const safetyInfo = refData.name.includes('🔥') ? 
+                    '<br><span style="color: #ff6b6b;">⚠️ Flammable refrigerant - Special precautions required</span>' : 
+                    refData.name.includes('⚠️') ? 
+                    '<br><span style="color: #f39c12;">⚠️ Toxic refrigerant - Proper ventilation required</span>' : '';
+                
+                refProperties.innerHTML = `
+                    <strong>${refData.name}</strong><br>
+                    Pressure range: ${Math.min(...refData.data.map(p => p.pressure)).toFixed(1)} - ${Math.max(...refData.data.map(p => p.pressure)).toFixed(1)} PSI<br>
+                    Temperature range: ${Math.min(...refData.data.map(p => p.temp))}°C to ${Math.max(...refData.data.map(p => p.temp))}°C<br>
+                    Chart type: Saturation curve with pressure-temperature relationship
+                    ${safetyInfo}
+                `;
+            }
         }
 
         // PWA Manifest
@@ -1446,56 +2801,21 @@
             ]
         };
 
-        // Create manifest blob URL
         const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
         const manifestURL = URL.createObjectURL(manifestBlob);
         document.getElementById('app-manifest').href = manifestURL;
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 closeModal();
             }
         }
 
-        // Show PWA prompt after 10 seconds if not installed
         setTimeout(() => {
             if (!isInstalled && !deferredPrompt) {
                 showPWAPrompt();
             }
         }, 10000);
-
-        // Placeholder functions for SuperHeat/SubCool calculator
-        window.calculateSuperheat = function() {
-            console.log('Calculate superheat function would be implemented here');
-            document.getElementById('superheat-result').innerHTML = 'Calculation functionality would be implemented here';
-        };
-
-        window.calculateSubcooling = function() {
-            console.log('Calculate subcooling function would be implemented here');
-            document.getElementById('subcooling-result').innerHTML = 'Calculation functionality would be implemented here';
-        };
-
-        window.resetSuperheat = function() {
-            document.getElementById('sh-refrigerant').value = '';
-            document.getElementById('suction-pressure').value = '';
-            document.getElementById('suction-temp').value = '';
-            document.getElementById('superheat-result').innerHTML = 'Enter values to calculate super-heat';
-        };
-
-        window.resetSubcooling = function() {
-            document.getElementById('sc-refrigerant').value = '';
-            document.getElementById('discharge-pressure').value = '';
-            document.getElementById('liquid-temp').value = '';
-            document.getElementById('subcooling-result').innerHTML = 'Enter values to calculate sub-cooling';
-        };
-
-        // Placeholder function for P-T Chart generator
-        window.generateChart = function() {
-            console.log('Generate chart function would be implemented here');
-            document.getElementById('chartInfo').innerHTML = 'Chart generation functionality would be implemented here';
-            document.getElementById('refProperties').innerHTML = 'Refrigerant properties would be displayed here';
-        };
     </script>
 </body>
 </html>
