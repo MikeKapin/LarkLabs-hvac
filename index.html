@@ -201,6 +201,7 @@
             padding: 2rem;
             transition: all 0.3s;
             cursor: pointer;
+            position: relative;
         }
 
         .tool-card:hover {
@@ -242,6 +243,35 @@
         .status-coming-soon {
             background: linear-gradient(45deg, #f39c12, #e67e22);
             color: white;
+        }
+
+        /* NEW Badge */
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
         /* Newsletter Signup */
@@ -666,6 +696,7 @@
                         <span class="tool-status status-available external-link">Launch P-T Charts</span>
                     </div>
                     <div class="tool-card" onclick="window.open('./duct_sizing_calculator.html', '_blank')">
+                        <div class="new-badge">NEW</div>
                         <div class="tool-icon">🌪️</div>
                         <h3>Duct Sizing Calculator</h3>
                         <p>Size ductwork for optimal airflow and efficiency with professional-grade calculations</p>
