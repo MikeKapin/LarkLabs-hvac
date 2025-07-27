@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email List Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .controls {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0 0.5rem;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn.danger {
+            background: #e74c3c;
+        }
+        
+        .btn.danger:hover {
+            background: #c0392b;
+        }
+        
+        .email-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .email-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .email-item:last-child {
+            border-bottom: none;
+        }
+        
+        .email-item:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .email-address {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .email-page {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .email-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .copy-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .copy-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .email-textarea {
+            width: 100%;
+            height: 150px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        
+        .no-emails {
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+            font-style: italic;
+        }
+        
+        .header-row {
+            background: #333;
+            color: white;
+            font-weight: bold;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 Email List Manager</h1>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <span class="stat-number" id="totalEmails">0</span>
+                <span>Total Emails</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="todayEmails">0</span>
+                <span>Today</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="weekEmails">0</span>
+                <span>This Week</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="downloadCSV()">📥 Download CSV</button>
+            <button class="btn" onclick="downloadTXT()">📄 Download TXT</button>
+            <button class="btn" onclick="refreshList()">🔄 Refresh</button>
+            <button class="btn danger" onclick="clearList()">🗑️ Clear All</button>
+        </div>
+        
+        <div class="email-list">
+            <div class="header-row">
+                <div>Email Address</div>
+                <div>Source Page</div>
+                <div>Date Added</div>
+            </div>
+            <div id="emailContainer">
+                <div class="no-emails">No emails collected yet.</div>
+            </div>
+        </div>
+        
+        <div class="copy-section">
+            <h3>📋 Copy Email Addresses</h3>
+            <p>Select the format you need for your email program:</p>
+            <button class="btn" onclick="generateEmailList('comma')">Comma Separated</button>
+            <button class="btn" onclick="generateEmailList('semicolon')">Semicolon Separated</button>
+            <button class="btn" onclick="generateEmailList('newline')">One Per Line</button>
+            <textarea id="emailOutput" class="email-textarea" placeholder="Email addresses will appear here..." readonly></textarea>
+            <button class="btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <script>
+        let emailData = [];
+
+        function loadEmailData() {
+            const stored = localStorage.getItem('collectedEmails');
+            emailData = stored ? JSON.parse(stored) : [];
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            updateStats();
+            displayEmails();
+        }
+
+        function updateStats() {
+            const total = emailData.length;
+            document.getElementById('totalEmails').textContent = total;
+
+            const today = new Date().toDateString();
+            const todayCount = emailData.filter(item => 
+                new Date(item.timestamp).toDateString() === today
+            ).length;
+            document.getElementById('todayEmails').textContent = todayCount;
+
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            const weekCount = emailData.filter(item => 
+                new Date(item.timestamp) >= weekAgo
+            ).length;
+            document.getElementById('weekEmails').textContent = weekCount;
+        }
+
+        function displayEmails() {
+            const container = document.getElementById('emailContainer');
+            
+            if (emailData.length === 0) {
+                container.innerHTML = '<div class="no-emails">No emails collected yet.</div>';
+                return;
+            }
+
+            // Sort by most recent first
+            const sortedEmails = [...emailData].sort((a, b) => 
+                new Date(b.timestamp) - new Date(a.timestamp)
+            );
+
+            container.innerHTML = sortedEmails.map(item => `
+                <div class="email-item">
+                    <div class="email-address">${item.email}</div>
+                    <div class="email-page">${item.page || 'Unknown'}</div>
+                    <div class="email-date">${item.date || new Date(item.timestamp).toLocaleDateString()}</div>
+                </div>
+            `).join('');
+        }
+
+        function generateEmailList(format) {
+            const emails = emailData.map(item => item.email);
+            const unique = [...new Set(emails)]; // Remove duplicates
+            
+            let output;
+            switch(format) {
+                case 'comma':
+                    output = unique.join(', ');
+                    break;
+                case 'semicolon':
+                    output = unique.join('; ');
+                    break;
+                case 'newline':
+                    output = unique.join('\n');
+                    break;
+                default:
+                    output = unique.join(', ');
+            }
+            
+            document.getElementById('emailOutput').value = output;
+        }
+
+        function copyToClipboard() {
+            const textarea = document.getElementById('emailOutput');
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Show feedback
+            const originalText = textarea.nextElementSibling.textContent;
+            textarea.nextElementSibling.textContent = '✅ Copied!';
+            setTimeout(() => {
+                textarea.nextElementSibling.textContent = originalText;
+            }, 2000);
+        }
+
+        function downloadCSV() {
+            const headers = ['Email', 'Page', 'Date', 'Timestamp'];
+            const csvContent = [
+                headers.join(','),
+                ...emailData.map(item => [
+                    `"${item.email}"`,
+                    `"${item.page || 'Unknown'}"`,
+                    `"${item.date || new Date(item.timestamp).toLocaleDateString()}"`,
+                    `"${item.timestamp}"`
+                ].join(','))
+            ].join('\n');
+
+            downloadFile(csvContent, 'email-list.csv', 'text/csv');
+        }
+
+        function downloadTXT() {
+            const emails = emailData.map(item => item.email);
+            const unique = [...new Set(emails)];
+            const content = unique.join('\n');
+            
+            downloadFile(content, 'email-list.txt', 'text/plain');
+        }
+
+        function downloadFile(content, filename, contentType) {
+            const blob = new Blob([content], { type: contentType });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function refreshList() {
+            loadEmailData();
+        }
+
+        function clearList() {
+            if (confirm('Are you sure you want to delete all collected emails? This cannot be undone.')) {
+                localStorage.removeItem('collectedEmails');
+                emailData = [];
+                updateDisplay();
+                document.getElementById('emailOutput').value = '';
+            }
+        }
+
+        // Load data when page loads
+        loadEmailData();
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadEmailData, 30000);
+    </script>
+</body>
+</html>
