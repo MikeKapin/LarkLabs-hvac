@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA B149.1-25 Pipe & Tube Sizing Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .main-inputs {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .main-inputs h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-inputs h2:before {
+            content: "⚙️";
+            font-size: 1.2rem;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .input-group select,
+        .input-group input {
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-group select:focus,
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            display: block;
+            margin: 20px auto 0;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .results {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #28a745;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.1);
+        }
+
+        .results h3 {
+            color: #155724;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .results h3:before {
+            content: "📊";
+        }
+
+        .result-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .result-value {
+            font-weight: 700;
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+
+        .branches {
+            margin-top: 40px;
+        }
+
+        .branches h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .branches h2:before {
+            content: "🔧";
+        }
+
+        .branch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .branch-card {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffeaa7 100%);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+            border-color: #ffc107;
+        }
+
+        .branch-card h4 {
+            color: #8b5a00;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .branch-card h4:before {
+            content: "🏠";
+        }
+
+        .branch-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .branch-input:focus {
+            outline: none;
+            border-color: #ffc107;
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
+        }
+
+        .branch-result {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
+            color: #8b5a00;
+            border: 2px solid #ffc107;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #fce4b6 100%);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f1aeb5 100%);
+            border: 2px solid #dc3545;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .branch-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA B149.1-25 Pipe & Tube Sizing Calculator</h1>
+            <p>Professional Gas Line Sizing Tool for Natural Gas & Propane Systems</p>
+        </div>
+
+        <div class="main-inputs">
+            <h2>System Parameters</h2>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label for="fuelType">Type of Fuel:</label>
+                    <select id="fuelType">
+                        <option value="natural-gas">Natural Gas</option>
+                        <option value="propane">Propane</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="materialType">Pipe Material:</label>
+                    <select id="materialType">
+                        <option value="black-iron">Black Iron Schedule 40</option>
+                        <option value="copper">Copper Tubing Type G</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="workingPressure">Working Pressure:</label>
+                    <select id="workingPressure">
+                        <option value="7wc">7" w.c.</option>
+                        <option value="14wc">14" w.c.</option>
+                        <option value="2psi">2 psi</option>
+                        <option value="5psi">5 psi</option>
+                        <option value="10psi">10 psi</option>
+                        <option value="20psi">20 psi</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="pressureDrop">Allowable Pressure Drop (in. w.c.):</label>
+                    <input type="number" id="pressureDrop" step="0.1" placeholder="e.g., 0.5" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="lmr">Longest Measured Run (ft):</label>
+                    <input type="number" id="lmr" step="1" placeholder="e.g., 100" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="totalBtu">Total System BTU/hr:</label>
+                    <input type="number" id="totalBtu" step="1000" placeholder="e.g., 250000" min="0">
+                </div>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateMainLine()">Calculate Main Line Size</button>
+        </div>
+
+        <div id="mainResults" class="results" style="display: none;">
+            <h3>Main Line Sizing Results</h3>
+            <div id="mainResultsContent"></div>
+        </div>
+
+        <div class="branches">
+            <h2>Branch Line Calculators</h2>
+            <div class="branch-grid">
+                <div class="branch-card">
+                    <h4>Branch 1 - Appliance</h4>
+                    <input type="number" class="branch-input" placeholder="Enter BTU/hr" oninput="calculateBranch(1, this.value)">
+                    <div class="branch-result" id="branch1Result">Enter BTU to calculate size</div>
+                </div>
+
+                <div class="branch-card">
+                    <h4>Branch 2 - Appliance</h4>
+                    <input type="number" class="branch-input" placeholder="Enter BTU/hr" oninput="calculateBranch(2, this.value)">
+                    <div class="branch-result" id="branch2Result">Enter BTU to calculate size</div>
+                </div>
+
+                <div class="branch-card">
+                    <h4>Branch 3 - Appliance</h4>
+                    <input type="number" class="branch-input" placeholder="Enter BTU/hr" oninput="calculateBranch(3, this.value)">
+                    <div class="branch-result" id="branch3Result">Enter BTU to calculate size</div>
+                </div>
+
+                <div class="branch-card">
+                    <h4>Branch 4 - Appliance</h4>
+                    <input type="number" class="branch-input" placeholder="Enter BTU/hr" oninput="calculateBranch(4, this.value)">
+                    <div class="branch-result" id="branch4Result">Enter BTU to calculate size</div>
+                </div>
+
+                <div class="branch-card">
+                    <h4>Branch 5 - Appliance</h4>
+                    <input type="number" class="branch-input" placeholder="Enter BTU/hr" oninput="calculateBranch(5, this.value)">
+                    <div class="branch-result" id="branch5Result">Enter BTU to calculate size</div>
+                </div>
+
+                <div class="branch-card">
+                    <h4>Branch 6 - Appliance</h4>
+                    <input type="number" class="branch-input" placeholder="Enter BTU/hr" oninput="calculateBranch(6, this.value)">
+                    <div class="branch-result" id="branch6Result">Enter BTU to calculate size</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CSA B149.1-25 Canadian pipe sizing tables
+        const PIPE_SIZES = {
+            'black-iron': {
+                sizes: ['1/2"', '3/4"', '1"', '1-1/4"', '1-1/2"', '2"', '2-1/2"', '3"', '4"', '6"'],
+                capacities: {
+                    'natural-gas': {
+                        // Capacities in MBH (1000 BTU/hr) for 100 ft length at various pressures
+                        '7wc': [175, 360, 680, 1400, 2100, 4000, 6300, 11200, 23000, 69000],
+                        '14wc': [245, 510, 950, 1950, 2950, 5600, 8900, 15700, 32500, 97000],
+                        '2psi': [320, 665, 1250, 2550, 3850, 7300, 11600, 20500, 42500, 127000],
+                        '5psi': [505, 1050, 1950, 4000, 6050, 11500, 18200, 32200, 66700, 199000],
+                        '10psi': [715, 1480, 2750, 5650, 8550, 16200, 25700, 45400, 94000, 281000],
+                        '20psi': [1010, 2100, 3900, 8000, 12100, 23000, 36400, 64200, 133000, 397000]
+                    },
+                    'propane': {
+                        // Propane capacities adjusted for higher heating value
+                        '7wc': [470, 967, 1826, 3762, 5670, 10764, 16929, 30096, 61830, 185490],
+                        '14wc': [659, 1371, 2555, 5242, 7931, 15056, 23929, 42207, 87375, 260679],
+                        '2psi': [860, 1787, 3360, 6855, 10348, 19620, 31136, 55090, 114300, 341430],
+                        '5psi': [1358, 2822, 5243, 10760, 16294, 30940, 48916, 86576, 179309, 535091],
+                        '10psi': [1922, 3993, 7398, 15194, 22979, 43560, 69069, 122072, 252760, 755268],
+                        '20psi': [2717, 5649, 10491, 21520, 33341, 61820, 97884, 172698, 357730, 1067201]
+                    }
+                }
+            },
+            'copper': {
+                sizes: ['1/2"', '5/8"', '3/4"', '7/8"', '1-1/8"', '1-3/8"', '1-5/8"', '2-1/8"'],
+                capacities: {
+                    'natural-gas': {
+                        '7wc': [125, 200, 315, 435, 790, 1200, 1760, 3150],
+                        '14wc': [175, 280, 440, 610, 1110, 1690, 2480, 4420],
+                        '2psi': [230, 365, 575, 795, 1440, 2200, 3230, 5760],
+                        '5psi': [360, 575, 905, 1250, 2270, 3460, 5080, 9060],
+                        '10psi': [510, 815, 1280, 1770, 3210, 4890, 7180, 12800],
+                        '20psi': [720, 1150, 1810, 2500, 4540, 6920, 10200, 18100]
+                    },
+                    'propane': {
+                        '7wc': [336, 537, 846, 1169, 2122, 3225, 4729, 8463],
+                        '14wc': [470, 752, 1182, 1639, 2982, 4543, 6667, 11879],
+                        '2psi': [618, 981, 1544, 2136, 3870, 5913, 8679, 15472],
+                        '5psi': [967, 1544, 2431, 3360, 6099, 9298, 13651, 24351],
+                        '10psi': [1369, 2189, 3438, 4758, 8626, 13143, 19291, 34394],
+                        '20psi': [1935, 3090, 4864, 6720, 12198, 18596, 27302, 48702]
+                    }
+                }
+            }
+        };
+
+        function calculateMainLine() {
+            const fuelType = document.getElementById('fuelType').value;
+            const materialType = document.getElementById('materialType').value;
+            const workingPressure = document.getElementById('workingPressure').value;
+            const pressureDrop = parseFloat(document.getElementById('pressureDrop').value);
+            const lmr = parseFloat(document.getElementById('lmr').value);
+            const totalBtu = parseFloat(document.getElementById('totalBtu').value);
+
+            // Validation
+            if (!pressureDrop || !lmr || !totalBtu) {
+                showError('Please fill in all required fields.');
+                return;
+            }
+
+            // Convert working pressure to comparable units for validation
+            const pressureInWC = convertPressureToWC(workingPressure);
+            if (pressureDrop > pressureInWC * 0.1) {
+                showWarning('Pressure drop should typically not exceed 10% of working pressure for safety.');
+            }
+
+            // Calculate required pipe size
+            const result = calculatePipeSize(fuelType, materialType, workingPressure, pressureDrop, totalBtu, lmr);
+            
+            displayMainResults(result, {
+                fuelType,
+                materialType,
+                workingPressure,
+                pressureDrop,
+                lmr,
+                totalBtu
+            });
+        }
+
+        function convertPressureToWC(pressure) {
+            // Convert all pressures to inches water column for comparison
+            switch(pressure) {
+                case '7wc': return 7;
+                case '14wc': return 14;
+                case '2psi': return 55.4; // 1 psi = 27.7" w.c.
+                case '5psi': return 138.5;
+                case '10psi': return 277;
+                case '20psi': return 554;
+                default: return 7;
+            }
+        }
+
+        function getPressureText(pressure) {
+            switch(pressure) {
+                case '7wc': return '7" w.c.';
+                case '14wc': return '14" w.c.';
+                case '2psi': return '2 psi';
+                case '5psi': return '5 psi';
+                case '10psi': return '10 psi';
+                case '20psi': return '20 psi';
+                default: return pressure;
+            }
+        }
+
+        function calculatePipeSize(fuelType, materialType, workingPressure, pressureDrop, btuLoad, length) {
+            // Convert BTU to MBH (thousands of BTU)
+            const loadMBH = btuLoad / 1000;
+            
+            // Adjust capacity for actual length vs. standard 100 ft
+            const lengthFactor = Math.sqrt(100 / length);
+            
+            // Adjust for pressure drop (Canadian method uses different factors)
+            let pressureAdjustment = 1.0;
+            if (pressureDrop !== 0.5) {
+                pressureAdjustment = Math.sqrt(pressureDrop / 0.5);
+            }
+            
+            const adjustedLoad = loadMBH / (lengthFactor * pressureAdjustment);
+            
+            const pipeData = PIPE_SIZES[materialType];
+            const capacities = pipeData.capacities[fuelType][workingPressure];
+            
+            let recommendedSize = null;
+            let sizeIndex = -1;
+            let actualCapacity = 0;
+            
+            for (let i = 0; i < capacities.length; i++) {
+                if (capacities[i] >= adjustedLoad) {
+                    recommendedSize = pipeData.sizes[i];
+                    sizeIndex = i;
+                    actualCapacity = capacities[i];
+                    break;
+                }
+            }
+            
+            if (!recommendedSize) {
+                recommendedSize = "Larger than " + pipeData.sizes[pipeData.sizes.length - 1];
+                sizeIndex = pipeData.sizes.length - 1;
+                actualCapacity = capacities[capacities.length - 1];
+            }
+            
+            return {
+                size: recommendedSize,
+                capacity: Math.round(actualCapacity * 1000), // Convert back to BTU
+                adjustedLoad: Math.round(adjustedLoad * 1000),
+                actualLoad: btuLoad,
+                lengthFactor: lengthFactor.toFixed(3),
+                pressureFactor: pressureAdjustment.toFixed(3),
+                workingPressure: workingPressure
+            };
+        }
+
+        function calculateBranch(branchNumber, btuValue) {
+            const resultElement = document.getElementById(`branch${branchNumber}Result`);
+            
+            if (!btuValue || btuValue <= 0) {
+                resultElement.textContent = 'Enter BTU to calculate size';
+                resultElement.style.backgroundColor = 'white';
+                return;
+            }
+
+            const fuelType = document.getElementById('fuelType').value;
+            const materialType = document.getElementById('materialType').value;
+            const workingPressure = document.getElementById('workingPressure').value;
+            const pressureDrop = parseFloat(document.getElementById('pressureDrop').value) || 0.5;
+            
+            // Assume typical branch run of 25 feet for branch calculations
+            const branchLength = 25;
+            
+            const result = calculatePipeSize(fuelType, materialType, workingPressure, pressureDrop, parseFloat(btuValue), branchLength);
+            
+            resultElement.textContent = `Recommended Size: ${result.size}`;
+            resultElement.style.backgroundColor = result.capacity >= result.actualLoad ? '#d4edda' : '#fff3cd';
+        }
+
+        function displayMainResults(result, params) {
+            const resultsDiv = document.getElementById('mainResults');
+            const contentDiv = document.getElementById('mainResultsContent');
+            
+            const fuelTypeText = params.fuelType === 'natural-gas' ? 'Natural Gas' : 'Propane';
+            const materialText = params.materialType === 'black-iron' ? 'Black Iron Schedule 40' : 'Copper Tubing Type G';
+            
+            contentDiv.innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">Recommended Main Line Size:</span>
+                    <span class="result-value">${result.size}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Fuel Type:</span>
+                    <span class="result-value">${fuelTypeText}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Material:</span>
+                    <span class="result-value">${materialText}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">System Load:</span>
+                    <span class="result-value">${params.totalBtu.toLocaleString()} BTU/hr</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Pipe Capacity:</span>
+                    <span class="result-value">${result.capacity.toLocaleString()} BTU/hr</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Working Pressure:</span>
+                    <span class="result-value">${getPressureText(params.workingPressure)}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Pressure Drop:</span>
+                    <span class="result-value">${params.pressureDrop}" w.c.</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Longest Measured Run:</span>
+                    <span class="result-value">${params.lmr} ft</span>
+                </div>
+            `;
+            
+            resultsDiv.style.display = 'block';
+            
+            // Scroll to results
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function showError(message) {
+            const existingError = document.querySelector('.error');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.innerHTML = `<strong>Error:</strong> ${message}`;
+            
+            document.querySelector('.main-inputs').appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+
+        function showWarning(message) {
+            const existingWarning = document.querySelector('.warning');
+            if (existingWarning) {
+                existingWarning.remove();
+            }
+            
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'warning';
+            warningDiv.innerHTML = `<strong>Warning:</strong> ${message}`;
+            
+            document.querySelector('.main-inputs').appendChild(warningDiv);
+            
+            setTimeout(() => {
+                warningDiv.remove();
+            }, 8000);
+        }
+
+        // Initialize with default values for demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('pressureDrop').value = '0.5';
+            document.getElementById('lmr').value = '100';
+            document.getElementById('totalBtu').value = '200000';
+        });
+    </script>
+</body>
+</html>
