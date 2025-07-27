@@ -846,10 +846,10 @@
             <ul class="nav-links">
                 <li><a onclick="showSection('home')" class="active">Home</a></li>
                 <li><a onclick="showSection('tools')">Tools</a></li>
-                <li><a onclick="showSection('training')">Training</a></li>
-                <li><a onclick="showSection('downloads')">Free Downloads</a></li>
+                <li><a onclick="showProtectedSection('training')">Training</a></li>
+                <li><a onclick="showProtectedSection('downloads')">Free Downloads</a></li>
                 <li><a onclick="showSection('community')">Community</a></li>
-                <li><a onclick="showSection('resources')">Resources</a></li>
+                <li><a onclick="showProtectedSection('resources')">Resources</a></li>
                 <li><a onclick="showSection('about')">About</a></li>
             </ul>
         </nav>
@@ -863,7 +863,7 @@
                     <h1>Free HVAC Tools & Training</h1>
                     <p>Professional-grade calculators, training simulators, and community resources - completely free for HVAC technicians, students, and educators</p>
                     <a href="#" class="cta-button" onclick="showSection('tools')">Browse Tools</a>
-                    <a href="#" class="cta-button secondary" onclick="showSection('downloads')">Free Downloads</a>
+                    <a href="#" class="cta-button secondary" onclick="showProtectedSection('downloads')">Free Downloads</a>
                 </div>
             </div>
 
@@ -880,7 +880,7 @@
                         <p>Load calculations, unit conversions, and refrigeration charts for everyday use</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="showSection('training')">
+                    <div class="tool-card" onclick="showProtectedSection('training')">
                         <div class="tool-icon">🎓</div>
                         <h3>Exam Simulators</h3>
                         <p>TSSA G2 & G3 practice exams to help you pass your certification</p>
@@ -892,7 +892,7 @@
                         <p>Connect with other technicians and students to share knowledge</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="showSection('resources')">
+                    <div class="tool-card" onclick="showProtectedSection('resources')">
                         <div class="tool-icon">📚</div>
                         <h3>Gas Codes & Regulations</h3>
                         <p>Search through CSA B149.1, TSSA regulations, and safety standards</p>
@@ -1089,7 +1089,7 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 2rem;">
-                    <button class="cta-button" onclick="showSection('training')">← Back to Training</button>
+                    <button class="cta-button" onclick="showProtectedSection('training')">← Back to Training</button>
                 </div>
             </div>
         </section>
@@ -1662,6 +1662,21 @@
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
             initializeFilters();
+            
+            // Handle section redirects from email gate
+            const hash = window.location.hash.substring(1); // Remove the # symbol
+            if (hash && ['training', 'downloads', 'resources'].includes(hash)) {
+                // Check if user has email (they should if redirected from email gate)
+                const userEmail = localStorage.getItem('userEmail');
+                if (userEmail) {
+                    showSection(hash);
+                    // Clear the hash from URL for cleaner appearance
+                    history.replaceState(null, null, window.location.pathname);
+                } else {
+                    // Fallback: redirect to email gate if no email found
+                    showProtectedSection(hash);
+                }
+            }
         });
 
         function setupEventListeners() {
@@ -1728,6 +1743,20 @@
             
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // NEW FUNCTION: Handle protected sections
+        function showProtectedSection(sectionId) {
+            // Check if user has already provided email
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (userEmail) {
+                // User has email, show section normally
+                showSection(sectionId);
+            } else {
+                // No email, redirect to email gate
+                window.location.href = 'email-gate.html?redirect=' + sectionId;
+            }
         }
 
         // Function to show CSA Chapter Questions
