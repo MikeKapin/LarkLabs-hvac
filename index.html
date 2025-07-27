@@ -917,20 +917,37 @@
         });
 
         function setupEventListeners() {
-            // Newsletter signup
-            const newsletterButton = document.querySelector('.newsletter-form button');
-            if (newsletterButton) {
-                newsletterButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const email = document.querySelector('.newsletter-form input').value;
-                    if (email) {
+            // Newsletter signup - UPDATED VERSION
+            const newsletterForms = document.querySelectorAll('.newsletter-form');
+            newsletterForms.forEach(form => {
+                const button = form.querySelector('button');
+                const input = form.querySelector('input');
+                
+                if (button && input) {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const email = input.value.trim();
+                        
+                        // Basic email validation
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!email) {
+                            alert('Please enter an email address.');
+                            return;
+                        }
+                        if (!emailRegex.test(email)) {
+                            alert('Please enter a valid email address.');
+                            return;
+                        }
+                        
+                        // Store email in the same system used by email-gate.html
+                        storeEmailAddress(email, 'newsletter-signup');
+                        
+                        // Show success message
                         alert('Thank you for subscribing! You will receive updates about new tools and features.');
-                        document.querySelector('.newsletter-form input').value = '';
-                    } else {
-                        alert('Please enter a valid email address.');
-                    }
-                });
-            }
+                        input.value = ''; // Clear the input
+                    });
+                }
+            });
 
             // Animate tool cards on hover
             const toolCards = document.querySelectorAll('.tool-card');
@@ -942,6 +959,32 @@
                     this.style.transform = 'translateY(0) scale(1)';
                 });
             });
+        }
+
+        // Add this new function to handle email storage
+        function storeEmailAddress(email, source) {
+            // Get existing email list from localStorage
+            let emailList = JSON.parse(localStorage.getItem('collectedEmails') || '[]');
+            
+            // Check if email already exists
+            const exists = emailList.some(entry => entry.email === email);
+            
+            if (!exists) {
+                // Add new email to the list
+                emailList.push({
+                    email: email,
+                    page: source,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleDateString()
+                });
+                
+                // Save back to localStorage
+                localStorage.setItem('collectedEmails', JSON.stringify(emailList));
+                
+                console.log('Email stored:', email, 'from', source);
+            } else {
+                console.log('Email already exists:', email);
+            }
         }
 
         // Navigation functionality
@@ -971,7 +1014,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // NEW FUNCTION: Handle protected sections
+        // Handle protected sections
         function showProtectedSection(sectionId) {
             // Check if user has already provided email
             const userEmail = localStorage.getItem('userEmail');
