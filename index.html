@@ -85,6 +85,24 @@
             color: #3498db;
         }
 
+        /* Mobile menu toggle button - hidden by default */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
         /* Hero Section */
         .hero {
             padding: 300px 0 80px 0;
@@ -345,11 +363,72 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                gap: 0.5rem;
+            /* Mobile navigation styles */
+            .mobile-menu-toggle {
+                display: block;
             }
 
+            .logo {
+                transform: scale(1.2); /* Smaller logo on mobile */
+                margin-right: 20px; /* Reduced margin */
+                gap: 10px; /* Smaller gap */
+            }
+
+            .logo-bird svg {
+                width: 50px; /* Smaller bird icon */
+                height: 50px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(26, 26, 26, 0.98);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid rgba(52, 152, 219, 0.3);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 2rem;
+                margin: 0;
+                border-radius: 0;
+                width: 100%;
+                font-size: 1.1rem;
+                transition: all 0.3s;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                background: rgba(52, 152, 219, 0.2);
+                color: #3498db;
+            }
+
+            /* Rest of mobile styles */
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -372,6 +451,76 @@
 
             .main-content-with-header {
                 padding: 280px 0 80px 0;
+            }
+
+            /* Mobile-specific adjustments */
+            .container {
+                padding: 0 15px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .cta-button {
+                margin: 5px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            .logo {
+                transform: scale(1.0);
+                margin-right: 10px;
+            }
+
+            .logo div:first-child {
+                font-size: 1.4rem !important;
+            }
+
+            .logo div:last-child {
+                font-size: 1rem !important;
+            }
+
+            .logo-bird svg {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero {
+                padding: 250px 0 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+
+            .main-content-with-header {
+                padding: 220px 0 60px 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .tool-card {
+                padding: 1rem;
+            }
+
+            .tool-icon {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -412,14 +561,20 @@
                     <div style="font-size: 1.2rem; font-weight: normal; color: #95a5a6; margin-top: -5px;">LABS</div>
                 </div>
             </div>
-            <ul class="nav-links">
-                <li><a onclick="showSection('home')" class="active">Home</a></li>
-                <li><a onclick="showSection('tools')">Tools</a></li>
-                <li><a onclick="showProtectedSection('training')">Training</a></li>
-                <li><a onclick="showProtectedSection('downloads')">Free Downloads</a></li>
+            
+            <!-- Mobile menu toggle button -->
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                ☰
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="showSection('home'); closeMobileMenu();" class="active">Home</a></li>
+                <li><a onclick="showSection('tools'); closeMobileMenu();">Tools</a></li>
+                <li><a onclick="showProtectedSection('training'); closeMobileMenu();">Training</a></li>
+                <li><a onclick="showProtectedSection('downloads'); closeMobileMenu();">Free Downloads</a></li>
                 <li><a href="community.html">Community</a></li>
-                <li><a onclick="showProtectedSection('resources')">Resources</a></li>
-                <li><a onclick="showSection('about')">About</a></li>
+                <li><a onclick="showProtectedSection('resources'); closeMobileMenu();">Resources</a></li>
+                <li><a onclick="showSection('about'); closeMobileMenu();">About</a></li>
             </ul>
         </nav>
     </header>
@@ -896,21 +1051,40 @@
     </footer>
 
     <script>
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
             
             // Handle section redirects from email gate
-            const hash = window.location.hash.substring(1); // Remove the # symbol
+            const hash = window.location.hash.substring(1);
             if (hash && ['training', 'downloads', 'resources'].includes(hash)) {
-                // Check if user has email (they should if redirected from email gate)
                 const userEmail = localStorage.getItem('userEmail');
                 if (userEmail) {
                     showSection(hash);
-                    // Clear the hash from URL for cleaner appearance
                     history.replaceState(null, null, window.location.pathname);
                 } else {
-                    // Fallback: redirect to email gate if no email found
                     showProtectedSection(hash);
                 }
             }
