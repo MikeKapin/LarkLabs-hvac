@@ -159,18 +159,23 @@
             padding: 80px 0;
         }
 
-        /* Updated padding for main sections to prevent header obstruction */
+        /* Reduced padding for main sections to prevent header obstruction */
         .main-content-with-header {
-            padding: 300px 0 80px 0;
+            padding: 200px 0 80px 0;
         }
 
         .section {
             display: none;
             animation: fadeIn 0.5s ease-in;
+            padding-top: 100px;
         }
 
         .section.active {
             display: block;
+        }
+
+        .section#home {
+            padding-top: 0 !important;
         }
 
         @keyframes fadeIn {
@@ -182,6 +187,7 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 3rem;
+            margin-top: 0;
             color: #3498db;
         }
 
@@ -480,7 +486,7 @@
             }
 
             .main-content-with-header {
-                padding: 280px 0 80px 0;
+                padding: 180px 0 80px 0;
             }
 
             /* Mobile-specific adjustments */
@@ -538,7 +544,7 @@
             }
 
             .main-content-with-header {
-                padding: 220px 0 60px 0;
+                padding: 160px 0 60px 0;
             }
 
             .section-title {
@@ -600,10 +606,10 @@
             <ul class="nav-links" id="navLinks">
                 <li><a onclick="showSection('home'); closeMobileMenu();" class="active">Home</a></li>
                 <li><a onclick="showSection('tools'); closeMobileMenu();">Tools</a></li>
-                <li><a onclick="showProtectedSection('training'); closeMobileMenu();">Training</a></li>
-                <li><a onclick="showProtectedSection('downloads'); closeMobileMenu();">Free Downloads</a></li>
+                <li><a onclick="showSection('training'); closeMobileMenu();">Training</a></li>
+                <li><a onclick="showSection('downloads'); closeMobileMenu();">Free Downloads</a></li>
                 <li><a href="community.html">Community</a></li>
-                <li><a onclick="showProtectedSection('resources'); closeMobileMenu();">Resources</a></li>
+                <li><a onclick="showSection('resources'); closeMobileMenu();">Resources</a></li>
                 <li><a onclick="showSection('about'); closeMobileMenu();">About</a></li>
             </ul>
         </nav>
@@ -617,7 +623,7 @@
                     <h1>Free HVAC Tools & Training</h1>
                     <p>Professional-grade calculators, training simulators, and community resources - completely free for HVAC technicians, students, and educators</p>
                     <a href="#" class="cta-button" onclick="showSection('tools')">Browse Tools</a>
-                    <a href="#" class="cta-button secondary" onclick="showProtectedSection('downloads')">Free Downloads</a>
+                    <a href="#" class="cta-button secondary" onclick="showSection('downloads')">Free Downloads</a>
                 </div>
             </div>
 
@@ -634,7 +640,7 @@
                         <p>Load calculations, unit conversions, and refrigeration charts for everyday use</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="showProtectedSection('training')">
+                    <div class="tool-card" onclick="showSection('training')">
                         <div class="tool-icon">🎓</div>
                         <h3>Exam Simulators</h3>
                         <p>TSSA G2 & G3 practice exams to help you pass your certification</p>
@@ -646,7 +652,7 @@
                         <p>Connect with other technicians and students to share knowledge</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="showProtectedSection('resources')">
+                    <div class="tool-card" onclick="showSection('resources')">
                         <div class="tool-icon">📚</div>
                         <h3>Gas Codes & Regulations</h3>
                         <p>Search through CSA B149.1, TSSA regulations, and safety standards</p>
@@ -844,7 +850,7 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 2rem;">
-                    <button class="cta-button" onclick="showProtectedSection('training')">← Back to Training</button>
+                    <button class="cta-button" onclick="showSection('training')">← Back to Training</button>
                 </div>
             </div>
         </section>
@@ -858,60 +864,26 @@
                 </p>
                 
                 <div class="tools-grid">
-                    <div class="tool-card" onclick="window.open('./HVAC_PRO_Tools.html', '_blank')" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto;">
-                        <div class="tool-icon" style="font-size: 4rem;">📱</div>
-                        <h3 style="font-size: 2rem; margin-bottom: 1.5rem;">HVAC Pro Tools App</h3>
-                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
-                            Your complete HVAC calculation toolkit in one comprehensive application. This powerful web app includes all our professional-grade calculators and tools, designed for both field work and educational use.
-                        </p>
+                    <div class="tool-card" onclick="window.open('./HVAC_PRO_Tools.html', '_blank')">
+                        <div class="tool-icon">📱</div>
+                        <h3>HVAC Pro Tools App</h3>
+                        <p>Your complete HVAC calculation toolkit in one comprehensive application. This powerful web app includes all our professional-grade calculators and tools, designed for both field work and educational use.</p>
                         
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; text-align: left;">
-                            <div style="background: rgba(52, 152, 219, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(52, 152, 219, 0.2);">
-                                <h4 style="color: #3498db; margin-bottom: 0.5rem;">🏠 Heat Load Calculator</h4>
-                                <p style="font-size: 0.9rem; color: #bdc3c7;">Calculate heating and cooling requirements with Canadian climate data</p>
-                            </div>
-                            <div style="background: rgba(52, 152, 219, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(52, 152, 219, 0.2);">
-                                <h4 style="color: #3498db; margin-bottom: 0.5rem;">🌡️ Superheat & Subcooling</h4>
-                                <p style="font-size: 0.9rem; color: #bdc3c7;">Advanced refrigeration system diagnostics and analysis</p>
-                            </div>
-                            <div style="background: rgba(52, 152, 219, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(52, 152, 219, 0.2);">
-                                <h4 style="color: #3498db; margin-bottom: 0.5rem;">📊 P-T Charts</h4>
-                                <p style="font-size: 0.9rem; color: #bdc3c7;">Interactive pressure-temperature charts for all refrigerants</p>
-                            </div>
-                            <div style="background: rgba(39, 174, 96, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(39, 174, 96, 0.2);">
-                                <h4 style="color: #27ae60; margin-bottom: 0.5rem;">🔄 Unit Converter</h4>
-                                <p style="font-size: 0.9rem; color: #bdc3c7;">Instant imperial/metric conversions - Available Now!</p>
-                            </div>
-                            <div style="background: rgba(39, 174, 96, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(39, 174, 96, 0.2);">
-                                <h4 style="color: #27ae60; margin-bottom: 0.5rem;">🌪️ Duct Sizing Tool</h4>
-                                <p style="font-size: 0.9rem; color: #bdc3c7;">Ductwork sizing calculations - Available Now!</p>
-                            </div>
-                            <div style="background: rgba(39, 174, 96, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(39, 174, 96, 0.2);">
-                                <h4 style="color: #27ae60; margin-bottom: 0.5rem;">💨 Vent Sizing Tool</h4>
-                                <p style="font-size: 0.9rem; color: #bdc3c7;">Venting calculations and sizing - Coming Soon!</p>
-                            </div>
-                            <div style="background: rgba(39, 174, 96, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(39, 174, 96, 0.2);">
-                                <h4 style="color: #27ae60; margin-bottom: 0.5rem;">📈 Psychrometric Calculator</h4>
-                                <p style="font-size: 0.9rem; color: #bdc3c7;">Advanced air property calculations - Available Now!</p>
-                            </div>
-                            <div style="background: rgba(39, 174, 96, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid rgba(39, 174, 96, 0.2);">
-                                <h4 style="color: #27ae60; margin-bottom: 0.5rem;">📐 More Tools</h4>
-                                <p style="font-size: 0.9rem; color: #bdc3c7;">Additional calculators and utilities in development</p>
-                            </div>
-                        </div>
-
-                        <div style="background: linear-gradient(45deg, #2c3e50, #34495e); padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
-                            <h4 style="color: #3498db; margin-bottom: 1rem;">✨ Key Features:</h4>
-                            <ul style="text-align: left; color: #ecf0f1; list-style: none; padding: 0;">
-                                <li style="margin-bottom: 0.5rem;">📱 <strong>Mobile-Friendly:</strong> Works perfectly on phones, tablets, and desktops</li>
-                                <li style="margin-bottom: 0.5rem;">🌐 <strong>No Installation Required:</strong> Runs directly in your web browser</li>
-                                <li style="margin-bottom: 0.5rem;">📚 <strong>Educational Mode:</strong> Step-by-step explanations for learning</li>
-                                <li style="margin-bottom: 0.5rem;">🎯 <strong>Professional Grade:</strong> Accurate calculations for field work</li>
-                                <li style="margin-bottom: 0.5rem;">🆓 <strong>Completely Free:</strong> No hidden costs or subscriptions</li>
+                        <div style="margin: 1rem 0; text-align: left;">
+                            <h4 style="color: #3498db; margin-bottom: 0.8rem;">Included Tools:</h4>
+                            <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem;">
+                                <li>🏠 Heat & Cooling Load Calculator</li>
+                                <li>🌡️ Superheat & Subcooling Calculator</li>
+                                <li>📊 Refrigeration P-T Charts</li>
+                                <li>🌪️ Duct Sizing Calculator</li>
+                                <li>📐 Universal Unit Converter</li>
+                                <li>📈 Psychrometric Calculator</li>
+                                <li>💨 Vent Sizing Tool (Coming Soon)</li>
+                                <li>🔧 Additional HVAC Utilities</li>
                             </ul>
                         </div>
                         
-                        <span class="tool-status status-available external-link" style="font-size: 1.2rem; padding: 15px 30px;">🚀 Launch HVAC Pro Tools</span>
+                        <span class="tool-status status-available external-link">🚀 Launch HVAC Pro Tools</span>
                     </div>
 
                     <div class="tool-card">
@@ -1107,22 +1079,10 @@
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
-            
-            // Handle section redirects from email gate
-            const hash = window.location.hash.substring(1);
-            if (hash && ['training', 'downloads', 'resources'].includes(hash)) {
-                const userEmail = localStorage.getItem('userEmail');
-                if (userEmail) {
-                    showSection(hash);
-                    history.replaceState(null, null, window.location.pathname);
-                } else {
-                    showProtectedSection(hash);
-                }
-            }
         });
 
         function setupEventListeners() {
-            // Newsletter signup - UPDATED VERSION
+            // Newsletter signup
             const newsletterForms = document.querySelectorAll('.newsletter-form');
             newsletterForms.forEach(form => {
                 const button = form.querySelector('button');
@@ -1144,9 +1104,6 @@
                             return;
                         }
                         
-                        // Store email in the same system used by email-gate.html
-                        storeEmailAddress(email, 'newsletter-signup');
-                        
                         // Show success message
                         alert('Thank you for subscribing! You will receive updates about new tools and features.');
                         input.value = ''; // Clear the input
@@ -1164,32 +1121,6 @@
                     this.style.transform = 'translateY(0) scale(1)';
                 });
             });
-        }
-
-        // Add this new function to handle email storage
-        function storeEmailAddress(email, source) {
-            // Get existing email list from localStorage
-            let emailList = JSON.parse(localStorage.getItem('collectedEmails') || '[]');
-            
-            // Check if email already exists
-            const exists = emailList.some(entry => entry.email === email);
-            
-            if (!exists) {
-                // Add new email to the list
-                emailList.push({
-                    email: email,
-                    page: source,
-                    timestamp: new Date().toISOString(),
-                    date: new Date().toLocaleDateString()
-                });
-                
-                // Save back to localStorage
-                localStorage.setItem('collectedEmails', JSON.stringify(emailList));
-                
-                console.log('Email stored:', email, 'from', source);
-            } else {
-                console.log('Email already exists:', email);
-            }
         }
 
         // Navigation functionality
@@ -1217,20 +1148,6 @@
             
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Handle protected sections
-        function showProtectedSection(sectionId) {
-            // Check if user has already provided email
-            const userEmail = localStorage.getItem('userEmail');
-            
-            if (userEmail) {
-                // User has email, show section normally
-                showSection(sectionId);
-            } else {
-                // No email, redirect to email gate
-                window.location.href = 'email-gate.html?redirect=' + sectionId;
-            }
         }
 
         // Function to show CSA Chapter Questions
