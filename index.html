@@ -880,11 +880,11 @@
                         <span class="tool-status status-available external-link">🚀 Launch HVAC Pro Tools</span>
                     </div>
                     
-                    <div class="tool-card" onclick="downloadG3Package()">
+                    <div class="tool-card" onclick="window.open('./G3/', '_blank')">
                         <div class="tool-icon">🔥</div>
-                        <h3>CSA Gas Technician 3 Unit Content</h3>
-                        <p>Complete downloadable content package for CSA Gas Technician 3 certification training. Includes comprehensive study materials, reference guides, and practice resources for all nine units covering safety, tools, gas properties, codes, electricity, technical drawings, customer relations, piping systems, and gas appliances.</p>
-                        <span class="tool-status status-available">📥 Download Package</span>
+                        <h3>CSA Gas Technician 3 - Study Materials</h3>
+                        <p>Browse and download individual study materials, reference guides, and practice resources for all nine units. Access what you need, when you need it - from safety protocols to gas appliance operation.</p>
+                        <span class="tool-status status-available external-link">Browse Materials</span>
                     </div>
                     
                     <div class="tool-card">
@@ -1126,35 +1126,6 @@
         // Function to show CSA Chapter Questions
         function showCSAChapterQuestions() {
             showSection('csa-chapters');
-        }
-
-        // Function to download G3 package
-        function downloadG3Package() {
-            // Show download confirmation
-            const confirmed = confirm(
-                "This will download the complete CSA Gas Technician 3 Unit Content package.\n\n" +
-                "The package includes:\n" +
-                "• All 9 unit study materials\n" +
-                "• Chapter review questions\n" +
-                "• Reference guides\n" +
-                "• Practice resources\n\n" +
-                "Download size: Approximately 25MB\n\n" +
-                "Continue with download?"
-            );
-            
-            if (confirmed) {
-                // Create a temporary link to trigger download
-                // Note: In a real implementation, you would replace this with the actual file path
-                alert("Download will begin shortly. The G3 package will be saved to your downloads folder.");
-                
-                // You can implement actual file download logic here
-                // Example: window.open('./downloads/CSA_G3_Complete_Package.zip', '_blank');
-                
-                // For now, we'll show a placeholder message
-                setTimeout(() => {
-                    alert("Thank you for downloading the CSA Gas Technician 3 Unit Content package!\n\nIf the download doesn't start automatically, please contact support at info@larklabs.dev");
-                }, 1000);
-            }
         }
     </script>
 </body>
