@@ -507,7 +507,7 @@
         <section id="files" class="file-section">
             <h2>Browse All Learning Materials</h2>
             <p style="text-align: center; margin-bottom: 2rem; color: #bdc3c7;">
-                Click on any file below to open it directly. Files are automatically detected from your G3 directory.
+                Click on any file below to open it directly. These are the actual files available in your G3 directory.
             </p>
             
             <div class="file-grid" id="fileGrid">
@@ -526,14 +526,6 @@
     </div>
 
     <script>
-        // File management and detection
-        const commonFileExtensions = ['.html', '.pdf', '.doc', '.docx', '.ppt', '.pptx', '.txt', '.md'];
-        const commonFileNames = [
-            'unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8', 'unit9',
-            'safety', 'tools', 'gas-properties', 'codes', 'electricity', 'drawings', 'customer-relations', 'piping', 'appliances',
-            'module1', 'module2', 'module3', 'module4', 'module5', 'module6', 'module7', 'module8', 'module9'
-        ];
-
         // Progress tracking
         let completedModules = JSON.parse(localStorage.getItem('g3-progress') || '[]');
 
@@ -563,49 +555,108 @@
             }
         }
 
-        // File operations
-        function openFile(fileName) {
-            // First try common variations with different extensions
-            const variations = [
-                `${fileName}.html`,
-                `${fileName}.pdf`,
-                `${fileName}.doc`,
-                `${fileName}.docx`,
-                `${fileName}.ppt`,
-                `${fileName}.pptx`,
-                `${fileName}.txt`,
-                `${fileName}.md`,
-                `${fileName}`,
-                `Unit_${fileName.replace('unit', '')}.html`,
-                `Module_${fileName.replace('unit', '')}.html`,
-                `CSA_${fileName}.html`,
-                `G3_${fileName}.html`
-            ];
-
-            // Try to open the file
-            let fileOpened = false;
-            for (let variation of variations) {
-                try {
-                    // Try to open the file - if it exists, it will open
-                    const newWindow = window.open(variation, '_blank');
-                    if (newWindow) {
-                        fileOpened = true;
-                        // Mark module as accessed (not necessarily completed)
-                        setTimeout(() => {
-                            const confirmComplete = confirm(`Did you complete the ${fileName.toUpperCase()} module? Click OK to mark as completed.`);
-                            if (confirmComplete) {
-                                markModuleComplete(fileName);
-                            }
-                        }, 2000);
-                        break;
-                    }
-                } catch (error) {
-                    console.log(`File ${variation} not found`);
+        // Corrected file operations based on actual file names
+        function openFile(unitId) {
+            // Create a dropdown/menu for each unit showing available materials
+            const unitMap = {
+                'unit1': {
+                    name: 'Unit 1 - Safety',
+                    files: [
+                        { name: 'CSA_Unit_1_Safety.pdf', type: 'PDF Content', icon: '📄' },
+                        { name: 'CSA_Unit_1_Safety_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
+                },
+                'unit2': {
+                    name: 'Unit 2 - Tools & Equipment',
+                    files: [
+                        { name: 'CSA_Unit_2_Fasteners_Tools_and_Test_Equipment.pdf', type: 'PDF Content', icon: '📄' },
+                        { name: 'CSA_Unit_2_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
+                },
+                'unit3': {
+                    name: 'Unit 3 - Gas Properties',
+                    files: [
+                        { name: 'CSA_Unit_3_Properties_and_Safe_Handling_of_Fuel_Gases.pdf', type: 'PDF Content', icon: '📄' },
+                        { name: 'CSA_Unit_3_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
+                },
+                'unit4': {
+                    name: 'Unit 4 & 4a - Codes & Regulations',
+                    files: [
+                        { name: 'CSA_Unit_4_Gas-Industry-Codes-Acts-and-Regulations.pdf', type: 'Unit 4 PDF', icon: '📄' },
+                        { name: 'CSA_Unit_4a_Laws-Governing-the-Gas-Industry.pdf', type: 'Unit 4a PDF', icon: '📄' },
+                        { name: 'CSA_Unit_4_&_4a_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
+                },
+                'unit5': {
+                    name: 'Unit 5 - Basic Electricity',
+                    files: [
+                        { name: 'CSA_Unit_5_Basic_Electricity.pdf', type: 'PDF Content', icon: '📄' },
+                        { name: 'CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
+                },
+                'unit6': {
+                    name: 'Unit 6 - Technical Drawings & Manuals',
+                    files: [
+                        { name: 'CSA_Unit_6_Technical_Manuals_Specs_Drawings.pdf', type: 'PDF Content', icon: '📄' },
+                        { name: 'CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
+                },
+                'unit7': {
+                    name: 'Unit 7 - Customer Relations',
+                    files: [
+                        { name: 'CSA_Unit_7_Customer_Relations.pdf', type: 'PDF Content', icon: '📄' },
+                        { name: 'CSA_Unit_7_Customer_Relations_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
+                },
+                'unit8': {
+                    name: 'Unit 8 - Gas Piping Systems',
+                    files: [
+                        { name: 'CSA_Unit_8_Intro_to_Piping_and_Tubing_Systems.pdf', type: 'PDF Content', icon: '📄' },
+                        { name: 'CSA_Unit_8_Intro_to_Piping_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
+                },
+                'unit9': {
+                    name: 'Unit 9 - Gas Appliances',
+                    files: [
+                        { name: 'CSA_Unit_9_Intro_to_Gas_Appliances.pdf', type: 'PDF Content', icon: '📄' },
+                        { name: 'CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
+                    ]
                 }
+            };
+
+            const unit = unitMap[unitId];
+            if (!unit) {
+                alert(`Unit ${unitId} not found!`);
+                return;
             }
 
-            if (!fileOpened) {
-                alert(`File not found: ${fileName}\n\nPlease ensure the file exists in the G3 directory. Common file names include:\n• ${fileName}.html\n• ${fileName}.pdf\n• Unit_${fileName.replace('unit', '')}.html\n• Module_${fileName.replace('unit', '')}.html`);
+            // Create a simple selection dialog
+            let message = `Select material for ${unit.name}:\n\n`;
+            unit.files.forEach((file, index) => {
+                message += `${index + 1}. ${file.icon} ${file.type}\n`;
+            });
+            message += '\nEnter number (1-' + unit.files.length + ') or click Cancel:';
+
+            const selection = prompt(message);
+            if (selection && !isNaN(selection)) {
+                const fileIndex = parseInt(selection) - 1;
+                if (fileIndex >= 0 && fileIndex < unit.files.length) {
+                    const selectedFile = unit.files[fileIndex];
+                    try {
+                        window.open(selectedFile.name, '_blank');
+                        
+                        // Mark module as accessed after a delay
+                        setTimeout(() => {
+                            const confirmComplete = confirm(`Did you complete working with ${unit.name}? Click OK to mark as completed.`);
+                            if (confirmComplete) {
+                                markModuleComplete(unitId);
+                            }
+                        }, 3000);
+                    } catch (error) {
+                        alert(`Could not open file: ${selectedFile.name}\n\nPlease ensure the file exists in the G3 directory.`);
+                    }
+                }
             }
         }
 
@@ -617,32 +668,36 @@
             }
         }
 
-        // Dynamic file detection (simplified version)
+        // Load the actual files available based on your file list
         function loadAvailableFiles() {
             const fileGrid = document.getElementById('fileGrid');
             
-            // Since we can't actually scan the directory in a browser environment,
-            // we'll create placeholder items for common file types and let users know
-            // which files are available
-            
-            const commonFiles = [
-                { name: 'Unit 1 - Safety.html', icon: '🛡️', desc: 'Safety protocols and procedures' },
-                { name: 'Unit 2 - Tools.html', icon: '🔧', desc: 'Tools and equipment training' },
-                { name: 'Unit 3 - Gas Properties.html', icon: '⛽', desc: 'Gas properties and handling' },
-                { name: 'Unit 4 - Codes.html', icon: '📋', desc: 'Codes and regulations' },
-                { name: 'Unit 5 - Electricity.html', icon: '⚡', desc: 'Basic electrical principles' },
-                { name: 'Unit 6 - Drawings.html', icon: '📐', desc: 'Technical drawings and manuals' },
-                { name: 'Unit 7 - Customer Relations.html', icon: '🤝', desc: 'Customer service skills' },
-                { name: 'Unit 8 - Piping.html', icon: '🔩', desc: 'Gas piping systems' },
-                { name: 'Unit 9 - Appliances.html', icon: '🔥', desc: 'Gas appliances and components' },
-                { name: 'G3_Study_Guide.pdf', icon: '📚', desc: 'Comprehensive study guide' },
-                { name: 'Practice_Questions.html', icon: '❓', desc: 'Practice questions and quizzes' },
-                { name: 'Reference_Materials.pdf', icon: '📖', desc: 'Additional reference materials' }
+            // Actual files from your G3 directory
+            const actualFiles = [
+                { name: 'CSA_Unit_1_Safety.pdf', icon: '📄', desc: 'Unit 1 Safety - PDF Content' },
+                { name: 'CSA_Unit_1_Safety_Chapter_Reviews.html', icon: '❓', desc: 'Unit 1 Safety - Chapter Reviews' },
+                { name: 'CSA_Unit_2_Chapter_Reviews.html', icon: '❓', desc: 'Unit 2 Tools - Chapter Reviews' },
+                { name: 'CSA_Unit_2_Fasteners_Tools_and_Test_Equipment.pdf', icon: '📄', desc: 'Unit 2 Tools & Equipment - PDF Content' },
+                { name: 'CSA_Unit_3_Chapter_Reviews.html', icon: '❓', desc: 'Unit 3 Gas Properties - Chapter Reviews' },
+                { name: 'CSA_Unit_3_Properties_and_Safe_Handling_of_Fuel_Gases.pdf', icon: '📄', desc: 'Unit 3 Gas Properties - PDF Content' },
+                { name: 'CSA_Unit_4_&_4a_Chapter_Reviews.html', icon: '❓', desc: 'Unit 4 & 4a Codes - Chapter Reviews' },
+                { name: 'CSA_Unit_4_Gas-Industry-Codes-Acts-and-Regulations.pdf', icon: '📄', desc: 'Unit 4 Codes & Regulations - PDF Content' },
+                { name: 'CSA_Unit_4a_Laws-Governing-the-Gas-Industry.pdf', icon: '📄', desc: 'Unit 4a Laws - PDF Content' },
+                { name: 'CSA_Unit_5_Basic_Electricity.pdf', icon: '📄', desc: 'Unit 5 Basic Electricity - PDF Content' },
+                { name: 'CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html', icon: '❓', desc: 'Unit 5 Electricity - Chapter Reviews' },
+                { name: 'CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html', icon: '❓', desc: 'Unit 6 Technical Drawings - Chapter Reviews' },
+                { name: 'CSA_Unit_6_Technical_Manuals_Specs_Drawings.pdf', icon: '📄', desc: 'Unit 6 Technical Drawings - PDF Content' },
+                { name: 'CSA_Unit_7_Customer_Relations.pdf', icon: '📄', desc: 'Unit 7 Customer Relations - PDF Content' },
+                { name: 'CSA_Unit_7_Customer_Relations_Chapter_Reviews.html', icon: '❓', desc: 'Unit 7 Customer Relations - Chapter Reviews' },
+                { name: 'CSA_Unit_8_Intro_to_Piping_and_Tubing_Systems.pdf', icon: '📄', desc: 'Unit 8 Piping Systems - PDF Content' },
+                { name: 'CSA_Unit_8_Intro_to_Piping_Reviews.html', icon: '❓', desc: 'Unit 8 Piping - Chapter Reviews' },
+                { name: 'CSA_Unit_9_Intro_to_Gas_Appliances.pdf', icon: '📄', desc: 'Unit 9 Gas Appliances - PDF Content' },
+                { name: 'CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html', icon: '❓', desc: 'Unit 9 Appliances - Chapter Reviews' }
             ];
 
             fileGrid.innerHTML = '';
             
-            commonFiles.forEach(file => {
+            actualFiles.forEach(file => {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
                 fileItem.onclick = () => openFileByName(file.name);
@@ -659,7 +714,7 @@
 
         function refreshFileList() {
             loadAvailableFiles();
-            alert('File list refreshed! Note: Only files that exist in your G3 directory will be accessible.');
+            alert('File list refreshed with actual G3 directory contents!');
         }
 
         // Initialize page
