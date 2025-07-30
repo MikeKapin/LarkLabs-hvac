@@ -50,19 +50,16 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            transform: scale(1.8);
-            transform-origin: left center;
-            margin-right: 150px;
         }
 
-        .logo-bird {
-            position: relative;
-            display: inline-block;
+        .logo img {
+            height: 60px;
+            width: auto;
+            transition: all 0.3s ease;
         }
 
-        .logo-bird svg {
-            width: 80px;
-            height: 80px;
+        .logo img:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -427,14 +424,11 @@
             }
 
             .logo {
-                transform: scale(1.2); /* Smaller logo on mobile */
-                margin-right: 20px; /* Reduced margin */
-                gap: 10px; /* Smaller gap */
+                gap: 10px;
             }
 
-            .logo-bird svg {
-                width: 50px; /* Smaller bird icon */
-                height: 50px;
+            .logo img {
+                height: 45px;
             }
 
             .nav-links {
@@ -534,22 +528,8 @@
 
         /* Extra small mobile devices */
         @media (max-width: 480px) {
-            .logo {
-                transform: scale(1.0);
-                margin-right: 10px;
-            }
-
-            .logo div:first-child {
-                font-size: 1.4rem !important;
-            }
-
-            .logo div:last-child {
-                font-size: 1rem !important;
-            }
-
-            .logo-bird svg {
-                width: 40px;
-                height: 40px;
+            .logo img {
+                height: 35px;
             }
 
             .hero {
@@ -587,37 +567,7 @@
     <header>
         <nav class="container">
             <div class="logo">
-                <div class="logo-bird">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Bird body -->
-                        <ellipse cx="50" cy="55" rx="25" ry="20" fill="#4A90E2"/>
-                        
-                        <!-- Bird head -->
-                        <circle cx="65" cy="40" r="15" fill="#5BA3F5"/>
-                        
-                        <!-- Eye -->
-                        <circle cx="70" cy="37" r="3" fill="white"/>
-                        <circle cx="71" cy="36" r="1.5" fill="black"/>
-                        
-                        <!-- Beak -->
-                        <polygon points="85,40 75,38 75,42" fill="#FF6B6B"/>
-                        
-                        <!-- Wing detail -->
-                        <ellipse cx="45" cy="50" rx="12" ry="15" fill="#3498db"/>
-                        
-                        <!-- Tail -->
-                        <ellipse cx="25" cy="60" rx="8" ry="12" fill="#3498db"/>
-                        
-                        <!-- Sound waves -->
-                        <path d="M 95 35 Q 90 30 95 25" stroke="#FF6B6B" stroke-width="2" fill="none"/>
-                        <path d="M 92 40 Q 87 35 92 30" stroke="#FF6B6B" stroke-width="2" fill="none"/>
-                        <path d="M 95 45 Q 90 40 95 35" stroke="#FF6B6B" stroke-width="2" fill="none"/>
-                    </svg>
-                </div>
-                <div>
-                    <div style="font-size: 1.8rem; font-weight: bold; color: #3498db;">LARK</div>
-                    <div style="font-size: 1.2rem; font-weight: normal; color: #95a5a6; margin-top: -5px;">LABS</div>
-                </div>
+                <img src="logo.png" alt="LARK Labs Logo" style="height: 60px; width: auto;">
             </div>
             
             <!-- Mobile menu toggle button -->
