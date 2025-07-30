@@ -124,6 +124,64 @@
             display: block;
         }
 
+        .exam-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .exam-option-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .exam-option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .exam-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .exam-option-card h3 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-count {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .time-estimate {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .difficulty {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
         .exam-header {
             display: flex;
             justify-content: space-between;
@@ -288,62 +346,110 @@
                     <a href="g2_payment.html" class="purchase-button">Get Lifetime Access - $79.99</a>
                 </div>
 
-                <!-- Exam Interface (shown if access granted) -->
+                <!-- Exam Selection Interface (shown if access granted) -->
                 <div id="examInterface" class="exam-interface">
-                    <div class="exam-header">
-                        <div class="question-counter">
-                            Question <span id="currentQuestion">1</span> of <span id="totalQuestions">50</span>
-                        </div>
-                        <div class="timer" id="timer">60:00</div>
-                    </div>
-
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width: 2%"></div>
-                    </div>
-
-                    <div class="question-container">
-                        <div class="question" id="questionText">
-                            Which of the following is the minimum clearance required between a gas water heater and combustible materials?
+                    <div class="exam-selection" id="examSelection">
+                        <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">Choose Your Practice Exam</h2>
+                        <p style="text-align: center; margin-bottom: 3rem; color: #666; font-size: 1.1rem;">
+                            Select the exam length that best fits your study schedule and preparation needs.
+                        </p>
+                        
+                        <div class="exam-options-grid">
+                            <div class="exam-option-card" onclick="startExam(50)">
+                                <div class="exam-icon">⚡</div>
+                                <h3>Quick Practice</h3>
+                                <div class="question-count">50 Questions</div>
+                                <p>Perfect for a focused study session or quick review</p>
+                                <div class="time-estimate">⏱️ ~1 hour</div>
+                                <div class="difficulty">Difficulty: Beginner to Intermediate</div>
+                            </div>
+                            
+                            <div class="exam-option-card" onclick="startExam(100)">
+                                <div class="exam-icon">🎯</div>
+                                <h3>Standard Practice</h3>
+                                <div class="question-count">100 Questions</div>
+                                <p>Comprehensive practice covering all major topics</p>
+                                <div class="time-estimate">⏱️ ~2 hours</div>
+                                <div class="difficulty">Difficulty: All Levels</div>
+                            </div>
+                            
+                            <div class="exam-option-card" onclick="startExam(150)">
+                                <div class="exam-icon">🏆</div>
+                                <h3>Full Mock Exam</h3>
+                                <div class="question-count">150 Questions</div>
+                                <p>Complete simulation of the actual G2 exam experience</p>
+                                <div class="time-estimate">⏱️ ~3.5 hours</div>
+                                <div class="difficulty">Difficulty: Advanced</div>
+                            </div>
                         </div>
                         
-                        <ul class="options">
-                            <li>
-                                <label>
-                                    <input type="radio" name="answer" value="a">
-                                    <span>6 inches (150 mm)</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="answer" value="b">
-                                    <span>12 inches (300 mm)</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="answer" value="c">
-                                    <span>18 inches (450 mm)</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="answer" value="d">
-                                    <span>24 inches (600 mm)</span>
-                                </label>
-                            </li>
-                        </ul>
+                        <div style="text-align: center; margin-top: 3rem;">
+                            <p style="color: #666; font-style: italic;">
+                                💡 Tip: Start with the Quick Practice to get familiar with the format, then progress to longer exams as you build confidence.
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="exam-controls">
-                        <button class="control-button" id="prevButton" onclick="previousQuestion()" disabled>
-                            ← Previous
-                        </button>
-                        <button class="control-button" id="nextButton" onclick="nextQuestion()">
-                            Next →
-                        </button>
-                        <button class="control-button submit-button" id="submitButton" onclick="submitExam()" style="display: none;">
-                            Submit Exam
-                        </button>
+                    <!-- Actual Exam Interface (hidden initially) -->
+                    <div class="actual-exam" id="actualExam" style="display: none;">
+                        <div class="exam-header">
+                            <div class="question-counter">
+                                Question <span id="currentQuestion">1</span> of <span id="totalQuestions">50</span>
+                            </div>
+                            <div class="timer" id="timer">60:00</div>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 2%"></div>
+                        </div>
+
+                        <div class="question-container">
+                            <div class="question" id="questionText">
+                                Which of the following is the minimum clearance required between a gas water heater and combustible materials?
+                            </div>
+                            
+                            <ul class="options">
+                                <li>
+                                    <label>
+                                        <input type="radio" name="answer" value="a">
+                                        <span>6 inches (150 mm)</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="answer" value="b">
+                                        <span>12 inches (300 mm)</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="answer" value="c">
+                                        <span>18 inches (450 mm)</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="answer" value="d">
+                                        <span>24 inches (600 mm)</span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="exam-controls">
+                            <button class="control-button" id="prevButton" onclick="previousQuestion()" disabled>
+                                ← Previous
+                            </button>
+                            <button class="control-button" id="nextButton" onclick="nextQuestion()">
+                                Next →
+                            </button>
+                            <button class="control-button submit-button" id="submitButton" onclick="submitExam()" style="display: none;">
+                                Submit Exam
+                            </button>
+                            <button class="control-button" onclick="backToSelection()">
+                                ← Back to Selection
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -371,7 +477,8 @@
         let currentQuestionIndex = 0;
         let userAnswers = [];
         let examTimer;
-        let timeRemaining = 3600; // 60 minutes in seconds
+        let timeRemaining = 3600; // Default 60 minutes
+        let selectedExamLength = 50; // Default exam length
 
         // Check access on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -393,12 +500,96 @@
         function grantAccess() {
             document.getElementById('accessDenied').style.display = 'none';
             document.getElementById('examInterface').classList.add('active');
-            startExam();
+            // Show exam selection by default
+            showExamSelection();
         }
 
         function denyAccess() {
             document.getElementById('accessDenied').style.display = 'block';
             document.getElementById('examInterface').classList.remove('active');
+        }
+
+        function showExamSelection() {
+            document.getElementById('examSelection').style.display = 'block';
+            document.getElementById('actualExam').style.display = 'none';
+        }
+
+        function startExam(questionCount) {
+            selectedExamLength = questionCount;
+            
+            // Set timer based on exam length
+            switch(questionCount) {
+                case 50:
+                    timeRemaining = 3600; // 1 hour
+                    break;
+                case 100:
+                    timeRemaining = 7200; // 2 hours
+                    break;
+                case 150:
+                    timeRemaining = 12600; // 3.5 hours
+                    break;
+                default:
+                    timeRemaining = 3600; // 1 hour
+            }
+            
+            // Hide selection, show exam
+            document.getElementById('examSelection').style.display = 'none';
+            document.getElementById('actualExam').style.display = 'block';
+            
+            // Initialize exam
+            document.getElementById('totalQuestions').textContent = questionCount;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            
+            // Generate questions based on selected length
+            generateQuestions(questionCount);
+            
+            loadQuestion(0);
+            startTimer();
+        }
+
+        function backToSelection() {
+            // Stop timer
+            if (examTimer) {
+                clearInterval(examTimer);
+            }
+            
+            // Reset exam state
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            
+            // Show selection screen
+            showExamSelection();
+        }
+
+        function generateQuestions(count) {
+            // In a real implementation, you'd fetch questions from your database
+            // For demo, we'll repeat the sample questions
+            const baseQuestions = [
+                {
+                    question: "Which of the following is the minimum clearance required between a gas water heater and combustible materials?",
+                    options: ["6 inches (150 mm)", "12 inches (300 mm)", "18 inches (450 mm)", "24 inches (600 mm)"],
+                    correct: 0,
+                    explanation: "According to CSA B149.1, the minimum clearance from combustible materials is 6 inches (150 mm) unless otherwise specified by the manufacturer."
+                },
+                {
+                    question: "What is the maximum allowable gas pressure for residential appliances?",
+                    options: ["7 inches w.c.", "10.5 inches w.c.", "14 inches w.c.", "2 psi"],
+                    correct: 2,
+                    explanation: "The maximum gas pressure for residential appliances is typically 14 inches water column (w.c.) or 0.5 psi."
+                },
+                // Add more questions as needed
+            ];
+            
+            // Generate questions array based on requested count
+            sampleQuestions = [];
+            for (let i = 0; i < count; i++) {
+                const baseQuestion = baseQuestions[i % baseQuestions.length];
+                sampleQuestions.push({
+                    ...baseQuestion,
+                    question: `${baseQuestion.question} (Question ${i + 1})`
+                });
+            }
         }
 
         function setupEventListeners() {
