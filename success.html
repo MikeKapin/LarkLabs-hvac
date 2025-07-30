@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSSA G2 Practice Exam - Premium Access</title>
+    <title>Welcome to G2 Simulator Premium! - LARK Labs</title>
     <style>
         * {
             margin: 0;
@@ -16,319 +16,353 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .payment-container {
+        .success-container {
             background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .back-to-site {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .back-to-site:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-        }
-
-        .pricing-card {
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             text-align: center;
-            padding: 30px;
-            border: 2px solid #667eea;
-            border-radius: 15px;
+            max-width: 600px;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #27ae60, #2ecc71, #f39c12, #e74c3c);
+            animation: rainbow 3s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: #27ae60;
             margin-bottom: 30px;
-            background: linear-gradient(135deg, #f8f9ff 0%, #e6eaff 100%);
+            animation: bounce 2s ease-in-out infinite;
         }
 
-        .price {
-            font-size: 3em;
-            font-weight: bold;
-            color: #667eea;
-            margin: 20px 0;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
         }
 
-        .price-subtitle {
-            color: #666;
-            font-size: 1.1em;
+        .success-title {
+            font-size: 2.5rem;
+            color: #333;
             margin-bottom: 20px;
+            font-weight: bold;
         }
 
-        .features-list {
-            text-align: left;
+        .success-subtitle {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .access-granted {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border: 2px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
             margin: 30px 0;
         }
 
-        .features-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
+        .access-granted h3 {
+            color: #155724;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .features-list li:last-child {
-            border-bottom: none;
+        .premium-features {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .premium-features h4 {
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .checkmark {
             color: #27ae60;
             font-weight: bold;
-            margin-right: 10px;
-            font-size: 1.2em;
+            font-size: 1.1em;
         }
 
-        .payment-button {
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .primary-button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
-            font-size: 1.2em;
+            padding: 18px 40px;
+            border-radius: 30px;
+            font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            width: 100%;
-            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .payment-button:hover {
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .secondary-button {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .secondary-button:hover {
+            background: #667eea;
+            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
-        .payment-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .security-info {
-            background: #f8f9fa;
-            padding: 20px;
+        .receipt-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
             border-radius: 10px;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .security-info p {
-            color: #666;
-            font-size: 0.9em;
-            margin: 5px 0;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .already-purchased {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            border-radius: 8px;
             padding: 20px;
-            margin: 20px 0;
-            text-align: center;
+            margin: 30px 0;
         }
 
-        .already-purchased h3 {
-            color: #155724;
+        .receipt-info h4 {
+            color: #856404;
             margin-bottom: 10px;
         }
 
-        .access-button {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px;
+        .receipt-info p {
+            color: #856404;
+            margin: 0;
+            font-size: 0.95rem;
         }
 
-        .access-button:hover {
-            background: #218838;
+        .support-section {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .support-section h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        .support-section p {
+            color: #1976d2;
+            margin: 0;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f39c12;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        .confetti:nth-child(1) { left: 10%; animation-delay: 0s; background: #e74c3c; }
+        .confetti:nth-child(2) { left: 20%; animation-delay: 0.5s; background: #3498db; }
+        .confetti:nth-child(3) { left: 30%; animation-delay: 1s; background: #2ecc71; }
+        .confetti:nth-child(4) { left: 40%; animation-delay: 1.5s; background: #f39c12; }
+        .confetti:nth-child(5) { left: 50%; animation-delay: 2s; background: #9b59b6; }
+        .confetti:nth-child(6) { left: 60%; animation-delay: 0.3s; background: #e67e22; }
+        .confetti:nth-child(7) { left: 70%; animation-delay: 0.8s; background: #1abc9c; }
+        .confetti:nth-child(8) { left: 80%; animation-delay: 1.3s; background: #34495e; }
+        .confetti:nth-child(9) { left: 90%; animation-delay: 1.8s; background: #e91e63; }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
+            .success-container {
+                padding: 30px 20px;
+                margin: 10px;
             }
             
-            .payment-container {
-                padding: 20px;
+            .success-title {
+                font-size: 2rem;
             }
             
-            .header h1 {
-                font-size: 2em;
+            .success-icon {
+                font-size: 4rem;
             }
             
-            .price {
-                font-size: 2.5em;
+            .action-buttons {
+                gap: 12px;
+            }
+            
+            .primary-button {
+                padding: 15px 30px;
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🔥 TSSA G2 Practice Exam</h1>
-            <p>Professional Certification Training</p>
+    <div class="success-container">
+        <!-- Confetti elements -->
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        
+        <div class="success-icon">🎉</div>
+        
+        <h1 class="success-title">Payment Successful!</h1>
+        <h2 class="success-subtitle">Welcome to G2 Simulator Premium</h2>
+        
+        <p class="success-message">
+            Congratulations! You now have <strong>lifetime access</strong> to the most comprehensive TSSA G2 Practice Exam Simulator available. Your investment in professional development starts now!
+        </p>
+
+        <div class="access-granted">
+            <h3><span>🔓</span> Premium Access Activated</h3>
+            <p>Your account has been upgraded and you can now access all premium features immediately.</p>
         </div>
 
-        <div class="payment-container">
-            <a href="index.html" class="back-to-site">← Back to LARK Labs</a>
-            
-            <div id="purchaseSection">
-                <div class="pricing-card">
-                    <h2>Premium G2 Simulator Access</h2>
-                    <div class="price">$79.99</div>
-                    <div class="price-subtitle">One-time payment • Lifetime access</div>
-                    
-                    <ul class="features-list">
-                        <li><span class="checkmark">✓</span> 500+ Real G2 Exam Questions</li>
-                        <li><span class="checkmark">✓</span> Unlimited Practice Tests</li>
-                        <li><span class="checkmark">✓</span> Detailed Answer Explanations</li>
-                        <li><span class="checkmark">✓</span> Progress Tracking & Analytics</li>
-                        <li><span class="checkmark">✓</span> Timed Mock Exams</li>
-                        <li><span class="checkmark">✓</span> Mobile & Desktop Access</li>
-                        <li><span class="checkmark">✓</span> Regular Content Updates</li>
+        <div class="premium-features">
+            <h4>🚀 What You Get With Premium Access:</h4>
+            <ul class="features-list">
+                <li><span class="checkmark">✓</span> 500+ Real G2 Exam Questions</li>
+                <li><span class="checkmark">✓</span> Unlimited Practice Tests</li>
+                <li><span class="checkmark">✓</span> Detailed Answer Explanations</li>
+                <li><span class="checkmark">✓</span> Progress Tracking & Analytics</li>
+                <li><span class="checkmark">✓</span> Timed Mock Exams</li>
+                <li><span class="checkmark">✓</span> Mobile & Desktop Access</li>
+                <li><span class="checkmark">✓</span> Regular Content Updates</li>
+            </ul>
+        </div>
 
-                    </ul>
+        <div class="action-buttons">
+            <a href="g2_simulator_protected.html" class="primary-button" id="startSimulatorBtn">
+                🔥 Start Your First Practice Exam
+            </a>
+            <a href="index.html" class="secondary-button">
+                ← Back to LARK Labs Home
+            </a>
+        </div>
 
-                    <button id="paymentButton" class="payment-button">
-                        🔒 Get Instant Access Now
-                    </button>
-                </div>
+        <div class="receipt-info">
+            <h4>📧 Receipt & Access Information</h4>
+            <p>A confirmation email with your receipt and access details has been sent to your email address. Please check your inbox (and spam folder) for important information about your purchase.</p>
+        </div>
 
-                <div class="security-info">
-                    <p><strong>🔒 Secure Payment</strong></p>
-                    <p>Your payment is processed securely by Stripe</p>
-                    <p>We never store your payment information</p>
-                </div>
-            </div>
-
-            <div id="alreadyPurchased" class="already-purchased" style="display: none;">
-                <h3>✅ Access Granted!</h3>
-                <p>You already have lifetime access to the G2 Practice Exam Simulator.</p>
-                <button id="accessButton" class="access-button">
-                    Launch G2 Simulator
-                </button>
-            </div>
-
-            <div id="loading" class="loading">
-                <div class="spinner"></div>
-                <p>Processing your payment...</p>
-            </div>
+        <div class="support-section">
+            <h4>🤝 Need Help?</h4>
+            <p>If you have any questions about your purchase or need technical support, contact us at <strong>info@larklabs.dev</strong> - we're here to help you succeed!</p>
         </div>
     </div>
 
     <script>
-        // Check if user already has access on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            checkUserAccess();
+        // Grant premium access immediately
+        localStorage.setItem('g2_simulator_purchased', 'true');
+        
+        // Add click tracking for the start button
+        document.getElementById('startSimulatorBtn').addEventListener('click', function() {
+            // Optional: Track conversion or send analytics
+            console.log('User started G2 simulator after purchase');
         });
 
-        function checkUserAccess() {
-            // For demonstration purposes, let's add a way to force showing payment
-            const urlParams = new URLSearchParams(window.location.search);
-            const forcePayment = urlParams.get('force_payment');
-            
-            if (forcePayment === 'true') {
-                // Don't check for existing access, always show payment
-                return;
-            }
-            
-            // Check if user has already purchased (stored in localStorage for demo)
-            const hasPurchased = localStorage.getItem('g2_simulator_purchased');
-            
-            if (hasPurchased === 'true') {
-                showAccessGranted();
-            }
+        // Get session ID from URL if available (for tracking)
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        
+        if (sessionId) {
+            console.log('Stripe session ID:', sessionId);
+            // You could use this to verify the purchase with your backend
         }
 
-        function showAccessGranted() {
-            document.getElementById('purchaseSection').style.display = 'none';
-            document.getElementById('alreadyPurchased').style.display = 'block';
-        }
-
-        // Payment button click handler
-        document.getElementById('paymentButton').addEventListener('click', function() {
-            // Redirect directly to your Stripe payment link
-            window.location.href = 'https://buy.stripe.com/28E8wQ1H7brSdL07Wg7ok02';
-        });
-
-        // Access button click handler
-        document.getElementById('accessButton').addEventListener('click', function() {
-            // Redirect to the protected G2 simulator
-            window.location.href = 'g2_simulator_protected.html';
-        });
-
-        // Demo function to reset purchase status (for testing)
-        function resetPurchaseStatus() {
-            localStorage.removeItem('g2_simulator_purchased');
-            location.reload();
-        }
-
-        // Add reset button for demo (remove in production)
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            const resetButton = document.createElement('button');
-            resetButton.textContent = 'Reset Demo (Dev Only)';
-            resetButton.style.cssText = 'position: fixed; top: 10px; right: 10px; z-index: 1000; background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;';
-            resetButton.onclick = resetPurchaseStatus;
-            document.body.appendChild(resetButton);
-        }
+        // Add some celebration effects
+        setTimeout(() => {
+            // Remove confetti after animation
+            const confetti = document.querySelectorAll('.confetti');
+            confetti.forEach(c => c.remove());
+        }, 3000);
     </script>
 </body>
 </html>
