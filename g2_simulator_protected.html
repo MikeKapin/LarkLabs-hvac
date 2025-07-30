@@ -608,6 +608,22 @@
                     userAnswers[currentQuestionIndex] = e.target.value;
                 }
             });
+
+            // Add click listeners to exam option cards
+            document.addEventListener('click', function(e) {
+                const card = e.target.closest('.exam-option-card');
+                if (card) {
+                    const onclick = card.getAttribute('onclick');
+                    if (onclick) {
+                        // Extract the number from onclick="startExam(50)"
+                        const match = onclick.match(/startExam\((\d+)\)/);
+                        if (match) {
+                            const questionCount = parseInt(match[1]);
+                            startExam(questionCount);
+                        }
+                    }
+                }
+            });
         }
 
         function startExam() {
