@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSSA G2 Practice Exam - Premium Access Required</title>
+    <title>TSSA G2 Premium Access - LARK Labs</title>
     <style>
         * {
             margin: 0;
@@ -13,79 +13,104 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+            color: #ffffff;
+            line-height: 1.6;
             min-height: 100vh;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         .header {
             text-align: center;
-            color: white;
-            margin-bottom: 40px;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
         }
 
         .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-size: 1.2rem;
+            color: #ecf0f1;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .access-denied {
-            background: white;
-            border-radius: 20px;
-            padding: 60px 40px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        .content-wrapper {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .access-required {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .premium-content {
+            background: rgba(52, 152, 219, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .pricing-card {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            border-radius: 15px;
+            padding: 2rem;
             text-align: center;
+            border: 2px solid #3498db;
+            position: relative;
+            overflow: hidden;
         }
 
-        .access-denied h2 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            font-weight: 800;
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
         }
 
-        .access-denied .subtitle {
-            font-size: 1.3em;
-            color: #666;
-            margin-bottom: 30px;
-            font-weight: 500;
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3498db;
+            margin: 1rem 0;
+        }
+
+        .price-subtitle {
+            color: #95a5a6;
+            margin-bottom: 2rem;
         }
 
         .features-list {
             text-align: left;
-            max-width: 500px;
-            margin: 30px auto;
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            border-left: 5px solid #667eea;
+            margin: 2rem 0;
         }
 
         .features-list h3 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.4em;
+            color: #3498db;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
         .features-list ul {
@@ -94,286 +119,240 @@
         }
 
         .features-list li {
-            padding: 8px 0;
-            color: #555;
-            font-size: 1.1em;
-            position: relative;
-            padding-left: 30px;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .features-list li:before {
-            content: "✅";
-            position: absolute;
-            left: 0;
-            top: 8px;
+        .features-list li:last-child {
+            border-bottom: none;
         }
 
-        .pricing-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 30px 0;
-        }
-
-        .pricing-box h3 {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-        }
-
-        .price {
-            font-size: 3em;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .price-subtitle {
-            font-size: 1.1em;
-            opacity: 0.9;
-            margin-bottom: 20px;
+        .features-list li::before {
+            content: "✅ ";
+            margin-right: 0.5rem;
         }
 
         .purchase-button {
-            display: inline-block;
-            background: #28a745;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
             color: white;
-            padding: 20px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.3em;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
             font-weight: bold;
-            margin-top: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
         }
 
         .purchase-button:hover {
-            background: #218838;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 15px 30px rgba(39, 174, 96, 0.4);
         }
 
-        /* Footer Styles */
-        .footer {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px 20px;
-            border-top: 3px solid #667eea;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .lark-labs-branding {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .created-by-text {
-            font-size: 1.1em;
-            color: #555;
-            font-weight: 500;
-        }
-
-        .lark-labs-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 15px;
-            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .lark-labs-logo:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
-        }
-
-        .lark-bird {
-            width: 32px;
-            height: 32px;
-            background: #5BC0DE;
-            border-radius: 50%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lark-bird::before {
-            content: '🐦';
-            font-size: 18px;
-            filter: hue-rotate(200deg);
-        }
-
-        .lark-bird::after {
-            content: '💬';
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            font-size: 12px;
-            animation: chirp 2s infinite;
-        }
-
-        @keyframes chirp {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
-
-        .lark-text {
+        .access-button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
             color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
             font-weight: bold;
-            font-size: 1.4em;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            display: inline-block;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .lark-labs {
-            font-size: 1.6em;
-            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 800;
-            letter-spacing: 1px;
+        .access-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.4);
         }
 
-        .lark-tagline {
-            font-size: 0.85em;
-            color: #A8A8A8;
-            font-weight: normal;
-            letter-spacing: 2px;
-            margin-top: 2px;
-        }
-
-        .copyright {
-            color: #666;
-            font-size: 0.9em;
-            line-height: 1.6;
-            border-top: 1px solid #e0e0e0;
-            padding-top: 15px;
-        }
-
-        .copyright-year {
+        .back-button {
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
             font-weight: bold;
-            color: #4A90E2;
+            display: inline-block;
+            transition: all 0.3s;
+            margin-top: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(149, 165, 166, 0.3);
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            border-left: 4px solid #3498db;
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .access-denied {
-                padding: 40px 20px;
-            }
-
             .header h1 {
-                font-size: 2em;
+                font-size: 2rem;
             }
-
-            .access-denied h2 {
-                font-size: 2em;
-            }
-
+            
             .price {
-                font-size: 2.5em;
+                font-size: 2.5rem;
             }
-
-            .purchase-button {
-                padding: 15px 30px;
-                font-size: 1.1em;
-            }
-
-            .lark-labs-branding {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .lark-text {
-                font-size: 1.2em;
-            }
-
-            .lark-labs {
-                font-size: 1.4em;
-            }
-
-            .footer {
-                padding: 20px 15px;
+            
+            .container {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="main-content">
-        <div class="container">
-            <div class="header">
-                <h1>🔥 TSSA G2 Practice Exam Simulator</h1>
-                <p>Master Your Gas Technician 2 Certification</p>
-            </div>
+    <div class="container">
+        <div class="header">
+            <h1>TSSA G2 Premium Exam Simulator</h1>
+            <p>Master your Gas Technician 2 certification with our comprehensive practice exam system</p>
+        </div>
 
-            <div class="access-denied">
-                <h2>🔒 Premium Access Required</h2>
-                <p class="subtitle">Unlock the Complete TSSA G2 Exam Preparation Experience</p>
-
+        <!-- Access Required Section -->
+        <div id="accessRequired" class="access-required">
+            <div class="pricing-card">
+                <h2>Premium Access Required</h2>
+                <div class="price">$79.99</div>
+                <div class="price-subtitle">One-time payment • Lifetime access</div>
+                
                 <div class="features-list">
                     <h3>What You Get:</h3>
                     <ul>
-                        <li>500+ Official Practice Questions</li>
-                        <li>Realistic Timed Exam Simulations</li>
-                        <li>Detailed Answer Explanations</li>
-                        <li>Progress Tracking & Analytics</li>
-                        <li>Multiple Exam Formats (50, 100, 175 questions)</li>
-                        <li>Instant Results & Performance Review</li>
+                        <li>500+ Official TSSA G2 Practice Questions</li>
+                        <li>Detailed Explanations for Every Answer</li>
+                        <li>Realistic Exam Simulation Environment</li>
+                        <li>Progress Tracking & Performance Analytics</li>
+                        <li>Unlimited Practice Attempts</li>
                         <li>Mobile & Desktop Compatible</li>
-                        <li>Lifetime Access - No Recurring Fees</li>
+                        <li>Regular Content Updates</li>
+                        <li>Expert-Verified Question Bank</li>
+                        <li>Lifetime Access - No Subscriptions</li>
                     </ul>
                 </div>
 
-                <div class="pricing-box">
-                    <h3>One-Time Payment</h3>
-                    <div class="price">$79.99</div>
-                    <p class="price-subtitle">Lifetime Access • No Monthly Fees • Instant Activation</p>
-                </div>
+                <button class="purchase-button" onclick="simulatePurchase()">
+                    🔐 Get Premium Access Now
+                </button>
 
-                <!-- Stripe payment link -->
-                <a href="https://buy.stripe.com/28E8wQ1H7brSdL07Wg7ok02" class="purchase-button">
-                    Get Lifetime Access Now
+                <div id="successMessage" class="success-message">
+                    <h3>🎉 Payment Successful!</h3>
+                    <p>Welcome to TSSA G2 Premium! Your access has been activated.</p>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <p>"This practice exam was invaluable for my G2 certification. The questions were spot-on and the explanations helped me understand the concepts thoroughly. Passed on my first try!"</p>
+                <strong>- Sarah M., Certified Gas Technician</strong>
+            </div>
+        </div>
+
+        <!-- Premium Content Section -->
+        <div id="premiumContent" class="premium-content" style="display: none;">
+            <h2>🎉 Welcome to TSSA G2 Premium!</h2>
+            <p>Thank you for your purchase. You now have lifetime access to our comprehensive G2 practice exam system.</p>
+            
+            <div style="margin: 2rem 0; text-align: center;">
+                <a href="./TSSA_G2_Exam_Simulator_Premium.html" class="access-button">
+                    🚀 Start Practice Exam
                 </a>
             </div>
+
+            <div class="features-list">
+                <h3>Your Premium Features:</h3>
+                <ul>
+                    <li>Access to 500+ practice questions</li>
+                    <li>Detailed explanations for every answer</li>
+                    <li>Progress tracking and analytics</li>
+                    <li>Unlimited practice attempts</li>
+                    <li>Regular content updates</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 10px; margin-top: 2rem;">
+                <h4>📚 Study Tips for Success:</h4>
+                <ul style="margin-top: 1rem;">
+                    <li>Take multiple practice exams to build confidence</li>
+                    <li>Review explanations for both correct and incorrect answers</li>
+                    <li>Focus on areas where you score lower</li>
+                    <li>Practice under timed conditions to simulate the real exam</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="./index.html" class="back-button">← Back to LARK Labs</a>
         </div>
     </div>
 
-    <!-- Footer with Lark Labs Branding -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="lark-labs-branding">
-                <span class="created-by-text">Created by:</span>
-                <div class="lark-labs-logo">
-                    <div class="lark-bird"></div>
-                    <div class="lark-text">
-                        <div class="lark-labs">LARK LABS</div>
-                        <div class="lark-tagline">SOFTWARE DEVELOPMENT</div>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <strong>© <span class="copyright-year">2025</span> Lark Labs Software Development. All Rights Reserved.</strong><br>
-                This software and its content are protected by copyright law. Unauthorized reproduction, distribution, or modification is strictly prohibited. 
-                The TSSA G2 Practice Exam Simulator is designed for educational purposes only and is not affiliated with or endorsed by TSSA (Technical Standards and Safety Authority).
-                All trademarks and registered trademarks are the property of their respective owners.
-            </div>
-        </div>
-    </footer>
+    <script>
+        // Simple access control with persistent storage
+        function hasAccess() {
+            return localStorage.getItem('g2PremiumAccess') === 'true';
+        }
+
+        function checkAccess() {
+            if (hasAccess()) {
+                document.getElementById('premiumContent').style.display = 'block';
+                document.getElementById('accessRequired').style.display = 'none';
+            } else {
+                document.getElementById('premiumContent').style.display = 'none';
+                document.getElementById('accessRequired').style.display = 'block';
+            }
+        }
+
+        function grantAccess() {
+            localStorage.setItem('g2PremiumAccess', 'true');
+            localStorage.setItem('g2AccessDate', new Date().toISOString());
+            checkAccess();
+        }
+
+        function simulatePurchase() {
+            // Show loading state
+            const button = document.querySelector('.purchase-button');
+            const originalText = button.innerHTML;
+            button.innerHTML = '⏳ Processing Payment...';
+            button.disabled = true;
+
+            // Simulate payment processing
+            setTimeout(() => {
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Grant access after a short delay
+                setTimeout(() => {
+                    grantAccess();
+                    // Reset button for next time (in case localStorage is cleared)
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 2000);
+            }, 2000);
+        }
+
+        // Check access status when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAccess();
+        });
+    </script>
 </body>
 </html>
