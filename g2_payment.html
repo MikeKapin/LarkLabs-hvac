@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TSSA G2 Practice Exam - Premium Access</title>
-    <script src="https://js.stripe.com/v3/"></script>
     <style>
         * {
             margin: 0;
@@ -150,27 +149,6 @@
             margin: 5px 0;
         }
 
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .already-purchased {
             background: #d4edda;
             border: 1px solid #c3e6cb;
@@ -245,7 +223,6 @@
                         <li><span class="checkmark">✓</span> Timed Mock Exams</li>
                         <li><span class="checkmark">✓</span> Mobile & Desktop Access</li>
                         <li><span class="checkmark">✓</span> Regular Content Updates</li>
-
                     </ul>
 
                     <button id="paymentButton" class="payment-button">
@@ -267,24 +244,25 @@
                     Launch G2 Simulator
                 </button>
             </div>
-
-            <div id="loading" class="loading">
-                <div class="spinner"></div>
-                <p>Processing your payment...</p>
-            </div>
         </div>
     </div>
 
     <script>
-        // Replace with your actual Stripe publishable key
-        const stripe = Stripe('pk_test_your_stripe_publishable_key_here');
-        
         // Check if user already has access on page load
         document.addEventListener('DOMContentLoaded', function() {
             checkUserAccess();
         });
 
         function checkUserAccess() {
+            // For demonstration purposes, let's add a way to force showing payment
+            const urlParams = new URLSearchParams(window.location.search);
+            const forcePayment = urlParams.get('force_payment');
+            
+            if (forcePayment === 'true') {
+                // Don't check for existing access, always show payment
+                return;
+            }
+            
             // Check if user has already purchased (stored in localStorage for demo)
             const hasPurchased = localStorage.getItem('g2_simulator_purchased');
             
@@ -298,53 +276,10 @@
             document.getElementById('alreadyPurchased').style.display = 'block';
         }
 
-        // Payment button click handler
-        document.getElementById('paymentButton').addEventListener('click', async function() {
-            const button = this;
-            button.disabled = true;
-            button.textContent = 'Processing...';
-            
-            document.getElementById('loading').style.display = 'block';
-
-            try {
-                // In production, you would call your backend to create a Stripe Checkout session
-                // For demo purposes, we'll simulate the payment process
-                
-                // Replace this with actual Stripe Checkout session creation
-                const response = await fetch('/create-checkout-session', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        priceId: 'price_your_stripe_price_id_here', // Replace with your Stripe Price ID
-                        successUrl: window.location.origin + '/success.html',
-                        cancelUrl: window.location.href
-                    }),
-                });
-
-                const session = await response.json();
-
-                // Redirect to Stripe Checkout
-                const result = await stripe.redirectToCheckout({
-                    sessionId: session.id
-                });
-
-                if (result.error) {
-                    throw new Error(result.error.message);
-                }
-                
-            } catch (error) {
-                console.error('Payment error:', error);
-                
-                // For demo purposes, simulate successful payment after 2 seconds
-                setTimeout(() => {
-                    localStorage.setItem('g2_simulator_purchased', 'true');
-                    document.getElementById('loading').style.display = 'none';
-                    showAccessGranted();
-                    alert('Demo: Payment successful! You now have lifetime access to the G2 Simulator.');
-                }, 2000);
-            }
+        // Payment button click handler - FIXED VERSION
+        document.getElementById('paymentButton').addEventListener('click', function() {
+            // Redirect directly to your Stripe payment link - NO DEMO CODE
+            window.location.href = 'https://buy.stripe.com/28E8wQ1H7brSdL07Wg7ok02';
         });
 
         // Access button click handler
