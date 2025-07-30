@@ -699,6 +699,10 @@
     </div>
 
     <script>
+        // Add premium access localStorage
+        localStorage.setItem('g2PremiumAccess', 'true');
+        localStorage.setItem('g2AccessDate', new Date().toISOString());
+
         // Function to normalize question objects
         function normalizeQuestion(q) {
             return {
@@ -4829,7 +4833,7 @@
     Correct: 1
   }
 
-];
+        ];
 
         // Normalize all questions and create the question bank
         const questionBank = rawQuestionBank.map(normalizeQuestion);
