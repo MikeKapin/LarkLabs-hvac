@@ -714,8 +714,30 @@
             });
             
             const percentage = Math.round((correct / sampleQuestions.length) * 100);
+            const passingGrade = 75;
+            const passed = percentage >= passingGrade;
             
-            alert(`Exam Complete!\n\nYour Score: ${correct}/${sampleQuestions.length} (${percentage}%)\n\nIn the full version, you would see detailed explanations for each question and comprehensive performance analytics.`);
+            // Determine performance message
+            let performanceMsg = "";
+            let passStatus = "";
+            
+            if (passed) {
+                passStatus = "🎉 PASS! ";
+                if (percentage >= 85) {
+                    performanceMsg = "Outstanding! You are well prepared for the TSSA G2 Exam.";
+                } else {
+                    performanceMsg = "Good work! You are prepared but need a little more improvement to be successful on the TSSA G2 Exam.";
+                }
+            } else {
+                passStatus = "📚 Keep Studying - ";
+                if (percentage >= 65) {
+                    performanceMsg = "You're close! Review the missed questions and try again.";
+                } else {
+                    performanceMsg = "Focus on your weak areas and practice more before taking the real exam.";
+                }
+            }
+            
+            alert(`🎯 Exam Complete!\n\n${passStatus}Your Score: ${correct}/${sampleQuestions.length} (${percentage}%)\nPassing Grade: ${passingGrade}%\n\n${performanceMsg}\n\nYou can now start a new practice exam or review different question sets.`);
             
             // Return to selection screen
             backToSelection();
