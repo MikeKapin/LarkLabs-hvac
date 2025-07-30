@@ -355,7 +355,7 @@
                         </p>
                         
                         <div class="exam-options-grid">
-                            <div class="exam-option-card" onclick="startExam(50)">
+                            <div class="exam-option-card" data-questions="50">
                                 <div class="exam-icon">⚡</div>
                                 <h3>Quick Practice</h3>
                                 <div class="question-count">50 Questions</div>
@@ -364,7 +364,7 @@
                                 <div class="difficulty">Difficulty: Beginner to Intermediate</div>
                             </div>
                             
-                            <div class="exam-option-card" onclick="startExam(100)">
+                            <div class="exam-option-card" data-questions="100">
                                 <div class="exam-icon">🎯</div>
                                 <h3>Standard Practice</h3>
                                 <div class="question-count">100 Questions</div>
@@ -373,7 +373,7 @@
                                 <div class="difficulty">Difficulty: All Levels</div>
                             </div>
                             
-                            <div class="exam-option-card" onclick="startExam(150)">
+                            <div class="exam-option-card" data-questions="150">
                                 <div class="exam-icon">🏆</div>
                                 <h3>Full Mock Exam</h3>
                                 <div class="question-count">150 Questions</div>
@@ -457,23 +457,8 @@
     </div>
 
     <script>
-        // Sample questions data (in production, this would come from your backend)
-        const sampleQuestions = [
-            {
-                question: "Which of the following is the minimum clearance required between a gas water heater and combustible materials?",
-                options: ["6 inches (150 mm)", "12 inches (300 mm)", "18 inches (450 mm)", "24 inches (600 mm)"],
-                correct: 0,
-                explanation: "According to CSA B149.1, the minimum clearance from combustible materials is 6 inches (150 mm) unless otherwise specified by the manufacturer."
-            },
-            {
-                question: "What is the maximum allowable gas pressure for residential appliances?",
-                options: ["7 inches w.c.", "10.5 inches w.c.", "14 inches w.c.", "2 psi"],
-                correct: 2,
-                explanation: "The maximum gas pressure for residential appliances is typically 14 inches water column (w.c.) or 0.5 psi."
-            },
-            // Add more questions as needed
-        ];
-
+        // Global variables
+        let sampleQuestions = [];
         let currentQuestionIndex = 0;
         let userAnswers = [];
         let examTimer;
@@ -514,7 +499,38 @@
             document.getElementById('actualExam').style.display = 'none';
         }
 
+        function setupEventListeners() {
+            // Radio button selection
+            document.addEventListener('change', function(e) {
+                if (e.target.name === 'answer') {
+                    // Remove selected class from all labels
+                    document.querySelectorAll('.options label').forEach(label => {
+                        label.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to chosen option
+                    e.target.closest('label').classList.add('selected');
+                    
+                    // Store answer
+                    userAnswers[currentQuestionIndex] = e.target.value;
+                }
+            });
+
+            // Add click listeners to exam option cards - FIXED VERSION
+            document.addEventListener('click', function(e) {
+                const card = e.target.closest('.exam-option-card');
+                if (card) {
+                    const questionCount = parseInt(card.getAttribute('data-questions'));
+                    if (questionCount) {
+                        console.log('Starting exam with', questionCount, 'questions'); // Debug log
+                        startExam(questionCount);
+                    }
+                }
+            });
+        }
+
         function startExam(questionCount) {
+            console.log('startExam called with:', questionCount); // Debug log
             selectedExamLength = questionCount;
             
             // Set timer based on exam length
@@ -578,7 +594,18 @@
                     correct: 2,
                     explanation: "The maximum gas pressure for residential appliances is typically 14 inches water column (w.c.) or 0.5 psi."
                 },
-                // Add more questions as needed
+                {
+                    question: "What type of pipe joint is typically used for natural gas installations in residential applications?",
+                    options: ["Threaded joints", "Welded joints", "Compression fittings", "Soldered joints"],
+                    correct: 0,
+                    explanation: "Threaded joints are commonly used for natural gas piping in residential applications as they provide secure, leak-proof connections."
+                },
+                {
+                    question: "What is the minimum burial depth for gas service lines in most jurisdictions?",
+                    options: ["12 inches", "18 inches", "24 inches", "36 inches"],
+                    correct: 1,
+                    explanation: "Most codes require a minimum burial depth of 18 inches for gas service lines, though this may vary by jurisdiction."
+                }
             ];
             
             // Generate questions array based on requested count
@@ -590,47 +617,8 @@
                     question: `${baseQuestion.question} (Question ${i + 1})`
                 });
             }
-        }
-
-        function setupEventListeners() {
-            // Radio button selection
-            document.addEventListener('change', function(e) {
-                if (e.target.name === 'answer') {
-                    // Remove selected class from all labels
-                    document.querySelectorAll('.options label').forEach(label => {
-                        label.classList.remove('selected');
-                    });
-                    
-                    // Add selected class to chosen option
-                    e.target.closest('label').classList.add('selected');
-                    
-                    // Store answer
-                    userAnswers[currentQuestionIndex] = e.target.value;
-                }
-            });
-
-            // Add click listeners to exam option cards
-            document.addEventListener('click', function(e) {
-                const card = e.target.closest('.exam-option-card');
-                if (card) {
-                    const onclick = card.getAttribute('onclick');
-                    if (onclick) {
-                        // Extract the number from onclick="startExam(50)"
-                        const match = onclick.match(/startExam\((\d+)\)/);
-                        if (match) {
-                            const questionCount = parseInt(match[1]);
-                            startExam(questionCount);
-                        }
-                    }
-                }
-            });
-        }
-
-        function startExam() {
-            // Initialize exam
-            document.getElementById('totalQuestions').textContent = sampleQuestions.length;
-            loadQuestion(0);
-            startTimer();
+            
+            console.log('Generated', sampleQuestions.length, 'questions'); // Debug log
         }
 
         function loadQuestion(index) {
@@ -728,6 +716,9 @@
             const percentage = Math.round((correct / sampleQuestions.length) * 100);
             
             alert(`Exam Complete!\n\nYour Score: ${correct}/${sampleQuestions.length} (${percentage}%)\n\nIn the full version, you would see detailed explanations for each question and comprehensive performance analytics.`);
+            
+            // Return to selection screen
+            backToSelection();
         }
 
         // Demo function to reset purchase status (for testing)
