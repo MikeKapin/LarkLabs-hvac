@@ -281,6 +281,15 @@
         });
 
         function checkUserAccess() {
+            // For demonstration purposes, let's add a way to force showing payment
+            const urlParams = new URLSearchParams(window.location.search);
+            const forcePayment = urlParams.get('force_payment');
+            
+            if (forcePayment === 'true') {
+                // Don't check for existing access, always show payment
+                return;
+            }
+            
             // Check if user has already purchased (stored in localStorage for demo)
             const hasPurchased = localStorage.getItem('g2_simulator_purchased');
             
