@@ -1149,6 +1149,32 @@
             setupEventListeners();
         });
 
+        // Add this new function to save emails
+        function saveEmailToList(email, source) {
+            // Get existing email list or create empty array
+            let emailList = JSON.parse(localStorage.getItem('collectedEmails') || '[]');
+            
+            // Check if email already exists
+            const existingEmail = emailList.find(entry => entry.email === email);
+            if (existingEmail) {
+                // Update the existing entry's timestamp
+                existingEmail.timestamp = new Date().toISOString();
+                existingEmail.date = new Date().toLocaleDateString();
+                existingEmail.page = source; // Update source if different
+            } else {
+                // Add new email entry
+                emailList.push({
+                    email: email,
+                    page: source,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleDateString()
+                });
+            }
+            
+            // Save back to localStorage
+            localStorage.setItem('collectedEmails', JSON.stringify(emailList));
+        }
+
         function setupEventListeners() {
             // Newsletter signup
             const newsletterForms = document.querySelectorAll('.newsletter-form');
@@ -1171,6 +1197,9 @@
                             alert('Please enter a valid email address.');
                             return;
                         }
+                        
+                        // Save email to localStorage (THIS IS THE NEW PART)
+                        saveEmailToList(email, 'newsletter-signup');
                         
                         // Show success message
                         alert('Thank you for subscribing! You will receive updates about new tools and features.');
