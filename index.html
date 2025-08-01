@@ -287,6 +287,121 @@
             animation: pulse 2s infinite;
         }
 
+        /* REVOLUTIONARY Badge */
+        .revolutionary-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #e74c3c, #ff6b6b, #e74c3c);
+            background-size: 200% 200%;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 12px rgba(231, 76, 60, 0.6);
+            animation: revolutionaryPulse 3s infinite, gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes revolutionaryPulse {
+            0% { transform: scale(1); box-shadow: 0 2px 12px rgba(231, 76, 60, 0.6); }
+            50% { transform: scale(1.08); box-shadow: 0 4px 20px rgba(231, 76, 60, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 2px 12px rgba(231, 76, 60, 0.6); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Revolutionary Tool Card Styles */
+        .revolutionary-tool {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), rgba(255, 107, 107, 0.05));
+            border: 2px solid rgba(231, 76, 60, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revolutionary-tool::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(231, 76, 60, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .revolutionary-tool:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(231, 76, 60, 0.3);
+            border-color: rgba(231, 76, 60, 0.5);
+        }
+
+        .revolutionary-icon {
+            background: linear-gradient(45deg, #e74c3c, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: iconGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes iconGlow {
+            0% { filter: drop-shadow(0 0 5px rgba(231, 76, 60, 0.5)); }
+            100% { filter: drop-shadow(0 0 15px rgba(231, 76, 60, 0.8)); }
+        }
+
+        /* Coming Soon Preview Styles */
+        .coming-soon-preview {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(231, 76, 60, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .preview-screens {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-screen {
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(45deg, #e74c3c, #ff6b6b);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            animation: screenFlicker 2s infinite alternate;
+        }
+
+        @keyframes screenFlicker {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .status-revolutionary {
+            background: linear-gradient(45deg, #e74c3c, #ff6b6b);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+        }
+
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -691,6 +806,33 @@
                         <h3>Psychrometric Calculator</h3>
                         <p>Advanced air property calculations and analysis</p>
                         <span class="tool-status status-available external-link">Launch Calculator</span>
+                    </div>
+                    <div class="tool-card revolutionary-tool">
+                        <div class="new-badge revolutionary-badge">REVOLUTIONARY</div>
+                        <div class="tool-icon revolutionary-icon">🤖</div>
+                        <h3>AI Troubleshooting Assistant</h3>
+                        <p>Revolutionary diagnostic tool providing detailed sequence of operations, step-by-step troubleshooting guides, and comprehensive fault analysis for all HVAC makes and models. Features include flash code interpretation, common problem databases, and AI-powered diagnostic recommendations.</p>
+                        <div style="margin: 1rem 0; text-align: left;">
+                            <h4 style="color: #e74c3c; margin-bottom: 0.8rem; font-size: 1rem;">🚀 Revolutionary Features:</h4>
+                            <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
+                                <li>🔍 Universal make/model compatibility</li>
+                                <li>⚡ Real-time flash code decoder</li>
+                                <li>📋 Interactive sequence of operations</li>
+                                <li>🎯 AI-powered fault diagnosis</li>
+                                <li>📊 Performance optimization tips</li>
+                                <li>📱 Mobile-optimized interface</li>
+                                <li>🔧 Equipment-specific procedures</li>
+                            </ul>
+                        </div>
+                        <div class="coming-soon-preview">
+                            <div class="preview-screens">
+                                <div class="preview-screen">📱</div>
+                                <div class="preview-screen">💻</div>
+                                <div class="preview-screen">🔧</div>
+                            </div>
+                            <p style="font-size: 0.9rem; color: #e74c3c; font-weight: bold; margin: 1rem 0;">Beta Testing Begins Q2 2025</p>
+                        </div>
+                        <span class="tool-status status-revolutionary">🚀 Revolutionary Tool - Coming Soon</span>
                     </div>
                 </div>
             </div>
