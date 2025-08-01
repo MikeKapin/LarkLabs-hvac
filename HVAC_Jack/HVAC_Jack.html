@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HVAC Jack">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#FF6B35">
+    <title>HVAC Jack - Your Jack of All Trades HVAC AI Assistant</title>
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiBmaWxsPSIjRkY2QjM1Ii8+Cjx0ZXh0IHg9IjkwIiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI2MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfkqc8L3RleHQ+Cjwvc3ZnPgo=">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input, textarea {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .mobile-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.75rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            position: relative;
+        }
+
+        .header-logo {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .header-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .mobile-logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #FF6B35;
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+            padding-left: 50px;
+        }
+
+        .mobile-logo::before {
+            content: "🔧";
+            margin-right: 8px;
+            font-size: 1.4rem;
+        }
+
+        .mobile-mode-toggle {
+            display: flex;
+            background: #f0f0f0;
+            border-radius: 20px;
+            padding: 2px;
+            flex-shrink: 0;
+        }
+
+        .mobile-mode-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            background: transparent;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+            min-height: 36px;
+            touch-action: manipulation;
+        }
+
+        .mobile-mode-btn.active {
+            background: #FF6B35;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .mobile-status {
+            font-size: 0.7rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            width: 100%;
+            margin-top: 0.25rem;
+        }
+
+        .mobile-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #28a745;
+            animation: pulse 2s infinite;
+        }
+
+        .mobile-status-dot.error {
+            background: #dc3545;
+        }
+
+        .mobile-status-dot.connecting {
+            background: #ffc107;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .main-container {
+            padding: 0;
+            height: calc(100vh - 140px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-chat-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .mobile-context-bar {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mobile-context-bar.expanded {
+            padding: 1rem 0.5rem;
+        }
+
+        .context-toggle {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 0.25rem;
+        }
+
+        .mobile-context-details {
+            display: none;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .mobile-context-details.show {
+            display: block;
+        }
+
+        .mobile-messages {
+            flex: 1;
+            padding: 1rem 0.75rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-message {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-message.user {
+            justify-content: flex-end;
+        }
+
+        .mobile-message.ai {
+            justify-content: flex-start;
+        }
+
+        .mobile-message-content {
+            max-width: 85%;
+            padding: 0.75rem 1rem;
+            border-radius: 18px;
+            position: relative;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        .mobile-message.user .mobile-message-content {
+            background: #007bff;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .mobile-message.ai .mobile-message-content {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .mobile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .mobile-avatar.user {
+            background: #007bff;
+            color: white;
+        }
+
+        .mobile-avatar.ai {
+            background: #FF6B35;
+            color: white;
+        }
+
+        .mobile-input-container {
+            padding: 0.75rem;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 0;
+        }
+
+        .mobile-quick-actions {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .mobile-quick-actions::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-quick-btn {
+            padding: 0.4rem 0.8rem;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            min-height: 36px;
+            touch-action: manipulation;
+        }
+
+        .mobile-quick-btn:active {
+            background: #FF6B35;
+            color: white;
+            border-color: #FF6B35;
+            transform: scale(0.95);
+        }
+
+        .mobile-input-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-end;
+        }
+
+        .mobile-input-field {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 1rem;
+            min-height: 44px;
+            resize: none;
+            max-height: 100px;
+            transition: border-color 0.3s;
+        }
+
+        .mobile-input-field:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+
+        .mobile-send-btn {
+            width: 44px;
+            height: 44px;
+            background: #FF6B35;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            touch-action: manipulation;
+        }
+
+        .mobile-send-btn:active {
+            transform: scale(0.9);
+            background: #E55A2B;
+        }
+
+        .mobile-send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .mobile-typing {
+            display: none;
+            padding: 0.5rem 0.75rem;
+            color: #666;
+            font-size: 0.8rem;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mobile-typing-dots {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .mobile-typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #FF6B35;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .mobile-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .mobile-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        .mobile-fab {
+            position: fixed;
+            bottom: 140px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: #FF6B35;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .mobile-fab:active {
+            transform: scale(0.9);
+        }
+
+        .mobile-footer {
+            background: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid #e0e0e0;
+            padding: 0.75rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            bottom: 0;
+            z-index: 1000;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .footer-logo {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .footer-text {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .copyright {
+            margin-top: 0.25rem;
+            font-size: 0.65rem;
+            color: #999;
+        }
+
+        /* Error message styling */
+        .error-message {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-size: 0.8rem;
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            }
+            
+            .mobile-header {
+                background: rgba(40, 40, 40, 0.95);
+                color: white;
+            }
+            
+            .mobile-logo {
+                color: #FF6B35;
+            }
+            
+            .mobile-messages {
+                background: #2a2a2a;
+            }
+            
+            .mobile-message.ai .mobile-message-content {
+                background: #3a3a3a;
+                border-color: #555;
+                color: white;
+            }
+            
+            .mobile-input-container {
+                background: #333;
+                border-top-color: #555;
+            }
+            
+            .mobile-input-field {
+                background: #444;
+                border-color: #555;
+                color: white;
+            }
+            
+            .mobile-footer {
+                background: rgba(40, 40, 40, 0.95);
+                border-top-color: #555;
+            }
+
+            .footer-content {
+                color: #bbb;
+            }
+
+            .copyright {
+                color: #888;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-header">
+        <div class="mobile-header-content">
+            <a href="./logo.png" class="header-logo">
+                <img src="./logo.png" alt="Logo" />
+            </a>
+            <div class="mobile-logo">HVAC Jack</div>
+            <div class="mobile-mode-toggle">
+                <button class="mobile-mode-btn active" id="mobileHomeownerBtn" onclick="switchMode('homeowner')">🏠 Home</button>
+                <button class="mobile-mode-btn" id="mobileTechnicianBtn" onclick="switchMode('technician')">🔧 Tech</button>
+            </div>
+        </div>
+        <div class="mobile-status">
+            <div class="mobile-status-dot" id="mobileStatusDot"></div>
+            <span id="mobileStatusText">Connecting to Jack...</span>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="mobile-chat-container">
+            <div class="mobile-context-bar" id="mobileContextBar" onclick="toggleContext()">
+                <div id="mobileContextSummary">🧠 New conversation - Jack is learning about your system</div>
+                <div class="context-toggle">Tap to expand memory</div>
+                <div class="mobile-context-details" id="mobileContextDetails">
+                    <strong>System:</strong> <span id="mobileSystemType">Unknown</span><br>
+                    <strong>Problem:</strong> <span id="mobileProblemType">Diagnosing</span><br>
+                    <strong>Messages:</strong> <span id="mobileMessageCount">0</span>
+                </div>
+            </div>
+
+            <div class="mobile-messages" id="mobileMessages">
+                <div class="mobile-message ai">
+                    <div class="mobile-avatar ai">🔧</div>
+                    <div class="mobile-message-content" id="mobileWelcomeMessage">
+                        <strong>Hey! I'm HVAC Jack!</strong><br><br>
+                        🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
+                        💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
+                        <strong>What's wrong with your heating or cooling?</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mobile-typing" id="mobileTyping">
+                <span>Jack is thinking</span>
+                <div class="mobile-typing-dots">
+                    <div class="mobile-typing-dot"></div>
+                    <div class="mobile-typing-dot"></div>
+                    <div class="mobile-typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="mobile-input-container">
+                <div class="mobile-quick-actions">
+                    <button class="mobile-quick-btn" onclick="quickQuestion('No heat from furnace')">🔥 No Heat</button>
+                    <button class="mobile-quick-btn" onclick="quickQuestion('AC not cooling')">❄️ No Cool</button>
+                    <button class="mobile-quick-btn" onclick="quickQuestion('Strange noises')">🔊 Noise</button>
+                    <button class="mobile-quick-btn" onclick="quickQuestion('System short cycling')">🔄 Cycling</button>
+                    <button class="mobile-quick-btn" onclick="quickQuestion('Frozen AC coil')">🧊 Frozen</button>
+                </div>
+                
+                <div class="mobile-input-group">
+                    <textarea class="mobile-input-field" id="mobileInput" placeholder="Tell Jack what's wrong..." rows="1" onkeypress="handleMobileKeyPress(event)" oninput="adjustTextareaHeight(this)"></textarea>
+                    <button class="mobile-send-btn" id="mobileSendBtn" onclick="sendMobileMessage()">
+                        <span>➤</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-footer">
+        <div class="footer-content">
+            <div class="footer-text">
+                Created by 
+                <a href="./logo.png" class="footer-logo">
+                    <img src="./logo.png" alt="Logo" />
+                </a>
+                Your Company Name
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 Your Company Name. All rights reserved. HVAC Jack is a trademark of Your Company Name.
+        </div>
+    </div>
+
+    <button class="mobile-fab" id="mobileFab" onclick="showMobileMenu()">⚙️</button>
+
+    <script>
+        // Secure Mobile HVAC Jack - No API keys in frontend
+        class SecureMobileHVACJack {
+            constructor() {
+                this.diagnosticsRun = 0;
+                this.conversationHistory = [];
+                this.currentMode = 'homeowner';
+                this.systemContext = {
+                    equipmentType: null,
+                    brand: null,
+                    symptoms: [],
+                    previousActions: [],
+                    currentProblem: null
+                };
+                // Backend API endpoint - change this to your server URL
+                this.apiEndpoint = '/api/chat'; // Change to your backend URL
+                this.isConnected = false;
+                this.isProcessing = false;
+                this.init();
+            }
+
+            async init() {
+                this.setupMobileFeatures();
+                this.loadSavedConversation();
+                await this.checkBackendConnection();
+            }
+
+            setupMobileFeatures() {
+                document.addEventListener('touchstart', function() {}, {passive: true});
+                
+                if (window.visualViewport) {
+                    window.visualViewport.addEventListener('resize', this.handleViewportChange.bind(this));
+                }
+                
+                document.addEventListener('touchmove', function(e) {
+                    if (e.touches.length > 1) {
+                        e.preventDefault();
+                    }
+                }, {passive: false});
+                
+                this.setupAutoScroll();
+                this.setupHapticFeedback();
+            }
+
+            handleViewportChange() {
+                const viewport = window.visualViewport;
+                document.documentElement.style.setProperty('--viewport-height', `${viewport.height}px`);
+                
+                setTimeout(() => {
+                    document.getElementById('mobileInput').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+                }, 100);
+            }
+
+            setupAutoScroll() {
+                this.messagesContainer = document.getElementById('mobileMessages');
+                this.observer = new MutationObserver(() => {
+                    this.scrollToBottom();
+                });
+                this.observer.observe(this.messagesContainer, {childList: true});
+            }
+
+            setupHapticFeedback() {
+                this.hapticFeedback = (type = 'light') => {
+                    if (navigator.vibrate) {
+                        const patterns = {
+                            light: [10],
+                            medium: [20],
+                            heavy: [30],
+                            success: [10, 50, 10]
+                        };
+                        navigator.vibrate(patterns[type] || patterns.light);
+                    }
+                };
+            }
+
+            scrollToBottom() {
+                setTimeout(() => {
+                    this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+                }, 100);
+            }
+
+            loadSavedConversation() {
+                const saved = localStorage.getItem('hvacJackMobileConversation');
+                if (saved) {
+                    try {
+                        const data = JSON.parse(saved);
+                        this.conversationHistory = data.history || [];
+                        this.systemContext = data.context || this.systemContext;
+                        this.updateMobileMemoryDisplay();
+                    } catch (error) {
+                        console.log('Could not load saved conversation');
+                    }
+                }
+            }
+
+            saveConversation() {
+                const data = {
+                    history: this.conversationHistory,
+                    context: this.systemContext,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('hvacJackMobileConversation', JSON.stringify(data));
+            }
+
+            addToConversation(role, content) {
+                this.conversationHistory.push({
+                    role: role,
+                    content: content,
+                    timestamp: new Date().toISOString(),
+                    mode: this.currentMode
+                });
+                
+                if (this.conversationHistory.length > 20) {
+                    this.conversationHistory = this.conversationHistory.slice(-20);
+                }
+                
+                this.updateMobileMemoryDisplay();
+                this.saveConversation();
+            }
+
+            updateMobileMemoryDisplay() {
+                document.getElementById('mobileMessageCount').textContent = this.conversationHistory.length;
+                document.getElementById('mobileSystemType').textContent = this.systemContext.equipmentType || 'Unknown';
+                document.getElementById('mobileProblemType').textContent = this.systemContext.currentProblem || 'Diagnosing';
+                
+                const summary = this.conversationHistory.length > 0 
+                    ? `🧠 Remembering: ${this.systemContext.equipmentType || 'system'} ${this.systemContext.currentProblem || 'issue'}`
+                    : '🧠 New conversation - Jack is learning about your system';
+                    
+                document.getElementById('mobileContextSummary').textContent = summary;
+            }
+
+            extractSystemContext(userInput) {
+                const input = userInput.toLowerCase();
+                
+                if (input.includes('furnace')) this.systemContext.equipmentType = 'furnace';
+                else if (input.includes('air condition') || input.includes('ac ')) this.systemContext.equipmentType = 'air conditioner';
+                else if (input.includes('heat pump')) this.systemContext.equipmentType = 'heat pump';
+                else if (input.includes('water heater')) this.systemContext.equipmentType = 'water heater';
+                
+                if (input.includes('no heat')) this.systemContext.currentProblem = 'no heat';
+                else if (input.includes('no cool') || input.includes('not cooling')) this.systemContext.currentProblem = 'no cooling';
+                else if (input.includes('noise')) this.systemContext.currentProblem = 'strange noises';
+                else if (input.includes('frozen')) this.systemContext.currentProblem = 'frozen system';
+                else if (input.includes('cycling')) this.systemContext.currentProblem = 'short cycling';
+            }
+
+            async checkBackendConnection() {
+                this.updateMobileStatus('connecting', 'Connecting to Jack...');
+                
+                try {
+                    const response = await fetch(`${this.apiEndpoint}/health`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        this.isConnected = true;
+                        this.updateMobileStatus('connected', 'Jack is ready!');
+                        this.hapticFeedback('success');
+                    } else {
+                        throw new Error('Backend connection failed');
+                    }
+                } catch (error) {
+                    console.warn('Backend not available, using fallback mode:', error);
+                    this.handleConnectionFailure();
+                }
+            }
+
+            handleConnectionFailure() {
+                this.isConnected = false;
+                this.updateMobileStatus('error', 'Offline Mode');
+                
+                // Show informative message to user
+                this.addMobileMessage(
+                    '⚠️ **Offline Mode** - Jack is using built-in knowledge. For full AI capabilities, please contact support about server setup.',
+                    'ai'
+                );
+            }
+
+            updateMobileStatus(status, message) {
+                const dot = document.getElementById('mobileStatusDot');
+                const text = document.getElementById('mobileStatusText');
+                
+                dot.className = `mobile-status-dot ${status === 'connected' ? '' : status}`;
+                text.textContent = message;
+            }
+
+            async processUserInput(input) {
+                if (this.isProcessing) return;
+                this.isProcessing = true;
+                
+                this.showMobileTyping();
+                this.addToConversation('user', input);
+                this.extractSystemContext(input);
+                
+                try {
+                    let response;
+                    if (this.isConnected) {
+                        response = await this.sendToBackend(input);
+                    } else {
+                        response = await this.processWithFallbackKnowledge(input);
+                    }
+                    
+                    this.addToConversation('assistant', response);
+                    this.hideMobileTyping();
+                    this.diagnosticsRun++;
+                    this.hapticFeedback('success');
+                    
+                    return { text: response, isError: false };
+                    
+                } catch (error) {
+                    console.error('Processing error:', error);
+                    this.hideMobileTyping();
+                    this.hapticFeedback('heavy');
+                    
+                    const fallback = await this.processWithFallbackKnowledge(input);
+                    this.addToConversation('assistant', fallback);
+                    return { text: fallback, isError: false };
+                } finally {
+                    this.isProcessing = false;
+                }
+            }
+
+            async sendToBackend(input) {
+                const requestBody = {
+                    message: input,
+                    mode: this.currentMode,
+                    conversationHistory: this.conversationHistory.slice(-10), // Send last 10 messages for context
+                    systemContext: this.systemContext
+                };
+
+                const response = await fetch(this.apiEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Backend error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.response || data.message || 'Sorry, I had trouble processing that.';
+            }
+
+            async processWithFallbackKnowledge(input) {
+                await this.delay(1000); // Simulate thinking time
+                
+                const analysis = this.analyzeInput(input);
+                return this.generateFallbackResponse(analysis, input);
+            }
+
+            analyzeInput(input) {
+                const inputLower = input.toLowerCase();
+                return {
+                    systemType: this.detectSystemType(inputLower),
+                    problemType: this.detectProblemType(inputLower),
+                    isFollowUp: this.conversationHistory.length > 1
+                };
+            }
+
+            detectSystemType(input) {
+                if (input.includes('furnace')) return 'furnace';
+                if (input.includes('ac ') || input.includes('air condition')) return 'airConditioner';
+                if (input.includes('water heater')) return 'waterHeater';
+                return this.systemContext.equipmentType;
+            }
+
+            detectProblemType(input) {
+                if (input.includes('no heat')) return 'noHeat';
+                if (input.includes('no cool') || input.includes('not cooling')) return 'noCooling';
+                if (input.includes('noise')) return 'noise';
+                if (input.includes('frozen')) return 'frozenCoil';
+                if (input.includes('cycling')) return 'shortCycling';
+                return 'general';
+            }
+
+            generateFallbackResponse(analysis, input) {
+                const contextInfo = this.conversationHistory.length > 1 
+                    ? `(I remember: ${this.systemContext.equipmentType || 'your system'} with ${this.systemContext.currentProblem || 'issues'}) `
+                    : '';
+
+                if (this.currentMode === 'homeowner') {
+                    return this.generateFallbackHomeownerResponse(analysis, contextInfo);
+                } else {
+                    return this.generateFallbackTechResponse(analysis, contextInfo);
+                }
+            }
+
+            generateFallbackHomeownerResponse(analysis, contextInfo) {
+                const responses = {
+                    noHeat: `**No heat problem! ${contextInfo}**
+
+**Quick checks:**
+📱 Set thermostat 5°F higher
+🔋 Replace thermostat batteries
+⚡ Check circuit breaker
+🌪️ Replace air filter
+🔧 Listen for startup sounds
+
+**STOP if you smell gas!** Call gas company immediately.
+
+**Most likely:** Dead batteries (30% of my calls!) or dirty filter.
+
+Try these and tell me what happens! 👍`,
+
+                    noCooling: `**AC not cooling! ${contextInfo}**
+
+**Start here:**
+❄️ Set thermostat to COOL, 5°F lower
+🌪️ Replace dirty air filter (BIG cause!)
+⚡ Check both circuit breakers 
+🏠 Clean outdoor unit with hose
+👀 All vents open and unblocked?
+
+**Red flag:** Ice anywhere = turn OFF cooling!
+
+**Quick test:** Any cool air from vents at all?
+
+What did you find? 🔍`,
+
+                    general: `**HVAC issue! ${contextInfo}**
+
+**Tell me:**
+🔧 What type of system?
+❓ What's it doing (or not doing)?
+📅 When did this start?
+👂 Any weird sounds or smells?
+
+**Safety first:**
+🚨 Gas smell = call gas company
+💧 Water leaking = turn off system  
+⚡ Sparks/burning = turn off power
+
+What's going on? I'm here to help! 😊
+
+*Note: I'm in offline mode. For advanced AI analysis, please contact support.*`
+                };
+
+                return responses[analysis.problemType] || responses.general;
+            }
+
+            generateFallbackTechResponse(analysis, contextInfo) {
+                const responses = {
+                    noHeat: `**No heat diagnostic ${contextInfo}**
+
+**Sequence check:**
+⚡ 24VAC R-W at unit
+🔥 HSI: 11-200Ω, 3.2-3.6A draw  
+📊 Gas: 3.5"WC NG, 11"WC LP
+👁️ Flame sensor: 2-5μA DC
+🌪️ Pressure switch closure timing
+🚨 Limit switch continuity
+
+**Tools:** DMM, manometer, μA meter
+
+**Common failures:**
+- Control board fuses
+- HSI cracked/high resistance  
+- Flame sensor contamination
+- Pressure switch tubing
+
+Current symptoms and test results?
+
+*Offline mode - Contact support for AI-powered diagnostics.*`,
+
+                    noCooling: `**No cooling diagnostic ${contextInfo}**
+
+**Power/electrical:**
+⚡ 240VAC at disconnect
+📊 Compressor/fan amp draws
+🔋 Start/run capacitor μF
+🔌 Contactor pull-in voltage
+
+**Refrigerant (EPA req'd):**
+❄️ Suction/discharge pressures
+🌡️ Superheat/subcooling calc
+💧 Leak detection (oil spots)
+
+**Airflow:**
+📏 Static pressure measurement
+🌪️ CFM verification
+🔧 Blower wheel/motor inspection
+
+Current readings and observations?
+
+*Offline mode - Contact support for AI-powered analysis.*`,
+
+                    general: `**Tech diagnostic mode ${contextInfo}**
+
+**Need:**
+📋 Model/serial numbers
+📊 Current measurements
+🔧 Specific failure point
+⚡ Test equipment available
+
+**Standard approach:**
+1. Electrical verification
+2. Pressure/temperature readings  
+3. Sequence timing analysis
+4. Component isolation testing
+
+What's your current diagnostic status?
+
+*Offline mode - Limited to basic guidance.*`
+                };
+
+                return responses[analysis.problemType] || responses.general;
+            }
+
+            showMobileTyping() {
+                document.getElementById('mobileTyping').style.display = 'flex';
+                document.getElementById('mobileSendBtn').disabled = true;
+                this.scrollToBottom();
+            }
+
+            hideMobileTyping() {
+                document.getElementById('mobileTyping').style.display = 'none';
+                document.getElementById('mobileSendBtn').disabled = false;
+            }
+
+            switchMode(mode) {
+                this.currentMode = mode;
+                this.hapticFeedback('light');
+                
+                document.getElementById('mobileHomeownerBtn').classList.toggle('active', mode === 'homeowner');
+                document.getElementById('mobileTechnicianBtn').classList.toggle('active', mode === 'technician');
+                
+                const placeholder = mode === 'homeowner' 
+                    ? 'Tell Jack what\'s wrong...' 
+                    : 'Describe symptoms and readings...';
+                document.getElementById('mobileInput').placeholder = placeholder;
+                
+                this.updateWelcomeMessage(mode);
+                
+                const modeMessage = mode === 'homeowner'
+                    ? '🏠 **Switched to Homeowner Mode** - I\'ll explain things simply and focus on safe DIY steps you can take.'
+                    : '🔧 **Switched to Technician Mode** - I\'ll provide detailed technical specs, measurements, and professional diagnostic procedures.';
+                    
+                this.addMobileMessage(modeMessage, 'ai');
+            }
+
+            updateWelcomeMessage(mode) {
+                const welcomeElement = document.getElementById('mobileWelcomeMessage');
+                if (welcomeElement) {
+                    if (mode === 'homeowner') {
+                        welcomeElement.innerHTML = `
+                            <strong>Hey! I'm HVAC Jack!</strong><br><br>
+                            🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
+                            💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
+                            <strong>What's wrong with your heating or cooling?</strong>
+                        `;
+                    } else {
+                        welcomeElement.innerHTML = `
+                            <strong>HVAC Jack - Technician Mode</strong><br><br>
+                            🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>
+                            💭 <strong>Conversation Memory</strong> - I'll build on our diagnostic history.<br><br>
+                            <strong>What system are you diagnosing? Include model info and current readings.</strong>
+                        `;
+                    }
+                }
+            }
+
+            addMobileMessage(content, sender) {
+                const messagesContainer = document.getElementById('mobileMessages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `mobile-message ${sender}`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = `mobile-avatar ${sender}`;
+                avatar.textContent = sender === 'user' ? '👤' : '🔧';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'mobile-message-content';
+                
+                if (sender === 'ai') {
+                    let formattedContent = content
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\n\n/g, '<br><br>')
+                        .replace(/\n/g, '<br>');
+                    messageContent.innerHTML = formattedContent;
+                } else {
+                    messageContent.textContent = content;
+                }
+                
+                if (sender === 'user') {
+                    messageDiv.appendChild(messageContent);
+                    messageDiv.appendChild(avatar);
+                } else {
+                    messageDiv.appendChild(avatar);
+                    messageDiv.appendChild(messageContent);
+                }
+                
+                messagesContainer.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+
+            async delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        // Initialize Secure Mobile HVAC Jack
+        const mobileHvacJack = new SecureMobileHVACJack();
+
+        // Mobile-specific functions
+        function adjustTextareaHeight(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
+        }
+
+        function handleMobileKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMobileMessage();
+            }
+        }
+
+        async function sendMobileMessage() {
+            const input = document.getElementById('mobileInput');
+            const message = input.value.trim();
+            
+            if (!message || mobileHvacJack.isProcessing) return;
+
+            mobileHvacJack.hapticFeedback('light');
+            addMobileMessage(message, 'user');
+            input.value = '';
+            input.style.height = 'auto';
+
+            try {
+                const response = await mobileHvacJack.processUserInput(message);
+                addMobileMessage(response.text, 'ai');
+            } catch (error) {
+                addMobileMessage('❌ Sorry! Something went wrong. Try again?', 'ai');
+                mobileHvacJack.hapticFeedback('heavy');
+            }
+        }
+
+        function addMobileMessage(content, sender) {
+            const messagesContainer = document.getElementById('mobileMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `mobile-message ${sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = `mobile-avatar ${sender}`;
+            avatar.textContent = sender === 'user' ? '👤' : '🔧';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'mobile-message-content';
+            
+            if (sender === 'ai') {
+                let formattedContent = content
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n\n/g, '<br><br>')
+                    .replace(/\n/g, '<br>');
+                messageContent.innerHTML = formattedContent;
+            } else {
+                messageContent.textContent = content;
+            }
+            
+            if (sender === 'user') {
+                messageDiv.appendChild(messageContent);
+                messageDiv.appendChild(avatar);
+            } else {
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            mobileHvacJack.scrollToBottom();
+        }
+
+        function quickQuestion(question) {
+            document.getElementById('mobileInput').value = question;
+            sendMobileMessage();
+        }
+
+        function switchMode(mode) {
+            mobileHvacJack.switchMode(mode);
+        }
+
+        function toggleContext() {
+            const details = document.getElementById('mobileContextDetails');
+            const bar = document.getElementById('mobileContextBar');
+            
+            details.classList.toggle('show');
+            bar.classList.toggle('expanded');
+            mobileHvacJack.hapticFeedback('light');
+        }
+
+        function showMobileMenu() {
+            if (confirm('Clear conversation and start fresh?')) {
+                clearMobileConversation();
+            }
+        }
+
+        function clearMobileConversation() {
+            mobileHvacJack.conversationHistory = [];
+            mobileHvacJack.systemContext = {
+                equipmentType: null,
+                brand: null,
+                symptoms: [],
+                previousActions: [],
+                currentProblem: null
+            };
+            
+            localStorage.removeItem('hvacJackMobileConversation');
+            
+            document.getElementById('mobileMessages').innerHTML = `
+                <div class="mobile-message ai">
+                    <div class="mobile-avatar ai">🔧</div>
+                    <div class="mobile-message-content" id="mobileWelcomeMessage">
+                        ${mobileHvacJack.currentMode === 'homeowner' ? 
+                            '<strong>Hey! I\'m HVAC Jack!</strong><br><br>🏠 <strong>Homeowner Mode</strong> - I\'ll explain things simply and focus on safe DIY steps.<br><br>💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br><strong>What\'s wrong with your heating or cooling?</strong>' :
+                            '<strong>HVAC Jack - Technician Mode</strong><br><br>🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>💭 <strong>Conversation Memory</strong> - I\'ll build on our diagnostic history.<br><br><strong>What system are you diagnosing? Include model info and current readings.</strong>'
+                        }
+                    </div>
+                </div>
+            `;
+            
+            mobileHvacJack.updateMobileMemoryDisplay();
+            mobileHvacJack.hapticFeedback('success');
+        }
+    </script>
+</body>
+</html>
