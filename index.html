@@ -6,6 +6,25 @@
     <title>LARK Labs HVAC Tools & Training – Free Resources for Canadian Gas Technicians</title>
     <meta name="description" content="LARK Labs offers free professional-grade HVAC tools, calculators, and certification training for Canadian gas technicians, students, and educators. Access AI-powered diagnostics, TSSA exam simulators, and more—built by industry experts.">
     <meta name="keywords" content="CSA B149.1 study guide, TSSA G2 practice exam, HVAC certification prep Canada, free HVAC calculators, Gas Technician 2 training, Gas Technician 3 training, HVAC field tools app, HVAC troubleshooting assistant, Canadian gas technician certification">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="LARK Labs">
+    <link rel="canonical" href="https://larklabs.ca/">
+    
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Free HVAC Tools & Canadian Gas Technician Training - LARK Labs">
+    <meta property="og:description" content="Professional-grade HVAC calculators, TSSA G2 & G3 exam simulators, and CSA B149.1 study guides - completely free for Canadian HVAC professionals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://larklabs.ca/">
+    <meta property="og:image" content="https://larklabs.ca/logo.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free HVAC Tools & Canadian Gas Technician Training">
+    <meta name="twitter:description" content="Professional-grade HVAC calculators and certification training for Canadian gas technicians.">
+    <meta name="twitter:image" content="https://larklabs.ca/logo.png">
+    
     <style>
         * {
             margin: 0;
@@ -745,28 +764,44 @@
                 font-size: 2.5rem;
             }
         }
+
+        /* Breadcrumb Styles */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
             <div class="logo">
-                <img src="logo.png" alt="LARK Labs logo - Free HVAC tools and Canadian gas technician training" style="height: 60px; width: auto;">
+                <img src="logo.png" alt="LARK Labs logo - Professional HVAC tools and training for Canadian gas technicians" style="height: 60px; width: auto;">
             </div>
             
             <!-- Mobile menu toggle button -->
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle mobile navigation menu">
                 ☰
             </button>
             
             <ul class="nav-links" id="navLinks">
                 <li><a onclick="showSection('home'); closeMobileMenu();" class="active">Home</a></li>
-                <li><a onclick="showSection('tools'); closeMobileMenu();">Tools</a></li>
-                <li><a onclick="showSection('training'); closeMobileMenu();">Training</a></li>
-                <li><a onclick="showSection('downloads'); closeMobileMenu();">Downloads</a></li>
-                <li><a href="community.html">Community</a></li>
-                <li><a onclick="showSection('resources'); closeMobileMenu();">Resources</a></li>
-                <li><a onclick="showSection('about'); closeMobileMenu();">About</a></li>
+                <li><a onclick="showSection('tools'); closeMobileMenu();">Professional HVAC Tools</a></li>
+                <li><a onclick="showSection('training'); closeMobileMenu();">TSSA Certification Training</a></li>
+                <li><a onclick="showSection('downloads'); closeMobileMenu();">Free Study Downloads</a></li>
+                <li><a href="community.html">Canadian HVAC Community</a></li>
+                <li><a onclick="showSection('resources'); closeMobileMenu();">CSA B149.1 Resources</a></li>
+                <li><a onclick="showSection('about'); closeMobileMenu();">About LARK Labs</a></li>
             </ul>
         </nav>
     </header>
@@ -778,12 +813,17 @@
                 <div class="container">
                     <h1>Free HVAC Tools & Canadian Gas Technician Training</h1>
                     <p>Professional-grade calculators, TSSA G2 & G3 exam simulators, CSA B149.1 study guides, and certification training resources - completely free for Canadian HVAC technicians, students, and educators</p>
-                    <a href="#" class="cta-button" onclick="showSection('tools')">Browse HVAC Tools</a>
-                    <a href="#" class="cta-button secondary" onclick="showSection('downloads')">Free Downloads</a>
+                    <a href="#" class="cta-button" onclick="showSection('tools')" aria-label="Browse professional HVAC tools and calculators">Browse HVAC Tools</a>
+                    <a href="#" class="cta-button secondary" onclick="showSection('downloads')" aria-label="Download free HVAC study materials">Free Downloads</a>
                 </div>
             </div>
 
             <div class="container main-content">
+                <!-- Breadcrumb Navigation -->
+                <nav class="breadcrumb" aria-label="Breadcrumb navigation">
+                    <a href="/">Home</a> > Free HVAC Tools & Training
+                </nav>
+
                 <!-- NEW: CSA B149.1 Study Guide Section -->
                 <section class="study-guide-section">
                     <h2>CSA B149.1 Study Guide for Canadian Gas Technicians</h2>
@@ -797,7 +837,7 @@
                         <li>✔️ Get tips from experienced Canadian HVAC educators</li>
                     </ul>
                     <div style="text-align: center;">
-                        <a href="https://codecompass-api.vercel.app/" target="_blank" class="cta-button">Access Code Compass Now</a>
+                        <a href="https://codecompass-api.vercel.app/" target="_blank" class="cta-button external-link" aria-label="Access Code Compass CSA B149.1 search tool">Access Code Compass Now</a>
                     </div>
                 </section>
 
@@ -811,14 +851,14 @@
                 <div class="tools-grid" style="margin-bottom: 2rem;">
                     <div class="tool-card revolutionary-tool" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto;">
                         <div class="new-badge revolutionary-badge">REVOLUTIONARY</div>
-                        <div class="tool-icon revolutionary-icon">🤖</div>
+                        <div class="tool-icon revolutionary-icon" role="img" aria-label="AI robot icon">🤖</div>
                         <h3 style="text-align: center; font-size: 1.8rem;">AI HVAC Troubleshooting Assistant - Coming Q4 2025</h3>
                         <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">Revolutionary diagnostic tool providing detailed sequence of operations, step-by-step troubleshooting guides, and comprehensive fault analysis for all HVAC makes and models.</p>
                         <div class="coming-soon-preview">
                             <div class="preview-screens">
-                                <div class="preview-screen">📱</div>
-                                <div class="preview-screen">💻</div>
-                                <div class="preview-screen">🔧</div>
+                                <div class="preview-screen" role="img" aria-label="Mobile app preview">📱</div>
+                                <div class="preview-screen" role="img" aria-label="Desktop app preview">💻</div>
+                                <div class="preview-screen" role="img" aria-label="Field tool preview">🔧</div>
                             </div>
                             <p style="font-size: 1rem; color: #e74c3c; font-weight: bold; margin: 1rem 0; text-align: center;">🚀 Game-Changing HVAC Technology - Beta Testing Begins Q4 2025</p>
                         </div>
@@ -829,26 +869,26 @@
                 </div>
 
                 <div class="tools-grid">
-                    <div class="tool-card" onclick="showSection('tools')">
-                        <div class="tool-icon">🧮</div>
+                    <div class="tool-card" onclick="showSection('tools')" role="button" tabindex="0" aria-label="Access professional HVAC calculators">
+                        <div class="tool-icon" role="img" aria-label="Calculator icon">🧮</div>
                         <h3>Professional HVAC Calculators</h3>
                         <p>Load calculations, unit conversions, and refrigeration P-T charts for Canadian HVAC technicians</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="showSection('training')">
-                        <div class="tool-icon">🎓</div>
+                    <div class="tool-card" onclick="showSection('training')" role="button" tabindex="0" aria-label="Access TSSA practice exams">
+                        <div class="tool-icon" role="img" aria-label="Graduate cap icon">🎓</div>
                         <h3>TSSA G2 & G3 Practice Exams</h3>
                         <p>Complete exam simulators to help you pass your Canadian Gas Technician certification</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="window.location.href='community.html'">
-                        <div class="tool-icon">💬</div>
+                    <div class="tool-card" onclick="window.location.href='community.html'" role="button" tabindex="0" aria-label="Join Canadian HVAC community">
+                        <div class="tool-icon" role="img" aria-label="Chat bubble icon">💬</div>
                         <h3>Canadian HVAC Community</h3>
                         <p>Connect with other Canadian technicians and students to share knowledge and experience</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="showSection('resources')">
-                        <div class="tool-icon">📚</div>
+                    <div class="tool-card" onclick="showSection('resources')" role="button" tabindex="0" aria-label="Access CSA B149.1 code search">
+                        <div class="tool-icon" role="img" aria-label="Books icon">📚</div>
                         <h3>CSA B149.1 Code Search Tool</h3>
                         <p>Search through Canadian gas codes, CSA B149.1, TSSA regulations, and safety standards</p>
                         <span class="tool-status status-available">Available Now</span>
@@ -861,22 +901,22 @@
                     
                     <div class="faq-item">
                         <div class="faq-question">How do I study for the TSSA G2 exam?</div>
-                        <div class="faq-answer">Our TSSA G2 practice exam simulator provides 500+ questions with detailed explanations, covering all certification topics. Combined with our CSA B149.1 study guide and Code Compass tool, you'll have comprehensive preparation for your Gas Technician 2 certification.</div>
+                        <div class="faq-answer">Our TSSA G2 practice exam simulator provides 500+ questions with detailed explanations, covering all certification topics. Combined with our CSA B149.1 study guide and <a href="https://codecompass-api.vercel.app/" class="external-link">Code Compass tool</a>, you'll have comprehensive preparation for your Gas Technician 2 certification.</div>
                     </div>
 
                     <div class="faq-item">
                         <div class="faq-question">What's the best free HVAC calculator for Canadian standards?</div>
-                        <div class="faq-answer">Our HVAC Pro Tools app includes professional-grade calculators specifically designed for Canadian HVAC work, including heat load calculations with Canadian climate data, refrigeration P-T charts for all common refrigerants, and unit converters for imperial/metric systems.</div>
+                        <div class="faq-answer">Our <a href="#" onclick="showSection('tools')">HVAC Pro Tools</a> app includes professional-grade calculators specifically designed for Canadian HVAC work, including heat load calculations with Canadian climate data, refrigeration P-T charts for all common refrigerants, and unit converters for imperial/metric systems.</div>
                     </div>
 
                     <div class="faq-item">
                         <div class="faq-question">Are these tools suitable for HVAC students and educators?</div>
-                        <div class="faq-answer">Absolutely! All our tools are designed for students, working technicians, and educators. They're used in Canadian HVAC programs and are completely free for educational use. Our training modules align with CSA certification requirements.</div>
+                        <div class="faq-answer">Absolutely! All our tools are designed for students, working technicians, and educators. They're used in Canadian HVAC programs and are completely free for educational use. Our <a href="#" onclick="showSection('training')">training modules</a> align with CSA certification requirements.</div>
                     </div>
 
                     <div class="faq-item">
                         <div class="faq-question">How do I prepare for the CSA B149.1 exam?</div>
-                        <div class="faq-answer">Use our Code Compass tool to search and study CSA B149.1 regulations, combined with our comprehensive chapter review questions covering all units from safety protocols to advanced piping systems and appliance installation.</div>
+                        <div class="faq-answer">Use our <a href="https://codecompass-api.vercel.app/" class="external-link">Code Compass tool</a> to search and study CSA B149.1 regulations, combined with our comprehensive chapter review questions covering all units from safety protocols to advanced piping systems and appliance installation.</div>
                     </div>
 
                     <div class="faq-item">
@@ -889,8 +929,8 @@
                     <h3>Stay Updated with LARK Labs</h3>
                     <p>Get notified when new HVAC tools, training modules, and certification resources are released</p>
                     <div class="newsletter-form">
-                        <input type="email" placeholder="Enter your email for HVAC updates">
-                        <button type="submit">Subscribe</button>
+                        <input type="email" placeholder="Enter your email for HVAC updates" aria-label="Email address for newsletter subscription">
+                        <button type="submit" aria-label="Subscribe to LARK Labs newsletter">Subscribe</button>
                     </div>
                 </div>
             </div>
@@ -903,7 +943,7 @@
         <div class="container">
             <p>&copy; 2025 LARK Labs - Free HVAC Tools & Training Resources for Canadian Gas Technicians</p>
             <p>Empowering Canadian HVAC professionals with innovative technology solutions</p>
-            <p>Contact: <a href="mailto:lark_labs@outlook.com" style="color: #3498db;">lark_labs@outlook.com</a></p>
+            <p>Contact: <a href="mailto:lark_labs@outlook.com" style="color: #3498db;" aria-label="Email LARK Labs">lark_labs@outlook.com</a></p>
         </div>
     </footer>
 
@@ -1001,6 +1041,41 @@
     }
     </script>
 
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "LARK Labs",
+      "url": "https://larklabs.ca",
+      "logo": "https://larklabs.ca/logo.png",
+      "description": "Free professional-grade HVAC tools and training for Canadian gas technicians",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "",
+        "contactType": "Customer Service",
+        "email": "lark_labs@outlook.com"
+      },
+      "sameAs": []
+    }
+    </script>
+
+    <!-- Website Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "LARK Labs",
+      "url": "https://larklabs.ca",
+      "description": "Free HVAC tools and Canadian gas technician training resources",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://larklabs.ca/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
     <script>
         // Mobile menu functionality
         function toggleMobileMenu() {
@@ -1021,6 +1096,13 @@
             
             if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
+            }
+        });
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeMobileMenu();
             }
         });
 
@@ -1078,7 +1160,7 @@
                             return;
                         }
                         
-                        // Save email to localStorage (THIS IS THE NEW PART)
+                        // Save email to localStorage
                         saveEmailToList(email, 'newsletter-signup');
                         
                         // Show success message
@@ -1096,6 +1178,14 @@
                 });
                 card.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateY(0) scale(1)';
+                });
+
+                // Keyboard support for tool cards
+                card.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
                 });
             });
         }
@@ -1129,4 +1219,5 @@
     </script>
 </body>
 </html>
+
 
