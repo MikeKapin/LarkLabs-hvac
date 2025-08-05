@@ -475,7 +475,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Navigation Enhancements */
+        /* Navigation */
         .navigation {
             display: flex;
             justify-content: space-between;
@@ -483,18 +483,6 @@
             margin-top: 40px;
             padding-top: 30px;
             border-top: 2px solid #e9ecef;
-        }
-
-        .nav-center {
-            flex: 1;
-            text-align: center;
-        }
-
-        .nav-center span {
-            background: rgba(102, 126, 234, 0.1);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9em;
         }
 
         .btn {
@@ -1072,14 +1060,7 @@
                     </button>
                     <p class="start-note">Start your comprehensive Canadian A2L refrigerant safety certification journey</p>
                 </div>
-
-                <!-- Navigation for main page -->
-                <div class="navigation" style="justify-content: center;">
-                    <button class="btn" onclick="startCourse()">Start Course →</button>
-                <!-- Navigation for certificate page -->
-                <div class="navigation" style="justify-content: center; margin-top: 30px;">
-                    <button class="btn" onclick="previousModule()" style="background: #6c757d;">← Back to Final Assessment</button>
-                </div>
+            </div>
         </div>
 
         <!-- Training Modules -->
@@ -1222,11 +1203,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="goToMainPage()" style="background: #6c757d;">← Back to Course Overview</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 1 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Safety Considerations →</button>
+                    <div></div>
+                    <button class="btn" onclick="nextModule()">Continue to Safety Considerations →</button>
                 </div>
             </div>
 
@@ -1335,11 +1313,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Introduction</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 2 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Tools & Equipment →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Introduction</button>
+                    <button class="btn" onclick="nextModule()">Continue to Tools & Equipment →</button>
                 </div>
             </div>
 
@@ -1414,11 +1389,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Safety</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 3 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Refrigerant Properties →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Safety</button>
+                    <button class="btn" onclick="nextModule()">Continue to Refrigerant Properties →</button>
                 </div>
             </div>
 
@@ -1525,11 +1497,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Tools</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 4 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Pressure Management →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Tools</button>
+                    <button class="btn" onclick="nextModule()">Continue to Pressure Management →</button>
                 </div>
             </div>
 
@@ -1590,11 +1559,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Properties</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 5 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Installation Methods →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Properties</button>
+                    <button class="btn" onclick="nextModule()">Continue to Installation Methods →</button>
                 </div>
             </div>
 
@@ -1667,11 +1633,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Pressure Management</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 6 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Canadian Regulations →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Pressure Management</button>
+                    <button class="btn" onclick="nextModule()">Continue to Canadian Regulations →</button>
                 </div>
             </div>
 
@@ -1740,11 +1703,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Installation</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 7 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Leak Detection →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Installation</button>
+                    <button class="btn" onclick="nextModule()">Continue to Leak Detection →</button>
                 </div>
             </div>
 
@@ -1820,11 +1780,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Regulations</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 8 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Emergency Response →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Regulations</button>
+                    <button class="btn" onclick="nextModule()">Continue to Emergency Response →</button>
                 </div>
             </div>
 
@@ -1902,11 +1859,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Leak Detection</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 9 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Troubleshooting →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Leak Detection</button>
+                    <button class="btn" onclick="nextModule()">Continue to Troubleshooting →</button>
                 </div>
             </div>
 
@@ -1989,11 +1943,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Emergency Response</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 10 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Environmental Impact →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Emergency Response</button>
+                    <button class="btn" onclick="nextModule()">Continue to Environmental Impact →</button>
                 </div>
             </div>
 
@@ -2062,11 +2013,8 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Troubleshooting</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 11 of 12</span>
-                    </div>
-                    <button class="btn" onclick="nextModule()">Next: Final Assessment →</button>
+                    <button class="btn" onclick="previousModule()">← Back to Troubleshooting</button>
+                    <button class="btn" onclick="nextModule()">Continue to Final Assessment →</button>
                 </div>
             </div>
 
@@ -2119,10 +2067,7 @@
                 </div>
 
                 <div class="navigation">
-                    <button class="btn" onclick="previousModule()">← Previous: Environmental Impact</button>
-                    <div class="nav-center" style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #666; font-weight: bold;">Module 12 of 12</span>
-                    </div>
+                    <button class="btn" onclick="previousModule()">← Back to Environmental Impact</button>
                     <button class="btn" onclick="completeCourse()">Generate Certificate →</button>
                 </div>
             </div>
@@ -2288,18 +2233,6 @@
             document.getElementById('trainingContent').style.display = 'block';
             updateProgress();
             startTime = new Date();
-        }
-
-        function goToMainPage() {
-            document.getElementById('trainingContent').style.display = 'none';
-            document.getElementById('mainPage').style.display = 'block';
-            currentModule = 1;
-            // Reset all modules
-            document.querySelectorAll('.module').forEach(module => {
-                module.classList.remove('active');
-            });
-            document.getElementById('module1').classList.add('active');
-            updateProgress();
         }
 
         function nextModule() {
