@@ -10,7 +10,10 @@
     <!-- SEO Enhancements -->
     <link rel="canonical" href="https://larklabs.org/" />
     <meta name="robots" content="index, follow">
+    <meta name="author" content="LARK Labs - HVAC Training and Tools">
+    <meta name="theme-color" content="#3498db">
     <link rel="icon" type="image/png" href="https://larklabs.org/favicon.png" />
+    <link rel="apple-touch-icon" href="https://larklabs.org/apple-touch-icon.png" />
     
     <!-- Open Graph for Facebook/LinkedIn -->
     <meta property="og:title" content="Free HVAC Tools & Canadian Gas Technician Training - LARK Labs">
@@ -600,7 +603,43 @@
             line-height: 1.6;
         }
 
-        /* Footer */
+        /* Accessibility Improvements */
+        *:focus {
+            outline: 2px solid #3498db;
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .tool-card {
+                border: 2px solid #ffffff;
+            }
+            
+            .cta-button {
+                border: 2px solid #ffffff;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
         footer {
             background: rgba(0, 0, 0, 0.3);
             padding: 2rem 0;
@@ -772,7 +811,8 @@
             </div>
             
             <!-- Mobile menu toggle button -->
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="sr-only">Open navigation menu</span>
                 ☰
             </button>
             
@@ -847,26 +887,26 @@
                 </div>
 
                 <div class="tools-grid">
-                    <div class="tool-card" onclick="showSection('tools')">
-                        <div class="tool-icon">🧮</div>
+                    <div class="tool-card" onclick="showSection('tools')" role="button" tabindex="0" aria-label="View Professional HVAC Calculators">
+                        <div class="tool-icon" aria-hidden="true">🧮</div>
                         <h3>Professional HVAC Calculators</h3>
                         <p>Load calculations, unit conversions, and refrigeration P-T charts for Canadian HVAC technicians</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="showSection('training')">
-                        <div class="tool-icon">🎓</div>
+                    <div class="tool-card" onclick="showSection('training')" role="button" tabindex="0" aria-label="Access TSSA G2 and G3 Practice Exams">
+                        <div class="tool-icon" aria-hidden="true">🎓</div>
                         <h3>TSSA G2 & G3 Practice Exams</h3>
                         <p>Complete exam simulators to help you pass your Canadian Gas Technician certification</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="window.location.href='community.html'">
-                        <div class="tool-icon">💬</div>
+                    <div class="tool-card" onclick="window.location.href='community.html'" role="button" tabindex="0" aria-label="Join Canadian HVAC Community">
+                        <div class="tool-icon" aria-hidden="true">💬</div>
                         <h3>Canadian HVAC Community</h3>
                         <p>Connect with other Canadian technicians and students to share knowledge and experience</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="showSection('resources')">
-                        <div class="tool-icon">📚</div>
+                    <div class="tool-card" onclick="showSection('resources')" role="button" tabindex="0" aria-label="Search CSA B149.1 Code">
+                        <div class="tool-icon" aria-hidden="true">📚</div>
                         <h3>CSA B149.1 Code Search Tool</h3>
                         <p>Search through Canadian gas codes, CSA B149.1, TSSA regulations, and safety standards</p>
                         <span class="tool-status status-available">Available Now</span>
@@ -1538,7 +1578,15 @@
         // Mobile menu functionality
         function toggleMobileMenu() {
             const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const isExpanded = navLinks.classList.contains('active');
+            
             navLinks.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            
+            // Update screen reader text
+            const srText = menuToggle.querySelector('.sr-only');
+            srText.textContent = isExpanded ? 'Open navigation menu' : 'Close navigation menu';
         }
 
         function closeMobileMenu() {
@@ -1630,6 +1678,14 @@
                 card.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateY(0) scale(1)';
                 });
+                
+                // Add keyboard support for tool cards
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
             });
         }
 
@@ -1672,3 +1728,4 @@
     </script>
 </body>
 </html>
+
