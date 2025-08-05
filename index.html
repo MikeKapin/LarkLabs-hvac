@@ -781,6 +781,37 @@
             line-height: 1.6;
         }
 
+        /* Social Media Links Styles */
+        .social-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            margin: 0 15px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 50%;
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px) scale(1.1);
+            background: rgba(52, 152, 219, 0.2);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .social-links img {
+            vertical-align: middle;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover img {
+            filter: brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(180deg);
+        }
+
         /* Accessibility Improvements */
         *:focus {
             outline: 2px solid #3498db;
@@ -818,6 +849,7 @@
                 transition-duration: 0.01ms !important;
             }
         }
+        
         footer {
             background: rgba(0, 0, 0, 0.3);
             padding: 2rem 0;
@@ -942,6 +974,12 @@
                 padding: 12px 20px;
                 font-size: 0.9rem;
             }
+
+            /* Mobile social links */
+            .social-links a {
+                margin: 0 10px;
+                padding: 8px;
+            }
         }
 
         /* Extra small mobile devices */
@@ -977,6 +1015,16 @@
 
             .tool-icon {
                 font-size: 2.5rem;
+            }
+
+            .social-links a {
+                margin: 0 8px;
+                padding: 6px;
+            }
+
+            .social-links img {
+                width: 28px;
+                height: 28px;
             }
         }
     </style>
@@ -1636,9 +1684,19 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 LARK Labs - Free HVAC Tools & Training Resources for Canadian Gas Technicians</p>
-            <p>Empowering Canadian HVAC professionals with innovative technology solutions</p>
-            <p>Contact: <a href="mailto:lark_labs@outlook.com" style="color: #3498db;">lark_labs@outlook.com</a></p>
+            <!-- Social Media Links -->
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61578856650263" target="_blank" rel="noopener" title="Follow LARK Labs on Facebook">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="32" height="32">
+                </a>
+                <a href="https://www.linkedin.com/in/michael-kapin-b38749370/" target="_blank" rel="noopener" title="Connect with LARK Labs on LinkedIn">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" width="32" height="32">
+                </a>
+                <a href="https://www.youtube.com/@YOUR_YOUTUBE_CHANNEL" target="_blank" rel="noopener" title="Subscribe to LARK Labs on YouTube">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube" width="32" height="32">
+                </a>
+            </div>
+            
         </div>
     </footer>
 
