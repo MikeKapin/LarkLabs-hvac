@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Training Blog - Canadian Gas Technician Study Guides & Tips | LARK Labs</title>
+    <meta name="description" content="Expert guides for Canadian gas technicians. Free TSSA G3 study resources, G2 exam strategies, CSA B149.1 tips, and HVAC industry insights from experienced instructors.">
+    <meta name="keywords" content="TSSA exam guides, Canadian gas technician blog, HVAC training articles, CSA B149.1 study tips, G2 G3 certification">
+    
+    <!-- SEO Meta Tags -->
+    <link rel="canonical" href="https://larklabs.org/blog/" />
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="LARK Labs - HVAC Training and Tools">
+    <meta name="theme-color" content="#3498db">
+    <link rel="icon" type="image/png" href="../favicon.png" />
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="HVAC Training Blog - Canadian Gas Technician Study Guides">
+    <meta property="og:description" content="Expert guides and study resources for Canadian gas technicians including TSSA exam preparation and HVAC industry insights.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://larklabs.org/blog/">
+    <meta property="og:image" content="https://larklabs.org/logo.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(52, 152, 219, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Blog Posts Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(52, 152, 219, 0.2);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+
+        .blog-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-badge.free {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+        }
+
+        .blog-badge.premium {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .blog-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .blog-card-meta {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card-content {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .blog-card p {
+            color: #bdc3c7;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .blog-card-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more {
+            color: #3498db;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .read-time {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-section h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #3498db;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 0 10px 10px 0;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="../" class="logo">LARK Labs</a>
+                <a href="../" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <h1 class="page-title">HVAC Training Blog</h1>
+            <p class="page-subtitle">
+                Expert guides, study strategies, and industry insights for Canadian gas technicians and HVAC professionals
+            </p>
+
+            <div class="blog-grid">
+                <!-- G3 Exam Guide -->
+                <a href="tssa-g3-exam-guide.html" class="blog-card">
+                    <div class="blog-card-header">
+                        <span class="blog-badge free">🆓 100% Free</span>
+                        <h2>Free TSSA G3 Exam Study Guide</h2>
+                        <div class="blog-card-meta">Complete Preparation for Ontario Gas Technician 3 Certification</div>
+                    </div>
+                    <div class="blog-card-content">
+                        <p>Everything you need to pass the TSSA G3 exam - completely free! Includes practice tests, chapter reviews for all 9 units, study strategies, and access to professional HVAC tools.</p>
+                        <ul style="color: #27ae60; font-size: 0.95rem; margin-left: 1rem;">
+                            <li>Free practice exam simulator</li>
+                            <li>All 9 unit chapter reviews</li>
+                            <li>CSA B149.1 code search tool</li>
+                            <li>6-week study plan</li>
+                        </ul>
+                    </div>
+                    <div class="blog-card-footer">
+                        <span class="read-more">Read Complete Guide →</span>
+                        <span class="read-time">10 min read</span>
+                    </div>
+                </a>
+
+                <!-- G2 Exam Guide -->
+                <a href="tssa-g2-exam-guide.html" class="blog-card">
+                    <div class="blog-card-header">
+                        <span class="blog-badge premium">💎 Premium Guide</span>
+                        <h2>How to Pass the TSSA G2 Exam in Ontario</h2>
+                        <div class="blog-card-meta">Proven Strategies for Canadian Gas Technicians</div>
+                    </div>
+                    <div class="blog-card-content">
+                        <p>Advanced study strategies for G2 certification with access to our premium practice exam system. Detailed preparation guide from experienced instructors with 20+ years of field experience.</p>
+                        <ul style="color: #f39c12; font-size: 0.95rem; margin-left: 1rem;">
+                            <li>500+ premium practice questions</li>
+                            <li>Advanced study modules (Units 10-24)</li>
+                            <li>Video tutorials and expert support</li>
+                            <li>8-week preparation timeline</li>
+                        </ul>
+                    </div>
+                    <div class="blog-card-footer">
+                        <span class="read-more">Read Study Guide →</span>
+                        <span class="read-time">12 min read</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <h3>🚀 Start Your HVAC Journey Today</h3>
+                <p>Access professional-grade tools, practice exams, and join thousands of Canadian gas technicians in our community</p>
+                <a href="../" class="cta-button">Explore Free Tools</a>
+                <a href="../community.html" class="cta-button">Join Community</a>
+            </div>
+
+            <!-- Coming Soon Section -->
+            <div style="text-align: center; margin: 3rem 0; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 15px;">
+                <h3 style="color: #3498db; margin-bottom: 1rem;">📰 More Guides Coming Soon</h3>
+                <p style="color: #bdc3c7; margin-bottom: 1.5rem;">We're working on additional study guides and industry insights:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; text-align: left;">
+                    <div style="padding: 1rem; background: rgba(52, 152, 219, 0.08); border-radius: 8px;">
+                        <h4 style="color: #3498db; margin-bottom: 0.5rem;">📋 CSA B149.1 Code Changes 2025</h4>
+                        <p style="font-size: 0.9rem; color: #bdc3c7;">What G2 and G3 technicians need to know</p>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(52, 152, 219, 0.08); border-radius: 8px;">
+                        <h4 style="color: #3498db; margin-bottom: 0.5rem;">🔧 HVAC Load Calculation Guide</h4>
+                        <p style="font-size: 0.9rem; color: #bdc3c7;">Mastering residential and commercial sizing</p>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(52, 152, 219, 0.08); border-radius: 8px;">
+                        <h4 style="color: #3498db; margin-bottom: 0.5rem;">🌬️ A2L Refrigerant Safety</h4>
+                        <p style="font-size: 0.9rem; color: #bdc3c7;">Complete guide to mildly flammable refrigerants</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
