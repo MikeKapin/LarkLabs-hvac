@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://larklabs.org/</loc>
     <priority>1.0</priority>
@@ -12,7 +10,6 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
-  <!-- Add additional URLs for major static pages/tools if accessible as separate URLs: -->
   <url>
     <loc>https://larklabs.org/hvac-load-calculator.html</loc>
     <priority>0.8</priority>
@@ -48,5 +45,5 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
-  <!-- Repeat for any other public-facing, SEO-valuable HTML files -->
+  <!-- Add more URLs for any additional public-facing, SEO-relevant HTML pages -->
 </urlset>
