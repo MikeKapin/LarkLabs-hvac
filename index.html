@@ -27,6 +27,184 @@
     <meta name="twitter:title" content="Free HVAC Tools & Canadian Gas Technician Training">
     <meta name="twitter:description" content="Professional-grade HVAC calculators and certification training for Canadian gas technicians.">
     <meta name="twitter:image" content="https://larklabs.org/logo.png">
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://larklabs.org/"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "LARK Labs",
+      "url": "https://larklabs.org",
+      "logo": "https://larklabs.org/logo.png",
+      "description": "Free professional-grade HVAC tools and training for Canadian gas technicians",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "lark_labs@outlook.com",
+        "contactType": "Customer Service"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "HRAC Program Coordinator",
+        "jobTitle": "Program Coordinator at Fanshawe College"
+      },
+      "sameAs": [
+        "https://larklabs.org"
+      ]
+    }
+    </script>
+
+    <!-- Website Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "LARK Labs",
+      "url": "https://larklabs.org",
+      "description": "Free professional-grade HVAC tools, calculators, and certification training for Canadian gas technicians, students, and educators",
+      "keywords": "HVAC tools, Canadian gas technician training, TSSA G2 exam, TSSA G3 exam, CSA B149.1, HVAC calculators, free HVAC resources",
+      "inLanguage": "en-CA",
+      "copyrightYear": "2025",
+      "creator": {
+        "@type": "Organization",
+        "name": "LARK Labs"
+      }
+    }
+    </script>
+
+    <!-- Software Application Schemas for Key Tools -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "Code Compass",
+      "operatingSystem": "Web",
+      "applicationCategory": "HVAC Tool",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CAD"
+      },
+      "description": "CSA B149.1 code search tool for Canadian gas technicians and HVAC professionals",
+      "url": "https://codecompass-api.vercel.app/",
+      "creator": {
+        "@type": "Organization",
+        "name": "LARK Labs"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "HVAC Pro Tools",
+      "operatingSystem": "Web",
+      "applicationCategory": "HVAC Calculator",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CAD"
+      },
+      "description": "Professional-grade HVAC calculators and tools for Canadian technicians including heat load calculations, P-T charts, and unit converters",
+      "creator": {
+        "@type": "Organization",
+        "name": "LARK Labs"
+      }
+    }
+    </script>
+
+    <!-- Course Schema for Training Programs -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "TSSA G2 Gas Technician Certification Training",
+      "description": "Comprehensive training program for Gas Technician 2 certification including CSA B149.1 code training, practice exams, and hands-on learning modules.",
+      "provider": {
+        "@type": "Organization",
+        "name": "LARK Labs",
+        "url": "https://larklabs.org"
+      },
+      "courseCode": "G2-CERT",
+      "educationalLevel": "Professional Certification",
+      "teaches": [
+        "CSA B149.1 Gas Code",
+        "Advanced Piping Systems",
+        "Gas Appliance Installation",
+        "Safety Protocols",
+        "TSSA Regulations"
+      ],
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "courseWorkload": "P4W",
+        "instructor": {
+          "@type": "Person",
+          "name": "HRAC Program Coordinator"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "79.99",
+        "priceCurrency": "CAD",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "TSSA G3 Gas Technician Certification Training",
+      "description": "Free comprehensive training program for Gas Technician 3 certification including practice exams, study guides, and interactive learning modules.",
+      "provider": {
+        "@type": "Organization",
+        "name": "LARK Labs",
+        "url": "https://larklabs.org"
+      },
+      "courseCode": "G3-CERT",
+      "educationalLevel": "Professional Certification",
+      "teaches": [
+        "Gas Safety Protocols",
+        "Basic Gas Piping",
+        "Gas Appliance Fundamentals",
+        "Customer Relations",
+        "TSSA Regulations"
+      ],
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "courseWorkload": "P2W",
+        "instructor": {
+          "@type": "Person",
+          "name": "HRAC Program Coordinator"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CAD",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+    </script>
     
     <style>
         * {
@@ -1464,7 +1642,7 @@
         </div>
     </footer>
 
-    <!-- Schema Markup for SEO -->
+    <!-- FAQ Schema for SEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1514,71 +1692,6 @@
     }
     </script>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org/",
-      "@type": "SoftwareApplication",
-      "name": "Code Compass",
-      "operatingSystem": "Web",
-      "applicationCategory": "HVAC Tool",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "CAD"
-      },
-      "description": "CSA B149.1 code search tool for Canadian gas technicians and HVAC professionals",
-      "url": "https://codecompass-api.vercel.app/",
-      "creator": {
-        "@type": "Organization",
-        "name": "LARK Labs"
-      }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org/",
-      "@type": "SoftwareApplication",
-      "name": "HVAC Pro Tools",
-      "operatingSystem": "Web",
-      "applicationCategory": "HVAC Calculator",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "CAD"
-      },
-      "description": "Professional-grade HVAC calculators and tools for Canadian technicians including heat load calculations, P-T charts, and unit converters",
-      "creator": {
-        "@type": "Organization",
-        "name": "LARK Labs"
-      }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "LARK Labs",
-      "url": "https://larklabs.org",
-      "logo": "https://larklabs.org/logo.png",
-      "description": "Free professional-grade HVAC tools and training for Canadian gas technicians",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "lark_labs@outlook.com",
-        "contactType": "Customer Service"
-      },
-      "founder": {
-        "@type": "Person",
-        "name": "HRAC Program Coordinator",
-        "jobTitle": "Program Coordinator at Fanshawe College"
-      },
-      "sameAs": [
-        "https://larklabs.org"
-      ]
-    }
-    </script>
-
     <script>
         // Mobile menu functionality
         function toggleMobileMenu() {
@@ -1596,7 +1709,9 @@
 
         function closeMobileMenu() {
             const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
             navLinks.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
         }
 
         // Close mobile menu when clicking outside
@@ -1607,6 +1722,7 @@
             
             if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
             }
         });
 
@@ -1719,6 +1835,9 @@
             
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Close mobile menu if open
+            closeMobileMenu();
         }
 
         // Function to show CSA Chapter Questions
