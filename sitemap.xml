@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Pages -->
   <url>
     <loc>https://larklabs.org/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://larklabs.org/community.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <!-- Blog -->
+  <url>
     <loc>https://larklabs.org/blog/</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://larklabs.org/blog/tssa-g3-exam-guide.html</loc>
-    <priority>0.9</priority>
-    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://larklabs.org/blog/tssa-g2-exam-guide.html</loc>
@@ -21,10 +23,11 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://larklabs.org/community.html</loc>
-    <priority>0.8</priority>
+    <loc>https://larklabs.org/blog/tssa-g3-exam-guide.html</loc>
+    <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <!-- Tools -->
   <url>
     <loc>https://larklabs.org/hvac-load-calculator.html</loc>
     <priority>0.8</priority>
@@ -60,5 +63,179 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
-  <!-- Add more URLs for any additional public-facing, SEO-relevant HTML pages -->
+  <!-- Training & Courses -->
+  <url>
+    <loc>https://larklabs.org/A2L_Course.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/TSSA_G3_Exam_SimulatorV3.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/g2_premium_access.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2_modules_payment.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/g2_modules_premium_access.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/index.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G3/index.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <!-- CSA G3 Chapters (Units 1-9) -->
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_1_Safety_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_2_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_3_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_4_&_4a_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_7_Customer_Relations_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_8_Intro_to_Piping_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <!-- CSA G2 Chapters (Units 10-24) -->
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_10_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_11_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_12_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_13_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_14_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_15_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_16_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_17_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_18_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_19_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_20_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_21_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_22_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_23_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/G2/CSA_Unit_24_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <!-- Resources & Downloads -->
+  <url>
+    <loc>https://larklabs.org/resources.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://larklabs.org/downloads.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <!-- About -->
+  <url>
+    <loc>https://larklabs.org/about.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
