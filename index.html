@@ -352,6 +352,23 @@
         .cta-button.secondary {
             background: linear-gradient(45deg, #27ae60, #2ecc71);
         }
+        .cta-button.beta {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            font-size: 1.1rem;
+            padding: 18px 35px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: betaPulse 2s infinite alternate;
+        }
+
+        @keyframes betaPulse {
+            0% { box-shadow: 0 15px 30px rgba(231, 76, 60, 0.3); }
+            100% { box-shadow: 0 20px 40px rgba(231, 76, 60, 0.6); }
+        }
+
+        .cta-button.beta:hover {
+            background: linear-gradient(45deg, #c0392b, #e74c3c);
+        }
 
         /* Main Content */
         .main-content {
@@ -1093,24 +1110,26 @@
                 
                 <!-- Revolutionary AI Tool Preview for Home Page -->
                 <div class="tools-grid" style="margin-bottom: 2rem;">
-                    <div class="tool-card revolutionary-tool" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto;">
-                        <div class="new-badge revolutionary-badge">REVOLUTIONARY</div>
-                        <div class="tool-icon revolutionary-icon">🤖</div>
-                        <h3 style="text-align: center; font-size: 1.8rem;">AI HVAC Troubleshooting Assistant - Coming Q4 2025</h3>
-                        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">Revolutionary diagnostic tool providing detailed sequence of operations, step-by-step troubleshooting guides, and comprehensive fault analysis for all HVAC makes and models.</p>
-                        <div class="coming-soon-preview">
-                            <div class="preview-screens">
-                                <div class="preview-screen">📱</div>
-                                <div class="preview-screen">💻</div>
-                                <div class="preview-screen">🔧</div>
-                            </div>
-                            <p style="font-size: 1rem; color: #e74c3c; font-weight: bold; margin: 1rem 0; text-align: center;">🚀 Game-Changing HVAC Technology - Beta Testing Begins Q4 2025</p>
-                        </div>
-                        <div style="text-align: center;">
-                            <span class="tool-status status-revolutionary">🚀 Revolutionary Tool - Coming Soon</span>
-                        </div>
-                    </div>
-                </div>
+                    <div class="tool-card revolutionary-tool" onclick="window.location.href='beta_landing.html'" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto; cursor: pointer;">
+    <div class="new-badge revolutionary-badge">REVOLUTIONARY</div>
+    <div class="tool-icon revolutionary-icon">🤖</div>
+    <h3 style="text-align: center; font-size: 1.8rem;">AI HVAC Troubleshooting Assistant - Coming Q4 2025</h3>
+    <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">Revolutionary diagnostic tool providing detailed sequence of operations, step-by-step troubleshooting guides, and comprehensive fault analysis for all HVAC makes and models.</p>
+    <div class="coming-soon-preview">
+        <div class="preview-screens">
+            <div class="preview-screen">📱</div>
+            <div class="preview-screen">💻</div>
+            <div class="preview-screen">🔧</div>
+        </div>
+        <p style="font-size: 1rem; color: #e74c3c; font-weight: bold; margin: 1rem 0; text-align: center;">🚀 Game-Changing HVAC Technology - Beta Testing Begins Q4 2025</p>
+    </div>
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="beta_landing.html" class="cta-button beta" onclick="event.stopPropagation();">🚀 Join the Beta Team Now!</a>
+    </div>
+    <div style="text-align: center; margin-top: 1rem;">
+        <span class="tool-status status-revolutionary">🚀 Revolutionary Tool - Coming Soon</span>
+    </div>
+</div>
 
                 <div class="tools-grid">
                     <div class="tool-card" onclick="showSection('tools')" role="button" tabindex="0" aria-label="View Professional HVAC Calculators">
@@ -1234,33 +1253,36 @@
                         <p>Advanced air property calculations and analysis for HVAC professionals</p>
                         <span class="tool-status status-available external-link">Launch Calculator</span>
                     </div>
-                    <div class="tool-card revolutionary-tool">
-                        <div class="new-badge revolutionary-badge">REVOLUTIONARY</div>
-                        <div class="tool-icon revolutionary-icon">🤖</div>
-                        <h3>AI HVAC Troubleshooting Assistant</h3>
-                        <p>Revolutionary diagnostic tool providing detailed sequence of operations, step-by-step troubleshooting guides, and comprehensive fault analysis for all HVAC makes and models. Features include flash code interpretation, common problem databases, and AI-powered diagnostic recommendations.</p>
-                        <div style="margin: 1rem 0; text-align: left;">
-                            <h4 style="color: #e74c3c; margin-bottom: 0.8rem; font-size: 1rem;">🚀 Revolutionary Features:</h4>
-                            <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
-                                <li>🔍 Universal make/model compatibility</li>
-                                <li>⚡ Real-time flash code decoder</li>
-                                <li>📋 Interactive sequence of operations</li>
-                                <li>🎯 AI-powered fault diagnosis</li>
-                                <li>📊 Performance optimization tips</li>
-                                <li>📱 Mobile-optimized interface</li>
-                                <li>🔧 Equipment-specific procedures</li>
-                            </ul>
-                        </div>
-                        <div class="coming-soon-preview">
-                            <div class="preview-screens">
-                                <div class="preview-screen">📱</div>
-                                <div class="preview-screen">💻</div>
-                                <div class="preview-screen">🔧</div>
-                            </div>
-                            <p style="font-size: 0.9rem; color: #e74c3c; font-weight: bold; margin: 1rem 0;">Beta Testing Begins Q2 2025</p>
-                        </div>
-                        <span class="tool-status status-revolutionary">🚀 Revolutionary Tool - Coming Soon</span>
-                    </div>
+                    <div class="tool-card revolutionary-tool" onclick="window.location.href='beta_landing.html'">
+    <div class="new-badge revolutionary-badge">REVOLUTIONARY</div>
+    <div class="tool-icon revolutionary-icon">🤖</div>
+    <h3>AI HVAC Troubleshooting Assistant</h3>
+    <p>Revolutionary diagnostic tool providing detailed sequence of operations, step-by-step troubleshooting guides, and comprehensive fault analysis for all HVAC makes and models. Features include flash code interpretation, common problem databases, and AI-powered diagnostic recommendations.</p>
+    <div style="margin: 1rem 0; text-align: left;">
+        <h4 style="color: #e74c3c; margin-bottom: 0.8rem; font-size: 1rem;">🚀 Revolutionary Features:</h4>
+        <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
+            <li>🔍 Universal make/model compatibility</li>
+            <li>⚡ Real-time flash code decoder</li>
+            <li>📋 Interactive sequence of operations</li>
+            <li>🎯 AI-powered fault diagnosis</li>
+            <li>🛡️ Instant warranty lookup</li>
+            <li>📊 Performance optimization tips</li>
+            <li>📱 Mobile-optimized interface</li>
+            <li>🔧 Equipment-specific procedures</li>
+        </ul>
+    </div>
+    <div class="coming-soon-preview">
+        <div class="preview-screens">
+            <div class="preview-screen">📱</div>
+            <div class="preview-screen">💻</div>
+            <div class="preview-screen">🔧</div>
+        </div>
+<p style="font-size: 0.9rem; color: #e74c3c; font-weight: bold; margin: 1rem 0;">Beta Testing Begins Q4 2025</p>    </div>
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="beta_landing.html" class="cta-button beta" onclick="event.stopPropagation();">🚀 Join the Beta Team Now!</a>
+    </div>
+    <span class="tool-status status-revolutionary">🚀 Revolutionary Tool - Coming Soon</span>
+</div>
                 </div>
             </div>
         </section>
@@ -1910,3 +1932,4 @@
     </script>
 </body>
 </html>
+
