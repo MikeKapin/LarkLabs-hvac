@@ -739,10 +739,12 @@
         window.addEventListener('appinstalled', () => {
             isInstalled = true;
             hideInstallPromotion();
+            console.log('App installed successfully');
         });
 
         // Listen for the beforeinstallprompt event
         window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('beforeinstallprompt event fired');
             // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
             // Save the event so it can be triggered later
@@ -751,26 +753,71 @@
             showInstallPromotion();
         });
 
-        function showInstallPromotion() {
-            if (!isInstalled && !localStorage.getItem('installBannerDismissed')) {
-                document.getElementById('install-banner').classList.add('show');
+        // Check if we should show install promotion on load
+        window.addEventListener('load', () => {
+            // Check if already installed (standalone mode)
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                isInstalled = true;
+                console.log('App is running in standalone mode');
+                return;
             }
-            document.getElementById('install-button').classList.add('show');
+
+            // Show install button after a short delay if not already triggered by beforeinstallprompt
+            setTimeout(() => {
+                if (!isInstalled && !deferredPrompt) {
+                    console.log('Showing install button - fallback method');
+                    document.getElementById('install-button').classList.add('show');
+                    // Show banner if not dismissed
+                    if (!localStorage.getItem('installBannerDismissed')) {
+                        document.getElementById('install-banner').classList.add('show');
+                    }
+                }
+            }, 2000);
+        });
+
+        function showInstallPromotion() {
+            console.log('showInstallPromotion called');
+            if (!isInstalled) {
+                // Show install button
+                const installBtn = document.getElementById('install-button');
+                if (installBtn) {
+                    installBtn.classList.add('show');
+                    console.log('Install button shown');
+                }
+                
+                // Show banner if not dismissed
+                if (!localStorage.getItem('installBannerDismissed')) {
+                    const installBanner = document.getElementById('install-banner');
+                    if (installBanner) {
+                        installBanner.classList.add('show');
+                        console.log('Install banner shown');
+                    }
+                }
+            }
         }
 
         function hideInstallPromotion() {
-            document.getElementById('install-banner').classList.remove('show');
-            document.getElementById('install-button').classList.remove('show');
+            console.log('hideInstallPromotion called');
+            const installBtn = document.getElementById('install-button');
+            const installBanner = document.getElementById('install-banner');
+            
+            if (installBtn) installBtn.classList.remove('show');
+            if (installBanner) installBanner.classList.remove('show');
         }
 
         function installApp() {
-            hideInstallPromotion();
+            console.log('installApp called');
             
             if (deferredPrompt) {
+                console.log('Using deferredPrompt');
+                // Hide the promotion first
+                hideInstallPromotion();
+                
                 // Show the install prompt
                 deferredPrompt.prompt();
                 // Wait for the user to respond to the prompt
                 deferredPrompt.userChoice.then((choiceResult) => {
+                    console.log('User choice:', choiceResult.outcome);
                     if (choiceResult.outcome === 'accepted') {
                         console.log('User accepted the install prompt');
                         isInstalled = true;
@@ -781,12 +828,23 @@
                     }
                     deferredPrompt = null;
                 });
-            } else if (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
-                // iOS Safari instructions
-                alert('To install this app on iOS:\n\n1. Tap the Share button below\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to confirm');
             } else {
-                // Fallback for browsers that don't support PWA installation
-                alert('This browser doesn\'t support app installation. Try using Chrome, Firefox, or Safari.');
+                console.log('No deferredPrompt available');
+                
+                // Check if we're on iOS
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                const isInStandaloneMode = ('standalone' in window.navigator) && (window.navigator.standalone);
+                
+                if (isIOS && !isInStandaloneMode) {
+                    // iOS Safari instructions
+                    alert('To install this app on iOS:\n\n1. Tap the Share button (⬆️) in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to confirm\n\nThe app will then work offline and appear on your home screen!');
+                } else if ('serviceWorker' in navigator) {
+                    // For other browsers, show general instructions
+                    alert('To install this app:\n\n• Chrome/Edge: Look for the install icon in the address bar\n• Firefox: Use "Add to Home Screen" from the menu\n• Safari: Use "Add to Home Screen" from the share menu\n\nOnce installed, the app will work offline!');
+                } else {
+                    // Fallback for browsers that don't support PWA installation
+                    alert('This browser doesn\'t fully support app installation.\n\nFor the best experience, try using:\n• Chrome\n• Firefox\n• Safari\n• Microsoft Edge');
+                }
             }
         }
 
@@ -1324,9 +1382,35 @@
             resultDiv.className = `result show ${type === 'error' ? 'error' : ''}`;
         }
 
-        // Initialize with first calculator
+        // Initialize with first calculator and check for install capability
         document.addEventListener('DOMContentLoaded', function() {
             showCalculator('leak-detector');
+            
+            // Debug: Check PWA support
+            console.log('PWA Support Check:');
+            console.log('- Service Worker:', 'serviceWorker' in navigator);
+            console.log('- Standalone mode:', window.matchMedia('(display-mode: standalone)').matches);
+            console.log('- iOS standalone:', window.navigator.standalone === true);
+            console.log('- User agent:', navigator.userAgent);
+            
+            // Force show install elements for testing (remove in production if desired)
+            setTimeout(() => {
+                if (!isInstalled) {
+                    console.log('Force showing install elements for visibility');
+                    const installBtn = document.getElementById('install-button');
+                    const installBanner = document.getElementById('install-banner');
+                    
+                    if (installBtn) {
+                        installBtn.classList.add('show');
+                        installBtn.style.display = 'flex'; // Force display
+                    }
+                    
+                    if (installBanner && !localStorage.getItem('installBannerDismissed')) {
+                        installBanner.classList.add('show');
+                        installBanner.style.display = 'flex'; // Force display
+                    }
+                }
+            }, 1000);
         });
     </script>
 </body>
