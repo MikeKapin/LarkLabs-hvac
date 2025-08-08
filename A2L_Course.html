@@ -473,21 +473,29 @@
             background: linear-gradient(135deg, #fff, #f8f9fa);
             border: 3px solid #2a5298;
             border-radius: 15px;
-            padding: 40px;
+            padding: 25px;
             text-align: center;
-            margin: 30px 0;
+            margin: 20px auto;
+            max-width: 750px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            /* Ensure it fits on 8.5x11 paper */
+            height: auto;
+            min-height: 600px;
+            max-height: 700px;
         }
 
         .certificate-header {
             color: #1e3c72;
-            font-size: 2em;
-            margin-bottom: 20px;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: bold;
         }
 
         .certificate-body {
-            font-size: 1.2em;
-            line-height: 1.6;
-            margin: 20px 0;
+            font-size: 1em;
+            line-height: 1.4;
+            margin: 15px 0;
         }
 
         .download-certificate {
@@ -1862,55 +1870,54 @@
 
                 <div id="certificateSection" style="display: none;">
                     <div class="certificate-container" id="certificateContainer">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                             <div style="text-align: left;">
                                 <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTAwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8dGV4dCB4PSI1IiB5PSIyNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFlM2M3MiI+TEFSSzwvdGV4dD4KPHRleHQgeD0iNTUiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMyYTUyOTgiPkxhYnM8L3RleHQ+Cjwvc3ZnPgo=" alt="LARK Labs Logo">
-                                <div style="font-size: 0.9em; color: #666; margin-top: 5px;">Professional HVAC Training</div>
+                                <div style="font-size: 0.8em; color: #666; margin-top: 2px;">Professional HVAC Training</div>
                             </div>
-                            <div style="text-align: right; font-size: 0.9em; color: #666;">
+                            <div style="text-align: right; font-size: 0.8em; color: #666;">
                                 <div>Certificate ID: <span id="certificateId"></span></div>
                                 <div>Issued: <span id="completionDate"></span></div>
                             </div>
                         </div>
                         
-                        <div class="certificate-header">🏆 Certificate of Completion</div>
+                        <div class="certificate-header" style="font-size: 1.6em; margin-bottom: 15px;">🏆 Certificate of Completion</div>
                         <div class="certificate-body">
-                            <h3 style="color: #1e3c72; margin-bottom: 20px;">Canadian A2L Refrigerant Safety Certificate</h3>
-                            <p style="font-size: 1.1em; margin-bottom: 10px;">This is to certify that</p>
-                            <h2 id="studentName" style="color: #2a5298; border-bottom: 3px solid #2a5298; display: inline-block; padding-bottom: 8px; margin: 20px 0; font-size: 2.2em;">Student Name</h2>
-                            <p style="font-size: 1.1em; margin-bottom: 20px;">has successfully completed the Canadian A2L Refrigerant Safety Certificate Course<br>
+                            <h3 style="color: #1e3c72; margin-bottom: 15px; font-size: 1.3em;">Canadian A2L Refrigerant Safety Certificate</h3>
+                            <p style="font-size: 1em; margin-bottom: 8px;">This is to certify that</p>
+                            <h2 id="studentName" style="color: #2a5298; border-bottom: 3px solid #2a5298; display: inline-block; padding-bottom: 6px; margin: 15px 0; font-size: 1.8em;">Student Name</h2>
+                            <p style="font-size: 1em; margin-bottom: 15px;">has successfully completed the Canadian A2L Refrigerant Safety Certificate Course<br>
                             with a passing score and demonstrated competency in:</p>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 25px 0; text-align: left;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 18px 0; text-align: left; font-size: 0.9em;">
                                 <div>
-                                    <div style="margin: 8px 0;">✓ A2L refrigerant properties and hazards</div>
-                                    <div style="margin: 8px 0;">✓ Canadian regulatory requirements (CSA B52, B149.1-25, TSSA)</div>
-                                    <div style="margin: 8px 0;">✓ Safe handling and installation practices</div>
+                                    <div style="margin: 6px 0;">✓ A2L refrigerant properties and hazards</div>
+                                    <div style="margin: 6px 0;">✓ Canadian regulatory requirements (CSA B52, B149.1-25, TSSA)</div>
+                                    <div style="margin: 6px 0;">✓ Safe handling and installation practices</div>
                                 </div>
                                 <div>
-                                    <div style="margin: 8px 0;">✓ System design and maintenance procedures</div>
-                                    <div style="margin: 8px 0;">✓ Emergency response protocols</div>
-                                    <div style="margin: 8px 0;">✓ Code compliance and documentation</div>
+                                    <div style="margin: 6px 0;">✓ System design and maintenance procedures</div>
+                                    <div style="margin: 6px 0;">✓ Emergency response protocols</div>
+                                    <div style="margin: 6px 0;">✓ Code compliance and documentation</div>
                                 </div>
                             </div>
-                            <p style="margin-top: 30px; font-size: 1em;">This certificate demonstrates the holder's knowledge of safe practices for working with mildly flammable A2L refrigerants in accordance with Canadian codes and standards.</p>
+                            <p style="margin-top: 20px; font-size: 0.9em;">This certificate demonstrates the holder's knowledge of safe practices for working with mildly flammable A2L refrigerants in accordance with Canadian codes and standards.</p>
                         </div>
                         
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 2px solid #e9ecef;">
                             <div style="text-align: center;">
                                 <div style="border-top: 2px solid #2a5298; width: 200px; margin-bottom: 5px;"></div>
-                                <div style="font-weight: bold; color: #1e3c72;">LARK Labs</div>
-                                <div style="font-size: 0.9em; color: #666;">Professional HVAC Training Provider</div>
+                                <div style="font-family: 'Brush Script MT', cursive, 'Dancing Script', cursive; font-size: 1.4em; color: #2a5298; margin-bottom: 3px;">Michael J Kapin</div>
+                                <div style="font-weight: bold; color: #1e3c72; font-size: 0.9em;">LARK Labs</div>
+                                <div style="font-size: 0.8em; color: #666;">Professional HVAC Training Provider</div>
                             </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 0.9em; color: #666;">
-                                    <div><strong>Course Duration:</strong> 6-8 hours</div>
-                                    <div><strong>Passing Score:</strong> 80%</div>
-                                    <div><strong>Your Score:</strong> <span id="certificateScore"></span>%</div>
-                                </div>
+                            <div style="text-align: center; font-size: 0.85em; color: #666;">
+                                <div><strong>Course Duration:</strong> 6-8 hours</div>
+                                <div><strong>Passing Score:</strong> 80%</div>
+                                <div><strong>Your Score:</strong> <span id="certificateScore"></span>%</div>
                             </div>
                         </div>
                         
-                        <div style="text-align: center; margin-top: 30px; display: flex; gap: 15px; justify-content: center;">
+                        <div style="text-align: center; margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
                             <button class="download-certificate" onclick="printCertificate()">🖨️ Print Certificate</button>
                             <button class="download-certificate" onclick="downloadCertificate()">📄 Download PDF</button>
                         </div>
@@ -2738,55 +2745,96 @@
                 <head>
                     <title>A2L Refrigerant Safety Certificate</title>
                     <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+                        
+                        @page {
+                            size: letter;
+                            margin: 0.5in;
+                        }
+                        
                         body {
                             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                            margin: 20px;
+                            margin: 0;
+                            padding: 0;
                             background: white;
+                            width: 100%;
+                            height: 100vh;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
                         }
+                        
                         .certificate-container {
                             background: linear-gradient(135deg, #fff, #f8f9fa);
                             border: 3px solid #2a5298;
                             border-radius: 15px;
-                            padding: 40px;
+                            padding: 25px;
                             text-align: center;
-                            margin: 30px auto;
-                            max-width: 800px;
+                            width: 7.5in;
+                            max-width: 7.5in;
+                            height: auto;
+                            max-height: 10in;
+                            box-shadow: none;
                         }
+                        
                         .certificate-header {
                             color: #1e3c72;
-                            font-size: 2em;
-                            margin-bottom: 20px;
+                            font-size: 1.6em;
+                            margin-bottom: 15px;
                             font-weight: bold;
                         }
+                        
                         .certificate-body {
-                            font-size: 1.2em;
-                            line-height: 1.6;
-                            margin: 20px 0;
+                            font-size: 1em;
+                            line-height: 1.4;
+                            margin: 15px 0;
                         }
+                        
                         .download-certificate {
                             display: none !important;
                         }
+                        
                         h2 {
                             color: #2a5298;
                             border-bottom: 3px solid #2a5298;
                             display: inline-block;
-                            padding-bottom: 8px;
-                            margin: 20px 0;
-                            font-size: 2.2em;
+                            padding-bottom: 6px;
+                            margin: 15px 0;
+                            font-size: 1.8em;
                         }
+                        
                         h3 {
                             color: #1e3c72;
-                            margin-bottom: 20px;
+                            margin-bottom: 15px;
+                            font-size: 1.3em;
                         }
+                        
+                        /* Cursive signature styling */
+                        .signature-name {
+                            font-family: 'Dancing Script', 'Brush Script MT', cursive !important;
+                            font-size: 1.4em !important;
+                            color: #2a5298 !important;
+                            margin-bottom: 3px !important;
+                        }
+                        
                         @media print {
-                            body { margin: 0; }
-                            .certificate-container { margin: 0; box-shadow: none; }
+                            body { 
+                                margin: 0; 
+                                padding: 0;
+                                -webkit-print-color-adjust: exact;
+                                print-color-adjust: exact;
+                            }
+                            .certificate-container { 
+                                margin: 0; 
+                                box-shadow: none; 
+                                page-break-inside: avoid;
+                            }
                         }
                     </style>
                 </head>
                 <body>
                     <div class="certificate-container">
-                        ${certificateHTML}
+                        ${certificateHTML.replace(/style="font-family: 'Brush Script MT', cursive, 'Dancing Script', cursive;/g, 'class="signature-name" style="')}
                     </div>
                 </body>
                 </html>
@@ -2795,11 +2843,11 @@
             printWindow.document.close();
             printWindow.focus();
             
-            // Small delay to ensure content is loaded before printing
+            // Small delay to ensure content and fonts are loaded before printing
             setTimeout(() => {
                 printWindow.print();
                 printWindow.close();
-            }, 250);
+            }, 500);
         }
 
         function downloadCertificate() {
@@ -2816,103 +2864,148 @@
     <meta charset="UTF-8">
     <title>A2L Refrigerant Safety Certificate - ${studentName}</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+        
+        @page {
+            size: letter;
+            margin: 0.5in;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background: #f5f5f5;
         }
+        
         .certificate-container {
             background: linear-gradient(135deg, #fff, #f8f9fa);
             border: 3px solid #2a5298;
             border-radius: 15px;
-            padding: 40px;
+            padding: 25px;
             text-align: center;
-            margin: 30px auto;
-            max-width: 800px;
+            margin: 20px auto;
+            max-width: 750px;
+            width: 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: auto;
+            min-height: 600px;
+            max-height: 700px;
         }
+        
         .header-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+        
         .logo-section {
             text-align: left;
         }
+        
         .logo-text {
             font-size: 18px;
             font-weight: bold;
             color: #1e3c72;
         }
+        
         .logo-subtitle {
-            font-size: 14px;
+            font-size: 12px;
             color: #2a5298;
         }
+        
         .cert-info {
             text-align: right;
-            font-size: 0.9em;
+            font-size: 0.8em;
             color: #666;
         }
+        
         .certificate-header {
             color: #1e3c72;
-            font-size: 2em;
-            margin-bottom: 20px;
+            font-size: 1.6em;
+            margin-bottom: 15px;
             font-weight: bold;
         }
+        
         .certificate-title {
             color: #1e3c72;
-            margin-bottom: 20px;
-            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-size: 1.3em;
         }
+        
         .student-name {
             color: #2a5298;
             border-bottom: 3px solid #2a5298;
             display: inline-block;
-            padding-bottom: 8px;
-            margin: 20px 0;
-            font-size: 2.2em;
+            padding-bottom: 6px;
+            margin: 15px 0;
+            font-size: 1.8em;
             font-weight: bold;
         }
+        
         .competencies {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 25px 0;
+            gap: 8px;
+            margin: 18px 0;
             text-align: left;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            font-size: 0.9em;
         }
+        
         .competency {
-            margin: 8px 0;
+            margin: 6px 0;
             color: #333;
         }
+        
         .footer-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 20px;
+            padding-top: 15px;
             border-top: 2px solid #e9ecef;
         }
+        
         .signature-section {
             text-align: center;
         }
+        
         .signature-line {
             border-top: 2px solid #2a5298;
             width: 200px;
             margin-bottom: 5px;
         }
+        
+        .signature-name {
+            font-family: 'Dancing Script', 'Brush Script MT', cursive;
+            font-size: 1.4em;
+            color: #2a5298;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+        
         .score-section {
             text-align: center;
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #666;
         }
+        
         @media print {
-            body { background: white; }
-            .certificate-container { box-shadow: none; }
+            body { 
+                background: white; 
+                padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .certificate-container { 
+                box-shadow: none; 
+                margin: 0;
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
@@ -2931,9 +3024,9 @@
         
         <div class="certificate-header">🏆 Certificate of Completion</div>
         <h3 class="certificate-title">Canadian A2L Refrigerant Safety Certificate</h3>
-        <p style="font-size: 1.1em; margin-bottom: 10px;">This is to certify that</p>
+        <p style="font-size: 1em; margin-bottom: 8px;">This is to certify that</p>
         <div class="student-name">${studentName}</div>
-        <p style="font-size: 1.1em; margin-bottom: 20px;">has successfully completed the Canadian A2L Refrigerant Safety Certificate Course<br>
+        <p style="font-size: 1em; margin-bottom: 15px;">has successfully completed the Canadian A2L Refrigerant Safety Certificate Course<br>
         with a passing score and demonstrated competency in:</p>
         
         <div class="competencies">
@@ -2949,13 +3042,14 @@
             </div>
         </div>
         
-        <p style="margin-top: 30px; font-size: 1em;">This certificate demonstrates the holder's knowledge of safe practices for working with mildly flammable A2L refrigerants in accordance with Canadian codes and standards.</p>
+        <p style="margin-top: 20px; font-size: 0.9em;">This certificate demonstrates the holder's knowledge of safe practices for working with mildly flammable A2L refrigerants in accordance with Canadian codes and standards.</p>
         
         <div class="footer-section">
             <div class="signature-section">
                 <div class="signature-line"></div>
-                <div style="font-weight: bold; color: #1e3c72;">LARK Labs</div>
-                <div style="font-size: 0.9em; color: #666;">Professional HVAC Training Provider</div>
+                <div class="signature-name">Michael J Kapin</div>
+                <div style="font-weight: bold; color: #1e3c72; font-size: 0.9em;">LARK Labs</div>
+                <div style="font-size: 0.8em; color: #666;">Professional HVAC Training Provider</div>
             </div>
             <div class="score-section">
                 <div><strong>Course Duration:</strong> 6-8 hours</div>
@@ -2980,7 +3074,7 @@
             document.body.removeChild(a);
             
             // Show success message
-            alert('Certificate downloaded successfully! You can open the HTML file in any web browser and print it as a PDF if needed.');
+            alert('Certificate downloaded successfully! Open the HTML file in any web browser and use Print → Save as PDF for a professional PDF certificate that fits perfectly on 8.5" x 11" paper.');
         }
     </script>
 </body>
