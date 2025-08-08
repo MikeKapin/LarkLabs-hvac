@@ -1,32 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
   <!-- Main Pages -->
   <url>
     <loc>https://larklabs.org/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/community.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
+  <url>
+    <loc>https://larklabs.org/beta_landing.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
+  </url>
+
   <!-- Blog -->
   <url>
     <loc>https://larklabs.org/blog/</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/blog/tssa-g2-exam-guide.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/blog/tssa-g3-exam-guide.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
+  <url>
+    <loc>https://larklabs.org/blog/g2_premium_access.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/blog/g3_simulator.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/blog/g2_modules_payment.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-08-08T18:33:43+00:00</lastmod>
+  </url>
+
   <!-- Tools -->
   <url>
     <loc>https://larklabs.org/hvac-load-calculator.html</loc>
@@ -63,6 +99,12 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://larklabs.org/superheat_subcool_calculator.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <!-- Training & Courses -->
   <url>
     <loc>https://larklabs.org/A2L_Course.html</loc>
@@ -99,6 +141,12 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://larklabs.org/tssa_g3_exam_simulatorv3.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <!-- CSA G3 Chapters (Units 1-9) -->
   <url>
     <loc>https://larklabs.org/CSA_Unit_1_Safety_Chapter_Reviews.html</loc>
@@ -145,6 +193,7 @@
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
+
   <!-- CSA G2 Chapters (Units 10-24) -->
   <url>
     <loc>https://larklabs.org/G2/CSA_Unit_10_Chapter_Reviews.html</loc>
@@ -221,6 +270,7 @@
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
+
   <!-- Resources & Downloads -->
   <url>
     <loc>https://larklabs.org/resources.html</loc>
@@ -232,6 +282,7 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+
   <!-- About -->
   <url>
     <loc>https://larklabs.org/about.html</loc>
