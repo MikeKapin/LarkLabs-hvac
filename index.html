@@ -283,6 +283,7 @@
             background: rgba(52, 152, 219, 0.2);
             color: #3498db;
         }
+        
 
         /* Mobile menu toggle button - hidden by default */
         .mobile-menu-toggle {
@@ -1612,39 +1613,94 @@
         </section>
 
         <!-- RESOURCES SECTION -->
-        <section id="resources" class="section">
-            <div class="container main-content-with-header">
-                <h2 class="section-title">Canadian Gas Codes & HVAC Resources</h2>
-                
-                <div class="tools-grid">
-                    <div class="tool-card" onclick="window.open('https://codecompass-api.vercel.app/', '_blank')">
-                        <div class="tool-icon">📋</div>
-                        <h3>Code Compass - CSA B149.1 & Gas Codes</h3>
-                        <p>Search through Canadian gas codes and regulations quickly and efficiently</p>
-                        <span class="tool-status status-available external-link">Access Now</span>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.open('https://www.larklabs.org/CSA_B149_Reference_Guide.html', '_blank')">
-                        <div class="tool-icon">📖</div>
-                        <h3>CSA B149.1 Reference Guide</h3>
-                        <p>Natural gas and propane installation code quick reference guide for Canadian technicians</p>
-                        <span class="tool-status status-available external-link">Access Now</span>
-                    </div>
-                </div>
-                    <div class="tool-card">
-                        <div class="tool-icon">⚖️</div>
-                        <h3>TSSA Regulations Database</h3>
-                        <p>Technical Standards and Safety Authority regulations and updates for Ontario</p>
-                        <span class="tool-status status-coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-
-                <div class="quote">
-                    "Knowledge of Canadian codes and regulations is essential for safe, professional HVAC work" - LARK Labs
-                </div>
+<section id="resources" class="section">
+    <div class="container main-content-with-header">
+        <h2 class="section-title">Canadian Gas Codes & HVAC Resources</h2>
+        
+        <div class="tools-grid">
+            <div class="tool-card" onclick="window.open('https://codecompass-api.vercel.app/', '_blank')">
+                <div class="tool-icon">📋</div>
+                <h3>Code Compass - CSA B149.1 & Gas Codes</h3>
+                <p>Search through Canadian gas codes and regulations quickly and efficiently</p>
+                <span class="tool-status status-available external-link">Access Now</span>
             </div>
-        </section>
+            
+            <div class="tool-card" onclick="window.open('https://www.larklabs.org/CSA_B149_Reference_Guide.html', '_blank')">
+                <div class="tool-icon">📖</div>
+                <h3>CSA B149.1 Reference Guide</h3>
+                <p>Natural gas and propane installation code quick reference guide for Canadian technicians</p>
+                <span class="tool-status status-available external-link">Access Now</span>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">⚖️</div>
+                <h3>TSSA Regulations Database</h3>
+                <p>Technical Standards and Safety Authority regulations and updates for Ontario</p>
+                <span class="tool-status status-coming-soon">Coming Soon</span>
+            </div>
+        </div>
 
+        <div class="quote" style="text-align: center; margin-top: 2em; font-style: italic;">
+            "Knowledge of Canadian codes and regulations is essential for safe, professional HVAC work" - LARK Labs
+        </div>
+    </div>
+</section>
+<!-- Add this CSS for layout and styling -->
+<style>
+.tools-grid {
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2em;
+}
+.tool-card {
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 1.5em 1em;
+    width: 270px;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tool-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    transform: translateY(-4px) scale(1.03);
+}
+.tool-icon {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+.tool-status {
+    margin-top: 1em;
+    padding: 0.4em 1em;
+    border-radius: 6px;
+    font-size: 0.95em;
+    display: inline-block;
+}
+.status-available {
+    background: #0074D9;
+    color: #fff;
+}
+.status-coming-soon {
+    background: #ffdc00;
+    color: #222;
+}
+.external-link::after {
+    content: " ↗";
+    font-size: 0.85em;
+}
+@media (max-width: 900px) {
+    .tools-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
         <!-- ABOUT SECTION -->
         <section id="about" class="section">
             <div class="container main-content-with-header">
@@ -1949,3 +2005,4 @@
     </script>
 </body>
 </html>
+
