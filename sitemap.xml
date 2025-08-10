@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- Main Pages -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage (SPA) -->
   <url>
     <loc>https://larklabs.org/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
     <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
+
+  <!-- Real Community Page -->
   <url>
     <loc>https://larklabs.org/community.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
     <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
+
+  <!-- Beta Landing Page (if this is a real file) -->
   <url>
     <loc>https://larklabs.org/beta_landing.html</loc>
     <priority>0.8</priority>
@@ -25,7 +24,7 @@
     <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
 
-  <!-- Blog -->
+  <!-- Blog (if these are real files) -->
   <url>
     <loc>https://larklabs.org/blog/</loc>
     <priority>0.8</priority>
@@ -63,7 +62,7 @@
     <lastmod>2025-08-08T18:33:43+00:00</lastmod>
   </url>
 
-  <!-- Tools -->
+  <!-- Tools (if these are real files) -->
   <url>
     <loc>https://larklabs.org/hvac-load-calculator.html</loc>
     <priority>0.8</priority>
@@ -105,7 +104,7 @@
     <changefreq>monthly</changefreq>
   </url>
 
-  <!-- Training & Courses -->
+  <!-- Training & Courses (if these are real files) -->
   <url>
     <loc>https://larklabs.org/A2L_Course.html</loc>
     <priority>0.9</priority>
@@ -147,7 +146,7 @@
     <changefreq>monthly</changefreq>
   </url>
 
-  <!-- CSA G3 Chapters (Units 1-9) -->
+  <!-- CSA G3 Chapters (if these are real files) -->
   <url>
     <loc>https://larklabs.org/CSA_Unit_1_Safety_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
@@ -194,7 +193,7 @@
     <changefreq>monthly</changefreq>
   </url>
 
-  <!-- CSA G2 Chapters (Units 10-24) -->
+  <!-- CSA G2 Chapters (if these are real files) -->
   <url>
     <loc>https://larklabs.org/G2/CSA_Unit_10_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
@@ -270,23 +269,5 @@
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
-
-  <!-- Resources & Downloads -->
-  <url>
-    <loc>https://larklabs.org/resources.html</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://larklabs.org/downloads.html</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-
-  <!-- About -->
-  <url>
-    <loc>https://larklabs.org/about.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-  </url>
 </urlset>
+
