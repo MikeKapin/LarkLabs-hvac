@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HVAC Jack">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#FF6B35">
+    <meta name="theme-color" content="#E85A4F">
     <title>HVAC Jack - Your Jack of All Trades HVAC AI Assistant</title>
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiBmaWxsPSIjRkY2QjM1Ii8+Cjx0ZXh0IHg9IjkwIiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI2MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfkqc8L3RleHQ+Cjwvc3ZnPgo=">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiBmaWxsPSIjRTg1QTRGIi8+Cjx0ZXh0IHg9IjkwIiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI2MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfkqc8L3RleHQ+Cjwvc3ZnPgo=">
     <style>
         * {
             margin: 0;
@@ -28,40 +28,74 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: #1A1F2E;
             min-height: 100vh;
-            color: #333;
+            color: #E2E8F0;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
         .mobile-header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 0.75rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(26, 31, 46, 0.95);
+            padding: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid #2D3748;
         }
 
         .mobile-header-content {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 0.5rem;
             position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .header-settings-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 40px;
+            height: 40px;
+            background: #E85A4F;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(232, 90, 79, 0.4);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .header-settings-btn:active {
+            transform: scale(0.9);
+            background: #C53030;
         }
 
         .header-logo {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
+            position: static;
+            width: 90vw;
+            height: 110px;
             cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0.1rem auto;
         }
 
         .header-logo img {
@@ -74,7 +108,7 @@
         .mobile-logo {
             font-size: 1.2rem;
             font-weight: bold;
-            color: #FF6B35;
+            color: #E85A4F;
             display: flex;
             align-items: center;
             margin: 0 auto;
@@ -89,10 +123,11 @@
 
         .mobile-mode-toggle {
             display: flex;
-            background: #f0f0f0;
+            background: #2D3748;
             border-radius: 20px;
             padding: 2px;
             flex-shrink: 0;
+            border: 1px solid #4A5568;
         }
 
         .mobile-mode-btn {
@@ -105,38 +140,39 @@
             font-size: 0.8rem;
             min-height: 36px;
             touch-action: manipulation;
+            color: #A0AEC0;
         }
 
         .mobile-mode-btn.active {
-            background: #FF6B35;
+            background: #E85A4F;
             color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(232, 90, 79, 0.4);
         }
 
         .mobile-status {
-            font-size: 0.7rem;
-            color: #666;
+            font-size: 0.65rem;
+            color: #A0AEC0;
             display: flex;
             align-items: center;
             gap: 0.3rem;
             width: 100%;
-            margin-top: 0.25rem;
+            margin-top: 0.2rem;
         }
 
         .mobile-status-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: #28a745;
+            background: #48BB78;
             animation: pulse 2s infinite;
         }
 
         .mobile-status-dot.error {
-            background: #dc3545;
+            background: #F56565;
         }
 
         .mobile-status-dot.connecting {
-            background: #ffc107;
+            background: #ED8936;
         }
 
         @keyframes pulse {
@@ -150,28 +186,33 @@
             height: calc(100vh - 140px);
             display: flex;
             flex-direction: column;
+            position: relative;
+            padding-bottom: 240px;
         }
 
         .mobile-chat-container {
             flex: 1;
-            background: rgba(255, 255, 255, 0.95);
+            background: #1A1F2E;
             display: flex;
             flex-direction: column;
             height: 100%;
+            position: relative;
         }
 
         .mobile-context-bar {
-            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            background: linear-gradient(135deg, #E85A4F 0%, #C53030 100%);
             color: white;
-            padding: 0.5rem;
-            font-size: 0.8rem;
+            padding: 0.4rem;
+            font-size: 0.75rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
+            border-bottom: 1px solid #C53030;
+            flex-shrink: 0;
         }
 
         .mobile-context-bar.expanded {
-            padding: 1rem 0.5rem;
+            padding: 0.8rem 0.4rem;
         }
 
         .context-toggle {
@@ -193,9 +234,9 @@
 
         .mobile-messages {
             flex: 1;
-            padding: 1rem 0.75rem;
+            padding: 1rem 0.75rem 20px 0.75rem;
             overflow-y: auto;
-            background: #f8f9fa;
+            background: #1A1F2E;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -229,16 +270,18 @@
         }
 
         .mobile-message.user .mobile-message-content {
-            background: #007bff;
+            background: #E85A4F;
             color: white;
             border-bottom-right-radius: 4px;
+            box-shadow: 0 2px 8px rgba(232, 90, 79, 0.4);
         }
 
         .mobile-message.ai .mobile-message-content {
-            background: white;
-            border: 1px solid #e0e0e0;
+            background: #2D3748;
+            border: 1px solid #4A5568;
             border-bottom-left-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            color: #E2E8F0;
         }
 
         .mobile-avatar {
@@ -254,21 +297,27 @@
         }
 
         .mobile-avatar.user {
-            background: #007bff;
+            background: #E85A4F;
             color: white;
+            box-shadow: 0 2px 8px rgba(232, 90, 79, 0.4);
         }
 
         .mobile-avatar.ai {
-            background: #FF6B35;
-            color: white;
+            background: #2D3748;
+            color: #E85A4F;
+            border: 1px solid #4A5568;
         }
 
         .mobile-input-container {
             padding: 0.75rem;
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            position: sticky;
+            background: #2D3748;
+            border-top: 1px solid #4A5568;
+            position: fixed;
             bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
         }
 
         .mobile-quick-actions {
@@ -287,8 +336,8 @@
 
         .mobile-quick-btn {
             padding: 0.4rem 0.8rem;
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
+            background: #1A1F2E;
+            border: 1px solid #4A5568;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.8rem;
@@ -297,13 +346,15 @@
             transition: all 0.3s;
             min-height: 36px;
             touch-action: manipulation;
+            color: #A0AEC0;
         }
 
         .mobile-quick-btn:active {
-            background: #FF6B35;
+            background: #E85A4F;
             color: white;
-            border-color: #FF6B35;
+            border-color: #E85A4F;
             transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(232, 90, 79, 0.4);
         }
 
         .mobile-input-group {
@@ -315,24 +366,31 @@
         .mobile-input-field {
             flex: 1;
             padding: 0.75rem;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #4A5568;
             border-radius: 20px;
             font-size: 1rem;
             min-height: 44px;
             resize: none;
             max-height: 100px;
             transition: border-color 0.3s;
+            background: #1A1F2E;
+            color: #E2E8F0;
         }
 
         .mobile-input-field:focus {
             outline: none;
-            border-color: #FF6B35;
+            border-color: #E85A4F;
+            box-shadow: 0 0 0 3px rgba(232, 90, 79, 0.2);
+        }
+
+        .mobile-input-field::placeholder {
+            color: #718096;
         }
 
         .mobile-send-btn {
             width: 44px;
             height: 44px;
-            background: #FF6B35;
+            background: #E85A4F;
             color: white;
             border: none;
             border-radius: 50%;
@@ -344,26 +402,35 @@
             transition: all 0.3s;
             flex-shrink: 0;
             touch-action: manipulation;
+            box-shadow: 0 2px 8px rgba(232, 90, 79, 0.4);
         }
 
         .mobile-send-btn:active {
             transform: scale(0.9);
-            background: #E55A2B;
+            background: #C53030;
         }
 
         .mobile-send-btn:disabled {
-            background: #ccc;
+            background: #4A5568;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
         .mobile-typing {
             display: none;
             padding: 0.5rem 0.75rem;
-            color: #666;
+            color: #A0AEC0;
             font-size: 0.8rem;
             align-items: center;
             gap: 0.5rem;
+            position: fixed;
+            bottom: 220px;
+            left: 0;
+            right: 0;
+            background: rgba(26, 31, 46, 0.95);
+            z-index: 1001;
+            backdrop-filter: blur(10px);
         }
 
         .mobile-typing-dots {
@@ -375,7 +442,7 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: #FF6B35;
+            background: #E85A4F;
             animation: typing 1.4s infinite ease-in-out;
         }
 
@@ -388,33 +455,12 @@
         }
 
         .mobile-fab {
-            position: fixed;
-            bottom: 140px;
-            right: 20px;
-            width: 48px;
-            height: 48px;
-            background: #FF6B35;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            cursor: pointer;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: all 0.3s;
-            touch-action: manipulation;
-        }
-
-        .mobile-fab:active {
-            transform: scale(0.9);
+            display: none;
         }
 
         .mobile-footer {
-            background: rgba(255, 255, 255, 0.95);
-            border-top: 1px solid #e0e0e0;
+            background: rgba(26, 31, 46, 0.95);
+            border-top: 1px solid #2D3748;
             padding: 0.75rem;
             text-align: center;
             backdrop-filter: blur(10px);
@@ -430,13 +476,20 @@
             gap: 0.5rem;
             flex-wrap: wrap;
             font-size: 0.75rem;
-            color: #666;
+            color: #A0AEC0;
         }
 
         .footer-logo {
             width: 20px;
             height: 20px;
             cursor: pointer;
+            background: #E85A4F;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
         }
 
         .footer-logo img {
@@ -455,101 +508,124 @@
         .copyright {
             margin-top: 0.25rem;
             font-size: 0.65rem;
-            color: #999;
+            color: #718096;
         }
 
-        /* Error message styling */
-        .error-message {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            color: #856404;
+        /* Connection error styling */
+        .connection-error {
+            background: rgba(245, 101, 101, 0.2);
+            border: 1px solid #F56565;
+            color: #FEB2B2;
             padding: 0.75rem;
             border-radius: 8px;
             margin: 0.5rem 0;
             font-size: 0.8rem;
         }
 
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            }
-            
-            .mobile-header {
-                background: rgba(40, 40, 40, 0.95);
-                color: white;
-            }
-            
-            .mobile-logo {
-                color: #FF6B35;
-            }
-            
-            .mobile-messages {
-                background: #2a2a2a;
-            }
-            
-            .mobile-message.ai .mobile-message-content {
-                background: #3a3a3a;
-                border-color: #555;
-                color: white;
-            }
-            
-            .mobile-input-container {
-                background: #333;
-                border-top-color: #555;
-            }
-            
-            .mobile-input-field {
-                background: #444;
-                border-color: #555;
-                color: white;
-            }
-            
-            .mobile-footer {
-                background: rgba(40, 40, 40, 0.95);
-                border-top-color: #555;
-            }
+        /* Scrollbar styling for webkit browsers */
+        .mobile-messages::-webkit-scrollbar {
+            width: 4px;
+        }
 
-            .footer-content {
-                color: #bbb;
-            }
+        .mobile-messages::-webkit-scrollbar-track {
+            background: #1A1F2E;
+        }
 
-            .copyright {
-                color: #888;
-            }
+        .mobile-messages::-webkit-scrollbar-thumb {
+            background: #4A5568;
+            border-radius: 2px;
+        }
+
+        .mobile-messages::-webkit-scrollbar-thumb:hover {
+            background: #718096;
+        }
+
+        /* Add safe area insets for mobile devices */
+        .mobile-input-container {
+            padding: 0.75rem;
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+            background: #2D3748;
+            border-top: 1px solid #4A5568;
+            position: fixed;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+            min-height: 140px;
+        }
+
+        /* Adjust body for better mobile support */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1A1F2E;
+            min-height: 100vh;
+            color: #E2E8F0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+        }
+        /* Enhanced glow effects for interactive elements */
+        .mobile-send-btn:hover,
+        .mobile-fab:hover {
+            box-shadow: 0 4px 16px rgba(232, 90, 79, 0.6);
+        }
+
+        .mobile-mode-btn.active {
+            box-shadow: 0 2px 12px rgba(232, 90, 79, 0.5);
+        }
+
+        /* Quick button hover effects */
+        .mobile-quick-btn:hover {
+            background: #2D3748;
+            border-color: #E85A4F;
+            color: #E85A4F;
+        }
+
+        /* Input field focus glow */
+        .mobile-input-field:focus {
+            box-shadow: 0 0 0 3px rgba(232, 90, 79, 0.3), 0 0 20px rgba(232, 90, 79, 0.1);
+        }
+
+        /* Message content styling improvements */
+        .mobile-message.ai .mobile-message-content strong {
+            color: #E85A4F;
+        }
+
+        /* Enhanced context bar gradient */
+        .mobile-context-bar {
+            background: linear-gradient(135deg, #E85A4F 0%, #C53030 50%, #9C2A2A 100%);
+            box-shadow: 0 2px 10px rgba(232, 90, 79, 0.3);
+        }
+
+        /* Improved header styling */
+        .mobile-header {
+            background: linear-gradient(180deg, rgba(26, 31, 46, 0.98) 0%, rgba(26, 31, 46, 0.95) 100%);
+            border-bottom: 1px solid #E85A4F;
         }
     </style>
 </head>
 <body>
     <div class="mobile-header">
         <div class="mobile-header-content">
-            <a href="./logo.png" class="header-logo">
-                <img src="./logo.png" alt="Logo" />
-            </a>
-            <div class="mobile-logo">HVAC Jack</div>
             <div class="mobile-mode-toggle">
                 <button class="mobile-mode-btn active" id="mobileHomeownerBtn" onclick="switchMode('homeowner')">🏠 Home</button>
                 <button class="mobile-mode-btn" id="mobileTechnicianBtn" onclick="switchMode('technician')">🔧 Tech</button>
             </div>
+            <button class="header-settings-btn" onclick="showMobileMenu()">⚙️</button>
+            <a href="#" class="header-logo">
+                <img src="logo_2.png" alt="HVAC Jack Logo" />
+            </a>
         </div>
         <div class="mobile-status">
-            <div class="mobile-status-dot" id="mobileStatusDot"></div>
+            <div class="mobile-status-dot connecting" id="mobileStatusDot"></div>
             <span id="mobileStatusText">Connecting to Jack...</span>
         </div>
     </div>
 
     <div class="main-container">
         <div class="mobile-chat-container">
-            <div class="mobile-context-bar" id="mobileContextBar" onclick="toggleContext()">
-                <div id="mobileContextSummary">🧠 New conversation - Jack is learning about your system</div>
-                <div class="context-toggle">Tap to expand memory</div>
-                <div class="mobile-context-details" id="mobileContextDetails">
-                    <strong>System:</strong> <span id="mobileSystemType">Unknown</span><br>
-                    <strong>Problem:</strong> <span id="mobileProblemType">Diagnosing</span><br>
-                    <strong>Messages:</strong> <span id="mobileMessageCount">0</span>
-                </div>
-            </div>
-
             <div class="mobile-messages" id="mobileMessages">
                 <div class="mobile-message ai">
                     <div class="mobile-avatar ai">🔧</div>
@@ -558,6 +634,14 @@
                         🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
                         💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
                         <strong>What's wrong with your heating or cooling?</strong>
+                    </div>
+                <div class="mobile-context-bar" id="mobileContextBar" onclick="toggleContext()">
+                    <div id="mobileContextSummary">🧠 New conversation - Jack is learning about your system</div>
+                    <div class="context-toggle">Tap to expand memory</div>
+                    <div class="mobile-context-details" id="mobileContextDetails">
+                        <strong>System:</strong> <span id="mobileSystemType">Unknown</span><br>
+                        <strong>Problem:</strong> <span id="mobileProblemType">Diagnosing</span><br>
+                        <strong>Messages:</strong> <span id="mobileMessageCount">0</span>
                     </div>
                 </div>
             </div>
@@ -594,9 +678,9 @@
         <div class="footer-content">
             <div class="footer-text">
                 Created by 
-                <a href="./logo.png" class="footer-logo">
-                    <img src="./logo.png" alt="Logo" />
-                </a>
+                <div class="footer-logo">
+                    🔧
+                </div>
                 Your Company Name
             </div>
         </div>
@@ -605,10 +689,10 @@
         </div>
     </div>
 
-    <button class="mobile-fab" id="mobileFab" onclick="showMobileMenu()">⚙️</button>
+    <button class="mobile-fab" id="mobileFab" style="display: none;" onclick="showMobileMenu()">⚙️</button>
 
     <script>
-        // Secure Mobile HVAC Jack - No API keys in frontend
+        // Enhanced Mobile HVAC Jack with better connection handling
         class SecureMobileHVACJack {
             constructor() {
                 this.diagnosticsRun = 0;
@@ -621,10 +705,13 @@
                     previousActions: [],
                     currentProblem: null
                 };
-                // Backend API endpoint - change this to your server URL
-                this.apiEndpoint = '/api/chat'; // Change to your backend URL
+                // Backend API endpoints - Updated for production hosting
+                this.apiEndpoint = 'https://hvac-jack-api.larklabs.workers.dev/api/chat';
+                this.healthEndpoint = 'https://hvac-jack-api.larklabs.workers.dev/api/health';
                 this.isConnected = false;
                 this.isProcessing = false;
+                this.connectionAttempts = 0;
+                this.maxConnectionAttempts = 3;
                 this.init();
             }
 
@@ -756,44 +843,104 @@
 
             async checkBackendConnection() {
                 this.updateMobileStatus('connecting', 'Connecting to Jack...');
+                this.connectionAttempts++;
                 
                 try {
-                    const response = await fetch(`${this.apiEndpoint}/health`, {
+                    console.log(`Attempting to connect to: ${this.healthEndpoint}`);
+                    console.log(`Connection attempt ${this.connectionAttempts}/${this.maxConnectionAttempts}`);
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                    
+                    const response = await fetch(this.healthEndpoint, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json'
-                        }
+                        },
+                        signal: controller.signal
                     });
-
+                    
+                    clearTimeout(timeoutId);
+                    
                     if (response.ok) {
-                        this.isConnected = true;
-                        this.updateMobileStatus('connected', 'Jack is ready!');
-                        this.hapticFeedback('success');
+                        const data = await response.json();
+                        console.log('Health check response:', data);
+                        
+                        if (data.claudeConfigured) {
+                            this.isConnected = true;
+                            this.connectionAttempts = 0;
+                            this.updateMobileStatus('connected', 'Jack is ready!');
+                            this.hapticFeedback('success');
+                            
+                            // Remove any existing error messages
+                            const existingErrors = document.querySelectorAll('.connection-error');
+                            existingErrors.forEach(error => error.remove());
+                        } else {
+                            throw new Error('Claude API not configured on server');
+                        }
+                        
                     } else {
-                        throw new Error('Backend connection failed');
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                     }
                 } catch (error) {
-                    console.warn('Backend not available, using fallback mode:', error);
-                    this.handleConnectionFailure();
+                    console.error('Connection error details:', {
+                        name: error.name,
+                        message: error.message,
+                        endpoint: this.healthEndpoint,
+                        attempt: this.connectionAttempts
+                    });
+                    this.handleConnectionFailure(error);
                 }
             }
 
-            handleConnectionFailure() {
+            handleConnectionFailure(error) {
                 this.isConnected = false;
-                this.updateMobileStatus('error', 'Offline Mode');
                 
-                // Show informative message to user
-                this.addMobileMessage(
-                    '⚠️ **Offline Mode** - Jack is using built-in knowledge. For full AI capabilities, please contact support about server setup.',
-                    'ai'
-                );
+                if (this.connectionAttempts < this.maxConnectionAttempts) {
+                    this.updateMobileStatus('connecting', `Retrying... (${this.connectionAttempts}/${this.maxConnectionAttempts})`);
+                    setTimeout(() => this.checkBackendConnection(), 3000);
+                    return;
+                }
+                
+                this.updateMobileStatus('error', 'Connection Failed');
+                
+                // Show detailed error message with troubleshooting
+                let errorMessage = '⚠️ **Cannot Connect to HVAC Jack Server**\n\n';
+                
+                if (error.name === 'AbortError') {
+                    errorMessage += '**Issue:** Connection timeout\n';
+                    errorMessage += '**Likely cause:** Server is not running or not responding\n\n';
+                } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    errorMessage += '**Issue:** Network connection failed\n';
+                    errorMessage += '**Likely cause:** Server is not running on http://localhost:3000\n\n';
+                } else if (error.message.includes('Claude API not configured')) {
+                    errorMessage += '**Issue:** Server running but Claude API not configured\n';
+                    errorMessage += '**Likely cause:** Missing or invalid CLAUDE_API_KEY in .env file\n\n';
+                } else {
+                    errorMessage += `**Issue:** ${error.message}\n\n`;
+                }
+                
+                errorMessage += '**To fix this:**\n';
+                errorMessage += '1. Open terminal/command prompt\n';
+                errorMessage += '2. Navigate to your server directory\n';
+                errorMessage += '3. Run: `npm install` (if first time)\n';
+                errorMessage += '4. Run: `node server.js`\n';
+                errorMessage += '5. Look for "HVAC Jack Backend Server running on port 3000"\n';
+                errorMessage += '6. Refresh this page\n\n';
+                errorMessage += '**Still not working?**\n';
+                errorMessage += '• Check .env file has valid CLAUDE_API_KEY\n';
+                errorMessage += '• Try different port: PORT=3001 in .env\n';
+                errorMessage += '• Check firewall/antivirus blocking port 3000\n\n';
+                errorMessage += '*Using built-in knowledge until connected*';
+                
+                this.addMobileMessage(errorMessage, 'ai');
             }
 
             updateMobileStatus(status, message) {
                 const dot = document.getElementById('mobileStatusDot');
                 const text = document.getElementById('mobileStatusText');
                 
-                dot.className = `mobile-status-dot ${status === 'connected' ? '' : status}`;
+                dot.className = `mobile-status-dot ${status}`;
                 text.textContent = message;
             }
 
@@ -825,8 +972,15 @@
                     this.hideMobileTyping();
                     this.hapticFeedback('heavy');
                     
+                    // If backend fails, try to reconnect and use fallback
+                    if (this.isConnected) {
+                        this.isConnected = false;
+                        this.updateMobileStatus('error', 'Connection lost');
+                        setTimeout(() => this.checkBackendConnection(), 1000);
+                    }
+                    
                     const fallback = await this.processWithFallbackKnowledge(input);
-                    this.addToConversation('assistant', fallback);
+                    this.addToConversation('assistant', fallback + '\n\n*Note: Using fallback mode due to connection issue.*');
                     return { text: fallback, isError: false };
                 } finally {
                     this.isProcessing = false;
@@ -837,28 +991,48 @@
                 const requestBody = {
                     message: input,
                     mode: this.currentMode,
-                    conversationHistory: this.conversationHistory.slice(-10), // Send last 10 messages for context
+                    conversationHistory: this.conversationHistory.slice(-10),
                     systemContext: this.systemContext
                 };
 
-                const response = await fetch(this.apiEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestBody)
-                });
+                console.log('Sending to backend:', this.apiEndpoint, requestBody);
+                
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+                
+                try {
+                    const response = await fetch(this.apiEndpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody),
+                        signal: controller.signal
+                    });
 
-                if (!response.ok) {
-                    throw new Error(`Backend error: ${response.status}`);
+                    clearTimeout(timeoutId);
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Backend error: ${response.status} ${response.statusText} - ${errorText}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('Backend response:', data);
+                    
+                    if (data.fallback) {
+                        console.warn('Server returned fallback response');
+                    }
+                    
+                    return data.response || data.message || 'Sorry, I had trouble processing that.';
+                } catch (error) {
+                    clearTimeout(timeoutId);
+                    throw error;
                 }
-
-                const data = await response.json();
-                return data.response || data.message || 'Sorry, I had trouble processing that.';
             }
 
             async processWithFallbackKnowledge(input) {
-                await this.delay(1000); // Simulate thinking time
+                await this.delay(1000);
                 
                 const analysis = this.analyzeInput(input);
                 return this.generateFallbackResponse(analysis, input);
@@ -946,9 +1120,7 @@ What did you find? 🔍`,
 💧 Water leaking = turn off system  
 ⚡ Sparks/burning = turn off power
 
-What's going on? I'm here to help! 😊
-
-*Note: I'm in offline mode. For advanced AI analysis, please contact support.*`
+What's going on? I'm here to help! 😊`
                 };
 
                 return responses[analysis.problemType] || responses.general;
@@ -974,9 +1146,7 @@ What's going on? I'm here to help! 😊
 - Flame sensor contamination
 - Pressure switch tubing
 
-Current symptoms and test results?
-
-*Offline mode - Contact support for AI-powered diagnostics.*`,
+Current symptoms and test results?`,
 
                     noCooling: `**No cooling diagnostic ${contextInfo}**
 
@@ -996,9 +1166,7 @@ Current symptoms and test results?
 🌪️ CFM verification
 🔧 Blower wheel/motor inspection
 
-Current readings and observations?
-
-*Offline mode - Contact support for AI-powered analysis.*`,
+Current readings and observations?`,
 
                     general: `**Tech diagnostic mode ${contextInfo}**
 
@@ -1014,9 +1182,7 @@ Current readings and observations?
 3. Sequence timing analysis
 4. Component isolation testing
 
-What's your current diagnostic status?
-
-*Offline mode - Limited to basic guidance.*`
+What's your current diagnostic status?`
                 };
 
                 return responses[analysis.problemType] || responses.general;
@@ -1114,7 +1280,7 @@ What's your current diagnostic status?
             }
         }
 
-        // Initialize Secure Mobile HVAC Jack
+        // Initialize Enhanced Mobile HVAC Jack
         const mobileHvacJack = new SecureMobileHVACJack();
 
         // Mobile-specific functions
