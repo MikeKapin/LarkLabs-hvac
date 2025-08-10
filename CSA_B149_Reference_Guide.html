@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSA B149.1-25 Quick Reference Guide | LARK Labs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f4f7fa; color: #222; }
+    .container { max-width: 900px; margin: 2em auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 2em; }
+    .logo { display: flex; align-items: center; justify-content: center; margin-bottom: 2em; }
+    .logo img { width: 120px; height: auto; border-radius: 20px; }
+    h1 { text-align: center; color: #0074D9; margin-bottom: 0.2em;}
+    h2 { color: #0074D9; }
+    .intro { background: #f1f6fa; border-radius: 6px; padding: 1em; margin-bottom: 2em; }
+    .section-buttons, .annex-buttons { display: flex; flex-wrap: wrap; gap: 1em; justify-content: center; margin-bottom: 2em; }
+    .section-btn, .annex-btn {
+      background: #0074D9;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8em 1.4em;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 0.5em;
+    }
+    .section-btn:hover, .annex-btn:hover { background: #005fa3; }
+    .content-area { background: #f9f9f9; border-radius: 8px; padding: 1.5em; min-height: 160px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);}
+    .footer { margin-top: 3em; background: #f1f6fa; padding: 1em; text-align: center; border-radius: 6px; }
+    .download-link { color: #0074D9; font-weight: bold; text-decoration: none; }
+    .download-link:hover { text-decoration: underline; }
+    @media (max-width: 600px) {
+      .container { padding: 1em; }
+      .section-buttons, .annex-buttons { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="https://sintra-images.s3.eu-north-1.amazonaws.com/762bbc62-82ab-474b-9b84-92f37ebd92ba/message-files/97cfcb72-464d-42df-8ad6-b7aa3d6210e1/logo-facebook.png" alt="LARK Labs Logo">
+    </div>
+    <h1>CSA B149.1-25 Quick Reference Guide</h1>
+    <div class="intro">
+      <p>
+        Welcome to the interactive CSA B149.1-25 Reference Guide by <strong>LARK Labs</strong>.<br>
+        Click any section or annex below for a detailed explanation of what it covers.<br>
+        <br>
+        For full code text, Ontario regulations, and advanced keyword search, 
+        <a href="https://codecompass-api.vercel.app/" class="download-link" target="_blank">download the Code Compass app</a>.
+      </p>
+    </div>
+
+    <div class="section-buttons">
+      <button class="section-btn" onclick="showContent('sec1')">Section 1</button>
+      <button class="section-btn" onclick="showContent('sec2')">Section 2</button>
+      <button class="section-btn" onclick="showContent('sec3')">Section 3</button>
+      <button class="section-btn" onclick="showContent('sec4')">Section 4</button>
+      <button class="section-btn" onclick="showContent('sec5')">Section 5</button>
+      <button class="section-btn" onclick="showContent('sec6')">Section 6</button>
+      <button class="section-btn" onclick="showContent('sec7')">Section 7</button>
+      <button class="section-btn" onclick="showContent('sec8')">Section 8</button>
+      <button class="section-btn" onclick="showContent('sec9')">Section 9</button>
+      <button class="section-btn" onclick="showContent('sec10')">Section 10</button>
+    </div>
+    <div class="annex-buttons">
+      <button class="annex-btn" onclick="showContent('annexA')">Annex A</button>
+      <button class="annex-btn" onclick="showContent('annexB')">Annex B</button>
+      <button class="annex-btn" onclick="showContent('annexC')">Annex C (GVR)</button>
+    </div>
+
+    <div class="content-area" id="content-area">
+      <em>Select a section or annex above to see details here.</em>
+    </div>
+
+    <div class="footer">
+      Want the full CSA B149.1, B149.2, Ontario regulations, and advanced keyword search? 
+      <a href="https://codecompass-api.vercel.app/" class="download-link" target="_blank">Download Code Compass</a> for complete access.
+    </div>
+  </div>
+  <script>
+    const content = {
+      sec1: `<h2>Section 1 – Introduction and Scope</h2>
+        <ul>
+          <li><strong>Introduction:</strong> Explains the purpose and intent of the code—establishing minimum requirements for safe installation of natural gas and propane appliances, equipment, and piping systems in Canada.</li>
+          <li><strong>Scope:</strong> Outlines what is covered: residential, commercial, and industrial gas systems, piping, venting, appliances, vehicle fueling, and field testing. Specifies what is excluded (like appliance design).</li>
+        </ul>`,
+
+      sec2: `<h2>Section 2 – References</h2>
+        <ul>
+          <li>Lists all CSA, ANSI, and other reference standards and materials cited throughout the code book.</li>
+          <li>Includes full names, designations, and editions of referenced codes (e.g., CSA B149.2, ANSI Z21.13, CAN/ULC-S636).</li>
+          <li>Use this section to verify source documents for any referenced clause.</li>
+        </ul>`,
+
+      sec3: `<h2>Section 3 – Definitions</h2>
+        <ul>
+          <li>Comprehensive glossary of technical terms used throughout the code.</li>
+          <li>Definitions are legally binding for code interpretation—always check here if a term seems ambiguous.</li>
+        </ul>`,
+
+      sec4: `<h2>Section 4 – General Requirements</h2>
+        <ul>
+          <li>Core safety and administrative rules for all installations covered by the code.</li>
+          <li>Includes requirements for permits, inspections, installer qualifications, and general safety practices.</li>
+        </ul>`,
+
+      sec5: `<h2>Section 5 – Pressure Controls</h2>
+        <ul>
+          <li>Requirements for selection, installation, and operation of pressure regulators, relief valves, and shut-off devices.</li>
+          <li>Ensures safe control of gas pressures in all system components.</li>
+        </ul>`,
+
+      sec6: `<h2>Section 6 – Gas Piping Systems</h2>
+        <ul>
+          <li>Detailed requirements for design, installation, and testing of gas piping and tubing systems.</li>
+          <li>Covers materials, sizing, supports, protection, and leak testing.</li>
+        </ul>`,
+
+      sec7: `<h2>Section 7 – Specific Appliances</h2>
+        <ul>
+          <li>Rules for installation and connection of various appliances (e.g., furnaces, boilers, water heaters, commercial equipment).</li>
+          <li>Includes any unique requirements, exceptions, or installation notes for each appliance type.</li>
+        </ul>`,
+
+      sec8: `<h2>Section 8 – Venting Systems and Air Supply for Appliances</h2>
+        <ul>
+          <li>Comprehensive requirements for venting appliances and providing combustion air/ventilation.</li>
+          <li>Includes vent sizing, materials, clearances, and air supply calculations.</li>
+        </ul>`,
+
+      sec9: `<h2>Section 9 – Natural Gas Compressors and Cylinders</h2>
+        <ul>
+          <li>Requirements for installation, operation, and maintenance of gas compressors and storage cylinders.</li>
+          <li>Focuses on safety, handling, and inspection protocols.</li>
+        </ul>`,
+
+      sec10: `<h2>Section 10 – Residential Fueling Appliances and Vehicle Fueling Appliances</h2>
+        <ul>
+          <li>Requirements for installing and operating appliances designed for fueling vehicles or use in residential fueling applications.</li>
+          <li>Includes safety controls, installation standards, and operational guidelines.</li>
+        </ul>`,
+
+      annexA: `<h2>Annex A – Informative (Not Mandatory)</h2>
+        <ul>
+          <li>Explanatory notes, sample calculations, and extra guidance for interpreting the code.</li>
+          <li>Intended to help users understand best practices and code intent, but not enforceable unless referenced in the main code.</li>
+        </ul>`,
+
+      annexB: `<h2>Annex B – Informative</h2>
+        <ul>
+          <li>Examples of acceptable methods, alternative materials, or non-mandatory best practices.</li>
+          <li>Use for study and comparison, but always verify with main code text for compliance.</li>
+        </ul>`,
+
+      annexC: `<h2>Annex C – General Venting Requirements (GVR)</h2>
+        <ul>
+          <li>Comprehensive technical details, tables, and requirements for venting systems.</li>
+          <li>Key resource for vent sizing, approved vent materials, installation standards, and troubleshooting venting issues.</li>
+        </ul>`
+    };
+
+    function showContent(section) {
+      document.getElementById('content-area').innerHTML = content[section];
+    }
+  </script>
+</body>
+</html>
