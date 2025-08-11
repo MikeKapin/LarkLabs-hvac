@@ -1,31 +1,4 @@
-@media (max-width: 768px) {
-            body {
-                padding: 0;
-                overflow: hidden;
-            }
-            
-            .container {
-                width: 100%;
-                height: 100vh;
-                position: fixed;
-            }
-            
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 20px;
-                overflow-y: auto;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -221,32 +194,24 @@
             border-left: 4px solid #ffc107;
         }
 
-        .footer {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
+        .credits {
             text-align: center;
-            padding: 25px;
-            border-top: 3px solid #3498db;
-            position: relative;
-            z-index: 1001;
-        }
-
-        .footer-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            font-size: 1.1em;
+            margin-top: 30px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9em;
         }
 
         .lark-logo {
             background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 6px 12px;
+            border-radius: 15px;
             font-weight: bold;
-            font-size: 1em;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 0.9em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: inline-block;
+            margin-left: 5px;
         }
 
         .tooltip {
@@ -279,6 +244,55 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Download button styling */
+        .download-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+                overflow: hidden;
+            }
+            
+            .container {
+                width: 100%;
+                height: 100vh;
+                position: fixed;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+                overflow-y: auto;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -286,6 +300,11 @@
         <div class="header">
             <h1>🏠 Canadian HVAC Load Calculator</h1>
             <p>Professional heating and cooling load calculations for Canadian climates</p>
+            <div style="margin-top: 15px;">
+                <button class="download-btn" onclick="downloadApp()">
+                    📱 Download App
+                </button>
+            </div>
         </div>
 
         <div class="main-content">
@@ -383,12 +402,7 @@
             </div>
         </div>
 
-        <div class="footer">
-            <div class="footer-content">
-                <span>Created by</span>
-                <div class="lark-logo">🐦 Lark Labs</div>
-            </div>
-        </div>
+
     </div>
 
     <script>
@@ -428,6 +442,26 @@
             'low-e': { imperial: 0.35, metric: 2.0 },
             'low-e-triple': { imperial: 0.21, metric: 1.2 }
         };
+
+        function downloadApp() {
+            // Get the complete HTML content
+            const fullHTML = document.documentElement.outerHTML;
+            
+            const blob = new Blob([fullHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create download link
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Canadian_HVAC_Calculator.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Show confirmation
+            alert('📱 App downloaded successfully! You can now open the HTML file in any web browser to use the calculator offline.');
+        }
 
         function toggleUnits() {
             isMetric = !isMetric;
@@ -491,7 +525,7 @@
             const buildingAge = document.getElementById('building-age').value;
 
             // Validation
-            if (!province || !area || windowArea === null || !occupants) {
+            if (!province || !area || isNaN(windowArea) || !occupants) {
                 alert('Please fill in all required fields.');
                 return;
             }
@@ -503,34 +537,34 @@
 
             const climate = climateData[province];
             const insul = insulationValues[insulation];
-            const windowU = windowUValues[windowType].metric; // Always use metric for calculations
+            const windowU = windowUValues[windowType].metric;
             const volume = areaM2 * heightM;
 
             // Calculate heat loss components
-            const wallArea = Math.sqrt(areaM2) * 4 * heightM - windowAreaM2; // Approximate wall area
+            const wallArea = Math.sqrt(areaM2) * 4 * heightM - windowAreaM2;
             const ceilingArea = areaM2;
             const floorArea = areaM2;
 
             // Heat loss calculations (W)
             const wallLoss = (wallArea / insul.wall) * (21 - climate.winterTemp);
             const ceilingLoss = (ceilingArea / insul.ceiling) * (21 - climate.winterTemp);
-            const floorLoss = (floorArea / insul.floor) * (21 - climate.winterTemp) * 0.5; // Ground temp factor
+            const floorLoss = (floorArea / insul.floor) * (21 - climate.winterTemp) * 0.5;
             const windowLoss = windowAreaM2 * windowU * (21 - climate.winterTemp);
             
-            // Air infiltration (assuming 0.5 ACH for average building)
+            // Air infiltration
             const infiltrationMultiplier = buildingAge === 'new' ? 0.3 : buildingAge === 'recent' ? 0.4 : buildingAge === 'older' ? 0.6 : 0.8;
             const infiltrationLoss = volume * infiltrationMultiplier * 1.2 * 1000 * (21 - climate.winterTemp) / 3600;
 
             const totalHeatLoss = wallLoss + ceilingLoss + floorLoss + windowLoss + infiltrationLoss;
 
-            // Add safety factor and equipment sizing
-            const designHeatLoad = totalHeatLoss * 1.2; // 20% safety factor
-            const heatingCapacityBtu = designHeatLoad * 3.412; // Convert W to BTU/h
+            // Add safety factor
+            const designHeatLoad = totalHeatLoss * 1.2;
+            const heatingCapacityBtu = designHeatLoad * 3.412;
 
             // Cooling load calculations
             const coolingLoad = calculateCoolingLoad(areaM2, windowAreaM2, windowU, occupants, climate, insul);
             const coolingCapacityBtu = coolingLoad * 3.412;
-            const coolingTons = coolingCapacityBtu / 12000; // Convert to tons
+            const coolingTons = coolingCapacityBtu / 12000;
 
             // Display results
             displayResults({
@@ -622,6 +656,10 @@
                     <strong>⚠️ Professional Note:</strong> These calculations provide estimates based on simplified methods. 
                     For final equipment sizing and installation, consult with a licensed HVAC professional who can perform 
                     detailed Manual J calculations and consider local building codes.
+                </div>
+
+                <div class="credits">
+                    Created by <span class="lark-logo">🐦 Lark Labs</span>
                 </div>
             `;
         }
