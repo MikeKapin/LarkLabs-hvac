@@ -1,63 +1,48 @@
 {
   "name": "hvac-pro-tools",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "description": "Professional HVAC calculation tools for technicians and engineers",
   "main": "index.html",
   "scripts": {
-    "start": "http-server . -p 3000 -c-1",
-    "dev": "http-server . -p 3000 -c-1 -o",
-    "build": "echo 'Static site - no build step needed'",
-    "test": "echo 'No tests configured yet'",
-    "lint": "echo 'No linting configured yet'",
-    "deploy": "netlify deploy --prod --dir .",
-    "preview": "netlify deploy --dir .",
-    "validate": "node scripts/validate.js"
+    "start": "npx http-server . -p 8080",
+    "build": "echo 'No build process needed for static site'",
+    "test": "echo 'No tests specified' && exit 0",
+    "deploy": "netlify deploy --prod --dir ."
   },
   "keywords": [
     "hvac",
+    "tools",
+    "calculator",
+    "refrigeration",
     "heating",
     "cooling",
-    "refrigeration",
-    "calculator",
-    "tools",
-    "professional",
-    "pwa",
-    "progressive-web-app"
+    "duct-sizing",
+    "psychrometric",
+    "mobile-app",
+    "pwa"
   ],
-  "author": {
-    "name": "LARK Labs",
-    "email": "contact@larklabs.dev",
-    "url": "https://larklabs.dev"
-  },
+  "author": "LARK Labs",
   "license": "MIT",
-  "homepage": "https://hvac-pro-tools.netlify.app",
+  "homepage": "https://github.com/LarkLabs-hvac/HVAC_Tools",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/hvac-pro-tools.git"
+    "url": "https://github.com/LarkLabs-hvac/HVAC_Tools.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/hvac-pro-tools/issues"
+    "url": "https://github.com/LarkLabs-hvac/HVAC_Tools/issues"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
-    "netlify-cli": "^17.10.1"
+    "netlify-cli": "^17.0.0"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
+    "node": ">=14.0.0"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead",
-    "not ie <= 11"
-  ],
-  "pwa": {
-    "name": "HVAC Pro Tools",
-    "short_name": "HVAC Tools",
-    "theme_color": "#4ecdc4",
-    "background_color": "#1e3c72",
-    "display": "standalone",
-    "start_url": "/"
-  }
+    "iOS >= 10",
+    "Android >= 5"
+  ]
 }
