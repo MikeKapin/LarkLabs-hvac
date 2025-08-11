@@ -1,31 +1,30 @@
-const CACHE_NAME = 'hvac-pro-tools-v1.2.0';
-const STATIC_CACHE = 'hvac-static-v1.2.0';
-const DYNAMIC_CACHE = 'hvac-dynamic-v1.2.0';
-
-// Files to cache immediately
-const STATIC_ASSETS = [
+// Service Worker for HVAC Pro Tools PWA
+const CACHE_NAME = 'hvac-pro-tools-v1.0.0';
+const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
   '/HVAC_Pro_Logo.png',
+  '/chart.js',
+  '/health.js',
   'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js'
 ];
 
-// Install event - cache static assets
+// Install event - cache resources
 self.addEventListener('install', event => {
   console.log('Service Worker: Installing...');
   event.waitUntil(
-    caches.open(STATIC_CACHE)
+    caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Service Worker: Caching static assets');
-        return cache.addAll(STATIC_ASSETS);
+        console.log('Service Worker: Caching files');
+        return cache.addAll(urlsToCache);
       })
       .then(() => {
-        console.log('Service Worker: Static assets cached successfully');
+        console.log('Service Worker: Cache complete');
         return self.skipWaiting();
       })
       .catch(err => {
-        console.error('Service Worker: Failed to cache static assets', err);
+        console.log('Service Worker: Cache failed', err);
       })
   );
 });
@@ -34,136 +33,102 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   console.log('Service Worker: Activating...');
   event.waitUntil(
-    caches.keys()
-      .then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(cacheName => {
-            if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
-              console.log('Service Worker: Deleting old cache:', cacheName);
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
-      .then(() => {
-        console.log('Service Worker: Activated successfully');
-        return self.clients.claim();
-      })
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Service Worker: Deleting old cache', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(() => {
+      console.log('Service Worker: Ready to handle fetches');
+      return self.clients.claim();
+    })
   );
 });
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', event => {
-  // Skip non-GET requests
-  if (event.request.method !== 'GET') {
-    return;
-  }
-
-  // Skip Chrome extension requests
-  if (event.request.url.startsWith('chrome-extension://')) {
+  // Skip cross-origin requests
+  if (!event.request.url.startsWith(self.location.origin) && 
+      !event.request.url.includes('cdnjs.cloudflare.com')) {
     return;
   }
 
   event.respondWith(
     caches.match(event.request)
-      .then(cachedResponse => {
-        // Return cached version if available
-        if (cachedResponse) {
-          console.log('Service Worker: Serving from cache:', event.request.url);
-          return cachedResponse;
+      .then(response => {
+        // Return cached version or fetch from network
+        if (response) {
+          console.log('Service Worker: Serving from cache', event.request.url);
+          return response;
         }
 
-        // Otherwise fetch from network
-        return fetch(event.request)
-          .then(networkResponse => {
-            // Don't cache non-successful responses
-            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-              return networkResponse;
-            }
+        console.log('Service Worker: Fetching from network', event.request.url);
+        return fetch(event.request).then(response => {
+          // Check if valid response
+          if (!response || response.status !== 200 || response.type !== 'basic') {
+            return response;
+          }
 
-            // Clone the response for caching
-            const responseToCache = networkResponse.clone();
+          // Clone the response
+          const responseToCache = response.clone();
 
-            // Cache dynamic content
-            caches.open(DYNAMIC_CACHE)
-              .then(cache => {
-                // Only cache certain file types
-                if (shouldCache(event.request.url)) {
-                  console.log('Service Worker: Caching dynamic asset:', event.request.url);
-                  cache.put(event.request, responseToCache);
-                }
-              });
+          // Add to cache
+          caches.open(CACHE_NAME)
+            .then(cache => {
+              cache.put(event.request, responseToCache);
+            });
 
-            return networkResponse;
-          })
-          .catch(err => {
-            console.error('Service Worker: Network fetch failed:', err);
-            
-            // Return offline fallback for navigation requests
-            if (event.request.mode === 'navigate') {
-              return caches.match('/');
-            }
-            
-            // For other requests, throw the error
-            throw err;
-          });
+          return response;
+        });
+      })
+      .catch(err => {
+        console.log('Service Worker: Fetch failed', err);
+        // Return offline page or fallback
+        if (event.request.destination === 'document') {
+          return caches.match('/index.html');
+        }
       })
   );
 });
 
-// Helper function to determine if a URL should be cached
-function shouldCache(url) {
-  const cachableExtensions = ['.js', '.css', '.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp', '.woff', '.woff2', '.ttf', '.eot'];
-  const cachableDomains = ['cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
-  
-  // Cache resources from specific CDNs
-  if (cachableDomains.some(domain => url.includes(domain))) {
-    return true;
-  }
-  
-  // Cache files with specific extensions
-  if (cachableExtensions.some(ext => url.includes(ext))) {
-    return true;
-  }
-  
-  return false;
-}
-
-// Background sync for offline functionality
+// Background Sync for offline functionality
 self.addEventListener('sync', event => {
-  console.log('Service Worker: Background sync triggered');
-  
   if (event.tag === 'background-sync') {
-    event.waitUntil(
-      // Perform background sync tasks here
-      console.log('Service Worker: Performing background sync')
-    );
+    console.log('Service Worker: Background sync triggered');
+    event.waitUntil(doBackgroundSync());
   }
 });
 
-// Push notification handling
+function doBackgroundSync() {
+  // Sync any pending calculations or data
+  return Promise.resolve();
+}
+
+// Push notifications (for future features)
 self.addEventListener('push', event => {
-  console.log('Service Worker: Push notification received');
-  
   const options = {
     body: event.data ? event.data.text() : 'HVAC Pro Tools notification',
-    icon: 'HVAC_Pro_Logo.png',
-    badge: 'HVAC_Pro_Logo.png',
-    vibrate: [200, 100, 200],
+    icon: '/HVAC_Pro_Logo.png',
+    badge: '/HVAC_Pro_Logo.png',
+    vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
-      primaryKey: '1'
+      primaryKey: 1
     },
     actions: [
       {
         action: 'explore',
         title: 'Open App',
-        icon: 'HVAC_Pro_Logo.png'
+        icon: '/HVAC_Pro_Logo.png'
       },
       {
         action: 'close',
         title: 'Close',
-        icon: 'HVAC_Pro_Logo.png'
+        icon: '/HVAC_Pro_Logo.png'
       }
     ]
   };
@@ -173,10 +138,8 @@ self.addEventListener('push', event => {
   );
 });
 
-// Notification click handling
+// Handle notification clicks
 self.addEventListener('notificationclick', event => {
-  console.log('Service Worker: Notification clicked');
-  
   event.notification.close();
 
   if (event.action === 'explore') {
@@ -186,29 +149,21 @@ self.addEventListener('notificationclick', event => {
   }
 });
 
-// Message handling from main thread
+// Handle message from main thread
 self.addEventListener('message', event => {
-  console.log('Service Worker: Message received:', event.data);
-  
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
-  
-  if (event.data && event.data.type === 'CACHE_URLS') {
-    event.waitUntil(
-      caches.open(DYNAMIC_CACHE)
-        .then(cache => cache.addAll(event.data.payload))
-    );
+});
+
+// Periodic background sync (for future features)
+self.addEventListener('periodicsync', event => {
+  if (event.tag === 'hvac-data-sync') {
+    event.waitUntil(syncHVACData());
   }
 });
 
-// Error handling
-self.addEventListener('error', event => {
-  console.error('Service Worker: Error occurred:', event.error);
-});
-
-self.addEventListener('unhandledrejection', event => {
-  console.error('Service Worker: Unhandled promise rejection:', event.reason);
-});
-
-console.log('Service Worker: Script loaded successfully');
+function syncHVACData() {
+  // Sync refrigerant data, climate data, etc.
+  return Promise.resolve();
+}
