@@ -7,7 +7,8 @@ const STATIC_FILES = [
   '/A2L/',
   '/A2L/index.html',
   '/A2L/manifest.json',
-  '/A2L/offline.html',
+  '/A2L/A2L_Pro_Logo.png'
+  // Removed offline.html since it doesn't exist
   // Add any additional static files here if needed
 ];
 
@@ -17,7 +18,11 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE).then((cache) => {
       console.log('Service Worker: Caching static files');
-      return cache.addAll(STATIC_FILES);
+      return cache.addAll(STATIC_FILES).catch((error) => {
+        console.error('Service Worker: Failed to cache some files:', error);
+        // Continue installation even if some files fail to cache
+        return Promise.resolve();
+      });
     }).then(() => {
       // Skip waiting to activate new service worker immediately
       return self.skipWaiting();
@@ -72,7 +77,7 @@ self.addEventListener('fetch', (event) => {
                 return cachedResponse;
               }
               // Fallback to main page if specific page not cached
-              return caches.match('/A2L/');
+              return caches.match('/A2L/index.html') || caches.match('/A2L/');
             });
         })
     );
@@ -105,6 +110,17 @@ self.addEventListener('fetch', (event) => {
             });
 
             return response;
+          })
+          .catch((error) => {
+            console.warn('Service Worker: Fetch failed for:', event.request.url, error);
+            // Return a basic fallback for failed requests
+            return new Response('Offline - Content not available', {
+              status: 503,
+              statusText: 'Service Unavailable',
+              headers: new Headers({
+                'Content-Type': 'text/plain'
+              })
+            });
           });
       })
   );
@@ -124,11 +140,11 @@ self.addEventListener('push', (event) => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/icon-192.png',
-      badge: '/badge-72.png',
+      icon: '/A2L/A2L_Pro_Logo.png',  // Updated to use your logo
+      badge: '/A2L/A2L_Pro_Logo.png', // Updated to use your logo
       vibrate: [200, 100, 200],
       data: {
-        url: data.url || '/'
+        url: data.url || '/A2L/'
       }
     };
 
