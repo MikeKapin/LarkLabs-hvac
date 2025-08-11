@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canadian HVAC Duct Sizing Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 0;
+            min-height: 800px;
+        }
+
+        .input-section {
+            padding: 40px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+        }
+
+        .results-section {
+            padding: 40px;
+            background: white;
+            overflow-y: auto;
+            max-height: 800px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .results-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .result-value {
+            font-size: 1.1em;
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+        .rooms-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #e9ecef;
+        }
+
+        .room-input {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 10px;
+            align-items: end;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .add-room-btn {
+            padding: 10px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-room-btn:hover {
+            background: #219a52;
+        }
+
+        .duct-sizing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 14px;
+        }
+
+        .duct-sizing-table th,
+        .duct-sizing-table td {
+            padding: 8px 6px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .duct-sizing-table th {
+            background: #34495e;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .duct-sizing-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .trunk-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .spec-card {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .spec-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-section {
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .room-input {
+                grid-template-columns: 1fr;
+            }
+
+            .trunk-specs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Canadian HVAC Duct Sizing Calculator</h1>
+            <p>Professional duct sizing based on CSA and NBC standards (Imperial Units)</p>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h2 class="section-title">System Parameters</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="climate-zone">Climate Zone</label>
+                        <select id="climate-zone">
+                            <option value="4">Zone 4 (Southern ON)</option>
+                            <option value="5">Zone 5 (Central ON)</option>
+                            <option value="6">Zone 6 (Northern ON)</option>
+                            <option value="7a">Zone 7A (MB, SK)</option>
+                            <option value="7b">Zone 7B (AB)</option>
+                            <option value="8">Zone 8 (Northern Canada)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="building-type">Building Type</label>
+                        <select id="building-type">
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="industrial">Industrial</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="furnace-capacity">Furnace/AHU Input (BTU/h)</label>
+                        <input type="number" id="furnace-capacity" placeholder="e.g., 80000">
+                    </div>
+                    <div class="form-group">
+                        <label for="fan-speed">Fan Capacity (CFM)</label>
+                        <input type="number" id="fan-speed" placeholder="e.g., 1200">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="duct-material">Duct Material</label>
+                        <select id="duct-material">
+                            <option value="galvanized">Galvanized Steel</option>
+                            <option value="aluminum">Aluminum</option>
+                            <option value="flexible">Flexible Duct</option>
+                            <option value="fiberglass">Fiberglass Board</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="system-type">System Type</label>
+                        <select id="system-type">
+                            <option value="heating">Heating Only</option>
+                            <option value="cooling">Cooling Only</option>
+                            <option value="both">Heating & Cooling</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="duct-length">Total Equivalent Length (ft)</label>
+                        <input type="number" id="duct-length" placeholder="e.g., 150" value="150">
+                    </div>
+                    <div class="form-group">
+                        <label for="fitting-count">Number of Fittings</label>
+                        <input type="number" id="fitting-count" placeholder="e.g., 8" value="8">
+                    </div>
+                </div>
+
+                <div class="rooms-section">
+                    <h3 style="margin-bottom: 15px; color: #2c3e50;">Room Information</h3>
+                    <div id="rooms-container">
+                        <div class="room-input">
+                            <div>
+                                <label>Room Name</label>
+                                <input type="text" class="room-name" placeholder="e.g., Living Room">
+                            </div>
+                            <div>
+                                <label>Area (sq ft)</label>
+                                <input type="number" class="room-area" placeholder="250">
+                            </div>
+                            <div>
+                                <label>Ceiling Height (ft)</label>
+                                <input type="number" class="room-height" placeholder="8" step="0.5">
+                            </div>
+                            <div>
+                                <label>Registers</label>
+                                <input type="number" class="room-registers" placeholder="1" min="1">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-room-btn" onclick="addRoom()">+ Add Room</button>
+                </div>
+
+                <button class="calculate-btn" onclick="calculateDuctSizing()">Calculate Duct Sizing</button>
+            </div>
+
+            <div class="results-section">
+                <h2 class="section-title">Calculation Results</h2>
+                
+                <div class="results-card">
+                    <h3 style="margin-bottom: 15px; color: #2c3e50;">System Summary</h3>
+                    <div class="result-item">
+                        <span class="result-label">Total Heating Load:</span>
+                        <span class="result-value" id="total-load">- BTU/h</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Airflow Required:</span>
+                        <span class="result-value" id="total-cfm">- CFM</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Static Pressure Loss:</span>
+                        <span class="result-value" id="pressure-loss">- in. w.c.</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Cold Air Return Area:</span>
+                        <span class="result-value" id="return-area">- sq in</span>
+                    </div>
+                </div>
+
+                <div class="trunk-specs">
+                    <div class="spec-card">
+                        <div class="spec-title">Main Trunk</div>
+                        <div id="main-trunk-size">- inches</div>
+                        <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                            Velocity: <span id="trunk-velocity">-</span> ft/min
+                        </div>
+                    </div>
+                    <div class="spec-card">
+                        <div class="spec-title">Sub-Trunk</div>
+                        <div id="sub-trunk-size">- inches</div>
+                        <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                            Velocity: <span id="sub-trunk-velocity">-</span> ft/min
+                        </div>
+                    </div>
+                    <div class="spec-card">
+                        <div class="spec-title">Branch Ducts</div>
+                        <div id="branch-duct-range">- inches</div>
+                        <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                            Round: <span id="round-duct-range">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="duct-sizing-results">
+                    <!-- Dynamic duct sizing table will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Canadian climate zone heating factors (BTU/h per sq ft)
+        const climateFactors = {
+            '4': 35,    // Southern Ontario
+            '5': 40,    // Central Ontario
+            '6': 45,    // Northern Ontario
+            '7a': 50,   // Manitoba, Saskatchewan
+            '7b': 45,   // Alberta
+            '8': 60     // Northern Canada
+        };
+
+        // Duct material friction factors (per 100 ft)
+        const materialFriction = {
+            'galvanized': 0.1,
+            'aluminum': 0.08,
+            'flexible': 0.25,
+            'fiberglass': 0.12
+        };
+
+        // Standard duct sizes (rectangular W x H)
+        const standardDuctSizes = [
+            [6, 4], [8, 4], [10, 4], [12, 4], [14, 4], [16, 4], [18, 4], [20, 4],
+            [6, 6], [8, 6], [10, 6], [12, 6], [14, 6], [16, 6], [18, 6], [20, 6], [22, 6], [24, 6],
+            [8, 8], [10, 8], [12, 8], [14, 8], [16, 8], [18, 8], [20, 8], [22, 8], [24, 8], [26, 8], [28, 8],
+            [10, 10], [12, 10], [14, 10], [16, 10], [18, 10], [20, 10], [22, 10], [24, 10], [26, 10], [28, 10], [30, 10],
+            [12, 12], [14, 12], [16, 12], [18, 12], [20, 12], [22, 12], [24, 12], [26, 12], [28, 12], [30, 12], [32, 12], [36, 12]
+        ];
+
+        // Standard round duct sizes
+        const roundDuctSizes = [4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
+
+        let roomCount = 1;
+
+        function addRoom() {
+            roomCount++;
+            const container = document.getElementById('rooms-container');
+            const roomDiv = document.createElement('div');
+            roomDiv.className = 'room-input';
+            roomDiv.innerHTML = `
+                <div>
+                    <label>Room Name</label>
+                    <input type="text" class="room-name" placeholder="e.g., Bedroom ${roomCount}">
+                </div>
+                <div>
+                    <label>Area (sq ft)</label>
+                    <input type="number" class="room-area" placeholder="150">
+                </div>
+                <div>
+                    <label>Ceiling Height (ft)</label>
+                    <input type="number" class="room-height" placeholder="8" step="0.5">
+                </div>
+                <div>
+                    <label>Registers</label>
+                    <input type="number" class="room-registers" placeholder="1" min="1">
+                </div>
+            `;
+            container.appendChild(roomDiv);
+        }
+
+        function calculateEquivalentDiameter(width, height) {
+            return 1.3 * Math.pow((width * height), 0.625) / Math.pow((width + height), 0.25);
+        }
+
+        function selectOptimalDuctSize(cfm, maxVelocity = 900) {
+            const requiredArea = cfm / maxVelocity * 144; // Convert to sq in
+            
+            let bestSize = null;
+            let bestVelocity = Infinity;
+            
+            // Check rectangular sizes
+            for (let [w, h] of standardDuctSizes) {
+                const area = w * h;
+                if (area >= requiredArea) {
+                    const velocity = (cfm / area) * 144;
+                    if (velocity <= maxVelocity && velocity < bestVelocity) {
+                        bestSize = [w, h, 'rect'];
+                        bestVelocity = velocity;
+                    }
+                }
+            }
+            
+            return bestSize;
+        }
+
+        function selectRoundDuct(cfm, maxVelocity = 800) {
+            const requiredArea = cfm / maxVelocity * 144;
+            const requiredDiameter = Math.sqrt(requiredArea * 4 / Math.PI);
+            
+            for (let diameter of roundDuctSizes) {
+                const area = Math.PI * Math.pow(diameter / 2, 2);
+                const velocity = (cfm / area) * 144;
+                if (velocity <= maxVelocity) {
+                    return diameter;
+                }
+            }
+            return roundDuctSizes[roundDuctSizes.length - 1]; // Return largest if none fit
+        }
+
+        function calculatePressureLoss(cfm, ductSize, length, material, fittings = 0) {
+            let equivalentDiameter;
+            if (Array.isArray(ductSize)) {
+                equivalentDiameter = calculateEquivalentDiameter(ductSize[0], ductSize[1]);
+            } else {
+                equivalentDiameter = ductSize;
+            }
+            
+            // Friction loss calculation (simplified)
+            const frictionFactor = materialFriction[material];
+            const velocity = cfm / (Math.PI * Math.pow(equivalentDiameter / 24, 2)) * 4; // ft/min
+            
+            // Friction loss per 100 ft
+            const frictionPer100 = frictionFactor * Math.pow(velocity / 1000, 1.9);
+            const frictionLoss = (frictionPer100 * length) / 100;
+            
+            // Fitting losses (each fitting = approx 5 ft equivalent length)
+            const fittingLoss = (frictionPer100 * fittings * 5) / 100;
+            
+            return frictionLoss + fittingLoss;
+        }
+
+        function calculateDuctSizing() {
+            // Get system parameters
+            const climateZone = document.getElementById('climate-zone').value;
+            const buildingType = document.getElementById('building-type').value;
+            const furnaceCapacity = parseFloat(document.getElementById('furnace-capacity').value) || 0;
+            const fanSpeed = parseFloat(document.getElementById('fan-speed').value) || 0;
+            const ductMaterial = document.getElementById('duct-material').value;
+            const systemType = document.getElementById('system-type').value;
+            const ductLength = parseFloat(document.getElementById('duct-length').value) || 150;
+            const fittingCount = parseInt(document.getElementById('fitting-count').value) || 8;
+
+            // Get room data
+            const rooms = [];
+            const roomInputs = document.querySelectorAll('.room-input');
+            
+            roomInputs.forEach(room => {
+                const name = room.querySelector('.room-name').value || 'Unnamed Room';
+                const area = parseFloat(room.querySelector('.room-area').value) || 0;
+                const height = parseFloat(room.querySelector('.room-height').value) || 8;
+                const registers = parseInt(room.querySelector('.room-registers').value) || 1;
+                
+                if (area > 0) {
+                    rooms.push({ name, area, height, registers });
+                }
+            });
+
+            if (rooms.length === 0) {
+                alert('Please add at least one room with valid area.');
+                return;
+            }
+
+            // Calculate heating load for each room
+            const heatingFactor = climateFactors[climateZone];
+            let totalLoad = 0;
+            let totalCFM = 0;
+            
+            rooms.forEach(room => {
+                // Calculate heat load (BTU/h)
+                room.heatLoad = room.area * heatingFactor;
+                
+                // Calculate required CFM (400-500 BTU/h per CFM for heating, 350-400 for cooling)
+                const cfmPerBtu = systemType === 'cooling' ? 400 : 450;
+                room.cfm = room.heatLoad / cfmPerBtu;
+                
+                // Distribute CFM across registers
+                room.cfmPerRegister = room.cfm / room.registers;
+                
+                totalLoad += room.heatLoad;
+                totalCFM += room.cfm;
+            });
+
+            // Calculate main trunk sizing (1000-1200 ft/min)
+            const mainTrunkSize = selectOptimalDuctSize(totalCFM, 1100);
+            const mainTrunkVelocity = mainTrunkSize ? 
+                (totalCFM / (mainTrunkSize[0] * mainTrunkSize[1])) * 144 : 0;
+
+            // Calculate sub-trunk sizing (800-1000 ft/min)
+            const subTrunkCFM = totalCFM * 0.6; // Assume 60% of total flow through sub-trunk
+            const subTrunkSize = selectOptimalDuctSize(subTrunkCFM, 900);
+            const subTrunkVelocity = subTrunkSize ? 
+                (subTrunkCFM / (subTrunkSize[0] * subTrunkSize[1])) * 144 : 0;
+
+            // Calculate branch duct sizes for rooms
+            rooms.forEach(room => {
+                room.ductSize = selectOptimalDuctSize(room.cfm, 800);
+                room.roundDuct = selectRoundDuct(room.cfm, 750);
+                
+                // Register sizing - standard 4"x10" or 3"x10"
+                if (room.cfmPerRegister <= 60) {
+                    room.registerSize = "3\" × 10\"";
+                } else {
+                    room.registerSize = "4\" × 10\"";
+                }
+            });
+
+            // Calculate total pressure loss
+            const mainTrunkPressure = calculatePressureLoss(totalCFM, mainTrunkSize, ductLength * 0.4, ductMaterial, fittingCount * 0.3);
+            const subTrunkPressure = calculatePressureLoss(subTrunkCFM, subTrunkSize, ductLength * 0.3, ductMaterial, fittingCount * 0.3);
+            const branchPressure = Math.max(...rooms.map(room => 
+                calculatePressureLoss(room.cfm, room.ductSize, ductLength * 0.3 / rooms.length, ductMaterial, fittingCount * 0.4 / rooms.length)
+            ));
+            
+            const totalPressureLoss = mainTrunkPressure + subTrunkPressure + branchPressure;
+
+            // Calculate cold air return area (80% of supply CFM, 500 ft/min face velocity)
+            const returnCFM = totalCFM * 0.8;
+            const returnArea = (returnCFM / 500) * 144; // sq in
+
+            // Update results
+            document.getElementById('total-load').textContent = `${Math.round(totalLoad).toLocaleString()} BTU/h`;
+            document.getElementById('total-cfm').textContent = `${Math.round(totalCFM)} CFM`;
+            document.getElementById('pressure-loss').textContent = `${totalPressureLoss.toFixed(3)} in. w.c.`;
+            document.getElementById('return-area').textContent = `${Math.round(returnArea)} sq in`;
+
+            // Update trunk specifications
+            if (mainTrunkSize) {
+                document.getElementById('main-trunk-size').textContent = `${mainTrunkSize[0]}" × ${mainTrunkSize[1]}"`;
+                document.getElementById('trunk-velocity').textContent = `${Math.round(mainTrunkVelocity)}`;
+            }
+
+            if (subTrunkSize) {
+                document.getElementById('sub-trunk-size').textContent = `${subTrunkSize[0]}" × ${subTrunkSize[1]}"`;
+                document.getElementById('sub-trunk-velocity').textContent = `${Math.round(subTrunkVelocity)}`;
+            }
+
+            // Branch duct range
+            const branchSizes = rooms.map(room => `${room.ductSize[0]}"×${room.ductSize[1]}"`);
+            const roundSizes = rooms.map(room => `${room.roundDuct}"`);
+            document.getElementById('branch-duct-range').textContent = `${Math.min(...rooms.map(r => r.ductSize[0]))}-${Math.max(...rooms.map(r => r.ductSize[0]))} inch`;
+            document.getElementById('round-duct-range').textContent = `${Math.min(...rooms.map(r => r.roundDuct))}-${Math.max(...rooms.map(r => r.roundDuct))}"`;
+
+            // Generate detailed room table
+            generateDuctSizingTable(rooms);
+
+            // Check for warnings
+            checkSystemWarnings(furnaceCapacity, totalLoad, fanSpeed, totalCFM, totalPressureLoss);
+        }
+
+        function generateDuctSizingTable(rooms) {
+            const resultsDiv = document.getElementById('duct-sizing-results');
+            
+            let tableHTML = `
+                <div class="results-card">
+                    <h3 style="margin-bottom: 15px; color: #2c3e50;">Individual Room Duct Sizing</h3>
+                    <table class="duct-sizing-table">
+                        <thead>
+                            <tr>
+                                <th>Room</th>
+                                <th>Area<br>(sq ft)</th>
+                                <th>Heat Load<br>(BTU/h)</th>
+                                <th>CFM<br>Required</th>
+                                <th>Registers</th>
+                                <th>CFM/<br>Register</th>
+                                <th>Rectangular<br>Duct Size</th>
+                                <th>Round Duct<br>Size</th>
+                                <th>Register<br>Size</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            rooms.forEach(room => {
+                tableHTML += `
+                    <tr>
+                        <td>${room.name}</td>
+                        <td>${room.area}</td>
+                        <td>${Math.round(room.heatLoad).toLocaleString()}</td>
+                        <td>${Math.round(room.cfm)}</td>
+                        <td>${room.registers}</td>
+                        <td>${Math.round(room.cfmPerRegister)}</td>
+                        <td>${room.ductSize[0]}" × ${room.ductSize[1]}"</td>
+                        <td>${room.roundDuct}" ∅</td>
+                        <td>${room.registerSize}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            // Add cold air return specifications
+            const returnCFM = rooms.reduce((sum, room) => sum + room.cfm, 0) * 0.8;
+            const returnArea = (returnCFM / 500) * 144;
+            const recommendedReturns = Math.ceil(returnArea / 200); // 200 sq in per return
+
+            tableHTML += `
+                <div class="results-card">
+                    <h3 style="margin-bottom: 15px; color: #2c3e50;">Cold Air Return Requirements</h3>
+                    <div class="result-item">
+                        <span class="result-label">Return Air CFM:</span>
+                        <span class="result-value">${Math.round(returnCFM)} CFM</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Return Area Required:</span>
+                        <span class="result-value">${Math.round(returnArea)} sq in</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Recommended Number of Returns:</span>
+                        <span class="result-value">${recommendedReturns}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Return Grille Size (each):</span>
+                        <span class="result-value">${recommendedReturns === 1 ? '20" × 20"' : '16" × 20"'}</span>
+                    </div>
+                </div>
+            `;
+
+            resultsDiv.innerHTML = tableHTML;
+        }
+
+        function checkSystemWarnings(furnaceCapacity, totalLoad, fanSpeed, totalCFM, pressureLoss) {
+            const resultsDiv = document.getElementById('duct-sizing-results');
+            let warnings = [];
+            let errors = [];
+
+            if (furnaceCapacity > 0 && furnaceCapacity < totalLoad) {
+                errors.push('🚨 Furnace capacity is insufficient for calculated heating load.');
+            }
+
+            if (fanSpeed > 0 && fanSpeed < totalCFM) {
+                errors.push('🚨 Fan capacity is insufficient for required airflow.');
+            }
+
+            if (pressureLoss > 0.5) {
+                errors.push(`🚨 Static pressure loss (${pressureLoss.toFixed(3)}" w.c.) exceeds maximum allowable (0.5" w.c.).`);
+            }
+
+            if (totalCFM > 2000) {
+                warnings.push('⚠️ High airflow requirements may require zoning or larger equipment.');
+            }
+
+            if (pressureLoss > 0.4) {
+                warnings.push('⚠️ Static pressure approaching maximum limit. Consider larger ducts.');
+            }
+
+            if (errors.length > 0) {
+                const errorHTML = `
+                    <div class="error">
+                        <strong>System Errors - Must Be Addressed:</strong><br>
+                        ${errors.join('<br>')}
+                    </div>
+                `;
+                resultsDiv.innerHTML += errorHTML;
+            }
+
+            if (warnings.length > 0) {
+                const warningHTML = `
+                    <div class="warning">
+                        <strong>System Warnings:</strong><br>
+                        ${warnings.join('<br>')}
+                    </div>
+                `;
+                resultsDiv.innerHTML += warningHTML;
+            }
+        }
+
+        // Initialize with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('furnace-capacity').value = '80000';
+            document.getElementById('fan-speed').value = '1200';
+            document.querySelector('.room-name').value = 'Living Room';
+            document.querySelector('.room-area').value = '250';
+            document.querySelector('.room-height').value = '8';
+            document.querySelector('.room-registers').value = '2';
+        });
+    </script>
+</body>
+</html>
