@@ -35,6 +35,124 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Password Protection Styles */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1A1F2E;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .password-container {
+            background: #2D3748;
+            border: 2px solid #E85A4F;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(232, 90, 79, 0.3);
+        }
+
+        .password-logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .password-title {
+            color: #E85A4F;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .password-subtitle {
+            color: #A0AEC0;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #4A5568;
+            border-radius: 12px;
+            background: #1A1F2E;
+            color: #E2E8F0;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #E85A4F;
+            box-shadow: 0 0 0 3px rgba(232, 90, 79, 0.2);
+        }
+
+        .password-input::placeholder {
+            color: #718096;
+        }
+
+        .password-button {
+            width: 100%;
+            padding: 1rem;
+            background: #E85A4F;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(232, 90, 79, 0.4);
+        }
+
+        .password-button:hover {
+            background: #C53030;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 90, 79, 0.6);
+        }
+
+        .password-button:active {
+            transform: translateY(0);
+        }
+
+        .password-error {
+            color: #F56565;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: rgba(245, 101, 101, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(245, 101, 101, 0.3);
+        }
+
+        .beta-badge {
+            background: linear-gradient(135deg, #E85A4F, #C53030);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Main App Styles */
         .mobile-header {
             background: rgba(26, 31, 46, 0.95);
             padding: 0.5rem;
@@ -607,34 +725,64 @@
     </style>
 </head>
 <body>
-    <div class="mobile-header">
-        <div class="mobile-header-content">
-            <div class="mobile-mode-toggle">
-                <button class="mobile-mode-btn active" id="mobileHomeownerBtn" onclick="switchMode('homeowner')">🏠 Home</button>
-                <button class="mobile-mode-btn" id="mobileTechnicianBtn" onclick="switchMode('technician')">🔧 Tech</button>
+    <!-- Password Protection Overlay -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-container">
+            <div class="beta-badge">🔒 BETA ACCESS</div>
+            <div class="password-logo">🔧</div>
+            <h1 class="password-title">HVAC Jack</h1>
+            <p class="password-subtitle">Beta Testing - Enter access code to continue</p>
+            
+            <input 
+                type="password" 
+                class="password-input" 
+                id="passwordInput" 
+                placeholder="Enter password..."
+                autocomplete="new-password"
+            />
+            
+            <button class="password-button" onclick="checkPassword()">
+                🚀 Access HVAC Jack
+            </button>
+            
+            <div class="password-error hidden" id="passwordError">
+                ❌ Incorrect password. Please try again.
             </div>
-            <button class="header-settings-btn" onclick="showMobileMenu()">⚙️</button>
-            <a href="#" class="header-logo">
-                <img src="logo_2.png" alt="HVAC Jack Logo" />
-            </a>
-        </div>
-        <div class="mobile-status">
-            <div class="mobile-status-dot connecting" id="mobileStatusDot"></div>
-            <span id="mobileStatusText">Connecting to Jack...</span>
         </div>
     </div>
 
-    <div class="main-container">
-        <div class="mobile-chat-container">
-            <div class="mobile-messages" id="mobileMessages">
-                <div class="mobile-message ai">
-                    <div class="mobile-avatar ai">🔧</div>
-                    <div class="mobile-message-content" id="mobileWelcomeMessage">
-                        <strong>Hey! I'm HVAC Jack!</strong><br><br>
-                        🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
-                        💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
-                        <strong>What's wrong with your heating or cooling?</strong>
+    <!-- Main App Content (hidden initially) -->
+    <div class="main-app hidden" id="mainApp">
+        <div class="mobile-header">
+            <div class="mobile-header-content">
+                <div class="mobile-mode-toggle">
+                    <button class="mobile-mode-btn active" id="mobileHomeownerBtn" onclick="switchMode('homeowner')">🏠 Home</button>
+                    <button class="mobile-mode-btn" id="mobileTechnicianBtn" onclick="switchMode('technician')">🔧 Tech</button>
+                </div>
+                <button class="header-settings-btn" onclick="showMobileMenu()">⚙️</button>
+                <a href="#" class="header-logo">
+                    <img src="logo_2.png" alt="HVAC Jack Logo" />
+                </a>
+            </div>
+            <div class="mobile-status">
+                <div class="mobile-status-dot connecting" id="mobileStatusDot"></div>
+                <span id="mobileStatusText">Connecting to Jack...</span>
+            </div>
+        </div>
+
+        <div class="main-container">
+            <div class="mobile-chat-container">
+                <div class="mobile-messages" id="mobileMessages">
+                    <div class="mobile-message ai">
+                        <div class="mobile-avatar ai">🔧</div>
+                        <div class="mobile-message-content" id="mobileWelcomeMessage">
+                            <strong>Hey! I'm HVAC Jack!</strong><br><br>
+                            🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
+                            💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
+                            <strong>What's wrong with your heating or cooling?</strong>
+                        </div>
                     </div>
+                </div>
                 <div class="mobile-context-bar" id="mobileContextBar" onclick="toggleContext()">
                     <div id="mobileContextSummary">🧠 New conversation - Jack is learning about your system</div>
                     <div class="context-toggle">Tap to expand memory</div>
@@ -644,54 +792,142 @@
                         <strong>Messages:</strong> <span id="mobileMessageCount">0</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="mobile-typing" id="mobileTyping">
-                <span>Jack is thinking</span>
-                <div class="mobile-typing-dots">
-                    <div class="mobile-typing-dot"></div>
-                    <div class="mobile-typing-dot"></div>
-                    <div class="mobile-typing-dot"></div>
+                <div class="mobile-typing" id="mobileTyping">
+                    <span>Jack is thinking</span>
+                    <div class="mobile-typing-dots">
+                        <div class="mobile-typing-dot"></div>
+                        <div class="mobile-typing-dot"></div>
+                        <div class="mobile-typing-dot"></div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mobile-input-container">
-                <div class="mobile-quick-actions">
-                    <button class="mobile-quick-btn" onclick="quickQuestion('No heat from furnace')">🔥 No Heat</button>
-                    <button class="mobile-quick-btn" onclick="quickQuestion('AC not cooling')">❄️ No Cool</button>
-                    <button class="mobile-quick-btn" onclick="quickQuestion('Strange noises')">🔊 Noise</button>
-                    <button class="mobile-quick-btn" onclick="quickQuestion('System short cycling')">🔄 Cycling</button>
-                    <button class="mobile-quick-btn" onclick="quickQuestion('Frozen AC coil')">🧊 Frozen</button>
-                </div>
-                
-                <div class="mobile-input-group">
-                    <textarea class="mobile-input-field" id="mobileInput" placeholder="Tell Jack what's wrong..." rows="1" onkeypress="handleMobileKeyPress(event)" oninput="adjustTextareaHeight(this)"></textarea>
-                    <button class="mobile-send-btn" id="mobileSendBtn" onclick="sendMobileMessage()">
-                        <span>➤</span>
-                    </button>
+                <div class="mobile-input-container">
+                    <div class="mobile-quick-actions">
+                        <button class="mobile-quick-btn" onclick="quickQuestion('No heat from furnace')">🔥 No Heat</button>
+                        <button class="mobile-quick-btn" onclick="quickQuestion('AC not cooling')">❄️ No Cool</button>
+                        <button class="mobile-quick-btn" onclick="quickQuestion('Strange noises')">🔊 Noise</button>
+                        <button class="mobile-quick-btn" onclick="quickQuestion('System short cycling')">🔄 Cycling</button>
+                        <button class="mobile-quick-btn" onclick="quickQuestion('Frozen AC coil')">🧊 Frozen</button>
+                    </div>
+                    
+                    <div class="mobile-input-group">
+                        <textarea class="mobile-input-field" id="mobileInput" placeholder="Tell Jack what's wrong..." rows="1" onkeypress="handleMobileKeyPress(event)" oninput="adjustTextareaHeight(this)"></textarea>
+                        <button class="mobile-send-btn" id="mobileSendBtn" onclick="sendMobileMessage()">
+                            <span>➤</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="mobile-footer">
+            <div class="footer-content">
+                <div class="footer-text">
+                    Created by 
+                    <div class="footer-logo">
+                        🔧
+                    </div>
+                    Your Company Name
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 Your Company Name. All rights reserved. HVAC Jack is a trademark of Your Company Name.
+            </div>
+        </div>
+
+        <button class="mobile-fab" id="mobileFab" style="display: none;" onclick="showMobileMenu()">⚙️</button>
     </div>
-
-    <div class="mobile-footer">
-        <div class="footer-content">
-            <div class="footer-text">
-                Created by 
-                <div class="footer-logo">
-                    🔧
-                </div>
-                Your Company Name
-            </div>
-        </div>
-        <div class="copyright">
-            © 2025 Your Company Name. All rights reserved. HVAC Jack is a trademark of Your Company Name.
-        </div>
-    </div>
-
-    <button class="mobile-fab" id="mobileFab" style="display: none;" onclick="showMobileMenu()">⚙️</button>
 
     <script>
+        // Password Protection System
+        const BETA_PASSWORD = 'HVACJACK2025';
+        const SESSION_KEY = 'hvacjack_beta_session';
+        const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const errorDiv = document.getElementById('passwordError');
+            const password = input.value.trim();
+
+            if (password === BETA_PASSWORD) {
+                // Store session with expiration
+                const session = {
+                    authenticated: true,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+                
+                // Hide password overlay and show main app
+                document.getElementById('passwordOverlay').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+                
+                // Initialize the main app
+                initializeMainApp();
+                
+                // Show success message
+                console.log('✅ Beta access granted - Welcome to HVAC Jack!');
+            } else {
+                // Show error
+                errorDiv.classList.remove('hidden');
+                input.value = '';
+                input.focus();
+                
+                // Hide error after 3 seconds
+                setTimeout(() => {
+                    errorDiv.classList.add('hidden');
+                }, 3000);
+            }
+        }
+
+        function checkExistingSession() {
+            const stored = localStorage.getItem(SESSION_KEY);
+            if (stored) {
+                try {
+                    const session = JSON.parse(stored);
+                    const timeElapsed = Date.now() - session.timestamp;
+                    
+                    if (session.authenticated && timeElapsed < SESSION_DURATION) {
+                        // Valid session - skip password
+                        document.getElementById('passwordOverlay').classList.add('hidden');
+                        document.getElementById('mainApp').classList.remove('hidden');
+                        initializeMainApp();
+                        return true;
+                    } else {
+                        // Expired session
+                        localStorage.removeItem(SESSION_KEY);
+                    }
+                } catch (error) {
+                    // Invalid session data
+                    localStorage.removeItem(SESSION_KEY);
+                }
+            }
+            return false;
+        }
+
+        // Handle Enter key on password input
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            
+            passwordInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            
+            // Check for existing session on page load
+            if (!checkExistingSession()) {
+                // Focus password input if no session
+                setTimeout(() => passwordInput.focus(), 100);
+            }
+        });
+
+        function initializeMainApp() {
+            // Initialize the main HVAC Jack app
+            const mobileHvacJack = new SecureMobileHVACJack();
+            window.mobileHvacJack = mobileHvacJack; // Make it globally accessible
+        }
+
         // Enhanced Mobile HVAC Jack with better connection handling
         class SecureMobileHVACJack {
             constructor() {
@@ -1280,9 +1516,6 @@ What's your current diagnostic status?`
             }
         }
 
-        // Initialize Enhanced Mobile HVAC Jack
-        const mobileHvacJack = new SecureMobileHVACJack();
-
         // Mobile-specific functions
         function adjustTextareaHeight(textarea) {
             textarea.style.height = 'auto';
@@ -1297,22 +1530,24 @@ What's your current diagnostic status?`
         }
 
         async function sendMobileMessage() {
+            if (!window.mobileHvacJack) return;
+            
             const input = document.getElementById('mobileInput');
             const message = input.value.trim();
             
-            if (!message || mobileHvacJack.isProcessing) return;
+            if (!message || window.mobileHvacJack.isProcessing) return;
 
-            mobileHvacJack.hapticFeedback('light');
+            window.mobileHvacJack.hapticFeedback('light');
             addMobileMessage(message, 'user');
             input.value = '';
             input.style.height = 'auto';
 
             try {
-                const response = await mobileHvacJack.processUserInput(message);
+                const response = await window.mobileHvacJack.processUserInput(message);
                 addMobileMessage(response.text, 'ai');
             } catch (error) {
                 addMobileMessage('❌ Sorry! Something went wrong. Try again?', 'ai');
-                mobileHvacJack.hapticFeedback('heavy');
+                window.mobileHvacJack.hapticFeedback('heavy');
             }
         }
 
@@ -1347,7 +1582,9 @@ What's your current diagnostic status?`
             }
             
             messagesContainer.appendChild(messageDiv);
-            mobileHvacJack.scrollToBottom();
+            if (window.mobileHvacJack) {
+                window.mobileHvacJack.scrollToBottom();
+            }
         }
 
         function quickQuestion(question) {
@@ -1356,7 +1593,9 @@ What's your current diagnostic status?`
         }
 
         function switchMode(mode) {
-            mobileHvacJack.switchMode(mode);
+            if (window.mobileHvacJack) {
+                window.mobileHvacJack.switchMode(mode);
+            }
         }
 
         function toggleContext() {
@@ -1365,7 +1604,9 @@ What's your current diagnostic status?`
             
             details.classList.toggle('show');
             bar.classList.toggle('expanded');
-            mobileHvacJack.hapticFeedback('light');
+            if (window.mobileHvacJack) {
+                window.mobileHvacJack.hapticFeedback('light');
+            }
         }
 
         function showMobileMenu() {
@@ -1375,8 +1616,10 @@ What's your current diagnostic status?`
         }
 
         function clearMobileConversation() {
-            mobileHvacJack.conversationHistory = [];
-            mobileHvacJack.systemContext = {
+            if (!window.mobileHvacJack) return;
+            
+            window.mobileHvacJack.conversationHistory = [];
+            window.mobileHvacJack.systemContext = {
                 equipmentType: null,
                 brand: null,
                 symptoms: [],
@@ -1390,7 +1633,7 @@ What's your current diagnostic status?`
                 <div class="mobile-message ai">
                     <div class="mobile-avatar ai">🔧</div>
                     <div class="mobile-message-content" id="mobileWelcomeMessage">
-                        ${mobileHvacJack.currentMode === 'homeowner' ? 
+                        ${window.mobileHvacJack.currentMode === 'homeowner' ? 
                             '<strong>Hey! I\'m HVAC Jack!</strong><br><br>🏠 <strong>Homeowner Mode</strong> - I\'ll explain things simply and focus on safe DIY steps.<br><br>💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br><strong>What\'s wrong with your heating or cooling?</strong>' :
                             '<strong>HVAC Jack - Technician Mode</strong><br><br>🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>💭 <strong>Conversation Memory</strong> - I\'ll build on our diagnostic history.<br><br><strong>What system are you diagnosing? Include model info and current readings.</strong>'
                         }
@@ -1398,8 +1641,8 @@ What's your current diagnostic status?`
                 </div>
             `;
             
-            mobileHvacJack.updateMobileMemoryDisplay();
-            mobileHvacJack.hapticFeedback('success');
+            window.mobileHvacJack.updateMobileMemoryDisplay();
+            window.mobileHvacJack.hapticFeedback('success');
         }
     </script>
 </body>
