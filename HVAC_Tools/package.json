@@ -1,0 +1,63 @@
+{
+  "name": "hvac-pro-tools",
+  "version": "1.2.0",
+  "description": "Professional HVAC calculation tools for technicians and engineers",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server . -p 3000 -c-1",
+    "dev": "http-server . -p 3000 -c-1 -o",
+    "build": "echo 'Static site - no build step needed'",
+    "test": "echo 'No tests configured yet'",
+    "lint": "echo 'No linting configured yet'",
+    "deploy": "netlify deploy --prod --dir .",
+    "preview": "netlify deploy --dir .",
+    "validate": "node scripts/validate.js"
+  },
+  "keywords": [
+    "hvac",
+    "heating",
+    "cooling",
+    "refrigeration",
+    "calculator",
+    "tools",
+    "professional",
+    "pwa",
+    "progressive-web-app"
+  ],
+  "author": {
+    "name": "LARK Labs",
+    "email": "contact@larklabs.dev",
+    "url": "https://larklabs.dev"
+  },
+  "license": "MIT",
+  "homepage": "https://hvac-pro-tools.netlify.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/hvac-pro-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/hvac-pro-tools/issues"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "netlify-cli": "^17.10.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ],
+  "pwa": {
+    "name": "HVAC Pro Tools",
+    "short_name": "HVAC Tools",
+    "theme_color": "#4ecdc4",
+    "background_color": "#1e3c72",
+    "display": "standalone",
+    "start_url": "/"
+  }
+}
