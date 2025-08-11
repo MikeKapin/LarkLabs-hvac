@@ -1,546 +1,390 @@
-// Health monitoring and performance tracking for HVAC Pro Tools
+// Health monitoring and diagnostics for HVAC Pro Tools
+// This module handles app health, performance monitoring, and error tracking
+
 class HVACHealthMonitor {
     constructor() {
-        this.metrics = {
-            performance: {},
-            errors: [],
-            usage: {},
-            device: {},
-            network: {},
-            serviceWorker: {}
-        };
-        
         this.startTime = Date.now();
+        this.errors = [];
+        this.performance = {
+            calculations: [],
+            pageLoads: [],
+            userInteractions: []
+        };
         this.isOnline = navigator.onLine;
-        this.errorThreshold = 10; // Maximum errors before alert
-        this.performanceBuffer = [];
-        this.maxBufferSize = 100;
+        this.lastHealthCheck = null;
         
         this.init();
     }
 
     init() {
-        this.detectDevice();
-        this.monitorPerformance();
-        this.monitorErrors();
-        this.monitorNetwork();
-        this.monitorServiceWorker();
-        this.trackPageVisibility();
+        this.setupErrorHandling();
+        this.setupPerformanceMonitoring();
+        this.setupNetworkMonitoring();
+        this.setupServiceWorkerMonitoring();
+        this.startHealthChecks();
         
-        // Send initial health report
-        this.scheduleHealthReports();
-        
-        console.log('HVAC Health Monitor initialized');
+        console.log('🔧 HVAC Health Monitor initialized');
     }
 
-    // Device and browser detection
-    detectDevice() {
-        const userAgent = navigator.userAgent;
-        
-        this.metrics.device = {
-            userAgent: userAgent,
-            platform: navigator.platform,
-            language: navigator.language,
-            cookieEnabled: navigator.cookieEnabled,
-            onLine: navigator.onLine,
-            screenResolution: `${screen.width}x${screen.height}`,
-            colorDepth: screen.colorDepth,
-            pixelRatio: window.devicePixelRatio,
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            memory: navigator.deviceMemory || 'unknown',
-            connection: this.getConnectionInfo(),
-            isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent),
-            isTablet: /iPad|Android(?!.*Mobile)/i.test(userAgent),
-            browser: this.getBrowserInfo(),
-            os: this.getOSInfo()
-        };
-    }
-
-    getBrowserInfo() {
-        const userAgent = navigator.userAgent;
-        let browser = 'Unknown';
-        
-        if (userAgent.includes('Chrome')) browser = 'Chrome';
-        else if (userAgent.includes('Firefox')) browser = 'Firefox';
-        else if (userAgent.includes('Safari')) browser = 'Safari';
-        else if (userAgent.includes('Edge')) browser = 'Edge';
-        else if (userAgent.includes('Opera')) browser = 'Opera';
-        
-        return browser;
-    }
-
-    getOSInfo() {
-        const userAgent = navigator.userAgent;
-        let os = 'Unknown';
-        
-        if (userAgent.includes('Windows')) os = 'Windows';
-        else if (userAgent.includes('Mac')) os = 'macOS';
-        else if (userAgent.includes('Linux')) os = 'Linux';
-        else if (userAgent.includes('Android')) os = 'Android';
-        else if (userAgent.includes('iOS')) os = 'iOS';
-        
-        return os;
-    }
-
-    getConnectionInfo() {
-        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        
-        if (connection) {
-            return {
-                effectiveType: connection.effectiveType,
-                downlink: connection.downlink,
-                rtt: connection.rtt,
-                saveData: connection.saveData
-            };
-        }
-        
-        return { effectiveType: 'unknown' };
-    }
-
-    // Performance monitoring
-    monitorPerformance() {
-        // Monitor page load performance
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const perfData = performance.getEntriesByType('navigation')[0];
-                
-                if (perfData) {
-                    this.metrics.performance.pageLoad = {
-                        domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
-                        loadComplete: perfData.loadEventEnd - perfData.loadEventStart,
-                        firstPaint: this.getFirstPaint(),
-                        firstContentfulPaint: this.getFirstContentfulPaint(),
-                        totalLoadTime: perfData.loadEventEnd - perfData.navigationStart,
-                        dnsLookup: perfData.domainLookupEnd - perfData.domainLookupStart,
-                        tcpConnection: perfData.connectEnd - perfData.connectStart,
-                        serverResponse: perfData.responseEnd - perfData.requestStart
-                    };
-                }
-                
-                this.trackResourcePerformance();
-            }, 1000);
-        });
-
-        // Monitor JavaScript performance
-        setInterval(() => {
-            this.trackJSPerformance();
-        }, 30000); // Every 30 seconds
-    }
-
-    getFirstPaint() {
-        const paintEntries = performance.getEntriesByType('paint');
-        const fpEntry = paintEntries.find(entry => entry.name === 'first-paint');
-        return fpEntry ? fpEntry.startTime : null;
-    }
-
-    getFirstContentfulPaint() {
-        const paintEntries = performance.getEntriesByType('paint');
-        const fcpEntry = paintEntries.find(entry => entry.name === 'first-contentful-paint');
-        return fcpEntry ? fcpEntry.startTime : null;
-    }
-
-    trackResourcePerformance() {
-        const resources = performance.getEntriesByType('resource');
-        const slowResources = resources.filter(resource => resource.duration > 1000);
-        
-        this.metrics.performance.resources = {
-            total: resources.length,
-            slow: slowResources.length,
-            totalSize: resources.reduce((sum, resource) => sum + (resource.transferSize || 0), 0),
-            cacheHits: resources.filter(resource => resource.transferSize === 0).length
-        };
-    }
-
-    trackJSPerformance() {
-        const now = performance.now();
-        const memoryInfo = performance.memory || {};
-        
-        const perfSnapshot = {
-            timestamp: Date.now(),
-            memoryUsed: memoryInfo.usedJSHeapSize || 'unknown',
-            memoryTotal: memoryInfo.totalJSHeapSize || 'unknown',
-            memoryLimit: memoryInfo.jsHeapSizeLimit || 'unknown',
-            performanceNow: now,
-            calculationCount: this.getCalculationCount(),
-            activeCharts: this.getActiveChartsCount()
-        };
-
-        this.performanceBuffer.push(perfSnapshot);
-        
-        // Keep buffer size manageable
-        if (this.performanceBuffer.length > this.maxBufferSize) {
-            this.performanceBuffer.shift();
-        }
-
-        // Check for memory leaks
-        this.checkMemoryLeaks();
-    }
-
-    getCalculationCount() {
-        // Track how many calculations have been performed
-        return window.hvacCalculationCount || 0;
-    }
-
-    getActiveChartsCount() {
-        // Track active Chart.js instances
-        return window.hvacChartManager ? window.hvacChartManager.charts.size : 0;
-    }
-
-    checkMemoryLeaks() {
-        if (this.performanceBuffer.length >= 10) {
-            const recent = this.performanceBuffer.slice(-10);
-            const memoryTrend = recent.map(snapshot => snapshot.memoryUsed);
-            
-            // Check if memory usage is consistently increasing
-            let increases = 0;
-            for (let i = 1; i < memoryTrend.length; i++) {
-                if (memoryTrend[i] > memoryTrend[i-1]) increases++;
-            }
-            
-            if (increases >= 8) { // 80% of samples show increase
-                this.logWarning('Potential memory leak detected', {
-                    memoryTrend: memoryTrend,
-                    timestamp: Date.now()
-                });
-            }
-        }
-    }
-
-    // Error monitoring
-    monitorErrors() {
-        // JavaScript errors
+    // Error handling and tracking
+    setupErrorHandling() {
         window.addEventListener('error', (event) => {
             this.logError({
                 type: 'javascript',
                 message: event.message,
                 filename: event.filename,
-                lineno: event.lineno,
-                colno: event.colno,
-                stack: event.error ? event.error.stack : null,
-                timestamp: Date.now(),
-                url: window.location.href
+                line: event.lineno,
+                column: event.colno,
+                stack: event.error?.stack,
+                timestamp: Date.now()
             });
         });
 
-        // Promise rejections
         window.addEventListener('unhandledrejection', (event) => {
             this.logError({
-                type: 'promise_rejection',
-                message: event.reason ? event.reason.toString() : 'Unknown promise rejection',
-                stack: event.reason ? event.reason.stack : null,
-                timestamp: Date.now(),
-                url: window.location.href
+                type: 'promise',
+                message: event.reason?.message || 'Unhandled promise rejection',
+                stack: event.reason?.stack,
+                timestamp: Date.now()
             });
         });
-
-        // Resource loading errors
-        window.addEventListener('error', (event) => {
-            if (event.target !== window) {
-                this.logError({
-                    type: 'resource',
-                    message: 'Failed to load resource',
-                    resource: event.target.src || event.target.href,
-                    tagName: event.target.tagName,
-                    timestamp: Date.now(),
-                    url: window.location.href
-                });
-            }
-        }, true);
     }
 
     logError(error) {
-        this.metrics.errors.push(error);
+        this.errors.push(error);
+        console.error('🚨 HVAC Error logged:', error);
         
-        // Keep error log manageable
-        if (this.metrics.errors.length > 50) {
-            this.metrics.errors.shift();
+        // Keep only last 50 errors to prevent memory bloat
+        if (this.errors.length > 50) {
+            this.errors = this.errors.slice(-50);
         }
 
-        console.error('HVAC Health Monitor - Error logged:', error);
-
-        // Check if error threshold exceeded
-        if (this.metrics.errors.length >= this.errorThreshold) {
-            this.alertHighErrorRate();
+        // Send to analytics in production
+        if (this.isProduction()) {
+            this.sendErrorToAnalytics(error);
         }
     }
 
-    logWarning(message, data = {}) {
-        console.warn('HVAC Health Monitor - Warning:', message, data);
-        
-        // You could send warnings to analytics here
-    }
+    // Performance monitoring
+    setupPerformanceMonitoring() {
+        // Monitor calculation performance
+        this.originalCalculateLoadsLC = window.calculateLoadsLC;
+        if (this.originalCalculateLoadsLC) {
+            window.calculateLoadsLC = (...args) => {
+                const start = performance.now();
+                const result = this.originalCalculateLoadsLC.apply(this, args);
+                const duration = performance.now() - start;
+                
+                this.performance.calculations.push({
+                    type: 'load-calculation',
+                    duration,
+                    timestamp: Date.now()
+                });
+                
+                return result;
+            };
+        }
 
-    alertHighErrorRate() {
-        console.error('HVAC Health Monitor - High error rate detected!', {
-            errorCount: this.metrics.errors.length,
-            recentErrors: this.metrics.errors.slice(-5)
+        // Monitor page load performance
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                if (perfData) {
+                    this.performance.pageLoads.push({
+                        loadTime: perfData.loadEventEnd - perfData.loadEventStart,
+                        domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
+                        totalTime: perfData.loadEventEnd - perfData.fetchStart,
+                        timestamp: Date.now()
+                    });
+                }
+            }, 1000);
         });
-        
-        // You could trigger user notification or send alert to monitoring service
+
+        // Monitor user interactions
+        ['click', 'input', 'change'].forEach(eventType => {
+            document.addEventListener(eventType, (event) => {
+                this.performance.userInteractions.push({
+                    type: eventType,
+                    target: event.target.tagName + (event.target.id ? '#' + event.target.id : ''),
+                    timestamp: Date.now()
+                });
+            }, { passive: true });
+        });
     }
 
     // Network monitoring
-    monitorNetwork() {
-        // Online/offline status
+    setupNetworkMonitoring() {
         window.addEventListener('online', () => {
             this.isOnline = true;
-            this.metrics.network.lastOnline = Date.now();
-            this.trackConnectivityChange('online');
+            console.log('🌐 Network connection restored');
+            this.syncOfflineData();
         });
 
         window.addEventListener('offline', () => {
             this.isOnline = false;
-            this.metrics.network.lastOffline = Date.now();
-            this.trackConnectivityChange('offline');
+            console.log('📱 App is now offline');
         });
 
-        // Connection change monitoring
-        if (navigator.connection) {
-            navigator.connection.addEventListener('change', () => {
-                this.metrics.device.connection = this.getConnectionInfo();
-                this.trackConnectivityChange('connection_change');
-            });
+        // Monitor connection quality
+        if ('connection' in navigator) {
+            this.monitorConnectionQuality();
         }
     }
 
-    trackConnectivityChange(type) {
-        if (!this.metrics.network.connectivityChanges) {
-            this.metrics.network.connectivityChanges = [];
-        }
-
-        this.metrics.network.connectivityChanges.push({
-            type: type,
-            timestamp: Date.now(),
-            connection: this.getConnectionInfo()
-        });
-
-        // Keep history manageable
-        if (this.metrics.network.connectivityChanges.length > 20) {
-            this.metrics.network.connectivityChanges.shift();
+    monitorConnectionQuality() {
+        const connection = navigator.connection;
+        if (connection) {
+            const logConnectionInfo = () => {
+                console.log(`📶 Connection: ${connection.effectiveType}, Downlink: ${connection.downlink}Mbps`);
+            };
+            
+            connection.addEventListener('change', logConnectionInfo);
+            logConnectionInfo();
         }
     }
 
     // Service Worker monitoring
-    monitorServiceWorker() {
+    setupServiceWorkerMonitoring() {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistration().then(registration => {
-                if (registration) {
-                    this.metrics.serviceWorker = {
-                        registered: true,
-                        scope: registration.scope,
-                        updateViaCache: registration.updateViaCache,
-                        state: registration.active ? registration.active.state : 'unknown'
-                    };
-
-                    // Monitor service worker updates
-                    registration.addEventListener('updatefound', () => {
-                        this.metrics.serviceWorker.updateFound = Date.now();
-                        console.log('HVAC Health Monitor - Service worker update found');
-                    });
-                } else {
-                    this.metrics.serviceWorker = { registered: false };
-                }
-            }).catch(error => {
-                this.metrics.serviceWorker = { registered: false, error: error.message };
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('🔄 Service Worker controller changed');
             });
-        } else {
-            this.metrics.serviceWorker = { supported: false };
+
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'SW_UPDATE_AVAILABLE') {
+                    this.notifyUserOfUpdate();
+                }
+            });
         }
     }
 
-    // Page visibility tracking
-    trackPageVisibility() {
-        let visibilityStart = Date.now();
+    // Health checks
+    startHealthChecks() {
+        // Initial health check
+        this.performHealthCheck();
         
-        document.addEventListener('visibilitychange', () => {
-            const now = Date.now();
-            
-            if (document.hidden) {
-                // Page became hidden
-                const visibleTime = now - visibilityStart;
-                this.addUsageMetric('visibleTime', visibleTime);
-            } else {
-                // Page became visible
-                visibilityStart = now;
-                this.addUsageMetric('visibilityChange', now);
-            }
-        });
-
-        // Track initial visibility
-        if (!document.hidden) {
-            visibilityStart = Date.now();
-        }
-    }
-
-    // Usage tracking
-    addUsageMetric(key, value) {
-        if (!this.metrics.usage[key]) {
-            this.metrics.usage[key] = [];
-        }
-        
-        this.metrics.usage[key].push({
-            value: value,
-            timestamp: Date.now()
-        });
-
-        // Keep usage history manageable
-        if (this.metrics.usage[key].length > 100) {
-            this.metrics.usage[key].shift();
-        }
-    }
-
-    trackToolUsage(toolName, action = 'open') {
-        this.addUsageMetric('toolUsage', {
-            tool: toolName,
-            action: action,
-            timestamp: Date.now()
-        });
-    }
-
-    trackCalculation(calculationType, duration = null) {
-        this.addUsageMetric('calculations', {
-            type: calculationType,
-            duration: duration,
-            timestamp: Date.now()
-        });
-
-        // Increment global calculation counter
-        if (!window.hvacCalculationCount) window.hvacCalculationCount = 0;
-        window.hvacCalculationCount++;
-    }
-
-    // Health reporting
-    generateHealthReport() {
-        const now = Date.now();
-        const uptime = now - this.startTime;
-        
-        return {
-            timestamp: now,
-            uptime: uptime,
-            version: '1.2.0', // App version
-            device: this.metrics.device,
-            performance: {
-                ...this.metrics.performance,
-                currentMemory: performance.memory ? {
-                    used: performance.memory.usedJSHeapSize,
-                    total: performance.memory.totalJSHeapSize,
-                    limit: performance.memory.jsHeapSizeLimit
-                } : null,
-                recentPerformance: this.performanceBuffer.slice(-10)
-            },
-            errors: {
-                count: this.metrics.errors.length,
-                recent: this.metrics.errors.slice(-5)
-            },
-            network: {
-                ...this.metrics.network,
-                isOnline: this.isOnline,
-                connection: this.getConnectionInfo()
-            },
-            serviceWorker: this.metrics.serviceWorker,
-            usage: this.getUsageSummary()
-        };
-    }
-
-    getUsageSummary() {
-        const summary = {};
-        
-        Object.keys(this.metrics.usage).forEach(key => {
-            const data = this.metrics.usage[key];
-            summary[key] = {
-                count: data.length,
-                recent: data.slice(-5)
-            };
-        });
-        
-        return summary;
-    }
-
-    scheduleHealthReports() {
-        // Send initial report after 30 seconds
-        setTimeout(() => {
-            this.sendHealthReport();
-        }, 30000);
-
-        // Send periodic reports every 5 minutes
+        // Periodic health checks every 5 minutes
         setInterval(() => {
-            this.sendHealthReport();
-        }, 300000);
-
-        // Send report when page is about to unload
-        window.addEventListener('beforeunload', () => {
-            this.sendHealthReport(true);
-        });
+            this.performHealthCheck();
+        }, 5 * 60 * 1000);
     }
 
-    sendHealthReport(isUnloading = false) {
-        const report = this.generateHealthReport();
-        
-        // In a real app, you would send this to your analytics service
-        console.log('HVAC Health Report:', report);
-        
-        // Example of how you might send to an analytics service:
-        // if (isUnloading) {
-        //     navigator.sendBeacon('/api/health', JSON.stringify(report));
-        // } else {
-        //     fetch('/api/health', {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify(report)
-        //     });
-        // }
-    }
-
-    // Public API methods
-    getMetrics() {
-        return { ...this.metrics };
-    }
-
-    getPerformanceSnapshot() {
-        return this.performanceBuffer.slice(-1)[0] || null;
-    }
-
-    clearErrorLog() {
-        this.metrics.errors = [];
-    }
-
-    isHealthy() {
-        const report = this.generateHealthReport();
-        
-        // Define health criteria
-        const criteria = {
-            errorRate: this.metrics.errors.length < this.errorThreshold,
-            performance: report.performance.currentMemory ? 
-                report.performance.currentMemory.used < report.performance.currentMemory.limit * 0.8 : true,
-            network: this.isOnline,
-            uptime: report.uptime > 0
+    performHealthCheck() {
+        const healthData = {
+            timestamp: Date.now(),
+            uptime: Date.now() - this.startTime,
+            isOnline: this.isOnline,
+            errorCount: this.errors.length,
+            memoryUsage: this.getMemoryUsage(),
+            performance: this.getPerformanceSummary(),
+            features: this.checkFeatureAvailability()
         };
 
-        return Object.values(criteria).every(criterion => criterion === true);
+        this.lastHealthCheck = healthData;
+        console.log('💚 Health check completed:', healthData);
+
+        // Alert if issues detected
+        if (healthData.errorCount > 10) {
+            console.warn('⚠️ High error count detected');
+        }
+
+        return healthData;
+    }
+
+    getMemoryUsage() {
+        if ('memory' in performance) {
+            return {
+                used: Math.round(performance.memory.usedJSHeapSize / 1024 / 1024),
+                total: Math.round(performance.memory.totalJSHeapSize / 1024 / 1024),
+                limit: Math.round(performance.memory.jsHeapSizeLimit / 1024 / 1024)
+            };
+        }
+        return null;
+    }
+
+    getPerformanceSummary() {
+        const avgCalculationTime = this.performance.calculations.length > 0 
+            ? this.performance.calculations.reduce((sum, calc) => sum + calc.duration, 0) / this.performance.calculations.length
+            : 0;
+
+        return {
+            avgCalculationTime: Math.round(avgCalculationTime),
+            totalCalculations: this.performance.calculations.length,
+            totalInteractions: this.performance.userInteractions.length,
+            pageLoadCount: this.performance.pageLoads.length
+        };
+    }
+
+    checkFeatureAvailability() {
+        return {
+            serviceWorker: 'serviceWorker' in navigator,
+            geolocation: 'geolocation' in navigator,
+            storage: typeof(Storage) !== 'undefined',
+            indexedDB: 'indexedDB' in window,
+            webGL: this.checkWebGLSupport(),
+            touch: 'ontouchstart' in window,
+            vibration: 'vibrate' in navigator
+        };
+    }
+
+    checkWebGLSupport() {
+        try {
+            const canvas = document.createElement('canvas');
+            return !!(window.WebGLRenderingContext && 
+                     (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Data synchronization
+    syncOfflineData() {
+        if (!this.isOnline) return;
+
+        // Sync any pending calculations or user data
+        const pendingData = this.getPendingData();
+        if (pendingData.length > 0) {
+            console.log(`🔄 Syncing ${pendingData.length} pending items`);
+            // Implementation for syncing data would go here
+        }
+    }
+
+    getPendingData() {
+        // Return any data that needs to be synced
+        return [];
+    }
+
+    // User notifications
+    notifyUserOfUpdate() {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        `;
+        notification.innerHTML = `
+            <div>📱 App update available!</div>
+            <button onclick="location.reload()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 4px; margin-top: 8px; cursor: pointer;">
+                Update Now
+            </button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 10000);
+    }
+
+    // Diagnostics and reporting
+    generateDiagnosticReport() {
+        return {
+            timestamp: Date.now(),
+            version: '1.0.0',
+            userAgent: navigator.userAgent,
+            url: window.location.href,
+            healthCheck: this.lastHealthCheck,
+            recentErrors: this.errors.slice(-10),
+            performance: this.performance,
+            features: this.checkFeatureAvailability()
+        };
+    }
+
+    downloadDiagnosticReport() {
+        const report = this.generateDiagnosticReport();
+        const blob = new Blob([JSON.stringify(report, null, 2)], 
+                             { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `hvac-diagnostic-${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // Analytics (placeholder for production implementation)
+    sendErrorToAnalytics(error) {
+        // In production, this would send to analytics service
+        console.log('📊 Would send error to analytics:', error);
+    }
+
+    isProduction() {
+        return window.location.hostname !== 'localhost' && 
+               window.location.hostname !== '127.0.0.1';
+    }
+
+    // Public API
+    getHealthStatus() {
+        return {
+            isHealthy: this.errors.length < 10 && this.isOnline,
+            uptime: Date.now() - this.startTime,
+            errorCount: this.errors.length,
+            isOnline: this.isOnline,
+            lastCheck: this.lastHealthCheck
+        };
+    }
+
+    clearErrors() {
+        this.errors = [];
+        console.log('🧹 Error log cleared');
+    }
+
+    restart() {
+        this.startTime = Date.now();
+        this.errors = [];
+        this.performance = {
+            calculations: [],
+            pageLoads: [],
+            userInteractions: []
+        };
+        console.log('🔄 Health monitor restarted');
     }
 }
 
 // Initialize health monitor when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     window.hvacHealthMonitor = new HVACHealthMonitor();
     
-    // Expose tracking methods globally for easy access
-    window.trackToolUsage = (toolName, action) => {
-        if (window.hvacHealthMonitor) {
-            window.hvacHealthMonitor.trackToolUsage(toolName, action);
-        }
+    // Add diagnostic tools to global scope for debugging
+    window.hvacDiagnostics = {
+        getHealth: () => window.hvacHealthMonitor.getHealthStatus(),
+        downloadReport: () => window.hvacHealthMonitor.downloadDiagnosticReport(),
+        clearErrors: () => window.hvacHealthMonitor.clearErrors(),
+        restart: () => window.hvacHealthMonitor.restart()
     };
-    
-    window.trackCalculation = (type, duration) => {
-        if (window.hvacHealthMonitor) {
-            window.hvacHealthMonitor.trackCalculation(type, duration);
-        }
-    };
-    
-    console.log('HVAC Health Monitor ready');
 });
 
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = HVACHealthMonitor;
+// Auto-register service worker if available
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+                console.log('✅ Service Worker registered:', registration.scope);
+                
+                // Check for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // New content is available
+                            newWorker.postMessage({ type: 'SW_UPDATE_AVAILABLE' });
+                        }
+                    });
+                });
+            })
+            .catch((error) => {
+                console.error('❌ Service Worker registration failed:', error);
+            });
+    });
 }
