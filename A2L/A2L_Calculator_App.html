@@ -16,9 +16,11 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- Favicon and App Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzY2N2VlYSIvPgo8dGV4dCB4PSIxNiIgeT0iMjIiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BMkw8L3RleHQ+Cjwvc3ZnPg==">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iNDAiIGZpbGw9IiM2NjdlZWEiLz4KPHR4dCB4PSI5MCIgeT0iMTEwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QTJMPC90ZXh0Pgo8L3N2Zz4=">
+    <!-- Favicon and App Icons - Updated to use your PNG logo -->
+    <link rel="icon" type="image/png" sizes="32x32" href="A2L_Pro_Logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="A2L_Pro_Logo.png">
+    <link rel="apple-touch-icon" href="A2L_Pro_Logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="A2L_Pro_Logo.png">
     
     <style>
         * {
@@ -492,7 +494,7 @@
 
             <div class="input-group">
                 <label>Refrigerant:</label>
-                <select id="pt-refrigerant" onchange="updatePTTable()">
+                <select id="pt-refrigerant">
                     <option value="R32">R-32</option>
                     <option value="R454B">R-454B</option>
                     <option value="R454C">R-454C</option>
