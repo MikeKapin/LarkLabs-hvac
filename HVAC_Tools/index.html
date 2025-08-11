@@ -55,18 +55,18 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #3182ce 100%);
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
         .app-header {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             padding: 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -75,7 +75,7 @@
         .app-title {
             font-size: 1.8em;
             font-weight: bold;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background: linear-gradient(45deg, #63b3ed, #90cdf4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -97,11 +97,11 @@
         }
 
         .tool-card {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
@@ -110,8 +110,8 @@
 
         .tool-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .tool-card.coming-soon {
@@ -124,7 +124,7 @@
             position: absolute;
             top: 10px;
             right: -30px;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            background: linear-gradient(45deg, #e53e3e, #c53030);
             color: white;
             padding: 5px 40px;
             font-size: 0.7em;
@@ -143,7 +143,7 @@
             font-size: 1.3em;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #4ecdc4;
+            color: #90cdf4;
         }
 
         .tool-description {
@@ -165,7 +165,7 @@
 
         .tool-features li::before {
             content: '✓ ';
-            color: #4ecdc4;
+            color: #90cdf4;
             font-weight: bold;
         }
 
@@ -221,16 +221,8 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        .download-section {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px;
-            text-align: center;
-        }
-
         .download-btn {
-            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            background: linear-gradient(45deg, #3182ce, #2c5282);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -245,7 +237,8 @@
 
         .download-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #2c5282, #1a365d);
         }
 
         .install-instructions {
@@ -256,7 +249,7 @@
         }
 
         .install-instructions h3 {
-            color: #4ecdc4;
+            color: #90cdf4;
             margin-bottom: 15px;
         }
 
@@ -288,7 +281,7 @@
             width: 60px;
             height: 60px;
             margin-right: 15px;
-            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            background: linear-gradient(45deg, #3182ce, #2c5282);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -299,7 +292,7 @@
         .footer-text {
             font-size: 1.1em;
             font-weight: bold;
-            color: #4ecdc4;
+            color: #90cdf4;
             margin-bottom: 10px;
         }
 
@@ -317,7 +310,7 @@
         }
 
         .back-btn {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            background: linear-gradient(45deg, #e53e3e, #c53030);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -329,7 +322,7 @@
 
         .back-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         @media (max-width: 768px) {
@@ -354,7 +347,7 @@
             bottom: 20px;
             left: 20px;
             right: 20px;
-            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            background: linear-gradient(45deg, #3182ce, #2c5282);
             padding: 15px;
             border-radius: 10px;
             display: none;
@@ -369,11 +362,6 @@
             border-radius: 5px;
             margin: 5px;
             cursor: pointer;
-        }
-
-        /* Hide download section when app is installed */
-        .app-installed .download-section {
-            display: none;
         }
 
         /* Psychrometric and Unit Converter specific styles */
@@ -392,19 +380,19 @@
         }
         .result-value {
             font-weight: 600;
-            color: #2196F3;
+            color: #3182ce;
         }
         .unit-btn {
             padding: 8px 16px;
-            border: 2px solid #2196F3;
+            border: 2px solid #3182ce;
             background: white;
-            color: #2196F3;
+            color: #3182ce;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .unit-btn.active {
-            background: #2196F3 !important;
+            background: #3182ce !important;
             color: white !important;
         }
 
@@ -450,15 +438,9 @@
 
     <div id="main-app">
         <header class="app-header">
-            <h1 class="app-title">🔧 HVAC Pro Tools</h1>
+            <h1 class="app-title"><img src="logo2.png" alt="HVAC Pro Tools" style="height: 1.2em; vertical-align: middle; margin-right: 10px;">HVAC Pro Tools</h1>
             <p class="app-subtitle">Professional HVAC Calculation Suite</p>
         </header>
-
-        <div class="download-section" id="downloadSection">
-            <h2>📱 Install as Mobile App</h2>
-            <p>Get instant access to all HVAC tools on your mobile device</p>
-            <button class="download-btn" onclick="showInstallModal()">📲 Install App</button>
-        </div>
 
         <main class="tools-grid">
             <!-- Heat/Cool Load Calculator -->
@@ -539,6 +521,19 @@
                 </ul>
             </div>
 
+            <!-- Duct Sizing Calculator -->
+            <div class="tool-card" onclick="openTool('duct-sizing')">
+                <span class="tool-icon">🌬️</span>
+                <h3 class="tool-title">Duct Sizing Calculator</h3>
+                <p class="tool-description">Calculate optimal duct sizes for HVAC airflow systems.</p>
+                <ul class="tool-features">
+                    <li>Airflow calculations</li>
+                    <li>Friction loss analysis</li>
+                    <li>Velocity optimization</li>
+                    <li>Multiple duct shapes</li>
+                </ul>
+            </div>
+
             <!-- Vent Sizing Calculator -->
             <div class="tool-card coming-soon" onclick="showComingSoon('Vent Sizing Calculator')">
                 <span class="tool-icon">💨</span>
@@ -555,7 +550,9 @@
 
         <footer class="footer">
             <div class="footer-logo">
-                <div class="lark-logo">🐦</div>
+                <div class="lark-logo">
+                    <img src="logo2.png" alt="LARK Labs" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                </div>
                 <div>
                     <div class="footer-text">Created by LARK Labs</div>
                     <div style="font-size: 0.8em; opacity: 0.7;">Software Development</div>
@@ -642,6 +639,11 @@
     <div id="psychrometric" class="app-content">
         <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
         <div id="psychrometric-content"></div>
+    </div>
+
+    <div id="duct-sizing" class="app-content">
+        <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
+        <div id="duct-sizing-content"></div>
     </div>
 
     <div id="unit-converter" class="app-content">
