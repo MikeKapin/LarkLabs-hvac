@@ -1,6 +1,7 @@
 /**
  * A2L Calculator Health Monitoring System
  * Monitors app performance, connectivity, and provides system diagnostics
+ * Modified version: Health monitoring without visual indicator
  */
 
 class A2LHealthMonitor {
@@ -20,8 +21,8 @@ class A2LHealthMonitor {
         this.bindNetworkEvents();
         this.bindPerformanceMonitoring();
         this.bindErrorHandling();
-        this.createHealthIndicator();
-        console.log('A2L Health Monitor initialized');
+        // REMOVED: this.createHealthIndicator();
+        console.log('A2L Health Monitor initialized (no visual indicator)');
     }
 
     startHealthMonitoring() {
@@ -59,7 +60,7 @@ class A2LHealthMonitor {
 
         this.lastHealthCheck = healthData;
         this.updateHealthStatus(healthData);
-        this.updateHealthIndicator();
+        // REMOVED: this.updateHealthIndicator();
 
         // Log health data for debugging
         console.log('Health Check:', {
@@ -309,309 +310,11 @@ class A2LHealthMonitor {
         console.log(`Health Monitor - ${category}:`, message);
     }
 
-    createHealthIndicator() {
-        const indicator = document.createElement('div');
-        indicator.id = 'health-indicator';
-        indicator.className = 'health-indicator';
-        indicator.setAttribute('aria-label', 'App health status');
-        
-        const styles = document.createElement('style');
-        styles.textContent = `
-            .health-indicator {
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                background: #48bb78;
-                z-index: 999;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.7);
-            }
-
-            .health-indicator.warning {
-                background: #ed8936;
-                box-shadow: 0 0 0 0 rgba(237, 137, 54, 0.7);
-            }
-
-            .health-indicator.error {
-                background: #e53e3e;
-                box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7);
-                animation: pulse 2s infinite;
-            }
-
-            .health-indicator.offline {
-                background: #718096;
-                box-shadow: 0 0 0 0 rgba(113, 128, 150, 0.7);
-            }
-
-            @keyframes pulse {
-                0% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7); }
-                70% { box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); }
-                100% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
-            }
-
-            .health-indicator:hover {
-                transform: scale(1.2);
-            }
-
-            .health-tooltip {
-                position: absolute;
-                top: 25px;
-                left: 0;
-                background: rgba(0, 0, 0, 0.8);
-                color: white;
-                padding: 8px 12px;
-                border-radius: 4px;
-                font-size: 12px;
-                white-space: nowrap;
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.3s ease;
-                z-index: 1000;
-            }
-
-            .health-indicator:hover .health-tooltip {
-                opacity: 1;
-            }
-
-            @media (max-width: 768px) {
-                .health-indicator {
-                    top: 10px;
-                    left: 10px;
-                    width: 10px;
-                    height: 10px;
-                }
-            }
-        `;
-
-        document.head.appendChild(styles);
-        document.body.appendChild(indicator);
-
-        // Add click handler for detailed health info
-        indicator.addEventListener('click', () => {
-            this.showHealthDetails();
-        });
-    }
-
-    updateHealthIndicator() {
-        const indicator = document.getElementById('health-indicator');
-        if (!indicator) return;
-
-        // Remove existing status classes
-        indicator.className = 'health-indicator';
-        
-        // Add current status class
-        if (this.healthStatus !== 'healthy') {
-            indicator.classList.add(this.healthStatus);
-        }
-
-        // Update tooltip
-        let existingTooltip = indicator.querySelector('.health-tooltip');
-        if (existingTooltip) {
-            existingTooltip.remove();
-        }
-
-        const tooltip = document.createElement('div');
-        tooltip.className = 'health-tooltip';
-        tooltip.textContent = this.getStatusMessage();
-        indicator.appendChild(tooltip);
-    }
-
-    getStatusMessage() {
-        const messages = {
-            healthy: 'App running normally',
-            warning: 'Minor issues detected',
-            error: 'Errors detected',
-            offline: 'Working offline'
-        };
-        return messages[this.healthStatus] || 'Status unknown';
-    }
-
-    showHealthDetails() {
-        if (!this.lastHealthCheck) {
-            alert('No health data available yet');
-            return;
-        }
-
-        const healthInfo = this.formatHealthInfo(this.lastHealthCheck);
-        
-        // Create modal for health details
-        const modal = document.createElement('div');
-        modal.className = 'health-modal';
-        modal.innerHTML = `
-            <div class="health-modal-content">
-                <div class="health-modal-header">
-                    <h3>App Health Status</h3>
-                    <button class="health-modal-close">&times;</button>
-                </div>
-                <div class="health-modal-body">
-                    <pre>${healthInfo}</pre>
-                </div>
-                <div class="health-modal-footer">
-                    <button class="health-export-btn">Export Health Data</button>
-                    <button class="health-refresh-btn">Refresh Check</button>
-                </div>
-            </div>
-        `;
-
-        // Add modal styles
-        const modalStyles = document.createElement('style');
-        modalStyles.textContent = `
-            .health-modal {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 10000;
-            }
-
-            .health-modal-content {
-                background: white;
-                border-radius: 8px;
-                width: 90%;
-                max-width: 600px;
-                max-height: 80%;
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .health-modal-header {
-                padding: 20px;
-                border-bottom: 1px solid #e2e8f0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background: #f7fafc;
-            }
-
-            .health-modal-header h3 {
-                margin: 0;
-                color: #2d3748;
-            }
-
-            .health-modal-close {
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                color: #718096;
-            }
-
-            .health-modal-body {
-                padding: 20px;
-                overflow-y: auto;
-                flex: 1;
-            }
-
-            .health-modal-body pre {
-                background: #f7fafc;
-                padding: 15px;
-                border-radius: 4px;
-                font-size: 12px;
-                line-height: 1.4;
-                margin: 0;
-                white-space: pre-wrap;
-                word-wrap: break-word;
-            }
-
-            .health-modal-footer {
-                padding: 20px;
-                border-top: 1px solid #e2e8f0;
-                display: flex;
-                gap: 10px;
-                justify-content: flex-end;
-            }
-
-            .health-modal-footer button {
-                padding: 8px 16px;
-                border: 1px solid #e2e8f0;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 14px;
-            }
-
-            .health-export-btn {
-                background: #667eea;
-                color: white;
-                border-color: #667eea;
-            }
-
-            .health-refresh-btn {
-                background: white;
-                color: #4a5568;
-            }
-
-            .health-refresh-btn:hover {
-                background: #f7fafc;
-            }
-        `;
-
-        document.head.appendChild(modalStyles);
-        document.body.appendChild(modal);
-
-        // Bind modal events
-        modal.querySelector('.health-modal-close').addEventListener('click', () => {
-            document.body.removeChild(modal);
-            document.head.removeChild(modalStyles);
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                document.body.removeChild(modal);
-                document.head.removeChild(modalStyles);
-            }
-        });
-
-        modal.querySelector('.health-export-btn').addEventListener('click', () => {
-            this.exportHealthData();
-        });
-
-        modal.querySelector('.health-refresh-btn').addEventListener('click', () => {
-            this.performHealthCheck();
-            modal.querySelector('.health-modal-body pre').textContent = this.formatHealthInfo(this.lastHealthCheck);
-        });
-    }
-
-    formatHealthInfo(healthData) {
-        return `STATUS: ${this.healthStatus.toUpperCase()}
-LAST CHECK: ${new Date(healthData.timestamp).toLocaleString()}
-
-CONNECTIVITY:
-  Online: ${healthData.online ? 'Yes' : 'No'}
-  
-PERFORMANCE:
-  Load Time: ${healthData.performance.loadTime || 'N/A'}ms
-  DOM Ready: ${healthData.performance.domContentLoaded || 'N/A'}ms
-  First Paint: ${healthData.performance.firstPaint || 'N/A'}ms
-  Health Check: ${healthData.healthCheckDuration.toFixed(2)}ms
-
-MEMORY:
-  Used: ${healthData.memory.available ? `${(healthData.memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB` : 'N/A'}
-  Total: ${healthData.memory.available ? `${(healthData.memory.totalJSHeapSize / 1024 / 1024).toFixed(2)}MB` : 'N/A'}
-  Usage: ${healthData.memory.available ? `${healthData.memory.usagePercentage}%` : 'N/A'}
-
-SERVICE WORKER:
-  Supported: ${healthData.serviceWorker.supported ? 'Yes' : 'No'}
-  Active: ${healthData.serviceWorker.controller ? 'Yes' : 'No'}
-
-PWA FEATURES:
-  Standalone Mode: ${healthData.features.pwa.standalone ? 'Yes' : 'No'}
-  Manifest Support: ${healthData.features.pwa.manifest ? 'Yes' : 'No'}
-
-RECENT ERRORS: ${healthData.errors.length}
-${healthData.errors.length > 0 ? healthData.errors.map(err => `  • ${err.type}: ${err.details.message || 'No message'}`).join('\n') : '  None'}
-
-VIEWPORT: ${healthData.viewport.width}x${healthData.viewport.height}`;
-    }
+    // REMOVED: createHealthIndicator() method
+    // REMOVED: updateHealthIndicator() method
+    // REMOVED: getStatusMessage() method
+    // REMOVED: showHealthDetails() method
+    // REMOVED: formatHealthInfo() method
 
     exportHealthData() {
         const data = {
@@ -771,11 +474,7 @@ VIEWPORT: ${healthData.viewport.width}x${healthData.viewport.height}`;
         window.removeEventListener('offline', this.handleOffline);
         document.removeEventListener('visibilitychange', this.handleVisibilityChange);
 
-        // Remove health indicator
-        const indicator = document.getElementById('health-indicator');
-        if (indicator) {
-            indicator.remove();
-        }
+        // REMOVED: Health indicator removal code
 
         console.log('A2L Health Monitor destroyed');
     }
