@@ -9,7 +9,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#E85A4F">
     <title>HVAC Jack - Your Jack of All Trades HVAC AI Assistant</title>
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiBmaWxsPSIjRTg1QTRGIi8+Cjx0ZXh0IHg9IjkwIiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI2MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfkqc8L3RleHQ+Cjwvc3ZnPgo=">
+    <link rel="apple-touch-icon" href="logo_2.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo_2.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="logo_2.png">
+    <link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;HVAC Jack&quot;,&quot;short_name&quot;:&quot;HVAC Jack&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;logo_2.png&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;},{&quot;src&quot;:&quot;logo_2.png&quot;,&quot;sizes&quot;:&quot;512x512&quot;,&quot;type&quot;:&quot;image/png&quot;}],&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#1A1F2E&quot;,&quot;theme_color&quot;:&quot;#E85A4F&quot;}">
     <style>
         * {
             margin: 0;
@@ -63,8 +66,13 @@
         }
 
         .password-logo {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem auto;
+            background-image: url('logo_2.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
 
         .password-title {
@@ -729,7 +737,7 @@
     <div class="password-overlay" id="passwordOverlay">
         <div class="password-container">
             <div class="beta-badge">🔒 BETA ACCESS</div>
-            <div class="password-logo">🔧</div>
+            <div class="password-logo"></div>
             <h1 class="password-title">HVAC Jack</h1>
             <p class="password-subtitle">Beta Testing - Enter access code to continue</p>
             
