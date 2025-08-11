@@ -705,9 +705,9 @@
                     previousActions: [],
                     currentProblem: null
                 };
-                // Backend API endpoints - Updated for production hosting
-                this.apiEndpoint = 'https://hvac-jack-api.larklabs.workers.dev/api/chat';
-                this.healthEndpoint = 'https://hvac-jack-api.larklabs.workers.dev/api/health';
+                // Backend API endpoints - Updated for Netlify deployment
+                this.apiEndpoint = '/.netlify/functions/chat';
+                this.healthEndpoint = '/.netlify/functions/health';
                 this.isConnected = false;
                 this.isProcessing = false;
                 this.connectionAttempts = 0;
