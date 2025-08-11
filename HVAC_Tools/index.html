@@ -114,6 +114,25 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
+        .tool-card.under-construction {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .tool-card.under-construction::before {
+            content: 'UNDER CONSTRUCTION';
+            position: absolute;
+            top: 10px;
+            right: -40px;
+            background: linear-gradient(45deg, #f6ad55, #ed8936);
+            color: white;
+            padding: 5px 50px;
+            font-size: 0.7em;
+            font-weight: bold;
+            transform: rotate(45deg);
+            letter-spacing: 1px;
+        }
+
         .tool-card.coming-soon {
             opacity: 0.7;
             cursor: not-allowed;
@@ -438,7 +457,7 @@
 
     <div id="main-app">
         <header class="app-header">
-            <h1 class="app-title"><img src="logo2.png" alt="HVAC Pro Tools" style="height: 1.2em; vertical-align: middle; margin-right: 10px;">HVAC Pro Tools</h1>
+            <h1 class="app-title"><img src="logo_2.png" alt="HVAC Pro Tools" style="height: 1.2em; vertical-align: middle; margin-right: 10px;">HVAC Pro Tools</h1>
             <p class="app-subtitle">Professional HVAC Calculation Suite</p>
         </header>
 
@@ -551,7 +570,7 @@
         <footer class="footer">
             <div class="footer-logo">
                 <div class="lark-logo">
-                    <img src="logo2.png" alt="LARK Labs" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                    <img src="logo_2.png" alt="LARK Labs" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
                 </div>
                 <div>
                     <div class="footer-text">Created by LARK Labs</div>
@@ -646,6 +665,11 @@
         <div id="duct-sizing-content"></div>
     </div>
 
+    <div id="pipe-sizing" class="app-content">
+        <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
+        <div id="pipe-sizing-content"></div>
+    </div>
+
     <div id="unit-converter" class="app-content">
         <button class="back-btn" onclick="showMainApp()">← Back to Tools</button>
         <div id="unit-converter-content"></div>
@@ -656,10 +680,199 @@
     <script src="chart.js"></script>
     <script src="health.js"></script>
     <script>
-        // Include all the existing JavaScript from your original file here
-        // [The entire JavaScript code from your original paste.txt file goes here]
-        // This includes all the PWA functionality, tool content, calculations, etc.
-        // I'm not repeating it here to save space, but it should be identical to your original
+        // PWA Variables
+        let deferredPrompt;
+        let isInstalled = false;
+
+        // Tool Navigation Functions
+        function showMainApp() {
+            // Hide all tool content areas
+            const toolContents = document.querySelectorAll('.app-content');
+            toolContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Show main app
+            document.getElementById('main-app').style.display = 'block';
+        }
+
+        function openTool(toolName) {
+            // Hide main app
+            document.getElementById('main-app').style.display = 'none';
+            
+            // Hide all other tool content areas
+            const toolContents = document.querySelectorAll('.app-content');
+            toolContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Show selected tool
+            const selectedTool = document.getElementById(toolName);
+            if (selectedTool) {
+                selectedTool.style.display = 'block';
+                loadToolContent(toolName);
+            }
+        }
+
+        function loadToolContent(toolName) {
+            const contentDiv = document.getElementById(toolName + '-content');
+            if (!contentDiv) return;
+
+            // Map tool names to their respective HTML files
+            const toolFiles = {
+                'load-calculator': 'hvac-load-calculator.html',
+                'superheat-subcool': 'superheat-subcooling-calculator.html',
+                'pt-chart': 'Refrigeration_P-T_Chart.html',
+                'psychrometric': 'psychrometric_calculator.html',
+                'unit-converter': 'universal_unit_converter.html',
+                'duct-sizing': 'duct_sizing_calculator.html',
+                'pipe-sizing': 'pipe_sizing_calculator.html'
+            };
+
+            const fileName = toolFiles[toolName];
+            if (fileName) {
+                // Try to load the content from the external file
+                fetch(fileName)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        }
+                        throw new Error(`Could not load ${fileName}`);
+                    })
+                    .then(html => {
+                        // Extract just the body content if it's a full HTML file
+                        const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+                        if (bodyMatch) {
+                            contentDiv.innerHTML = bodyMatch[1];
+                        } else {
+                            contentDiv.innerHTML = html;
+                        }
+                        
+                        // Execute any scripts in the loaded content
+                        const scripts = contentDiv.getElementsByTagName('script');
+                        for (let script of scripts) {
+                            eval(script.innerHTML);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading tool:', error);
+                        contentDiv.innerHTML = `
+                            <div style="text-align: center; padding: 40px;">
+                                <h2 style="color: #90cdf4; margin-bottom: 20px;">🚧 Tool Loading</h2>
+                                <p style="font-size: 1.1em; margin-bottom: 15px;">This tool is being loaded...</p>
+                                <p style="opacity: 0.8;">If you continue to see this message, the tool file may not be available.</p>
+                                <p style="font-size: 0.9em; opacity: 0.6; margin-top: 20px;">Expected file: ${fileName}</p>
+                            </div>
+                        `;
+                    });
+            } else {
+                contentDiv.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <h2 style="color: #90cdf4; margin-bottom: 20px;">🚧 Tool Not Available</h2>
+                        <p style="font-size: 1.1em; margin-bottom: 15px;">This tool is not yet configured.</p>
+                        <p style="opacity: 0.8;">Please check back later or contact support.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Modal Functions
+        function showInstallModal() {
+            document.getElementById('installModal').style.display = 'block';
+        }
+
+        function showComingSoon(toolName) {
+            document.getElementById('comingSoonText').textContent = toolName;
+            document.getElementById('comingSoonModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('installModal').style.display = 'none';
+            document.getElementById('comingSoonModal').style.display = 'none';
+        }
+
+        // PWA Installation Functions
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        trackToolUsage('pwa', 'installed');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                // Show manual installation instructions
+                showInstallModal();
+            }
+        }
+
+        function dismissPrompt() {
+            document.getElementById('pwaPrompt').style.display = 'none';
+            localStorage.setItem('pwaPromptDismissed', 'true');
+        }
+
+        // Usage Tracking (Optional)
+        function trackToolUsage(tool, action) {
+            // Simple usage tracking - you can enhance this
+            console.log(`Tool Usage: ${tool} - ${action}`);
+        }
+
+        // PWA Event Listeners
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install prompt if not dismissed
+            if (!localStorage.getItem('pwaPromptDismissed')) {
+                setTimeout(() => {
+                    document.getElementById('pwaPrompt').style.display = 'block';
+                }, 3000);
+            }
+        });
+
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('App was installed');
+            isInstalled = true;
+            document.body.classList.add('app-installed');
+            document.getElementById('pwaPrompt').style.display = 'none';
+            trackToolUsage('pwa', 'installed');
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            const installModal = document.getElementById('installModal');
+            const comingSoonModal = document.getElementById('comingSoonModal');
+            
+            if (e.target === installModal) {
+                closeModal();
+            }
+            if (e.target === comingSoonModal) {
+                closeModal();
+            }
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if already installed
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                isInstalled = true;
+                document.body.classList.add('app-installed');
+            }
+            
+            // Initialize any other components
+            console.log('HVAC Pro Tools initialized');
+        });
     </script>
     
     <!-- Service Worker Registration -->
