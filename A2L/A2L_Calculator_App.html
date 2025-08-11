@@ -731,6 +731,10 @@
         </div>
     </div>
 
+    <!-- Include chat and health monitoring scripts -->
+    <script src="chat.js"></script>
+    <script src="health.js"></script>
+
     <!-- Service Worker Registration and App Logic -->
     <script>
         // PWA Installation and Service Worker
@@ -863,7 +867,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', async () => {
                 try {
-                    const registration = await navigator.serviceWorker.register('/A2L/sw.js');
+                    const registration = await navigator.serviceWorker.register('/sw.js');
                     console.log('ServiceWorker registered successfully');
                     
                     // Check for updates
