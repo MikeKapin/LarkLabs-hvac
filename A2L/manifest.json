@@ -2,12 +2,12 @@
   "name": "A2L Refrigerant Calculator",
   "short_name": "A2L Calc",
   "description": "Professional HVAC tools for A2L refrigerant systems including leak detection, P-T calculations, and system diagnostics.",
-  "start_url": "/A2L/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#667eea",
   "orientation": "portrait-primary",
-  "scope": "/A2L/",
+  "scope": "/",
   "categories": ["productivity", "utilities", "business"],
   "lang": "en-US",
   "icons": [
@@ -59,7 +59,7 @@
       "name": "P-T Calculator",
       "short_name": "P-T Calc",
       "description": "Pressure-Temperature Calculator for A2L refrigerants",
-      "url": "/A2L/?calc=pt-calc",
+      "url": "/?calc=pt-calc",
       "icons": [
         {
           "src": "A2L_Pro_Logo.png",
@@ -71,7 +71,7 @@
       "name": "Leak Rate Calculator",
       "short_name": "Leak Rate",
       "description": "A2L leak rate safety calculator",
-      "url": "/A2L/?calc=leak-rate",
+      "url": "/?calc=leak-rate",
       "icons": [
         {
           "src": "A2L_Pro_Logo.png",
@@ -83,7 +83,7 @@
       "name": "System Diagnostic",
       "short_name": "Diagnostic",
       "description": "A2L system performance analysis",
-      "url": "/A2L/?calc=system-diag",
+      "url": "/?calc=system-diag",
       "icons": [
         {
           "src": "A2L_Pro_Logo.png",
