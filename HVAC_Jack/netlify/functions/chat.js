@@ -1,5 +1,5 @@
 // netlify/functions/chat.js
-// Enhanced HVAC Jack backend with improved content filtering and tracking integration
+// Enhanced HVAC Jack backend with improved content filtering, tracking integration, and photo analysis support
 
 // Initialize shared storage if it doesn't exist
 global.usageStore = global.usageStore || {
@@ -7,7 +7,8 @@ global.usageStore = global.usageStore || {
   messages: [],
   blockedContent: [],
   events: [],
-  dailyStats: new Map()
+  dailyStats: new Map(),
+  photoAnalyses: [] // NEW: Track photo analysis requests
 };
 
 exports.handler = async (event, context) => {
@@ -111,7 +112,8 @@ exports.handler = async (event, context) => {
 
       try {
         // Call Claude API with content filtering
-        claudeResponse = await callClaude(systemPrompt, claudeMessages, process.env.CLAUDE_API_KEY);
+        const apiKey = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
+        claudeResponse = await callClaude(systemPrompt, claudeMessages, apiKey);
       } catch (claudeError) {
         console.log('Claude API failed, using fallback:', claudeError.message);
         claudeResponse = generateFallbackResponse(message, mode);
@@ -255,6 +257,24 @@ async function trackEvent(eventType, sessionId, data) {
         store.messages[msgIndex].usingAI = data.usingAI;
       }
       break;
+
+    // NEW: Handle photo analysis events
+    case 'photo_analyzed':
+      store.photoAnalyses = store.photoAnalyses || [];
+      store.photoAnalyses.push({
+        sessionId,
+        timestamp: event.timestamp,
+        success: data.success,
+        analysisTime: data.responseTime,
+        mode: data.mode,
+        equipmentType: data.equipmentType || 'unknown'
+      });
+      
+      // Keep only last 200 photo analyses
+      if (store.photoAnalyses.length > 200) {
+        store.photoAnalyses = store.photoAnalyses.slice(-200);
+      }
+      break;
   }
 }
 
@@ -316,7 +336,8 @@ function validateHVACContent(message) {
     'hvac', 'heating', 'cooling', 'furnace', 'air conditioner', 'ac', 'heat pump',
     'thermostat', 'temperature', 'hot', 'cold', 'warm', 'cool', 'filter', 'vent',
     'system', 'unit', 'equipment', 'repair', 'fix', 'broken', 'problem', 'issue',
-    'noise', 'sound', 'smell', 'air', 'fan', 'motor', 'compressor', 'coil'
+    'noise', 'sound', 'smell', 'air', 'fan', 'motor', 'compressor', 'coil',
+    'photo', 'picture', 'rating', 'plate', 'model', 'serial', 'capacitor' // NEW: Photo analysis terms
   ];
 
   const hasHvacTerm = hvacTerms.some(term => lowerMessage.includes(term));
@@ -378,11 +399,14 @@ HVAC SCOPE INCLUDES:
 - Maintenance, troubleshooting, repairs
 - Energy efficiency, system sizing
 - Installation guidance (DIY-safe tasks only)
+- Rating plate analysis and equipment specifications
+- Capacitor requirements and electrical specifications
 
 Current system context:
 - Equipment: ${systemContext?.equipmentType || 'Unknown'}
 - Current problem: ${systemContext?.currentProblem || 'Diagnosing'}
 - Previous actions: ${systemContext?.previousActions?.join(', ') || 'None'}
+- Equipment Brand: ${systemContext?.brand || 'Unknown'}
 
 SAFETY FIRST:
 - Gas smells = immediate professional help
@@ -407,7 +431,8 @@ HOMEOWNER MODE - Tailor responses for homeowners:
 - Explain WHY they're doing each step
 - Be encouraging and supportive
 - Prioritize most common/likely causes first
-- Use analogies to explain complex concepts`;
+- Use analogies to explain complex concepts
+- When discussing rating plate info, explain it in simple terms`;
   } else {
     return basePrompt + `
 
@@ -417,7 +442,9 @@ TECHNICIAN MODE - Provide professional-level guidance:
 - Reference diagnostic equipment and tools needed
 - Provide troubleshooting sequences
 - Include electrical, gas, and refrigerant safety protocols
-- Assume professional knowledge and EPA certification where applicable`;
+- Assume professional knowledge and EPA certification where applicable
+- Provide exact capacitor specifications with MFD, voltage, and tolerance
+- Include model-specific technical details and service bulletins`;
   }
 }
 
@@ -583,7 +610,14 @@ function generateFallbackResponse(message, mode) {
       : `**No cooling diagnostic:**\n\n⚡ **Verify:**\n• 240VAC at disconnect\n• Compressor amps\n• Refrigerant pressures\n• Superheat/subcooling\n\nCurrent readings?`;
   }
 
+  // NEW: Photo analysis fallback
+  if (input.includes('photo') || input.includes('picture') || input.includes('rating plate')) {
+    return mode === 'homeowner'
+      ? `**Photo Analysis Available!**\n\n📸 **I can analyze rating plates!** Take a clear photo of your equipment's rating plate and I'll provide:\n• Equipment details and age\n• Warranty status\n• Capacitor requirements\n• Technical specifications\n\n*Use the camera button to upload a photo.*`
+      : `**Rating Plate Analysis**\n\n📋 **Upload a photo and I'll extract:**\n• Complete model/serial breakdown\n• Electrical specifications (FLA, LRA, MCA)\n• Exact capacitor requirements\n• Service bulletins and known issues\n• Parts availability assessment\n\n*Camera button available for photo upload.*`;
+  }
+
   return mode === 'homeowner'
-    ? `**I'm here to help!**\n\n🔧 **Tell me:**\n• What type of system?\n• What's wrong?\n• When did it start?\n\n⚠️ **Safety:** Gas smell = call gas company immediately!`
-    : `**Diagnostic mode**\n\n📋 **Need:**\n• Equipment details\n• Symptoms and measurements\n• Test equipment available\n\nProvide system specifics for targeted troubleshooting.`;
+    ? `**I'm here to help!**\n\n🔧 **Tell me:**\n• What type of system?\n• What's wrong?\n• When did it start?\n\n📸 **Or take a photo** of your rating plate for detailed analysis!\n\n⚠️ **Safety:** Gas smell = call gas company immediately!`
+    : `**Diagnostic mode**\n\n📋 **Need:**\n• Equipment details\n• Symptoms and measurements\n• Test equipment available\n\n📸 **Photo analysis** available for rating plates.\n\nProvide system specifics for targeted troubleshooting.`;
 }
