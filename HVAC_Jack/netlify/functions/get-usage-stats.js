@@ -1,15 +1,6 @@
 // netlify/functions/get-usage-stats.js
 // Enhanced endpoint with real usage tracking integration
 
-// In-memory storage for demo (replace with database in production)
-global.usageStore = global.usageStore || {
-  sessions: new Map(),
-  messages: [],
-  blockedContent: [],
-  events: [],
-  dailyStats: new Map()
-};
-
 exports.handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -30,8 +21,18 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Initialize storage safely
+    initializeStorage();
+    
     // Get real usage statistics from storage
     const stats = await generateRealUsageStats();
+
+    console.log('📊 Usage stats generated:', {
+      realData: stats.realData,
+      totalSessions: stats.summary.totalSessions,
+      totalMessages: stats.summary.totalMessages,
+      timestamp: stats.lastUpdated
+    });
 
     return {
       statusCode: 200,
@@ -43,6 +44,8 @@ exports.handler = async (event, context) => {
     
     // Fallback to mock data if real data fails
     const mockStats = await generateMockUsageStats();
+    console.log('⚠️ Using fallback data due to error:', error.message);
+    
     return {
       statusCode: 200,
       headers,
@@ -55,22 +58,60 @@ exports.handler = async (event, context) => {
   }
 };
 
+// Safe storage initialization
+function initializeStorage() {
+  if (!global.usageStore) {
+    global.usageStore = {
+      sessions: new Map(),
+      messages: [],
+      blockedContent: [],
+      events: [],
+      dailyStats: new Map()
+    };
+    console.log('🔄 Initialized new storage');
+  }
+}
+
 async function generateRealUsageStats() {
   const store = global.usageStore;
   const now = new Date();
-  const today = now.toISOString().split('T')[0];
+  
+  // Verify storage exists
+  if (!store) {
+    console.warn('⚠️ Storage not available, using mock data');
+    return await generateMockUsageStats();
+  }
 
   // Calculate real metrics from stored events
-  const totalSessions = store.sessions.size;
-  const totalMessages = store.messages.length;
-  const blockedMessages = store.blockedContent.length;
+  const totalSessions = store.sessions?.size || 0;
+  const totalMessages = store.messages?.length || 0;
+  const blockedMessages = store.blockedContent?.length || 0;
+  const totalEvents = store.events?.length || 0;
+  
+  console.log('📈 Raw storage counts:', {
+    sessions: totalSessions,
+    messages: totalMessages,
+    blocked: blockedMessages,
+    events: totalEvents
+  });
+  
+  // If we have no real data, return enhanced mock data
+  if (totalSessions === 0 && totalMessages === 0 && totalEvents === 0) {
+    console.log('📊 No real data found, returning enhanced mock data');
+    const mockData = await generateMockUsageStats();
+    return {
+      ...mockData,
+      realData: false,
+      reason: 'No usage data collected yet'
+    };
+  }
   
   // Calculate success rate
-  const successfulMessages = store.messages.filter(m => !m.error).length;
+  const successfulMessages = store.messages?.filter(m => !m.error)?.length || 0;
   const successRate = totalMessages > 0 ? ((successfulMessages / totalMessages) * 100).toFixed(1) : 100;
 
   // Mode usage calculation
-  const modeStats = store.messages.reduce((acc, msg) => {
+  const modeStats = (store.messages || []).reduce((acc, msg) => {
     acc[msg.mode || 'homeowner']++;
     return acc;
   }, { homeowner: 0, technician: 0 });
@@ -82,24 +123,24 @@ async function generateRealUsageStats() {
   };
 
   // Problem type analysis
-  const problemTypes = analyzeProblemTypes(store.messages);
+  const problemTypes = analyzeProblemTypes(store.messages || []);
 
   // Daily usage over last 7 days
-  const dailyUsage = generateDailyUsageFromEvents(store.events, 7);
+  const dailyUsage = generateDailyUsageFromEvents(store.events || [], 7);
 
   // Recent sessions
-  const recentSessions = Array.from(store.sessions.values())
+  const recentSessions = Array.from(store.sessions?.values() || [])
     .slice(-10)
     .sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
 
   // Recent blocked content
-  const recentBlockedContent = store.blockedContent
+  const recentBlockedContent = (store.blockedContent || [])
     .slice(-5)
     .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-  return {
+  const realStats = {
     summary: {
-      totalSessions: Math.max(totalSessions, 1), // Ensure minimum of 1
+      totalSessions: Math.max(totalSessions, 0),
       totalMessages: Math.max(totalMessages, 0),
       averageSessionDuration: calculateAverageSessionDuration(store.sessions),
       homeownerModePercentage: modeUsage.homeowner,
@@ -107,19 +148,28 @@ async function generateRealUsageStats() {
       blockedMessages: blockedMessages,
       successRate: parseFloat(successRate)
     },
-    dailyUsage: dailyUsage,
+    dailyUsage: dailyUsage.length > 0 ? dailyUsage : generateMockDailyUsage(7),
     problemTypes: problemTypes,
     modeUsage: modeUsage,
-    recentSessions: recentSessions.length > 0 ? recentSessions : generateMockSessions(5),
-    blockedContent: recentBlockedContent.length > 0 ? recentBlockedContent : generateMockBlockedContent(3),
+    recentSessions: recentSessions.length > 0 ? recentSessions : generateMockSessions(3),
+    blockedContent: recentBlockedContent.length > 0 ? recentBlockedContent : [],
     performance: {
-      averageResponseTime: calculateAverageResponseTime(store.messages),
+      averageResponseTime: calculateAverageResponseTime(store.messages || []),
       uptime: 99.8,
-      errorRate: calculateErrorRate(store.messages)
+      errorRate: calculateErrorRate(store.messages || [])
     },
     realData: true,
+    dataAge: store.lastUpdated || now.toISOString(),
     lastUpdated: now.toISOString()
   };
+
+  console.log('✅ Generated real stats:', {
+    sessions: realStats.summary.totalSessions,
+    messages: realStats.summary.totalMessages,
+    blocked: realStats.summary.blockedMessages
+  });
+
+  return realStats;
 }
 
 function analyzeProblemTypes(messages) {
@@ -173,7 +223,7 @@ function analyzeProblemTypes(messages) {
 }
 
 function calculateAverageSessionDuration(sessions) {
-  if (sessions.size === 0) return 18.5;
+  if (!sessions || sessions.size === 0) return 18.5;
 
   const durations = Array.from(sessions.values())
     .filter(session => session.endTime)
@@ -224,12 +274,12 @@ function generateDailyUsageFromEvents(events, days) {
 
     const sessions = dayEvents.filter(e => e.eventType === 'session_start').length;
     const messages = dayEvents.filter(e => e.eventType === 'message_sent').length;
-    const blocked = dayEvents.filter(e => e.eventType === 'message_blocked').length;
+    const blocked = dayEvents.filter(e => e.eventType === 'input_blocked' || e.eventType === 'input_rejected').length;
 
     usage.push({
       date: dateStr,
-      sessions: Math.max(sessions, Math.floor(Math.random() * 10) + 1), // Minimum of 1
-      messages: Math.max(messages, Math.floor(Math.random() * 50) + 10), // Minimum of 10
+      sessions: sessions,
+      messages: messages,
       blockedMessages: blocked
     });
   }
@@ -237,39 +287,41 @@ function generateDailyUsageFromEvents(events, days) {
   return usage;
 }
 
-// Fallback mock data generators (kept for compatibility)
+// Fallback mock data generators
 async function generateMockUsageStats() {
   const now = new Date();
   
   return {
     summary: {
-      totalSessions: 1247 + Math.floor(Math.random() * 100),
-      totalMessages: 8934 + Math.floor(Math.random() * 500),
-      averageSessionDuration: 18.5,
-      homeownerModePercentage: 78,
-      technicianModePercentage: 22,
-      blockedMessages: 23 + Math.floor(Math.random() * 10),
-      successRate: 98.2
+      totalSessions: 47 + Math.floor(Math.random() * 20),
+      totalMessages: 234 + Math.floor(Math.random() * 100),
+      averageSessionDuration: 12.5 + Math.random() * 10,
+      homeownerModePercentage: 75 + Math.floor(Math.random() * 15),
+      technicianModePercentage: 25 + Math.floor(Math.random() * 15),
+      blockedMessages: Math.floor(Math.random() * 8),
+      successRate: 96.5 + Math.random() * 3
     },
     dailyUsage: generateMockDailyUsage(7),
     problemTypes: {
-      'no_heat': 35,
-      'no_cooling': 40,
-      'thermostat_issues': 15,
-      'maintenance': 10
+      'no_heat': 30 + Math.floor(Math.random() * 15),
+      'no_cooling': 35 + Math.floor(Math.random() * 15),
+      'thermostat_issues': 15 + Math.floor(Math.random() * 10),
+      'maintenance': 10 + Math.floor(Math.random() * 10),
+      'noise': 5 + Math.floor(Math.random() * 5)
     },
     modeUsage: {
-      'homeowner': 78,
-      'technician': 22
+      'homeowner': 75 + Math.floor(Math.random() * 15),
+      'technician': 25 + Math.floor(Math.random() * 15)
     },
-    recentSessions: generateMockSessions(10),
-    blockedContent: generateMockBlockedContent(5),
+    recentSessions: generateMockSessions(8),
+    blockedContent: generateMockBlockedContent(3),
     performance: {
-      averageResponseTime: 2.3,
-      uptime: 99.8,
-      errorRate: 0.2
+      averageResponseTime: 2.1 + Math.random() * 1,
+      uptime: 99.2 + Math.random() * 0.7,
+      errorRate: Math.random() * 0.5
     },
     realData: false,
+    mockReason: 'No real data available yet',
     lastUpdated: now.toISOString()
   };
 }
@@ -282,11 +334,16 @@ function generateMockDailyUsage(days) {
     const date = new Date(now);
     date.setDate(date.getDate() - i);
     
+    // Generate realistic daily patterns
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+    const baseMessages = isWeekend ? 15 : 25;
+    const baseSessions = isWeekend ? 3 : 6;
+    
     usage.push({
       date: date.toISOString().split('T')[0],
-      sessions: Math.floor(Math.random() * 20) + 5,
-      messages: Math.floor(Math.random() * 150) + 50,
-      blockedMessages: Math.floor(Math.random() * 5)
+      sessions: baseSessions + Math.floor(Math.random() * 10),
+      messages: baseMessages + Math.floor(Math.random() * 30),
+      blockedMessages: Math.floor(Math.random() * 3)
     });
   }
   
@@ -301,16 +358,16 @@ function generateMockSessions(count) {
   const modes = ['homeowner', 'technician'];
   
   for (let i = 0; i < count; i++) {
-    const sessionTime = new Date(now.getTime() - (i * 1000 * 60 * Math.random() * 120));
+    const sessionTime = new Date(now.getTime() - (i * 1000 * 60 * Math.random() * 480)); // Random time in last 8 hours
     
     sessions.push({
-      sessionId: `sess_${Date.now()}_${i}`,
+      sessionId: `sess_mock_${Date.now()}_${i}`,
       startTime: sessionTime.toISOString(),
-      duration: Math.floor(Math.random() * 1800000) + 300000,
-      messageCount: Math.floor(Math.random() * 15) + 3,
+      duration: Math.floor(Math.random() * 1200000) + 300000, // 5-25 minutes
+      messageCount: Math.floor(Math.random() * 12) + 3,
       mode: modes[Math.floor(Math.random() * modes.length)],
       problemType: problemTypes[Math.floor(Math.random() * problemTypes.length)],
-      resolved: Math.random() > 0.3
+      resolved: Math.random() > 0.25 // 75% resolution rate
     });
   }
   
@@ -331,7 +388,7 @@ function generateMockBlockedContent(count) {
   };
   
   for (let i = 0; i < count; i++) {
-    const blockTime = new Date(now.getTime() - (i * 1000 * 60 * Math.random() * 60));
+    const blockTime = new Date(now.getTime() - (i * 1000 * 60 * Math.random() * 120)); // Random time in last 2 hours
     const reason = reasons[Math.floor(Math.random() * reasons.length)];
     
     blocked.push({
@@ -339,7 +396,7 @@ function generateMockBlockedContent(count) {
       reason: reason,
       messagePreview: examples[reason],
       ip: `192.168.1.${Math.floor(Math.random() * 255)}`,
-      sessionId: `sess_blocked_${i}`
+      sessionId: `sess_blocked_mock_${i}`
     });
   }
   
