@@ -11,9 +11,18 @@
   to = "/.netlify/functions/:splat"
   status = 200
 
+[[redirects]]
+  from = "/hvac_jack"
+  to = "/HVAC_Jack.html"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/HVAC_Jack.html"
+  status = 200
+
 [dev]
   functions = "netlify/functions"
-  publish = "."
 
 [template.environment]
   CLAUDE_API_KEY = "Your Claude API key from Anthropic"
