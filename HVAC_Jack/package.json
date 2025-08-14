@@ -7,10 +7,12 @@
     "dev": "netlify dev",
     "build": "echo 'No build step required'",
     "test": "echo 'No tests specified'",
-    "start": "netlify dev"
+    "start": "netlify dev",
+    "deploy": "netlify deploy --prod"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.24.3"
+    "@anthropic-ai/sdk": "^0.24.3",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "netlify-cli": "^17.0.0"
