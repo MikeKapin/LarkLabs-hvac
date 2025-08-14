@@ -239,92 +239,105 @@ exports.handler = async (event, context) => {
 
 // Helper function to track photo analysis events
 async function trackPhotoEvent(eventType, sessionId, data) {
-  const store = global.usageStore;
-  
-  const event = {
-    eventType,
-    sessionId,
-    timestamp: new Date().toISOString(),
-    data: data || {}
-  };
+  try {
+    const store = global.usageStore;
+    
+    const event = {
+      eventType,
+      sessionId,
+      timestamp: new Date().toISOString(),
+      data: data || {}
+    };
 
-  store.events = store.events || [];
-  store.events.push(event);
+    store.events = store.events || [];
+    store.events.push(event);
 
-  // Keep only last 1000 events
-  if (store.events.length > 1000) {
-    store.events = store.events.slice(-1000);
+    // Keep only last 1000 events
+    if (store.events.length > 1000) {
+      store.events = store.events.slice(-1000);
+    }
+
+    console.log(`📊 Photo Event: ${eventType}`, {
+      sessionId,
+      ...data
+    });
+  } catch (error) {
+    console.warn('Failed to track photo event:', error);
   }
-
-  console.log(`📊 Photo Event: ${eventType}`, {
-    sessionId,
-    ...data
-  });
 }
 
 // Rate limiting specifically for photo analysis (more restrictive)
 const photoRateLimitStore = new Map();
 
 async function checkPhotoRateLimit(ip) {
-  const key = ip || 'unknown';
-  const now = Date.now();
-  const windowMs = 300000; // 5 minutes
-  const maxRequests = 10; // 10 photo analyses per 5 minutes
+  try {
+    const key = ip || 'unknown';
+    const now = Date.now();
+    const windowMs = 300000; // 5 minutes
+    const maxRequests = 10; // 10 photo analyses per 5 minutes
 
-  if (!photoRateLimitStore.has(key)) {
-    photoRateLimitStore.set(key, []);
+    if (!photoRateLimitStore.has(key)) {
+      photoRateLimitStore.set(key, []);
+    }
+
+    const requests = photoRateLimitStore.get(key);
+    
+    // Remove old requests
+    const validRequests = requests.filter(timestamp => now - timestamp < windowMs);
+    
+    if (validRequests.length >= maxRequests) {
+      return {
+        allowed: false,
+        retryAfter: Math.ceil((validRequests[0] + windowMs - now) / 1000)
+      };
+    }
+
+    // Add current request
+    validRequests.push(now);
+    photoRateLimitStore.set(key, validRequests);
+
+    return { allowed: true };
+  } catch (error) {
+    console.warn('Rate limit check failed:', error);
+    return { allowed: true }; // Allow on error
   }
-
-  const requests = photoRateLimitStore.get(key);
-  
-  // Remove old requests
-  const validRequests = requests.filter(timestamp => now - timestamp < windowMs);
-  
-  if (validRequests.length >= maxRequests) {
-    return {
-      allowed: false,
-      retryAfter: Math.ceil((validRequests[0] + windowMs - now) / 1000)
-    };
-  }
-
-  // Add current request
-  validRequests.push(now);
-  photoRateLimitStore.set(key, validRequests);
-
-  return { allowed: true };
 }
 
 // Log photo analysis to shared storage
 async function logPhotoAnalysis(data) {
-  const store = global.usageStore;
-  
-  store.photoAnalyses = store.photoAnalyses || [];
-  store.photoAnalyses.push({
-    sessionId: data.sessionId,
-    timestamp: data.timestamp,
-    success: data.success,
-    mode: data.mode,
-    responseTime: data.responseTime,
-    error: data.error || null,
-    equipmentType: data.equipmentType || 'unknown',
-    ip: data.ip,
-    analysisLength: data.analysisLength || 0,
-    hasStructuredData: data.hasStructuredData || false
-  });
+  try {
+    const store = global.usageStore;
+    
+    store.photoAnalyses = store.photoAnalyses || [];
+    store.photoAnalyses.push({
+      sessionId: data.sessionId,
+      timestamp: data.timestamp,
+      success: data.success,
+      mode: data.mode,
+      responseTime: data.responseTime,
+      error: data.error || null,
+      equipmentType: data.equipmentType || 'unknown',
+      ip: data.ip,
+      analysisLength: data.analysisLength || 0,
+      hasStructuredData: data.hasStructuredData || false
+    });
 
-  // Keep only last 200 photo analyses
-  if (store.photoAnalyses.length > 200) {
-    store.photoAnalyses = store.photoAnalyses.slice(-200);
+    // Keep only last 200 photo analyses
+    if (store.photoAnalyses.length > 200) {
+      store.photoAnalyses = store.photoAnalyses.slice(-200);
+    }
+
+    console.log('📸 Photo Analysis Logged:', {
+      sessionId: data.sessionId,
+      success: data.success,
+      mode: data.mode,
+      responseTime: data.responseTime,
+      equipmentType: data.equipmentType,
+      error: data.error
+    });
+  } catch (error) {
+    console.warn('Failed to log photo analysis:', error);
   }
-
-  console.log('📸 Photo Analysis Logged:', {
-    sessionId: data.sessionId,
-    success: data.success,
-    mode: data.mode,
-    responseTime: data.responseTime,
-    equipmentType: data.equipmentType,
-    error: data.error
-  });
 }
 
 function createHomeownerAnalysisPrompt() {
