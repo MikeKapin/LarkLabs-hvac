@@ -967,6 +967,23 @@
                 
                 this.initializeContentFilters();
                 this.init();
+                
+                // NEW: Track session start immediately
+                this.trackSessionStart();
+            }
+
+            // NEW: Track session start method
+            async trackSessionStart() {
+                try {
+                    await this.trackUsage('session_start', {
+                        mode: this.currentMode,
+                        timestamp: new Date().toISOString(),
+                        userAgent: navigator.userAgent.substring(0, 50)
+                    });
+                    console.log('✅ Session started and tracked:', this.sessionId);
+                } catch (error) {
+                    console.warn('Session tracking failed:', error);
+                }
             }
 
             initializeContentFilters() {
@@ -1395,6 +1412,7 @@
                 text.textContent = message;
             }
 
+            // ENHANCED: processUserInput method with better tracking
             async processUserInput(input) {
                 if (this.isProcessing) return;
 
@@ -1404,11 +1422,12 @@
                 if (!validation.isValid) {
                     this.hapticFeedback('heavy');
                     
-                    // Log validation failure
+                    // ENHANCED: Log validation failure with more detail
                     await this.trackUsage('input_rejected', {
                         reason: validation.reason,
                         category: validation.category,
-                        inputLength: input.length
+                        inputLength: input.length,
+                        originalMessage: input.substring(0, 50) // First 50 chars for context
                     });
 
                     // Show helpful error message
@@ -1421,15 +1440,19 @@
                 this.isProcessing = true;
                 const sanitizedInput = validation.sanitizedInput;
 
-                // Log successful validation
-                await this.trackUsage('input_accepted', {
+                // ENHANCED: Track message being sent
+                await this.trackUsage('message_sent', {
                     inputLength: sanitizedInput.length,
-                    hasHvacKeywords: true
+                    mode: this.currentMode,
+                    messageCount: this.conversationHistory.length,
+                    message: sanitizedInput.substring(0, 100) // Store first 100 chars
                 });
 
                 this.showMobileTyping();
                 this.addToConversation('user', sanitizedInput);
                 this.extractSystemContext(sanitizedInput);
+                
+                const startTime = Date.now(); // NEW: Track response time
                 
                 try {
                     let response;
@@ -1439,15 +1462,19 @@
                         response = await this.processWithFallbackKnowledge(sanitizedInput);
                     }
                     
+                    const responseTime = (Date.now() - startTime) / 1000; // NEW
+                    
                     this.addToConversation('assistant', response);
                     this.hideMobileTyping();
                     this.diagnosticsRun++;
                     this.hapticFeedback('success');
                     
-                    // Track successful response
-                    await this.trackUsage('response_generated', {
+                    // ENHANCED: Track successful response
+                    await this.trackUsage('response_received', {
+                        responseTime: responseTime,
                         responseLength: response.length,
-                        usingAI: this.isConnected
+                        usingAI: this.isConnected,
+                        mode: this.currentMode
                     });
                     
                     return { text: response, isError: false };
@@ -1457,9 +1484,13 @@
                     this.hideMobileTyping();
                     this.hapticFeedback('heavy');
                     
-                    // Track error
+                    const responseTime = (Date.now() - startTime) / 1000; // NEW
+                    
+                    // ENHANCED: Track error
                     await this.trackUsage('processing_error', {
-                        error: error.message
+                        error: error.message,
+                        responseTime: responseTime,
+                        usingAI: this.isConnected
                     });
                     
                     // If backend fails, try to reconnect and use fallback
@@ -1477,18 +1508,23 @@
                 }
             }
 
+            // ENHANCED: sendToBackend method to include session ID
             async sendToBackend(input) {
                 const requestBody = {
                     message: input,
                     mode: this.currentMode,
                     conversationHistory: this.conversationHistory.slice(-10),
-                    systemContext: this.systemContext
+                    systemContext: this.systemContext,
+                    sessionId: this.sessionId // NEW: Include session ID
                 };
 
-                console.log('Sending to backend:', this.apiEndpoint, requestBody);
+                console.log('Sending to backend:', this.apiEndpoint, {
+                    ...requestBody,
+                    message: input.substring(0, 50) + '...' // ENHANCED: Only log preview
+                });
                 
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
                 
                 try {
                     const response = await fetch(this.apiEndpoint, {
@@ -1508,7 +1544,14 @@
                     }
 
                     const data = await response.json();
-                    console.log('Backend response:', data);
+                    
+                    // ENHANCED: Better logging
+                    console.log('Backend response received:', {
+                        responseLength: data.response?.length || 0,
+                        sessionId: data.sessionId,
+                        usingAI: data.usingAI,
+                        responseTime: data.responseTime
+                    });
                     
                     if (data.fallback) {
                         console.warn('Server returned fallback response');
@@ -1689,13 +1732,15 @@ What's your current diagnostic status?`
                 document.getElementById('mobileSendBtn').disabled = false;
             }
 
+            // ENHANCED: switchMode method with better tracking
             switchMode(mode) {
+                const oldMode = this.currentMode; // Store old mode first
                 this.currentMode = mode;
                 this.hapticFeedback('light');
                 
-                // Track mode switch
+                // ENHANCED: Track mode switch with correct old/new modes
                 this.trackUsage('mode_switched', {
-                    from_mode: this.currentMode,
+                    from_mode: oldMode,
                     to_mode: mode
                 });
                 
