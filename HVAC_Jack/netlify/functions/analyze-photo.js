@@ -12,16 +12,21 @@ global.usageStore = global.usageStore || {
 };
 
 exports.handler = async (event, context) => {
+  console.log('📸 Photo analysis function triggered');
+  console.log('HTTP Method:', event.httpMethod);
+  console.log('Headers:', JSON.stringify(event.headers, null, 2));
+
   // Enable CORS
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json'
   };
 
   // Handle preflight requests
   if (event.httpMethod === 'OPTIONS') {
+    console.log('Handling OPTIONS preflight request');
     return {
       statusCode: 200,
       headers,
@@ -30,6 +35,7 @@ exports.handler = async (event, context) => {
   }
 
   if (event.httpMethod !== 'POST') {
+    console.log('Invalid method:', event.httpMethod);
     return {
       statusCode: 405,
       headers,
@@ -42,10 +48,28 @@ exports.handler = async (event, context) => {
 
   try {
     console.log('📸 Photo analysis request received');
+    console.log('Raw body length:', event.body?.length || 0);
     
-    const { imageData, mode, sessionId: clientSessionId } = JSON.parse(event.body);
+    if (!event.body) {
+      throw new Error('No request body provided');
+    }
+
+    let requestData;
+    try {
+      requestData = JSON.parse(event.body);
+      console.log('Request data keys:', Object.keys(requestData));
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError);
+      throw new Error('Invalid JSON in request body');
+    }
+
+    const { imageData, mode, sessionId: clientSessionId } = requestData;
     sessionId = clientSessionId || `photo_session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
+    console.log('Session ID:', sessionId);
+    console.log('Mode:', mode);
+    console.log('Image data length:', imageData?.length || 0);
+
     if (!imageData) {
       await trackPhotoEvent('photo_validation_failed', sessionId, { reason: 'missing_image_data' });
       return {
@@ -58,14 +82,14 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Validate image data format
-    if (!imageData.match(/^[A-Za-z0-9+/]+={0,2}$/)) {
+    // Validate image data format (base64)
+    if (!imageData.match(/^[A-Za-z0-9+/]+=*$/)) {
       await trackPhotoEvent('photo_validation_failed', sessionId, { reason: 'invalid_base64' });
       return {
         statusCode: 400,
         headers,
         body: JSON.stringify({ 
-          error: 'Invalid image format',
+          error: 'Invalid image format - must be base64 encoded',
           success: false 
         })
       };
@@ -78,11 +102,11 @@ exports.handler = async (event, context) => {
     });
 
     // Rate limiting for photo analysis (more restrictive than chat)
-    const rateLimitCheck = await checkPhotoRateLimit(event.headers['client-ip']);
+    const rateLimitCheck = await checkPhotoRateLimit(event.headers['client-ip'] || event.headers['x-forwarded-for']);
     if (!rateLimitCheck.allowed) {
       await trackPhotoEvent('photo_rate_limited', sessionId, { 
         retryAfter: rateLimitCheck.retryAfter,
-        ip: event.headers['client-ip']
+        ip: event.headers['client-ip'] || event.headers['x-forwarded-for']
       });
       
       return {
@@ -105,7 +129,25 @@ exports.handler = async (event, context) => {
 
     const apiKey = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
-      throw new Error('Claude API key not configured');
+      throw new Error('Claude API key not configured - check environment variables');
+    }
+
+    console.log('API Key configured:', apiKey ? 'Yes' : 'No');
+    console.log('API Key prefix:', apiKey ? apiKey.substring(0, 8) + '...' : 'None');
+
+    // Ensure we have node-fetch available
+    let fetch;
+    try {
+      const nodeFetch = await import('node-fetch');
+      fetch = nodeFetch.default;
+    } catch (importError) {
+      console.error('Failed to import node-fetch:', importError);
+      // Try using global fetch (Node 18+)
+      fetch = global.fetch || require('node-fetch');
+    }
+
+    if (!fetch) {
+      throw new Error('No fetch implementation available');
     }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -142,8 +184,11 @@ exports.handler = async (event, context) => {
       })
     });
 
+    console.log('Claude API response status:', response.status);
+
     if (!response.ok) {
       const errorText = await response.text();
+      console.error('Claude API error response:', errorText);
       throw new Error(`Claude API error: ${response.status} - ${errorText}`);
     }
 
@@ -151,7 +196,12 @@ exports.handler = async (event, context) => {
     const responseTime = (Date.now() - startTime) / 1000;
     console.log(`✅ Claude API responded in ${responseTime}s`);
 
+    if (!data.content || !data.content[0] || !data.content[0].text) {
+      throw new Error('Invalid response format from Claude API');
+    }
+
     const analysisResult = data.content[0].text;
+    console.log('Analysis result length:', analysisResult.length);
 
     // Try to parse structured data if present
     let structuredResult;
@@ -159,9 +209,10 @@ exports.handler = async (event, context) => {
       const jsonMatch = analysisResult.match(/```json\n([\s\S]*?)\n```/);
       if (jsonMatch) {
         structuredResult = JSON.parse(jsonMatch[1]);
+        console.log('✅ Structured data extracted successfully');
       }
     } catch (parseError) {
-      console.log('Response is not JSON, treating as text');
+      console.log('No structured JSON found, treating as text response');
     }
 
     // Log successful analysis to shared storage
@@ -173,7 +224,7 @@ exports.handler = async (event, context) => {
       responseTime,
       analysisLength: analysisResult.length,
       hasStructuredData: !!structuredResult,
-      ip: event.headers['client-ip'] || 'unknown',
+      ip: event.headers['client-ip'] || event.headers['x-forwarded-for'] || 'unknown',
       equipmentType: structuredResult?.equipment?.type || 'unknown'
     });
 
@@ -203,6 +254,7 @@ exports.handler = async (event, context) => {
   } catch (error) {
     const responseTime = (Date.now() - startTime) / 1000;
     console.error('❌ Photo analysis error:', error);
+    console.error('Error stack:', error.stack);
 
     // Track failed analysis
     if (sessionId) {
@@ -219,7 +271,7 @@ exports.handler = async (event, context) => {
         mode: mode || 'homeowner',
         responseTime,
         error: error.message,
-        ip: event.headers['client-ip'] || 'unknown'
+        ip: event.headers['client-ip'] || event.headers['x-forwarded-for'] || 'unknown'
       });
     }
     
@@ -231,7 +283,12 @@ exports.handler = async (event, context) => {
         error: 'Photo analysis failed',
         message: error.message,
         fallback: true,
-        sessionId
+        sessionId,
+        debug: {
+          hasImageData: !!imageData,
+          imageDataLength: imageData?.length || 0,
+          hasApiKey: !!(process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY)
+        }
       })
     };
   }
