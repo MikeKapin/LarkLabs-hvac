@@ -1,19 +1,20 @@
 [build]
   functions = "netlify/functions"
+  publish = "."
 
 [functions]
   node_bundler = "esbuild"
+  external_node_modules = ["@anthropic-ai/sdk"]
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Headers = "Content-Type"
-    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
 
-# Enable file uploads
-[[headers]]
-  for = "/api/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Max-Age = "86400"
+[dev]
+  functions = "netlify/functions"
+  publish = "."
+
+[template.environment]
+  CLAUDE_API_KEY = "Your Claude API key from Anthropic"
+  ANTHROPIC_API_KEY = "Your Anthropic API key (fallback)"
