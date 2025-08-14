@@ -1,4 +1,5 @@
 [build]
+  base = "HVAC_Jack"
   functions = "netlify/functions"
   publish = "."
 
@@ -12,18 +13,10 @@
   status = 200
 
 [[redirects]]
-  from = "/hvac_jack"
-  to = "/HVAC_Jack.html"
-  status = 200
-
-[[redirects]]
   from = "/"
-  to = "/HVAC_Jack.html"
+  to = "/index.html"
   status = 200
 
 [dev]
   functions = "netlify/functions"
-
-[template.environment]
-  CLAUDE_API_KEY = "Your Claude API key from Anthropic"
-  ANTHROPIC_API_KEY = "Your Anthropic API key (fallback)"
+  publish = "."
