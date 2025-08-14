@@ -1,5 +1,14 @@
 // netlify/functions/chat.js
-// Enhanced HVAC Jack backend with content filtering and usage tracking
+// Enhanced HVAC Jack backend with improved content filtering and tracking integration
+
+// Initialize shared storage if it doesn't exist
+global.usageStore = global.usageStore || {
+  sessions: new Map(),
+  messages: [],
+  blockedContent: [],
+  events: [],
+  dailyStats: new Map()
+};
 
 exports.handler = async (event, context) => {
   // Handle CORS
@@ -16,11 +25,16 @@ exports.handler = async (event, context) => {
 
   // Chat endpoint
   if (event.httpMethod === 'POST') {
+    const startTime = Date.now();
+    let sessionId = null;
+    
     try {
-      const { message, mode, conversationHistory, systemContext } = JSON.parse(event.body);
+      const { message, mode, conversationHistory, systemContext, sessionId: clientSessionId } = JSON.parse(event.body);
+      sessionId = clientSessionId || `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
       // Basic validation
       if (!message || typeof message !== 'string' || message.trim().length === 0) {
+        await trackEvent('validation_failed', sessionId, { reason: 'empty_message' });
         return {
           statusCode: 400,
           headers,
@@ -31,12 +45,21 @@ exports.handler = async (event, context) => {
       // Server-side content validation
       const validation = validateHVACContent(message);
       if (!validation.isValid) {
-        // Log blocked content
+        // Track blocked content
+        await trackEvent('input_blocked', sessionId, {
+          reason: validation.reason,
+          category: validation.category,
+          originalMessage: message.substring(0, 100),
+          mode: mode
+        });
+
+        // Log blocked content to shared storage
         await logBlockedContent({
-          message: message.substring(0, 100), // First 100 chars for logging
+          message: message.substring(0, 100),
           reason: validation.reason,
           timestamp: new Date().toISOString(),
-          ip: event.headers['client-ip'] || event.headers['x-forwarded-for'] || 'unknown'
+          ip: event.headers['client-ip'] || event.headers['x-forwarded-for'] || 'unknown',
+          sessionId: sessionId
         });
 
         return {
@@ -45,7 +68,8 @@ exports.handler = async (event, context) => {
           body: JSON.stringify({
             response: validation.errorMessage,
             blocked: true,
-            reason: validation.reason
+            reason: validation.reason,
+            sessionId: sessionId
           })
         };
       }
@@ -53,6 +77,11 @@ exports.handler = async (event, context) => {
       // Rate limiting check
       const rateLimitCheck = await checkRateLimit(event.headers['client-ip']);
       if (!rateLimitCheck.allowed) {
+        await trackEvent('rate_limited', sessionId, { 
+          retryAfter: rateLimitCheck.retryAfter,
+          ip: event.headers['client-ip']
+        });
+        
         return {
           statusCode: 429,
           headers,
@@ -63,25 +92,61 @@ exports.handler = async (event, context) => {
         };
       }
 
+      // Track successful message
+      await trackEvent('message_accepted', sessionId, {
+        mode: mode,
+        messageLength: message.length,
+        hasHistory: !!(conversationHistory && conversationHistory.length > 0),
+        systemContext: systemContext
+      });
+
       // Build system prompt with enhanced HVAC focus
       const systemPrompt = buildSystemPrompt(mode, systemContext);
       
       // Prepare messages for Claude
       const claudeMessages = buildClaudeMessages(message, conversationHistory, mode);
 
-      // Call Claude API with content filtering
-      const claudeResponse = await callClaude(systemPrompt, claudeMessages, process.env.CLAUDE_API_KEY);
+      let claudeResponse;
+      let usingAI = true;
+
+      try {
+        // Call Claude API with content filtering
+        claudeResponse = await callClaude(systemPrompt, claudeMessages, process.env.CLAUDE_API_KEY);
+      } catch (claudeError) {
+        console.log('Claude API failed, using fallback:', claudeError.message);
+        claudeResponse = generateFallbackResponse(message, mode);
+        usingAI = false;
+        
+        await trackEvent('ai_fallback_used', sessionId, {
+          error: claudeError.message,
+          mode: mode
+        });
+      }
       
       // Post-process response for additional safety
       const sanitizedResponse = sanitizeClaudeResponse(claudeResponse);
+      
+      // Calculate response time
+      const responseTime = (Date.now() - startTime) / 1000;
 
-      // Log successful interaction
+      // Track successful response
+      await trackEvent('response_generated', sessionId, {
+        responseTime: responseTime,
+        responseLength: sanitizedResponse.length,
+        usingAI: usingAI,
+        mode: mode
+      });
+
+      // Log successful interaction to shared storage
       await logInteraction({
-        input: message.substring(0, 100), // First 100 chars for logging
+        sessionId: sessionId,
+        input: message.substring(0, 100),
         output: sanitizedResponse.substring(0, 100),
         mode,
         timestamp: new Date().toISOString(),
-        ip: event.headers['client-ip'] || 'unknown'
+        ip: event.headers['client-ip'] || 'unknown',
+        responseTime: responseTime,
+        usingAI: usingAI
       });
 
       return {
@@ -90,12 +155,25 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({
           response: sanitizedResponse,
           timestamp: new Date().toISOString(),
-          mode: mode
+          mode: mode,
+          sessionId: sessionId,
+          responseTime: responseTime,
+          usingAI: usingAI
         })
       };
 
     } catch (error) {
       console.error('Chat error:', error);
+      
+      const responseTime = (Date.now() - startTime) / 1000;
+      
+      // Track error
+      if (sessionId) {
+        await trackEvent('processing_error', sessionId, {
+          error: error.message,
+          responseTime: responseTime
+        });
+      }
       
       // Fallback response
       const { message = '', mode = 'homeowner' } = JSON.parse(event.body || '{}');
@@ -107,7 +185,9 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({
           response: fallbackResponse + '\n\n*Note: Using fallback mode due to temporary AI service issue.*',
           timestamp: new Date().toISOString(),
-          fallback: true
+          fallback: true,
+          sessionId: sessionId,
+          responseTime: responseTime
         })
       };
     }
@@ -120,10 +200,69 @@ exports.handler = async (event, context) => {
   };
 };
 
+// Helper function to track events to shared storage
+async function trackEvent(eventType, sessionId, data) {
+  const store = global.usageStore;
+  
+  const event = {
+    eventType,
+    sessionId,
+    timestamp: new Date().toISOString(),
+    data: data || {}
+  };
+
+  store.events.push(event);
+
+  // Keep only last 1000 events
+  if (store.events.length > 1000) {
+    store.events = store.events.slice(-1000);
+  }
+
+  // Process specific events
+  switch (eventType) {
+    case 'message_accepted':
+      // Update messages array
+      store.messages.push({
+        sessionId,
+        timestamp: event.timestamp,
+        content: data.messageLength ? `[${data.messageLength} chars]` : '',
+        mode: data.mode,
+        inputLength: data.messageLength,
+        responseTime: null,
+        error: false
+      });
+      break;
+      
+    case 'input_blocked':
+      // Add to blocked content
+      store.blockedContent.push({
+        sessionId,
+        timestamp: event.timestamp,
+        reason: data.reason,
+        messagePreview: data.originalMessage || '',
+        ip: 'tracked',
+        category: data.category
+      });
+      break;
+      
+    case 'response_generated':
+      // Update the most recent message with response time
+      const msgIndex = store.messages.findIndex(
+        msg => msg.sessionId === sessionId && !msg.responseTime
+      );
+      if (msgIndex !== -1) {
+        store.messages[msgIndex].responseTime = data.responseTime;
+        store.messages[msgIndex].usingAI = data.usingAI;
+      }
+      break;
+  }
+}
+
 function validateHVACContent(message) {
   const validation = {
     isValid: true,
     reason: '',
+    category: '',
     errorMessage: ''
   };
 
@@ -133,23 +272,23 @@ function validateHVACContent(message) {
   // Prohibited content checks
   const prohibitedPatterns = [
     // Explicit content
-    { pattern: /\b(porn|sex|nude|adult|xxx|nsfw|explicit)\b/i, reason: 'explicit' },
+    { pattern: /\b(porn|sex|nude|adult|xxx|nsfw|explicit)\b/i, reason: 'explicit', category: 'inappropriate' },
     
     // Programming requests
-    { pattern: /\b(code|programming|script|function|api|github|sql|python|javascript|html|css|php)\b/i, reason: 'programming' },
+    { pattern: /\b(code|programming|script|function|api|github|sql|python|javascript|html|css|php)\b/i, reason: 'programming', category: 'off_topic' },
     
     // Large file/data requests
-    { pattern: /\b(download|upload|file|document|pdf|spreadsheet|database|excel|csv)\b/i, reason: 'file_operations' },
+    { pattern: /\b(download|upload|file|document|pdf|spreadsheet|database|excel|csv)\b/i, reason: 'file_operations', category: 'unsupported' },
     
     // Medical/legal advice
-    { pattern: /\b(medical|doctor|legal|lawyer|prescription|lawsuit|diagnosis|treatment)\b/i, reason: 'professional_advice' },
+    { pattern: /\b(medical|doctor|legal|lawyer|prescription|lawsuit|diagnosis|treatment)\b/i, reason: 'professional_advice', category: 'off_topic' },
     
     // System manipulation attempts
-    { pattern: /\b(ignore|override|bypass|jailbreak|system prompt|pretend you are|act as|roleplay)\b/i, reason: 'system_manipulation' },
+    { pattern: /\b(ignore|override|bypass|jailbreak|system prompt|pretend you are|act as|roleplay)\b/i, reason: 'system_manipulation', category: 'malicious' },
     
     // Spam patterns
-    { pattern: /(.)\1{15,}/, reason: 'spam' }, // Repeated characters
-    { pattern: /\b(.+\b.*){10,}/, reason: 'repetitive' } // Repetitive content
+    { pattern: /(.)\1{15,}/, reason: 'spam', category: 'spam' }, // Repeated characters
+    { pattern: /\b(.+\b.*){10,}/, reason: 'repetitive', category: 'spam' } // Repetitive content
   ];
 
   // Check against prohibited patterns
@@ -157,6 +296,7 @@ function validateHVACContent(message) {
     if (check.pattern.test(message)) {
       validation.isValid = false;
       validation.reason = check.reason;
+      validation.category = check.category;
       validation.errorMessage = generateBlockedContentMessage(check.reason);
       return validation;
     }
@@ -166,6 +306,7 @@ function validateHVACContent(message) {
   if (message.length > 1000) {
     validation.isValid = false;
     validation.reason = 'too_long';
+    validation.category = 'length';
     validation.errorMessage = '🚫 **Message too long.** Please keep HVAC questions under 1000 characters for better responses.';
     return validation;
   }
@@ -195,6 +336,7 @@ function validateHVACContent(message) {
     if (isOffTopic) {
       validation.isValid = false;
       validation.reason = 'off_topic';
+      validation.category = 'off_topic';
       validation.errorMessage = '🔧 **HVAC Topics Only** - I only help with heating, cooling, and ventilation systems. Please ask about your HVAC equipment!';
       return validation;
     }
@@ -369,28 +511,61 @@ async function checkRateLimit(ip) {
 }
 
 async function logBlockedContent(data) {
-  // Log blocked content for monitoring
+  const store = global.usageStore;
+  
+  // Add to blocked content array in shared storage
+  store.blockedContent.push({
+    timestamp: data.timestamp,
+    reason: data.reason,
+    messagePreview: data.message,
+    ip: data.ip,
+    sessionId: data.sessionId
+  });
+
+  // Keep only last 100 blocked messages
+  if (store.blockedContent.length > 100) {
+    store.blockedContent = store.blockedContent.slice(-100);
+  }
+  
   console.log('🚫 Blocked Content:', {
     timestamp: data.timestamp,
     reason: data.reason,
     messagePreview: data.message,
-    ip: data.ip
+    ip: data.ip,
+    sessionId: data.sessionId
   });
-  
-  // In production, you could store this in a database or send to monitoring service
 }
 
 async function logInteraction(data) {
-  // Log successful interactions
+  const store = global.usageStore;
+  
+  // Add to messages array in shared storage
+  store.messages.push({
+    sessionId: data.sessionId,
+    timestamp: data.timestamp,
+    content: data.input,
+    mode: data.mode,
+    inputLength: data.input.length,
+    responseTime: data.responseTime,
+    error: false,
+    usingAI: data.usingAI
+  });
+
+  // Keep only last 500 messages
+  if (store.messages.length > 500) {
+    store.messages = store.messages.slice(-500);
+  }
+  
   console.log('✅ HVAC Interaction:', {
     timestamp: data.timestamp,
+    sessionId: data.sessionId,
     inputLength: data.input.length,
     outputPreview: data.output,
     mode: data.mode,
+    responseTime: data.responseTime,
+    usingAI: data.usingAI,
     ip: data.ip
   });
-  
-  // In production, you could store this in a database for analytics
 }
 
 function generateFallbackResponse(message, mode) {
