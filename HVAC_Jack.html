@@ -936,7 +936,7 @@
             window.mobileHvacJack = mobileHvacJack; // Make it globally accessible
         }
 
-        // Enhanced Mobile HVAC Jack with better connection handling
+        // Enhanced Mobile HVAC Jack with Content Filtering
         class SecureMobileHVACJack {
             constructor() {
                 this.diagnosticsRun = 0;
@@ -949,14 +949,215 @@
                     previousActions: [],
                     currentProblem: null
                 };
-                // Backend API endpoints - Updated for Netlify deployment
+                // Backend API endpoints - Netlify Functions
                 this.apiEndpoint = '/.netlify/functions/chat';
                 this.healthEndpoint = '/.netlify/functions/health';
+                this.trackingEndpoint = '/.netlify/functions/track-usage';
                 this.isConnected = false;
                 this.isProcessing = false;
                 this.connectionAttempts = 0;
                 this.maxConnectionAttempts = 3;
+                
+                // Content filtering settings
+                this.maxMessageLength = 500;
+                this.rateLimitWindow = 60000; // 1 minute
+                this.maxMessagesPerWindow = 10;
+                this.messageTimestamps = [];
+                this.sessionId = this.generateSessionId();
+                
+                this.initializeContentFilters();
                 this.init();
+            }
+
+            initializeContentFilters() {
+                // HVAC-related keywords (whitelist approach)
+                this.hvacKeywords = [
+                    'hvac', 'heating', 'cooling', 'furnace', 'air conditioner', 'ac', 'heat pump',
+                    'thermostat', 'duct', 'filter', 'compressor', 'condenser', 'evaporator',
+                    'refrigerant', 'blower', 'motor', 'fan', 'coil', 'vent', 'airflow',
+                    'temperature', 'humidity', 'btu', 'cfm', 'tonnage', 'seer', 'efficiency',
+                    'gas', 'electric', 'propane', 'oil', 'boiler', 'radiator', 'baseboard',
+                    'central air', 'mini split', 'ductless', 'zoning', 'damper', 'plenum',
+                    'return air', 'supply air', 'exhaust', 'ventilation', 'indoor air quality',
+                    'carbon monoxide', 'heat exchanger', 'igniter', 'pilot light', 'flame sensor',
+                    'pressure switch', 'limit switch', 'capacitor', 'contactor', 'relay',
+                    'transformer', 'circuit board', 'control board', 'wiring', 'electrical',
+                    'refrigeration', 'defrost', 'superheat', 'subcooling', 'manifold',
+                    'leak', 'repair', 'maintenance', 'service', 'installation', 'replacement',
+                    'troubleshoot', 'diagnose', 'problem', 'issue', 'malfunction', 'broken',
+                    'not working', 'noise', 'smell', 'smoke', 'water', 'ice', 'frozen',
+                    'hot', 'cold', 'warm', 'cool', 'cycling', 'running', 'starting', 'system', 'unit'
+                ];
+
+                // Prohibited content patterns
+                this.prohibitedPatterns = [
+                    // Explicit content
+                    /\b(porn|sex|nude|naked|explicit|adult|xxx|nsfw)\b/i,
+                    
+                    // Programming/code requests
+                    /\b(code|program|script|function|api|database|python|javascript|html|css|sql|php|github|stackoverflow|programming)\b/i,
+                    
+                    // Large data requests
+                    /\b(download|upload|file|document|pdf|database|spreadsheet|excel|csv)\b/i,
+                    
+                    // Off-topic requests
+                    /\b(recipe|cooking|medical|legal|financial|politics|religion|homework|essay|assignment)\b/i,
+                    
+                    // System manipulation attempts
+                    /\b(ignore|bypass|override|system prompt|jailbreak|pretend|roleplay|character|act as|you are now|from now on)\b/i
+                ];
+
+                // Suspicious patterns
+                this.suspiciousPatterns = [
+                    /\b(hack|crack|exploit|vulnerability|illegal|criminal|dangerous|harmful)\b/i,
+                    /repeated\s+text|(.)\1{10,}/i, // Spam patterns
+                    /[A-Z]{20,}/, // Excessive caps
+                    /(.{1,10})\1{3,}/ // Repeated phrases
+                ];
+            }
+
+            generateSessionId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+
+            validateInput(input) {
+                const validation = {
+                    isValid: true,
+                    reason: '',
+                    category: '',
+                    sanitizedInput: input.trim()
+                };
+
+                // 1. Length check
+                if (input.length > this.maxMessageLength) {
+                    validation.isValid = false;
+                    validation.reason = `Message too long (${input.length}/${this.maxMessageLength} characters). Please keep HVAC questions concise.`;
+                    validation.category = 'length';
+                    return validation;
+                }
+
+                // 2. Rate limiting
+                if (!this.checkRateLimit()) {
+                    validation.isValid = false;
+                    validation.reason = 'Too many messages. Please wait a moment before sending another HVAC question.';
+                    validation.category = 'rate_limit';
+                    return validation;
+                }
+
+                // 3. Empty or meaningless input
+                if (input.trim().length < 3 || /^[^a-zA-Z]*$/.test(input.trim())) {
+                    validation.isValid = false;
+                    validation.reason = 'Please ask a specific HVAC question.';
+                    validation.category = 'empty';
+                    return validation;
+                }
+
+                // 4. Check for prohibited content
+                const prohibitedMatch = this.prohibitedPatterns.find(pattern => pattern.test(input));
+                if (prohibitedMatch) {
+                    validation.isValid = false;
+                    validation.reason = 'HVAC Jack only helps with heating, cooling, and ventilation questions. Please ask about your HVAC system.';
+                    validation.category = 'prohibited';
+                    return validation;
+                }
+
+                // 5. Check for suspicious content
+                const suspiciousMatch = this.suspiciousPatterns.find(pattern => pattern.test(input));
+                if (suspiciousMatch) {
+                    validation.isValid = false;
+                    validation.reason = 'This message seems suspicious. HVAC Jack only discusses heating and cooling systems.';
+                    validation.category = 'suspicious';
+                    return validation;
+                }
+
+                // 6. HVAC relevance check (lenient approach)
+                const hasHvacKeywords = this.hvacKeywords.some(keyword => 
+                    input.toLowerCase().includes(keyword.toLowerCase())
+                );
+
+                // Allow some flexibility for follow-up questions
+                const isFollowUp = this.conversationHistory.length > 0;
+                const hasGeneralTerms = /\b(it|this|that|system|unit|equipment|problem|issue|help|why|how|what|when|where)\b/i.test(input);
+
+                if (!hasHvacKeywords && !isFollowUp && !hasGeneralTerms) {
+                    validation.isValid = false;
+                    validation.reason = 'HVAC Jack specializes in heating, cooling, and ventilation. Please ask about your HVAC system, furnace, AC, heat pump, or related equipment.';
+                    validation.category = 'off_topic';
+                    return validation;
+                }
+
+                // 7. Basic sanitization
+                validation.sanitizedInput = this.sanitizeInput(input);
+
+                return validation;
+            }
+
+            sanitizeInput(input) {
+                return input
+                    .replace(/[<>]/g, '') // Remove potential HTML
+                    .replace(/javascript:/gi, '') // Remove JS injection attempts
+                    .replace(/\s+/g, ' ') // Normalize whitespace
+                    .trim()
+                    .substring(0, this.maxMessageLength); // Ensure length limit
+            }
+
+            checkRateLimit() {
+                const now = Date.now();
+                
+                // Remove old timestamps
+                this.messageTimestamps = this.messageTimestamps.filter(
+                    timestamp => now - timestamp < this.rateLimitWindow
+                );
+
+                // Check if under limit
+                if (this.messageTimestamps.length >= this.maxMessagesPerWindow) {
+                    return false;
+                }
+
+                // Add current timestamp
+                this.messageTimestamps.push(now);
+                return true;
+            }
+
+            generateValidationErrorResponse(validation) {
+                const responses = {
+                    length: "⚠️ **Message Too Long**\n\nPlease keep your HVAC questions shorter and more specific. Try asking about one issue at a time!\n\n**Examples:**\n• \"My furnace won't start\"\n• \"AC is making strange noises\"\n• \"No heat from vents\"",
+                    
+                    rate_limit: "⏳ **Slow Down!**\n\nYou're asking questions too quickly. Take a moment to try my suggestions, then come back with updates!\n\n💡 **Tip:** Quality over quantity - detailed questions get better answers.",
+                    
+                    empty: "🤔 **Need More Details**\n\nI need a specific HVAC question to help you!\n\n**Try asking:**\n• What's wrong with your heating/cooling?\n• What symptoms are you seeing?\n• What type of system do you have?",
+                    
+                    prohibited: "🔧 **HVAC Questions Only**\n\nI'm HVAC Jack - I only help with heating, cooling, and ventilation systems!\n\n**I can help with:**\n• Furnaces & boilers\n• Air conditioners & heat pumps\n• Thermostats & controls\n• Ductwork & airflow\n• System maintenance",
+                    
+                    suspicious: "🚨 **Invalid Request**\n\nThat doesn't look like an HVAC question. I'm here to help with heating and cooling systems only.\n\n**Ask me about:**\n• System problems\n• Strange noises or smells\n• Temperature issues\n• Equipment troubleshooting",
+                    
+                    off_topic: "❌ **Off-Topic**\n\nI'm specialized in HVAC systems only! Please ask about:\n\n🔥 **Heating:** Furnaces, boilers, heat pumps\n❄️ **Cooling:** Air conditioners, evaporative coolers\n🌪️ **Ventilation:** Fans, ductwork, air quality\n🎛️ **Controls:** Thermostats, sensors, smart systems"
+                };
+
+                return responses[validation.category] || responses.off_topic;
+            }
+
+            async trackUsage(eventType, data = {}) {
+                try {
+                    await fetch(this.trackingEndpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            eventType,
+                            data: {
+                                ...data,
+                                mode: this.currentMode,
+                                conversationLength: this.conversationHistory.length
+                            },
+                            sessionId: this.sessionId,
+                            timestamp: new Date().toISOString()
+                        })
+                    });
+                } catch (error) {
+                    console.warn('Usage tracking failed:', error);
+                }
             }
 
             async init() {
@@ -1116,6 +1317,11 @@
                             this.updateMobileStatus('connected', 'Jack is ready!');
                             this.hapticFeedback('success');
                             
+                            // Track successful connection
+                            await this.trackUsage('connection_success', {
+                                attempts: this.connectionAttempts
+                            });
+                            
                             // Remove any existing error messages
                             const existingErrors = document.querySelectorAll('.connection-error');
                             existingErrors.forEach(error => error.remove());
@@ -1148,34 +1354,35 @@
                 
                 this.updateMobileStatus('error', 'Connection Failed');
                 
+                // Track connection failure
+                this.trackUsage('connection_failed', {
+                    error: error.message,
+                    attempts: this.connectionAttempts
+                });
+                
                 // Show detailed error message with troubleshooting
                 let errorMessage = '⚠️ **Cannot Connect to HVAC Jack Server**\n\n';
                 
                 if (error.name === 'AbortError') {
                     errorMessage += '**Issue:** Connection timeout\n';
-                    errorMessage += '**Likely cause:** Server is not running or not responding\n\n';
+                    errorMessage += '**Using offline mode with built-in HVAC knowledge**\n\n';
                 } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
                     errorMessage += '**Issue:** Network connection failed\n';
-                    errorMessage += '**Likely cause:** Server is not running on http://localhost:3000\n\n';
+                    errorMessage += '**Using offline mode with built-in HVAC knowledge**\n\n';
                 } else if (error.message.includes('Claude API not configured')) {
                     errorMessage += '**Issue:** Server running but Claude API not configured\n';
-                    errorMessage += '**Likely cause:** Missing or invalid CLAUDE_API_KEY in .env file\n\n';
+                    errorMessage += '**Using offline mode with built-in HVAC knowledge**\n\n';
                 } else {
                     errorMessage += `**Issue:** ${error.message}\n\n`;
                 }
                 
-                errorMessage += '**To fix this:**\n';
-                errorMessage += '1. Open terminal/command prompt\n';
-                errorMessage += '2. Navigate to your server directory\n';
-                errorMessage += '3. Run: `npm install` (if first time)\n';
-                errorMessage += '4. Run: `node server.js`\n';
-                errorMessage += '5. Look for "HVAC Jack Backend Server running on port 3000"\n';
-                errorMessage += '6. Refresh this page\n\n';
-                errorMessage += '**Still not working?**\n';
-                errorMessage += '• Check .env file has valid CLAUDE_API_KEY\n';
-                errorMessage += '• Try different port: PORT=3001 in .env\n';
-                errorMessage += '• Check firewall/antivirus blocking port 3000\n\n';
-                errorMessage += '*Using built-in knowledge until connected*';
+                errorMessage += '**I can still help you!** I have extensive built-in HVAC knowledge for common problems.\n\n';
+                errorMessage += '**Ask me about:**\n';
+                errorMessage += '• No heat or cooling issues\n';
+                errorMessage += '• Strange noises or smells\n';
+                errorMessage += '• Thermostat problems\n';
+                errorMessage += '• Basic troubleshooting steps\n\n';
+                errorMessage += '*AI features will return when connection is restored*';
                 
                 this.addMobileMessage(errorMessage, 'ai');
             }
@@ -1190,24 +1397,58 @@
 
             async processUserInput(input) {
                 if (this.isProcessing) return;
-                this.isProcessing = true;
+
+                // Validate input before processing
+                const validation = this.validateInput(input);
                 
+                if (!validation.isValid) {
+                    this.hapticFeedback('heavy');
+                    
+                    // Log validation failure
+                    await this.trackUsage('input_rejected', {
+                        reason: validation.reason,
+                        category: validation.category,
+                        inputLength: input.length
+                    });
+
+                    // Show helpful error message
+                    const errorResponse = this.generateValidationErrorResponse(validation);
+                    this.addMobileMessage(errorResponse, 'ai');
+                    return { text: errorResponse, isError: true };
+                }
+
+                // Process with sanitized input
+                this.isProcessing = true;
+                const sanitizedInput = validation.sanitizedInput;
+
+                // Log successful validation
+                await this.trackUsage('input_accepted', {
+                    inputLength: sanitizedInput.length,
+                    hasHvacKeywords: true
+                });
+
                 this.showMobileTyping();
-                this.addToConversation('user', input);
-                this.extractSystemContext(input);
+                this.addToConversation('user', sanitizedInput);
+                this.extractSystemContext(sanitizedInput);
                 
                 try {
                     let response;
                     if (this.isConnected) {
-                        response = await this.sendToBackend(input);
+                        response = await this.sendToBackend(sanitizedInput);
                     } else {
-                        response = await this.processWithFallbackKnowledge(input);
+                        response = await this.processWithFallbackKnowledge(sanitizedInput);
                     }
                     
                     this.addToConversation('assistant', response);
                     this.hideMobileTyping();
                     this.diagnosticsRun++;
                     this.hapticFeedback('success');
+                    
+                    // Track successful response
+                    await this.trackUsage('response_generated', {
+                        responseLength: response.length,
+                        usingAI: this.isConnected
+                    });
                     
                     return { text: response, isError: false };
                     
@@ -1216,6 +1457,11 @@
                     this.hideMobileTyping();
                     this.hapticFeedback('heavy');
                     
+                    // Track error
+                    await this.trackUsage('processing_error', {
+                        error: error.message
+                    });
+                    
                     // If backend fails, try to reconnect and use fallback
                     if (this.isConnected) {
                         this.isConnected = false;
@@ -1223,7 +1469,7 @@
                         setTimeout(() => this.checkBackendConnection(), 1000);
                     }
                     
-                    const fallback = await this.processWithFallbackKnowledge(input);
+                    const fallback = await this.processWithFallbackKnowledge(sanitizedInput);
                     this.addToConversation('assistant', fallback + '\n\n*Note: Using fallback mode due to connection issue.*');
                     return { text: fallback, isError: false };
                 } finally {
@@ -1447,6 +1693,12 @@ What's your current diagnostic status?`
                 this.currentMode = mode;
                 this.hapticFeedback('light');
                 
+                // Track mode switch
+                this.trackUsage('mode_switched', {
+                    from_mode: this.currentMode,
+                    to_mode: mode
+                });
+                
                 document.getElementById('mobileHomeownerBtn').classList.toggle('active', mode === 'homeowner');
                 document.getElementById('mobileTechnicianBtn').classList.toggle('active', mode === 'technician');
                 
@@ -1625,6 +1877,11 @@ What's your current diagnostic status?`
 
         function clearMobileConversation() {
             if (!window.mobileHvacJack) return;
+            
+            // Track conversation clear
+            window.mobileHvacJack.trackUsage('conversation_cleared', {
+                messageCount: window.mobileHvacJack.conversationHistory.length
+            });
             
             window.mobileHvacJack.conversationHistory = [];
             window.mobileHvacJack.systemContext = {
