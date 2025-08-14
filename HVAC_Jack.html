@@ -439,11 +439,12 @@
             background: #2D3748;
             border-top: 1px solid #4A5568;
             position: fixed;
-            bottom: 0;
+            bottom: 80px;
             left: 0;
             right: 0;
             z-index: 1000;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+            min-height: 140px;
         }
 
         .mobile-quick-actions {
@@ -541,6 +542,269 @@
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+        }
+
+        /* Photo Upload Styles */
+        .photo-upload-btn {
+            width: 44px;
+            height: 44px;
+            background: #38B2AC;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            touch-action: manipulation;
+            box-shadow: 0 2px 8px rgba(56, 178, 172, 0.4);
+            margin-right: 0.5rem;
+        }
+
+        .photo-upload-btn:active {
+            transform: scale(0.9);
+            background: #319795;
+        }
+
+        .photo-upload-input {
+            display: none;
+        }
+
+        .photo-preview-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .photo-preview {
+            max-width: 90%;
+            max-height: 60%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .photo-preview-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .photo-action-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .photo-action-btn.analyze {
+            background: #E85A4F;
+            color: white;
+            box-shadow: 0 4px 16px rgba(232, 90, 79, 0.4);
+        }
+
+        .photo-action-btn.cancel {
+            background: #4A5568;
+            color: white;
+        }
+
+        .photo-action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .analysis-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 31, 46, 0.95);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #4A5568;
+            border-top: 4px solid #E85A4F;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #E2E8F0;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-subtitle {
+            color: #A0AEC0;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .rating-plate-info {
+            background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%);
+            border: 2px solid #E85A4F;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 24px rgba(232, 90, 79, 0.2);
+        }
+
+        .rating-plate-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #4A5568;
+        }
+
+        .rating-plate-icon {
+            width: 48px;
+            height: 48px;
+            background: #E85A4F;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .rating-plate-title {
+            color: #E85A4F;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .rating-plate-subtitle {
+            color: #A0AEC0;
+            font-size: 0.85rem;
+        }
+
+        .info-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-section-title {
+            color: #E85A4F;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .info-item {
+            background: rgba(74, 85, 104, 0.3);
+            padding: 0.8rem;
+            border-radius: 8px;
+            border-left: 3px solid #E85A4F;
+        }
+
+        .info-item-label {
+            color: #A0AEC0;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-item-value {
+            color: #E2E8F0;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .warranty-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .warranty-active {
+            background: linear-gradient(135deg, #48BB78, #38A169);
+            color: white;
+        }
+
+        .warranty-expired {
+            background: linear-gradient(135deg, #F56565, #E53E3E);
+            color: white;
+        }
+
+        .warranty-expiring {
+            background: linear-gradient(135deg, #ED8936, #DD6B20);
+            color: white;
+        }
+
+        .capacitor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .capacitor-item {
+            background: rgba(56, 178, 172, 0.1);
+            border: 1px solid #38B2AC;
+            border-radius: 8px;
+            padding: 0.6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .capacitor-component {
+            color: #38B2AC;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .capacitor-specs {
+            color: #E2E8F0;
+            font-size: 0.8rem;
         }
 
         .mobile-typing {
@@ -666,35 +930,10 @@
             background: #718096;
         }
 
-        /* Add safe area insets for mobile devices */
-        .mobile-input-container {
-            padding: 0.75rem;
-            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
-            background: #2D3748;
-            border-top: 1px solid #4A5568;
-            position: fixed;
-            bottom: 80px;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
-            min-height: 140px;
-        }
-
-        /* Adjust body for better mobile support */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #1A1F2E;
-            min-height: 100vh;
-            color: #E2E8F0;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            margin: 0;
-            padding: 0;
-        }
         /* Enhanced glow effects for interactive elements */
         .mobile-send-btn:hover,
-        .mobile-fab:hover {
+        .mobile-fab:hover,
+        .photo-upload-btn:hover {
             box-shadow: 0 4px 16px rgba(232, 90, 79, 0.6);
         }
 
@@ -730,6 +969,11 @@
             background: linear-gradient(180deg, rgba(26, 31, 46, 0.98) 0%, rgba(26, 31, 46, 0.95) 100%);
             border-bottom: 1px solid #E85A4F;
         }
+
+        .analysis-text-result {
+            color: #E2E8F0;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -759,6 +1003,26 @@
         </div>
     </div>
 
+    <!-- Photo Preview Overlay -->
+    <div class="photo-preview-container hidden" id="photoPreviewContainer">
+        <img id="photoPreview" class="photo-preview" alt="Rating plate photo" />
+        <div class="photo-preview-actions">
+            <button class="photo-action-btn analyze" onclick="analyzeRatingPlate()">
+                🔍 Analyze Rating Plate
+            </button>
+            <button class="photo-action-btn cancel" onclick="cancelPhotoPreview()">
+                ❌ Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- Analysis Loading Overlay -->
+    <div class="analysis-loading hidden" id="analysisLoading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Analyzing Rating Plate...</div>
+        <div class="loading-subtitle">Reading text and looking up equipment data</div>
+    </div>
+
     <!-- Main App Content (hidden initially) -->
     <div class="main-app hidden" id="mainApp">
         <div class="mobile-header">
@@ -786,6 +1050,7 @@
                         <div class="mobile-message-content" id="mobileWelcomeMessage">
                             <strong>Hey! I'm HVAC Jack!</strong><br><br>
                             🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
+                            📸 <strong>NEW: Rating Plate Analysis!</strong> - Take a photo of your equipment's rating plate for detailed specs, warranty info, and capacitor requirements!<br><br>
                             💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
                             <strong>What's wrong with your heating or cooling?</strong>
                         </div>
@@ -817,9 +1082,14 @@
                         <button class="mobile-quick-btn" onclick="quickQuestion('Strange noises')">🔊 Noise</button>
                         <button class="mobile-quick-btn" onclick="quickQuestion('System short cycling')">🔄 Cycling</button>
                         <button class="mobile-quick-btn" onclick="quickQuestion('Frozen AC coil')">🧊 Frozen</button>
+                        <button class="mobile-quick-btn" onclick="triggerPhotoUpload()">📸 Photo</button>
                     </div>
                     
                     <div class="mobile-input-group">
+                        <button class="photo-upload-btn" onclick="triggerPhotoUpload()" title="Take photo of rating plate">
+                            📸
+                        </button>
+                        <input type="file" id="photoUpload" class="photo-upload-input" accept="image/*" capture="environment" onchange="handlePhotoUpload(event)" />
                         <textarea class="mobile-input-field" id="mobileInput" placeholder="Tell Jack what's wrong..." rows="1" onkeypress="handleMobileKeyPress(event)" oninput="adjustTextareaHeight(this)"></textarea>
                         <button class="mobile-send-btn" id="mobileSendBtn" onclick="sendMobileMessage()">
                             <span>➤</span>
@@ -936,7 +1206,531 @@
             window.mobileHvacJack = mobileHvacJack; // Make it globally accessible
         }
 
-        // Enhanced Mobile HVAC Jack with Content Filtering
+        // Photo processor instance
+        let photoProcessor;
+        
+        // Initialize photo processing when needed
+        function initPhotoProcessor() {
+            if (!photoProcessor) {
+                photoProcessor = new PhotoProcessor();
+            }
+            return photoProcessor;
+        }
+
+        // Photo upload and analysis functions
+        function triggerPhotoUpload() {
+            document.getElementById('photoUpload').click();
+        }
+
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const processor = initPhotoProcessor();
+            
+            // Validate file
+            const validation = processor.validateFile(file);
+            if (!validation.valid) {
+                alert('Invalid file: ' + validation.errors.join(', '));
+                event.target.value = '';
+                return;
+            }
+
+            // Process and show preview
+            processor.processImage(file)
+                .then(result => {
+                    const preview = document.getElementById('photoPreview');
+                    preview.src = result.dataUrl;
+                    
+                    // Store processed image data for analysis
+                    preview.dataset.processedImage = result.dataUrl;
+                    
+                    document.getElementById('photoPreviewContainer').classList.remove('hidden');
+                })
+                .catch(error => {
+                    console.error('Photo processing error:', error);
+                    alert('Failed to process image: ' + error.message);
+                    event.target.value = '';
+                });
+        }
+
+        function cancelPhotoPreview() {
+            document.getElementById('photoPreviewContainer').classList.add('hidden');
+            document.getElementById('photoUpload').value = '';
+        }
+
+        async function analyzeRatingPlate() {
+            // Hide preview and show loading
+            document.getElementById('photoPreviewContainer').classList.add('hidden');
+            document.getElementById('analysisLoading').classList.remove('hidden');
+
+            try {
+                const preview = document.getElementById('photoPreview');
+                const imageData = preview.dataset.processedImage || preview.src;
+                
+                if (!imageData) {
+                    throw new Error('No image data available');
+                }
+
+                // Get current mode and session info
+                const mode = window.mobileHvacJack ? window.mobileHvacJack.currentMode : 'homeowner';
+                const sessionId = window.mobileHvacJack ? window.mobileHvacJack.sessionId : 'unknown';
+
+                console.log('Sending photo to Claude API for analysis...');
+                
+                // Send to backend for Claude analysis
+                const analysisResult = await sendPhotoForAnalysis(imageData, mode, sessionId);
+                
+                // Hide loading
+                document.getElementById('analysisLoading').classList.add('hidden');
+
+                if (!analysisResult.success) {
+                    throw new Error(analysisResult.message || 'Analysis failed');
+                }
+
+                // Display results using Claude's analysis
+                displayClaudeAnalysisResult(analysisResult, mode);
+
+                // Track photo analysis
+                if (window.mobileHvacJack) {
+                    await window.mobileHvacJack.trackUsage('photo_analyzed', {
+                        analysisMethod: 'claude_api',
+                        mode: mode,
+                        success: true,
+                        responseTime: analysisResult.responseTime
+                    });
+                }
+
+            } catch (error) {
+                console.error('Photo analysis error:', error);
+                document.getElementById('analysisLoading').classList.add('hidden');
+                
+                // Show error message
+                addMobileMessage(`❌ **Photo Analysis Failed**\n\n${error.message}\n\nPlease try:\n• Taking a clearer photo\n• Better lighting\n• Getting closer to the rating plate\n• Ask me manually about your equipment`, 'ai');
+                
+                // Track failed analysis
+                if (window.mobileHvacJack) {
+                    await window.mobileHvacJack.trackUsage('photo_analysis_failed', {
+                        error: error.message,
+                        analysisMethod: 'claude_api'
+                    });
+                }
+            }
+
+            // Clear the file input
+            document.getElementById('photoUpload').value = '';
+        }
+
+        async function sendPhotoForAnalysis(imageData, mode, sessionId) {
+            const photoAnalysisEndpoint = '/.netlify/functions/analyze-photo';
+            
+            // Extract base64 data if it's a data URL
+            let base64Data = imageData;
+            if (imageData.startsWith('data:')) {
+                base64Data = imageData.split(',')[1];
+            }
+
+            const requestBody = {
+                imageData: base64Data,
+                mode: mode,
+                sessionId: sessionId
+            };
+
+            console.log('Sending to photo analysis endpoint:', photoAnalysisEndpoint);
+            
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout for photo analysis
+
+            try {
+                const response = await fetch(photoAnalysisEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Analysis server error: ${response.status} - ${errorText}`);
+                }
+
+                const result = await response.json();
+                console.log('Photo analysis result received:', {
+                    success: result.success,
+                    hasStructuredData: !!result.structuredData,
+                    responseTime: result.responseTime
+                });
+
+                return result;
+                
+            } catch (error) {
+                clearTimeout(timeoutId);
+                
+                if (error.name === 'AbortError') {
+                    throw new Error('Analysis timed out. Please try again with a clearer photo.');
+                }
+                
+                throw error;
+            }
+        }
+
+        function displayClaudeAnalysisResult(analysisResult, mode) {
+            // Add initial message
+            addMobileMessage('📸 **Rating Plate Analysis Complete!**\n\nClaude has analyzed your equipment photo:', 'ai');
+            
+            // Format and display the analysis
+            const formattedResult = AnalysisFormatter.formatAnalysisResult(analysisResult, mode);
+            
+            if (!formattedResult.success) {
+                addMobileMessage(`❌ **Analysis Error**\n\n${formattedResult.error}`, 'ai');
+                return;
+            }
+
+            // Add the analysis as a special message
+            const messagesContainer = document.getElementById('mobileMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'mobile-message ai';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'mobile-avatar ai';
+            avatar.textContent = '🔍';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'mobile-message-content';
+            messageContent.innerHTML = formattedResult.formatted;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(messageContent);
+            messagesContainer.appendChild(messageDiv);
+            
+            if (window.mobileHvacJack) {
+                window.mobileHvacJack.scrollToBottom();
+                
+                // Try to extract equipment info for context if structured data is available
+                if (formattedResult.structured && formattedResult.structured.equipment) {
+                    const equipment = formattedResult.structured.equipment;
+                    window.mobileHvacJack.systemContext.equipmentType = equipment.type?.toLowerCase() || null;
+                    window.mobileHvacJack.systemContext.brand = equipment.brand || null;
+                    window.mobileHvacJack.updateMobileMemoryDisplay();
+                }
+            }
+
+            // Follow up message
+            setTimeout(() => {
+                const followUpMessage = mode === 'technician' 
+                    ? '🔧 **Technical Analysis Complete!** I have all the specifications and capacitor requirements. What diagnostic issue are you working on?'
+                    : '✅ **Analysis Complete!** I now know all about your equipment. What problem are you experiencing with this unit?';
+                    
+                addMobileMessage(followUpMessage, 'ai');
+            }, 1000);
+        }
+
+        // Analysis result formatter for Claude API responses
+        class AnalysisFormatter {
+            /**
+             * Format Claude API response for display
+             */
+            static formatAnalysisResult(analysisData, mode = 'homeowner') {
+                if (!analysisData.success) {
+                    return {
+                        success: false,
+                        error: analysisData.message || 'Analysis failed',
+                        fallback: analysisData.fallback || false
+                    };
+                }
+
+                const { analysis, structuredData } = analysisData;
+
+                // If we have structured data, use it to create enhanced display
+                if (structuredData && mode === 'technician') {
+                    return {
+                        success: true,
+                        formatted: this.formatTechnicalAnalysis(structuredData, analysis),
+                        raw: analysis,
+                        structured: structuredData
+                    };
+                }
+
+                // For homeowner mode or when no structured data, format the text response
+                return {
+                    success: true,
+                    formatted: this.formatTextAnalysis(analysis, mode),
+                    raw: analysis
+                };
+            }
+
+            /**
+             * Format technical analysis with structured data
+             */
+            static formatTechnicalAnalysis(data, rawText) {
+                let formatted = `<div class="rating-plate-info">`;
+                
+                // Equipment header
+                if (data.equipment) {
+                    formatted += `
+                        <div class="rating-plate-header">
+                            <div class="rating-plate-icon">📋</div>
+                            <div>
+                                <div class="rating-plate-title">${data.equipment.brand || 'Unknown'} ${data.equipment.type || 'Equipment'}</div>
+                                <div class="rating-plate-subtitle">Model: ${data.equipment.model || 'N/A'} • Age: ${data.equipment.age || 'Unknown'}</div>
+                            </div>
+                        </div>`;
+                }
+
+                // Equipment specs
+                if (data.equipment) {
+                    formatted += `
+                        <div class="info-section">
+                            <div class="info-section-title">🔧 Equipment Specifications</div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-item-label">Model Number</div>
+                                    <div class="info-item-value">${data.equipment.model || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">Serial Number</div>
+                                    <div class="info-item-value">${data.equipment.serial || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">Capacity</div>
+                                    <div class="info-item-value">${data.equipment.capacity || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">Manufacturing Date</div>
+                                    <div class="info-item-value">${data.equipment.manufacturingDate || 'N/A'}</div>
+                                </div>
+                            </div>
+                        </div>`;
+                }
+
+                // Electrical specs
+                if (data.electrical) {
+                    formatted += `
+                        <div class="info-section">
+                            <div class="info-section-title">⚡ Electrical Specifications</div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-item-label">Voltage</div>
+                                    <div class="info-item-value">${data.electrical.voltage || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">FLA</div>
+                                    <div class="info-item-value">${data.electrical.fla || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">LRA</div>
+                                    <div class="info-item-value">${data.electrical.lra || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">MCA</div>
+                                    <div class="info-item-value">${data.electrical.mca || 'N/A'}</div>
+                                </div>
+                            </div>
+                        </div>`;
+                }
+
+                // Capacitors
+                if (data.capacitors && data.capacitors.length > 0) {
+                    formatted += `
+                        <div class="info-section">
+                            <div class="info-section-title">🔋 Capacitor Requirements</div>
+                            <div class="capacitor-list">`;
+                    
+                    data.capacitors.forEach(cap => {
+                        formatted += `
+                            <div class="capacitor-item">
+                                <div class="capacitor-component">${cap.component}</div>
+                                <div class="capacitor-specs">${cap.mfd} MFD, ${cap.voltage}V ${cap.type}</div>
+                            </div>`;
+                    });
+                    
+                    formatted += `</div></div>`;
+                }
+
+                // Warranty info
+                if (data.warranty) {
+                    const statusClass = data.warranty.status === 'active' ? 'warranty-active' : 
+                                       data.warranty.status === 'expiring' ? 'warranty-expiring' : 'warranty-expired';
+                    
+                    formatted += `
+                        <div class="info-section">
+                            <div class="info-section-title">🛡️ Warranty Status</div>
+                            <div class="warranty-status ${statusClass}">
+                                ${data.warranty.status === 'active' ? '✅ WARRANTY ACTIVE' : 
+                                  data.warranty.status === 'expiring' ? '⚠️ WARRANTY EXPIRING' : 
+                                  '❌ WARRANTY EXPIRED'}
+                            </div>
+                            <div style="margin-top: 0.5rem; color: #A0AEC0; font-size: 0.85rem;">
+                                ${data.warranty.coverage || 'Standard manufacturer warranty terms apply'}
+                            </div>
+                        </div>`;
+                }
+
+                // Technical notes
+                if (data.technicalNotes) {
+                    formatted += `
+                        <div class="info-section">
+                            <div class="info-section-title">📝 Technical Notes</div>
+                            <div style="color: #A0AEC0; font-size: 0.85rem; line-height: 1.4;">
+                                ${data.technicalNotes.replace(/\n/g, '<br>')}
+                            </div>
+                        </div>`;
+                }
+
+                formatted += `</div>`;
+                return formatted;
+            }
+
+            /**
+             * Format text analysis for display
+             */
+            static formatTextAnalysis(text, mode) {
+                // Convert markdown-style formatting to HTML
+                let formatted = text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\n\n/g, '<br><br>')
+                    .replace(/\n/g, '<br>');
+
+                // Wrap in appropriate container
+                return `<div class="analysis-text-result">${formatted}</div>`;
+            }
+        }
+
+        // Photo processor class for image handling
+        class PhotoProcessor {
+            constructor() {
+                this.maxFileSize = 10 * 1024 * 1024; // 10MB
+                this.maxDimension = 2048; // Max width/height
+                this.compressionQuality = 0.85;
+                this.allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            }
+
+            /**
+             * Validate uploaded file
+             */
+            validateFile(file) {
+                const errors = [];
+
+                if (!file) {
+                    errors.push('No file selected');
+                    return { valid: false, errors };
+                }
+
+                // Check file type
+                if (!this.allowedTypes.includes(file.type)) {
+                    errors.push('Please upload a JPEG, PNG, or WebP image');
+                }
+
+                // Check file size
+                if (file.size > this.maxFileSize) {
+                    errors.push(`File too large. Maximum size is ${this.maxFileSize / 1024 / 1024}MB`);
+                }
+
+                return {
+                    valid: errors.length === 0,
+                    errors
+                };
+            }
+
+            /**
+             * Process and optimize image for analysis
+             */
+            async processImage(file) {
+                return new Promise((resolve, reject) => {
+                    // Validate file first
+                    const validation = this.validateFile(file);
+                    if (!validation.valid) {
+                        reject(new Error(validation.errors.join(', ')));
+                        return;
+                    }
+
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const img = new Image();
+
+                    img.onload = () => {
+                        try {
+                            // Calculate optimal dimensions
+                            const { width, height } = this.calculateOptimalSize(
+                                img.width, 
+                                img.height, 
+                                this.maxDimension
+                            );
+
+                            // Set canvas size
+                            canvas.width = width;
+                            canvas.height = height;
+
+                            // Draw and compress image
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            // Convert to base64 with compression
+                            const compressedDataUrl = canvas.toDataURL('image/jpeg', this.compressionQuality);
+                            
+                            console.log('Image processed:', {
+                                originalSize: `${img.width}x${img.height}`,
+                                processedSize: `${width}x${height}`,
+                                originalFileSize: `${(file.size / 1024).toFixed(1)}KB`,
+                                compressedSize: `${(compressedDataUrl.length * 0.75 / 1024).toFixed(1)}KB`
+                            });
+
+                            resolve({
+                                dataUrl: compressedDataUrl,
+                                width,
+                                height,
+                                originalWidth: img.width,
+                                originalHeight: img.height,
+                                compressionRatio: file.size / (compressedDataUrl.length * 0.75)
+                            });
+                        } catch (error) {
+                            reject(new Error('Failed to process image: ' + error.message));
+                        }
+                    };
+
+                    img.onerror = () => {
+                        reject(new Error('Failed to load image. Please try a different file.'));
+                    };
+
+                    // Read file as data URL
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        img.src = e.target.result;
+                    };
+                    reader.onerror = () => {
+                        reject(new Error('Failed to read file'));
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            /**
+             * Calculate optimal image size for analysis
+             */
+            calculateOptimalSize(originalWidth, originalHeight, maxDimension) {
+                // If image is already small enough, keep original size
+                if (originalWidth <= maxDimension && originalHeight <= maxDimension) {
+                    return { width: originalWidth, height: originalHeight };
+                }
+
+                // Calculate scaling factor
+                const scaleFactor = Math.min(
+                    maxDimension / originalWidth,
+                    maxDimension / originalHeight
+                );
+
+                return {
+                    width: Math.round(originalWidth * scaleFactor),
+                    height: Math.round(originalHeight * scaleFactor)
+                };
+            }
+        }
+
+        // Enhanced Mobile HVAC Jack with Content Filtering and Photo Analysis
         class SecureMobileHVACJack {
             constructor() {
                 this.diagnosticsRun = 0;
@@ -953,6 +1747,7 @@
                 this.apiEndpoint = '/.netlify/functions/chat';
                 this.healthEndpoint = '/.netlify/functions/health';
                 this.trackingEndpoint = '/.netlify/functions/track-usage';
+                this.photoAnalysisEndpoint = '/.netlify/functions/analyze-photo';
                 this.isConnected = false;
                 this.isProcessing = false;
                 this.connectionAttempts = 0;
@@ -968,11 +1763,11 @@
                 this.initializeContentFilters();
                 this.init();
                 
-                // NEW: Track session start immediately
+                // Track session start immediately
                 this.trackSessionStart();
             }
 
-            // NEW: Track session start method
+            // Track session start method
             async trackSessionStart() {
                 try {
                     await this.trackUsage('session_start', {
@@ -1003,7 +1798,8 @@
                     'leak', 'repair', 'maintenance', 'service', 'installation', 'replacement',
                     'troubleshoot', 'diagnose', 'problem', 'issue', 'malfunction', 'broken',
                     'not working', 'noise', 'smell', 'smoke', 'water', 'ice', 'frozen',
-                    'hot', 'cold', 'warm', 'cool', 'cycling', 'running', 'starting', 'system', 'unit'
+                    'hot', 'cold', 'warm', 'cool', 'cycling', 'running', 'starting', 'system', 'unit',
+                    'rating plate', 'model number', 'serial number', 'warranty', 'photo', 'picture', 'analyze'
                 ];
 
                 // Prohibited content patterns
@@ -1704,7 +2500,7 @@ Current readings and observations?`,
                     general: `**Tech diagnostic mode ${contextInfo}**
 
 **Need:**
-📋 Model/serial numbers
+🔋 Model/serial numbers
 📊 Current measurements
 🔧 Specific failure point
 ⚡ Test equipment available
@@ -1768,6 +2564,7 @@ What's your current diagnostic status?`
                         welcomeElement.innerHTML = `
                             <strong>Hey! I'm HVAC Jack!</strong><br><br>
                             🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
+                            📸 <strong>NEW: Rating Plate Analysis!</strong> - Take a photo of your equipment's rating plate for detailed specs, warranty info, and capacitor requirements!<br><br>
                             💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
                             <strong>What's wrong with your heating or cooling?</strong>
                         `;
@@ -1775,6 +2572,7 @@ What's your current diagnostic status?`
                         welcomeElement.innerHTML = `
                             <strong>HVAC Jack - Technician Mode</strong><br><br>
                             🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>
+                            📸 <strong>Rating Plate Analysis</strong> - Photo analysis provides exact capacitor specs, warranty status, and equipment details.<br><br>
                             💭 <strong>Conversation Memory</strong> - I'll build on our diagnostic history.<br><br>
                             <strong>What system are you diagnosing? Include model info and current readings.</strong>
                         `;
@@ -1944,8 +2742,8 @@ What's your current diagnostic status?`
                     <div class="mobile-avatar ai">🔧</div>
                     <div class="mobile-message-content" id="mobileWelcomeMessage">
                         ${window.mobileHvacJack.currentMode === 'homeowner' ? 
-                            '<strong>Hey! I\'m HVAC Jack!</strong><br><br>🏠 <strong>Homeowner Mode</strong> - I\'ll explain things simply and focus on safe DIY steps.<br><br>💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br><strong>What\'s wrong with your heating or cooling?</strong>' :
-                            '<strong>HVAC Jack - Technician Mode</strong><br><br>🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>💭 <strong>Conversation Memory</strong> - I\'ll build on our diagnostic history.<br><br><strong>What system are you diagnosing? Include model info and current readings.</strong>'
+                            '<strong>Hey! I\'m HVAC Jack!</strong><br><br>🏠 <strong>Homeowner Mode</strong> - I\'ll explain things simply and focus on safe DIY steps.<br><br>📸 <strong>NEW: Rating Plate Analysis!</strong> - Take a photo of your equipment\'s rating plate for detailed specs, warranty info, and capacitor requirements!<br><br>💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br><strong>What\'s wrong with your heating or cooling?</strong>' :
+                            '<strong>HVAC Jack - Technician Mode</strong><br><br>🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>📸 <strong>Rating Plate Analysis</strong> - Photo analysis provides exact capacitor specs, warranty status, and equipment details.<br><br>💭 <strong>Conversation Memory</strong> - I\'ll build on our diagnostic history.<br><br><strong>What system are you diagnosing? Include model info and current readings.</strong>'
                         }
                     </div>
                 </div>
