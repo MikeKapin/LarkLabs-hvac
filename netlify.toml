@@ -14,7 +14,7 @@
 
 [[redirects]]
   from = "/"
-  to = "/index.html"
+  to = "/HVAC_Jack.html"
   status = 200
 
 [dev]
