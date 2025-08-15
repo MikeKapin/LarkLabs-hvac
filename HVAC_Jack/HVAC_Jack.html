@@ -1952,11 +1952,19 @@
                 return identifiers;
             }
 
-            // Enhanced manual search functionality using the same backend as photo analysis
+            // Fixed manual search functionality with proper error handling
             async searchForManuals(identifiers, input) {
+                let searchAttempted = false;
+                
                 try {
                     console.log('Manual search triggered - using chat endpoint for web search');
                     console.log('Identifiers found:', identifiers);
+
+                    if (searchAttempted) {
+                        console.warn('Manual search already attempted, preventing infinite loop');
+                        return this.generateOfflineManualResponse(identifiers, input);
+                    }
+                    searchAttempted = true;
 
                     // Show loading message
                     this.showManualSearchLoading();
@@ -1969,41 +1977,56 @@
                         mode: this.currentMode,
                         conversationHistory: [], // Fresh context for manual search
                         systemContext: {
-                            equipmentType: 'generator',
+                            equipmentType: identifiers.brands.includes('generac') || identifiers.brands.includes('kohler') ? 'generator' : 'hvac',
                             brand: identifiers.brands[0] || null,
                             model: identifiers.models[0] || null,
-                            isManualSearch: true
+                            isManualSearch: true,
+                            searchType: 'web_manual_search'
                         },
                         sessionId: this.sessionId
                     };
 
                     console.log('Sending manual search to chat endpoint:', this.apiEndpoint);
-                    console.log('Search query:', searchQuery);
+                    console.log('Search query:', searchQuery.substring(0, 100) + '...');
 
                     const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 30000);
+                    const timeoutId = setTimeout(() => {
+                        console.warn('Manual search timed out after 30 seconds');
+                        controller.abort();
+                    }, 30000);
 
-                    const response = await fetch(this.apiEndpoint, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(requestBody),
-                        signal: controller.signal
-                    });
+                    let response;
+                    try {
+                        response = await fetch(this.apiEndpoint, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify(requestBody),
+                            signal: controller.signal
+                        });
+                    } catch (fetchError) {
+                        clearTimeout(timeoutId);
+                        throw new Error(`Network request failed: ${fetchError.message}`);
+                    }
 
                     clearTimeout(timeoutId);
 
                     if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Chat endpoint error: ${response.status} - ${errorText}`);
+                        const errorText = await response.text().catch(() => 'Unknown error');
+                        throw new Error(`HTTP ${response.status}: ${errorText.substring(0, 200)}`);
                     }
 
-                    const result = await response.json();
+                    let result;
+                    try {
+                        result = await response.json();
+                    } catch (parseError) {
+                        throw new Error(`Invalid JSON response: ${parseError.message}`);
+                    }
                     
                     // Remove loading indicator
-                    const loading = document.getElementById('manual-search-loading');
-                    if (loading) loading.remove();
+                    this.removeManualSearchLoading();
                     
                     console.log('Manual search response received from chat endpoint');
                     
@@ -2013,36 +2036,47 @@
                         models: identifiers.models,
                         usedChatEndpoint: true,
                         responseLength: result.response?.length || 0
-                    });
+                    }).catch(trackError => console.warn('Tracking failed:', trackError));
 
                     // Display the result from Claude with web search
-                    if (result.response) {
+                    if (result.response && result.response.trim()) {
                         this.addMobileMessage(result.response, 'ai');
+                        return result.response;
                     } else {
-                        throw new Error('No response received from chat endpoint');
+                        throw new Error('Empty response received from chat endpoint');
                     }
-                    
-                    return result.response;
 
                 } catch (error) {
-                    console.error('Manual search error (will try offline):', error);
+                    console.error('Manual search error (using offline fallback):', error);
                     
                     // Remove loading indicator
-                    const loading = document.getElementById('manual-search-loading');
-                    if (loading) loading.remove();
+                    this.removeManualSearchLoading();
                     
-                    await this.trackUsage('manual_search_failed', {
-                        error: error.message,
+                    // Track failure but don't let tracking errors break the flow
+                    this.trackUsage('manual_search_failed', {
+                        error: error.message.substring(0, 100),
                         brands: identifiers.brands,
                         models: identifiers.models,
                         endpoint: 'chat',
                         fallbackUsed: true
-                    });
+                    }).catch(trackError => console.warn('Error tracking failed:', trackError));
 
                     // Use offline fallback
                     const offlineResponse = this.generateOfflineManualResponse(identifiers, input);
                     this.addMobileMessage(offlineResponse, 'ai');
                     return offlineResponse;
+                }
+            }
+
+            // Helper method to safely remove loading indicator
+            removeManualSearchLoading() {
+                try {
+                    const loading = document.getElementById('manual-search-loading');
+                    if (loading && loading.parentNode) {
+                        loading.parentNode.removeChild(loading);
+                    }
+                } catch (error) {
+                    console.warn('Failed to remove loading indicator:', error);
                 }
             }
 
@@ -2625,46 +2659,57 @@
                 text.textContent = message;
             }
 
-            // Simplified processUserInput method - no secondary validation
+            // Robust processUserInput method with comprehensive error handling
             async processUserInput(input) {
-                if (this.isProcessing) return;
-
-                // Basic validation only - length, rate limiting, empty check
-                if (input.length > this.maxMessageLength) {
-                    const errorResponse = `⚠️ **Message Too Long**\n\nPlease keep your questions shorter (${input.length}/${this.maxMessageLength} characters).`;
-                    this.addMobileMessage(errorResponse, 'ai');
-                    return { text: errorResponse, isError: true };
+                if (this.isProcessing) {
+                    console.warn('Already processing input, ignoring duplicate request');
+                    return { text: "Please wait for the current request to complete.", isError: true };
                 }
 
-                if (!this.checkRateLimit()) {
-                    const errorResponse = "⏳ **Slow Down!**\n\nToo many messages. Please wait a moment before sending another question.";
-                    this.addMobileMessage(errorResponse, 'ai');
-                    return { text: errorResponse, isError: true };
-                }
-
-                if (input.trim().length < 3) {
-                    const errorResponse = "🤔 **Need More Details**\n\nPlease ask a specific question about your HVAC system, generator, or gas appliance.";
-                    this.addMobileMessage(errorResponse, 'ai');
-                    return { text: errorResponse, isError: true };
-                }
-
+                // Set processing flag immediately to prevent race conditions
                 this.isProcessing = true;
-                const sanitizedInput = this.sanitizeInput(input);
+                let processingStarted = true;
 
-                await this.trackUsage('message_sent', {
-                    inputLength: sanitizedInput.length,
-                    mode: this.currentMode,
-                    messageCount: this.conversationHistory.length,
-                    message: sanitizedInput.substring(0, 100)
-                });
-
-                this.showMobileTyping();
-                this.addToConversation('user', sanitizedInput);
-                this.extractSystemContext(sanitizedInput);
-                
-                const startTime = Date.now();
-                
                 try {
+                    // Basic validation only - length, rate limiting, empty check
+                    if (input.length > this.maxMessageLength) {
+                        const errorResponse = `⚠️ **Message Too Long**\n\nPlease keep your questions shorter (${input.length}/${this.maxMessageLength} characters).`;
+                        this.addMobileMessage(errorResponse, 'ai');
+                        return { text: errorResponse, isError: true };
+                    }
+
+                    if (!this.checkRateLimit()) {
+                        const errorResponse = "⏳ **Slow Down!**\n\nToo many messages. Please wait a moment before sending another question.";
+                        this.addMobileMessage(errorResponse, 'ai');
+                        return { text: errorResponse, isError: true };
+                    }
+
+                    if (input.trim().length < 3) {
+                        const errorResponse = "🤔 **Need More Details**\n\nPlease ask a specific question about your HVAC system, generator, or gas appliance.";
+                        this.addMobileMessage(errorResponse, 'ai');
+                        return { text: errorResponse, isError: true };
+                    }
+
+                    const sanitizedInput = this.sanitizeInput(input);
+
+                    // Track message being sent
+                    try {
+                        await this.trackUsage('message_sent', {
+                            inputLength: sanitizedInput.length,
+                            mode: this.currentMode,
+                            messageCount: this.conversationHistory.length,
+                            message: sanitizedInput.substring(0, 100)
+                        });
+                    } catch (trackError) {
+                        console.warn('Message tracking failed:', trackError);
+                    }
+
+                    this.showMobileTyping();
+                    this.addToConversation('user', sanitizedInput);
+                    this.extractSystemContext(sanitizedInput);
+                    
+                    const startTime = Date.now();
+                    
                     // Check if input contains equipment identifiers for manual search
                     const identifiers = this.detectEquipmentIdentifiers(sanitizedInput);
                     const shouldSearchManuals = identifiers.hasManualRequest || 
@@ -2682,35 +2727,57 @@
                         
                         this.hideMobileTyping();
                         
-                        // Perform manual search - displays results directly
-                        const searchResult = await this.searchForManuals(identifiers, sanitizedInput);
-                        
-                        // Add follow-up message
-                        const followUpMessage = this.generateManualSearchFollowUp(identifiers);
-                        this.addMobileMessage(followUpMessage, 'ai');
-                        
-                        this.addToConversation('assistant', `Manual search completed. ${followUpMessage}`);
-                        
-                        this.diagnosticsRun++;
-                        this.hapticFeedback('success');
-                        
-                        const responseTime = (Date.now() - startTime) / 1000;
-                        
-                        await this.trackUsage('response_received', {
-                            responseTime: responseTime,
-                            responseLength: followUpMessage.length,
-                            usingAI: this.isConnected,
-                            mode: this.currentMode,
-                            manualSearchPerformed: true
-                        });
-                        
-                        return { text: followUpMessage, isError: false, manualSearchPerformed: true };
+                        try {
+                            // Perform manual search - displays results directly
+                            const searchResult = await this.searchForManuals(identifiers, sanitizedInput);
+                            
+                            // Add follow-up message
+                            const followUpMessage = this.generateManualSearchFollowUp(identifiers);
+                            this.addMobileMessage(followUpMessage, 'ai');
+                            
+                            this.addToConversation('assistant', `Manual search completed. ${followUpMessage}`);
+                            
+                            this.diagnosticsRun++;
+                            this.hapticFeedback('success');
+                            
+                            const responseTime = (Date.now() - startTime) / 1000;
+                            
+                            try {
+                                await this.trackUsage('response_received', {
+                                    responseTime: responseTime,
+                                    responseLength: followUpMessage.length,
+                                    usingAI: this.isConnected,
+                                    mode: this.currentMode,
+                                    manualSearchPerformed: true
+                                });
+                            } catch (trackError) {
+                                console.warn('Response tracking failed:', trackError);
+                            }
+                            
+                            return { text: followUpMessage, isError: false, manualSearchPerformed: true };
+                            
+                        } catch (searchError) {
+                            console.error('Manual search failed completely:', searchError);
+                            
+                            // Fall back to regular processing if manual search fails
+                            if (this.isConnected) {
+                                response = await this.sendToBackend(sanitizedInput);
+                            } else {
+                                response = await this.processWithFallbackKnowledge(sanitizedInput);
+                            }
+                        }
                         
                     } else {
-                        // Regular processing
-                        if (this.isConnected) {
-                            response = await this.sendToBackend(sanitizedInput);
-                        } else {
+                        // Regular processing path
+                        try {
+                            if (this.isConnected) {
+                                response = await this.sendToBackend(sanitizedInput);
+                            } else {
+                                response = await this.processWithFallbackKnowledge(sanitizedInput);
+                            }
+                        } catch (backendError) {
+                            console.error('Backend processing failed:', backendError);
+                            // Use fallback knowledge as last resort
                             response = await this.processWithFallbackKnowledge(sanitizedInput);
                         }
                         
@@ -2721,40 +2788,59 @@
                         this.diagnosticsRun++;
                         this.hapticFeedback('success');
                         
-                        await this.trackUsage('response_received', {
-                            responseTime: responseTime,
-                            responseLength: response.length,
-                            usingAI: this.isConnected,
-                            mode: this.currentMode,
-                            manualSearchPerformed: false
-                        });
+                        try {
+                            await this.trackUsage('response_received', {
+                                responseTime: responseTime,
+                                responseLength: response.length,
+                                usingAI: this.isConnected,
+                                mode: this.currentMode,
+                                manualSearchPerformed: false
+                            });
+                        } catch (trackError) {
+                            console.warn('Response tracking failed:', trackError);
+                        }
                         
                         return { text: response, isError: false, manualSearchPerformed: false };
                     }
                     
                 } catch (error) {
-                    console.error('Processing error:', error);
+                    console.error('Critical processing error:', error);
                     this.hideMobileTyping();
                     this.hapticFeedback('heavy');
                     
-                    const responseTime = (Date.now() - startTime) / 1000;
+                    const responseTime = processingStarted ? (Date.now() - Date.now()) / 1000 : 0;
                     
-                    await this.trackUsage('processing_error', {
-                        error: error.message,
-                        responseTime: responseTime,
-                        usingAI: this.isConnected
-                    });
-                    
-                    if (this.isConnected) {
-                        this.isConnected = false;
-                        this.updateMobileStatus('error', 'Connection lost');
-                        setTimeout(() => this.checkBackendConnection(), 1000);
+                    try {
+                        await this.trackUsage('processing_error', {
+                            error: error.message.substring(0, 200),
+                            responseTime: responseTime,
+                            usingAI: this.isConnected
+                        });
+                    } catch (trackError) {
+                        console.warn('Error tracking failed:', trackError);
                     }
                     
-                    const fallback = await this.processWithFallbackKnowledge(sanitizedInput);
-                    this.addToConversation('assistant', fallback + '\n\n*Note: Using fallback mode due to connection issue.*');
+                    // Connection recovery logic
+                    if (this.isConnected && error.message.includes('fetch')) {
+                        this.isConnected = false;
+                        this.updateMobileStatus('error', 'Connection lost');
+                        setTimeout(() => this.checkBackendConnection(), 2000);
+                    }
+                    
+                    // Generate safe fallback response
+                    let fallback;
+                    try {
+                        fallback = await this.processWithFallbackKnowledge(input);
+                    } catch (fallbackError) {
+                        console.error('Even fallback failed:', fallbackError);
+                        fallback = "I'm having technical difficulties. Please try asking your question again, or check your network connection.";
+                    }
+                    
+                    this.addToConversation('assistant', fallback + '\n\n*Note: Using offline mode due to technical issue.*');
                     return { text: fallback, isError: false };
+                    
                 } finally {
+                    // Always reset processing flag
                     this.isProcessing = false;
                 }
             }
@@ -2771,6 +2857,7 @@
                 }
             }
 
+            // Robust backend communication with comprehensive error handling
             async sendToBackend(input) {
                 const requestBody = {
                     message: input,
@@ -2780,19 +2867,20 @@
                     sessionId: this.sessionId
                 };
 
-                console.log('Sending to backend:', this.apiEndpoint, {
-                    ...requestBody,
-                    message: input.substring(0, 50) + '...'
-                });
+                console.log('Sending to backend:', this.apiEndpoint);
                 
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000);
+                const timeoutId = setTimeout(() => {
+                    console.warn('Backend request timed out');
+                    controller.abort();
+                }, 30000);
                 
                 try {
                     const response = await fetch(this.apiEndpoint, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                         },
                         body: JSON.stringify(requestBody),
                         signal: controller.signal
@@ -2801,11 +2889,21 @@
                     clearTimeout(timeoutId);
 
                     if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Backend error: ${response.status} ${response.statusText} - ${errorText}`);
+                        let errorText;
+                        try {
+                            errorText = await response.text();
+                        } catch (textError) {
+                            errorText = `HTTP ${response.status}`;
+                        }
+                        throw new Error(`Backend error: ${response.status} ${response.statusText} - ${errorText.substring(0, 200)}`);
                     }
 
-                    const data = await response.json();
+                    let data;
+                    try {
+                        data = await response.json();
+                    } catch (parseError) {
+                        throw new Error(`Invalid JSON response from backend: ${parseError.message}`);
+                    }
                     
                     console.log('Backend response received:', {
                         responseLength: data.response?.length || 0,
@@ -2818,9 +2916,19 @@
                         console.warn('Server returned fallback response');
                     }
                     
-                    return data.response || data.message || 'Sorry, I had trouble processing that.';
+                    const responseText = data.response || data.message;
+                    if (!responseText || !responseText.trim()) {
+                        throw new Error('Empty response received from backend');
+                    }
+                    
+                    return responseText;
                 } catch (error) {
                     clearTimeout(timeoutId);
+                    
+                    if (error.name === 'AbortError') {
+                        throw new Error('Backend request timed out after 30 seconds');
+                    }
+                    
                     throw error;
                 }
             }
@@ -3146,64 +3254,108 @@ What's your current diagnostic status?`
             }
         }
 
+        // Enhanced message sending with better error handling and iframe prevention
         async function sendMobileMessage() {
-            if (!window.mobileHvacJack) return;
+            if (!window.mobileHvacJack) {
+                console.error('HVAC Jack not initialized');
+                return;
+            }
             
             const input = document.getElementById('mobileInput');
+            if (!input) {
+                console.error('Input element not found');
+                return;
+            }
+            
             const message = input.value.trim();
             
             if (!message || window.mobileHvacJack.isProcessing) return;
 
+            // Prevent potential iframe navigation issues by sanitizing input
+            const sanitizedMessage = message.replace(/javascript:/gi, '').replace(/data:/gi, '');
+
             window.mobileHvacJack.hapticFeedback('light');
-            addMobileMessage(message, 'user');
+            addMobileMessage(sanitizedMessage, 'user');
             input.value = '';
             input.style.height = 'auto';
 
             try {
-                const response = await window.mobileHvacJack.processUserInput(message);
+                const response = await window.mobileHvacJack.processUserInput(sanitizedMessage);
+                
                 // Manual search handles its own messaging, only add for non-manual-search responses
-                if (!response.manualSearchPerformed) {
+                if (!response.manualSearchPerformed && !response.isError) {
                     addMobileMessage(response.text, 'ai');
+                } else if (response.isError) {
+                    // Error messages are already added by processUserInput
+                    console.warn('Input validation error:', response.text);
                 }
+                
             } catch (error) {
-                addMobileMessage('❌ Sorry! Something went wrong. Try again?', 'ai');
+                console.error('Critical error in sendMobileMessage:', error);
+                addMobileMessage('❌ Sorry! Something went wrong. Please try again or refresh the page.', 'ai');
                 window.mobileHvacJack.hapticFeedback('heavy');
+                
+                // Reset processing state if it gets stuck
+                if (window.mobileHvacJack.isProcessing) {
+                    window.mobileHvacJack.isProcessing = false;
+                }
             }
         }
 
+        // Enhanced message display with better error handling
         function addMobileMessage(content, sender) {
-            const messagesContainer = document.getElementById('mobileMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `mobile-message ${sender}`;
-            
-            const avatar = document.createElement('div');
-            avatar.className = `mobile-avatar ${sender}`;
-            avatar.textContent = sender === 'user' ? '👤' : '🔧';
-            
-            const messageContent = document.createElement('div');
-            messageContent.className = 'mobile-message-content';
-            
-            if (sender === 'ai') {
-                let formattedContent = content
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\n\n/g, '<br><br>')
-                    .replace(/\n/g, '<br>');
-                messageContent.innerHTML = formattedContent;
-            } else {
-                messageContent.textContent = content;
+            if (!content || typeof content !== 'string') {
+                console.warn('Invalid message content:', content);
+                return;
             }
-            
-            if (sender === 'user') {
-                messageDiv.appendChild(messageContent);
-                messageDiv.appendChild(avatar);
-            } else {
-                messageDiv.appendChild(avatar);
-                messageDiv.appendChild(messageContent);
-            }
-            
-            messagesContainer.appendChild(messageDiv);
-            if (window.mobileHvacJack) {
-                window.mobileHvacJack.scrollToBottom();
+
+            try {
+                const messagesContainer = document.getElementById('mobileMessages');
+                if (!messagesContainer) {
+                    console.error('Messages container not found');
+                    return;
+                }
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `mobile-message ${sender}`;
+                messageDiv.setAttribute('data-timestamp', Date.now());
+                
+                const avatar = document.createElement('div');
+                avatar.className = `mobile-avatar ${sender}`;
+                avatar.textContent = sender === 'user' ? '👤' : '🔧';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'mobile-message-content';
+                
+                if (sender === 'ai') {
+                    // Safely format AI messages, preventing any potential script injection
+                    let formattedContent = content
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\n\n/g, '<br><br>')
+                        .replace(/\n/g, '<br>')
+                        .replace(/javascript:/gi, '')
+                        .replace(/data:/gi, '');
+                    messageContent.innerHTML = formattedContent;
+                } else {
+                    // Use textContent for user messages to prevent any script execution
+                    messageContent.textContent = content;
+                }
+                
+                if (sender === 'user') {
+                    messageDiv.appendChild(messageContent);
+                    messageDiv.appendChild(avatar);
+                } else {
+                    messageDiv.appendChild(avatar);
+                    messageDiv.appendChild(messageContent);
+                }
+                
+                messagesContainer.appendChild(messageDiv);
+                
+                if (window.mobileHvacJack && typeof window.mobileHvacJack.scrollToBottom === 'function') {
+                    window.mobileHvacJack.scrollToBottom();
+                }
+            } catch (error) {
+                console.error('Error adding mobile message:', error);
             }
         }
 
