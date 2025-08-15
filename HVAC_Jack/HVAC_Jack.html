@@ -1771,7 +1771,7 @@
                 this.healthEndpoint = '/.netlify/functions/health';
                 this.trackingEndpoint = '/.netlify/functions/track-usage';
                 this.photoAnalysisEndpoint = '/.netlify/functions/analyze-photo';
-                this.manualSearchEndpoint = '/.netlify/functions/search-manuals';
+                // Note: Manual search now uses the main chat endpoint, not a separate endpoint
                 this.isConnected = false;
                 this.isProcessing = false;
                 this.connectionAttempts = 0;
@@ -1878,44 +1878,49 @@
 
             // Enhanced manual search functionality using the same backend as photo analysis
             async searchForManuals(identifiers, input) {
-                if (!this.isConnected) {
-                    return this.generateOfflineManualResponse(identifiers, input);
-                }
-
                 try {
-                    console.log('Searching for manuals with identifiers:', identifiers);
+                    console.log('Manual search triggered - using chat endpoint for web search');
+                    console.log('Identifiers found:', identifiers);
 
                     // Show loading message
                     this.showManualSearchLoading();
 
-                    // Use the same chat endpoint that has web search capabilities
+                    // Format the search as a natural language query for Claude with web search
                     const searchQuery = this.formatManualSearchQuery(identifiers, input);
                     
                     const requestBody = {
                         message: searchQuery,
                         mode: this.currentMode,
-                        conversationHistory: this.conversationHistory.slice(-5), // Include some context
+                        conversationHistory: [], // Fresh context for manual search
                         systemContext: {
-                            ...this.systemContext,
-                            isManualSearch: true,
-                            searchIdentifiers: identifiers
+                            equipmentType: 'generator',
+                            brand: identifiers.brands[0] || null,
+                            model: identifiers.models[0] || null,
+                            isManualSearch: true
                         },
-                        sessionId: this.sessionId,
-                        forceWebSearch: true // Flag to ensure web search is used
+                        sessionId: this.sessionId
                     };
 
                     console.log('Sending manual search to chat endpoint:', this.apiEndpoint);
+                    console.log('Search query:', searchQuery);
+
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 30000);
 
                     const response = await fetch(this.apiEndpoint, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(requestBody)
+                        body: JSON.stringify(requestBody),
+                        signal: controller.signal
                     });
 
+                    clearTimeout(timeoutId);
+
                     if (!response.ok) {
-                        throw new Error(`Manual search failed: ${response.status}`);
+                        const errorText = await response.text();
+                        throw new Error(`Chat endpoint error: ${response.status} - ${errorText}`);
                     }
 
                     const result = await response.json();
@@ -1924,20 +1929,27 @@
                     const loading = document.getElementById('manual-search-loading');
                     if (loading) loading.remove();
                     
+                    console.log('Manual search response received from chat endpoint');
+                    
                     // Track successful manual search
                     await this.trackUsage('manual_search_success', {
                         brands: identifiers.brands,
                         models: identifiers.models,
-                        usedChatEndpoint: true
+                        usedChatEndpoint: true,
+                        responseLength: result.response?.length || 0
                     });
 
-                    // Display the result from Claude/web search
-                    this.addMobileMessage(result.response || result.message, 'ai');
+                    // Display the result from Claude with web search
+                    if (result.response) {
+                        this.addMobileMessage(result.response, 'ai');
+                    } else {
+                        throw new Error('No response received from chat endpoint');
+                    }
                     
-                    return result.response || result.message;
+                    return result.response;
 
                 } catch (error) {
-                    console.error('Manual search error:', error);
+                    console.error('Manual search error (will try offline):', error);
                     
                     // Remove loading indicator
                     const loading = document.getElementById('manual-search-loading');
@@ -1947,16 +1959,20 @@
                         error: error.message,
                         brands: identifiers.brands,
                         models: identifiers.models,
-                        usedChatEndpoint: true
+                        endpoint: 'chat',
+                        fallbackUsed: true
                     });
 
-                    return this.generateOfflineManualResponse(identifiers, input);
+                    // Use offline fallback
+                    const offlineResponse = this.generateOfflineManualResponse(identifiers, input);
+                    this.addMobileMessage(offlineResponse, 'ai');
+                    return offlineResponse;
                 }
             }
 
-            // Format the manual search as a natural language query for Claude
+            // Format the manual search as a natural language query for Claude with web search
             formatManualSearchQuery(identifiers, originalInput) {
-                let query = "Please search the web for service manuals, installation guides, and diagnostic information for ";
+                let query = "Please search the web to find official service manuals, installation guides, and technical documentation for ";
                 
                 if (identifiers.brands.length > 0 && identifiers.models.length > 0) {
                     query += `${identifiers.brands[0]} model ${identifiers.models[0]}`;
@@ -1969,31 +1985,25 @@
                 }
                 
                 if (identifiers.serials.length > 0) {
-                    query += ` (serial: ${identifiers.serials[0]})`;
+                    query += ` (serial number: ${identifiers.serials[0]})`;
                 }
                 
-                // Add specific document types requested
-                if (/\bmanual\b/i.test(originalInput)) {
-                    query += ". Focus on service manuals";
-                }
-                if (/\bwiring\b/i.test(originalInput)) {
-                    query += " and wiring diagrams";
-                }
-                if (/\bdiagnostic\b/i.test(originalInput)) {
-                    query += " and diagnostic procedures";
-                }
-                if (/\bparts\b/i.test(originalInput)) {
-                    query += " and parts lists";
-                }
-                
-                query += ". Please provide direct links to official manufacturer documentation and reliable technical resources.";
-                
-                // Add context about the equipment type
-                if (identifiers.brands.includes('generac') || identifiers.brands.includes('kohler')) {
-                    query += " This is for a backup generator system.";
+                // Add equipment type context
+                if (identifiers.brands.includes('generac') || identifiers.brands.includes('kohler') || /generator/i.test(originalInput)) {
+                    query += ". This is a backup generator system";
                 } else if (/\b(furnace|boiler|heat pump|ac|air condition)\b/i.test(originalInput)) {
-                    query += " This is for HVAC equipment.";
+                    query += ". This is HVAC equipment";
                 }
+                
+                query += ". Please search for and provide direct links to:";
+                query += "\n• Official manufacturer service manuals";
+                query += "\n• Installation guides and specifications";
+                query += "\n• Wiring diagrams and schematics";
+                query += "\n• Parts lists and diagrams";
+                query += "\n• Troubleshooting guides";
+                query += "\n• Technical bulletins";
+                
+                query += "\n\nPlease focus on official manufacturer websites and authoritative technical resources. Provide working download links when available.";
                 
                 console.log('Formatted manual search query:', query);
                 return query;
