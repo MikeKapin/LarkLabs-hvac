@@ -1777,17 +1777,93 @@
                 this.connectionAttempts = 0;
                 this.maxConnectionAttempts = 3;
                 
-                // Content filtering settings
+                // Basic rate limiting only
                 this.maxMessageLength = 500;
                 this.rateLimitWindow = 60000;
                 this.maxMessagesPerWindow = 10;
                 this.messageTimestamps = [];
                 this.sessionId = this.generateSessionId();
                 
-                this.initializeContentFilters();
-                this.init();
+                // Equipment detection patterns
+                this.modelPatterns = [
+                    /\b[A-Z]{2,}\d{2,}[A-Z]?\d*[A-Z]?\b/g, // Standard model patterns like 58MXA080, TEM4A0B30H
+                    /\b\d{4,}[A-Z]{0,3}\d*\b/g, // Patterns like 0044563, 2000ABV123
+                    /\b[A-Z]+\d{2,}[A-Z]*\d*\b/g, // Flexible patterns
+                    /\bModel\s*#?\s*:?\s*([A-Z0-9\-]+)/gi, // "Model # 0044563"
+                    /\bSerial\s*#?\s*:?\s*([A-Z0-9\-]+)/gi, // "Serial# 4350808"
+                    /\b([A-Z]{2,}\d{4,}[A-Z]?)\b/g, // Brand + numbers
+                    /\b(#\s*\d{4,})\b/g // # followed by numbers
+                ];
+
+                // Brand detection patterns
+                this.brandPatterns = {
+                    'carrier': /\b(carrier|bryant)\b/i,
+                    'trane': /\b(trane|american standard)\b/i,
+                    'lennox': /\blennox\b/i,
+                    'york': /\byork\b/i,
+                    'rheem': /\b(rheem|ruud)\b/i,
+                    'goodman': /\b(goodman|amana|daikin)\b/i,
+                    'coleman': /\bcoleman\b/i,
+                    'heil': /\bheil\b/i,
+                    'payne': /\bpayne\b/i,
+                    'ducane': /\bducane\b/i,
+                    'generac': /\bgenerac\b/i,
+                    'kohler': /\bkohler\b/i,
+                    'briggs': /\bbriggs\b/i,
+                    'honda': /\bhonda\b/i,
+                    'champion': /\bchampion\b/i,
+                    'westinghouse': /\bwestinghouse\b/i
+                };
                 
+                this.init();
                 this.trackSessionStart();
+            }
+
+            checkRateLimit() {
+                const now = Date.now();
+                
+                this.messageTimestamps = this.messageTimestamps.filter(
+                    timestamp => now - timestamp < this.rateLimitWindow
+                );
+
+                if (this.messageTimestamps.length >= this.maxMessagesPerWindow) {
+                    return false;
+                }
+
+                this.messageTimestamps.push(now);
+                return true;
+            }
+
+            sanitizeInput(input) {
+                return input
+                    .replace(/[<>]/g, '')
+                    .replace(/javascript:/gi, '')
+                    .replace(/\s+/g, ' ')
+                    .trim()
+                    .substring(0, this.maxMessageLength);
+            }
+
+            async trackUsage(eventType, data = {}) {
+                try {
+                    await fetch(this.trackingEndpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            eventType,
+                            data: {
+                                ...data,
+                                mode: this.currentMode,
+                                conversationLength: this.conversationHistory.length
+                            },
+                            sessionId: this.sessionId,
+                            timestamp: new Date().toISOString()
+                        })
+                    });
+                } catch (error) {
+                    console.warn('Usage tracking failed:', error);
+                }
             }
 
             async trackSessionStart() {
@@ -2549,29 +2625,31 @@
                 text.textContent = message;
             }
 
-            // Enhanced processUserInput method with improved manual search
+            // Simplified processUserInput method - no secondary validation
             async processUserInput(input) {
                 if (this.isProcessing) return;
 
-                const validation = this.validateInput(input);
-                
-                if (!validation.isValid) {
-                    this.hapticFeedback('heavy');
-                    
-                    await this.trackUsage('input_rejected', {
-                        reason: validation.reason,
-                        category: validation.category,
-                        inputLength: input.length,
-                        originalMessage: input.substring(0, 50)
-                    });
+                // Basic validation only - length, rate limiting, empty check
+                if (input.length > this.maxMessageLength) {
+                    const errorResponse = `⚠️ **Message Too Long**\n\nPlease keep your questions shorter (${input.length}/${this.maxMessageLength} characters).`;
+                    this.addMobileMessage(errorResponse, 'ai');
+                    return { text: errorResponse, isError: true };
+                }
 
-                    const errorResponse = this.generateValidationErrorResponse(validation);
+                if (!this.checkRateLimit()) {
+                    const errorResponse = "⏳ **Slow Down!**\n\nToo many messages. Please wait a moment before sending another question.";
+                    this.addMobileMessage(errorResponse, 'ai');
+                    return { text: errorResponse, isError: true };
+                }
+
+                if (input.trim().length < 3) {
+                    const errorResponse = "🤔 **Need More Details**\n\nPlease ask a specific question.";
                     this.addMobileMessage(errorResponse, 'ai');
                     return { text: errorResponse, isError: true };
                 }
 
                 this.isProcessing = true;
-                const sanitizedInput = validation.sanitizedInput;
+                const sanitizedInput = this.sanitizeInput(input);
 
                 await this.trackUsage('message_sent', {
                     inputLength: sanitizedInput.length,
@@ -2598,52 +2676,61 @@
                     let manualSearchPerformed = false;
 
                     if (shouldSearchManuals) {
-                        // Use the same backend system as photo analysis for manual search
+                        // Manual search path
                         console.log('Manual search triggered for:', identifiers);
                         manualSearchPerformed = true;
                         
-                        // Hide typing indicator temporarily for manual search
                         this.hideMobileTyping();
                         
-                        // Perform manual search using chat endpoint (same as photo analysis)
-                        await this.searchForManuals(identifiers, sanitizedInput);
+                        // Perform manual search - displays results directly
+                        const searchResult = await this.searchForManuals(identifiers, sanitizedInput);
                         
-                        // Show typing again for follow-up response
-                        this.showMobileTyping();
+                        // Add follow-up message
+                        const followUpMessage = this.generateManualSearchFollowUp(identifiers);
+                        this.addMobileMessage(followUpMessage, 'ai');
                         
-                        // Get a follow-up response about the search
-                        const followUpQuery = `I've searched for manuals for ${identifiers.brands.join(', ')} ${identifiers.models.join(', ')}. What specific diagnostic issue are you working on with this equipment?`;
+                        this.addToConversation('assistant', `Manual search completed. ${followUpMessage}`);
                         
-                        if (this.isConnected) {
-                            response = await this.sendToBackend(followUpQuery);
-                        } else {
-                            response = this.generateManualSearchFollowUp(identifiers);
-                        }
+                        this.diagnosticsRun++;
+                        this.hapticFeedback('success');
+                        
+                        const responseTime = (Date.now() - startTime) / 1000;
+                        
+                        await this.trackUsage('response_received', {
+                            responseTime: responseTime,
+                            responseLength: followUpMessage.length,
+                            usingAI: this.isConnected,
+                            mode: this.currentMode,
+                            manualSearchPerformed: true
+                        });
+                        
+                        return { text: followUpMessage, isError: false };
+                        
                     } else {
-                        // Regular processing without manual search
+                        // Regular processing
                         if (this.isConnected) {
                             response = await this.sendToBackend(sanitizedInput);
                         } else {
                             response = await this.processWithFallbackKnowledge(sanitizedInput);
                         }
+                        
+                        const responseTime = (Date.now() - startTime) / 1000;
+                        
+                        this.addToConversation('assistant', response);
+                        this.hideMobileTyping();
+                        this.diagnosticsRun++;
+                        this.hapticFeedback('success');
+                        
+                        await this.trackUsage('response_received', {
+                            responseTime: responseTime,
+                            responseLength: response.length,
+                            usingAI: this.isConnected,
+                            mode: this.currentMode,
+                            manualSearchPerformed: false
+                        });
+                        
+                        return { text: response, isError: false };
                     }
-                    
-                    const responseTime = (Date.now() - startTime) / 1000;
-                    
-                    this.addToConversation('assistant', response);
-                    this.hideMobileTyping();
-                    this.diagnosticsRun++;
-                    this.hapticFeedback('success');
-                    
-                    await this.trackUsage('response_received', {
-                        responseTime: responseTime,
-                        responseLength: response.length,
-                        usingAI: this.isConnected,
-                        mode: this.currentMode,
-                        manualSearchPerformed: manualSearchPerformed
-                    });
-                    
-                    return { text: response, isError: false };
                     
                 } catch (error) {
                     console.error('Processing error:', error);
