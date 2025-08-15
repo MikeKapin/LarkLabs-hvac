@@ -1876,7 +1876,7 @@
                 return identifiers;
             }
 
-            // Enhanced manual search functionality
+            // Enhanced manual search functionality using the same backend as photo analysis
             async searchForManuals(identifiers, input) {
                 if (!this.isConnected) {
                     return this.generateOfflineManualResponse(identifiers, input);
@@ -1888,22 +1888,30 @@
                     // Show loading message
                     this.showManualSearchLoading();
 
-                    const searchData = {
-                        brands: identifiers.brands,
-                        models: identifiers.models,
-                        serials: identifiers.serials,
-                        hasManualRequest: identifiers.hasManualRequest,
-                        originalQuery: input,
+                    // Use the same chat endpoint that has web search capabilities
+                    const searchQuery = this.formatManualSearchQuery(identifiers, input);
+                    
+                    const requestBody = {
+                        message: searchQuery,
                         mode: this.currentMode,
-                        sessionId: this.sessionId
+                        conversationHistory: this.conversationHistory.slice(-5), // Include some context
+                        systemContext: {
+                            ...this.systemContext,
+                            isManualSearch: true,
+                            searchIdentifiers: identifiers
+                        },
+                        sessionId: this.sessionId,
+                        forceWebSearch: true // Flag to ensure web search is used
                     };
 
-                    const response = await fetch(this.manualSearchEndpoint, {
+                    console.log('Sending manual search to chat endpoint:', this.apiEndpoint);
+
+                    const response = await fetch(this.apiEndpoint, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(searchData)
+                        body: JSON.stringify(requestBody)
                     });
 
                     if (!response.ok) {
@@ -1912,26 +1920,83 @@
 
                     const result = await response.json();
                     
+                    // Remove loading indicator
+                    const loading = document.getElementById('manual-search-loading');
+                    if (loading) loading.remove();
+                    
                     // Track successful manual search
                     await this.trackUsage('manual_search_success', {
                         brands: identifiers.brands,
                         models: identifiers.models,
-                        foundResults: result.manuals?.length || 0
+                        usedChatEndpoint: true
                     });
 
-                    return this.formatManualSearchResults(result, identifiers);
+                    // Display the result from Claude/web search
+                    this.addMobileMessage(result.response || result.message, 'ai');
+                    
+                    return result.response || result.message;
 
                 } catch (error) {
                     console.error('Manual search error:', error);
                     
+                    // Remove loading indicator
+                    const loading = document.getElementById('manual-search-loading');
+                    if (loading) loading.remove();
+                    
                     await this.trackUsage('manual_search_failed', {
                         error: error.message,
                         brands: identifiers.brands,
-                        models: identifiers.models
+                        models: identifiers.models,
+                        usedChatEndpoint: true
                     });
 
                     return this.generateOfflineManualResponse(identifiers, input);
                 }
+            }
+
+            // Format the manual search as a natural language query for Claude
+            formatManualSearchQuery(identifiers, originalInput) {
+                let query = "Please search the web for service manuals, installation guides, and diagnostic information for ";
+                
+                if (identifiers.brands.length > 0 && identifiers.models.length > 0) {
+                    query += `${identifiers.brands[0]} model ${identifiers.models[0]}`;
+                } else if (identifiers.brands.length > 0) {
+                    query += `${identifiers.brands[0]} equipment`;
+                } else if (identifiers.models.length > 0) {
+                    query += `model ${identifiers.models[0]}`;
+                } else {
+                    query += "the equipment mentioned";
+                }
+                
+                if (identifiers.serials.length > 0) {
+                    query += ` (serial: ${identifiers.serials[0]})`;
+                }
+                
+                // Add specific document types requested
+                if (/\bmanual\b/i.test(originalInput)) {
+                    query += ". Focus on service manuals";
+                }
+                if (/\bwiring\b/i.test(originalInput)) {
+                    query += " and wiring diagrams";
+                }
+                if (/\bdiagnostic\b/i.test(originalInput)) {
+                    query += " and diagnostic procedures";
+                }
+                if (/\bparts\b/i.test(originalInput)) {
+                    query += " and parts lists";
+                }
+                
+                query += ". Please provide direct links to official manufacturer documentation and reliable technical resources.";
+                
+                // Add context about the equipment type
+                if (identifiers.brands.includes('generac') || identifiers.brands.includes('kohler')) {
+                    query += " This is for a backup generator system.";
+                } else if (/\b(furnace|boiler|heat pump|ac|air condition)\b/i.test(originalInput)) {
+                    query += " This is for HVAC equipment.";
+                }
+                
+                console.log('Formatted manual search query:', query);
+                return query;
             }
 
             showManualSearchLoading() {
@@ -2474,7 +2539,7 @@
                 text.textContent = message;
             }
 
-            // Enhanced processUserInput method with manual search capability
+            // Enhanced processUserInput method with improved manual search
             async processUserInput(input) {
                 if (this.isProcessing) return;
 
@@ -2523,15 +2588,26 @@
                     let manualSearchPerformed = false;
 
                     if (shouldSearchManuals) {
-                        // Perform manual search first
+                        // Use the same backend system as photo analysis for manual search
+                        console.log('Manual search triggered for:', identifiers);
                         manualSearchPerformed = true;
+                        
+                        // Hide typing indicator temporarily for manual search
+                        this.hideMobileTyping();
+                        
+                        // Perform manual search using chat endpoint (same as photo analysis)
                         await this.searchForManuals(identifiers, sanitizedInput);
                         
-                        // Then get regular response
+                        // Show typing again for follow-up response
+                        this.showMobileTyping();
+                        
+                        // Get a follow-up response about the search
+                        const followUpQuery = `I've searched for manuals for ${identifiers.brands.join(', ')} ${identifiers.models.join(', ')}. What specific diagnostic issue are you working on with this equipment?`;
+                        
                         if (this.isConnected) {
-                            response = await this.sendToBackend(sanitizedInput);
+                            response = await this.sendToBackend(followUpQuery);
                         } else {
-                            response = await this.processWithFallbackKnowledge(sanitizedInput);
+                            response = this.generateManualSearchFollowUp(identifiers);
                         }
                     } else {
                         // Regular processing without manual search
@@ -2583,6 +2659,18 @@
                     return { text: fallback, isError: false };
                 } finally {
                     this.isProcessing = false;
+                }
+            }
+
+            // Generate a follow-up response after manual search
+            generateManualSearchFollowUp(identifiers) {
+                const brandText = identifiers.brands.length > 0 ? identifiers.brands[0] : 'equipment';
+                const modelText = identifiers.models.length > 0 ? identifiers.models[0] : '';
+
+                if (this.currentMode === 'technician') {
+                    return `📚 **Manual search completed for ${brandText} ${modelText}**\n\nNow that you have the documentation, what specific diagnostic issue are you working on?\n\n**Common areas to check:**\n• Control board error codes\n• Electrical measurements\n• Gas pressure readings\n• Safety switch operations\n• Sensor calibrations\n\nWhat symptoms or fault codes are you seeing?`;
+                } else {
+                    return `📚 **Found manuals for your ${brandText} ${modelText}**\n\nWith the documentation above, I can help you with:\n\n**Safe troubleshooting steps**\n• Understanding error codes\n• Basic maintenance procedures\n• When to call for service\n• Safety precautions\n\nWhat specific problem are you experiencing with this unit?`;
                 }
             }
 
