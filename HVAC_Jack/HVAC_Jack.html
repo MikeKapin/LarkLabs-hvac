@@ -434,6 +434,100 @@
             border: 1px solid #4A5568;
         }
 
+        /* Manual Search Results Styling */
+        .manual-search-results {
+            background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%);
+            border: 2px solid #38B2AC;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 24px rgba(56, 178, 172, 0.3);
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #4A5568;
+        }
+
+        .search-icon {
+            width: 48px;
+            height: 48px;
+            background: #38B2AC;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .search-title {
+            color: #38B2AC;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .search-subtitle {
+            color: #A0AEC0;
+            font-size: 0.85rem;
+        }
+
+        .manual-link {
+            display: block;
+            background: rgba(56, 178, 172, 0.1);
+            border: 1px solid #38B2AC;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 0.8rem 0;
+            text-decoration: none;
+            color: #E2E8F0;
+            transition: all 0.3s;
+        }
+
+        .manual-link:hover {
+            background: rgba(56, 178, 172, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(56, 178, 172, 0.3);
+        }
+
+        .manual-title {
+            color: #38B2AC;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .manual-description {
+            color: #A0AEC0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .search-loading {
+            background: rgba(56, 178, 172, 0.1);
+            border: 1px solid #38B2AC;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            color: #38B2AC;
+        }
+
+        .search-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #4A5568;
+            border-top: 2px solid #38B2AC;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
         .mobile-input-container {
             padding: 0.75rem;
             background: #2D3748;
@@ -1051,6 +1145,7 @@
                             <strong>Hey! I'm HVAC Jack!</strong><br><br>
                             🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
                             📸 <strong>NEW: Rating Plate Analysis!</strong> - Take a photo of your equipment's rating plate for detailed specs, warranty info, and capacitor requirements!<br><br>
+                            🔍 <strong>Manual Search!</strong> - Give me a make/model/serial number and I'll find manuals and diagnostic data online!<br><br>
                             💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
                             <strong>What's wrong with your heating or cooling?</strong>
                         </div>
@@ -1082,6 +1177,7 @@
                         <button class="mobile-quick-btn" onclick="quickQuestion('Strange noises')">🔊 Noise</button>
                         <button class="mobile-quick-btn" onclick="quickQuestion('System short cycling')">🔄 Cycling</button>
                         <button class="mobile-quick-btn" onclick="quickQuestion('Frozen AC coil')">🧊 Frozen</button>
+                        <button class="mobile-quick-btn" onclick="quickQuestion('Find manual for my Carrier 58MXA')">📚 Manual</button>
                         <button class="mobile-quick-btn" onclick="triggerPhotoUpload()">📸 Photo</button>
                     </div>
                     
@@ -1129,29 +1225,23 @@
             const password = input.value.trim();
 
             if (password === BETA_PASSWORD) {
-                // Store session with expiration
                 const session = {
                     authenticated: true,
                     timestamp: Date.now()
                 };
                 localStorage.setItem(SESSION_KEY, JSON.stringify(session));
                 
-                // Hide password overlay and show main app
                 document.getElementById('passwordOverlay').classList.add('hidden');
                 document.getElementById('mainApp').classList.remove('hidden');
                 
-                // Initialize the main app
                 initializeMainApp();
                 
-                // Show success message
                 console.log('✅ Beta access granted - Welcome to HVAC Jack!');
             } else {
-                // Show error
                 errorDiv.classList.remove('hidden');
                 input.value = '';
                 input.focus();
                 
-                // Hide error after 3 seconds
                 setTimeout(() => {
                     errorDiv.classList.add('hidden');
                 }, 3000);
@@ -1166,24 +1256,20 @@
                     const timeElapsed = Date.now() - session.timestamp;
                     
                     if (session.authenticated && timeElapsed < SESSION_DURATION) {
-                        // Valid session - skip password
                         document.getElementById('passwordOverlay').classList.add('hidden');
                         document.getElementById('mainApp').classList.remove('hidden');
                         initializeMainApp();
                         return true;
                     } else {
-                        // Expired session
                         localStorage.removeItem(SESSION_KEY);
                     }
                 } catch (error) {
-                    // Invalid session data
                     localStorage.removeItem(SESSION_KEY);
                 }
             }
             return false;
         }
 
-        // Handle Enter key on password input
         document.addEventListener('DOMContentLoaded', function() {
             const passwordInput = document.getElementById('passwordInput');
             
@@ -1193,23 +1279,18 @@
                 }
             });
             
-            // Check for existing session on page load
             if (!checkExistingSession()) {
-                // Focus password input if no session
                 setTimeout(() => passwordInput.focus(), 100);
             }
         });
 
         function initializeMainApp() {
-            // Initialize the main HVAC Jack app
             const mobileHvacJack = new SecureMobileHVACJack();
-            window.mobileHvacJack = mobileHvacJack; // Make it globally accessible
+            window.mobileHvacJack = mobileHvacJack;
         }
 
-        // Photo processor instance
         let photoProcessor;
         
-        // Initialize photo processing when needed
         function initPhotoProcessor() {
             if (!photoProcessor) {
                 photoProcessor = new PhotoProcessor();
@@ -1217,7 +1298,6 @@
             return photoProcessor;
         }
 
-        // Photo upload and analysis functions
         function triggerPhotoUpload() {
             document.getElementById('photoUpload').click();
         }
@@ -1228,7 +1308,6 @@
 
             const processor = initPhotoProcessor();
             
-            // Validate file
             const validation = processor.validateFile(file);
             if (!validation.valid) {
                 alert('Invalid file: ' + validation.errors.join(', '));
@@ -1236,13 +1315,10 @@
                 return;
             }
 
-            // Process and show preview
             processor.processImage(file)
                 .then(result => {
                     const preview = document.getElementById('photoPreview');
                     preview.src = result.dataUrl;
-                    
-                    // Store processed image data for analysis
                     preview.dataset.processedImage = result.dataUrl;
                     
                     document.getElementById('photoPreviewContainer').classList.remove('hidden');
@@ -1260,7 +1336,6 @@
         }
 
         async function analyzeRatingPlate() {
-            // Hide preview and show loading
             document.getElementById('photoPreviewContainer').classList.add('hidden');
             document.getElementById('analysisLoading').classList.remove('hidden');
 
@@ -1272,26 +1347,21 @@
                     throw new Error('No image data available');
                 }
 
-                // Get current mode and session info
                 const mode = window.mobileHvacJack ? window.mobileHvacJack.currentMode : 'homeowner';
                 const sessionId = window.mobileHvacJack ? window.mobileHvacJack.sessionId : 'unknown';
 
                 console.log('Sending photo to Claude API for analysis...');
                 
-                // Send to backend for Claude analysis
                 const analysisResult = await sendPhotoForAnalysis(imageData, mode, sessionId);
                 
-                // Hide loading
                 document.getElementById('analysisLoading').classList.add('hidden');
 
                 if (!analysisResult.success) {
                     throw new Error(analysisResult.message || 'Analysis failed');
                 }
 
-                // Display results using Claude's analysis
                 displayClaudeAnalysisResult(analysisResult, mode);
 
-                // Track photo analysis
                 if (window.mobileHvacJack) {
                     await window.mobileHvacJack.trackUsage('photo_analyzed', {
                         analysisMethod: 'claude_api',
@@ -1305,10 +1375,8 @@
                 console.error('Photo analysis error:', error);
                 document.getElementById('analysisLoading').classList.add('hidden');
                 
-                // Show error message
                 addMobileMessage(`❌ **Photo Analysis Failed**\n\n${error.message}\n\nPlease try:\n• Taking a clearer photo\n• Better lighting\n• Getting closer to the rating plate\n• Ask me manually about your equipment`, 'ai');
                 
-                // Track failed analysis
                 if (window.mobileHvacJack) {
                     await window.mobileHvacJack.trackUsage('photo_analysis_failed', {
                         error: error.message,
@@ -1317,14 +1385,12 @@
                 }
             }
 
-            // Clear the file input
             document.getElementById('photoUpload').value = '';
         }
 
         async function sendPhotoForAnalysis(imageData, mode, sessionId) {
             const photoAnalysisEndpoint = '/.netlify/functions/analyze-photo';
             
-            // Extract base64 data if it's a data URL
             let base64Data = imageData;
             if (imageData.startsWith('data:')) {
                 base64Data = imageData.split(',')[1];
@@ -1339,7 +1405,7 @@
             console.log('Sending to photo analysis endpoint:', photoAnalysisEndpoint);
             
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout for photo analysis
+            const timeoutId = setTimeout(() => controller.abort(), 60000);
 
             try {
                 const response = await fetch(photoAnalysisEndpoint, {
@@ -1379,10 +1445,8 @@
         }
 
         function displayClaudeAnalysisResult(analysisResult, mode) {
-            // Add initial message
             addMobileMessage('📸 **Rating Plate Analysis Complete!**\n\nClaude has analyzed your equipment photo:', 'ai');
             
-            // Format and display the analysis
             const formattedResult = AnalysisFormatter.formatAnalysisResult(analysisResult, mode);
             
             if (!formattedResult.success) {
@@ -1390,7 +1454,6 @@
                 return;
             }
 
-            // Add the analysis as a special message
             const messagesContainer = document.getElementById('mobileMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'mobile-message ai';
@@ -1410,7 +1473,6 @@
             if (window.mobileHvacJack) {
                 window.mobileHvacJack.scrollToBottom();
                 
-                // Try to extract equipment info for context if structured data is available
                 if (formattedResult.structured && formattedResult.structured.equipment) {
                     const equipment = formattedResult.structured.equipment;
                     window.mobileHvacJack.systemContext.equipmentType = equipment.type?.toLowerCase() || null;
@@ -1419,7 +1481,6 @@
                 }
             }
 
-            // Follow up message
             setTimeout(() => {
                 const followUpMessage = mode === 'technician' 
                     ? '🔧 **Technical Analysis Complete!** I have all the specifications and capacitor requirements. What diagnostic issue are you working on?'
@@ -1429,11 +1490,7 @@
             }, 1000);
         }
 
-        // Analysis result formatter for Claude API responses
         class AnalysisFormatter {
-            /**
-             * Format Claude API response for display
-             */
             static formatAnalysisResult(analysisData, mode = 'homeowner') {
                 if (!analysisData.success) {
                     return {
@@ -1445,7 +1502,6 @@
 
                 const { analysis, structuredData } = analysisData;
 
-                // If we have structured data, use it to create enhanced display
                 if (structuredData && mode === 'technician') {
                     return {
                         success: true,
@@ -1455,7 +1511,6 @@
                     };
                 }
 
-                // For homeowner mode or when no structured data, format the text response
                 return {
                     success: true,
                     formatted: this.formatTextAnalysis(analysis, mode),
@@ -1463,13 +1518,9 @@
                 };
             }
 
-            /**
-             * Format technical analysis with structured data
-             */
             static formatTechnicalAnalysis(data, rawText) {
                 let formatted = `<div class="rating-plate-info">`;
                 
-                // Equipment header
                 if (data.equipment) {
                     formatted += `
                         <div class="rating-plate-header">
@@ -1481,7 +1532,6 @@
                         </div>`;
                 }
 
-                // Equipment specs
                 if (data.equipment) {
                     formatted += `
                         <div class="info-section">
@@ -1507,7 +1557,6 @@
                         </div>`;
                 }
 
-                // Electrical specs
                 if (data.electrical) {
                     formatted += `
                         <div class="info-section">
@@ -1533,7 +1582,6 @@
                         </div>`;
                 }
 
-                // Capacitors
                 if (data.capacitors && data.capacitors.length > 0) {
                     formatted += `
                         <div class="info-section">
@@ -1551,7 +1599,6 @@
                     formatted += `</div></div>`;
                 }
 
-                // Warranty info
                 if (data.warranty) {
                     const statusClass = data.warranty.status === 'active' ? 'warranty-active' : 
                                        data.warranty.status === 'expiring' ? 'warranty-expiring' : 'warranty-expired';
@@ -1570,7 +1617,6 @@
                         </div>`;
                 }
 
-                // Technical notes
                 if (data.technicalNotes) {
                     formatted += `
                         <div class="info-section">
@@ -1585,34 +1631,25 @@
                 return formatted;
             }
 
-            /**
-             * Format text analysis for display
-             */
             static formatTextAnalysis(text, mode) {
-                // Convert markdown-style formatting to HTML
                 let formatted = text
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     .replace(/\*(.*?)\*/g, '<em>$1</em>')
                     .replace(/\n\n/g, '<br><br>')
                     .replace(/\n/g, '<br>');
 
-                // Wrap in appropriate container
                 return `<div class="analysis-text-result">${formatted}</div>`;
             }
         }
 
-        // Photo processor class for image handling
         class PhotoProcessor {
             constructor() {
-                this.maxFileSize = 10 * 1024 * 1024; // 10MB
-                this.maxDimension = 2048; // Max width/height
+                this.maxFileSize = 10 * 1024 * 1024;
+                this.maxDimension = 2048;
                 this.compressionQuality = 0.85;
                 this.allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
             }
 
-            /**
-             * Validate uploaded file
-             */
             validateFile(file) {
                 const errors = [];
 
@@ -1621,12 +1658,10 @@
                     return { valid: false, errors };
                 }
 
-                // Check file type
                 if (!this.allowedTypes.includes(file.type)) {
                     errors.push('Please upload a JPEG, PNG, or WebP image');
                 }
 
-                // Check file size
                 if (file.size > this.maxFileSize) {
                     errors.push(`File too large. Maximum size is ${this.maxFileSize / 1024 / 1024}MB`);
                 }
@@ -1637,12 +1672,8 @@
                 };
             }
 
-            /**
-             * Process and optimize image for analysis
-             */
             async processImage(file) {
                 return new Promise((resolve, reject) => {
-                    // Validate file first
                     const validation = this.validateFile(file);
                     if (!validation.valid) {
                         reject(new Error(validation.errors.join(', ')));
@@ -1655,21 +1686,17 @@
 
                     img.onload = () => {
                         try {
-                            // Calculate optimal dimensions
                             const { width, height } = this.calculateOptimalSize(
                                 img.width, 
                                 img.height, 
                                 this.maxDimension
                             );
 
-                            // Set canvas size
                             canvas.width = width;
                             canvas.height = height;
 
-                            // Draw and compress image
                             ctx.drawImage(img, 0, 0, width, height);
 
-                            // Convert to base64 with compression
                             const compressedDataUrl = canvas.toDataURL('image/jpeg', this.compressionQuality);
                             
                             console.log('Image processed:', {
@@ -1696,7 +1723,6 @@
                         reject(new Error('Failed to load image. Please try a different file.'));
                     };
 
-                    // Read file as data URL
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         img.src = e.target.result;
@@ -1708,16 +1734,11 @@
                 });
             }
 
-            /**
-             * Calculate optimal image size for analysis
-             */
             calculateOptimalSize(originalWidth, originalHeight, maxDimension) {
-                // If image is already small enough, keep original size
                 if (originalWidth <= maxDimension && originalHeight <= maxDimension) {
                     return { width: originalWidth, height: originalHeight };
                 }
 
-                // Calculate scaling factor
                 const scaleFactor = Math.min(
                     maxDimension / originalWidth,
                     maxDimension / originalHeight
@@ -1730,7 +1751,7 @@
             }
         }
 
-        // Enhanced Mobile HVAC Jack with Content Filtering and Photo Analysis
+        // Enhanced Mobile HVAC Jack with Web Search for Manuals and Diagnostic Data
         class SecureMobileHVACJack {
             constructor() {
                 this.diagnosticsRun = 0;
@@ -1739,6 +1760,8 @@
                 this.systemContext = {
                     equipmentType: null,
                     brand: null,
+                    model: null,
+                    serial: null,
                     symptoms: [],
                     previousActions: [],
                     currentProblem: null
@@ -1748,6 +1771,7 @@
                 this.healthEndpoint = '/.netlify/functions/health';
                 this.trackingEndpoint = '/.netlify/functions/track-usage';
                 this.photoAnalysisEndpoint = '/.netlify/functions/analyze-photo';
+                this.manualSearchEndpoint = '/.netlify/functions/search-manuals';
                 this.isConnected = false;
                 this.isProcessing = false;
                 this.connectionAttempts = 0;
@@ -1755,7 +1779,7 @@
                 
                 // Content filtering settings
                 this.maxMessageLength = 500;
-                this.rateLimitWindow = 60000; // 1 minute
+                this.rateLimitWindow = 60000;
                 this.maxMessagesPerWindow = 10;
                 this.messageTimestamps = [];
                 this.sessionId = this.generateSessionId();
@@ -1763,11 +1787,9 @@
                 this.initializeContentFilters();
                 this.init();
                 
-                // Track session start immediately
                 this.trackSessionStart();
             }
 
-            // Track session start method
             async trackSessionStart() {
                 try {
                     await this.trackUsage('session_start', {
@@ -1782,7 +1804,7 @@
             }
 
             initializeContentFilters() {
-                // HVAC-related keywords (whitelist approach)
+                // Enhanced HVAC-related keywords including gas appliances and generators
                 this.hvacKeywords = [
                     'hvac', 'heating', 'cooling', 'furnace', 'air conditioner', 'ac', 'heat pump',
                     'thermostat', 'duct', 'filter', 'compressor', 'condenser', 'evaporator',
@@ -1799,34 +1821,326 @@
                     'troubleshoot', 'diagnose', 'problem', 'issue', 'malfunction', 'broken',
                     'not working', 'noise', 'smell', 'smoke', 'water', 'ice', 'frozen',
                     'hot', 'cold', 'warm', 'cool', 'cycling', 'running', 'starting', 'system', 'unit',
-                    'rating plate', 'model number', 'serial number', 'warranty', 'photo', 'picture', 'analyze'
+                    'rating plate', 'model number', 'serial number', 'warranty', 'photo', 'picture', 'analyze',
+                    // Gas appliances and generators
+                    'generator', 'standby generator', 'portable generator', 'whole house generator',
+                    'gas valve', 'gas line', 'natural gas', 'propane tank', 'gas meter',
+                    'gas water heater', 'gas range', 'gas fireplace', 'gas furnace',
+                    'gas dryer', 'gas grill', 'gas appliance', 'gas connection',
+                    'gas leak', 'gas detector', 'gas shut off', 'gas regulator',
+                    'kohler', 'generac', 'briggs', 'honda', 'champion', 'westinghouse',
+                    'duromax', 'predator', 'powerstroke', 'firman', 'wen', 'pulsar',
+                    'manual', 'service manual', 'installation manual', 'parts manual',
+                    'diagnostic', 'troubleshooting guide', 'wiring diagram', 'schematic'
                 ];
 
-                // Prohibited content patterns
+                // Model/Serial number patterns for equipment identification
+                this.modelPatterns = [
+                    /\b[A-Z]{2,}\d{2,}[A-Z]?\d*[A-Z]?\b/g, // Standard model patterns like 58MXA080, TEM4A0B30H
+                    /\b\d{4}[A-Z]{2,}\d+\b/g, // Patterns like 2000ABV123
+                    /\b[A-Z]+\d{2,}[A-Z]*\d*\b/g, // Flexible patterns
+                    /\bModel\s*:?\s*([A-Z0-9\-]+)/gi, // "Model: XYZ123"
+                    /\bSerial\s*:?\s*([A-Z0-9\-]+)/gi, // "Serial: ABC123"
+                    /\b([A-Z]{2,}\d{4,}[A-Z]?)\b/g // Brand + numbers
+                ];
+
+                // Brand detection patterns
+                this.brandPatterns = {
+                    'carrier': /\b(carrier|bryant)\b/i,
+                    'trane': /\b(trane|american standard)\b/i,
+                    'lennox': /\blennox\b/i,
+                    'york': /\byork\b/i,
+                    'rheem': /\b(rheem|ruud)\b/i,
+                    'goodman': /\b(goodman|amana|daikin)\b/i,
+                    'coleman': /\bcoleman\b/i,
+                    'heil': /\bheil\b/i,
+                    'payne': /\bpayne\b/i,
+                    'ducane': /\bducane\b/i,
+                    'generac': /\bgenerac\b/i,
+                    'kohler': /\bkohler\b/i,
+                    'briggs': /\bbriggs\b/i,
+                    'honda': /\bhonda\b/i,
+                    'champion': /\bchampion\b/i,
+                    'westinghouse': /\bwestinghouse\b/i
+                };
+
                 this.prohibitedPatterns = [
-                    // Explicit content
                     /\b(porn|sex|nude|naked|explicit|adult|xxx|nsfw)\b/i,
-                    
-                    // Programming/code requests
                     /\b(code|program|script|function|api|database|python|javascript|html|css|sql|php|github|stackoverflow|programming)\b/i,
-                    
-                    // Large data requests
                     /\b(download|upload|file|document|pdf|database|spreadsheet|excel|csv)\b/i,
-                    
-                    // Off-topic requests
                     /\b(recipe|cooking|medical|legal|financial|politics|religion|homework|essay|assignment)\b/i,
-                    
-                    // System manipulation attempts
                     /\b(ignore|bypass|override|system prompt|jailbreak|pretend|roleplay|character|act as|you are now|from now on)\b/i
                 ];
 
-                // Suspicious patterns
                 this.suspiciousPatterns = [
                     /\b(hack|crack|exploit|vulnerability|illegal|criminal|dangerous|harmful)\b/i,
-                    /repeated\s+text|(.)\1{10,}/i, // Spam patterns
-                    /[A-Z]{20,}/, // Excessive caps
-                    /(.{1,10})\1{3,}/ // Repeated phrases
+                    /repeated\s+text|(.)\1{10,}/i,
+                    /[A-Z]{20,}/,
+                    /(.{1,10})\1{3,}/
                 ];
+            }
+
+            // Detect if input contains model/serial numbers that warrant a manual search
+            detectEquipmentIdentifiers(input) {
+                const identifiers = {
+                    models: [],
+                    serials: [],
+                    brands: [],
+                    hasManualRequest: false
+                };
+
+                // Check for explicit manual requests
+                if (/\b(manual|service manual|installation guide|troubleshooting guide|wiring diagram|schematic|parts list)\b/i.test(input)) {
+                    identifiers.hasManualRequest = true;
+                }
+
+                // Extract model numbers
+                this.modelPatterns.forEach(pattern => {
+                    const matches = input.match(pattern);
+                    if (matches) {
+                        identifiers.models.push(...matches);
+                    }
+                });
+
+                // Extract brands
+                for (const [brand, pattern] of Object.entries(this.brandPatterns)) {
+                    if (pattern.test(input)) {
+                        identifiers.brands.push(brand);
+                    }
+                }
+
+                // Look for serial number context
+                const serialMatch = input.match(/\bserial\s*:?\s*([A-Z0-9\-]+)/gi);
+                if (serialMatch) {
+                    identifiers.serials.push(...serialMatch.map(match => 
+                        match.replace(/serial\s*:?\s*/gi, '').trim()
+                    ));
+                }
+
+                return identifiers;
+            }
+
+            // Enhanced manual search functionality
+            async searchForManuals(identifiers, input) {
+                if (!this.isConnected) {
+                    return this.generateOfflineManualResponse(identifiers, input);
+                }
+
+                try {
+                    console.log('Searching for manuals with identifiers:', identifiers);
+
+                    // Show loading message
+                    this.showManualSearchLoading();
+
+                    const searchData = {
+                        brands: identifiers.brands,
+                        models: identifiers.models,
+                        serials: identifiers.serials,
+                        hasManualRequest: identifiers.hasManualRequest,
+                        originalQuery: input,
+                        mode: this.currentMode,
+                        sessionId: this.sessionId
+                    };
+
+                    const response = await fetch(this.manualSearchEndpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(searchData)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Manual search failed: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    // Track successful manual search
+                    await this.trackUsage('manual_search_success', {
+                        brands: identifiers.brands,
+                        models: identifiers.models,
+                        foundResults: result.manuals?.length || 0
+                    });
+
+                    return this.formatManualSearchResults(result, identifiers);
+
+                } catch (error) {
+                    console.error('Manual search error:', error);
+                    
+                    await this.trackUsage('manual_search_failed', {
+                        error: error.message,
+                        brands: identifiers.brands,
+                        models: identifiers.models
+                    });
+
+                    return this.generateOfflineManualResponse(identifiers, input);
+                }
+            }
+
+            showManualSearchLoading() {
+                const loadingHtml = `
+                    <div class="search-loading">
+                        <div class="search-spinner"></div>
+                        Searching for manuals and diagnostic data...
+                    </div>
+                `;
+                
+                const messagesContainer = document.getElementById('mobileMessages');
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = loadingHtml;
+                tempDiv.id = 'manual-search-loading';
+                messagesContainer.appendChild(tempDiv);
+                this.scrollToBottom();
+
+                // Remove loading after 10 seconds max
+                setTimeout(() => {
+                    const loading = document.getElementById('manual-search-loading');
+                    if (loading) loading.remove();
+                }, 10000);
+            }
+
+            formatManualSearchResults(result, identifiers) {
+                // Remove loading indicator
+                const loading = document.getElementById('manual-search-loading');
+                if (loading) loading.remove();
+
+                if (!result.success || !result.manuals || result.manuals.length === 0) {
+                    return this.generateOfflineManualResponse(identifiers, '');
+                }
+
+                // Create manual search results display
+                const searchResultsHtml = this.createManualSearchResultsHtml(result, identifiers);
+                
+                // Add to chat
+                const messagesContainer = document.getElementById('mobileMessages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'mobile-message ai';
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'mobile-avatar ai';
+                avatar.textContent = '📚';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'mobile-message-content';
+                messageContent.innerHTML = searchResultsHtml;
+                
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+                messagesContainer.appendChild(messageDiv);
+                
+                this.scrollToBottom();
+
+                return `Found ${result.manuals.length} manual(s) and diagnostic resources for your equipment. Check the links above!`;
+            }
+
+            createManualSearchResultsHtml(result, identifiers) {
+                const brandText = identifiers.brands.length > 0 ? identifiers.brands.join(', ') : 'Equipment';
+                const modelText = identifiers.models.length > 0 ? identifiers.models[0] : 'Model';
+
+                let html = `
+                    <div class="manual-search-results">
+                        <div class="search-header">
+                            <div class="search-icon">📚</div>
+                            <div>
+                                <div class="search-title">Manual Search Results</div>
+                                <div class="search-subtitle">Found ${result.manuals.length} resource(s) for ${brandText} ${modelText}</div>
+                            </div>
+                        </div>
+                `;
+
+                result.manuals.forEach((manual, index) => {
+                    html += `
+                        <a href="${manual.url}" target="_blank" rel="noopener noreferrer" class="manual-link">
+                            <div class="manual-title">
+                                ${manual.title || `Manual ${index + 1}`}
+                            </div>
+                            <div class="manual-description">
+                                ${manual.description || manual.type || 'Equipment manual and diagnostic information'}
+                                ${manual.fileType ? ` • ${manual.fileType.toUpperCase()}` : ''}
+                                ${manual.size ? ` • ${manual.size}` : ''}
+                            </div>
+                        </a>
+                    `;
+                });
+
+                if (result.diagnosticTips) {
+                    html += `
+                        <div style="margin-top: 1rem; padding: 1rem; background: rgba(56, 178, 172, 0.1); border-radius: 8px;">
+                            <strong style="color: #38B2AC;">💡 Diagnostic Tips:</strong><br>
+                            <div style="color: #A0AEC0; font-size: 0.9rem; margin-top: 0.5rem;">
+                                ${result.diagnosticTips.replace(/\n/g, '<br>')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                html += `</div>`;
+                return html;
+            }
+
+            generateOfflineManualResponse(identifiers, input) {
+                const brandText = identifiers.brands.length > 0 ? identifiers.brands[0] : 'your equipment';
+                const modelText = identifiers.models.length > 0 ? identifiers.models[0] : '';
+
+                let response = `🔍 **Manual Search Results**\n\n`;
+                
+                if (identifiers.brands.length > 0 || identifiers.models.length > 0) {
+                    response += `I detected you're looking for manuals for **${brandText}** ${modelText}.\n\n`;
+                    
+                    response += `**Recommended Manual Sources:**\n\n`;
+                    
+                    if (identifiers.brands.includes('generac')) {
+                        response += `🔗 **Generac Support:** https://www.generac.com/support\n`;
+                        response += `• Official manuals and parts diagrams\n`;
+                        response += `• Troubleshooting guides by model\n\n`;
+                    }
+                    
+                    if (identifiers.brands.includes('kohler')) {
+                        response += `🔗 **Kohler Power:** https://kohlerpower.com/support\n`;
+                        response += `• Service manuals and parts lists\n`;
+                        response += `• Installation guides\n\n`;
+                    }
+                    
+                    if (identifiers.brands.includes('carrier')) {
+                        response += `🔗 **Carrier Literature:** https://www.carrier.com/residential/en/us/support/\n`;
+                        response += `• Installation and service manuals\n`;
+                        response += `• Wiring diagrams and specs\n\n`;
+                    }
+                    
+                    if (identifiers.brands.includes('trane')) {
+                        response += `🔗 **Trane Literature:** https://www.trane.com/residential/en/support/\n`;
+                        response += `• Technical documentation\n`;
+                        response += `• Service and parts manuals\n\n`;
+                    }
+                    
+                    response += `**General Resources:**\n`;
+                    response += `🔗 **ManualsLib:** https://www.manualslib.com/\n`;
+                    response += `🔗 **RepairClinic:** https://www.repairclinic.com/\n`;
+                    response += `🔗 **AppliancePartsPros:** https://www.appliancepartspros.com/\n\n`;
+                    
+                    if (modelText) {
+                        response += `**Search Tips:**\n`;
+                        response += `• Search for "${brandText} ${modelText} manual"\n`;
+                        response += `• Try "${brandText} ${modelText} service manual"\n`;
+                        response += `• Look for "${brandText} ${modelText} installation guide"\n\n`;
+                    }
+                } else {
+                    response += `**To find your equipment manual:**\n\n`;
+                    response += `1. **Find your model number** - Usually on the rating plate\n`;
+                    response += `2. **Note the brand** - Carrier, Trane, Generac, etc.\n`;
+                    response += `3. **Visit manufacturer website** - Most have searchable databases\n`;
+                    response += `4. **Try general manual sites** - ManualsLib, RepairClinic\n\n`;
+                }
+                
+                response += `**What I can help with while you search:**\n`;
+                response += `• Common troubleshooting steps\n`;
+                response += `• Safety procedures\n`;
+                response += `• Basic diagnostics\n`;
+                response += `• Parts identification\n\n`;
+                response += `Just tell me what specific issue you're having!`;
+
+                return response;
             }
 
             generateSessionId() {
@@ -1841,7 +2155,6 @@
                     sanitizedInput: input.trim()
                 };
 
-                // 1. Length check
                 if (input.length > this.maxMessageLength) {
                     validation.isValid = false;
                     validation.reason = `Message too long (${input.length}/${this.maxMessageLength} characters). Please keep HVAC questions concise.`;
@@ -1849,7 +2162,6 @@
                     return validation;
                 }
 
-                // 2. Rate limiting
                 if (!this.checkRateLimit()) {
                     validation.isValid = false;
                     validation.reason = 'Too many messages. Please wait a moment before sending another HVAC question.';
@@ -1857,7 +2169,6 @@
                     return validation;
                 }
 
-                // 3. Empty or meaningless input
                 if (input.trim().length < 3 || /^[^a-zA-Z]*$/.test(input.trim())) {
                     validation.isValid = false;
                     validation.reason = 'Please ask a specific HVAC question.';
@@ -1865,7 +2176,6 @@
                     return validation;
                 }
 
-                // 4. Check for prohibited content
                 const prohibitedMatch = this.prohibitedPatterns.find(pattern => pattern.test(input));
                 if (prohibitedMatch) {
                     validation.isValid = false;
@@ -1874,7 +2184,6 @@
                     return validation;
                 }
 
-                // 5. Check for suspicious content
                 const suspiciousMatch = this.suspiciousPatterns.find(pattern => pattern.test(input));
                 if (suspiciousMatch) {
                     validation.isValid = false;
@@ -1883,12 +2192,10 @@
                     return validation;
                 }
 
-                // 6. HVAC relevance check (lenient approach)
                 const hasHvacKeywords = this.hvacKeywords.some(keyword => 
                     input.toLowerCase().includes(keyword.toLowerCase())
                 );
 
-                // Allow some flexibility for follow-up questions
                 const isFollowUp = this.conversationHistory.length > 0;
                 const hasGeneralTerms = /\b(it|this|that|system|unit|equipment|problem|issue|help|why|how|what|when|where)\b/i.test(input);
 
@@ -1899,7 +2206,6 @@
                     return validation;
                 }
 
-                // 7. Basic sanitization
                 validation.sanitizedInput = this.sanitizeInput(input);
 
                 return validation;
@@ -1907,27 +2213,24 @@
 
             sanitizeInput(input) {
                 return input
-                    .replace(/[<>]/g, '') // Remove potential HTML
-                    .replace(/javascript:/gi, '') // Remove JS injection attempts
-                    .replace(/\s+/g, ' ') // Normalize whitespace
+                    .replace(/[<>]/g, '')
+                    .replace(/javascript:/gi, '')
+                    .replace(/\s+/g, ' ')
                     .trim()
-                    .substring(0, this.maxMessageLength); // Ensure length limit
+                    .substring(0, this.maxMessageLength);
             }
 
             checkRateLimit() {
                 const now = Date.now();
                 
-                // Remove old timestamps
                 this.messageTimestamps = this.messageTimestamps.filter(
                     timestamp => now - timestamp < this.rateLimitWindow
                 );
 
-                // Check if under limit
                 if (this.messageTimestamps.length >= this.maxMessagesPerWindow) {
                     return false;
                 }
 
-                // Add current timestamp
                 this.messageTimestamps.push(now);
                 return true;
             }
@@ -2087,16 +2390,30 @@
             extractSystemContext(userInput) {
                 const input = userInput.toLowerCase();
                 
+                // Extract equipment types
                 if (input.includes('furnace')) this.systemContext.equipmentType = 'furnace';
                 else if (input.includes('air condition') || input.includes('ac ')) this.systemContext.equipmentType = 'air conditioner';
                 else if (input.includes('heat pump')) this.systemContext.equipmentType = 'heat pump';
                 else if (input.includes('water heater')) this.systemContext.equipmentType = 'water heater';
+                else if (input.includes('generator')) this.systemContext.equipmentType = 'generator';
+                else if (input.includes('boiler')) this.systemContext.equipmentType = 'boiler';
                 
+                // Extract problems
                 if (input.includes('no heat')) this.systemContext.currentProblem = 'no heat';
                 else if (input.includes('no cool') || input.includes('not cooling')) this.systemContext.currentProblem = 'no cooling';
                 else if (input.includes('noise')) this.systemContext.currentProblem = 'strange noises';
                 else if (input.includes('frozen')) this.systemContext.currentProblem = 'frozen system';
                 else if (input.includes('cycling')) this.systemContext.currentProblem = 'short cycling';
+                else if (input.includes('won\'t start') || input.includes('not starting')) this.systemContext.currentProblem = 'won\'t start';
+
+                // Extract brand and model info
+                const identifiers = this.detectEquipmentIdentifiers(userInput);
+                if (identifiers.brands.length > 0) {
+                    this.systemContext.brand = identifiers.brands[0];
+                }
+                if (identifiers.models.length > 0) {
+                    this.systemContext.model = identifiers.models[0];
+                }
             }
 
             async checkBackendConnection() {
@@ -2108,7 +2425,7 @@
                     console.log(`Connection attempt ${this.connectionAttempts}/${this.maxConnectionAttempts}`);
                     
                     const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                    const timeoutId = setTimeout(() => controller.abort(), 10000);
                     
                     const response = await fetch(this.healthEndpoint, {
                         method: 'GET',
@@ -2130,12 +2447,10 @@
                             this.updateMobileStatus('connected', 'Jack is ready!');
                             this.hapticFeedback('success');
                             
-                            // Track successful connection
                             await this.trackUsage('connection_success', {
                                 attempts: this.connectionAttempts
                             });
                             
-                            // Remove any existing error messages
                             const existingErrors = document.querySelectorAll('.connection-error');
                             existingErrors.forEach(error => error.remove());
                         } else {
@@ -2167,13 +2482,11 @@
                 
                 this.updateMobileStatus('error', 'Connection Failed');
                 
-                // Track connection failure
                 this.trackUsage('connection_failed', {
                     error: error.message,
                     attempts: this.connectionAttempts
                 });
                 
-                // Show detailed error message with troubleshooting
                 let errorMessage = '⚠️ **Cannot Connect to HVAC Jack Server**\n\n';
                 
                 if (error.name === 'AbortError') {
@@ -2194,7 +2507,8 @@
                 errorMessage += '• No heat or cooling issues\n';
                 errorMessage += '• Strange noises or smells\n';
                 errorMessage += '• Thermostat problems\n';
-                errorMessage += '• Basic troubleshooting steps\n\n';
+                errorMessage += '• Basic troubleshooting steps\n';
+                errorMessage += '• Manual searches (offline mode)\n\n';
                 errorMessage += '*AI features will return when connection is restored*';
                 
                 this.addMobileMessage(errorMessage, 'ai');
@@ -2208,69 +2522,87 @@
                 text.textContent = message;
             }
 
-            // ENHANCED: processUserInput method with better tracking
+            // Enhanced processUserInput method with manual search capability
             async processUserInput(input) {
                 if (this.isProcessing) return;
 
-                // Validate input before processing
                 const validation = this.validateInput(input);
                 
                 if (!validation.isValid) {
                     this.hapticFeedback('heavy');
                     
-                    // ENHANCED: Log validation failure with more detail
                     await this.trackUsage('input_rejected', {
                         reason: validation.reason,
                         category: validation.category,
                         inputLength: input.length,
-                        originalMessage: input.substring(0, 50) // First 50 chars for context
+                        originalMessage: input.substring(0, 50)
                     });
 
-                    // Show helpful error message
                     const errorResponse = this.generateValidationErrorResponse(validation);
                     this.addMobileMessage(errorResponse, 'ai');
                     return { text: errorResponse, isError: true };
                 }
 
-                // Process with sanitized input
                 this.isProcessing = true;
                 const sanitizedInput = validation.sanitizedInput;
 
-                // ENHANCED: Track message being sent
                 await this.trackUsage('message_sent', {
                     inputLength: sanitizedInput.length,
                     mode: this.currentMode,
                     messageCount: this.conversationHistory.length,
-                    message: sanitizedInput.substring(0, 100) // Store first 100 chars
+                    message: sanitizedInput.substring(0, 100)
                 });
 
                 this.showMobileTyping();
                 this.addToConversation('user', sanitizedInput);
                 this.extractSystemContext(sanitizedInput);
                 
-                const startTime = Date.now(); // NEW: Track response time
+                const startTime = Date.now();
                 
                 try {
+                    // Check if input contains equipment identifiers for manual search
+                    const identifiers = this.detectEquipmentIdentifiers(sanitizedInput);
+                    const shouldSearchManuals = identifiers.hasManualRequest || 
+                                              identifiers.models.length > 0 || 
+                                              (identifiers.brands.length > 0 && 
+                                               /\b(manual|service|installation|troubleshooting|diagnostic|wiring|schematic)\b/i.test(sanitizedInput));
+
                     let response;
-                    if (this.isConnected) {
-                        response = await this.sendToBackend(sanitizedInput);
+                    let manualSearchPerformed = false;
+
+                    if (shouldSearchManuals) {
+                        // Perform manual search first
+                        manualSearchPerformed = true;
+                        await this.searchForManuals(identifiers, sanitizedInput);
+                        
+                        // Then get regular response
+                        if (this.isConnected) {
+                            response = await this.sendToBackend(sanitizedInput);
+                        } else {
+                            response = await this.processWithFallbackKnowledge(sanitizedInput);
+                        }
                     } else {
-                        response = await this.processWithFallbackKnowledge(sanitizedInput);
+                        // Regular processing without manual search
+                        if (this.isConnected) {
+                            response = await this.sendToBackend(sanitizedInput);
+                        } else {
+                            response = await this.processWithFallbackKnowledge(sanitizedInput);
+                        }
                     }
                     
-                    const responseTime = (Date.now() - startTime) / 1000; // NEW
+                    const responseTime = (Date.now() - startTime) / 1000;
                     
                     this.addToConversation('assistant', response);
                     this.hideMobileTyping();
                     this.diagnosticsRun++;
                     this.hapticFeedback('success');
                     
-                    // ENHANCED: Track successful response
                     await this.trackUsage('response_received', {
                         responseTime: responseTime,
                         responseLength: response.length,
                         usingAI: this.isConnected,
-                        mode: this.currentMode
+                        mode: this.currentMode,
+                        manualSearchPerformed: manualSearchPerformed
                     });
                     
                     return { text: response, isError: false };
@@ -2280,16 +2612,14 @@
                     this.hideMobileTyping();
                     this.hapticFeedback('heavy');
                     
-                    const responseTime = (Date.now() - startTime) / 1000; // NEW
+                    const responseTime = (Date.now() - startTime) / 1000;
                     
-                    // ENHANCED: Track error
                     await this.trackUsage('processing_error', {
                         error: error.message,
                         responseTime: responseTime,
                         usingAI: this.isConnected
                     });
                     
-                    // If backend fails, try to reconnect and use fallback
                     if (this.isConnected) {
                         this.isConnected = false;
                         this.updateMobileStatus('error', 'Connection lost');
@@ -2304,19 +2634,18 @@
                 }
             }
 
-            // ENHANCED: sendToBackend method to include session ID
             async sendToBackend(input) {
                 const requestBody = {
                     message: input,
                     mode: this.currentMode,
                     conversationHistory: this.conversationHistory.slice(-10),
                     systemContext: this.systemContext,
-                    sessionId: this.sessionId // NEW: Include session ID
+                    sessionId: this.sessionId
                 };
 
                 console.log('Sending to backend:', this.apiEndpoint, {
                     ...requestBody,
-                    message: input.substring(0, 50) + '...' // ENHANCED: Only log preview
+                    message: input.substring(0, 50) + '...'
                 });
                 
                 const controller = new AbortController();
@@ -2341,7 +2670,6 @@
 
                     const data = await response.json();
                     
-                    // ENHANCED: Better logging
                     console.log('Backend response received:', {
                         responseLength: data.response?.length || 0,
                         sessionId: data.sessionId,
@@ -2380,6 +2708,7 @@
                 if (input.includes('furnace')) return 'furnace';
                 if (input.includes('ac ') || input.includes('air condition')) return 'airConditioner';
                 if (input.includes('water heater')) return 'waterHeater';
+                if (input.includes('generator')) return 'generator';
                 return this.systemContext.equipmentType;
             }
 
@@ -2389,6 +2718,7 @@
                 if (input.includes('noise')) return 'noise';
                 if (input.includes('frozen')) return 'frozenCoil';
                 if (input.includes('cycling')) return 'shortCycling';
+                if (input.includes('won\'t start')) return 'wontStart';
                 return 'general';
             }
 
@@ -2435,6 +2765,25 @@ Try these and tell me what happens! 👍`,
 **Quick test:** Any cool air from vents at all?
 
 What did you find? 🔍`,
+
+                    wontStart: `**Equipment won't start! ${contextInfo}**
+
+**Safety first:**
+🚨 Gas smell = call gas company immediately
+⚡ No power = check main breaker
+
+**For generators:**
+🔋 Check battery connections
+⛽ Verify fuel levels
+🔧 Oil level check
+🔌 Transfer switch position
+
+**For HVAC:**
+📱 Thermostat settings
+🔋 Battery replacement
+🌪️ Air filter check
+
+What type of equipment and what happens when you try to start it?`,
 
                     general: `**HVAC issue! ${contextInfo}**
 
@@ -2497,6 +2846,29 @@ Current symptoms and test results?`,
 
 Current readings and observations?`,
 
+                    wontStart: `**No start diagnostic ${contextInfo}**
+
+**For generators:**
+🔋 Battery voltage (12.6V+ no load)
+⚡ Control panel display codes
+🔧 Engine oil pressure switch
+⛽ Fuel solenoid operation
+📡 Transfer switch signals
+
+**For HVAC:**
+⚡ Control voltage (24VAC)
+🔧 Safety switch positions
+📊 Thermostat call verification
+🔋 Low voltage transformer output
+
+**Common causes:**
+- Dead battery (generators)
+- Control transformer failure
+- Open safety switches
+- Loose wire connections
+
+What equipment and what are your readings?`,
+
                     general: `**Tech diagnostic mode ${contextInfo}**
 
 **Need:**
@@ -2528,13 +2900,11 @@ What's your current diagnostic status?`
                 document.getElementById('mobileSendBtn').disabled = false;
             }
 
-            // ENHANCED: switchMode method with better tracking
             switchMode(mode) {
-                const oldMode = this.currentMode; // Store old mode first
+                const oldMode = this.currentMode;
                 this.currentMode = mode;
                 this.hapticFeedback('light');
                 
-                // ENHANCED: Track mode switch with correct old/new modes
                 this.trackUsage('mode_switched', {
                     from_mode: oldMode,
                     to_mode: mode
@@ -2565,6 +2935,7 @@ What's your current diagnostic status?`
                             <strong>Hey! I'm HVAC Jack!</strong><br><br>
                             🏠 <strong>Homeowner Mode</strong> - I'll explain things simply and focus on safe DIY steps.<br><br>
                             📸 <strong>NEW: Rating Plate Analysis!</strong> - Take a photo of your equipment's rating plate for detailed specs, warranty info, and capacitor requirements!<br><br>
+                            🔍 <strong>Manual Search!</strong> - Give me a make/model/serial number and I'll find manuals and diagnostic data online!<br><br>
                             💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br>
                             <strong>What's wrong with your heating or cooling?</strong>
                         `;
@@ -2573,6 +2944,7 @@ What's your current diagnostic status?`
                             <strong>HVAC Jack - Technician Mode</strong><br><br>
                             🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>
                             📸 <strong>Rating Plate Analysis</strong> - Photo analysis provides exact capacitor specs, warranty status, and equipment details.<br><br>
+                            🔍 <strong>Manual Search</strong> - Automatic web search for service manuals, wiring diagrams, and diagnostic data when you provide model numbers.<br><br>
                             💭 <strong>Conversation Memory</strong> - I'll build on our diagnostic history.<br><br>
                             <strong>What system are you diagnosing? Include model info and current readings.</strong>
                         `;
@@ -2721,7 +3093,6 @@ What's your current diagnostic status?`
         function clearMobileConversation() {
             if (!window.mobileHvacJack) return;
             
-            // Track conversation clear
             window.mobileHvacJack.trackUsage('conversation_cleared', {
                 messageCount: window.mobileHvacJack.conversationHistory.length
             });
@@ -2730,6 +3101,8 @@ What's your current diagnostic status?`
             window.mobileHvacJack.systemContext = {
                 equipmentType: null,
                 brand: null,
+                model: null,
+                serial: null,
                 symptoms: [],
                 previousActions: [],
                 currentProblem: null
@@ -2742,8 +3115,8 @@ What's your current diagnostic status?`
                     <div class="mobile-avatar ai">🔧</div>
                     <div class="mobile-message-content" id="mobileWelcomeMessage">
                         ${window.mobileHvacJack.currentMode === 'homeowner' ? 
-                            '<strong>Hey! I\'m HVAC Jack!</strong><br><br>🏠 <strong>Homeowner Mode</strong> - I\'ll explain things simply and focus on safe DIY steps.<br><br>📸 <strong>NEW: Rating Plate Analysis!</strong> - Take a photo of your equipment\'s rating plate for detailed specs, warranty info, and capacitor requirements!<br><br>💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br><strong>What\'s wrong with your heating or cooling?</strong>' :
-                            '<strong>HVAC Jack - Technician Mode</strong><br><br>🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>📸 <strong>Rating Plate Analysis</strong> - Photo analysis provides exact capacitor specs, warranty status, and equipment details.<br><br>💭 <strong>Conversation Memory</strong> - I\'ll build on our diagnostic history.<br><br><strong>What system are you diagnosing? Include model info and current readings.</strong>'
+                            '<strong>Hey! I\'m HVAC Jack!</strong><br><br>🏠 <strong>Homeowner Mode</strong> - I\'ll explain things simply and focus on safe DIY steps.<br><br>📸 <strong>NEW: Rating Plate Analysis!</strong> - Take a photo of your equipment\'s rating plate for detailed specs, warranty info, and capacitor requirements!<br><br>🔍 <strong>Manual Search!</strong> - Give me a make/model/serial number and I\'ll find manuals and diagnostic data online!<br><br>💭 <strong>I Remember Everything</strong> - No need to repeat yourself as we chat!<br><br><strong>What\'s wrong with your heating or cooling?</strong>' :
+                            '<strong>HVAC Jack - Technician Mode</strong><br><br>🔧 <strong>Professional Mode</strong> - Technical specs, measurements, and diagnostic procedures.<br><br>📸 <strong>Rating Plate Analysis</strong> - Photo analysis provides exact capacitor specs, warranty status, and equipment details.<br><br>🔍 <strong>Manual Search</strong> - Automatic web search for service manuals, wiring diagrams, and diagnostic data when you provide model numbers.<br><br>💭 <strong>Conversation Memory</strong> - I\'ll build on our diagnostic history.<br><br><strong>What system are you diagnosing? Include model info and current readings.</strong>'
                         }
                     </div>
                 </div>
