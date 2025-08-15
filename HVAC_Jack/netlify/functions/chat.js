@@ -1,21 +1,11 @@
 // netlify/functions/chat.js
-// Enhanced HVAC Jack backend with improved content filtering, tracking integration, and photo analysis support
-
-// Initialize shared storage if it doesn't exist
-global.usageStore = global.usageStore || {
-  sessions: new Map(),
-  messages: [],
-  blockedContent: [],
-  events: [],
-  dailyStats: new Map(),
-  photoAnalyses: [] // NEW: Track photo analysis requests
-};
+// Enhanced HVAC Jack backend with web search capabilities and manual search support
 
 exports.handler = async (event, context) => {
   // Handle CORS
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   };
 
@@ -27,15 +17,12 @@ exports.handler = async (event, context) => {
   // Chat endpoint
   if (event.httpMethod === 'POST') {
     const startTime = Date.now();
-    let sessionId = null;
     
     try {
-      const { message, mode, conversationHistory, systemContext, sessionId: clientSessionId } = JSON.parse(event.body);
-      sessionId = clientSessionId || `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const { message, mode, conversationHistory, systemContext, sessionId } = JSON.parse(event.body);
 
       // Basic validation
       if (!message || typeof message !== 'string' || message.trim().length === 0) {
-        await trackEvent('validation_failed', sessionId, { reason: 'empty_message' });
         return {
           statusCode: 400,
           headers,
@@ -43,18 +30,10 @@ exports.handler = async (event, context) => {
         };
       }
 
-      // Server-side content validation
-      const validation = validateHVACContent(message);
+      // Enhanced validation with streamlined checks
+      const validation = validateContent(message);
       if (!validation.isValid) {
-        // Track blocked content
-        await trackEvent('input_blocked', sessionId, {
-          reason: validation.reason,
-          category: validation.category,
-          originalMessage: message.substring(0, 100),
-          mode: mode
-        });
-
-        // Log blocked content to shared storage
+        // Log blocked content
         await logBlockedContent({
           message: message.substring(0, 100),
           reason: validation.reason,
@@ -78,11 +57,6 @@ exports.handler = async (event, context) => {
       // Rate limiting check
       const rateLimitCheck = await checkRateLimit(event.headers['client-ip']);
       if (!rateLimitCheck.allowed) {
-        await trackEvent('rate_limited', sessionId, { 
-          retryAfter: rateLimitCheck.retryAfter,
-          ip: event.headers['client-ip']
-        });
-        
         return {
           statusCode: 429,
           headers,
@@ -93,62 +67,47 @@ exports.handler = async (event, context) => {
         };
       }
 
-      // Track successful message
-      await trackEvent('message_accepted', sessionId, {
-        mode: mode,
-        messageLength: message.length,
-        hasHistory: !!(conversationHistory && conversationHistory.length > 0),
-        systemContext: systemContext
-      });
-
-      // Build system prompt with enhanced HVAC focus
-      const systemPrompt = buildSystemPrompt(mode, systemContext);
-      
-      // Prepare messages for Claude
-      const claudeMessages = buildClaudeMessages(message, conversationHistory, mode);
+      // Check if this is a manual search request
+      const isManualSearch = systemContext?.isManualSearch || 
+                           detectManualSearchRequest(message, systemContext);
 
       let claudeResponse;
-      let usingAI = true;
-
-      try {
-        // Call Claude API with content filtering
-        const apiKey = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
-        claudeResponse = await callClaude(systemPrompt, claudeMessages, apiKey);
-      } catch (claudeError) {
-        console.log('Claude API failed, using fallback:', claudeError.message);
-        claudeResponse = generateFallbackResponse(message, mode);
-        usingAI = false;
+      
+      if (isManualSearch) {
+        // Enhanced system prompt for web search
+        const searchSystemPrompt = buildWebSearchSystemPrompt(mode, systemContext);
+        const claudeMessages = buildClaudeMessages(message, [], mode); // Fresh context for search
         
-        await trackEvent('ai_fallback_used', sessionId, {
-          error: claudeError.message,
-          mode: mode
+        console.log('Processing manual search request for:', {
+          brand: systemContext?.brand,
+          model: systemContext?.model,
+          equipmentType: systemContext?.equipmentType
         });
+        
+        claudeResponse = await callClaudeWithWebSearch(searchSystemPrompt, claudeMessages, process.env.CLAUDE_API_KEY);
+      } else {
+        // Regular conversation
+        const systemPrompt = buildSystemPrompt(mode, systemContext);
+        const claudeMessages = buildClaudeMessages(message, conversationHistory, mode);
+        claudeResponse = await callClaude(systemPrompt, claudeMessages, process.env.CLAUDE_API_KEY);
       }
       
       // Post-process response for additional safety
       const sanitizedResponse = sanitizeClaudeResponse(claudeResponse);
-      
-      // Calculate response time
+
+      // Enhanced response time calculation
       const responseTime = (Date.now() - startTime) / 1000;
 
-      // Track successful response
-      await trackEvent('response_generated', sessionId, {
-        responseTime: responseTime,
-        responseLength: sanitizedResponse.length,
-        usingAI: usingAI,
-        mode: mode
-      });
-
-      // Log successful interaction to shared storage
+      // Log successful interaction
       await logInteraction({
-        sessionId: sessionId,
         input: message.substring(0, 100),
         output: sanitizedResponse.substring(0, 100),
         mode,
+        isManualSearch,
+        responseTime,
         timestamp: new Date().toISOString(),
         ip: event.headers['client-ip'] || 'unknown',
-        responseTime: responseTime,
-        usingAI: usingAI
+        sessionId: sessionId
       });
 
       return {
@@ -158,28 +117,20 @@ exports.handler = async (event, context) => {
           response: sanitizedResponse,
           timestamp: new Date().toISOString(),
           mode: mode,
-          sessionId: sessionId,
+          usingAI: true,
           responseTime: responseTime,
-          usingAI: usingAI
+          sessionId: sessionId,
+          isManualSearch: isManualSearch
         })
       };
 
     } catch (error) {
       console.error('Chat error:', error);
       
-      const responseTime = (Date.now() - startTime) / 1000;
-      
-      // Track error
-      if (sessionId) {
-        await trackEvent('processing_error', sessionId, {
-          error: error.message,
-          responseTime: responseTime
-        });
-      }
-      
-      // Fallback response
-      const { message = '', mode = 'homeowner' } = JSON.parse(event.body || '{}');
+      // Enhanced fallback response
+      const { message = '', mode = 'homeowner', sessionId = null } = JSON.parse(event.body || '{}');
       const fallbackResponse = generateFallbackResponse(message, mode);
+      const responseTime = (Date.now() - startTime) / 1000;
       
       return {
         statusCode: 200,
@@ -188,8 +139,9 @@ exports.handler = async (event, context) => {
           response: fallbackResponse + '\n\n*Note: Using fallback mode due to temporary AI service issue.*',
           timestamp: new Date().toISOString(),
           fallback: true,
-          sessionId: sessionId,
-          responseTime: responseTime
+          usingAI: false,
+          responseTime: responseTime,
+          sessionId: sessionId
         })
       };
     }
@@ -202,224 +154,136 @@ exports.handler = async (event, context) => {
   };
 };
 
-// Helper function to track events to shared storage
-async function trackEvent(eventType, sessionId, data) {
-  const store = global.usageStore;
-  
-  const event = {
-    eventType,
-    sessionId,
-    timestamp: new Date().toISOString(),
-    data: data || {}
-  };
-
-  store.events.push(event);
-
-  // Keep only last 1000 events
-  if (store.events.length > 1000) {
-    store.events = store.events.slice(-1000);
-  }
-
-  // Process specific events
-  switch (eventType) {
-    case 'message_accepted':
-      // Update messages array
-      store.messages.push({
-        sessionId,
-        timestamp: event.timestamp,
-        content: data.messageLength ? `[${data.messageLength} chars]` : '',
-        mode: data.mode,
-        inputLength: data.messageLength,
-        responseTime: null,
-        error: false
-      });
-      break;
-      
-    case 'input_blocked':
-      // Add to blocked content
-      store.blockedContent.push({
-        sessionId,
-        timestamp: event.timestamp,
-        reason: data.reason,
-        messagePreview: data.originalMessage || '',
-        ip: 'tracked',
-        category: data.category
-      });
-      break;
-      
-    case 'response_generated':
-      // Update the most recent message with response time
-      const msgIndex = store.messages.findIndex(
-        msg => msg.sessionId === sessionId && !msg.responseTime
-      );
-      if (msgIndex !== -1) {
-        store.messages[msgIndex].responseTime = data.responseTime;
-        store.messages[msgIndex].usingAI = data.usingAI;
-      }
-      break;
-
-    // NEW: Handle photo analysis events
-    case 'photo_analyzed':
-      store.photoAnalyses = store.photoAnalyses || [];
-      store.photoAnalyses.push({
-        sessionId,
-        timestamp: event.timestamp,
-        success: data.success,
-        analysisTime: data.responseTime,
-        mode: data.mode,
-        equipmentType: data.equipmentType || 'unknown'
-      });
-      
-      // Keep only last 200 photo analyses
-      if (store.photoAnalyses.length > 200) {
-        store.photoAnalyses = store.photoAnalyses.slice(-200);
-      }
-      break;
-  }
-}
-
-function validateHVACContent(message) {
+// Streamlined content validation (matching frontend changes)
+function validateContent(message) {
   const validation = {
     isValid: true,
     reason: '',
-    category: '',
     errorMessage: ''
   };
 
-  // Convert to lowercase for checking
-  const lowerMessage = message.toLowerCase();
-
-  // Prohibited content checks
-  const prohibitedPatterns = [
-    // Explicit content
-    { pattern: /\b(porn|sex|nude|adult|xxx|nsfw|explicit)\b/i, reason: 'explicit', category: 'inappropriate' },
-    
-    // Programming requests
-    { pattern: /\b(code|programming|script|function|api|github|sql|python|javascript|html|css|php)\b/i, reason: 'programming', category: 'off_topic' },
-    
-    // Large file/data requests
-    { pattern: /\b(download|upload|file|document|pdf|spreadsheet|database|excel|csv)\b/i, reason: 'file_operations', category: 'unsupported' },
-    
-    // Medical/legal advice
-    { pattern: /\b(medical|doctor|legal|lawyer|prescription|lawsuit|diagnosis|treatment)\b/i, reason: 'professional_advice', category: 'off_topic' },
-    
-    // System manipulation attempts
-    { pattern: /\b(ignore|override|bypass|jailbreak|system prompt|pretend you are|act as|roleplay)\b/i, reason: 'system_manipulation', category: 'malicious' },
-    
-    // Spam patterns
-    { pattern: /(.)\1{15,}/, reason: 'spam', category: 'spam' }, // Repeated characters
-    { pattern: /\b(.+\b.*){10,}/, reason: 'repetitive', category: 'spam' } // Repetitive content
-  ];
-
-  // Check against prohibited patterns
-  for (const check of prohibitedPatterns) {
-    if (check.pattern.test(message)) {
-      validation.isValid = false;
-      validation.reason = check.reason;
-      validation.category = check.category;
-      validation.errorMessage = generateBlockedContentMessage(check.reason);
-      return validation;
-    }
-  }
-
-  // Message length check
+  // Only essential checks - matching the frontend approach
+  
+  // 1. Length check
   if (message.length > 1000) {
     validation.isValid = false;
     validation.reason = 'too_long';
-    validation.category = 'length';
-    validation.errorMessage = '🚫 **Message too long.** Please keep HVAC questions under 1000 characters for better responses.';
+    validation.errorMessage = '⚠️ **Message too long.** Please keep questions under 1000 characters.';
     return validation;
   }
 
-  // HVAC relevance check (more lenient on backend)
-  const hvacTerms = [
-    'hvac', 'heating', 'cooling', 'furnace', 'air conditioner', 'ac', 'heat pump',
-    'thermostat', 'temperature', 'hot', 'cold', 'warm', 'cool', 'filter', 'vent',
-    'system', 'unit', 'equipment', 'repair', 'fix', 'broken', 'problem', 'issue',
-    'noise', 'sound', 'smell', 'air', 'fan', 'motor', 'compressor', 'coil',
-    'photo', 'picture', 'rating', 'plate', 'model', 'serial', 'capacitor' // NEW: Photo analysis terms
-  ];
+  // 2. Only block obvious inappropriate content
+  if (/\b(porn|sex|nude|naked|explicit|adult|xxx|nsfw)\b/i.test(message)) {
+    validation.isValid = false;
+    validation.reason = 'inappropriate';
+    validation.errorMessage = '🚫 **Inappropriate content detected.** Please ask about HVAC systems.';
+    return validation;
+  }
 
-  const hasHvacTerm = hvacTerms.some(term => lowerMessage.includes(term));
-  const isVeryShort = message.trim().length < 10;
-  
-  // Only block if it's clearly off-topic AND has no HVAC terms
-  if (!hasHvacTerm && !isVeryShort && lowerMessage.length > 20) {
-    const offTopicPatterns = [
-      /\b(recipe|cooking|food|restaurant)\b/i,
-      /\b(politics|election|government|president)\b/i,
-      /\b(homework|essay|assignment|school)\b/i,
-      /\b(relationship|dating|marriage|divorce)\b/i,
-      /\b(stock|investment|crypto|bitcoin)\b/i
-    ];
+  // 3. Only block very large coding requests
+  if (/\b(write|create|build|develop|generate)\s+(large|complex|full|complete|entire)\s+(application|database|website|system)\b/i.test(message)) {
+    validation.isValid = false;
+    validation.reason = 'large_coding';
+    validation.errorMessage = '🚫 **Large coding projects not supported.** Please ask about HVAC systems.';
+    return validation;
+  }
 
-    const isOffTopic = offTopicPatterns.some(pattern => pattern.test(message));
-    if (isOffTopic) {
-      validation.isValid = false;
-      validation.reason = 'off_topic';
-      validation.category = 'off_topic';
-      validation.errorMessage = '🔧 **HVAC Topics Only** - I only help with heating, cooling, and ventilation systems. Please ask about your HVAC equipment!';
-      return validation;
-    }
+  // 4. Only block obvious spam (very repetitive patterns)
+  if (/(.)\1{20,}/.test(message) || /(.{1,5})\1{10,}/.test(message)) {
+    validation.isValid = false;
+    validation.reason = 'spam';
+    validation.errorMessage = '🚫 **Invalid message format.** Please ask a normal question.';
+    return validation;
   }
 
   return validation;
 }
 
-function generateBlockedContentMessage(reason) {
-  const messages = {
-    explicit: '🚫 **Inappropriate Content** - HVAC Jack only discusses heating and cooling systems.',
-    programming: '🚫 **Programming Questions** - I\'m HVAC Jack, not a coding assistant! Ask me about your HVAC system.',
-    file_operations: '🚫 **File Operations** - I don\'t handle file uploads/downloads. Ask me about HVAC troubleshooting!',
-    professional_advice: '🚫 **Professional Advice** - I only provide HVAC guidance. Consult professionals for medical/legal advice.',
-    system_manipulation: '🚫 **Invalid Request** - I\'m designed specifically for HVAC assistance.',
-    spam: '🚫 **Invalid Format** - Please send a clear HVAC question.',
-    repetitive: '🚫 **Repetitive Content** - Please ask a specific HVAC question.',
-    too_long: '🚫 **Message Too Long** - Please keep HVAC questions concise for better responses.'
-  };
+// Detect manual search requests
+function detectManualSearchRequest(message, systemContext) {
+  if (systemContext?.isManualSearch) return true;
+  
+  // Check for manual search indicators
+  const hasManualRequest = /\b(manual|service manual|installation guide|troubleshooting guide|wiring diagram|schematic|parts list)\b/i.test(message);
+  
+  // Check for model numbers (basic patterns)
+  const hasModelNumber = /\b([A-Z]{2,}\d{2,}[A-Z]?\d*|\d{4,}[A-Z]{0,3}\d*|#\s*\d{4,})\b/i.test(message);
+  
+  // Check for brands
+  const hasBrand = /\b(generac|kohler|carrier|trane|lennox|york|rheem|goodman|coleman|heil|payne|briggs|honda|champion|westinghouse)\b/i.test(message);
+  
+  return hasManualRequest || (hasModelNumber && hasBrand) || (hasModelNumber && /\b(generator|furnace|ac|air conditioner|heat pump)\b/i.test(message));
+}
 
-  return messages[reason] || '🚫 **Off-Topic** - Please ask about heating, cooling, or ventilation systems.';
+// Enhanced system prompt for web search capabilities
+function buildWebSearchSystemPrompt(mode, systemContext) {
+  const basePrompt = `You are HVAC Jack with web search capabilities. The user is requesting manuals, documentation, or technical resources for HVAC equipment or generators.
+
+IMPORTANT: You have access to web search. Use it to find official service manuals, installation guides, wiring diagrams, and technical documentation.
+
+Equipment Details:
+- Brand: ${systemContext?.brand || 'Unknown'}
+- Model: ${systemContext?.model || 'Unknown'}  
+- Type: ${systemContext?.equipmentType || 'Unknown'}
+
+SEARCH STRATEGY:
+1. Search for official manufacturer documentation
+2. Look for service manuals, installation guides, wiring diagrams
+3. Find parts lists and troubleshooting guides
+4. Provide direct links to official resources
+5. Include authoritative technical websites
+
+PREFERRED SOURCES:
+- Official manufacturer websites
+- Authorized dealer portals
+- Technical documentation sites
+- Parts supplier websites with manuals
+- Professional HVAC resource sites
+
+FORMAT YOUR RESPONSE:
+1. Brief acknowledgment of the search request
+2. List of found resources with direct links
+3. Brief description of each resource
+4. Additional helpful context about the equipment
+
+Always prioritize official manufacturer documentation and provide working links when available.`;
+
+  return basePrompt;
 }
 
 function buildSystemPrompt(mode, systemContext) {
-  const basePrompt = `You are HVAC Jack, a specialized AI assistant for heating, ventilation, and air conditioning systems ONLY.
+  const basePrompt = `You are HVAC Jack, a specialized AI assistant for heating, ventilation, air conditioning systems, and gas-powered equipment including generators.
 
-STRICT RESTRICTIONS:
-- ONLY discuss HVAC topics: heating, cooling, ventilation, air quality
-- NEVER provide information about: programming, explicit content, medical advice, legal advice, financial advice, or any non-HVAC topics
-- If asked about non-HVAC topics, politely redirect to HVAC questions
-- Keep responses under 500 words
-- Always prioritize safety - warn about gas leaks, electrical hazards, carbon monoxide
-
-HVAC SCOPE INCLUDES:
-- Furnaces, boilers, heat pumps, air conditioners
+SCOPE INCLUDES:
+- HVAC systems: furnaces, boilers, heat pumps, air conditioners, mini-splits
+- Gas appliances: generators, water heaters, ranges, fireplaces, dryers
 - Thermostats, controls, smart HVAC systems  
 - Ductwork, vents, air filters, air quality
 - Refrigeration cycles, electrical components
 - Maintenance, troubleshooting, repairs
 - Energy efficiency, system sizing
-- Installation guidance (DIY-safe tasks only)
-- Rating plate analysis and equipment specifications
-- Capacitor requirements and electrical specifications
+- Installation guidance (safe DIY tasks only)
 
 Current system context:
 - Equipment: ${systemContext?.equipmentType || 'Unknown'}
+- Brand: ${systemContext?.brand || 'Unknown'}
+- Model: ${systemContext?.model || 'Unknown'}
 - Current problem: ${systemContext?.currentProblem || 'Diagnosing'}
 - Previous actions: ${systemContext?.previousActions?.join(', ') || 'None'}
-- Equipment Brand: ${systemContext?.brand || 'Unknown'}
 
-SAFETY FIRST:
-- Gas smells = immediate professional help
-- Electrical work = licensed electrician
+SAFETY PRIORITIES:
+- Gas smells = immediate evacuation and professional help
+- Electrical work = licensed electrician for complex tasks
 - Carbon monoxide concerns = evacuate and call professionals
 - Refrigerant work = EPA certified technician
 
 Key principles:
-1. Safety first - always warn about gas leaks, electrical hazards, and when to call professionals
+1. Safety first - always warn about hazards and when to call professionals
 2. Be conversational and helpful, not clinical
-3. Use emojis and formatting to make responses engaging
+3. Use emojis and formatting for engagement
 4. Remember context from the conversation
-5. Provide step-by-step guidance`;
+5. Provide step-by-step guidance
+6. Support both HVAC and generator/gas appliance questions`;
 
   if (mode === 'homeowner') {
     return basePrompt + `
@@ -431,8 +295,7 @@ HOMEOWNER MODE - Tailor responses for homeowners:
 - Explain WHY they're doing each step
 - Be encouraging and supportive
 - Prioritize most common/likely causes first
-- Use analogies to explain complex concepts
-- When discussing rating plate info, explain it in simple terms`;
+- Use analogies to explain complex concepts`;
   } else {
     return basePrompt + `
 
@@ -442,9 +305,7 @@ TECHNICIAN MODE - Provide professional-level guidance:
 - Reference diagnostic equipment and tools needed
 - Provide troubleshooting sequences
 - Include electrical, gas, and refrigerant safety protocols
-- Assume professional knowledge and EPA certification where applicable
-- Provide exact capacitor specifications with MFD, voltage, and tolerance
-- Include model-specific technical details and service bulletins`;
+- Assume professional knowledge and EPA certification where applicable`;
   }
 }
 
@@ -453,7 +314,7 @@ function buildClaudeMessages(currentMessage, conversationHistory, mode) {
 
   // Add recent conversation history
   if (conversationHistory && conversationHistory.length > 0) {
-    const recentHistory = conversationHistory.slice(-8); // Limit to prevent large requests
+    const recentHistory = conversationHistory.slice(-8);
     
     recentHistory.forEach(msg => {
       if (msg.role === 'user') {
@@ -468,6 +329,61 @@ function buildClaudeMessages(currentMessage, conversationHistory, mode) {
   return messages;
 }
 
+// Enhanced Claude API call with web search support
+async function callClaudeWithWebSearch(systemPrompt, messages, apiKey) {
+  if (!apiKey) {
+    throw new Error('Claude API key not configured');
+  }
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': apiKey,
+      'Content-Type': 'application/json',
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify({
+      model: 'claude-3-5-sonnet-20241022', // Use more capable model for web search
+      max_tokens: 2000, // Allow longer responses for search results
+      system: systemPrompt,
+      messages: messages,
+      tools: [
+        {
+          name: "web_search",
+          description: "Search the web for information",
+          input_schema: {
+            type: "object",
+            properties: {
+              query: {
+                type: "string",
+                description: "The search query"
+              }
+            },
+            required: ["query"]
+          }
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Claude API error: ${response.status} - ${errorText}`);
+  }
+
+  const data = await response.json();
+  
+  // Handle tool use responses
+  if (data.content && data.content.some(block => block.type === 'tool_use')) {
+    // For tool use responses, extract the text content
+    const textBlocks = data.content.filter(block => block.type === 'text');
+    return textBlocks.map(block => block.text).join('\n');
+  }
+  
+  return data.content[0].text;
+}
+
+// Regular Claude API call
 async function callClaude(systemPrompt, messages, apiKey) {
   if (!apiKey) {
     throw new Error('Claude API key not configured');
@@ -482,7 +398,7 @@ async function callClaude(systemPrompt, messages, apiKey) {
     },
     body: JSON.stringify({
       model: 'claude-3-haiku-20240307',
-      max_tokens: 1000, // Limit response length
+      max_tokens: 1500,
       system: systemPrompt,
       messages: messages
     })
@@ -498,11 +414,11 @@ async function callClaude(systemPrompt, messages, apiKey) {
 }
 
 function sanitizeClaudeResponse(response) {
-  // Remove any potential harmful content that might have slipped through
+  // Basic sanitization while preserving manual links and formatting
   return response
     .replace(/\b(hack|crack|bypass|exploit)\b/gi, '[REDACTED]')
     .replace(/\b(porn|sex|adult|explicit)\b/gi, '[INAPPROPRIATE]')
-    .substring(0, 2000); // Hard limit on response length
+    .substring(0, 3000); // Allow longer responses for manual search results
 }
 
 // Rate limiting implementation
@@ -512,7 +428,7 @@ async function checkRateLimit(ip) {
   const key = ip || 'unknown';
   const now = Date.now();
   const windowMs = 60000; // 1 minute
-  const maxRequests = 20; // 20 requests per minute
+  const maxRequests = 30; // Increased for manual search usage
 
   if (!rateLimitStore.has(key)) {
     rateLimitStore.set(key, []);
@@ -538,22 +454,6 @@ async function checkRateLimit(ip) {
 }
 
 async function logBlockedContent(data) {
-  const store = global.usageStore;
-  
-  // Add to blocked content array in shared storage
-  store.blockedContent.push({
-    timestamp: data.timestamp,
-    reason: data.reason,
-    messagePreview: data.message,
-    ip: data.ip,
-    sessionId: data.sessionId
-  });
-
-  // Keep only last 100 blocked messages
-  if (store.blockedContent.length > 100) {
-    store.blockedContent = store.blockedContent.slice(-100);
-  }
-  
   console.log('🚫 Blocked Content:', {
     timestamp: data.timestamp,
     reason: data.reason,
@@ -564,60 +464,131 @@ async function logBlockedContent(data) {
 }
 
 async function logInteraction(data) {
-  const store = global.usageStore;
-  
-  // Add to messages array in shared storage
-  store.messages.push({
-    sessionId: data.sessionId,
-    timestamp: data.timestamp,
-    content: data.input,
-    mode: data.mode,
-    inputLength: data.input.length,
-    responseTime: data.responseTime,
-    error: false,
-    usingAI: data.usingAI
-  });
-
-  // Keep only last 500 messages
-  if (store.messages.length > 500) {
-    store.messages = store.messages.slice(-500);
-  }
-  
   console.log('✅ HVAC Interaction:', {
     timestamp: data.timestamp,
-    sessionId: data.sessionId,
     inputLength: data.input.length,
     outputPreview: data.output,
     mode: data.mode,
+    isManualSearch: data.isManualSearch,
     responseTime: data.responseTime,
-    usingAI: data.usingAI,
-    ip: data.ip
+    ip: data.ip,
+    sessionId: data.sessionId
   });
 }
 
+// Enhanced fallback responses
 function generateFallbackResponse(message, mode) {
   const input = message.toLowerCase();
   
+  // Check for manual search requests in fallback
+  if (/\b(manual|service manual|wiring|schematic|troubleshooting guide)\b/i.test(input)) {
+    const brandMatch = input.match(/\b(generac|kohler|carrier|trane|lennox|york|rheem|goodman)\b/i);
+    const brand = brandMatch ? brandMatch[0] : '';
+    
+    return `**Manual Search Request Detected**
+
+I understand you're looking for manuals${brand ? ` for ${brand}` : ''}. While I'm currently in offline mode, here are reliable sources:
+
+**Official Manufacturer Sites:**
+${brand ? `• ${brand}.com - Official support section` : '• Visit the manufacturer\'s official website'}
+• Search for model number in their support/literature section
+
+**General Resources:**
+• ManualsLib.com - Comprehensive manual database
+• RepairClinic.com - Service manuals and parts diagrams
+• ManualzForFree.com - Free technical documentation
+
+**Search Tips:**
+• Use your complete model number
+• Try "service manual" + model number
+• Look for "installation guide" + model number
+
+What specific equipment model are you working on?`;
+  }
+  
   if (input.includes('no heat')) {
     return mode === 'homeowner' 
-      ? `**No heat issue!**\n\n🔍 **Quick checks:**\n• Check thermostat is set to HEAT\n• Replace thermostat batteries\n• Check circuit breaker\n• Replace air filter\n\n⚠️ **If you smell gas - leave immediately!**`
-      : `**No heat diagnostic:**\n\n⚡ **Check:**\n• 24VAC at R-W terminals\n• HSI resistance (11-200Ω)\n• Gas valve operation\n• Flame sensor current\n\nWhat are current readings?`;
+      ? `**No heat issue!**
+
+🔥 **Quick checks:**
+• Check thermostat is set to HEAT
+• Replace thermostat batteries
+• Check circuit breaker
+• Replace air filter
+
+⚠️ **If you smell gas - leave immediately and call gas company!**`
+      : `**No heat diagnostic:**
+
+⚡ **Check:**
+• 24VAC at R-W terminals
+• HSI resistance (11-200Ω)
+• Gas valve operation
+• Flame sensor current
+
+What are current readings?`;
   }
   
   if (input.includes('no cool') || input.includes('ac')) {
     return mode === 'homeowner'
-      ? `**AC not cooling!**\n\n❄️ **Try:**\n• Set thermostat 5°F lower\n• Replace air filter\n• Check breakers\n• Clean outdoor unit\n\n🚨 **Ice anywhere? Turn OFF immediately!**`
-      : `**No cooling diagnostic:**\n\n⚡ **Verify:**\n• 240VAC at disconnect\n• Compressor amps\n• Refrigerant pressures\n• Superheat/subcooling\n\nCurrent readings?`;
+      ? `**AC not cooling!**
+
+❄️ **Try:**
+• Set thermostat 5°F lower
+• Replace air filter
+• Check breakers
+• Clean outdoor unit
+
+🚨 **Ice anywhere? Turn OFF immediately!**`
+      : `**No cooling diagnostic:**
+
+⚡ **Verify:**
+• 240VAC at disconnect
+• Compressor amps
+• Refrigerant pressures
+• Superheat/subcooling
+
+Current readings?`;
   }
 
-  // NEW: Photo analysis fallback
-  if (input.includes('photo') || input.includes('picture') || input.includes('rating plate')) {
+  if (input.includes('generator')) {
     return mode === 'homeowner'
-      ? `**Photo Analysis Available!**\n\n📸 **I can analyze rating plates!** Take a clear photo of your equipment's rating plate and I'll provide:\n• Equipment details and age\n• Warranty status\n• Capacitor requirements\n• Technical specifications\n\n*Use the camera button to upload a photo.*`
-      : `**Rating Plate Analysis**\n\n📋 **Upload a photo and I'll extract:**\n• Complete model/serial breakdown\n• Electrical specifications (FLA, LRA, MCA)\n• Exact capacitor requirements\n• Service bulletins and known issues\n• Parts availability assessment\n\n*Camera button available for photo upload.*`;
+      ? `**Generator issue!**
+
+🔋 **Basic checks:**
+• Battery connections tight?
+• Fuel level adequate?
+• Oil level check
+• Air filter clean?
+• Transfer switch position
+
+⚠️ **Gas smell = evacuate and call professionals!**`
+      : `**Generator diagnostic:**
+
+⚡ **Check:**
+• Battery voltage (12.6V+ no load)
+• Control panel error codes
+• Fuel pressure
+• Engine oil pressure switch
+• Transfer switch signals
+
+Current symptoms and readings?`;
   }
 
   return mode === 'homeowner'
-    ? `**I'm here to help!**\n\n🔧 **Tell me:**\n• What type of system?\n• What's wrong?\n• When did it start?\n\n📸 **Or take a photo** of your rating plate for detailed analysis!\n\n⚠️ **Safety:** Gas smell = call gas company immediately!`
-    : `**Diagnostic mode**\n\n📋 **Need:**\n• Equipment details\n• Symptoms and measurements\n• Test equipment available\n\n📸 **Photo analysis** available for rating plates.\n\nProvide system specifics for targeted troubleshooting.`;
+    ? `**I'm here to help!**
+
+🔧 **Tell me:**
+• What type of system? (furnace, AC, generator, etc.)
+• What's wrong?
+• When did it start?
+
+⚠️ **Safety:** Gas smell = evacuate and call gas company immediately!`
+    : `**Technical diagnostic mode**
+
+📋 **Need:**
+• Equipment details (make/model)
+• Symptoms and measurements
+• Test equipment available
+
+Provide system specifics for targeted troubleshooting.`;
 }
