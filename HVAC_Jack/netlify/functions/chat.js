@@ -759,14 +759,21 @@ function extractModel(message) {
 function extractEquipmentType(message) {
   const messageLower = message.toLowerCase();
   
-  if (messageLower.includes('generator')) return 'generator';
-  if (messageLower.includes('furnace')) return 'furnace';
-  if (messageLower.includes('air conditioner') || messageLower.includes('ac ')) return 'air conditioner';
-  if (messageLower.includes('heat pump')) return 'heat pump';
-  if (messageLower.includes('boiler')) return 'boiler';
-  if (messageLower.includes('water heater')) return 'water heater';
+  // Gas appliances and HVAC equipment detection
+  if (messageLower.includes('generator') || messageLower.includes('standby') || messageLower.includes('backup power')) return 'generator';
+  if (messageLower.includes('furnace') || messageLower.includes('heating unit')) return 'gas furnace';
+  if (messageLower.includes('water heater') || messageLower.includes('hot water') || messageLower.includes('tankless')) return 'gas water heater';
+  if (messageLower.includes('boiler') || messageLower.includes('steam') || messageLower.includes('hydronic')) return 'gas boiler';
+  if (messageLower.includes('unit heater') || messageLower.includes('garage heater') || messageLower.includes('space heater')) return 'gas unit heater';
+  if (messageLower.includes('air conditioner') || messageLower.includes('ac ') || messageLower.includes('cooling')) return 'air conditioner';
+  if (messageLower.includes('heat pump') || messageLower.includes('dual fuel')) return 'heat pump';
+  if (messageLower.includes('range') || messageLower.includes('stove') || messageLower.includes('cooktop')) return 'gas range';
+  if (messageLower.includes('dryer') || messageLower.includes('clothes dryer')) return 'gas dryer';
+  if (messageLower.includes('fireplace') || messageLower.includes('gas log') || messageLower.includes('gas insert')) return 'gas fireplace';
+  if (messageLower.includes('pool heater') || messageLower.includes('spa heater')) return 'gas pool heater';
+  if (messageLower.includes('packaged unit') || messageLower.includes('rooftop unit') || messageLower.includes('rtu')) return 'packaged HVAC unit';
   
-  return 'equipment';
+  return 'gas equipment';
 }
 
 function getBrandDomain(brand) {
@@ -845,14 +852,19 @@ function detectManualSearchRequest(message, systemContext) {
 }
 
 function buildSystemPrompt(mode, systemContext) {
-  const basePrompt = `You are HVAC Jack, a specialized AI assistant for heating, ventilation, air conditioning systems, and gas-powered equipment including generators.
+  const basePrompt = `You are HVAC Jack, a specialized AI assistant for heating, ventilation, air conditioning systems, and ALL gas-powered equipment and appliances.
 
-SCOPE INCLUDES:
-- HVAC systems: furnaces, boilers, heat pumps, air conditioners, mini-splits
-- Gas appliances: generators, water heaters, ranges, fireplaces, dryers
+COMPREHENSIVE SCOPE INCLUDES:
+- HVAC systems: furnaces, boilers, heat pumps, air conditioners, mini-splits, packaged units
+- Gas water heaters: tank, tankless, hybrid, commercial units
+- Gas generators: standby, portable, whole house backup systems
+- Gas boilers: residential, commercial, steam, hot water, hydronic
+- Gas unit heaters: garage heaters, warehouse heaters, space heaters
+- Gas appliances: ranges, dryers, fireplaces, pool heaters
 - Thermostats, controls, smart HVAC systems  
 - Ductwork, vents, air filters, air quality
-- Refrigeration cycles, electrical components
+- Gas piping, venting, combustion air requirements
+- Electrical components, ignition systems, controls
 - Maintenance, troubleshooting, repairs
 - Energy efficiency, system sizing
 - Installation guidance (safe DIY tasks only)
@@ -864,19 +876,31 @@ Current system context:
 - Current problem: ${systemContext?.currentProblem || 'Diagnosing'}
 - Previous actions: ${systemContext?.previousActions?.join(', ') || 'None'}
 
-SAFETY PRIORITIES:
-- Gas smells = immediate evacuation and professional help
+CRITICAL SAFETY PRIORITIES FOR GAS APPLIANCES:
+- Gas smells = immediate evacuation and emergency gas company call
+- Carbon monoxide concerns = evacuate immediately and call professionals
+- Gas piping work = licensed gas technician only
 - Electrical work = licensed electrician for complex tasks
-- Carbon monoxide concerns = evacuate and call professionals
+- Combustion air and venting = critical for safe operation
+- Proper gas pressures = natural gas 3.5"WC, propane 11"WC typical
+- Flame characteristics = proper blue flame, no yellow tips
 - Refrigerant work = EPA certified technician
 
+EQUIPMENT-SPECIFIC KNOWLEDGE:
+For Gas Furnaces: Heat exchangers, gas valves, ignition systems, venting
+For Gas Water Heaters: Temperature/pressure relief, anode rods, thermal efficiency
+For Gas Boilers: Pressure vessels, expansion tanks, circulation pumps, zone controls
+For Generators: Transfer switches, load management, fuel systems, battery maintenance
+For Unit Heaters: Combustion air, proper clearances, safety controls
+
 Key principles:
-1. Safety first - always warn about hazards and when to call professionals
-2. Be conversational and helpful, not clinical
-3. Use emojis and formatting for engagement
-4. Remember context from the conversation
-5. Provide step-by-step guidance
-6. Support both HVAC and generator/gas appliance questions`;
+1. SAFETY FIRST - Always prioritize gas safety and warn about hazards
+2. Equipment-specific guidance based on appliance type
+3. Be conversational and helpful, not clinical
+4. Use emojis and formatting for engagement
+5. Remember context from the conversation
+6. Provide step-by-step guidance for safe procedures
+7. Know when to call professionals vs DIY tasks`;
 
   if (mode === 'homeowner') {
     return basePrompt + `
@@ -884,11 +908,12 @@ Key principles:
 HOMEOWNER MODE - Tailor responses for homeowners:
 - Use simple, non-technical language
 - Focus on safe DIY steps they can take
-- Emphasize when to call a professional
+- Emphasize when to call a professional (especially for gas work)
 - Explain WHY they're doing each step
 - Be encouraging and supportive
 - Prioritize most common/likely causes first
-- Use analogies to explain complex concepts`;
+- Use analogies to explain complex concepts
+- Always stress gas safety - "when in doubt, call a pro"`;
   } else {
     return basePrompt + `
 
@@ -898,7 +923,9 @@ TECHNICIAN MODE - Provide professional-level guidance:
 - Reference diagnostic equipment and tools needed
 - Provide troubleshooting sequences
 - Include electrical, gas, and refrigerant safety protocols
-- Assume professional knowledge and EPA certification where applicable`;
+- Assume professional knowledge and EPA/gas certifications where applicable
+- Reference code requirements (NFPA, local gas codes)
+- Include combustion analysis procedures where relevant`;
   }
 }
 
