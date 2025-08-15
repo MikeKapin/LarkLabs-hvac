@@ -2643,7 +2643,7 @@
                 }
 
                 if (input.trim().length < 3) {
-                    const errorResponse = "🤔 **Need More Details**\n\nPlease ask a specific question.";
+                    const errorResponse = "🤔 **Need More Details**\n\nPlease ask a specific question about your HVAC system, generator, or gas appliance.";
                     this.addMobileMessage(errorResponse, 'ai');
                     return { text: errorResponse, isError: true };
                 }
@@ -2704,7 +2704,7 @@
                             manualSearchPerformed: true
                         });
                         
-                        return { text: followUpMessage, isError: false };
+                        return { text: followUpMessage, isError: false, manualSearchPerformed: true };
                         
                     } else {
                         // Regular processing
@@ -2729,7 +2729,7 @@
                             manualSearchPerformed: false
                         });
                         
-                        return { text: response, isError: false };
+                        return { text: response, isError: false, manualSearchPerformed: false };
                     }
                     
                 } catch (error) {
@@ -2922,7 +2922,7 @@ What did you find? 🔍`,
 
 What type of equipment and what happens when you try to start it?`,
 
-                    general: `**HVAC issue! ${contextInfo}**
+                    general: `**HVAC/Generator issue! ${contextInfo}**
 
 **Tell me:**
 🔧 What type of system?
@@ -2934,6 +2934,11 @@ What type of equipment and what happens when you try to start it?`,
 🚨 Gas smell = call gas company
 💧 Water leaking = turn off system  
 ⚡ Sparks/burning = turn off power
+
+**I can help with:**
+📸 Photo analysis of rating plates
+🔍 Manual searches for service documentation
+🛠️ Troubleshooting steps
 
 What's going on? I'm here to help! 😊`
                 };
@@ -3156,7 +3161,10 @@ What's your current diagnostic status?`
 
             try {
                 const response = await window.mobileHvacJack.processUserInput(message);
-                addMobileMessage(response.text, 'ai');
+                // Manual search handles its own messaging, only add for non-manual-search responses
+                if (!response.manualSearchPerformed) {
+                    addMobileMessage(response.text, 'ai');
+                }
             } catch (error) {
                 addMobileMessage('❌ Sorry! Something went wrong. Try again?', 'ai');
                 window.mobileHvacJack.hapticFeedback('heavy');
