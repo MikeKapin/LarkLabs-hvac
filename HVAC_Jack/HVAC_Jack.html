@@ -1807,11 +1807,12 @@
                 // Model/Serial number patterns for equipment identification
                 this.modelPatterns = [
                     /\b[A-Z]{2,}\d{2,}[A-Z]?\d*[A-Z]?\b/g, // Standard model patterns like 58MXA080, TEM4A0B30H
-                    /\b\d{4}[A-Z]{2,}\d+\b/g, // Patterns like 2000ABV123
+                    /\b\d{4,}[A-Z]{0,3}\d*\b/g, // Patterns like 0044563, 2000ABV123
                     /\b[A-Z]+\d{2,}[A-Z]*\d*\b/g, // Flexible patterns
-                    /\bModel\s*:?\s*([A-Z0-9\-]+)/gi, // "Model: XYZ123"
-                    /\bSerial\s*:?\s*([A-Z0-9\-]+)/gi, // "Serial: ABC123"
-                    /\b([A-Z]{2,}\d{4,}[A-Z]?)\b/g // Brand + numbers
+                    /\bModel\s*#?\s*:?\s*([A-Z0-9\-]+)/gi, // "Model # 0044563"
+                    /\bSerial\s*#?\s*:?\s*([A-Z0-9\-]+)/gi, // "Serial# 4350808"
+                    /\b([A-Z]{2,}\d{4,}[A-Z]?)\b/g, // Brand + numbers
+                    /\b(#\s*\d{4,})\b/g // # followed by numbers
                 ];
 
                 // Brand detection patterns
@@ -1833,16 +1834,6 @@
                     'champion': /\bchampion\b/i,
                     'westinghouse': /\bwestinghouse\b/i
                 };
-
-                // Essential content restrictions only
-                this.prohibitedPatterns = [
-                    /\b(porn|sex|nude|naked|explicit|adult|xxx|nsfw)\b/i,
-                    /\b(write|create|build|develop|generate)\s+(large|complex|full|complete)\s+(code|program|script|application|database|website)\b/i
-                ];
-
-                this.suspiciousPatterns = [
-                    /repeated\s+text|(.)\1{15,}/i, // Obvious spam patterns only
-                ];
             }
 
             // Detect if input contains model/serial numbers that warrant a manual search
@@ -2144,25 +2135,31 @@
                     return validation;
                 }
 
-                // 4. Check for prohibited content (streamlined)
-                const prohibitedMatch = this.prohibitedPatterns.find(pattern => pattern.test(input));
-                if (prohibitedMatch) {
+                // 4. Check for prohibited content (only serious violations)
+                if (/\b(porn|sex|nude|naked|explicit|adult|xxx|nsfw)\b/i.test(input)) {
                     validation.isValid = false;
-                    validation.reason = 'I can help with HVAC, heating, cooling, and gas appliance questions.';
+                    validation.reason = 'Inappropriate content detected.';
                     validation.category = 'prohibited';
                     return validation;
                 }
 
-                // 5. Check for spam patterns
-                const suspiciousMatch = this.suspiciousPatterns.find(pattern => pattern.test(input));
-                if (suspiciousMatch) {
+                // 5. Check for large coding requests only
+                if (/\b(write|create|build|develop|generate)\s+(large|complex|full|complete|entire)\s+(application|database|website|system)\b/i.test(input)) {
+                    validation.isValid = false;
+                    validation.reason = 'I can help with HVAC systems rather than large software development projects.';
+                    validation.category = 'prohibited';
+                    return validation;
+                }
+
+                // 6. Check for obvious spam only (very long repeated patterns)
+                if (/(.)\1{20,}/.test(input) || /(.{1,5})\1{10,}/.test(input)) {
                     validation.isValid = false;
                     validation.reason = 'This message appears to be spam. Please ask a normal question.';
                     validation.category = 'suspicious';
                     return validation;
                 }
 
-                // 6. Basic sanitization
+                // 7. Basic sanitization
                 validation.sanitizedInput = this.sanitizeInput(input);
 
                 return validation;
