@@ -1804,36 +1804,6 @@
             }
 
             initializeContentFilters() {
-                // Enhanced HVAC-related keywords including gas appliances and generators
-                this.hvacKeywords = [
-                    'hvac', 'heating', 'cooling', 'furnace', 'air conditioner', 'ac', 'heat pump',
-                    'thermostat', 'duct', 'filter', 'compressor', 'condenser', 'evaporator',
-                    'refrigerant', 'blower', 'motor', 'fan', 'coil', 'vent', 'airflow',
-                    'temperature', 'humidity', 'btu', 'cfm', 'tonnage', 'seer', 'efficiency',
-                    'gas', 'electric', 'propane', 'oil', 'boiler', 'radiator', 'baseboard',
-                    'central air', 'mini split', 'ductless', 'zoning', 'damper', 'plenum',
-                    'return air', 'supply air', 'exhaust', 'ventilation', 'indoor air quality',
-                    'carbon monoxide', 'heat exchanger', 'igniter', 'pilot light', 'flame sensor',
-                    'pressure switch', 'limit switch', 'capacitor', 'contactor', 'relay',
-                    'transformer', 'circuit board', 'control board', 'wiring', 'electrical',
-                    'refrigeration', 'defrost', 'superheat', 'subcooling', 'manifold',
-                    'leak', 'repair', 'maintenance', 'service', 'installation', 'replacement',
-                    'troubleshoot', 'diagnose', 'problem', 'issue', 'malfunction', 'broken',
-                    'not working', 'noise', 'smell', 'smoke', 'water', 'ice', 'frozen',
-                    'hot', 'cold', 'warm', 'cool', 'cycling', 'running', 'starting', 'system', 'unit',
-                    'rating plate', 'model number', 'serial number', 'warranty', 'photo', 'picture', 'analyze',
-                    // Gas appliances and generators
-                    'generator', 'standby generator', 'portable generator', 'whole house generator',
-                    'gas valve', 'gas line', 'natural gas', 'propane tank', 'gas meter',
-                    'gas water heater', 'gas range', 'gas fireplace', 'gas furnace',
-                    'gas dryer', 'gas grill', 'gas appliance', 'gas connection',
-                    'gas leak', 'gas detector', 'gas shut off', 'gas regulator',
-                    'kohler', 'generac', 'briggs', 'honda', 'champion', 'westinghouse',
-                    'duromax', 'predator', 'powerstroke', 'firman', 'wen', 'pulsar',
-                    'manual', 'service manual', 'installation manual', 'parts manual',
-                    'diagnostic', 'troubleshooting guide', 'wiring diagram', 'schematic'
-                ];
-
                 // Model/Serial number patterns for equipment identification
                 this.modelPatterns = [
                     /\b[A-Z]{2,}\d{2,}[A-Z]?\d*[A-Z]?\b/g, // Standard model patterns like 58MXA080, TEM4A0B30H
@@ -1864,19 +1834,14 @@
                     'westinghouse': /\bwestinghouse\b/i
                 };
 
+                // Essential content restrictions only
                 this.prohibitedPatterns = [
                     /\b(porn|sex|nude|naked|explicit|adult|xxx|nsfw)\b/i,
-                    /\b(code|program|script|function|api|database|python|javascript|html|css|sql|php|github|stackoverflow|programming)\b/i,
-                    /\b(download|upload|file|document|pdf|database|spreadsheet|excel|csv)\b/i,
-                    /\b(recipe|cooking|medical|legal|financial|politics|religion|homework|essay|assignment)\b/i,
-                    /\b(ignore|bypass|override|system prompt|jailbreak|pretend|roleplay|character|act as|you are now|from now on)\b/i
+                    /\b(write|create|build|develop|generate)\s+(large|complex|full|complete)\s+(code|program|script|application|database|website)\b/i
                 ];
 
                 this.suspiciousPatterns = [
-                    /\b(hack|crack|exploit|vulnerability|illegal|criminal|dangerous|harmful)\b/i,
-                    /repeated\s+text|(.)\1{10,}/i,
-                    /[A-Z]{20,}/,
-                    /(.{1,10})\1{3,}/
+                    /repeated\s+text|(.)\1{15,}/i, // Obvious spam patterns only
                 ];
             }
 
@@ -2155,57 +2120,49 @@
                     sanitizedInput: input.trim()
                 };
 
+                // 1. Length check
                 if (input.length > this.maxMessageLength) {
                     validation.isValid = false;
-                    validation.reason = `Message too long (${input.length}/${this.maxMessageLength} characters). Please keep HVAC questions concise.`;
+                    validation.reason = `Message too long (${input.length}/${this.maxMessageLength} characters). Please keep questions concise.`;
                     validation.category = 'length';
                     return validation;
                 }
 
+                // 2. Rate limiting
                 if (!this.checkRateLimit()) {
                     validation.isValid = false;
-                    validation.reason = 'Too many messages. Please wait a moment before sending another HVAC question.';
+                    validation.reason = 'Too many messages. Please wait a moment before sending another question.';
                     validation.category = 'rate_limit';
                     return validation;
                 }
 
-                if (input.trim().length < 3 || /^[^a-zA-Z]*$/.test(input.trim())) {
+                // 3. Empty input check
+                if (input.trim().length < 3) {
                     validation.isValid = false;
-                    validation.reason = 'Please ask a specific HVAC question.';
+                    validation.reason = 'Please ask a specific question.';
                     validation.category = 'empty';
                     return validation;
                 }
 
+                // 4. Check for prohibited content (streamlined)
                 const prohibitedMatch = this.prohibitedPatterns.find(pattern => pattern.test(input));
                 if (prohibitedMatch) {
                     validation.isValid = false;
-                    validation.reason = 'HVAC Jack only helps with heating, cooling, and ventilation questions. Please ask about your HVAC system.';
+                    validation.reason = 'I can help with HVAC, heating, cooling, and gas appliance questions.';
                     validation.category = 'prohibited';
                     return validation;
                 }
 
+                // 5. Check for spam patterns
                 const suspiciousMatch = this.suspiciousPatterns.find(pattern => pattern.test(input));
                 if (suspiciousMatch) {
                     validation.isValid = false;
-                    validation.reason = 'This message seems suspicious. HVAC Jack only discusses heating and cooling systems.';
+                    validation.reason = 'This message appears to be spam. Please ask a normal question.';
                     validation.category = 'suspicious';
                     return validation;
                 }
 
-                const hasHvacKeywords = this.hvacKeywords.some(keyword => 
-                    input.toLowerCase().includes(keyword.toLowerCase())
-                );
-
-                const isFollowUp = this.conversationHistory.length > 0;
-                const hasGeneralTerms = /\b(it|this|that|system|unit|equipment|problem|issue|help|why|how|what|when|where)\b/i.test(input);
-
-                if (!hasHvacKeywords && !isFollowUp && !hasGeneralTerms) {
-                    validation.isValid = false;
-                    validation.reason = 'HVAC Jack specializes in heating, cooling, and ventilation. Please ask about your HVAC system, furnace, AC, heat pump, or related equipment.';
-                    validation.category = 'off_topic';
-                    return validation;
-                }
-
+                // 6. Basic sanitization
                 validation.sanitizedInput = this.sanitizeInput(input);
 
                 return validation;
@@ -2237,20 +2194,18 @@
 
             generateValidationErrorResponse(validation) {
                 const responses = {
-                    length: "⚠️ **Message Too Long**\n\nPlease keep your HVAC questions shorter and more specific. Try asking about one issue at a time!\n\n**Examples:**\n• \"My furnace won't start\"\n• \"AC is making strange noises\"\n• \"No heat from vents\"",
+                    length: "⚠️ **Message Too Long**\n\nPlease keep your questions shorter and more specific. Try asking about one issue at a time!",
                     
-                    rate_limit: "⏳ **Slow Down!**\n\nYou're asking questions too quickly. Take a moment to try my suggestions, then come back with updates!\n\n💡 **Tip:** Quality over quantity - detailed questions get better answers.",
+                    rate_limit: "⏳ **Slow Down!**\n\nYou're asking questions too quickly. Take a moment to try my suggestions, then come back with updates!",
                     
-                    empty: "🤔 **Need More Details**\n\nI need a specific HVAC question to help you!\n\n**Try asking:**\n• What's wrong with your heating/cooling?\n• What symptoms are you seeing?\n• What type of system do you have?",
+                    empty: "🤔 **Need More Details**\n\nI need a specific question to help you! Try asking about your heating, cooling, or gas appliance issue.",
                     
-                    prohibited: "🔧 **HVAC Questions Only**\n\nI'm HVAC Jack - I only help with heating, cooling, and ventilation systems!\n\n**I can help with:**\n• Furnaces & boilers\n• Air conditioners & heat pumps\n• Thermostats & controls\n• Ductwork & airflow\n• System maintenance",
+                    prohibited: "🔧 **Content Restriction**\n\nI can help with HVAC systems, heating, cooling, generators, and gas appliances. Please ask about those topics.",
                     
-                    suspicious: "🚨 **Invalid Request**\n\nThat doesn't look like an HVAC question. I'm here to help with heating and cooling systems only.\n\n**Ask me about:**\n• System problems\n• Strange noises or smells\n• Temperature issues\n• Equipment troubleshooting",
-                    
-                    off_topic: "❌ **Off-Topic**\n\nI'm specialized in HVAC systems only! Please ask about:\n\n🔥 **Heating:** Furnaces, boilers, heat pumps\n❄️ **Cooling:** Air conditioners, evaporative coolers\n🌪️ **Ventilation:** Fans, ductwork, air quality\n🎛️ **Controls:** Thermostats, sensors, smart systems"
+                    suspicious: "🚨 **Invalid Message**\n\nThat message appears to be spam. Please ask a normal question about your equipment."
                 };
 
-                return responses[validation.category] || responses.off_topic;
+                return responses[validation.category] || responses.prohibited;
             }
 
             async trackUsage(eventType, data = {}) {
