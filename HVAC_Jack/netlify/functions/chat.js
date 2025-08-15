@@ -152,35 +152,344 @@ async function performManualWebSearch(message, systemContext, mode) {
     
     console.log('Searching for manuals:', { brand, model, equipmentType });
 
-    // Perform multiple targeted searches
-    const searchResults = await Promise.allSettled([
-      searchForManuals(brand, model, 'service manual'),
-      searchForManuals(brand, model, 'installation guide'),
-      searchForManuals(brand, model, 'wiring diagram'),
-      searchForManuals(brand, model, 'parts manual'),
-      searchOfficialSite(brand, model)
-    ]);
+    if (!brand || !model) {
+      return `**🔍 Manual Search**
 
-    // Process and combine results
-    const manuals = [];
-    searchResults.forEach((result, index) => {
-      if (result.status === 'fulfilled' && result.value) {
-        manuals.push(...result.value);
-      }
-    });
+I need more specific information to find manuals. Please provide:
 
-    // Remove duplicates based on URL
-    const uniqueManuals = manuals.filter((manual, index, self) => 
-      index === self.findIndex(m => m.url === manual.url)
-    );
+**Required Information:**
+• **Brand/Manufacturer**: Generac, Kohler, Carrier, Trane, etc.
+• **Model Number**: Complete model number from rating plate
 
-    // Format response with actual manual links
-    return formatManualSearchResponse(uniqueManuals, brand, model, equipmentType, mode);
+**Example:**
+"Find manuals for Generac model 0044563"
+
+What specific equipment are you looking for manuals for?`;
+    }
+
+    // Call the dedicated search function
+    const searchResult = await searchForActualManuals(brand, model, equipmentType);
+    
+    if (searchResult.length === 0) {
+      return generateFallbackManualResponse(brand, model, mode);
+    }
+
+    // Format response with real manual links
+    return formatRealManualSearchResponse(searchResult, brand, model, equipmentType, mode);
 
   } catch (error) {
     console.error('Manual search error:', error);
     return generateFallbackManualResponse(systemContext?.brand, systemContext?.model, mode);
   }
+}
+
+// Real manual search implementation using SerpAPI
+async function searchForActualManuals(brand, model, equipmentType) {
+  if (!process.env.SERPAPI_KEY) {
+    throw new Error('SERPAPI_KEY not configured');
+  }
+
+  const manuals = [];
+  
+  // Search for different types of manuals with targeted queries
+  const searchQueries = [
+    `${brand} ${model} service manual filetype:pdf`,
+    `${brand} ${model} installation manual filetype:pdf`,
+    `${brand} ${model} user manual filetype:pdf`,
+    `${brand} ${model} parts manual filetype:pdf`,
+    `site:${getBrandDomain(brand)} ${model} manual`,
+    `"${brand}" "${model}" manual download`,
+    `${brand} ${model} troubleshooting guide`,
+    `${brand} ${model} wiring diagram`
+  ];
+
+  // Perform searches with rate limiting
+  for (let i = 0; i < searchQueries.length && i < 5; i++) {
+    const query = searchQueries[i];
+    try {
+      console.log(`Searching: ${query}`);
+      const results = await performSerpAPISearch(query);
+      const manualResults = filterForManuals(results, brand, model);
+      manuals.push(...manualResults);
+      
+      // Rate limiting - don't overwhelm the API
+      if (i < searchQueries.length - 1) {
+        await delay(300);
+      }
+      
+    } catch (error) {
+      console.error(`Search failed for query: ${query}`, error);
+    }
+  }
+
+  // Remove duplicates and rank by relevance
+  const uniqueManuals = removeDuplicateManuals(manuals);
+  const rankedManuals = rankManualsByRelevance(uniqueManuals, brand, model);
+  
+  console.log(`Found ${rankedManuals.length} unique manuals`);
+  return rankedManuals.slice(0, 8); // Return top 8 results
+}
+
+// SerpAPI search implementation
+async function performSerpAPISearch(query) {
+  const apiKey = process.env.SERPAPI_KEY;
+  const url = `https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${apiKey}&num=10&gl=us&hl=en`;
+  
+  const response = await fetch(url);
+  
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`SerpAPI error: ${response.status} - ${errorText}`);
+  }
+  
+  const data = await response.json();
+  
+  if (data.error) {
+    throw new Error(`SerpAPI error: ${data.error}`);
+  }
+  
+  return data.organic_results || [];
+}
+
+// Filter search results for actual manuals
+function filterForManuals(results, brand, model) {
+  return results
+    .filter(result => {
+      const url = result.link.toLowerCase();
+      const title = result.title.toLowerCase();
+      const snippet = (result.snippet || '').toLowerCase();
+      
+      // Must contain brand and model (case insensitive)
+      const hasBrand = title.includes(brand.toLowerCase()) || snippet.includes(brand.toLowerCase()) || url.includes(brand.toLowerCase());
+      const hasModel = title.includes(model.toLowerCase()) || snippet.includes(model.toLowerCase()) || url.includes(model.toLowerCase());
+      
+      // Look for manual indicators
+      const manualKeywords = [
+        'manual', 'guide', 'instruction', 'documentation', 'service',
+        'installation', 'operation', 'maintenance', 'repair', 'parts',
+        'troubleshooting', 'user guide', 'owner manual', 'pdf'
+      ];
+      
+      const hasManualKeyword = manualKeywords.some(keyword => 
+        title.includes(keyword) || snippet.includes(keyword) || url.includes(keyword)
+      );
+      
+      // Check for quality indicators
+      const isPDF = url.includes('.pdf') || title.includes('pdf');
+      const isOfficialSite = isOfficialManufacturerSite(url, brand);
+      const isManualSite = isKnownManualSite(url);
+      
+      // Filter out irrelevant results
+      const badKeywords = ['forum', 'reddit', 'facebook', 'ebay', 'amazon', 'craigslist'];
+      const hasBadKeyword = badKeywords.some(keyword => url.includes(keyword));
+      
+      return (hasBrand || hasModel) && hasManualKeyword && !hasBadKeyword && (isPDF || isOfficialSite || isManualSite);
+    })
+    .map(result => ({
+      title: result.title,
+      url: result.link,
+      description: result.snippet || '',
+      isPDF: result.link.toLowerCase().includes('.pdf'),
+      isOfficial: isOfficialManufacturerSite(result.link, brand),
+      type: determineManualType(result.title, result.snippet || ''),
+      relevanceScore: calculateRelevanceScore(result, brand, model)
+    }));
+}
+
+// Check if URL is from official manufacturer
+function isOfficialManufacturerSite(url, brand) {
+  const officialDomains = {
+    'generac': ['generac.com', 'generacpower.com'],
+    'kohler': ['kohler.com', 'kohlerpower.com', 'kohlerengines.com'],
+    'carrier': ['carrier.com', 'carrier.ca'],
+    'trane': ['trane.com', 'tranetechnologies.com'],
+    'lennox': ['lennox.com', 'lennoxinternational.com'],
+    'york': ['york.com', 'johnsoncontrols.com'],
+    'rheem': ['rheem.com', 'rheemproducts.com'],
+    'goodman': ['goodman-mfg.com', 'goodmanmfg.com'],
+    'coleman': ['colemanac.com', 'coleman-hvac.com'],
+    'heil': ['heil-hvac.com'],
+    'payne': ['payne.com'],
+    'briggs': ['briggsandstratton.com'],
+    'honda': ['honda.com', 'hondaengines.com'],
+    'champion': ['championpowerequipment.com'],
+    'westinghouse': ['westinghouseoutdoorpower.com']
+  };
+  
+  const domains = officialDomains[brand.toLowerCase()] || [];
+  return domains.some(domain => url.includes(domain));
+}
+
+// Check if URL is from known manual repository
+function isKnownManualSite(url) {
+  const manualSites = [
+    'manualslib.com',
+    'repairclinic.com',
+    'appliancepartspros.com',
+    'partstown.com',
+    'searspartsdirect.com',
+    'manualzilla.com',
+    'manualscat.com',
+    'manualsplace.com',
+    'manualsdir.com'
+  ];
+  
+  return manualSites.some(site => url.includes(site));
+}
+
+// Determine what type of manual this is
+function determineManualType(title, snippet) {
+  const text = (title + ' ' + snippet).toLowerCase();
+  
+  if (text.includes('service') || text.includes('repair')) return 'Service Manual';
+  if (text.includes('installation') || text.includes('install')) return 'Installation Guide';
+  if (text.includes('user') || text.includes('owner') || text.includes('operation')) return 'User Manual';
+  if (text.includes('parts') || text.includes('component')) return 'Parts Manual';
+  if (text.includes('troubleshoot') || text.includes('diagnostic')) return 'Troubleshooting Guide';
+  if (text.includes('wiring') || text.includes('electrical')) return 'Wiring Diagram';
+  if (text.includes('maintenance')) return 'Maintenance Guide';
+  
+  return 'Documentation';
+}
+
+// Calculate relevance score for ranking
+function calculateRelevanceScore(result, brand, model) {
+  let score = 0;
+  const title = result.title.toLowerCase();
+  const snippet = (result.snippet || '').toLowerCase();
+  const url = result.link.toLowerCase();
+  const text = title + ' ' + snippet + ' ' + url;
+  
+  // Exact brand and model matches
+  if (text.includes(brand.toLowerCase())) score += 20;
+  if (text.includes(model.toLowerCase())) score += 30;
+  
+  // Title matches are more important
+  if (title.includes(brand.toLowerCase())) score += 10;
+  if (title.includes(model.toLowerCase())) score += 15;
+  
+  // File type bonus
+  if (url.includes('.pdf')) score += 15;
+  
+  // Official site bonus
+  if (isOfficialManufacturerSite(url, brand)) score += 25;
+  
+  // Manual type keywords
+  if (text.includes('service manual')) score += 15;
+  if (text.includes('installation guide')) score += 10;
+  if (text.includes('user manual')) score += 8;
+  if (text.includes('parts manual')) score += 12;
+  
+  // Known manual sites
+  if (isKnownManualSite(url)) score += 8;
+  
+  // Penalty for generic terms
+  if (text.includes('forum') || text.includes('discussion')) score -= 10;
+  
+  return score;
+}
+
+// Remove duplicate manuals based on URL similarity
+function removeDuplicateManuals(manuals) {
+  const seen = new Set();
+  return manuals.filter(manual => {
+    // Normalize URL for comparison
+    const normalizedUrl = manual.url.toLowerCase()
+      .replace(/^https?:\/\//, '')
+      .replace(/^www\./, '')
+      .replace(/\/$/, '')
+      .replace(/\?.*$/, '')
+      .replace(/#.*$/, '');
+    
+    if (seen.has(normalizedUrl)) return false;
+    seen.add(normalizedUrl);
+    return true;
+  });
+}
+
+// Rank manuals by relevance score and type
+function rankManualsByRelevance(manuals, brand, model) {
+  return manuals.sort((a, b) => {
+    // Official sites first
+    if (a.isOfficial && !b.isOfficial) return -1;
+    if (!a.isOfficial && b.isOfficial) return 1;
+    
+    // PDFs next
+    if (a.isPDF && !b.isPDF) return -1;
+    if (!a.isPDF && b.isPDF) return 1;
+    
+    // Then by relevance score
+    return b.relevanceScore - a.relevanceScore;
+  });
+}
+
+// Format response with real manual download links
+function formatRealManualSearchResponse(manuals, brand, model, equipmentType, mode) {
+  let response = `**📚 Manual Search Results for ${brand} ${model}**\n\n`;
+  response += `🔍 **Found ${manuals.length} actual manual(s) and documentation:**\n\n`;
+
+  manuals.forEach((manual, index) => {
+    const number = index + 1;
+    const typeEmoji = getManualTypeEmoji(manual.type);
+    const sourceEmoji = manual.isOfficial ? '🏭' : manual.isPDF ? '📄' : '🌐';
+    
+    response += `**${number}. ${typeEmoji} ${manual.type}**\n`;
+    response += `${sourceEmoji} [${manual.isPDF ? 'Download PDF' : 'View Online'}](${manual.url})\n`;
+    
+    if (manual.isOfficial) {
+      response += `✅ **Official ${brand} Source**\n`;
+    }
+    
+    if (manual.description && manual.description.length > 10) {
+      const shortDesc = manual.description.substring(0, 80);
+      response += `📝 ${shortDesc}${manual.description.length > 80 ? '...' : ''}\n`;
+    }
+    
+    response += '\n';
+  });
+
+  if (mode === 'technician') {
+    response += `**🔧 Technical Notes:**\n`;
+    response += `• Cross-reference model number exactly: **${model}**\n`;
+    response += `• Download PDFs for offline field reference\n`;
+    response += `• Check document revision dates for latest updates\n`;
+    response += `• Official manufacturer docs are most reliable\n\n`;
+  } else {
+    response += `**💡 Download Tips:**\n`;
+    response += `• Click "Download PDF" links to save manuals\n`;
+    response += `• Official ${brand} sources are most reliable\n`;
+    response += `• Check warranty information in user manuals\n`;
+    response += `• Always follow safety guidelines\n\n`;
+  }
+
+  response += `**🔍 Additional Resources:**\n`;
+  response += `• Visit **${brand}.com** support section\n`;
+  response += `• Search for "${brand} ${model} troubleshooting"\n`;
+  response += `• Contact ${brand} customer service: check official website\n\n`;
+  
+  response += `**What specific issue are you troubleshooting with this ${equipmentType}?**`;
+
+  return response;
+}
+
+// Get emoji for manual type
+function getManualTypeEmoji(type) {
+  const emojis = {
+    'Service Manual': '🔧',
+    'Installation Guide': '⚙️',
+    'User Manual': '👤',
+    'Parts Manual': '🔩',
+    'Troubleshooting Guide': '🔍',
+    'Wiring Diagram': '⚡',
+    'Maintenance Guide': '🛠️',
+    'Documentation': '📋'
+  };
+  return emojis[type] || '📄';
+}
+
+// Utility delay function
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // Real web search function using a search API
