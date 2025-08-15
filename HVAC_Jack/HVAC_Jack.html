@@ -1795,24 +1795,48 @@
                     /\b(#\s*\d{4,})\b/g // # followed by numbers
                 ];
 
-                // Brand detection patterns
+                // Brand detection patterns - expanded for all gas appliance manufacturers
                 this.brandPatterns = {
                     'carrier': /\b(carrier|bryant)\b/i,
                     'trane': /\b(trane|american standard)\b/i,
-                    'lennox': /\blennox\b/i,
-                    'york': /\byork\b/i,
-                    'rheem': /\b(rheem|ruud)\b/i,
+                    'lennox': /\b(lennox)\b/i,
+                    'york': /\b(york|luxaire|coleman|champion|guardian)\b/i,
+                    'rheem': /\b(rheem|ruud|richmond)\b/i,
                     'goodman': /\b(goodman|amana|daikin)\b/i,
-                    'coleman': /\bcoleman\b/i,
-                    'heil': /\bheil\b/i,
-                    'payne': /\bpayne\b/i,
-                    'ducane': /\bducane\b/i,
-                    'generac': /\bgenerac\b/i,
-                    'kohler': /\bkohler\b/i,
-                    'briggs': /\bbriggs\b/i,
-                    'honda': /\bhonda\b/i,
-                    'champion': /\bchampion\b/i,
-                    'westinghouse': /\bwestinghouse\b/i
+                    'coleman': /\b(coleman|evcon)\b/i,
+                    'heil': /\b(heil|tempstar|comfortmaker|keeprite)\b/i,
+                    'payne': /\b(payne)\b/i,
+                    'ducane': /\b(ducane)\b/i,
+                    'generac': /\b(generac|guardian|honeywell)\b/i,
+                    'kohler': /\b(kohler)\b/i,
+                    'briggs': /\b(briggs|stratton)\b/i,
+                    'honda': /\b(honda)\b/i,
+                    'champion': /\b(champion power)\b/i,
+                    'westinghouse': /\b(westinghouse)\b/i,
+                    'ao smith': /\b(ao smith|a\.?o\.? smith|smith)\b/i,
+                    'bradford white': /\b(bradford white|bradford)\b/i,
+                    'state': /\b(state water|state select)\b/i,
+                    'whirlpool': /\b(whirlpool)\b/i,
+                    'ge': /\b(general electric|ge)\b/i,
+                    'american water heater': /\b(american water heater|american standard water)\b/i,
+                    'noritz': /\b(noritz)\b/i,
+                    'rinnai': /\b(rinnai)\b/i,
+                    'navien': /\b(navien)\b/i,
+                    'takagi': /\b(takagi)\b/i,
+                    'bosch': /\b(bosch|thermotechnology)\b/i,
+                    'lochinvar': /\b(lochinvar)\b/i,
+                    'weil mclain': /\b(weil mclain|weil-mclain)\b/i,
+                    'burnham': /\b(burnham)\b/i,
+                    'crown boiler': /\b(crown boiler|crown)\b/i,
+                    'peerless': /\b(peerless)\b/i,
+                    'slant fin': /\b(slant fin|slant-fin)\b/i,
+                    'new yorker': /\b(new yorker)\b/i,
+                    'dunkirk': /\b(dunkirk)\b/i,
+                    'embassy': /\b(embassy)\b/i,
+                    'modine': /\b(modine)\b/i,
+                    'sterling': /\b(sterling)\b/i,
+                    'reznor': /\b(reznor)\b/i,
+                    'trane unit heater': /\b(trane unit heater)\b/i
                 };
                 
                 this.init();
@@ -2098,12 +2122,25 @@
                     query += ` (serial number: ${identifiers.serials[0]})`;
                 }
                 
-                // Add equipment type context
+                // Enhanced equipment type detection for gas appliances
+                let equipmentType = 'equipment';
                 if (identifiers.brands.includes('generac') || identifiers.brands.includes('kohler') || /generator/i.test(originalInput)) {
-                    query += ". This is a backup generator system";
-                } else if (/\b(furnace|boiler|heat pump|ac|air condition)\b/i.test(originalInput)) {
-                    query += ". This is HVAC equipment";
+                    equipmentType = 'backup generator system';
+                } else if (/\b(furnace|heating|heat)\b/i.test(originalInput)) {
+                    equipmentType = 'gas furnace';
+                } else if (/\b(water heater|hot water)\b/i.test(originalInput)) {
+                    equipmentType = 'gas water heater';
+                } else if (/\b(boiler|steam|hydronic)\b/i.test(originalInput)) {
+                    equipmentType = 'gas boiler';
+                } else if (/\b(unit heater|garage heater|space heater)\b/i.test(originalInput)) {
+                    equipmentType = 'gas unit heater';
+                } else if (/\b(air condition|ac|cooling|condenser)\b/i.test(originalInput)) {
+                    equipmentType = 'air conditioning system';
+                } else if (/\b(heat pump|dual fuel)\b/i.test(originalInput)) {
+                    equipmentType = 'heat pump system';
                 }
+                
+                query += `. This is a ${equipmentType}`;
                 
                 query += ". Please search for and provide direct links to:";
                 query += "\n• Official manufacturer service manuals";
@@ -2112,6 +2149,8 @@
                 query += "\n• Parts lists and diagrams";
                 query += "\n• Troubleshooting guides";
                 query += "\n• Technical bulletins";
+                query += "\n• Gas connection and venting requirements";
+                query += "\n• Electrical specifications and requirements";
                 
                 query += "\n\nPlease focus on official manufacturer websites and authoritative technical resources. Provide working download links when available.";
                 
@@ -2527,30 +2566,30 @@
             extractSystemContext(userInput) {
                 const input = userInput.toLowerCase();
                 
-                // Extract equipment types
-                if (input.includes('furnace')) this.systemContext.equipmentType = 'furnace';
-                else if (input.includes('air condition') || input.includes('ac ')) this.systemContext.equipmentType = 'air conditioner';
-                else if (input.includes('heat pump')) this.systemContext.equipmentType = 'heat pump';
-                else if (input.includes('water heater')) this.systemContext.equipmentType = 'water heater';
-                else if (input.includes('generator')) this.systemContext.equipmentType = 'generator';
-                else if (input.includes('boiler')) this.systemContext.equipmentType = 'boiler';
+                // Enhanced equipment type detection for all gas appliances
+                if (input.includes('furnace') || input.includes('heating unit')) this.systemContext.equipmentType = 'gas furnace';
+                else if (input.includes('water heater') || input.includes('hot water')) this.systemContext.equipmentType = 'gas water heater';
+                else if (input.includes('boiler') || input.includes('steam') || input.includes('hydronic')) this.systemContext.equipmentType = 'gas boiler';
+                else if (input.includes('unit heater') || input.includes('garage heater') || input.includes('space heater')) this.systemContext.equipmentType = 'gas unit heater';
+                else if (input.includes('air condition') || input.includes('ac ') || input.includes('cooling')) this.systemContext.equipmentType = 'air conditioner';
+                else if (input.includes('heat pump') || input.includes('dual fuel')) this.systemContext.equipmentType = 'heat pump';
+                else if (input.includes('generator') || input.includes('standby') || input.includes('backup power')) this.systemContext.equipmentType = 'generator';
+                else if (input.includes('range') || input.includes('stove') || input.includes('cooktop')) this.systemContext.equipmentType = 'gas range';
+                else if (input.includes('dryer') || input.includes('clothes dryer')) this.systemContext.equipmentType = 'gas dryer';
+                else if (input.includes('fireplace') || input.includes('gas log')) this.systemContext.equipmentType = 'gas fireplace';
                 
-                // Extract problems
-                if (input.includes('no heat')) this.systemContext.currentProblem = 'no heat';
+                // Enhanced problem detection
+                if (input.includes('no heat') || input.includes('not heating')) this.systemContext.currentProblem = 'no heat';
+                else if (input.includes('no hot water') || input.includes('cold water')) this.systemContext.currentProblem = 'no hot water';
                 else if (input.includes('no cool') || input.includes('not cooling')) this.systemContext.currentProblem = 'no cooling';
-                else if (input.includes('noise')) this.systemContext.currentProblem = 'strange noises';
-                else if (input.includes('frozen')) this.systemContext.currentProblem = 'frozen system';
-                else if (input.includes('cycling')) this.systemContext.currentProblem = 'short cycling';
-                else if (input.includes('won\'t start') || input.includes('not starting')) this.systemContext.currentProblem = 'won\'t start';
-
-                // Extract brand and model info
-                const identifiers = this.detectEquipmentIdentifiers(userInput);
-                if (identifiers.brands.length > 0) {
-                    this.systemContext.brand = identifiers.brands[0];
-                }
-                if (identifiers.models.length > 0) {
-                    this.systemContext.model = identifiers.models[0];
-                }
+                else if (input.includes('noise') || input.includes('sound') || input.includes('loud')) this.systemContext.currentProblem = 'strange noises';
+                else if (input.includes('frozen') || input.includes('ice')) this.systemContext.currentProblem = 'frozen system';
+                else if (input.includes('cycling') || input.includes('short cycle')) this.systemContext.currentProblem = 'short cycling';
+                else if (input.includes('won\'t start') || input.includes('not starting') || input.includes('no ignition')) this.systemContext.currentProblem = 'won\'t start';
+                else if (input.includes('gas smell') || input.includes('smell gas')) this.systemContext.currentProblem = 'gas odor - SAFETY ISSUE';
+                else if (input.includes('pilot') || input.includes('flame')) this.systemContext.currentProblem = 'pilot/flame issue';
+                else if (input.includes('leak') || input.includes('water')) this.systemContext.currentProblem = 'water leak';
+                else if (input.includes('error') || input.includes('code') || input.includes('fault')) this.systemContext.currentProblem = 'error code';
             }
 
             async checkBackendConnection() {
