@@ -160,16 +160,16 @@
             display: none !important;
         }
 
-        /* Main App Styles */
+        /* Main App Styles - OPTIMIZED HEADER */
         .mobile-header {
             background: rgba(26, 31, 46, 0.95);
-            padding: 0.5rem;
+            padding: 0.75rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
-            min-height: 140px;
+            min-height: 70px;
             display: flex;
             flex-direction: column;
             border-bottom: 1px solid #2D3748;
@@ -177,18 +177,14 @@
 
         .mobile-header-content {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
             gap: 0.5rem;
             position: relative;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .header-settings-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
             width: 40px;
             height: 40px;
             background: #E85A4F;
@@ -204,6 +200,7 @@
             z-index: 1001;
             transition: all 0.3s;
             touch-action: manipulation;
+            flex-shrink: 0;
         }
 
         .header-settings-btn:active {
@@ -211,40 +208,22 @@
             background: #C53030;
         }
 
-        .header-logo {
-            position: static;
-            width: 90vw;
-            height: 110px;
-            cursor: pointer;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            max-width: 500px;
-            margin: 0.1rem auto;
-        }
-
-        .header-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        .mobile-logo {
-            font-size: 1.2rem;
+        /* HVAC Jack Text Logo - Replaces Image Logo */
+        .header-title {
+            font-size: 1.8rem;
             font-weight: bold;
             color: #E85A4F;
             display: flex;
             align-items: center;
-            margin: 0 auto;
-            padding-left: 50px;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+            text-align: center;
         }
 
-        .mobile-logo::before {
+        .header-title::before {
             content: "🔧";
-            margin-right: 8px;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
         }
 
         .mobile-mode-toggle {
@@ -280,9 +259,9 @@
             color: #A0AEC0;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.3rem;
             width: 100%;
-            margin-top: 0.2rem;
         }
 
         .mobile-status-dot {
@@ -309,7 +288,7 @@
 
         .main-container {
             padding: 0;
-            height: calc(100vh - 140px);
+            height: calc(100vh - 70px);
             display: flex;
             flex-direction: column;
             position: relative;
@@ -1125,10 +1104,8 @@
                     <button class="mobile-mode-btn active" id="mobileHomeownerBtn" onclick="switchMode('homeowner')">🏠 Home</button>
                     <button class="mobile-mode-btn" id="mobileTechnicianBtn" onclick="switchMode('technician')">🔧 Tech</button>
                 </div>
+                <div class="header-title">HVAC Jack</div>
                 <button class="header-settings-btn" onclick="showMobileMenu()">⚙️</button>
-                <a href="#" class="header-logo">
-                    <img src="logo_2.png" alt="HVAC Jack Logo" />
-                </a>
             </div>
             <div class="mobile-status">
                 <div class="mobile-status-dot connecting" id="mobileStatusDot"></div>
