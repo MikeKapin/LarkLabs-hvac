@@ -3462,5 +3462,55 @@ What's your current diagnostic status?`
             window.mobileHvacJack.hapticFeedback('success');
         }
     </script>
+    <script>
+// Make chat messages selectable and links clickable
+function makeTextSelectable() {
+  // Find the chat container (tries multiple common selectors)
+  const chatContainer = document.querySelector('.chat-messages') || 
+                       document.querySelector('.chat-container') || 
+                       document.querySelector('#chat') ||
+                       document.querySelector('#messages') ||
+                       document.querySelector('[class*="message"]') ||
+                       document.querySelector('[class*="chat"]');
+  
+  if (chatContainer) {
+    // Make all text selectable
+    chatContainer.style.userSelect = 'text';
+    chatContainer.style.webkitUserSelect = 'text';
+    chatContainer.style.mozUserSelect = 'text';
+    chatContainer.style.msUserSelect = 'text';
+    
+    // Convert URL text to clickable links
+    const messageElements = chatContainer.querySelectorAll('*');
+    messageElements.forEach(element => {
+      if (element.textContent && element.children.length === 0) {
+        // Look for URLs in text and make them clickable
+        const urlRegex = /(https?:\/\/[^\s\)]+)/g;
+        if (urlRegex.test(element.textContent)) {
+          element.innerHTML = element.textContent.replace(urlRegex, 
+            '<a href="$1" target="_blank" style="color: #4A90E2; text-decoration: underline; cursor: pointer;">$1</a>'
+          );
+        }
+      }
+    });
+  }
+}
+
+// Run after each message is added
+const observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+      setTimeout(makeTextSelectable, 100);
+    }
+  });
+});
+
+// Start observing
+document.addEventListener('DOMContentLoaded', function() {
+  const chatArea = document.body;
+  observer.observe(chatArea, { childList: true, subtree: true });
+  makeTextSelectable(); // Run once on load
+});
+</script>
 </body>
 </html>
