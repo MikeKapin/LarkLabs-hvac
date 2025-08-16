@@ -483,7 +483,7 @@ function extractEquipmentType(message) {
   return 'gas equipment';
 }
 
-// Format manual search response (simplified for chat context)
+// ENHANCED Format manual search response with BOTH markdown links AND plain URLs
 function formatManualSearchResponse(manuals, brand, model, equipmentType, mode) {
   let response = `**📚 Manual Search Results for ${brand} ${model}**\n\n`;
   response += `🔍 **Found ${manuals.length} manual(s):**\n\n`;
@@ -494,10 +494,18 @@ function formatManualSearchResponse(manuals, brand, model, equipmentType, mode) 
     const sourceEmoji = manual.isOfficial ? '🏭' : manual.isPDF ? '📄' : '🌐';
     
     response += `**${number}. ${typeEmoji} ${manual.type}**\n`;
+    
+    // OPTION 2: Provide BOTH markdown link AND plain URL for maximum compatibility
     response += `${sourceEmoji} [${manual.isPDF ? 'Download PDF' : 'View Online'}](${manual.url})\n`;
+    response += `🔗 **Copy this link:** ${manual.url}\n`;
     
     if (manual.isOfficial) {
       response += `✅ **Official ${brand} Source**\n`;
+    }
+    
+    if (manual.description && manual.description.length > 10) {
+      const shortDesc = manual.description.substring(0, 80);
+      response += `📝 ${shortDesc}${manual.description.length > 80 ? '...' : ''}\n`;
     }
     
     response += '\n';
@@ -505,17 +513,24 @@ function formatManualSearchResponse(manuals, brand, model, equipmentType, mode) 
 
   if (mode === 'technician') {
     response += `**🔧 Technical Notes:**\n`;
-    response += `• Verify model number: **${model}**\n`;
-    response += `• Download PDFs for field reference\n`;
-    response += `• Official sources are most reliable\n\n`;
+    response += `• Cross-reference model number exactly: **${model}**\n`;
+    response += `• Download PDFs for offline field reference\n`;
+    response += `• Check document revision dates for latest updates\n`;
+    response += `• Official manufacturer docs are most reliable\n\n`;
   } else {
-    response += `**💡 Tips:**\n`;
-    response += `• Click links to download manuals\n`;
-    response += `• Official ${brand} sources are best\n`;
-    response += `• Save manuals for future reference\n\n`;
+    response += `**💡 Download Tips:**\n`;
+    response += `• Click the links above OR copy/paste the URLs into your browser\n`;
+    response += `• Right-click PDF links and "Save As" to download\n`;
+    response += `• Official ${brand} sources are most reliable\n`;
+    response += `• Check warranty information in user manuals\n\n`;
   }
+
+  response += `**🔍 Additional Resources:**\n`;
+  response += `• Visit **${brand}.com** support section\n`;
+  response += `• Search for "${brand} ${model} troubleshooting"\n`;
+  response += `• Contact ${brand} customer service: check official website\n\n`;
   
-  response += `**What specific issue are you troubleshooting?**`;
+  response += `**What specific issue are you troubleshooting with this ${equipmentType}?**`;
 
   return response;
 }
