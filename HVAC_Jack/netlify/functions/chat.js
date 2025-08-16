@@ -42,7 +42,8 @@ exports.handler = async (event, context) => {
         messageLength: message?.length,
         mode,
         sessionId,
-        hasPhotoContext: !!photoAnalysisData
+        hasPhotoContext: !!photoAnalysisData,
+        isAutoPhotoSearch: systemContext?.searchType === 'auto_photo_manual_search'
       });
 
       // Basic validation
@@ -172,22 +173,22 @@ exports.handler = async (event, context) => {
   };
 };
 
-// Delegate to manual search function
+// ENHANCED: Delegate to manual search function with photo analysis priority
 async function delegateToManualSearch(message, systemContext, photoAnalysisData, mode) {
-  // Extract equipment details from various sources
-  const brand = systemContext?.brand || 
-                photoAnalysisData?.structuredData?.equipment?.brand || 
+  // Extract equipment details with PHOTO ANALYSIS PRIORITY
+  const brand = photoAnalysisData?.structuredData?.equipment?.brand ||
+                systemContext?.brand || 
                 extractBrand(message);
                 
-  const model = systemContext?.model || 
-                photoAnalysisData?.structuredData?.equipment?.model || 
+  const model = photoAnalysisData?.structuredData?.equipment?.model ||
+                systemContext?.model || 
                 extractModel(message);
                 
-  const equipmentType = systemContext?.equipmentType || 
-                       photoAnalysisData?.structuredData?.equipment?.type || 
+  const equipmentType = photoAnalysisData?.structuredData?.equipment?.type ||
+                       systemContext?.equipmentType || 
                        extractEquipmentType(message);
 
-  console.log('Manual search with equipment details:', { brand, model, equipmentType });
+  console.log('Manual search with equipment details (photo priority):', { brand, model, equipmentType });
 
   if (!brand || !model) {
     return `**🔍 Manual Search**
@@ -220,7 +221,7 @@ What specific equipment are you looking for manuals for?`;
     if (searchResult.statusCode === 200) {
       const searchData = JSON.parse(searchResult.body);
       if (searchData.success && searchData.manuals.length > 0) {
-        return formatManualSearchResponse(searchData.manuals, brand, model, equipmentType, mode);
+        return formatEnhancedManualSearchResponse(searchData.manuals, brand, model, equipmentType, mode, photoAnalysisData);
       }
     }
   } catch (error) {
@@ -376,7 +377,7 @@ User's current question: ${currentMessage}`;
   return messages;
 }
 
-// Enhanced manual search detection that considers photo context
+// ENHANCED: Manual search detection that considers photo context and auto-search
 function detectManualSearchRequest(message, systemContext, photoAnalysisData) {
   if (systemContext?.isManualSearch) return true;
   
@@ -393,10 +394,14 @@ function detectManualSearchRequest(message, systemContext, photoAnalysisData) {
   const photoHasEquipmentInfo = photoAnalysisData?.structuredData?.equipment?.brand && 
                                photoAnalysisData?.structuredData?.equipment?.model;
   
+  // NEW: Auto-trigger manual search for photo analysis follow-ups
+  const isAutoPhotoManualSearch = systemContext?.searchType === 'auto_photo_manual_search';
+  
   return hasManualRequest || 
          (hasModelNumber && hasBrand) || 
          (hasModelNumber && /\b(generator|furnace|ac|air conditioner|heat pump)\b/i.test(message)) ||
-         (hasManualRequest && photoHasEquipmentInfo);
+         (hasManualRequest && photoHasEquipmentInfo) ||
+         isAutoPhotoManualSearch; // NEW: Include auto photo searches
 }
 
 // Regular Claude API call (consistent with analyze-photo.js)
@@ -483,7 +488,96 @@ function extractEquipmentType(message) {
   return 'gas equipment';
 }
 
-// ENHANCED Format manual search response with BOTH markdown links AND plain URLs
+// ENHANCED: Format manual search response with photo analysis context
+function formatEnhancedManualSearchResponse(manuals, brand, model, equipmentType, mode, photoAnalysisData) {
+  const isAutoSearch = photoAnalysisData ? ' (Auto-found from Photo Analysis)' : '';
+  
+  let response = `**📚 Complete Manual Library for ${brand} ${model}${isAutoSearch}**\n\n`;
+  response += `🔍 **Found ${manuals.length} official document(s):**\n\n`;
+
+  // Group manuals by type for better organization
+  const manualTypes = {
+    'Installation Guide': [],
+    'Service Manual': [],
+    'User Manual': [],
+    'Parts Manual': [],
+    'Troubleshooting Guide': [],
+    'Wiring Diagram': [],
+    'Maintenance Guide': [],
+    'Documentation': []
+  };
+
+  manuals.slice(0, 8).forEach((manual) => {
+    const type = manual.type || 'Documentation';
+    if (manualTypes[type]) {
+      manualTypes[type].push(manual);
+    } else {
+      manualTypes['Documentation'].push(manual);
+    }
+  });
+
+  // Display manuals grouped by type
+  Object.entries(manualTypes).forEach(([type, typeManuals]) => {
+    if (typeManuals.length > 0) {
+      response += `**${getManualTypeEmoji(type)} ${type}**\n`;
+      typeManuals.forEach((manual) => {
+        const sourceEmoji = manual.isOfficial ? '🏭' : manual.isPDF ? '📄' : '🌐';
+        response += `${sourceEmoji} [${manual.isPDF ? 'Download PDF' : 'View Online'}](${manual.url})\n`;
+        response += `🔗 **Copy this link:** ${manual.url}\n`;
+        
+        if (manual.isOfficial) {
+          response += `✅ **Official ${brand} Source**\n`;
+        }
+        
+        if (manual.description && manual.description.length > 10) {
+          const shortDesc = manual.description.substring(0, 80);
+          response += `📝 ${shortDesc}${manual.description.length > 80 ? '...' : ''}\n`;
+        }
+        response += '\n';
+      });
+    }
+  });
+
+  if (mode === 'technician') {
+    response += `**🔧 Technical Documentation Guide:**\n`;
+    response += `• **Installation Guide** - Clearances, venting, electrical connections\n`;
+    response += `• **Service Manual** - Diagnostic procedures, part numbers, troubleshooting\n`;
+    response += `• **Wiring Diagrams** - Control circuits, safety interlocks\n`;
+    response += `• **Parts Manual** - Component identification, replacement procedures\n\n`;
+    response += `• Cross-reference model number exactly: **${model}**\n`;
+    response += `• Download PDFs for offline field reference\n`;
+    response += `• Check document revision dates for latest updates\n`;
+    response += `• Official manufacturer docs are most reliable\n\n`;
+  } else {
+    response += `**💡 Homeowner Manual Guide:**\n`;
+    response += `• **User Manual** - Safe operation, basic maintenance\n`;
+    response += `• **Installation Guide** - Understanding your system setup\n`;
+    response += `• **Troubleshooting Guide** - Basic diagnostics you can do safely\n\n`;
+    response += `• Click the links above OR copy/paste the URLs into your browser\n`;
+    response += `• Right-click PDF links and "Save As" to download\n`;
+    response += `• Official ${brand} sources are most reliable\n`;
+    response += `• Keep manuals handy for future reference\n`;
+    response += `• Always follow safety procedures in documentation\n\n`;
+  }
+
+  response += `**🔍 Additional Resources:**\n`;
+  response += `• Visit **${brand}.com** support section\n`;
+  response += `• Search for "${brand} ${model} troubleshooting"\n`;
+  response += `• Contact ${brand} customer service: check official website\n\n`;
+  
+  if (photoAnalysisData) {
+    response += `**🎯 Complete Equipment Profile Ready!**\n`;
+    response += mode === 'technician' 
+      ? `Now that you have specifications, manuals, and documentation - what specific diagnostic issue are you working on?`
+      : `With equipment details and manuals ready - what specific problem are you experiencing with this unit?`;
+  } else {
+    response += `**What specific issue are you troubleshooting with this ${equipmentType}?**`;
+  }
+
+  return response;
+}
+
+// ORIGINAL: Format manual search response with BOTH markdown links AND plain URLs
 function formatManualSearchResponse(manuals, brand, model, equipmentType, mode) {
   let response = `**📚 Manual Search Results for ${brand} ${model}**\n\n`;
   response += `🔍 **Found ${manuals.length} manual(s):**\n\n`;
