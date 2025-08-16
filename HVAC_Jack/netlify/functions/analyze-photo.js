@@ -1,5 +1,5 @@
 // netlify/functions/analyze-photo.js
-// Photo analysis endpoint using Claude Vision API for HVAC rating plate analysis
+// Comprehensive HVAC and gas appliance rating plate analysis using Claude Vision API
 
 // Initialize shared storage for tracking photo analyses
 global.usageStore = global.usageStore || {
@@ -45,6 +45,7 @@ exports.handler = async (event, context) => {
 
   const startTime = Date.now();
   let sessionId = null;
+  let mode = 'homeowner';
 
   try {
     console.log('📸 Photo analysis request received');
@@ -63,8 +64,9 @@ exports.handler = async (event, context) => {
       throw new Error('Invalid JSON in request body');
     }
 
-    const { imageData, mode, sessionId: clientSessionId } = requestData;
+    const { imageData, mode: requestMode, sessionId: clientSessionId } = requestData;
     sessionId = clientSessionId || `photo_session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    mode = requestMode || 'homeowner';
     
     console.log('Session ID:', sessionId);
     console.log('Mode:', mode);
@@ -97,7 +99,7 @@ exports.handler = async (event, context) => {
 
     // Track photo analysis start
     await trackPhotoEvent('photo_analysis_started', sessionId, {
-      mode: mode || 'homeowner',
+      mode: mode,
       imageSize: imageData.length
     });
 
@@ -121,9 +123,7 @@ exports.handler = async (event, context) => {
     }
 
     // Create the analysis prompt based on mode
-    const systemPrompt = mode === 'technician' ? 
-      createTechnicianAnalysisPrompt() : 
-      createHomeownerAnalysisPrompt();
+    const systemPrompt = createComprehensiveAnalysisPrompt(mode);
 
     console.log('🔍 Sending photo to Claude API for analysis...');
 
@@ -168,7 +168,7 @@ exports.handler = async (event, context) => {
             content: [
               {
                 type: "text",
-                text: "Please analyze this HVAC equipment rating plate and provide all the information requested in the system prompt."
+                text: "Please analyze this HVAC equipment or gas appliance rating plate and provide all the information requested in the system prompt."
               },
               {
                 type: "image",
@@ -203,24 +203,16 @@ exports.handler = async (event, context) => {
     const analysisResult = data.content[0].text;
     console.log('Analysis result length:', analysisResult.length);
 
-    // Try to parse structured data if present
-    let structuredResult;
-    try {
-      const jsonMatch = analysisResult.match(/```json\n([\s\S]*?)\n```/);
-      if (jsonMatch) {
-        structuredResult = JSON.parse(jsonMatch[1]);
-        console.log('✅ Structured data extracted successfully');
-      }
-    } catch (parseError) {
-      console.log('No structured JSON found, treating as text response');
-    }
+    // Extract structured data from the analysis
+    const structuredResult = extractStructuredDataFromAnalysis(analysisResult);
+    console.log('✅ Structured data extracted successfully');
 
     // Log successful analysis to shared storage
     await logPhotoAnalysis({
       sessionId,
       timestamp: new Date().toISOString(),
       success: true,
-      mode: mode || 'homeowner',
+      mode: mode,
       responseTime,
       analysisLength: analysisResult.length,
       hasStructuredData: !!structuredResult,
@@ -234,7 +226,7 @@ exports.handler = async (event, context) => {
       analysisLength: analysisResult.length,
       hasStructuredData: !!structuredResult,
       equipmentType: structuredResult?.equipment?.type || 'unknown',
-      mode: mode || 'homeowner'
+      mode: mode
     });
 
     return {
@@ -247,7 +239,7 @@ exports.handler = async (event, context) => {
         responseTime,
         sessionId,
         timestamp: new Date().toISOString(),
-        mode: mode || 'homeowner'
+        mode: mode
       })
     };
 
@@ -261,14 +253,14 @@ exports.handler = async (event, context) => {
       await trackPhotoEvent('photo_analysis_failed', sessionId, {
         error: error.message,
         responseTime,
-        mode: mode || 'homeowner'
+        mode: mode
       });
 
       await logPhotoAnalysis({
         sessionId,
         timestamp: new Date().toISOString(),
         success: false,
-        mode: mode || 'homeowner',
+        mode: mode,
         responseTime,
         error: error.message,
         ip: event.headers['client-ip'] || event.headers['x-forwarded-for'] || 'unknown'
@@ -285,8 +277,8 @@ exports.handler = async (event, context) => {
         fallback: true,
         sessionId,
         debug: {
-          hasImageData: !!imageData,
-          imageDataLength: imageData?.length || 0,
+          hasImageData: !!requestData?.imageData,
+          imageDataLength: requestData?.imageData?.length || 0,
           hasApiKey: !!(process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY)
         }
       })
@@ -397,167 +389,339 @@ async function logPhotoAnalysis(data) {
   }
 }
 
-function createHomeownerAnalysisPrompt() {
-  return `You are HVAC Jack, a friendly and knowledgeable HVAC expert helping homeowners. You've been given a photo of an HVAC equipment rating plate to analyze.
+// Comprehensive analysis prompt that handles all HVAC and gas appliances
+function createComprehensiveAnalysisPrompt(mode) {
+  const isHomeowner = mode === 'homeowner';
+  
+  return `You are HVAC Jack, a comprehensive HVAC and gas appliance expert. You've been given a photo of an equipment rating plate to analyze. This could be ANY type of HVAC equipment or gas appliance.
 
-TASK: Analyze the rating plate photo and provide comprehensive information in a helpful, easy-to-understand format for homeowners.
+**EQUIPMENT TYPES TO ANALYZE:**
+- HVAC: Furnaces, Air Conditioners, Heat Pumps, Boilers, Package Units, Rooftop Units
+- Gas Appliances: Water Heaters (tank, tankless), Generators, Unit Heaters, Pool Heaters
+- Other: Gas ranges, dryers, fireplaces, space heaters, commercial units
 
-ANALYSIS REQUIREMENTS:
-1. **Equipment Identification**
-   - Brand and model number
-   - Equipment type (furnace, AC, heat pump, etc.)
-   - Manufacturing date and age calculation
+**COMPREHENSIVE ANALYSIS REQUIREMENTS:**
+
+1. **EQUIPMENT IDENTIFICATION**
+   - Equipment type (furnace, AC, heat pump, water heater, generator, etc.)
+   - Brand/manufacturer name
+   - Complete model number
    - Serial number
+   - Manufacturing date/year and age calculation
 
-2. **Warranty Information**
-   - Calculate equipment age from manufacturing date or serial number
-   - Determine warranty status (active/expired/expiring soon)
-   - Explain typical warranty coverage
-   - Provide warranty recommendations
+2. **GAS SPECIFICATIONS** (if gas-fired)
+   - Gas type (Natural Gas or Propane/LP)
+   - Gas input rate (BTU/h or MBH)
+   - Gas pressure requirements (inches WC)
+   - Orifice specifications if visible
+   - Manifold pressure requirements
 
-3. **Capacitor Requirements**
-   - List ALL capacitors needed for this specific equipment
-   - Include exact specifications (MFD, voltage, round/oval type)
-   - Identify which component each capacitor serves (compressor, fan, blower)
-   - Mention typical capacitor lifespan and replacement signs
+3. **ELECTRICAL SPECIFICATIONS**
+   - Operating voltage (120V, 240V, 208V, 480V)
+   - Phase (single/three-phase)
+   - Full Load Amperage (FLA)
+   - Locked Rotor Amperage (LRA) if applicable
+   - Minimum Circuit Ampacity (MCA)
+   - Maximum Overcurrent Protection (MOCP)
+   - Control circuit voltage (typically 24VAC)
 
-4. **Key Electrical Specs**
-   - Voltage requirements
-   - Amperage draw
-   - Refrigerant type (if applicable)
-   - Energy efficiency ratings (SEER, AFUE, etc.)
-
-5. **Homeowner Tips**
-   - Maintenance recommendations specific to this equipment
-   - Warning signs to watch for
-   - When to call a professional vs DIY
-   - Safety considerations for this specific unit
-
-RESPONSE FORMAT:
-- Start with a friendly greeting acknowledging the photo analysis
-- Organize information with clear headers and bullet points
-- Use simple language and explain technical terms
-- Include practical tips and actionable recommendations
-- End with helpful next steps
-
-IMPORTANT NOTES:
-- If you cannot read certain information clearly, say so and explain what areas need a clearer photo
-- Focus on being helpful and educational for a non-technical audience
-- Always prioritize safety in your recommendations
-- Be thorough but conversational - this is for a homeowner who wants to understand their equipment
-
-Analyze the rating plate image and provide comprehensive, homeowner-friendly information following the requirements above.`;
-}
-
-function createTechnicianAnalysisPrompt() {
-  return `You are HVAC Jack in technician mode, providing detailed technical analysis for HVAC professionals. You've been given a photo of an HVAC equipment rating plate to analyze.
-
-TASK: Perform comprehensive technical analysis of the rating plate with precise specifications and diagnostic information for field technicians.
-
-TECHNICAL ANALYSIS REQUIREMENTS:
-1. **Equipment Specifications**
-   - Complete model and serial number breakdown with meaning
-   - Manufacturing date decoding methodology
-   - Equipment series, efficiency ratings, and capacity specifications
-   - Tonnage, BTU ratings, and performance specifications
-
-2. **Electrical Specifications**
-   - Operating voltage and phase requirements
-   - Full load amperage (FLA) for all components
-   - Locked rotor amperage (LRA) where applicable
-   - Minimum circuit ampacity (MCA)
-   - Maximum overcurrent protection (MOCP)
-   - Control circuit voltage
-
-3. **Capacitor Specifications (CRITICAL)**
-   - Start capacitor: exact MFD, voltage, tolerance, and application
-   - Run capacitor: exact MFD, voltage, tolerance, and application
-   - Component-specific requirements:
-     * Compressor start/run capacitors with exact specs
-     * Condenser fan motor capacitor specifications
-     * Blower motor capacitor (indoor unit)
+4. **CAPACITOR REQUIREMENTS** (for motor-driven equipment)
+   - Start capacitor specifications (MFD, voltage, tolerance)
+   - Run capacitor specifications (MFD, voltage, tolerance)
+   - Component assignments:
+     * Compressor start/run capacitors
+     * Condenser fan motor capacitor
+     * Blower/indoor fan motor capacitor
      * Any auxiliary motor capacitors
    - Dual vs single capacitor configurations
-   - Tolerance specifications (+/- percentages)
-   - Physical mounting and connection details
+   - Physical mounting requirements
 
-4. **Refrigeration Data (if applicable)**
-   - Refrigerant type and factory charge amount
-   - Design operating pressures (high/low side)
-   - Superheat/subcooling target specifications
-   - Expansion device type and specifications
+5. **PERFORMANCE SPECIFICATIONS**
+   - Heating/cooling capacity (BTU/h, tons)
+   - Efficiency ratings (SEER, AFUE, Energy Factor, etc.)
+   - Temperature rise (furnaces)
+   - Recovery rate (water heaters)
+   - Maximum operating pressure (boilers)
+   - Refrigerant type and charge (HVAC equipment)
 
-5. **Warranty and Service Information**
-   - Manufacturing date interpretation methods
-   - Warranty period breakdown by component type
-   - Service access and connection requirements
-   - Parts availability and cross-reference information
+6. **WARRANTY INFORMATION**
+   - Equipment age calculation
+   - Warranty status determination (active/expired/expiring)
+   - Component-specific warranty periods
+   - Registration requirements
+   - Warranty coverage details
 
-6. **Diagnostic and Service Considerations**
-   - Common failure points specific to this model
-   - Recommended troubleshooting sequence
-   - Critical test points and measurement locations
-   - Known service bulletins or common issues
-   - Replacement part numbers where identifiable
+7. **SAFETY & CERTIFICATIONS**
+   - UL, CSA, or other safety certifications
+   - Gas appliance certification numbers
+   - EPA compliance (generators)
+   - Electrical code compliance
 
-RESPONSE FORMAT:
-First provide a structured JSON summary:
-\`\`\`json
-{
-  "equipment": {
-    "brand": "",
-    "model": "",
-    "serial": "",
-    "type": "",
-    "manufacturingDate": "",
-    "age": "",
-    "capacity": "",
-    "efficiency": ""
-  },
-  "electrical": {
-    "voltage": "",
-    "phase": "",
-    "fla": "",
-    "lra": "",
-    "mca": "",
-    "mocp": "",
-    "controlVoltage": ""
-  },
-  "capacitors": [
-    {
-      "component": "",
-      "mfd": "",
-      "voltage": "",
-      "type": "",
-      "tolerance": "",
-      "mounting": ""
+**MODE-SPECIFIC RESPONSE FORMAT:**
+
+${isHomeowner ? `
+**HOMEOWNER MODE:**
+- Use friendly, conversational language
+- Explain technical terms clearly
+- Focus on practical maintenance tips
+- Emphasize safety considerations
+- Provide actionable next steps
+- Include cost-saving recommendations
+- Warn when professional service is needed
+` : `
+**TECHNICIAN MODE:**
+- Provide precise technical specifications
+- Include diagnostic procedures
+- Reference service access points
+- Detail troubleshooting sequences
+- Specify exact part numbers where possible
+- Include known service bulletins
+- Provide critical measurement points
+`}
+
+**STRUCTURED DATA OUTPUT:**
+Always end your analysis with this structured format:
+
+EQUIPMENT_TYPE: [specific equipment type]
+BRAND: [manufacturer name]
+MODEL: [complete model number]
+SERIAL: [serial number]
+MANUFACTURING_DATE: [date or year]
+AGE: [calculated age in years]
+GAS_TYPE: [Natural Gas/Propane/N/A]
+GAS_INPUT: [BTU input rate or N/A]
+ELECTRICAL: [voltage and amperage summary]
+EFFICIENCY: [efficiency rating if visible]
+WARRANTY_STATUS: [active/expired/expiring with details]
+CAPACITORS: [list of capacitor specs if applicable]
+REFRIGERANT: [type and charge if applicable]
+SAFETY_NOTES: [critical safety considerations]
+
+**CRITICAL REQUIREMENTS:**
+- If information is unclear in the photo, explicitly state what needs a clearer image
+- Always prioritize safety in recommendations
+- Be thorough but appropriate for the selected mode (homeowner vs technician)
+- Include specific maintenance recommendations for the equipment type
+- Provide realistic warranty assessments based on typical industry standards
+
+Analyze the rating plate image comprehensively and provide all relevant technical and practical information based on the mode selected.`;
+}
+
+// Enhanced structured data extraction with comprehensive equipment support
+function extractStructuredDataFromAnalysis(analysisText) {
+  const structuredData = {
+    equipment: {},
+    electrical: {},
+    gas: {},
+    performance: {},
+    capacitors: [],
+    refrigeration: {},
+    safety: {},
+    warranty: {},
+    technicalNotes: null
+  };
+
+  try {
+    // Extract basic equipment information
+    const equipmentTypeMatch = analysisText.match(/EQUIPMENT_TYPE:\s*([^\n\r]+)/i);
+    if (equipmentTypeMatch) structuredData.equipment.type = equipmentTypeMatch[1].trim();
+
+    const brandMatch = analysisText.match(/BRAND:\s*([^\n\r]+)/i);
+    if (brandMatch) structuredData.equipment.brand = brandMatch[1].trim();
+
+    const modelMatch = analysisText.match(/MODEL:\s*([^\n\r]+)/i);
+    if (modelMatch) structuredData.equipment.model = modelMatch[1].trim();
+
+    const serialMatch = analysisText.match(/SERIAL:\s*([^\n\r]+)/i);
+    if (serialMatch) structuredData.equipment.serial = serialMatch[1].trim();
+
+    const mfgDateMatch = analysisText.match(/MANUFACTURING_DATE:\s*([^\n\r]+)/i);
+    if (mfgDateMatch) structuredData.equipment.manufacturingDate = mfgDateMatch[1].trim();
+
+    const ageMatch = analysisText.match(/AGE:\s*([^\n\r]+)/i);
+    if (ageMatch) structuredData.equipment.age = ageMatch[1].trim();
+
+    // Extract gas specifications
+    const gasTypeMatch = analysisText.match(/GAS_TYPE:\s*([^\n\r]+)/i);
+    if (gasTypeMatch) {
+      const gasType = gasTypeMatch[1].trim();
+      if (!gasType.includes('N/A')) {
+        structuredData.gas.type = gasType;
+      }
     }
-  ],
-  "refrigeration": {
-    "type": "",
-    "charge": "",
-    "highSidePressure": "",
-    "lowSidePressure": "",
-    "superheat": "",
-    "subcooling": ""
-  },
-  "warranty": {
-    "status": "",
-    "remaining": "",
-    "coverage": ""
+
+    const gasInputMatch = analysisText.match(/GAS_INPUT:\s*([^\n\r]+)/i);
+    if (gasInputMatch) {
+      const gasInput = gasInputMatch[1].trim();
+      if (!gasInput.includes('N/A')) {
+        structuredData.gas.input = gasInput;
+      }
+    }
+
+    // Extract electrical specifications
+    const electricalMatch = analysisText.match(/ELECTRICAL:\s*([^\n\r]+)/i);
+    if (electricalMatch) {
+      const electrical = electricalMatch[1].trim();
+      structuredData.electrical.summary = electrical;
+      
+      // Parse specific electrical values
+      const voltageMatch = electrical.match(/(\d+)V/);
+      if (voltageMatch) structuredData.electrical.voltage = voltageMatch[1] + 'V';
+      
+      const ampsMatch = electrical.match(/(\d+\.?\d*)\s*A/);
+      if (ampsMatch) structuredData.electrical.fla = ampsMatch[1] + 'A';
+
+      const mcaMatch = electrical.match(/MCA[:\s]*(\d+\.?\d*)/i);
+      if (mcaMatch) structuredData.electrical.mca = mcaMatch[1] + 'A';
+
+      const mocpMatch = electrical.match(/MOCP[:\s]*(\d+\.?\d*)/i);
+      if (mocpMatch) structuredData.electrical.mocp = mocpMatch[1] + 'A';
+    }
+
+    // Extract efficiency rating
+    const efficiencyMatch = analysisText.match(/EFFICIENCY:\s*([^\n\r]+)/i);
+    if (efficiencyMatch) {
+      const efficiency = efficiencyMatch[1].trim();
+      if (!efficiency.includes('N/A')) {
+        structuredData.performance.efficiency = efficiency;
+      }
+    }
+
+    // Extract warranty information
+    const warrantyMatch = analysisText.match(/WARRANTY_STATUS:\s*([^\n\r]+)/i);
+    if (warrantyMatch) {
+      const warrantyText = warrantyMatch[1].trim().toLowerCase();
+      if (warrantyText.includes('active') || warrantyText.includes('valid')) {
+        structuredData.warranty.status = 'active';
+      } else if (warrantyText.includes('expired')) {
+        structuredData.warranty.status = 'expired';
+      } else if (warrantyText.includes('expiring')) {
+        structuredData.warranty.status = 'expiring';
+      }
+      structuredData.warranty.coverage = warrantyMatch[1].trim();
+    }
+
+    // Extract capacitor information
+    const capacitorMatch = analysisText.match(/CAPACITORS:\s*([^\n\r]+)/i);
+    if (capacitorMatch) {
+      const capacitorText = capacitorMatch[1].trim();
+      if (!capacitorText.includes('N/A') && !capacitorText.includes('None')) {
+        // Parse capacitor specifications
+        const capacitorSpecs = capacitorText.match(/(\d+\.?\d*)\s*MFD.*?(\d+)V/gi);
+        if (capacitorSpecs) {
+          structuredData.capacitors = capacitorSpecs.map((spec, index) => {
+            const mfdMatch = spec.match(/(\d+\.?\d*)\s*MFD/i);
+            const voltageMatch = spec.match(/(\d+)V/i);
+            return {
+              component: index === 0 ? 'Compressor' : 'Fan Motor',
+              mfd: mfdMatch ? mfdMatch[1] : 'Unknown',
+              voltage: voltageMatch ? voltageMatch[1] : 'Unknown',
+              type: 'Run'
+            };
+          });
+        }
+      }
+    }
+
+    // Extract refrigerant information
+    const refrigerantMatch = analysisText.match(/REFRIGERANT:\s*([^\n\r]+)/i);
+    if (refrigerantMatch) {
+      const refrigerant = refrigerantMatch[1].trim();
+      if (!refrigerant.includes('N/A')) {
+        structuredData.refrigeration.type = refrigerant;
+      }
+    }
+
+    // Extract safety notes
+    const safetyMatch = analysisText.match(/SAFETY_NOTES:\s*([^\n\r]+)/i);
+    if (safetyMatch) {
+      structuredData.safety.notes = safetyMatch[1].trim();
+    }
+
+    // Calculate warranty status if not explicitly found but we have manufacturing date
+    if (!structuredData.warranty.status && structuredData.equipment.manufacturingDate) {
+      const mfgYear = extractYearFromDate(structuredData.equipment.manufacturingDate);
+      if (mfgYear) {
+        const warrantyInfo = calculateWarrantyStatus(mfgYear, structuredData.equipment.type);
+        structuredData.warranty = { ...structuredData.warranty, ...warrantyInfo };
+      }
+    }
+
+    // Determine equipment category
+    structuredData.equipment.category = categorizeEquipment(structuredData.equipment.type);
+
+  } catch (error) {
+    console.warn('Error extracting structured data:', error);
+  }
+
+  return structuredData;
+}
+
+// Helper function to extract year from various date formats
+function extractYearFromDate(dateString) {
+  const yearMatches = dateString.match(/\b(19|20)\d{2}\b/);
+  return yearMatches ? parseInt(yearMatches[0]) : null;
+}
+
+// Helper function to calculate warranty status
+function calculateWarrantyStatus(mfgYear, equipmentType) {
+  const currentYear = new Date().getFullYear();
+  const age = currentYear - mfgYear;
+  
+  // Typical warranty periods by equipment type
+  const warrantyPeriods = {
+    'generator': 5,
+    'furnace': 10,
+    'water heater': 6,
+    'boiler': 10,
+    'heat pump': 10,
+    'air conditioner': 10,
+    'tankless water heater': 12,
+    'unit heater': 5,
+    'pool heater': 3
+  };
+  
+  const equipmentKey = equipmentType?.toLowerCase() || '';
+  let warrantyPeriod = 5; // default
+  
+  // Find matching warranty period
+  for (const [key, period] of Object.entries(warrantyPeriods)) {
+    if (equipmentKey.includes(key)) {
+      warrantyPeriod = period;
+      break;
+    }
+  }
+  
+  if (age < warrantyPeriod) {
+    return {
+      status: 'active',
+      coverage: `Estimated ${warrantyPeriod - age} years remaining`
+    };
+  } else if (age === warrantyPeriod) {
+    return {
+      status: 'expiring',
+      coverage: 'Warranty expiring this year'
+    };
+  } else {
+    return {
+      status: 'expired',
+      coverage: `Expired ${age - warrantyPeriod} years ago`
+    };
   }
 }
-\`\`\`
 
-Then provide detailed technical commentary including:
-- Precise diagnostic procedures for this model
-- Service access instructions
-- Critical measurement points and expected values
-- Troubleshooting sequence recommendations
-- Safety protocols specific to this equipment
-- Parts ordering information
-
-CRITICAL: Be extremely precise with specifications. Field technicians rely on exact values for proper service and parts ordering. Include all technical details a professional would need for diagnosis, service, and parts replacement.
-
-Analyze the rating plate image and provide complete technical specifications and service information.`;
+// Helper function to determine equipment category
+function categorizeEquipment(equipmentType) {
+  const type = equipmentType?.toLowerCase() || '';
+  
+  if (type.includes('furnace')) return 'heating';
+  if (type.includes('water heater')) return 'water_heating';
+  if (type.includes('boiler')) return 'heating';
+  if (type.includes('generator')) return 'power_generation';
+  if (type.includes('air conditioner') || type.includes('heat pump')) return 'cooling';
+  if (type.includes('unit heater')) return 'space_heating';
+  if (type.includes('range') || type.includes('dryer') || type.includes('fireplace')) return 'appliance';
+  if (type.includes('pool heater')) return 'pool_equipment';
+  
+  return 'hvac_general';
 }
