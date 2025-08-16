@@ -1444,51 +1444,206 @@
             }
         }
 
-        function displayClaudeAnalysisResult(analysisResult, mode) {
-            addMobileMessage('📸 **Rating Plate Analysis Complete!**\n\nClaude has analyzed your equipment photo:', 'ai');
-            
-            const formattedResult = AnalysisFormatter.formatAnalysisResult(analysisResult, mode);
-            
-            if (!formattedResult.success) {
-                addMobileMessage(`❌ **Analysis Error**\n\n${formattedResult.error}`, 'ai');
-                return;
-            }
+       // Enhanced photo analysis function with automatic manual search
+function displayClaudeAnalysisResult(analysisResult, mode) {
+    // First, display the analysis results
+    addMobileMessage('📸 **Rating Plate Analysis Complete!**\n\nClaude has analyzed your equipment photo:', 'ai');
+    
+    const formattedResult = AnalysisFormatter.formatAnalysisResult(analysisResult, mode);
+    
+    if (!formattedResult.success) {
+        addMobileMessage(`❌ **Analysis Error**\n\n${formattedResult.error}`, 'ai');
+        return;
+    }
 
-            const messagesContainer = document.getElementById('mobileMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'mobile-message ai';
-            
-            const avatar = document.createElement('div');
-            avatar.className = 'mobile-avatar ai';
-            avatar.textContent = '🔍';
-            
-            const messageContent = document.createElement('div');
-            messageContent.className = 'mobile-message-content';
-            messageContent.innerHTML = formattedResult.formatted;
-            
-            messageDiv.appendChild(avatar);
-            messageDiv.appendChild(messageContent);
-            messagesContainer.appendChild(messageDiv);
-            
-            if (window.mobileHvacJack) {
-                window.mobileHvacJack.scrollToBottom();
-                
-                if (formattedResult.structured && formattedResult.structured.equipment) {
-                    const equipment = formattedResult.structured.equipment;
-                    window.mobileHvacJack.systemContext.equipmentType = equipment.type?.toLowerCase() || null;
-                    window.mobileHvacJack.systemContext.brand = equipment.brand || null;
-                    window.mobileHvacJack.updateMobileMemoryDisplay();
-                }
-            }
-
-            setTimeout(() => {
-                const followUpMessage = mode === 'technician' 
-                    ? '🔧 **Technical Analysis Complete!** I have all the specifications and capacitor requirements. What diagnostic issue are you working on?'
-                    : '✅ **Analysis Complete!** I now know all about your equipment. What problem are you experiencing with this unit?';
-                    
-                addMobileMessage(followUpMessage, 'ai');
-            }, 1000);
+    const messagesContainer = document.getElementById('mobileMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'mobile-message ai';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'mobile-avatar ai';
+    avatar.textContent = '🔍';
+    
+    const messageContent = document.createElement('div');
+    messageContent.className = 'mobile-message-content';
+    messageContent.innerHTML = formattedResult.formatted;
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(messageContent);
+    messagesContainer.appendChild(messageDiv);
+    
+    if (window.mobileHvacJack) {
+        window.mobileHvacJack.scrollToBottom();
+        
+        // Update system context with equipment details
+        if (formattedResult.structured && formattedResult.structured.equipment) {
+            const equipment = formattedResult.structured.equipment;
+            window.mobileHvacJack.systemContext.equipmentType = equipment.type?.toLowerCase() || null;
+            window.mobileHvacJack.systemContext.brand = equipment.brand || null;
+            window.mobileHvacJack.systemContext.model = equipment.model || null;
+            window.mobileHvacJack.updateMobileMemoryDisplay();
         }
+    }
+
+    // **NEW: Automatically search for manuals if we have equipment details**
+    const equipment = formattedResult.structured?.equipment;
+    if (equipment && equipment.brand && equipment.model) {
+        console.log('Auto-triggering manual search for:', equipment.brand, equipment.model);
+        
+        // Show that we're searching for manuals
+        setTimeout(() => {
+            addMobileMessage('🔍 **Searching for official manuals and documentation...**', 'ai');
+            performAutomaticManualSearch(equipment, analysisResult, mode);
+        }, 1500);
+    } else {
+        // If no equipment details, show the standard follow-up
+        setTimeout(() => {
+            const followUpMessage = mode === 'technician' 
+                ? '🔧 **Technical Analysis Complete!** I have the specifications. What diagnostic issue are you working on?'
+                : '✅ **Analysis Complete!** I now know about your equipment. What problem are you experiencing?';
+                
+            addMobileMessage(followUpMessage, 'ai');
+        }, 1000);
+    }
+}
+
+// NEW: Automatic manual search function
+async function performAutomaticManualSearch(equipment, analysisResult, mode) {
+    try {
+        // Construct the manual search message
+        const searchMessage = `Find installation guides, service manuals, and user manuals for ${equipment.brand} model ${equipment.model} ${equipment.type || 'equipment'}`;
+        
+        console.log('Performing automatic manual search:', searchMessage);
+        
+        // Use the existing manual search infrastructure
+        const requestBody = {
+            message: searchMessage,
+            mode: mode,
+            conversationHistory: [], // Fresh context for manual search
+            systemContext: {
+                equipmentType: equipment.type || 'equipment',
+                brand: equipment.brand,
+                model: equipment.model,
+                isManualSearch: true,
+                searchType: 'auto_photo_manual_search'
+            },
+            photoAnalysisData: analysisResult, // Include the photo analysis context
+            sessionId: window.mobileHvacJack ? window.mobileHvacJack.sessionId : 'unknown'
+        };
+
+        const response = await fetch('/.netlify/functions/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            
+            if (result.response && result.response.trim()) {
+                // Display the manual search results
+                addMobileMessage(result.response, 'ai');
+                
+                // Add a helpful follow-up message
+                const followUpMessage = mode === 'technician'
+                    ? '📋 **Complete Equipment Profile Ready!** I have the specifications, manuals, and documentation. What specific diagnostic issue are you working on?'
+                    : '🎯 **Everything Ready!** I have your equipment details and manuals. What specific problem are you experiencing with this unit?';
+                
+                setTimeout(() => {
+                    addMobileMessage(followUpMessage, 'ai');
+                    
+                    // Run the text selection fix after manual results are displayed
+                    setTimeout(() => {
+                        if (typeof makeTextSelectableAndClickable === 'function') {
+                            makeTextSelectableAndClickable();
+                        }
+                    }, 500);
+                }, 2000);
+                
+                // Track successful auto manual search
+                if (window.mobileHvacJack) {
+                    await window.mobileHvacJack.trackUsage('auto_manual_search_success', {
+                        brand: equipment.brand,
+                        model: equipment.model,
+                        equipmentType: equipment.type,
+                        mode: mode
+                    });
+                }
+            } else {
+                throw new Error('Empty response from manual search');
+            }
+        } else {
+            throw new Error(`Manual search failed: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.error('Automatic manual search failed:', error);
+        
+        // Fallback message with manual search tips
+        const fallbackMessage = generateManualSearchFallback(equipment, mode);
+        addMobileMessage(fallbackMessage, 'ai');
+        
+        // Track failure
+        if (window.mobileHvacJack) {
+            await window.mobileHvacJack.trackUsage('auto_manual_search_failed', {
+                brand: equipment.brand,
+                model: equipment.model,
+                error: error.message,
+                mode: mode
+            });
+        }
+    }
+}
+
+// Generate fallback manual search response
+function generateManualSearchFallback(equipment, mode) {
+    const brand = equipment.brand || 'Equipment';
+    const model = equipment.model || '';
+    
+    let response = `📚 **Manual Search for ${brand} ${model}**\n\n`;
+    response += `I'll help you find official documentation:\n\n`;
+    
+    // Brand-specific manual sources
+    const manualSources = {
+        'generac': 'https://www.generac.com/support/product-support/owner-support',
+        'kohler': 'https://kohlerpower.com/support',
+        'carrier': 'https://www.carrier.com/residential/en/us/support/',
+        'trane': 'https://www.trane.com/residential/en/support/',
+        'lennox': 'https://www.lennox.com/support',
+        'york': 'https://www.york.com/residential-equipment/support',
+        'rheem': 'https://www.rheem.com/support',
+        'goodman': 'https://www.goodman-mfg.com/support'
+    };
+    
+    const brandLower = brand.toLowerCase();
+    if (manualSources[brandLower]) {
+        response += `🔗 **Official ${brand} Support:** ${manualSources[brandLower]}\n`;
+        response += `• Search for model: ${model}\n`;
+        response += `• Download installation guides\n`;
+        response += `• Find service manuals\n\n`;
+    }
+    
+    response += `**General Manual Resources:**\n`;
+    response += `🔗 **ManualsLib:** https://www.manualslib.com/\n`;
+    response += `🔗 **RepairClinic:** https://www.repairclinic.com/\n`;
+    response += `🔗 **AppliancePartsPros:** https://www.appliancepartspros.com/\n\n`;
+    
+    response += `**Search Tips:**\n`;
+    response += `• Use exact model: "${brand} ${model}"\n`;
+    response += `• Try: "${brand} ${model} installation manual"\n`;
+    response += `• Try: "${brand} ${model} service manual"\n`;
+    response += `• Try: "${brand} ${model} user guide"\n\n`;
+    
+    const followUp = mode === 'technician'
+        ? '🔧 **Ready for Diagnostics!** What specific issue are you troubleshooting?'
+        : '🏠 **Equipment Profile Complete!** What problem are you experiencing?';
+    
+    response += followUp;
+    
+    return response;
+}
 
         class AnalysisFormatter {
             static formatAnalysisResult(analysisData, mode = 'homeowner') {
