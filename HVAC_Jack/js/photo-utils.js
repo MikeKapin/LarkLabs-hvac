@@ -1,9 +1,10 @@
 // js/photo-utils.js
 // Photo processing and utility functions for HVAC Jack
+// Compatible with analyze-photo.js backend
 
 class PhotoProcessor {
     constructor() {
-        this.maxFileSize = 10 * 1024 * 1024; // 10MB
+        this.maxFileSize = 10 * 1024 * 1024; // 10MB (matches backend expectations)
         this.maxDimension = 2048; // Max width/height
         this.compressionQuality = 0.85;
         this.allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -38,6 +39,7 @@ class PhotoProcessor {
 
     /**
      * Process and optimize image for analysis
+     * Returns base64 data compatible with analyze-photo.js backend
      */
     async processImage(file) {
         return new Promise((resolve, reject) => {
@@ -71,20 +73,26 @@ class PhotoProcessor {
                     // Convert to base64 with compression
                     const compressedDataUrl = canvas.toDataURL('image/jpeg', this.compressionQuality);
                     
-                    console.log('Image processed:', {
+                    // Extract just the base64 data (without data:image/jpeg;base64, prefix)
+                    const base64Data = this.extractBase64(compressedDataUrl);
+                    
+                    console.log('Image processed for analysis:', {
                         originalSize: `${img.width}x${img.height}`,
                         processedSize: `${width}x${height}`,
                         originalFileSize: `${(file.size / 1024).toFixed(1)}KB`,
-                        compressedSize: `${(compressedDataUrl.length * 0.75 / 1024).toFixed(1)}KB`
+                        compressedSize: `${(base64Data.length * 0.75 / 1024).toFixed(1)}KB`,
+                        base64Length: base64Data.length
                     });
 
                     resolve({
-                        dataUrl: compressedDataUrl,
+                        base64Data: base64Data, // Pure base64 for backend
+                        dataUrl: compressedDataUrl, // Full data URL for preview
                         width,
                         height,
                         originalWidth: img.width,
                         originalHeight: img.height,
-                        compressionRatio: file.size / (compressedDataUrl.length * 0.75)
+                        compressionRatio: file.size / (base64Data.length * 0.75),
+                        fileSize: base64Data.length * 0.75
                     });
                 } catch (error) {
                     reject(new Error('Failed to process image: ' + error.message));
@@ -278,7 +286,7 @@ class MobilePhotoCapture {
 }
 
 /**
- * Analysis result formatter
+ * Analysis result formatter compatible with analyze-photo.js response format
  */
 class AnalysisFormatter {
     /**
@@ -288,7 +296,7 @@ class AnalysisFormatter {
         if (!analysisData.success) {
             return {
                 success: false,
-                error: analysisData.message || 'Analysis failed',
+                error: analysisData.message || analysisData.error || 'Analysis failed',
                 fallback: analysisData.fallback || false
             };
         }
@@ -301,7 +309,8 @@ class AnalysisFormatter {
                 success: true,
                 formatted: this.formatTechnicalAnalysis(structuredData, analysis),
                 raw: analysis,
-                structured: structuredData
+                structured: structuredData,
+                mode: mode
             };
         }
 
@@ -309,7 +318,9 @@ class AnalysisFormatter {
         return {
             success: true,
             formatted: this.formatTextAnalysis(analysis, mode),
-            raw: analysis
+            raw: analysis,
+            structured: structuredData || null,
+            mode: mode
         };
     }
 
@@ -321,12 +332,19 @@ class AnalysisFormatter {
         
         // Equipment header
         if (data.equipment) {
+            const equipmentIcon = this.getEquipmentIcon(data.equipment.type);
+            const warrantyIcon = this.getWarrantyIcon(data.warranty?.status);
+            
             formatted += `
                 <div class="rating-plate-header">
-                    <div class="rating-plate-icon">📋</div>
+                    <div class="rating-plate-icon">${equipmentIcon}</div>
                     <div>
                         <div class="rating-plate-title">${data.equipment.brand || 'Unknown'} ${data.equipment.type || 'Equipment'}</div>
-                        <div class="rating-plate-subtitle">Model: ${data.equipment.model || 'N/A'} • Age: ${data.equipment.age || 'Unknown'}</div>
+                        <div class="rating-plate-subtitle">
+                            Model: ${data.equipment.model || 'N/A'} • 
+                            Age: ${data.equipment.age || 'Unknown'} • 
+                            ${warrantyIcon} ${data.warranty?.status || 'Unknown'}
+                        </div>
                     </div>
                 </div>`;
         }
@@ -346,8 +364,8 @@ class AnalysisFormatter {
                             <div class="info-item-value">${data.equipment.serial || 'N/A'}</div>
                         </div>
                         <div class="info-item">
-                            <div class="info-item-label">Capacity</div>
-                            <div class="info-item-value">${data.equipment.capacity || 'N/A'}</div>
+                            <div class="info-item-label">Category</div>
+                            <div class="info-item-value">${data.equipment.category || 'N/A'}</div>
                         </div>
                         <div class="info-item">
                             <div class="info-item-label">Manufacturing Date</div>
@@ -357,8 +375,26 @@ class AnalysisFormatter {
                 </div>`;
         }
 
+        // Gas specifications (if gas equipment)
+        if (data.gas && (data.gas.type || data.gas.input)) {
+            formatted += `
+                <div class="info-section">
+                    <div class="info-section-title">🔥 Gas Specifications</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-item-label">Gas Type</div>
+                            <div class="info-item-value">${data.gas.type || 'N/A'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-label">Input Rating</div>
+                            <div class="info-item-value">${data.gas.input || 'N/A'}</div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
         // Electrical specs
-        if (data.electrical) {
+        if (data.electrical && data.electrical.summary) {
             formatted += `
                 <div class="info-section">
                     <div class="info-section-title">⚡ Electrical Specifications</div>
@@ -372,12 +408,12 @@ class AnalysisFormatter {
                             <div class="info-item-value">${data.electrical.fla || 'N/A'}</div>
                         </div>
                         <div class="info-item">
-                            <div class="info-item-label">LRA</div>
-                            <div class="info-item-value">${data.electrical.lra || 'N/A'}</div>
-                        </div>
-                        <div class="info-item">
                             <div class="info-item-label">MCA</div>
                             <div class="info-item-value">${data.electrical.mca || 'N/A'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-label">MOCP</div>
+                            <div class="info-item-value">${data.electrical.mocp || 'N/A'}</div>
                         </div>
                     </div>
                 </div>`;
@@ -401,8 +437,22 @@ class AnalysisFormatter {
             formatted += `</div></div>`;
         }
 
+        // Performance/Efficiency
+        if (data.performance && data.performance.efficiency) {
+            formatted += `
+                <div class="info-section">
+                    <div class="info-section-title">📊 Performance Specifications</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-item-label">Efficiency Rating</div>
+                            <div class="info-item-value">${data.performance.efficiency}</div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
         // Warranty info
-        if (data.warranty) {
+        if (data.warranty && data.warranty.status) {
             const statusClass = data.warranty.status === 'active' ? 'warranty-active' : 
                                data.warranty.status === 'expiring' ? 'warranty-expiring' : 'warranty-expired';
             
@@ -420,13 +470,30 @@ class AnalysisFormatter {
                 </div>`;
         }
 
-        // Technical notes
-        if (data.technicalNotes) {
+        // Safety notes
+        if (data.safety && data.safety.notes) {
             formatted += `
                 <div class="info-section">
-                    <div class="info-section-title">📝 Technical Notes</div>
-                    <div style="color: #A0AEC0; font-size: 0.85rem; line-height: 1.4;">
-                        ${data.technicalNotes.replace(/\n/g, '<br>')}
+                    <div class="info-section-title">⚠️ Safety Notes</div>
+                    <div style="color: #FFA500; font-size: 0.9rem; line-height: 1.4;">
+                        ${data.safety.notes.replace(/\n/g, '<br>')}
+                    </div>
+                </div>`;
+        }
+
+        // Manual search prompt for technician mode
+        if (data.equipment?.brand && data.equipment?.model) {
+            formatted += `
+                <div class="info-section">
+                    <div class="info-section-title">📚 Technical Documentation</div>
+                    <div style="margin-bottom: 1rem;">
+                        <button onclick="searchForManuals('${data.equipment.brand}', '${data.equipment.model}', '${data.equipment.type || 'equipment'}')" 
+                                class="manual-search-btn">
+                            🔍 Search for Service Manuals
+                        </button>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #A0AEC0;">
+                        Search for official service manuals, wiring diagrams, and troubleshooting guides
                     </div>
                 </div>`;
         }
@@ -446,9 +513,189 @@ class AnalysisFormatter {
             .replace(/\n\n/g, '<br><br>')
             .replace(/\n/g, '<br>');
 
+        // Add manual search prompts for homeowner mode
+        if (mode === 'homeowner' && /model|brand|manufacturer/i.test(text)) {
+            formatted += `
+                <div style="margin-top: 1.5rem; padding: 1rem; background: #2D3748; border-radius: 8px; border-left: 4px solid #4A90E2;">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">📚 Need Manuals?</div>
+                    <div style="font-size: 0.9rem; color: #A0AEC0;">
+                        I can help you find official service manuals and documentation for this equipment. 
+                        Just ask "Find manuals for [brand] [model]"
+                    </div>
+                </div>`;
+        }
+
         // Wrap in appropriate container
         return `<div class="analysis-text-result">${formatted}</div>`;
     }
+
+    /**
+     * Get equipment icon based on type
+     */
+    static getEquipmentIcon(type) {
+        const iconMap = {
+            'generator': '🔋',
+            'furnace': '🔥',
+            'gas furnace': '🔥',
+            'water heater': '🚿',
+            'gas water heater': '🚿',
+            'boiler': '♨️',
+            'gas boiler': '♨️',
+            'air conditioner': '❄️',
+            'heat pump': '🌡️',
+            'unit heater': '🔥',
+            'gas unit heater': '🔥',
+            'range': '🍳',
+            'gas range': '🍳',
+            'dryer': '👕',
+            'gas dryer': '👕',
+            'fireplace': '🔥',
+            'gas fireplace': '🔥'
+        };
+        
+        return iconMap[type?.toLowerCase()] || '📋';
+    }
+
+    /**
+     * Get warranty status icon
+     */
+    static getWarrantyIcon(status) {
+        const iconMap = {
+            'active': '✅',
+            'expiring': '⚠️',
+            'expired': '❌'
+        };
+        
+        return iconMap[status] || '❓';
+    }
+
+    /**
+     * Create equipment summary for chat context
+     */
+    static createEquipmentSummary(structuredData) {
+        if (!structuredData || !structuredData.equipment) return null;
+
+        const eq = structuredData.equipment;
+        return {
+            brand: eq.brand,
+            model: eq.model,
+            type: eq.type,
+            age: eq.age,
+            category: eq.category,
+            warrantyStatus: structuredData.warranty?.status,
+            hasElectricalSpecs: !!(structuredData.electrical?.voltage),
+            hasGasSpecs: !!(structuredData.gas?.type),
+            hasCapacitors: !!(structuredData.capacitors?.length > 0)
+        };
+    }
+}
+
+/**
+ * Photo analysis API integration
+ */
+class PhotoAnalysisAPI {
+    constructor() {
+        this.baseUrl = '/.netlify/functions';
+        this.processor = new PhotoProcessor();
+    }
+
+    /**
+     * Analyze rating plate photo
+     */
+    async analyzePhoto(file, mode = 'homeowner', sessionId = null) {
+        try {
+            // Process image first
+            const processedImage = await this.processor.processImage(file);
+            
+            console.log('Sending photo for analysis...', {
+                mode,
+                imageSize: processedImage.base64Data.length,
+                sessionId
+            });
+
+            // Send to analyze-photo function
+            const response = await fetch(`${this.baseUrl}/analyze-photo`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    imageData: processedImage.base64Data, // Pure base64 expected by backend
+                    mode: mode,
+                    sessionId: sessionId
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Analysis failed: ${response.status}`);
+            }
+
+            const result = await response.json();
+            
+            console.log('Photo analysis result:', {
+                success: result.success,
+                hasStructuredData: !!(result.structuredData),
+                responseTime: result.responseTime
+            });
+
+            return result;
+
+        } catch (error) {
+            console.error('Photo analysis error:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Search for equipment manuals
+     */
+    async searchManuals(brand, model, equipmentType) {
+        try {
+            const response = await fetch(`${this.baseUrl}/search-manuals`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    brand,
+                    model,
+                    equipmentType
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Manual search failed: ${response.status}`);
+            }
+
+            return await response.json();
+
+        } catch (error) {
+            console.error('Manual search error:', error);
+            throw error;
+        }
+    }
+}
+
+// Global function for manual search (called from formatted analysis)
+if (typeof window !== 'undefined') {
+    window.searchForManuals = async function(brand, model, equipmentType) {
+        try {
+            const api = new PhotoAnalysisAPI();
+            const result = await api.searchManuals(brand, model, equipmentType);
+            
+            if (result.success && result.manuals.length > 0) {
+                // Display manual search results in a modal or new section
+                console.log('Found manuals:', result.manuals);
+                // You can implement the UI display logic here
+                alert(`Found ${result.manuals.length} manuals for ${brand} ${model}`);
+            } else {
+                alert('No manuals found. Try searching the manufacturer website directly.');
+            }
+        } catch (error) {
+            console.error('Manual search failed:', error);
+            alert('Manual search failed. Please try again.');
+        }
+    };
 }
 
 // Export classes for use in other files
@@ -456,6 +703,7 @@ if (typeof window !== 'undefined') {
     window.PhotoProcessor = PhotoProcessor;
     window.MobilePhotoCapture = MobilePhotoCapture;
     window.AnalysisFormatter = AnalysisFormatter;
+    window.PhotoAnalysisAPI = PhotoAnalysisAPI;
 }
 
 // For Node.js environments
@@ -463,6 +711,7 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         PhotoProcessor,
         MobilePhotoCapture,
-        AnalysisFormatter
+        AnalysisFormatter,
+        PhotoAnalysisAPI
     };
 }
