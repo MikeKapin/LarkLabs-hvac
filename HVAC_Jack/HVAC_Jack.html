@@ -3462,55 +3462,140 @@ What's your current diagnostic status?`
             window.mobileHvacJack.hapticFeedback('success');
         }
     </script>
-    <script>
-// Make chat messages selectable and links clickable
-function makeTextSelectable() {
-  // Find the chat container (tries multiple common selectors)
-  const chatContainer = document.querySelector('.chat-messages') || 
-                       document.querySelector('.chat-container') || 
-                       document.querySelector('#chat') ||
-                       document.querySelector('#messages') ||
-                       document.querySelector('[class*="message"]') ||
-                       document.querySelector('[class*="chat"]');
-  
-  if (chatContainer) {
-    // Make all text selectable
-    chatContainer.style.userSelect = 'text';
-    chatContainer.style.webkitUserSelect = 'text';
-    chatContainer.style.mozUserSelect = 'text';
-    chatContainer.style.msUserSelect = 'text';
-    
-    // Convert URL text to clickable links
-    const messageElements = chatContainer.querySelectorAll('*');
-    messageElements.forEach(element => {
-      if (element.textContent && element.children.length === 0) {
-        // Look for URLs in text and make them clickable
-        const urlRegex = /(https?:\/\/[^\s\)]+)/g;
-        if (urlRegex.test(element.textContent)) {
-          element.innerHTML = element.textContent.replace(urlRegex, 
-            '<a href="$1" target="_blank" style="color: #4A90E2; text-decoration: underline; cursor: pointer;">$1</a>'
-          );
-        }
-      }
-    });
-  }
+    <!-- Enhanced fix for clickable and selectable manual links -->
+<style>
+/* Override the global user-select: none for manual search results */
+.mobile-message-content {
+    -webkit-user-select: text !important;
+    user-select: text !important;
 }
 
-// Run after each message is added
+.mobile-message-content a {
+    color: #4A90E2 !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
+
+/* Make manual URLs specifically selectable */
+.mobile-message-content *[href],
+.mobile-message-content a,
+.mobile-message-content .manual-url {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    cursor: text !important;
+}
+
+/* Override for any text that contains "http" */
+.mobile-message-content *:contains("http") {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
+</style>
+
+<script>
+// Enhanced text selection and link creation
+function makeTextSelectableAndClickable() {
+  console.log('Making text selectable and clickable...');
+  
+  // Find all message containers
+  const messageContainers = document.querySelectorAll('.mobile-message-content');
+  
+  messageContainers.forEach(container => {
+    // Force text selection
+    container.style.userSelect = 'text';
+    container.style.webkitUserSelect = 'text';
+    container.style.mozUserSelect = 'text';
+    container.style.msUserSelect = 'text';
+    container.style.cursor = 'text';
+    
+    // Find all text nodes and make URLs clickable
+    const walker = document.createTreeWalker(
+      container,
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    );
+    
+    const textNodes = [];
+    let node;
+    while (node = walker.nextNode()) {
+      textNodes.push(node);
+    }
+    
+    textNodes.forEach(textNode => {
+      const text = textNode.textContent;
+      const urlRegex = /(https?:\/\/[^\s\)\]]+)/g;
+      
+      if (urlRegex.test(text)) {
+        console.log('Found URL in text:', text);
+        
+        // Create a span to replace the text node
+        const span = document.createElement('span');
+        span.style.userSelect = 'text';
+        span.style.webkitUserSelect = 'text';
+        
+        // Replace URLs with clickable links
+        const newHTML = text.replace(urlRegex, (url) => {
+          return `<a href="${url}" target="_blank" style="color: #4A90E2 !important; text-decoration: underline !important; cursor: pointer !important; user-select: text !important; -webkit-user-select: text !important;">${url}</a>`;
+        });
+        
+        span.innerHTML = newHTML;
+        textNode.parentNode.replaceChild(span, textNode);
+      }
+    });
+    
+    // Make the entire container selectable
+    container.addEventListener('selectstart', function(e) {
+      e.stopPropagation();
+    });
+  });
+}
+
+// Run immediately and on any changes
+function runEnhancement() {
+  makeTextSelectableAndClickable();
+  
+  // Also try to override the global CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    .mobile-message-content, 
+    .mobile-message-content * {
+      -webkit-user-select: text !important;
+      user-select: text !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// Multiple triggers to ensure it works
+document.addEventListener('DOMContentLoaded', runEnhancement);
+setTimeout(runEnhancement, 1000);
+setTimeout(runEnhancement, 3000);
+
+// Watch for new messages
 const observer = new MutationObserver(function(mutations) {
+  let shouldRun = false;
   mutations.forEach(function(mutation) {
     if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-      setTimeout(makeTextSelectable, 100);
+      shouldRun = true;
     }
   });
+  
+  if (shouldRun) {
+    setTimeout(runEnhancement, 200);
+  }
 });
 
 // Start observing
-document.addEventListener('DOMContentLoaded', function() {
-  const chatArea = document.body;
-  observer.observe(chatArea, { childList: true, subtree: true });
-  makeTextSelectable(); // Run once on load
-});
+const chatContainer = document.getElementById('mobileMessages');
+if (chatContainer) {
+  observer.observe(chatContainer, { childList: true, subtree: true });
+}
+
+// Double-check every 5 seconds
+setInterval(runEnhancement, 5000);
 </script>
 </body>
 </html>
