@@ -1416,6 +1416,7 @@
                 <li><a onclick="showSection('tools'); closeMobileMenu();">Tools</a></li>
                 <li><a onclick="showSection('training'); closeMobileMenu();">Training</a></li>
                 <li><a onclick="showSection('downloads'); closeMobileMenu();">Downloads</a></li>
+                <li><a href="apps/hvac-tool-vault/index.html" target="_blank">🏦 Tool Vault</a></li>
                 <li><a href="pages/community.html">Community</a></li>
                 <li><a onclick="showSection('resources'); closeMobileMenu();">Resources</a></li>
                 <li><a onclick="showSection('about'); closeMobileMenu();">About</a></li>
@@ -1431,6 +1432,7 @@
                     <h1>Free HVAC Tools & Canadian Gas Technician Training</h1>
                     <p>Professional-grade calculators, TSSA G2 & G3 exam simulators, CSA B149.1 study guides, and certification training resources - completely free for Canadian HVAC technicians, students, and educators</p>
                     <a href="#" class="cta-button" onclick="showSection('tools')">Browse HVAC Tools</a>
+                    <a href="apps/hvac-tool-vault/index.html" target="_blank" class="cta-button" style="background: linear-gradient(45deg, #f1c40f, #f39c12); color: #2c3e50;">🏦 Tool Vault</a>
                     <a href="#" class="cta-button secondary" onclick="showSection('downloads')">Free Downloads</a>
                 </div>
             </div>
@@ -1483,6 +1485,37 @@
         <span class="tool-status status-revolutionary">🚀 BETA LIVE - Limited Access!</span>
     </div>
 </div>
+
+                <!-- NEW: Featured Tool Vault Section -->
+                <div class="tool-vault-featured" style="background: linear-gradient(45deg, rgba(241, 196, 15, 0.1), rgba(243, 156, 18, 0.1)); border: 1px solid rgba(241, 196, 15, 0.3); border-radius: 20px; padding: 3rem 2rem; margin: 3rem 0; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🏦</div>
+                    <h2 style="color: #f1c40f; font-size: 2.5rem; margin-bottom: 1rem; font-weight: 900;">HVAC Tool Vault Marketplace</h2>
+                    <p style="font-size: 1.3rem; color: #ecf0f1; margin-bottom: 1rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                        Canada's premier peer-to-peer marketplace for HVAC professionals. Buy, sell, and trade quality tools with verified technicians nationwide.
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; flex-wrap: wrap;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem 1.5rem; border-radius: 15px; min-width: 150px;">
+                            <div style="font-size: 1.8rem; font-weight: bold; color: #f1c40f;">247+</div>
+                            <div style="color: #bdc3c7; font-size: 0.9rem;">Active Listings</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem 1.5rem; border-radius: 15px; min-width: 150px;">
+                            <div style="font-size: 1.8rem; font-weight: bold; color: #f1c40f;">89+</div>
+                            <div style="color: #bdc3c7; font-size: 0.9rem;">Verified Users</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem 1.5rem; border-radius: 15px; min-width: 150px;">
+                            <div style="font-size: 1.8rem; font-weight: bold; color: #f1c40f;">156+</div>
+                            <div style="color: #bdc3c7; font-size: 0.9rem;">Successful Trades</div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <span style="background: rgba(39, 174, 96, 0.2); color: #27ae60; padding: 8px 16px; border-radius: 20px; font-weight: bold; margin-right: 1rem;">📱 Install as Mobile App</span>
+                        <span style="background: rgba(52, 152, 219, 0.2); color: #3498db; padding: 8px 16px; border-radius: 20px; font-weight: bold;">🔄 Real-time Sync</span>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                        <a href="apps/hvac-tool-vault/index.html" target="_blank" class="cta-button" style="background: linear-gradient(45deg, #f1c40f, #f39c12); color: #2c3e50; font-weight: bold; font-size: 1.1rem;">🏦 Open Tool Vault</a>
+                        <a href="apps/hvac-tool-vault/index.html" target="_blank" class="cta-button secondary">📱 Install Mobile App</a>
+                    </div>
+                </div>
 
                 <div class="tools-grid">
                     <div class="tool-card" onclick="showSection('tools')" role="button" tabindex="0" aria-label="View Professional HVAC Calculators">
@@ -1605,6 +1638,13 @@
                         <h3>Psychrometric Calculator</h3>
                         <p>Advanced air property calculations and analysis for HVAC professionals</p>
                         <span class="tool-status status-available external-link">Launch Calculator</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./apps/hvac-tool-vault/index.html', '_blank')">
+                        <div class="new-badge">NEW</div>
+                        <div class="tool-icon">🏦</div>
+                        <h3>HVAC Tool Vault Marketplace</h3>
+                        <p>Canada's peer-to-peer marketplace for HVAC professionals to buy, sell, and trade quality used tools. Connect with verified technicians nationwide.</p>
+                        <span class="tool-status status-available external-link">🚀 Open Marketplace</span>
                     </div>
                     <div class="tool-card" onclick="window.open('https://a2lprotools.netlify.app/', '_blank')">
                         <div class="new-badge">NEW</div>
@@ -1950,6 +1990,19 @@
                         <p>Comprehensive downloadable training materials for CSA Gas Technician 2 certification. Features advanced content covering installation techniques, system design, troubleshooting procedures, and safety protocols. Perfect for technicians advancing from G3 to G2 certification levels.</p>
                         <span class="tool-status status-premium">Premium Access</span>
                     </div>
+                    
+                    <div class="tool-card" onclick="window.open('./apps/hvac-tool-vault/index.html', '_blank')">
+                        <div class="new-badge">NEW</div>
+                        <div class="tool-icon">🏦</div>
+                        <h3>HVAC Tool Vault - Mobile App</h3>
+                        <p>Canada's premier peer-to-peer marketplace for HVAC tools. Install as mobile app on your phone! Buy, sell, and trade quality used tools with verified technicians. Full sync between mobile and desktop - post on phone, view on computer!</p>
+                        <div style="margin-top: 1rem; font-size: 0.9rem; color: #3498db;">
+                            📱 <strong>Installable Mobile App</strong> - Add to home screen<br>
+                            🔄 <strong>Real-time Sync</strong> - Works across all devices<br>
+                            🔌 <strong>Offline Mode</strong> - Works without internet
+                        </div>
+                        <span class="tool-status status-available external-link">🚀 Launch & Install App</span>
+                    </div>
                 </div>
 
                 <div class="quote">
@@ -2116,6 +2169,17 @@
 
     <footer>
         <div class="container">
+            <!-- Social Media Links -->
+            <!-- Quick Links -->
+            <div style="margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                    <a href="apps/hvac-tool-vault/index.html" target="_blank" style="color: #f1c40f; text-decoration: none; font-weight: bold;">🏦 Tool Vault Marketplace</a>
+                    <a href="pages/community.html" style="color: #3498db; text-decoration: none;">💬 Community</a>
+                    <a href="https://codecompass-api.vercel.app/" target="_blank" style="color: #3498db; text-decoration: none;">🧭 Code Compass</a>
+                    <a href="mailto:lark_labs@outlook.com" style="color: #3498db; text-decoration: none;">📧 Contact</a>
+                </div>
+            </div>
+            
             <!-- Social Media Links -->
             <div class="social-links">
                 <a href="https://www.facebook.com/profile.php?id=61578856650263" target="_blank" rel="noopener" title="Follow LARK Labs on Facebook">
