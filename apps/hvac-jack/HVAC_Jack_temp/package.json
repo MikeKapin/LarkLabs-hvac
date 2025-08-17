@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.3",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "tesseract.js": "^5.0.4",
+    "canvas": "^2.11.2"
   },
   "devDependencies": {
     "netlify-cli": "^17.0.0"
@@ -47,7 +49,10 @@
   },
   "features": {
     "textChat": "Claude-powered HVAC assistance",
-    "photoAnalysis": "Rating plate analysis with Claude Vision",
+    "photoAnalysis": "Rating plate analysis with OCR + Claude Vision",
+    "ocrPreprocessing": "Tesseract.js text extraction for enhanced accuracy",
+    "equipmentDatabase": "Comprehensive manufacturer database integration",
+    "errorCodeLookup": "Advanced error code database with diagnostics",
     "equipmentIdentification": "Automatic brand/model recognition",
     "warrantyCalculation": "Age-based warranty status",
     "capacitorSpecs": "Exact MFD/voltage requirements",
@@ -58,6 +63,6 @@
   "supportedFormats": {
     "images": ["image/jpeg", "image/png", "image/webp"],
     "maxFileSize": "10MB",
-    "analysisTime": "15-30 seconds"
+    "analysisTime": "20-35 seconds (with OCR preprocessing)"
   }
 }

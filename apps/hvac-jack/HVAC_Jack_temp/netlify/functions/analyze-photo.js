@@ -1,5 +1,9 @@
 // netlify/functions/analyze-photo.js
-// Enhanced HVAC Jack photo analysis with instant comprehensive data retrieval
+// Enhanced HVAC Jack photo analysis with OCR preprocessing and comprehensive data retrieval
+
+const { OCRProcessor } = require('./ocr-processor');
+const { ErrorCodeDatabase, EquipmentDatabase } = require('./error-code-database');
+const { ComprehensiveEquipmentDatabase } = require('./equipment-database');
 
 // Initialize shared storage for tracking photo analyses
 global.usageStore = global.usageStore || {
@@ -96,17 +100,22 @@ exports.handler = async (event, context) => {
       timestamp: new Date().toISOString()
     });
 
-    // STEP 1: Enhanced Claude Vision Analysis
+    // STEP 0: OCR Preprocessing for enhanced accuracy
+    console.log('📝 Step 0: OCR text extraction...');
+    const ocrProcessor = new OCRProcessor();
+    const ocrResult = await ocrProcessor.extractText(imageData);
+    
+    // STEP 1: Enhanced Claude Vision Analysis with OCR data
     console.log('🔍 Step 1: Enhanced rating plate analysis...');
-    const primaryAnalysis = await performEnhancedClaudeAnalysis(imageData, mode);
+    const primaryAnalysis = await performEnhancedClaudeAnalysis(imageData, mode, ocrResult);
     
     // STEP 2: Extract equipment details for comprehensive lookup
     const equipmentDetails = extractEquipmentDetails(primaryAnalysis);
     console.log('🔧 Equipment detected:', equipmentDetails);
 
-    // STEP 3: Comprehensive data retrieval
-    console.log('📚 Step 2: Comprehensive data retrieval...');
-    const comprehensiveData = await retrieveComprehensiveData(equipmentDetails, mode);
+    // STEP 3: Enhanced data retrieval with database integration
+    console.log('📚 Step 2: Enhanced data retrieval...');
+    const comprehensiveData = await retrieveComprehensiveData(equipmentDetails, mode, equipmentLookup);
     
     // STEP 4: Professional diagnostic compilation
     console.log('🎯 Step 3: Professional diagnostic compilation...');
@@ -178,8 +187,8 @@ exports.handler = async (event, context) => {
   }
 };
 
-// Enhanced Claude analysis with professional focus
-async function performEnhancedClaudeAnalysis(imageData, mode) {
+// Enhanced Claude analysis with OCR preprocessing
+async function performEnhancedClaudeAnalysis(imageData, mode, ocrResult = null) {
   const systemPrompt = createProfessionalAnalysisPrompt(mode);
 
   const apiKey = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
@@ -208,7 +217,14 @@ async function performEnhancedClaudeAnalysis(imageData, mode) {
           content: [
             {
               type: "text",
-              text: "Analyze this HVAC equipment rating plate with professional precision. Extract ALL technical details for comprehensive diagnostic lookup."
+              text: `Analyze this HVAC equipment rating plate with professional precision. Extract ALL technical details for comprehensive diagnostic lookup.
+              
+${ocrResult?.success ? `OCR EXTRACTED TEXT (use to verify and enhance your analysis):
+${ocrResult.extractedText}
+
+OCR CONFIDENCE: ${ocrResult.confidence}%
+
+Use this OCR text to verify and enhance your visual analysis.` : 'No OCR data available - rely on visual analysis only.'}`
             },
             {
               type: "image",
@@ -306,8 +322,8 @@ ${mode === 'technician' ?
 Extract EVERY visible detail with professional precision. This data will be used for instant lookup of manuals, wiring diagrams, troubleshooting guides, error codes, and diagnostic procedures.`;
 }
 
-// Extract equipment details for comprehensive lookup
-function extractEquipmentDetails(analysisResult) {
+// Extract equipment details with OCR enhancement
+function extractEquipmentDetails(analysisResult, ocrResult = null) {
   const details = {
     brand: null,
     model: null,
@@ -326,6 +342,25 @@ function extractEquipmentDetails(analysisResult) {
 
   try {
     const text = analysisResult.analysis;
+    
+    // If OCR was successful, use it to enhance extraction confidence
+    if (ocrResult?.success && ocrResult.structuredData) {
+      const ocrData = ocrResult.structuredData;
+      
+      // Use OCR data to fill in or verify Claude analysis
+      if (ocrData.brand && !details.brand) {
+        details.brand = ocrData.brand;
+        details.confidence += 15;
+      }
+      if (ocrData.model && !details.model) {
+        details.model = ocrData.model;
+        details.confidence += 20;
+      }
+      if (ocrData.serial && !details.serial) {
+        details.serial = ocrData.serial;
+        details.confidence += 15;
+      }
+    }
     
     // Extract using structured format markers
     const brandMatch = text.match(/BRAND:\s*([^\n\r]+)/i);
@@ -401,8 +436,8 @@ function extractEquipmentDetails(analysisResult) {
   return details;
 }
 
-// Comprehensive data retrieval from multiple sources
-async function retrieveComprehensiveData(equipmentDetails, mode) {
+// Enhanced data retrieval with equipment database integration
+async function retrieveComprehensiveData(equipmentDetails, mode, equipmentLookup = null) {
   const comprehensiveData = {
     success: false,
     manuals: [],
