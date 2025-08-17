@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Tools Premium Membership - LARK Labs</title>
+    <meta name="description" content="Premium membership for exclusive HVAC tool deals, advanced AI features, and professional networking benefits.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2c3e50;
+            --secondary-blue: #34495e;
+            --accent-blue: #3498db;
+            --accent-orange: #e67e22;
+            --accent-green: #27ae60;
+            --text-light: #ecf0f1;
+            --text-muted: #95a5a6;
+            --bg-dark: #1a1a1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-accent: rgba(52, 152, 219, 0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-blue) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: transparent;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-orange), #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-light);
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--accent-orange);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, var(--accent-orange), #f39c12);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            min-width: 20px;
+        }
+
+        .subscribe-button {
+            background: linear-gradient(45deg, var(--accent-orange), #f39c12);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .subscribe-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(230, 126, 34, 0.4);
+        }
+
+        .subscribe-button.secondary {
+            background: transparent;
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .subscribe-button.secondary:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .benefits-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid var(--border-light);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-title {
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .pricing-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">🛠️ HVAC Tools Premium</a>
+                <a href="index.html" class="back-button">← Back to Marketplace</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>⭐ Premium Membership</h1>
+            <p class="hero-subtitle">Unlock exclusive deals, advanced AI features, and professional networking benefits for serious HVAC professionals</p>
+        </section>
+
+        <!-- Pricing Cards -->
+        <section class="pricing-section">
+            <!-- Free Tier -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Free Access</h3>
+                <div class="plan-price">$0</div>
+                <div class="plan-period">Forever free</div>
+                
+                <div class="features-list">
+                    <ul>
+                        <li><span class="feature-icon">✅</span> Basic tool catalog access</li>
+                        <li><span class="feature-icon">✅</span> Standard AI assistant</li>
+                        <li><span class="feature-icon">✅</span> Basic search and filters</li>
+                        <li><span class="feature-icon">✅</span> Product reviews and ratings</li>
+                        <li><span class="feature-icon">✅</span> Affiliate price comparison</li>
+                        <li><span class="feature-icon">❌</span> Exclusive deals</li>
+                        <li><span class="feature-icon">❌</span> Advanced AI features</li>
+                        <li><span class="feature-icon">❌</span> Priority support</li>
+                    </ul>
+                </div>
+                
+                <button class="subscribe-button secondary" onclick="window.location.href='index.html'">
+                    Continue with Free
+                </button>
+            </div>
+
+            <!-- Premium Tier -->
+            <div class="pricing-card featured">
+                <h3 class="plan-name">Premium Professional</h3>
+                <div class="plan-price">$19.99</div>
+                <div class="plan-period">per month</div>
+                
+                <div class="features-list">
+                    <ul>
+                        <li><span class="feature-icon">✅</span> Everything in Free</li>
+                        <li><span class="feature-icon">✅</span> Exclusive member-only deals</li>
+                        <li><span class="feature-icon">✅</span> Advanced AI tool recommendations</li>
+                        <li><span class="feature-icon">✅</span> Custom project tool lists</li>
+                        <li><span class="feature-icon">✅</span> Priority AI assistant support</li>
+                        <li><span class="feature-icon">✅</span> Professional networking</li>
+                        <li><span class="feature-icon">✅</span> Early access to new tools</li>
+                        <li><span class="feature-icon">✅</span> Advanced analytics dashboard</li>
+                        <li><span class="feature-icon">✅</span> Bulk purchasing guidance</li>
+                        <li><span class="feature-icon">✅</span> 24/7 technical support</li>
+                    </ul>
+                </div>
+                
+                <button class="subscribe-button" onclick="redirectToStripe('premium')">
+                    🚀 Start Premium Trial
+                </button>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+                    7-day free trial • Cancel anytime
+                </div>
+            </div>
+
+            <!-- Enterprise Tier -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Enterprise</h3>
+                <div class="plan-price">$99.99</div>
+                <div class="plan-period">per month</div>
+                
+                <div class="features-list">
+                    <ul>
+                        <li><span class="feature-icon">✅</span> Everything in Premium</li>
+                        <li><span class="feature-icon">✅</span> Team management features</li>
+                        <li><span class="feature-icon">✅</span> Bulk purchasing discounts</li>
+                        <li><span class="feature-icon">✅</span> Custom AI training</li>
+                        <li><span class="feature-icon">✅</span> API access for integrations</li>
+                        <li><span class="feature-icon">✅</span> Dedicated account manager</li>
+                        <li><span class="feature-icon">✅</span> Custom reporting</li>
+                        <li><span class="feature-icon">✅</span> White-label options</li>
+                    </ul>
+                </div>
+                
+                <button class="subscribe-button" onclick="contactEnterprise()">
+                    💼 Contact Sales
+                </button>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <h2 style="text-align: center; color: var(--accent-blue); font-size: 2.5rem; margin-bottom: 1rem;">
+                Why Go Premium?
+            </h2>
+            <p style="text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2rem;">
+                Professional HVAC technicians deserve professional-grade benefits
+            </p>
+
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">💰</div>
+                    <h4 class="benefit-title">Exclusive Deals</h4>
+                    <p style="color: var(--text-muted);">Save 15-30% on premium tools with our exclusive member-only pricing and flash sales.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">🤖</div>
+                    <h4 class="benefit-title">Advanced AI Assistant</h4>
+                    <p style="color: var(--text-muted);">Get personalized tool recommendations, project planning, and technical support from our enhanced AI.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">📊</div>
+                    <h4 class="benefit-title">Analytics Dashboard</h4>
+                    <p style="color: var(--text-muted);">Track your tool investments, project costs, and ROI with detailed analytics and reporting.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <h4 class="benefit-title">Custom Tool Lists</h4>
+                    <p style="color: var(--text-muted);">AI-generated tool lists for specific projects, with budget optimization and timeline planning.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">👥</div>
+                    <h4 class="benefit-title">Professional Network</h4>
+                    <p style="color: var(--text-muted);">Connect with other premium members, share experiences, and get peer recommendations.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <h4 class="benefit-title">Early Access</h4>
+                    <p style="color: var(--text-muted);">Be the first to know about new tools, technologies, and industry innovations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section style="margin: 3rem 0;">
+            <h2 style="text-align: center; color: var(--accent-blue); margin-bottom: 2rem;">What Premium Members Say</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: var(--bg-card); padding: 2rem; border-radius: 15px; border: 1px solid var(--border-light);">
+                    <p style="font-style: italic; margin-bottom: 1rem;">"The AI recommendations have saved me thousands on tool purchases. It knows exactly what I need for each job."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--accent-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">MR</div>
+                        <div>
+                            <div style="font-weight: 600;">Mike Rodriguez</div>
+                            <div style="color: var(--text-muted); font-size: 0.9rem;">G2 Certified Technician</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-card); padding: 2rem; border-radius: 15px; border: 1px solid var(--border-light);">
+                    <p style="font-style: italic; margin-bottom: 1rem;">"Premium deals paid for itself in the first month. The custom tool lists are perfect for project planning."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--accent-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">SK</div>
+                        <div>
+                            <div style="font-weight: 600;">Sarah Kim</div>
+                            <div style="color: var(--text-muted); font-size: 0.9rem;">HVAC Business Owner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section style="margin: 3rem 0;">
+            <h2 style="text-align: center; color: var(--accent-blue); margin-bottom: 2rem;">Frequently Asked Questions</h2>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item" style="background: var(--bg-card); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border: 1px solid var(--border-light);">
+                    <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">What's included in the free trial?</h4>
+                    <p style="color: var(--text-muted);">Full access to all premium features for 7 days, including exclusive deals, advanced AI, and custom tool lists. No credit card required to start.</p>
+                </div>
+
+                <div class="faq-item" style="background: var(--bg-card); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border: 1px solid var(--border-light);">
+                    <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">How much can I save with premium deals?</h4>
+                    <p style="color: var(--text-muted);">Premium members typically save 15-30% on tools, with some exclusive deals offering up to 50% off. Most members save more than the subscription cost in their first purchase.</p>
+                </div>
+
+                <div class="faq-item" style="background: var(--bg-card); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border: 1px solid var(--border-light);">
+                    <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">Can I cancel anytime?</h4>
+                    <p style="color: var(--text-muted);">Yes! Cancel your subscription at any time with no fees or penalties. You'll retain access until the end of your billing period.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Stripe Integration
+        function redirectToStripe(planType) {
+            // Replace with your actual Stripe payment links
+            const stripeLinks = {
+                'premium': 'https://buy.stripe.com/test_XXXXXXXX', // Replace with actual Stripe link
+                'enterprise': 'mailto:enterprise@larklabs.org?subject=Enterprise Plan Inquiry'
+            };
+
+            if (planType === 'premium') {
+                // Track conversion
+                trackEvent('Premium', 'Subscription Start', 'Monthly Plan', 19.99);
+                
+                // In production, integrate with Stripe
+                showNotification('Redirecting to secure payment...', 'info');
+                
+                // For demo, simulate successful subscription
+                setTimeout(() => {
+                    localStorage.setItem('hvacToolsPremium', JSON.stringify({
+                        active: true,
+                        plan: 'premium',
+                        startDate: new Date().toISOString(),
+                        features: ['exclusive_deals', 'advanced_ai', 'custom_lists', 'priority_support']
+                    }));
+                    
+                    showNotification('Welcome to Premium! 🎉', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html?premium=activated';
+                    }, 2000);
+                }, 1000);
+            } else {
+                window.location.href = stripeLinks[planType];
+            }
+        }
+
+        function contactEnterprise() {
+            const subject = encodeURIComponent('Enterprise Plan Inquiry - HVAC Tools Marketplace');
+            const body = encodeURIComponent('Hi,\n\nI\'m interested in the Enterprise plan for HVAC Tools Marketplace. Please contact me with more information about:\n\n- Team management features\n- Bulk purchasing options\n- Custom AI training\n- API access\n- Pricing details\n\nThank you!');
+            
+            window.location.href = `mailto:enterprise@larklabs.org?subject=${subject}&body=${body}`;
+        }
+
+        // Utility Functions
+        function trackEvent(category, action, label, value) {
+            console.log('Analytics Event:', { category, action, label, value });
+            // In production, integrate with Google Analytics
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: all 0.3s ease;
+                max-width: 350px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(45deg, var(--accent-green), #2ecc71)';
+            } else if (type === 'error') {
+                notification.style.background = 'linear-gradient(45deg, #e74c3c, #c0392b)';
+            } else {
+                notification.style.background = 'linear-gradient(45deg, var(--accent-blue), #2980b9)';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
