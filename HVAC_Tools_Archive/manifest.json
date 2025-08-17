@@ -1,0 +1,100 @@
+{
+  "name": "HVAC Pro Tools - Enhanced",
+  "short_name": "HVAC Pro",
+  "description": "Professional HVAC calculation tools with advanced features for Canadian technicians and engineers",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1e3c72",
+  "theme_color": "#4ecdc4",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["productivity", "utilities", "business", "education"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./HVAC_Pro_Logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./HVAC_Pro_Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./HVAC_Pro_Logo.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple-touch-icon"
+    },
+    {
+      "src": "./HVAC_Pro_Logo.png",
+      "sizes": "167x167",
+      "type": "image/png",
+      "purpose": "apple-touch-icon"
+    },
+    {
+      "src": "./HVAC_Pro_Logo.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "apple-touch-icon"
+    },
+    {
+      "src": "./HVAC_Pro_Logo.png",
+      "sizes": "120x120",
+      "type": "image/png",
+      "purpose": "apple-touch-icon"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./HVAC_Pro_Logo.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "HVAC Pro Tools Calculator Interface"
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Enhanced Load Calculator",
+      "short_name": "Load Calc+",
+      "description": "Advanced heating and cooling load calculations with equipment sizing",
+      "url": "/?tool=load-calculator&mode=enhanced",
+      "icons": [{ "src": "./HVAC_Pro_Logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "SuperHeat Calculator",
+      "short_name": "SuperHeat",
+      "description": "Calculate superheat and subcooling values",
+      "url": "/?tool=superheat-subcool",
+      "icons": [{ "src": "./HVAC_Pro_Logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "P-T Charts",
+      "short_name": "P-T Charts",
+      "description": "Refrigerant pressure-temperature charts",
+      "url": "/?tool=pt-chart",
+      "icons": [{ "src": "./HVAC_Pro_Logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Saved Calculations",
+      "short_name": "Saved",
+      "description": "Access your saved calculations",
+      "url": "/?view=saved",
+      "icons": [{ "src": "./HVAC_Pro_Logo.png", "sizes": "96x96" }]
+    }
+  ]
+}

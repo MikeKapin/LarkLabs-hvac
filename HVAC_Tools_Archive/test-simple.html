@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HVAC Tools Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>HVAC Tools Simple Test</h1>
+    
+    <div class="tool-card" onclick="openTool('test-tool')" style="padding: 20px; margin: 10px; background: #f0f0f0; cursor: pointer;">
+        <h3>Test Tool</h3>
+        <p>Click to test</p>
+    </div>
+    
+    <div id="main-app" style="display: block;">
+        <p>Main app area</p>
+    </div>
+    
+    <div id="test-tool" style="display: none;">
+        <button onclick="showMainApp()">Back</button>
+        <div id="test-tool-content">Test tool content</div>
+    </div>
+    
+    <script>
+        function openTool(toolId) {
+            console.log('Opening tool:', toolId);
+            document.getElementById('main-app').style.display = 'none';
+            document.getElementById(toolId).style.display = 'block';
+        }
+        
+        function showMainApp() {
+            console.log('Showing main app');
+            document.querySelectorAll('[id$="-tool"]').forEach(el => el.style.display = 'none');
+            document.getElementById('main-app').style.display = 'block';
+        }
+    </script>
+    
+    <script src="mobile-simple-fix.js"></script>
+</body>
+</html>

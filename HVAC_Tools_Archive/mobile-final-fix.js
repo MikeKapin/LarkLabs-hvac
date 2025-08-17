@@ -69,33 +69,26 @@ class FinalMobileFix {
     
     fixMobileToolCards() {
         const toolCards = document.querySelectorAll('.tool-card');
-        console.log(`Found ${toolCards.length} tool cards to fix`);
+        console.log(`Found ${toolCards.length} tool cards to fix for mobile`);
         
         toolCards.forEach((card, index) => {
-            // Remove any existing event listeners
-            const newCard = card.cloneNode(true);
-            card.parentNode.replaceChild(newCard, card);
-            
-            // Get the onclick attribute value
-            const onclickAttr = newCard.getAttribute('onclick');
+            // Get the onclick attribute value but DON'T remove it for desktop compatibility
+            const onclickAttr = card.getAttribute('onclick');
             
             if (onclickAttr) {
-                // Remove onclick to prevent conflicts
-                newCard.removeAttribute('onclick');
-                
                 // Extract tool ID from onclick
                 const toolIdMatch = onclickAttr.match(/openTool\(['"]([^'"]+)['"]\)/);
                 const comingSoonMatch = onclickAttr.match(/showComingSoon\(['"]([^'"]+)['"]\)/);
                 
                 if (toolIdMatch) {
                     const toolId = toolIdMatch[1];
-                    console.log(`Setting up mobile handler for tool: ${toolId}`);
+                    console.log(`Adding mobile handler for tool: ${toolId} (keeping desktop onclick)`);
                     
-                    // Add comprehensive touch handlers
-                    this.addMobileCardHandler(newCard, toolId);
+                    // Add mobile-specific touch handlers WITHOUT removing onclick
+                    this.addMobileCardHandler(card, toolId);
                 } else if (comingSoonMatch) {
                     const toolName = comingSoonMatch[1];
-                    this.addComingSoonHandler(newCard, toolName);
+                    this.addComingSoonHandler(card, toolName);
                 }
             }
         });
@@ -105,80 +98,91 @@ class FinalMobileFix {
         // Add mobile-friendly classes
         card.classList.add('mobile-ready');
         
-        // Create comprehensive event handler
-        const handleCardActivation = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            console.log(`Mobile card activation for: ${toolId}`);
-            
-            // Visual feedback
-            card.style.transform = 'scale(0.96)';
-            card.style.opacity = '0.8';
-            
-            // Haptic feedback if available
-            if ('vibrate' in navigator) {
-                navigator.vibrate(20);
+        // Create mobile-only event handler
+        const handleMobileCardActivation = (e) => {
+            // Only activate on actual touch devices
+            if (e.type === 'touchend' || (e.type === 'click' && this.isMobile)) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                
+                console.log(`Mobile card activation for: ${toolId}`);
+                
+                // Visual feedback
+                card.style.transform = 'scale(0.96)';
+                card.style.opacity = '0.8';
+                
+                // Haptic feedback if available
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(20);
+                }
+                
+                // Reset visual feedback
+                setTimeout(() => {
+                    card.style.transform = '';
+                    card.style.opacity = '';
+                }, 150);
+                
+                // Open tool with delay for visual feedback
+                setTimeout(() => {
+                    this.openToolMobileEnhanced(toolId);
+                }, 150);
             }
-            
-            // Reset visual feedback
-            setTimeout(() => {
-                card.style.transform = '';
-                card.style.opacity = '';
-            }, 150);
-            
-            // Open tool with delay for visual feedback
-            setTimeout(() => {
-                this.openToolMobileEnhanced(toolId);
-            }, 150);
         };
         
-        // Add multiple event listeners for maximum compatibility
-        card.addEventListener('touchend', handleCardActivation, { passive: false });
-        card.addEventListener('click', handleCardActivation, { passive: false });
+        // Only add touch handlers for mobile devices
+        card.addEventListener('touchend', handleMobileCardActivation, { passive: false });
         
-        // Prevent default touch behaviors
+        // Prevent default touch behaviors only on mobile
         card.addEventListener('touchstart', (e) => {
-            card.style.transform = 'scale(0.98)';
-            card.style.opacity = '0.9';
+            if (this.isMobile) {
+                card.style.transform = 'scale(0.98)';
+                card.style.opacity = '0.9';
+            }
         }, { passive: true });
         
         card.addEventListener('touchcancel', (e) => {
-            card.style.transform = '';
-            card.style.opacity = '';
+            if (this.isMobile) {
+                card.style.transform = '';
+                card.style.opacity = '';
+            }
         }, { passive: true });
         
-        // Prevent context menu
-        card.addEventListener('contextmenu', (e) => e.preventDefault());
-        
-        // Add touch-action CSS
-        card.style.touchAction = 'manipulation';
-        card.style.webkitTapHighlightColor = 'rgba(42, 82, 152, 0.3)';
-        card.style.userSelect = 'none';
-        card.style.webkitUserSelect = 'none';
+        // Add mobile-specific CSS
+        if (this.isMobile) {
+            card.style.touchAction = 'manipulation';
+            card.style.webkitTapHighlightColor = 'rgba(42, 82, 152, 0.3)';
+            card.style.userSelect = 'none';
+            card.style.webkitUserSelect = 'none';
+        }
     }
     
     addComingSoonHandler(card, toolName) {
         card.classList.add('mobile-ready', 'coming-soon');
         
         const handler = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Visual feedback
-            card.style.transform = 'scale(0.96)';
-            setTimeout(() => {
-                card.style.transform = '';
-            }, 150);
-            
-            // Show coming soon message
-            this.showMobileComingSoon(toolName);
+            // Only handle for mobile touch events
+            if (e.type === 'touchend' || (e.type === 'click' && this.isMobile)) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Visual feedback
+                card.style.transform = 'scale(0.96)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+                
+                // Show coming soon message
+                this.showMobileComingSoon(toolName);
+            }
         };
         
+        // Only add touch handlers for mobile
         card.addEventListener('touchend', handler, { passive: false });
-        card.addEventListener('click', handler, { passive: false });
-        card.addEventListener('contextmenu', (e) => e.preventDefault());
+        
+        if (this.isMobile) {
+            card.addEventListener('contextmenu', (e) => e.preventDefault());
+        }
     }
     
     openToolMobileEnhanced(toolId) {
@@ -483,26 +487,59 @@ class FinalMobileFix {
     }
     
     overrideCoreFunctions() {
-        // Completely override the core functions with mobile-optimized versions
-        console.log('🔄 Overriding core functions for mobile compatibility');
+        // Only override core functions for mobile devices
+        if (!this.isMobile) {
+            console.log('⏩ Skipping function override - desktop device detected');
+            return;
+        }
+        
+        console.log('🔄 Overriding core functions for mobile compatibility only');
         
         // Store originals
         window._originalOpenTool = window.openTool;
         window._originalShowMainApp = window.showMainApp;
         window._originalLoadToolContent = window.loadToolContent;
         
-        // Replace with mobile versions
+        // Replace with mobile versions ONLY for mobile devices
         window.openTool = (toolId) => {
-            console.log(`📱 Mobile openTool called: ${toolId}`);
-            this.openToolMobileEnhanced(toolId);
+            if (this.isMobile) {
+                console.log(`📱 Mobile openTool called: ${toolId}`);
+                this.openToolMobileEnhanced(toolId);
+            } else {
+                // Use original function for desktop
+                if (window._originalOpenTool) {
+                    window._originalOpenTool(toolId);
+                } else {
+                    // Fallback to basic implementation
+                    document.getElementById('main-app').style.display = 'none';
+                    document.getElementById(toolId).style.display = 'block';
+                    if (typeof loadToolContent === 'function') {
+                        loadToolContent(toolId);
+                    }
+                }
+            }
         };
         
         window.showMainApp = () => {
-            console.log('📱 Mobile showMainApp called');
-            this.showMainAppMobile();
+            if (this.isMobile) {
+                console.log('📱 Mobile showMainApp called');
+                this.showMainAppMobile();
+            } else {
+                // Use original function for desktop
+                if (window._originalShowMainApp) {
+                    window._originalShowMainApp();
+                } else {
+                    // Fallback to basic implementation
+                    const toolContents = document.querySelectorAll('.app-content');
+                    toolContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    document.getElementById('main-app').style.display = 'block';
+                }
+            }
         };
         
-        // Enhance loadToolContent to work better on mobile
+        // Enhance loadToolContent to work better on mobile but preserve desktop functionality
         const originalLoadToolContent = window.loadToolContent || window._originalLoadToolContent;
         window.loadToolContent = (toolId) => {
             try {
@@ -512,21 +549,25 @@ class FinalMobileFix {
                     console.log(`No loadToolContent function available for: ${toolId}`);
                 }
                 
-                // Always apply mobile optimizations after loading
-                setTimeout(() => {
-                    const contentDiv = document.getElementById(toolId + '-content');
-                    if (contentDiv) {
-                        this.optimizeContentForMobile(contentDiv);
-                    }
-                }, 100);
+                // Apply mobile optimizations only for mobile devices
+                if (this.isMobile) {
+                    setTimeout(() => {
+                        const contentDiv = document.getElementById(toolId + '-content');
+                        if (contentDiv) {
+                            this.optimizeContentForMobile(contentDiv);
+                        }
+                    }, 100);
+                }
                 
             } catch (error) {
                 console.error(`Error in enhanced loadToolContent for ${toolId}:`, error);
-                this.showMobileError(`Failed to load ${this.formatToolName(toolId)}`);
+                if (this.isMobile) {
+                    this.showMobileError(`Failed to load ${this.formatToolName(toolId)}`);
+                }
             }
         };
         
-        console.log('✅ Core functions overridden for mobile');
+        console.log('✅ Core functions conditionally overridden for mobile only');
     }
     
     showMobileLoading() {
