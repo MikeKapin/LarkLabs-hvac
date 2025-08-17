@@ -6,9 +6,25 @@
       "Bash(mv:*)",
       "Bash(rmdir:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "WebSearch",
+      "WebSearch",
+      "Bash(npm run build:*)",
+      "Bash(git push:*)",
+      "Bash(git rm:*)",
+      "Bash(dir:*)",
+      "Bash(python:*)",
+      "Bash(node:*)",
+      "Bash(fc /b:*)",
+      "Bash(curl:*)",
+      "Bash(cp:*)",
+      "WebFetch(domain:www.hrai.ca)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\Users\\m_kap\\OneDrive\\Desktop\\Personal\\Android App Project\\csa-code-search",
+      "C:\\mnt\\d\\b149-1-25"
+    ]
   }
 }

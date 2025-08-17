@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Community Hub - LARK Labs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #3498db;
+        }
+
+        /* Community Styles */
+        .community-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .community-nav-item {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            color: #bdc3c7;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .community-nav-item.active, .community-nav-item:hover {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .community-section {
+            display: none;
+        }
+
+        .community-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Discussion Threads */
+        .thread-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .new-thread-form {
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .thread-input-group {
+            margin-bottom: 1rem;
+        }
+
+        .thread-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        .thread-title-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .thread-category-select {
+            width: 200px;
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .thread-content-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .thread-input-group input::placeholder,
+        .thread-input-group textarea::placeholder,
+        .thread-input-group select {
+            color: #bdc3c7;
+        }
+
+        .thread-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .thread-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+
+        .thread-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .thread-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .thread-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .thread-author {
+            color: #3498db;
+            font-weight: 500;
+        }
+
+        .thread-time {
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        .thread-category {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .thread-stats {
+            display: flex;
+            gap: 1rem;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        .thread-preview {
+            color: #ecf0f1;
+            line-height: 1.5;
+            margin-top: 0.5rem;
+        }
+
+        /* User Directory */
+        .user-directory {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .user-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.2);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-title {
+            color: #3498db;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-location {
+            color: #95a5a6;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-badges {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .user-badge {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .user-badge.certified {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+        }
+
+        .user-badge.expert {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+        }
+
+        .connect-button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .connect-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Chat Messages - Enhanced */
+        .chat-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-area {
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.5;
+        }
+
+        .chat-input::placeholder {
+            color: #bdc3c7;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .chat-button-area {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .chat-messages {
+            max-height: 500px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .chat-message {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .chat-message:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-author-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .message-author {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .message-author-badge {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: #bdc3c7;
+        }
+
+        .message-content {
+            color: #ecf0f1;
+            line-height: 1.6;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .reply-button {
+            background: none;
+            border: 1px solid #3498db;
+            color: #3498db;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .reply-button:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .like-button {
+            background: none;
+            border: 1px solid #27ae60;
+            color: #27ae60;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .like-button:hover, .like-button.liked {
+            background: #27ae60;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .reply {
+            margin-left: 2rem;
+            margin-top: 1rem;
+            border-left: 3px solid #27ae60;
+            padding-left: 1rem;
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        /* Filter and Search */
+        .community-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-search {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .filter-category {
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-category.active {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-color: #3498db;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Back button */
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(149, 165, 166, 0.4);
+        }
+
+        .reply-input-box {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                max-height: 200px;
+            }
+        }
+
+        .thread-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .thread-replies {
+            border-top: 2px solid rgba(52, 152, 219, 0.3);
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+        }
+
+        /* Enhanced button styles */
+        .like-button, .reply-button {
+            background: none;
+            border: 1px solid;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .like-button {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .like-button:hover, .like-button.liked {
+            background: #27ae60;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .reply-button {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .reply-button:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .like-button.liked {
+            background: #27ae60;
+            color: white;
+            border-color: #27ae60;
+            animation: likeAnimation 0.3s ease;
+        }
+
+        @keyframes likeAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Thread interaction improvements */
+        .thread-title:hover {
+            color: #3498db !important;
+            text-decoration: underline;
+        }
+
+        .thread-item {
+            position: relative;
+        }
+
+        .thread-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: transparent;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .thread-item:hover::before {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+        }
+
+        /* Certification buttons */
+        .cert-button {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            color: #bdc3c7;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .cert-button:hover {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .cert-button.selected {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            border-color: #27ae60;
+            color: white;
+        }
+
+        .selected-cert {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .selected-cert .remove-cert {
+            cursor: pointer;
+            font-weight: bold;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .selected-cert .remove-cert:hover {
+            opacity: 1;
+        }
+
+        /* Profile photo upload styling */
+        .photo-upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .photo-upload-area:hover {
+            border-color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .photo-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3498db;
+        }
+
+        /* Enhanced user card for new profiles */
+        .user-card.new-profile {
+            border: 2px solid #27ae60;
+            box-shadow: 0 0 20px rgba(39, 174, 96, 0.3);
+        }
+
+        .user-card.new-profile::before {
+            content: "NEW";
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+            .community-nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .chat-input-area {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .chat-button-area {
+                justify-content: stretch;
+            }
+
+            .chat-button-area .cta-button {
+                width: 100%;
+            }
+
+            .user-directory {
+                grid-template-columns: 1fr;
+            }
+
+            .thread-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .thread-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .thread-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .community-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-search {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-button">← Back to LARK Labs</a>
+        
+        <h1 class="section-title">HVAC Community Hub</h1>
+        <p style="text-align: center; margin-bottom: 2rem; color: #bdc3c7;">
+            Connect with fellow HVAC professionals, students, and educators. Share knowledge, ask questions, and build your network.
+        </p>
+
+        <!-- Community Navigation -->
+        <div class="community-nav">
+            <div class="community-nav-item active" onclick="showCommunitySection('discussions')">
+                💬 Discussions
+            </div>
+            <div class="community-nav-item" onclick="showCommunitySection('directory')">
+                👥 User Directory
+            </div>
+            <div class="community-nav-item" onclick="showCommunitySection('chat')">
+                🗨️ Live Chat
+            </div>
+        </div>
+
+        <!-- DISCUSSIONS SECTION -->
+        <div id="community-discussions" class="community-section active">
+            <div class="thread-container">
+                <h3 style="color: #3498db; margin-bottom: 1.5rem; font-size: 1.4rem;">Discussion Threads</h3>
+                
+                <!-- New Thread Form -->
+                <div class="new-thread-form">
+                    <h4 style="color: #3498db; margin-bottom: 1rem;">Start a New Discussion</h4>
+                    <div class="thread-input-group">
+                        <label>Thread Title</label>
+                        <input type="text" id="threadTitle" class="thread-title-input" placeholder="Enter a descriptive title for your discussion...">
+                    </div>
+                    <div class="thread-input-group" style="display: flex; gap: 1rem; align-items: center;">
+                        <div>
+                            <label>Category</label>
+                            <select id="threadCategory" class="thread-category-select">
+                                <option value="general">General Discussion</option>
+                                <option value="troubleshooting">Troubleshooting</option>
+                                <option value="education">Education & Training</option>
+                                <option value="codes">Codes & Regulations</option>
+                                <option value="equipment">Equipment & Tools</option>
+                                <option value="career">Career Advice</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="thread-input-group">
+                        <label>Content</label>
+                        <textarea id="threadContent" class="thread-content-input" placeholder="Share your thoughts, ask questions, or start a discussion..."></textarea>
+                    </div>
+                    <button class="cta-button" onclick="createThread()" style="margin-top: 1rem;">
+                        🚀 Start Discussion
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="community-filters">
+                    <input type="text" class="filter-search" placeholder="🔍 Search discussions..." id="threadSearch">
+                    <div class="filter-category active" data-category="all">All</div>
+                    <div class="filter-category" data-category="general">General</div>
+                    <div class="filter-category" data-category="troubleshooting">Troubleshooting</div>
+                    <div class="filter-category" data-category="education">Education</div>
+                    <div class="filter-category" data-category="codes">Codes</div>
+                </div>
+
+                <!-- Thread List -->
+                <div id="threadList">
+                    <div class="thread-item" data-category="troubleshooting">
+                        <div class="thread-header">
+                            <div>
+                                <div class="thread-title">Heat pump not heating efficiently in cold weather</div>
+                                <div class="thread-meta">
+                                    <span class="thread-author">Mike R. (G2 Certified)</span>
+                                    <span class="thread-time">2 hours ago</span>
+                                    <span class="thread-category">Troubleshooting</span>
+                                </div>
+                            </div>
+                            <div class="thread-stats">
+                                <span>💬 8 replies</span>
+                                <span>👁️ 45 views</span>
+                            </div>
+                        </div>
+                        <div class="thread-preview">
+                            I have a client with a heat pump that's struggling to maintain temperature when it gets below -10°C. The backup electric heat is kicking in too often. Has anyone dealt with similar issues? Looking for troubleshooting steps...
+                        </div>
+                    </div>
+
+                    <div class="thread-item" data-category="education">
+                        <div class="thread-header">
+                            <div>
+                                <div class="thread-title">Best resources for studying CSA B149.1?</div>
+                                <div class="thread-meta">
+                                    <span class="thread-author">Sarah K. (Student)</span>
+                                    <span class="thread-time">5 hours ago</span>
+                                    <span class="thread-category">Education</span>
+                                </div>
+                            </div>
+                            <div class="thread-stats">
+                                <span>💬 12 replies</span>
+                                <span>👁️ 78 views</span>
+                            </div>
+                        </div>
+                        <div class="thread-preview">
+                            I'm preparing for my G2 exam and finding the gas code challenging. What study methods worked best for you? Are there any specific sections I should focus on more than others?
+                        </div>
+                    </div>
+
+                    <div class="thread-item" data-category="codes">
+                        <div class="thread-header">
+                            <div>
+                                <div class="thread-title">2024 Code Updates - What's Changed?</div>
+                                <div class="thread-meta">
+                                    <span class="thread-author">Tom W. (Inspector)</span>
+                                    <span class="thread-time">1 day ago</span>
+                                    <span class="thread-category">Codes</span>
+                                </div>
+                            </div>
+                            <div class="thread-stats">
+                                <span>💬 15 replies</span>
+                                <span>👁️ 156 views</span>
+                            </div>
+                        </div>
+                        <div class="thread-preview">
+                            Let's discuss the major updates in the 2024 gas codes. I've compiled a list of key changes that affect field work. What changes have you noticed impacting your daily operations?
+                        </div>
+                    </div>
+
+                    <div class="thread-item" data-category="equipment">
+                        <div class="thread-header">
+                            <div>
+                                <div class="thread-title">Recommendations for digital manifold gauges</div>
+                                <div class="thread-meta">
+                                    <span class="thread-author">Alex P. (Technician)</span>
+                                    <span class="thread-time">2 days ago</span>
+                                    <span class="thread-category">Equipment</span>
+                                </div>
+                            </div>
+                            <div class="thread-stats">
+                                <span>💬 6 replies</span>
+                                <span>👁️ 89 views</span>
+                            </div>
+                        </div>
+                        <div class="thread-preview">
+                            Looking to upgrade from analog gauges to digital. What brands and models do you recommend? Main priorities are accuracy, durability, and ease of use in the field.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- USER DIRECTORY SECTION -->
+        <div id="community-directory" class="community-section">
+            <div class="thread-container">
+                <h3 style="color: #3498db; margin-bottom: 1.5rem; font-size: 1.4rem;">HVAC Professional Directory</h3>
+                <p style="color: #bdc3c7; margin-bottom: 2rem;">Connect with fellow professionals in your area or specialization. Build your network and share knowledge.</p>
+                
+                <!-- Add Profile Button -->
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <button class="cta-button" onclick="showAddProfileForm()" id="addProfileBtn">
+                        👤 Add Your Profile to Directory
+                    </button>
+                </div>
+
+                <!-- Add Profile Form (Hidden by default) -->
+                <div id="addProfileForm" class="new-thread-form" style="display: none;">
+                    <h4 style="color: #3498db; margin-bottom: 1rem;">📝 Add Your Professional Profile</h4>
+                    
+                    <div class="thread-input-group">
+                        <label>Profile Photo</label>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div id="photoPreview" style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(45deg, #3498db, #2980b9); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold;">
+                                ?
+                            </div>
+                            <div>
+                                <input type="file" id="profilePhoto" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this)">
+                                <button type="button" onclick="document.getElementById('profilePhoto').click()" style="padding: 8px 16px; background: #3498db; border: none; border-radius: 5px; color: white; cursor: pointer; margin-right: 0.5rem;">
+                                    📷 Upload Photo
+                                </button>
+                                <button type="button" onclick="removePhoto()" style="padding: 8px 16px; background: #e74c3c; border: none; border-radius: 5px; color: white; cursor: pointer;">
+                                    🗑️ Remove
+                                </button>
+                            </div>
+                        </div>
+                        <small style="color: #bdc3c7; margin-top: 0.5rem; display: block;">Upload a professional photo (optional). Supported formats: JPG, PNG, GIF. Max size: 5MB.</small>
+                    </div>
+
+                    <div class="thread-input-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="profileName" class="thread-title-input" placeholder="Enter your full name..." required>
+                    </div>
+
+                    <div class="thread-input-group">
+                        <label>Professional Title *</label>
+                        <input type="text" id="profileTitle" class="thread-title-input" placeholder="e.g., HVAC Technician, Gas Fitter, HVAC Instructor..." required>
+                    </div>
+
+                    <div class="thread-input-group" style="display: flex; gap: 1rem; align-items: center;">
+                        <div style="flex: 1;">
+                            <label>Professional Type *</label>
+                            <select id="profileType" class="thread-category-select" style="width: 100%;" required>
+                                <option value="">Select your professional type...</option>
+                                <option value="certified">Field Technician (Certified)</option>
+                                <option value="instructor">Instructor/Educator</option>
+                                <option value="student">Student/Apprentice</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Experience Level</label>
+                            <select id="profileExperience" class="thread-category-select" style="width: 100%;">
+                                <option value="">Select experience...</option>
+                                <option value="entry">Entry Level (0-2 years)</option>
+                                <option value="intermediate">Intermediate (3-7 years)</option>
+                                <option value="senior">Senior (8-15 years)</option>
+                                <option value="expert">Expert (15+ years)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="thread-input-group">
+                        <label>Location (City, Province) *</label>
+                        <input type="text" id="profileLocation" class="thread-title-input" placeholder="e.g., Toronto, ON" required>
+                    </div>
+
+                    <div class="thread-input-group">
+                        <label>Certifications & Licenses</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;" id="selectedCertifications"></div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <button type="button" class="cert-button" onclick="toggleCertification('G2', this)">G2 Gas Technician</button>
+                            <button type="button" class="cert-button" onclick="toggleCertification('G3', this)">G3 Gas Technician</button>
+                            <button type="button" class="cert-button" onclick="toggleCertification('REF', this)">Refrigeration License</button>
+                            <button type="button" class="cert-button" onclick="toggleCertification('TSSA', this)">TSSA Certified</button>
+                            <button type="button" class="cert-button" onclick="toggleCertification('HRAI', this)">HRAI Certified</button>
+                            <button type="button" class="cert-button" onclick="toggleCertification('Other', this)">Other Certification</button>
+                        </div>
+                        <input type="text" id="customCertification" class="thread-title-input" placeholder="Enter custom certification..." style="margin-top: 0.5rem; display: none;">
+                    </div>
+
+                    <div class="thread-input-group">
+                        <label>Specializations (Optional)</label>
+                        <textarea id="profileSpecializations" class="thread-content-input" placeholder="e.g., Residential HVAC, Commercial refrigeration, Heat pumps, Gas appliances..." style="min-height: 60px;"></textarea>
+                    </div>
+
+                    <div class="thread-input-group">
+                        <label>Bio/About (Optional)</label>
+                        <textarea id="profileBio" class="thread-content-input" placeholder="Tell the community about yourself, your experience, and what you're passionate about in the HVAC industry..." style="min-height: 80px;"></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="cta-button" onclick="submitProfile()" style="flex: 1;">
+                            ✅ Add to Directory
+                        </button>
+                        <button class="cta-button" onclick="hideAddProfileForm()" style="background: linear-gradient(45deg, #95a5a6, #7f8c8d); flex: 0 0 auto;">
+                            ❌ Cancel
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="community-filters">
+                    <input type="text" class="filter-search" placeholder="🔍 Search by name, location, or specialization..." id="userSearch">
+                    <div class="filter-category active" data-filter="all">All Users</div>
+                    <div class="filter-category" data-filter="certified">Certified</div>
+                    <div class="filter-category" data-filter="instructors">Instructors</div>
+                    <div class="filter-category" data-filter="students">Students</div>
+                </div>
+
+                <div class="user-directory" id="userDirectory">
+                    <!-- User profiles will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- LIVE CHAT SECTION -->
+        <div id="community-chat" class="community-section">
+            <div class="chat-container">
+                <h3 style="color: #3498db; margin-bottom: 1.5rem; font-size: 1.4rem;">Live Community Chat</h3>
+                <p style="color: #bdc3c7; margin-bottom: 2rem;">Real-time discussions with the HVAC community. Get quick answers and share insights.</p>
+                
+                <div class="chat-input-area">
+                    <textarea id="chatInput" class="chat-input" placeholder="Ask a question or share your knowledge with the HVAC community..."></textarea>
+                    <div class="chat-button-area">
+                        <button class="cta-button" onclick="postMessage()">💬 Post Message</button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message">
+                        <div class="message-header">
+                            <div class="message-author-info">
+                                <span class="message-author">Mike T.</span>
+                                <span class="message-author-badge">G2 Certified</span>
+                            </div>
+                            <span class="message-time">2 hours ago</span>
+                        </div>
+                        <div class="message-content">
+                            Just passed my G2 exam using the practice simulator here! The questions were very similar to the real exam. Thanks LARK Labs! 🎉
+                        </div>
+                        <div class="message-actions">
+                            <button class="like-button" onclick="toggleLike(this)">👍 Like (3)</button>
+                            <button class="reply-button" onclick="showReplyBox(this)">💬 Reply</button>
+                        </div>
+                        <div class="reply">
+                            <div class="message-header">
+                                <div class="message-author-info">
+                                    <span class="message-author">Sarah K.</span>
+                                    <span class="message-author-badge">Instructor</span>
+                                </div>
+                                <span class="message-time">1 hour ago</span>
+                            </div>
+                            <div class="message-content">
+                                Congratulations Mike! That's exactly why we built these tools. Keep up the great work! 👍
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message">
+                        <div class="message-header">
+                            <div class="message-author-info">
+                                <span class="message-author">Alex R.</span>
+                                <span class="message-author-badge">Student</span>
+                            </div>
+                            <span class="message-time">4 hours ago</span>
+                        </div>
+                        <div class="message-content">
+                            Can someone explain the difference between superheat and subcooling? I'm studying for my G2 and getting confused. 🤔
+                        </div>
+                        <div class="message-actions">
+                            <button class="like-button" onclick="toggleLike(this)">👍 Like (1)</button>
+                            <button class="reply-button" onclick="showReplyBox(this)">💬 Reply</button>
+                        </div>
+                        <div class="reply">
+                            <div class="message-header">
+                                <div class="message-author-info">
+                                    <span class="message-author">Tom W.</span>
+                                    <span class="message-author-badge">Expert</span>
+                                </div>
+                                <span class="message-time">3 hours ago</span>
+                            </div>
+                            <div class="message-content">
+                                Superheat is how much hotter the refrigerant vapor is above its saturation temperature. Subcooling is how much cooler the liquid refrigerant is below its saturation temperature. Both are crucial for proper system operation! 🌡️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message">
+                        <div class="message-header">
+                            <div class="message-author-info">
+                                <span class="message-author">Lisa M.</span>
+                                <span class="message-author-badge">Technician</span>
+                            </div>
+                            <span class="message-time">6 hours ago</span>
+                        </div>
+                        <div class="message-content">
+                            Quick tip: When sizing ductwork, always account for fittings and transitions. They add significant pressure drop that many people forget about. 🌪️
+                        </div>
+                        <div class="message-actions">
+                            <button class="like-button" onclick="toggleLike(this)">👍 Like (7)</button>
+                            <button class="reply-button" onclick="showReplyBox(this)">💬 Reply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            initializeFilters();
+            loadExistingProfiles();
+        });
+
+        let selectedCertifications = [];
+        let profilePhotoData = null;
+
+        function loadExistingProfiles() {
+            // Load sample profiles and any saved user profiles
+            const userDirectory = document.getElementById('userDirectory');
+            
+            // Sample profiles (existing ones)
+            const sampleProfiles = [
+                {
+                    name: "Mike Rodriguez",
+                    title: "Senior HVAC Technician & Instructor",
+                    location: "📍 Toronto, ON",
+                    type: "certified instructor",
+                    avatar: "MR",
+                    badges: ["G2 Certified", "20+ Years"],
+                    isDefault: true
+                },
+                {
+                    name: "Sarah Kim",
+                    title: "HVAC Student",
+                    location: "📍 Vancouver, BC",
+                    type: "student",
+                    avatar: "SK",
+                    badges: ["2nd Year Student"],
+                    isDefault: true
+                },
+                {
+                    name: "Tom Wilson",
+                    title: "Gas Inspector",
+                    location: "📍 Calgary, AB",
+                    type: "certified",
+                    avatar: "TW",
+                    badges: ["G3 Certified", "Inspector"],
+                    isDefault: true
+                },
+                {
+                    name: "Lisa Park",
+                    title: "Refrigeration Specialist",
+                    location: "📍 Montreal, QC",
+                    type: "certified",
+                    avatar: "LP",
+                    badges: ["G2 Certified", "Refrigeration"],
+                    isDefault: true
+                },
+                {
+                    name: "David Johnson",
+                    title: "College Program Coordinator",
+                    location: "📍 London, ON",
+                    type: "instructor",
+                    avatar: "DJ",
+                    badges: ["Educator", "G2 & G3"],
+                    isDefault: true
+                },
+                {
+                    name: "Alex Rivera",
+                    title: "Apprentice Technician",
+                    location: "📍 Ottawa, ON",
+                    type: "student",
+                    avatar: "AR",
+                    badges: ["1st Year"],
+                    isDefault: true
+                }
+            ];
+
+            // Load saved user profiles from localStorage
+            const savedProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
+            const allProfiles = [...sampleProfiles, ...savedProfiles];
+
+            // Render all profiles
+            allProfiles.forEach(profile => {
+                renderUserCard(profile);
+            });
+        }
+
+        function renderUserCard(profile) {
+            const userDirectory = document.getElementById('userDirectory');
+            const userCard = document.createElement('div');
+            userCard.className = `user-card ${profile.isDefault ? '' : 'new-profile'}`;
+            userCard.setAttribute('data-type', profile.type);
+            userCard.style.position = 'relative';
+            
+            const avatarContent = profile.photoUrl ? 
+                `<img src="${profile.photoUrl}" alt="${profile.name}" class="photo-preview">` :
+                `<div class="user-avatar">${profile.avatar}</div>`;
+            
+            const badgesHtml = profile.badges.map(badge => {
+                const badgeClass = badge.includes('Certified') ? 'certified' : 
+                                 badge.includes('Expert') || badge.includes('Years') || badge.includes('Educator') ? 'expert' : '';
+                return `<span class="user-badge ${badgeClass}">${badge}</span>`;
+            }).join('');
+
+            userCard.innerHTML = `
+                ${avatarContent}
+                <div class="user-name">${profile.name}</div>
+                <div class="user-title">${profile.title}</div>
+                <div class="user-location">${profile.location}</div>
+                ${profile.specializations ? `<div style="color: #95a5a6; font-size: 0.8rem; margin-bottom: 0.5rem; font-style: italic;">${profile.specializations}</div>` : ''}
+                <div class="user-badges">
+                    ${badgesHtml}
+                </div>
+                ${profile.bio ? `<div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem; text-align: left; line-height: 1.4;">${profile.bio.substring(0, 100)}${profile.bio.length > 100 ? '...' : ''}</div>` : ''}
+                <button class="connect-button" onclick="connectWithUser('${profile.name}')">
+                    🤝 Connect
+                </button>
+            `;
+
+            userDirectory.appendChild(userCard);
+        }
+
+        function showAddProfileForm() {
+            document.getElementById('addProfileForm').style.display = 'block';
+            document.getElementById('addProfileBtn').style.display = 'none';
+            document.getElementById('profileName').focus();
+        }
+
+        function hideAddProfileForm() {
+            document.getElementById('addProfileForm').style.display = 'none';
+            document.getElementById('addProfileBtn').style.display = 'block';
+            clearProfileForm();
+        }
+
+        function clearProfileForm() {
+            document.getElementById('profileName').value = '';
+            document.getElementById('profileTitle').value = '';
+            document.getElementById('profileType').value = '';
+            document.getElementById('profileExperience').value = '';
+            document.getElementById('profileLocation').value = '';
+            document.getElementById('profileSpecializations').value = '';
+            document.getElementById('profileBio').value = '';
+            document.getElementById('customCertification').style.display = 'none';
+            document.getElementById('customCertification').value = '';
+            
+            // Reset photo
+            profilePhotoData = null;
+            document.getElementById('photoPreview').innerHTML = '?';
+            document.getElementById('photoPreview').style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
+            
+            // Reset certifications
+            selectedCertifications = [];
+            document.getElementById('selectedCertifications').innerHTML = '';
+            document.querySelectorAll('.cert-button').forEach(btn => btn.classList.remove('selected'));
+        }
+
+        function handlePhotoUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.match('image.*')) {
+                showNotification('Please select a valid image file.', 'error');
+                return;
+            }
+
+            // Validate file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('File size must be less than 5MB.', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profilePhotoData = e.target.result;
+                const preview = document.getElementById('photoPreview');
+                preview.innerHTML = `<img src="${profilePhotoData}" alt="Profile" class="photo-preview">`;
+                preview.style.background = 'transparent';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removePhoto() {
+            profilePhotoData = null;
+            document.getElementById('photoPreview').innerHTML = '?';
+            document.getElementById('photoPreview').style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
+            document.getElementById('profilePhoto').value = '';
+        }
+
+        function toggleCertification(certName, button) {
+            if (certName === 'Other') {
+                const customInput = document.getElementById('customCertification');
+                if (button.classList.contains('selected')) {
+                    button.classList.remove('selected');
+                    customInput.style.display = 'none';
+                    customInput.value = '';
+                } else {
+                    button.classList.add('selected');
+                    customInput.style.display = 'block';
+                    customInput.focus();
+                }
+                return;
+            }
+
+            if (button.classList.contains('selected')) {
+                button.classList.remove('selected');
+                selectedCertifications = selectedCertifications.filter(cert => cert !== certName);
+            } else {
+                button.classList.add('selected');
+                selectedCertifications.push(certName);
+            }
+            updateSelectedCertifications();
+        }
+
+        function updateSelectedCertifications() {
+            const container = document.getElementById('selectedCertifications');
+            container.innerHTML = selectedCertifications.map(cert => 
+                `<span class="selected-cert">${cert} <span class="remove-cert" onclick="removeCertification('${cert}')">×</span></span>`
+            ).join('');
+        }
+
+        function removeCertification(certName) {
+            selectedCertifications = selectedCertifications.filter(cert => cert !== certName);
+            updateSelectedCertifications();
+            
+            // Update button state
+            document.querySelectorAll('.cert-button').forEach(btn => {
+                if (btn.textContent.includes(certName)) {
+                    btn.classList.remove('selected');
+                }
+            });
+        }
+
+        function submitProfile() {
+            // Validate required fields
+            const name = document.getElementById('profileName').value.trim();
+            const title = document.getElementById('profileTitle').value.trim();
+            const type = document.getElementById('profileType').value;
+            const location = document.getElementById('profileLocation').value.trim();
+
+            if (!name || !title || !type || !location) {
+                showNotification('Please fill in all required fields (marked with *).', 'error');
+                return;
+            }
+
+            // Get optional fields
+            const experience = document.getElementById('profileExperience').value;
+            const specializations = document.getElementById('profileSpecializations').value.trim();
+            const bio = document.getElementById('profileBio').value.trim();
+            const customCert = document.getElementById('customCertification').value.trim();
+
+            // Add custom certification if provided
+            let allCertifications = [...selectedCertifications];
+            if (customCert && document.querySelector('.cert-button[onclick*="Other"]').classList.contains('selected')) {
+                allCertifications.push(customCert);
+            }
+
+            // Create badge array
+            let badges = [];
+            allCertifications.forEach(cert => badges.push(cert));
+            if (experience) {
+                const expLabels = {
+                    'entry': 'Entry Level',
+                    'intermediate': 'Intermediate',
+                    'senior': 'Senior Level',
+                    'expert': 'Expert'
+                };
+                badges.push(expLabels[experience]);
+            }
+
+            // Create profile object
+            const profile = {
+                name: name,
+                title: title,
+                location: `📍 ${location}`,
+                type: type,
+                avatar: name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2),
+                badges: badges,
+                specializations: specializations,
+                bio: bio,
+                photoUrl: profilePhotoData,
+                isDefault: false,
+                dateAdded: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            const savedProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
+            savedProfiles.push(profile);
+            localStorage.setItem('userProfiles', JSON.stringify(savedProfiles));
+
+            // Render the new profile
+            renderUserCard(profile);
+
+            // Hide form and reset
+            hideAddProfileForm();
+            
+            showNotification('Profile added successfully! Welcome to the HVAC community! 🎉', 'success');
+        }
+
+        function setupEventListeners() {
+            // Allow posting message with Enter key
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        postMessage();
+                    }
+                });
+            }
+        }
+
+        // Community functionality
+        function showCommunitySection(sectionName) {
+            // Hide all community sections
+            const sections = document.querySelectorAll('.community-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(`community-${sectionName}`).classList.add('active');
+            
+            // Update navigation
+            const navItems = document.querySelectorAll('.community-nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function createThread() {
+            const title = document.getElementById('threadTitle').value;
+            const category = document.getElementById('threadCategory').value;
+            const content = document.getElementById('threadContent').value;
+
+            if (!title.trim() || !content.trim()) {
+                showNotification('Please fill in both title and content for your thread.', 'error');
+                return;
+            }
+
+            const categoryLabels = {
+                'general': 'General Discussion',
+                'troubleshooting': 'Troubleshooting',
+                'education': 'Education & Training',
+                'codes': 'Codes & Regulations',
+                'equipment': 'Equipment & Tools',
+                'career': 'Career Advice'
+            };
+
+            const threadList = document.getElementById('threadList');
+            const newThread = document.createElement('div');
+            newThread.className = 'thread-item';
+            newThread.setAttribute('data-category', category);
+            
+            newThread.innerHTML = `
+                <div class="thread-header">
+                    <div>
+                        <div class="thread-title">${title}</div>
+                        <div class="thread-meta">
+                            <span class="thread-author">You (Visitor)</span>
+                            <span class="thread-time">just now</span>
+                            <span class="thread-category">${categoryLabels[category]}</span>
+                        </div>
+                    </div>
+                    <div class="thread-stats">
+                        <span>💬 0 replies</span>
+                        <span>👁️ 1 view</span>
+                    </div>
+                </div>
+                <div class="thread-preview">${content.substring(0, 200)}${content.length > 200 ? '...' : ''}</div>
+                <div class="thread-actions" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 0.5rem;">
+                    <button class="like-button" onclick="toggleLike(this)">👍 Like (0)</button>
+                    <button class="reply-button" onclick="showReplyBox(this)">💬 Reply</button>
+                    <button class="reply-button" onclick="toggleThreadReplies(this.closest('.thread-item'))" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">📖 View Replies</button>
+                </div>
+            `;
+
+            threadList.insertBefore(newThread, threadList.firstChild);
+
+            // Make the new thread interactive
+            makeThreadInteractive(newThread);
+
+            // Clear form
+            document.getElementById('threadTitle').value = '';
+            document.getElementById('threadContent').value = '';
+            document.getElementById('threadCategory').value = 'general';
+
+            // Animate new thread
+            newThread.style.transform = 'translateY(-20px)';
+            newThread.style.opacity = '0';
+            setTimeout(() => {
+                newThread.style.transform = 'translateY(0)';
+                newThread.style.opacity = '1';
+                newThread.style.transition = 'all 0.5s ease';
+            }, 100);
+
+            showNotification('Thread created successfully! 🎉', 'success');
+        }
+
+        function connectWithUser(userName) {
+            alert(`Connection request sent to ${userName}! 🤝\n\nIn a full version, this would:\n• Send a connection request\n• Allow direct messaging\n• Show shared interests\n• Enable collaboration`);
+        }
+
+        function toggleLike(button) {
+            const isLiked = button.classList.contains('liked');
+            const currentLikes = parseInt(button.textContent.match(/\d+/)[0]);
+            
+            if (isLiked) {
+                button.classList.remove('liked');
+                button.textContent = `👍 Like (${currentLikes - 1})`;
+            } else {
+                button.classList.add('liked');
+                button.textContent = `👍 Like (${currentLikes + 1})`;
+            }
+        }
+
+        function postMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) {
+                alert('Please enter a message before posting.');
+                return;
+            }
+            
+            const chatMessages = document.getElementById('chatMessages');
+            const newMessage = document.createElement('div');
+            newMessage.className = 'chat-message';
+            newMessage.innerHTML = `
+                <div class="message-header">
+                    <div class="message-author-info">
+                        <span class="message-author">You</span>
+                        <span class="message-author-badge">Visitor</span>
+                    </div>
+                    <span class="message-time">just now</span>
+                </div>
+                <div class="message-content">${message}</div>
+                <div class="message-actions">
+                    <button class="like-button" onclick="toggleLike(this)">👍 Like (0)</button>
+                    <button class="reply-button" onclick="showReplyBox(this)">💬 Reply</button>
+                </div>
+            `;
+            
+            chatMessages.insertBefore(newMessage, chatMessages.firstChild);
+            input.value = '';
+            
+            // Animate new message
+            newMessage.style.transform = 'translateY(-20px)';
+            newMessage.style.opacity = '0';
+            setTimeout(() => {
+                newMessage.style.transform = 'translateY(0)';
+                newMessage.style.opacity = '1';
+                newMessage.style.transition = 'all 0.5s ease';
+            }, 100);
+        }
+
+        // Filter functionality
+        function initializeFilters() {
+            // Thread category filters
+            const categoryFilters = document.querySelectorAll('.filter-category');
+            categoryFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    // Update active state
+                    categoryFilters.forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter threads
+                    const category = this.getAttribute('data-category');
+                    const threads = document.querySelectorAll('.thread-item');
+                    
+                    threads.forEach(thread => {
+                        if (category === 'all' || thread.getAttribute('data-category') === category) {
+                            thread.style.display = 'block';
+                        } else {
+                            thread.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Search functionality
+            const threadSearch = document.getElementById('threadSearch');
+            if (threadSearch) {
+                threadSearch.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const threads = document.querySelectorAll('.thread-item');
+                    
+                    threads.forEach(thread => {
+                        const title = thread.querySelector('.thread-title').textContent.toLowerCase();
+                        const content = thread.querySelector('.thread-preview').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                            thread.style.display = 'block';
+                        } else {
+                            thread.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // User directory filters
+            const userFilters = document.querySelectorAll('[data-filter]');
+            userFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    userFilters.forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filterType = this.getAttribute('data-filter');
+                    const userCards = document.querySelectorAll('.user-card');
+                    
+                    userCards.forEach(card => {
+                        const userType = card.getAttribute('data-type');
+                        if (filterType === 'all' || userType.includes(filterType)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // User search
+            const userSearch = document.getElementById('userSearch');
+            if (userSearch) {
+                userSearch.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const userCards = document.querySelectorAll('.user-card');
+                    
+                    userCards.forEach(card => {
+                        const name = card.querySelector('.user-name').textContent.toLowerCase();
+                        const title = card.querySelector('.user-title').textContent.toLowerCase();
+                        const location = card.querySelector('.user-location').textContent.toLowerCase();
+                        
+                        if (name.includes(searchTerm) || title.includes(searchTerm) || location.includes(searchTerm)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // Make existing threads interactive
+            document.querySelectorAll('.thread-item').forEach(thread => {
+                makeThreadInteractive(thread);
+                
+                // Add reply buttons to existing threads if they don't have them
+                if (!thread.querySelector('.thread-actions')) {
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'thread-actions';
+                    actionsDiv.style.cssText = 'margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 0.5rem;';
+                    actionsDiv.innerHTML = `
+                        <button class="like-button" onclick="toggleLike(this)">👍 Like (${Math.floor(Math.random() * 20)})</button>
+                        <button class="reply-button" onclick="showReplyBox(this)">💬 Reply</button>
+                        <button class="reply-button" onclick="toggleThreadReplies(this.closest('.thread-item'))" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">📖 View Replies</button>
+                    `;
+                    thread.appendChild(actionsDiv);
+                }
+            });
+        }
+
+        function showReplyBox(button) {
+            // Check if reply box already exists
+            const existingReplyBox = button.closest('.chat-message, .thread-item').querySelector('.reply-input-box');
+            if (existingReplyBox) {
+                existingReplyBox.remove();
+                return;
+            }
+            
+            const replyBox = document.createElement('div');
+            replyBox.className = 'reply-input-box';
+            replyBox.style.cssText = 'margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);';
+            replyBox.innerHTML = `
+                <div style="margin-bottom: 0.5rem; color: #3498db; font-weight: 600;">💬 Reply to this ${button.closest('.thread-item') ? 'thread' : 'message'}:</div>
+                <textarea placeholder="Write your reply..." style="width: 100%; min-height: 80px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-family: inherit; resize: vertical;"></textarea>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; justify-content: flex-end;">
+                    <button onclick="postReply(this)" style="padding: 8px 16px; background: linear-gradient(45deg, #27ae60, #2ecc71); border: none; border-radius: 20px; color: white; cursor: pointer; font-weight: 500; transition: all 0.3s;">Post Reply</button>
+                    <button onclick="this.closest('.reply-input-box').remove()" style="padding: 8px 16px; background: linear-gradient(45deg, #e74c3c, #c0392b); border: none; border-radius: 20px; color: white; cursor: pointer; font-weight: 500; transition: all 0.3s;">Cancel</button>
+                </div>
+            `;
+            
+            // Insert after message actions or thread preview
+            const container = button.closest('.chat-message') || button.closest('.thread-item');
+            container.appendChild(replyBox);
+            replyBox.querySelector('textarea').focus();
+            
+            // Add enter key support
+            replyBox.querySelector('textarea').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    postReply(replyBox.querySelector('button'));
+                }
+            });
+        }
+
+        function postReply(button) {
+            const replyBox = button.closest('.reply-input-box');
+            const textarea = replyBox.querySelector('textarea');
+            const container = button.closest('.chat-message') || button.closest('.thread-item');
+            
+            if (!textarea.value.trim()) {
+                alert('Please enter a reply before posting.');
+                textarea.focus();
+                return;
+            }
+            
+            const isThreadReply = container.classList.contains('thread-item');
+            const newReply = document.createElement('div');
+            newReply.className = 'reply';
+            
+            if (isThreadReply) {
+                // Thread reply styling
+                newReply.style.cssText = 'margin-top: 1rem; padding: 1rem; background: rgba(39, 174, 96, 0.1); border-left: 3px solid #27ae60; border-radius: 8px;';
+                newReply.innerHTML = `
+                    <div class="message-header" style="margin-bottom: 0.5rem;">
+                        <div class="message-author-info">
+                            <span class="message-author">You (Visitor)</span>
+                            <span class="message-author-badge">Community Member</span>
+                        </div>
+                        <span class="message-time">just now</span>
+                    </div>
+                    <div class="message-content">${textarea.value.replace(/\n/g, '<br>')}</div>
+                    <div class="message-actions" style="margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <button class="like-button" onclick="toggleLike(this)">👍 Like (0)</button>
+                        <button class="reply-button" onclick="showReplyBox(this)">💬 Reply</button>
+                    </div>
+                `;
+                
+                // Update thread stats
+                const threadStats = container.querySelector('.thread-stats');
+                if (threadStats) {
+                    const replyCount = threadStats.querySelector('span');
+                    const currentReplies = parseInt(replyCount.textContent.match(/\d+/)[0]);
+                    replyCount.textContent = `💬 ${currentReplies + 1} replies`;
+                }
+            } else {
+                // Chat message reply styling  
+                newReply.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-author-info">
+                            <span class="message-author">You</span>
+                            <span class="message-author-badge">Visitor</span>
+                        </div>
+                        <span class="message-time">just now</span>
+                    </div>
+                    <div class="message-content">${textarea.value.replace(/\n/g, '<br>')}</div>
+                    <div class="message-actions">
+                        <button class="like-button" onclick="toggleLike(this)">👍 Like (0)</button>
+                        <button class="reply-button" onclick="showReplyBox(this)">💬 Reply</button>
+                    </div>
+                `;
+            }
+            
+            container.appendChild(newReply);
+            replyBox.remove();
+            
+            // Animate new reply
+            newReply.style.transform = 'translateY(-10px)';
+            newReply.style.opacity = '0';
+            setTimeout(() => {
+                newReply.style.transform = 'translateY(0)';
+                newReply.style.opacity = '1';
+                newReply.style.transition = 'all 0.5s ease';
+            }, 100);
+            
+            // Show success message
+            showNotification('Reply posted successfully! 🎉', 'success');
+        }
+
+        // Enhanced thread interaction
+        function makeThreadInteractive(threadElement) {
+            // Add click handler to thread title to expand/collapse replies
+            const threadTitle = threadElement.querySelector('.thread-title');
+            if (threadTitle && !threadTitle.dataset.interactive) {
+                threadTitle.dataset.interactive = 'true';
+                threadTitle.style.cursor = 'pointer';
+                threadTitle.addEventListener('click', function() {
+                    toggleThreadReplies(threadElement);
+                });
+            }
+        }
+
+        function toggleThreadReplies(threadElement) {
+            let repliesContainer = threadElement.querySelector('.thread-replies');
+            
+            if (!repliesContainer) {
+                // Create replies container if it doesn't exist
+                repliesContainer = document.createElement('div');
+                repliesContainer.className = 'thread-replies';
+                repliesContainer.style.cssText = 'margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid rgba(52, 152, 219, 0.3);';
+                
+                // Add some sample replies for demonstration
+                repliesContainer.innerHTML = `
+                    <h4 style="color: #3498db; margin-bottom: 1rem; font-size: 1.1rem;">💬 Discussion Replies</h4>
+                    <div style="color: #bdc3c7; font-style: italic; padding: 1rem; text-align: center; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        Be the first to reply to this thread! Click the reply button below to join the conversation.
+                    </div>
+                `;
+                
+                threadElement.appendChild(repliesContainer);
+            } else {
+                // Toggle visibility
+                if (repliesContainer.style.display === 'none') {
+                    repliesContainer.style.display = 'block';
+                } else {
+                    repliesContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // Add notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: all 0.3s ease;
+                max-width: 300px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
+            } else if (type === 'error') {
+                notification.style.background = 'linear-gradient(45deg, #e74c3c, #c0392b)';
+            } else {
+                notification.style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
