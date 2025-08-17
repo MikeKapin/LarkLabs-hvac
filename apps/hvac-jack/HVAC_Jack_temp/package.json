@@ -1,6 +1,6 @@
 {
   "name": "hvac-jack",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "HVAC Jack - AI-powered HVAC assistant with photo analysis and rating plate recognition",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,9 @@
     "@anthropic-ai/sdk": "^0.24.3",
     "node-fetch": "^3.3.2",
     "tesseract.js": "^5.0.4",
-    "canvas": "^2.11.2"
+    "canvas": "^2.11.2",
+    "puppeteer": "^21.0.0",
+    "cheerio": "^1.0.0-rc.12"
   },
   "devDependencies": {
     "netlify-cli": "^17.0.0"
@@ -53,6 +55,10 @@
     "ocrPreprocessing": "Tesseract.js text extraction for enhanced accuracy",
     "equipmentDatabase": "Comprehensive manufacturer database integration",
     "errorCodeLookup": "Advanced error code database with diagnostics",
+    "multiPhotoAnalysis": "Composite analysis from multiple equipment photos",
+    "predictiveMaintenance": "AI-powered failure prediction and maintenance optimization",
+    "complianceChecker": "CSA B149.1 installation compliance verification",
+    "manufacturerIntegration": "Smart data retrieval from manufacturer sources",
     "equipmentIdentification": "Automatic brand/model recognition",
     "warrantyCalculation": "Age-based warranty status",
     "capacitorSpecs": "Exact MFD/voltage requirements",
