@@ -1,0 +1,100 @@
+{
+  "name": "A2L Safety Training Certificate Course",
+  "short_name": "A2L Training",
+  "description": "Professional A2L refrigerant safety certificate course with CSA B52-22 compliance training, interactive modules, and official certification for Canadian HVAC technicians.",
+  "start_url": "/training/courses/A2L_Safety_Course.html",
+  "display": "standalone",
+  "background_color": "#1e3c72",
+  "theme_color": "#2a5298",
+  "orientation": "portrait-primary",
+  "scope": "/training/courses/",
+  "categories": ["education", "productivity", "business"],
+  "lang": "en-CA",
+  "icons": [
+    {
+      "src": "../a2l/A2L_Pro_Logo.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../a2l/A2L_Pro_Logo.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "../a2l/A2L_Pro_Logo.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "../a2l/A2L_Pro_Logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "../a2l/A2L_Pro_Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Training",
+      "short_name": "Start",
+      "description": "Begin A2L safety certificate course",
+      "url": "/training/courses/A2L_Safety_Course.html",
+      "icons": [
+        {
+          "src": "../a2l/A2L_Pro_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Progress Dashboard",
+      "short_name": "Progress",
+      "description": "View training progress and analytics",
+      "url": "/training/courses/A2L_Safety_Course.html#dashboard",
+      "icons": [
+        {
+          "src": "../a2l/A2L_Pro_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Practice Calculators",
+      "short_name": "Calculators",
+      "description": "A2L safety calculation practice tools",
+      "url": "/training/courses/A2L_Safety_Course.html#calculators",
+      "icons": [
+        {
+          "src": "../a2l/A2L_Pro_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Final Assessment",
+      "short_name": "Assessment",
+      "description": "Take final certification assessment",
+      "url": "/training/courses/A2L_Safety_Course.html#assessment",
+      "icons": [
+        {
+          "src": "../a2l/A2L_Pro_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjU2OCIgdmlld0JveD0iMCAwIDMyMCA1NjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFlM2M3MjtzdG9wLW9wYWNpdHk6MSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMyYTUyOTg7c3RvcC1vcGFjaXR5OjEiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjMyMCIgaGVpZ2h0PSI1NjgiIGZpbGw9InVybCgjYmcpIi8+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjEwMCIgcng9IjE1IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOTUpIi8+PHRleHQgeD0iMTYwIiB5PSI0NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFlM2M3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QTJMIFNhZmV0eSBUcmFpbmluZzwvdGV4dD48dGV4dCB4PSIxNjAiIHk9IjcwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMyYTUyOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNlcnRpZmljYXRlIENvdXJzZTwvdGV4dD48dGV4dCB4PSIxNjAiIHk9IjkwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2NjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNTQSBCNTItMjIgQ29tcGxpYW5jZTwvdGV4dD48cmVjdCB4PSIxMCIgeT0iMTMwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE4MCIgcng9IjE1IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOTUpIi8+PHRleHQgeD0iMTYwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxZTNjNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlByb2dyZXNzIERhc2hib2FyZDwvdGV4dD48cmVjdCB4PSIzMCIgeT0iMTgwIiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjUwIiByeD0iMTAiIGZpbGw9IiNmOGY5ZmEiIHN0cm9rZT0iIzJhNTI5OCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iOTIiIHk9IjIwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFlM2M3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TW9kdWxlczogMy84PC90ZXh0Pjx0ZXh0IHg9IjkyIiB5PSIyMTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MzglIENvbXBsZXRlPC90ZXh0PjxyZWN0IHg9IjE2NSIgeT0iMTgwIiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjUwIiByeD0iMTAiIGZpbGw9IiNmOGY5ZmEiIHN0cm9rZT0iIzI4YTc0NSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iMjI3IiB5PSIyMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNTU3MjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlNjb3JlOiA4NyU8L3RleHQ+PHRleHQgeD0iMjI3IiB5PSIyMTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QXZlcmFnZTwvdGV4dD48cmVjdCB4PSIzMCIgeT0iMjQwIiB3aWR0aD0iMjYwIiBoZWlnaHQ9IjUwIiByeD0iMTAiIGZpbGw9IiNlM2YyZmQiIHN0cm9rZT0iIzIxOTZmMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iMTYwIiB5PSIyNjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxZTNjNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkludGVyYWN0aXZlIENhbGN1bGF0b3JzPC90ZXh0Pjx0ZXh0IHg9IjE2MCIgeT0iMjc1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkxGTCwgQ2hhcmdlLCBWZW50aWxhdGlvbiwgRGV0ZWN0aW9uPC90ZXh0PjxyZWN0IHg9IjEwIiB5PSIzMzAiIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiByeD0iMTUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC45NSkiLz48dGV4dCB4PSIxNjAiIHk9IjM2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFlM2M3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q1NBIEI1Mi0yMiBDb21wbGlhbmNlPC90ZXh0Pjx0ZXh0IHg9IjE2MCIgeT0iMzg1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2NjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNhbmFkaWFuIEEyTCBTYWZldHkgU3RhbmRhcmRzPC90ZXh0Pjx0ZXh0IHg9IjUwIiB5PSI0MTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzJhNTI5OCIgZm9udC13ZWlnaHQ9ImJvbGQiPuKAoiBJbnN0YWxsYXRpb24gUmVxdWlyZW1lbnRzPC90ZXh0Pjx0ZXh0IHg9IjUwIiB5PSI0MzUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzJhNTI5OCIgZm9udC13ZWlnaHQ9ImJvbGQiPuKAoiBMZWFrIERldGVjdGlvbiBTeXN0ZW1zPC90ZXh0Pjx0ZXh0IHg9IjUwIiB5PSI0NTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzJhNTI5OCIgZm9udC13ZWlnaHQ9ImJvbGQiPuKAoiBWZW50aWxhdGlvbiBSZXF1aXJlbWVudHM8L3RleHQ+PHRleHQgeD0iNTAiIHk9IjQ3NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMmE1Mjk4IiBmb250LXdlaWdodD0iYm9sZCI+4oCiIEVtZXJnZW5jeSBQcm9jZWR1cmVzPC90ZXh0Pjx0ZXh0IHg9IjUwIiB5PSI0OTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzJhNTI5OCIgZm9udC13ZWlnaHQ9ImJvbGQiPuKAoiBTYWZldHkgQ2VydGlmaWNhdGlvbjwvdGV4dD48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJ0biIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzI4YTc0NTtzdG9wLW9wYWNpdHk6MSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMyMGM5OTc7c3RvcC1vcGFjaXR5OjEiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMzAiIHk9IjUxMCIgd2lkdGg9IjI2MCIgaGVpZ2h0PSI0MCIgcng9IjEwIiBmaWxsPSJ1cmwoI2J0bikiLz48dGV4dCB4PSIxNjAiIHk9IjUzNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVhcm4gWW91ciBDZXJ0aWZpY2F0ZTwvdGV4dD48L3N2Zz4=",
+      "sizes": "320x568",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ]
+}
