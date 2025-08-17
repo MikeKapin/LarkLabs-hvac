@@ -1,51 +1,76 @@
-const CACHE_NAME = 'a2l-calculator-v1.0.0';
-const STATIC_CACHE = 'a2l-static-v1.0.0';
-const DYNAMIC_CACHE = 'a2l-dynamic-v1.0.0';
+const CACHE_NAME = 'a2l-calculator-v2.0.0';
+const STATIC_CACHE = 'a2l-static-v2.0.0';
+const DYNAMIC_CACHE = 'a2l-dynamic-v2.0.0';
+const ENHANCED_CACHE = 'a2l-enhanced-v2.0.0';
 
-// Files to cache for offline functionality
+// Enhanced files to cache for offline functionality
 const STATIC_FILES = [
   '/',
   '/index.html',
   '/manifest.json',
   '/A2L_Pro_Logo.png',
   '/chat.js',
-  '/health.js'
-  // Add any additional static files here if needed
+  '/health.js',
+  '/enhanced-a2l-features.js'
 ];
 
-// Install event - cache static files
+// Professional data to cache for A2L compliance
+const COMPLIANCE_DATA = [
+  '/data/a2l-refrigerants.json',
+  '/data/csa-b52-requirements.json',
+  '/data/leak-detection-standards.json'
+];
+
+// Enhanced install event - cache static files and compliance data
 self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installing...');
+  console.log('A2L Service Worker: Installing enhanced version...');
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => {
-      console.log('Service Worker: Caching static files');
-      return cache.addAll(STATIC_FILES).catch((error) => {
-        console.error('Service Worker: Failed to cache some files:', error);
-        // Continue installation even if some files fail to cache
-        return Promise.resolve();
-      });
-    }).then(() => {
-      // Skip waiting to activate new service worker immediately
+    Promise.all([
+      // Cache static files
+      caches.open(STATIC_CACHE).then((cache) => {
+        console.log('A2L Service Worker: Caching static files');
+        return cache.addAll(STATIC_FILES).catch((error) => {
+          console.error('A2L Service Worker: Failed to cache some static files:', error);
+          return Promise.resolve();
+        });
+      }),
+      // Cache compliance data for offline A2L calculations
+      caches.open(ENHANCED_CACHE).then((cache) => {
+        console.log('A2L Service Worker: Caching compliance data');
+        return Promise.all(
+          COMPLIANCE_DATA.map(url => 
+            fetch(url).then(response => {
+              if (response.ok) {
+                return cache.put(url, response);
+              }
+            }).catch(() => {
+              console.log('A2L Service Worker: Compliance data not available:', url);
+            })
+          )
+        );
+      })
+    ]).then(() => {
+      console.log('A2L Service Worker: Enhanced installation complete');
       return self.skipWaiting();
     })
   );
 });
 
-// Activate event - clean up old caches
+// Enhanced activate event - clean up old caches and manage enhanced cache
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activating...');
+  console.log('A2L Service Worker: Activating enhanced version...');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== STATIC_CACHE && cache !== DYNAMIC_CACHE) {
-            console.log('Service Worker: Deleting old cache:', cache);
+          if (cache !== STATIC_CACHE && cache !== DYNAMIC_CACHE && cache !== ENHANCED_CACHE) {
+            console.log('A2L Service Worker: Deleting old cache:', cache);
             return caches.delete(cache);
           }
         })
       );
     }).then(() => {
-      // Take control of all open clients
+      console.log('A2L Service Worker: Enhanced activation complete');
       return self.clients.claim();
     })
   );
@@ -213,14 +238,38 @@ function isCacheable(request) {
   return (isHTTPS || (isHTTP && isLocalhost)) && request.method === 'GET';
 }
 
-// Cache management - clean up old entries
+// Enhanced cache management for A2L compliance data
 async function cleanupCache() {
   const cacheNames = await caches.keys();
   const oldCaches = cacheNames.filter(name => 
-    name !== STATIC_CACHE && name !== DYNAMIC_CACHE
+    name !== STATIC_CACHE && name !== DYNAMIC_CACHE && name !== ENHANCED_CACHE
   );
   
   return Promise.all(oldCaches.map(name => caches.delete(name)));
+}
+
+// A2L-specific cache management for compliance data
+async function cacheComplianceData() {
+  try {
+    const cache = await caches.open(ENHANCED_CACHE);
+    
+    // Cache A2L refrigerant data for offline compliance calculations
+    const a2lData = {
+      'R-32': { gwp: 675, flammability: 'A2L', lfl: 0.307, safety_class: 'A2L' },
+      'R-454B': { gwp: 466, flammability: 'A2L', lfl: 0.063, safety_class: 'A2L' },
+      'R-454C': { gwp: 148, flammability: 'A2L', lfl: 0.070, safety_class: 'A2L' },
+      'R-468A': { gwp: 299, flammability: 'A2L', lfl: 0.045, safety_class: 'A2L' }
+    };
+    
+    const dataResponse = new Response(JSON.stringify(a2lData), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    await cache.put('/data/cached-a2l-data.json', dataResponse);
+    console.log('A2L Service Worker: Compliance data cached for offline use');
+  } catch (error) {
+    console.warn('A2L Service Worker: Failed to cache compliance data:', error);
+  }
 }
 
 // Update cache strategy - check for updates
@@ -247,4 +296,7 @@ async function updateCache() {
   }
 }
 
-console.log('Service Worker: Loaded');
+// Initialize enhanced A2L compliance caching on service worker startup
+cacheComplianceData();
+
+console.log('A2L Service Worker: Enhanced version loaded with CSA B52 compliance support');

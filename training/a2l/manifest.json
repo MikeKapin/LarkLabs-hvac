@@ -1,7 +1,7 @@
 {
-  "name": "A2L Refrigerant Calculator",
-  "short_name": "A2L Calc",
-  "description": "Professional HVAC tools for A2L refrigerant systems including leak detection, P-T calculations, and system diagnostics.",
+  "name": "A2L Pro Tools - Enhanced",
+  "short_name": "A2L Pro",
+  "description": "Professional A2L refrigerant tools with CSA B52 compliance, advanced safety calculations, and installation requirements for Canadian technicians.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#667eea",
@@ -56,34 +56,46 @@
   ],
   "shortcuts": [
     {
+      "name": "CSA B52 Compliance",
+      "short_name": "Compliance",
+      "description": "A2L system compliance assessment tool",
+      "url": "/?calc=compliance",
+      "icons": [
+        {
+          "src": "A2L_Pro_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Advanced Leak Analysis",
+      "short_name": "Leak Analysis",
+      "description": "Time-based A2L leak concentration analysis",
+      "url": "/?calc=leak-analysis",
+      "icons": [
+        {
+          "src": "A2L_Pro_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Installation Requirements",
+      "short_name": "Install Reqs",
+      "description": "A2L installation requirements calculator",
+      "url": "/?calc=installation",
+      "icons": [
+        {
+          "src": "A2L_Pro_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
       "name": "P-T Calculator",
       "short_name": "P-T Calc",
-      "description": "Pressure-Temperature Calculator for A2L refrigerants",
+      "description": "Enhanced A2L pressure-temperature calculator",
       "url": "/?calc=pt-calc",
-      "icons": [
-        {
-          "src": "A2L_Pro_Logo.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Leak Rate Calculator",
-      "short_name": "Leak Rate",
-      "description": "A2L leak rate safety calculator",
-      "url": "/?calc=leak-rate",
-      "icons": [
-        {
-          "src": "A2L_Pro_Logo.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "System Diagnostic",
-      "short_name": "Diagnostic",
-      "description": "A2L system performance analysis",
-      "url": "/?calc=system-diag",
       "icons": [
         {
           "src": "A2L_Pro_Logo.png",
