@@ -47,10 +47,14 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #3498db;
+            display: flex;
+            align-items: center;
             text-decoration: none;
+        }
+        
+        .logo img {
+            height: 60px;
+            width: auto;
         }
 
         .user-actions {
@@ -866,7 +870,9 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <a href="../index.html" class="logo">🚀 LARK Labs Community</a>
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo-square.png" alt="LARK Labs Community - HVAC Professional Network">
+            </a>
             <div class="user-actions">
                 <div id="guestActions">
                     <button class="auth-button secondary" onclick="showAuthModal('login')">Login</button>
