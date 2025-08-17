@@ -13,9 +13,6 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.3",
     "node-fetch": "^3.3.2",
-    "tesseract.js": "^5.0.4",
-    "canvas": "^2.11.2",
-    "puppeteer": "^21.0.0",
     "cheerio": "^1.0.0-rc.12"
   },
   "devDependencies": {
