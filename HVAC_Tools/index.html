@@ -9,16 +9,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HVAC Pro Tools">
     
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HVAC Pro Tools</title>
-    <meta name="description" content="Professional HVAC calculation tools for technicians and engineers">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="HVAC Pro Tools">
     <!-- PWA Icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -258,6 +248,219 @@
             margin-top: 40px;
         }
 
+        /* Enhanced Tool Navigation */
+        .tool-nav {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid rgba(78, 205, 196, 0.4);
+            color: #4ecdc4;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(78, 205, 196, 0.3);
+            border-color: #4ecdc4;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Input Styling */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4ecdc4;
+            font-size: 0.95em;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid rgba(78, 205, 196, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Enhanced Button Styling */
+        .btn-primary {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(45deg, #44a08d, #4ecdc4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #4ecdc4;
+            border: 2px solid #4ecdc4;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn-secondary:hover {
+            background: #4ecdc4;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Results Enhancement */
+        .results-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #4ecdc4;
+        }
+
+        .result-value {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Save/Load Feature Styling */
+        .data-management {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .saved-calculations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .saved-item {
+            background: rgba(78, 205, 196, 0.1);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .saved-item:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .saved-item-title {
+            font-weight: bold;
+            color: #4ecdc4;
+            margin-bottom: 5px;
+        }
+
+        .saved-item-date {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            
+            .tool-card {
+                padding: 20px;
+            }
+            
+            .modal-content {
+                max-width: 95vw;
+                padding: 20px;
+            }
+            
+            .tool-nav {
+                margin: 15px;
+                padding: 10px;
+            }
+            
+            .nav-btn {
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+            
+            .results-container {
+                padding: 20px;
+                margin: 20px 0;
+            }
+        }
+
         .footer-logo {
             display: flex;
             align-items: center;
@@ -395,6 +598,14 @@
         <header class="app-header">
             <h1 class="app-title">🔧 HVAC Pro Tools</h1>
             <p class="app-subtitle">Professional HVAC Calculation Suite</p>
+            
+            <!-- Enhanced Navigation and Features -->
+            <div class="tool-nav" style="margin: 15px 0;">
+                <button class="nav-btn active" onclick="showMainTools()">🏠 All Tools</button>
+                <button class="nav-btn" onclick="hvacEnhanced.showSavedCalculations()">💾 Saved</button>
+                <button class="nav-btn" id="installAppBtn" onclick="showInstallPrompt()" style="display: none;">📱 Install App</button>
+                <button class="nav-btn" onclick="showHelpGuide()">❓ Help</button>
+            </div>
         </header>
 
 
@@ -594,6 +805,9 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="enhanced-refrigerant-data.js"></script>
+    <script src="enhanced-features.js"></script>
+    <script src="accessibility-enhancements.js"></script>
     <script>
         let deferredPrompt;
         let isInstalled = false;
@@ -673,6 +887,62 @@
             document.querySelectorAll('.app-content').forEach(content => {
                 content.style.display = 'none';
             });
+        }
+
+        function showMainTools() {
+            showMainApp();
+            // Update navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.nav-btn').classList.add('active');
+        }
+
+        function showHelpGuide() {
+            const helpModal = document.createElement('div');
+            helpModal.className = 'modal';
+            helpModal.style.display = 'block';
+            helpModal.innerHTML = `
+                <div class="modal-content" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h2 class="modal-title">🔧 HVAC Pro Tools Help Guide</h2>
+                        <button class="close-btn" onclick="this.parentElement.parentElement.parentElement.remove()">×</button>
+                    </div>
+                    
+                    <div style="padding: 20px 0;">
+                        <h3 style="color: #4ecdc4; margin-bottom: 15px;">📚 Available Tools</h3>
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: #ff6b6b;">🏠 Load Calculator</h4>
+                            <p>Calculate heating and cooling loads for buildings using Canadian climate data. Includes building envelope analysis and equipment sizing recommendations.</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: #74b9ff;">🌡️ Superheat/Subcooling</h4>
+                            <p>Calculate superheat and subcooling values for refrigeration system diagnostics. Essential for proper system charging and troubleshooting.</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: #a29bfe;">📊 P-T Charts</h4>
+                            <p>Interactive pressure-temperature charts for all common refrigerants including A2L refrigerants. Perfect for field diagnosis.</p>
+                        </div>
+                        
+                        <h3 style="color: #4ecdc4; margin: 25px 0 15px 0;">💾 Enhanced Features</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 8px 0; padding: 8px; background: rgba(78, 205, 196, 0.1); border-radius: 5px;">💾 <strong>Save Calculations:</strong> Store your calculations for later reference</li>
+                            <li style="margin: 8px 0; padding: 8px; background: rgba(78, 205, 196, 0.1); border-radius: 5px;">📄 <strong>Export to PDF:</strong> Generate professional reports</li>
+                            <li style="margin: 8px 0; padding: 8px; background: rgba(78, 205, 196, 0.1); border-radius: 5px;">📱 <strong>Install as App:</strong> Add to home screen for offline use</li>
+                            <li style="margin: 8px 0; padding: 8px; background: rgba(78, 205, 196, 0.1); border-radius: 5px;">🔄 <strong>Auto-save:</strong> Your inputs are automatically saved</li>
+                        </ul>
+                        
+                        <h3 style="color: #4ecdc4; margin: 25px 0 15px 0;">🎯 Pro Tips</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 8px 0;">• Use Enhanced Calculate for detailed analysis and equipment recommendations</li>
+                            <li style="margin: 8px 0;">• Canadian climate data is built-in for accurate regional calculations</li>
+                            <li style="margin: 8px 0;">• All calculations include appropriate safety factors</li>
+                            <li style="margin: 8px 0;">• Results can be exported as professional PDF reports</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(helpModal);
         }
 
         function openTool(toolId) {
@@ -794,9 +1064,24 @@
                                 </select>
                             </div>
 
-                            <button onclick="calculateLoadsLC()" style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.3s ease;">
-                                🔥❄️ Calculate Heating & Cooling Loads
-                            </button>
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; color: #34495e; font-weight: 500;">Primary Orientation <span style="color: #3498db; cursor: help; margin-left: 5px;" title="Direction of most windows for solar gain calculations">ℹ️</span></label>
+                                <select id="lc-orientation" style="width: 100%; padding: 12px; border: 2px solid #ecf0f1; border-radius: 8px; font-size: 16px; transition: border-color 0.3s ease;">
+                                    <option value="south" selected>South (Maximum Solar Gain)</option>
+                                    <option value="north">North (Minimum Solar Gain)</option>
+                                    <option value="east">East (Morning Sun)</option>
+                                    <option value="west">West (Afternoon Sun)</option>
+                                </select>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+                                <button onclick="calculateLoadsEnhanced()" class="btn-primary" style="width: 100%; padding: 15px; font-size: 1em;">
+                                    🔥❄️ Enhanced Calculate
+                                </button>
+                                <button onclick="calculateLoadsLC()" class="btn-secondary" style="width: 100%; padding: 15px; font-size: 0.9em;">
+                                    📊 Basic Calculate
+                                </button>
+                            </div>
                         </div>
 
                         <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column;">

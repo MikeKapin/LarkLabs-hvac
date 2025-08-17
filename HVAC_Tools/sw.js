@@ -1,14 +1,19 @@
-// Service Worker for HVAC Pro Tools PWA
-const CACHE_NAME = 'hvac-pro-tools-v1.0.0';
+// Enhanced Service Worker for HVAC Pro Tools PWA
+const CACHE_NAME = 'hvac-pro-tools-v2.0.0';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
   '/HVAC_Pro_Logo.png',
   '/chart.js',
+  '/enhanced-features.js',
   '/health.js',
   'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js'
 ];
+
+// Enhanced offline capabilities
+const OFFLINE_FALLBACK_PAGE = '/index.html';
+const OFFLINE_CALCULATION_STORAGE = 'hvac-offline-calculations';
 
 // Install event - cache resources
 self.addEventListener('install', event => {
