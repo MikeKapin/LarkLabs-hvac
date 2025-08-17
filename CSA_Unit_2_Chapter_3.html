@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 2 - Chapter 3: Power Tools and Accessories</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #2980b9, #21618c);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #2980b9;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #21618c;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .image-caption {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .image-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .tool-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .tool-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            min-width: 150px;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .tool-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #3498db;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 2 - Fasteners, Tools and Testing Equipment</h1>
+            <h2>Chapter 3 - Power Tools and Accessories</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 10</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 10;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>To enable the gas technician/fitter to choose the correct power tool for the job.</p>
+                        
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter you will be able to:</p>
+                        <ul>
+                            <li>describe requirements for selecting and using power tools and accessories; and</li>
+                            <li>identify power tools and accessories.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Alternating current</td>
+                                    <td>Ac or AC</td>
+                                    <td>An electric current that reverses its direction many times a second at regular intervals, typically used in power supplies.</td>
+                                </tr>
+                                <tr>
+                                    <td>Direct current</td>
+                                    <td>Dc or DC</td>
+                                    <td>An electric current flowing in one direction only.</td>
+                                </tr>
+                                <tr>
+                                    <td>Hydraulic power</td>
+                                    <td></td>
+                                    <td>When a liquid is used to generate power.</td>
+                                </tr>
+                                <tr>
+                                    <td>Pneumatic power</td>
+                                    <td></td>
+                                    <td>When compressed air (or other gas) is used to generate power.</td>
+                                </tr>
+                                <tr>
+                                    <td>Powder-actuated tool</td>
+                                    <td></td>
+                                    <td>Nail gun used in construction and manufacturing to join materials to hard substrates such as steel and concrete.</td>
+                                </tr>
+                                <tr>
+                                    <td>Revolutions per minute</td>
+                                    <td>rpm</td>
+                                    <td>Measure of the frequency of rotation, specifically the number of rotations around a fixed axis in one minute.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `
+            },
+            {
+                title: "Requirements for Selecting and Using Power Tools",
+                content: `
+                    <div class="section">
+                        <h2>Requirements for selecting and using power tools and accessories</h2>
+                        
+                        <p>Portable power tools provide the gas technician/fitter with speed and efficiency beyond that found with hand tools. However, their benefits are directly related to how you operate and maintain them.</p>
+                        
+                        <p>The factors that you must consider when selecting power tools are:</p>
+                        <ul>
+                            <li>the type of work and the power tools available;</li>
+                            <li>the size of machine you need for the job;</li>
+                            <li>availability of appropriate power sources within the range of the machine's electrical connections; and</li>
+                            <li>safety.</li>
+                        </ul>
+
+                        <h3>Safety and security</h3>
+                        <div class="warning-box">
+                            <h4>⚠️ Caution!</h4>
+                            <p>Always operate power tools according to manufacturers' directions.</p>
+                            <p>Observe all necessary safety precautions (such as Workers' Compensation Board regulations).</p>
+                            <p>Always wear appropriate safety clothing and equipment as you work.</p>
+                            <p>Be extra careful when working in close quarters or up a ladder.</p>
+                        </div>
+
+                        <p>In Chapter 4, Hand Tools > the Using Tools Safely section provides details for more specific tool precautions and safety procedures.</p>
+
+                        <h3>Electric power tools</h3>
+                        <p>Most electric power tools are available as a cordless design in the smaller size range. Larger tools and equipment operate at 110 volts (110 V) or at 240 V. Some of the safety issues when using electric tools are:</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What are some key factors to consider when selecting power tools?",
+                    options: [
+                        "Only the cost of the tool",
+                        "Type of work, machine size, power sources, and safety",
+                        "Just the brand name",
+                        "Only the warranty period"
+                    ],
+                    correct: 1,
+                    explanation: "When selecting power tools, you must consider the type of work and available tools, the size of machine needed, availability of appropriate power sources, and safety requirements."
+                }
+            },
+            {
+                title: "Electric Power Tool Safety",
+                content: `
+                    <div class="section">
+                        <h2>Electric Power Tool Safety</h2>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Do...</th>
+                                    <th>Do not/never...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Either equip electrical power tools with a three-pronged grounding plug inserted into a properly grounded receptacle or double insulate them with a polarized plug and certified by CSA. This protects the user against shock if the insulation should fail or a short circuit happens.</td>
+                                    <td>Stand on wet surfaces while operating electric tools.</td>
+                                </tr>
+                                <tr>
+                                    <td>Clean the tools with an air hose to keep the motor and vents free from foreign matter to avoid overheating.</td>
+                                    <td>Touch water or metal piping when operating electric tools.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Overload the tool by forcing its operation with too large a work piece or when it is stuck.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Use too long extension cords. Manufacturers specify the range of power tools. Keep within this range to avoid too great a voltage drop across the lines.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Crimp the cord because continual flexing may break the wire or cause it to overheat.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Operate power tools in a gaseous or explosive atmosphere.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Three-Prong Grounding Protection</h4>
+                            <p>The three-pronged grounding plug is essential for protection in case of short circuit. This safety feature protects users from electrical shock and should never be bypassed.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Why are electric power tools equipped with three-prong electrical plugs?",
+                    options: [
+                        "The third prong prevents the plug from being installed upside down",
+                        "The third prong is a ground for protection in case of short circuit",
+                        "The third prong is a backup power feed to ensure performance"
+                    ],
+                    correct: 1,
+                    explanation: "The third prong is a ground for protection in case of short circuit. This protects the user against shock if the insulation should fail or a short circuit happens."
+                }
+            },
+            {
+                title: "Powder-Actuated Tools",
+                content: `
+                    <div class="section">
+                        <h2>Powder-actuated tools</h2>
+                        
+                        <p>Gas technicians/fitters use several powder-actuated tools to insert fasteners into concrete and steel.</p>
+
+                        <div class="warning-box">
+                            <h4>⚠️ Caution!</h4>
+                            <p>Do not use this equipment unless you are qualified and authorized to use the tool. You must hold a separate operator's card for each manufacturer's tools.</p>
+                            <p>Each company that manufactures powder-actuated tools has designed a short course of instruction in the use of its tools. Only that course qualifies students for those tools. Workers Compensation Board regulations override any other instructions or precautions.</p>
+                        </div>
+
+                        <p>The following typical safety precautions for using a powder-actuated tool are based on the recommendations of one manufacturer.</p>
+
+                        <h3>Before you start:</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Do...</th>
+                                    <th>Do not/never...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Read the instructions and be sure that you understand them before you use it.</td>
+                                    <td>Use the tool in an explosive atmosphere.</td>
+                                </tr>
+                                <tr>
+                                    <td>Operate the tool only if your supervisor authorizes you and if you are qualified with an operator's card.</td>
+                                    <td>Leave a tool untended where someone else might use it. Keep it locked up when you are not using it.</td>
+                                </tr>
+                                <tr>
+                                    <td>Use only fasteners and powder loads manufactured for the tool you are using.</td>
+                                    <td>Attempt to fasten into glass block, tile, hardened steel, solid rock, slate, terra cotta, granite, glazed brick, cast iron, brick, hollow concrete block, marble, or unsound or cracked concrete.</td>
+                                </tr>
+                                <tr>
+                                    <td>Always wear all required PPE and safety goggles rated for the task.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Store powder loads in a special container. Do not mix them with other objects or put them in your pockets.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Always check the material you are fastening into. Do not guess when the material is concealed.</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which type of power tool is used to insert fasteners into concrete or steel?",
+                    options: [
+                        "110V drill",
+                        "220V drill", 
+                        "Powder-actuated tool"
+                    ],
+                    correct: 2,
+                    explanation: "Powder-actuated tools are specifically designed to insert fasteners into hard substrates such as concrete and steel."
+                }
+            },
+            {
+                title: "Powder-Actuated Tool Safety Continued",
+                content: `
+                    <div class="section">
+                        <h2>As you work:</h2>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Do...</th>
+                                    <th>Do not/never...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Stand behind the tool when firing it.</td>
+                                    <td>Place your hands in front of the barrel.</td>
+                                </tr>
+                                <tr>
+                                    <td>Keep the tool at right angles to the work surface.</td>
+                                    <td>Use more powder load than you need.</td>
+                                </tr>
+                                <tr>
+                                    <td>Provide a backstop when firing into thin materials.</td>
+                                    <td>Point the tool at a person (including yourself). Keep other workers out of the line of fire.</td>
+                                </tr>
+                                <tr>
+                                    <td>Make sure you fasten into at least the minimum required thickness of material:<br>
+                                    • 2-1/2 in (65 mm) of concrete<br>
+                                    • 1/4 in (5 mm) of steel</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Fasten at least 2 in (50 mm) from a weld or vertical mortar joint.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Fasten at least 3 in (75 mm) from the edge of concrete.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Fasten at least 1/2 in (12 mm) from the edge of steel.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Fasten at least 3 in (75 mm) from where a former fastener failed.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Use a special adapter supplied by the tool manufacturer when driving a fastener into a hole.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>When you have finished, keep the unloaded tool and its cartridges in a dry locked container.</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Minimum Material Thickness Requirements</h4>
+                            <p>Always ensure adequate material thickness: 2-1/2 inches (65 mm) of concrete or 1/4 inch (5 mm) of steel minimum for safe fastening.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Where should the operator stand when firing a powder-actuated tool?",
+                    options: [
+                        "Behind it",
+                        "To the side",
+                        "Directly in front of the tool"
+                    ],
+                    correct: 0,
+                    explanation: "The operator should always stand behind the tool when firing a powder-actuated tool for safety reasons."
+                }
+            },
+            {
+                title: "Cordless and Electric Drills",
+                content: `
+                    <div class="section">
+                        <h2>Power tools and accessories</h2>
+                        
+                        <p>Electric power tools are either battery-powered (cordless) or plugged into an electrical receptacle (corded).</p>
+                        
+                        <p>Some tools derive power from other sources of energy, such as gasoline engines and pneumatic (air) pressure.</p>
+                        
+                        <p>Whatever the source of energy used to run the tool, the safety precautions are basically the same. The gas technician/fitter must follow the manufacturer's safety requirements for each tool, the employer's policy, and the supervisor's instructions.</p>
+
+                        <h3>Cordless tools</h3>
+                        <p>Most tools that gas technicians/fitters use are available in a cordless option for most applications. Cordless tools have many advantages and some disadvantages. The most obvious advantage is that the lack of an electrical cord frees up the tool for wider use and for applications where electric tools with a higher voltage are not suitable and where a risk of electrical shock exists. One disadvantage of a cordless tool is the need to charge the battery. You need to treat the battery chargers like any other 115- or 230-volt device, respecting all safety requirements and electrical codes.</p>
+
+                        <p>The batteries for cordless tools have many different designs, applications, and special safety considerations. Follow all the manufacturer's instructions for charging, handling, and disposing of batteries for cordless tools.</p>
+
+                        <p>The most common cordless tool is the cordless drill shown in Figure 3-1.</p>
+
+                        <div class="image-card">
+                            <div class="image-placeholder">🔋</div>
+                            <div class="image-caption">Cordless Drill and Charger</div>
+                            <div class="image-description">Most common cordless tool used by gas technicians</div>
+                        </div>
+
+                        <p>The gas technician/fitter uses many types of electric drills. Some drills work on 110 V or 115 V alternating current (ac) and some are powered by rechargeable batteries that typically run on 18-20 V direct current (dc). The three most common types of portable electric power drills used in the piping trades are the 1/2 in (12 mm) portable drill, the 3/8 in (9 mm) portable drill, and the hammer drill. The sizes refer to the maximum size of drill shank that can fit into the chuck.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the most obvious advantage of cordless tools?",
+                    options: [
+                        "They are cheaper than corded tools",
+                        "The lack of electrical cord frees up the tool for wider use",
+                        "They work faster than corded tools",
+                        "They never need maintenance"
+                    ],
+                    correct: 1,
+                    explanation: "The most obvious advantage is that the lack of an electrical cord frees up the tool for wider use and for applications where electric tools with higher voltage are not suitable."
+                }
+            },
+            {
+                title: "Types of Electric Drills",
+                content: `
+                    <div class="section">
+                        <h2>Electric drills</h2>
+                        
+                        <h3>Standard utility drills</h3>
+                        <p>Figure 3-2 shows the familiar standard drill used for light work. Its chuck capacity ranges from 1/4 in to 3/8 in (6 mm to 9 mm) drill size. Some models have a reversing switch and speed control.</p>
+
+                        <div class="image-card">
+                            <div class="image-placeholder">🔧</div>
+                            <div class="image-caption">Standard Utility Electric Drill</div>
+                            <div class="image-description">Chuck capacity: 1/4 in to 3/8 in (6 mm to 9 mm)</div>
+                        </div>
+
+                        <h3>Heavy-duty electric drills</h3>
+                        <p>Figure 3-3 shows a typical heavy-duty electric drill. The drills have chuck capacities ranging from 1/2 in to 3/4 in (12 mm to 19 mm). They usually have a reversing switch and a heavy-duty chuck.</p>
+                        
+                        <p>You must exercise extra caution to avoid injury when operating these high torque drills due to the rotation. Protect your hands and wrist when operating this drill.</p>
+
+                        <p>There are also compact types of heavy-duty drills that you may use to drill through studs and joists. These have power and torque to handle self-feed bits up to 4-3/4 in (120 mm) for wood and 1/2 in (12 mm) for steel. They usually have speed control and a reversing switch.</p>
+
+                        <h3>Right-angle drive electric drills</h3>
+                        <p>Figure 3-4 shows a right angle drive electric drill that helps drill through joists or studding, or in tight corners. Some have speed control and a reversing switch.</p>
+
+                        <div class="image-grid">
+                            <div class="image-card">
+                                <div class="image-placeholder">⚡</div>
+                                <div class="image-caption">Heavy-Duty Drill</div>
+                                <div class="image-description">Chuck capacity: 1/2 in to 3/4 in</div>
+                            </div>
+                            <div class="image-card">
+                                <div class="image-placeholder">🔄</div>
+                                <div class="image-caption">Right-Angle Drill</div>
+                                <div class="image-description">For tight corners and joists</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "For drilling through joists or studding, or in tight corners, which type of drill is used?",
+                    options: [
+                        "Standard utility drill",
+                        "Heavy-duty drill",
+                        "Right angle drive electric drill",
+                        "Hammer drill"
+                    ],
+                    correct: 2,
+                    explanation: "The right angle drive electric drill is specifically designed for drilling through joists or studding, or in tight corners where standard drills cannot fit."
+                }
+            },
+            {
+                title: "Rotary Hammer Drills and Drill Accessories",
+                content: `
+                    <div class="section">
+                        <h2>Rotary hammer electric drills</h2>
+                        
+                        <p>Gas technicians/fitters use rotary hammer drills (Figure 3-5) for fast drilling in concrete. Manufacturers claim you can drill 5.5 in (140 mm) per minute in construction-grade concrete with a 1/2 in (12 mm) bit. These drills use carbide-tip bits.</p>
+
+                        <div class="image-card">
+                            <div class="image-placeholder">🔨</div>
+                            <div class="image-caption">Rotary Hammer Drill</div>
+                            <div class="image-description">For fast drilling in concrete - 5.5 in (140 mm) per minute</div>
+                        </div>
+
+                        <p>The hammer drill produces both a drilling action and a hammering action while drilling is taking place. The combined actions produce faster, more accurate work.</p>
+
+                        <p>The following are two common sizes of hammer drills for drilling holes in concrete that does not have reinforcing bars:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Drill size</th>
+                                    <th>Hole size</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>3/8 in (9 mm) drill</td>
+                                    <td>Up to 9/16 in (14 mm)</td>
+                                </tr>
+                                <tr>
+                                    <td>1/2 in (50 mm) rotary hammer</td>
+                                    <td>Up to 1 1/8 in (28 mm)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <p>If you used a "core" drill bit, you can drill a 2 in (50 mm) hole.</p>
+
+                        <p>Many different hammer drills exist and there are three different energy sources that drive them—electric, pneumatic, or hydraulic drives—depending on the application.</p>
+
+                        <h3>Drill accessories</h3>
+                        <p>The following is a list of some of the types of drill bits that gas technicians/fitters use:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Drill bit</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Standard carbon drill bit</td>
+                                    <td>The most common of all drill bits. Can be used to drill through steel (see Figure 3-6a).</td>
+                                </tr>
+                                <tr>
+                                    <td>Self-feed bits</td>
+                                    <td>Used for cutting holes in wood for pipe sizes NPS 1/2 to 4. Some have replaceable feed-screw pilots (see Figure 3-6b).</td>
+                                </tr>
+                                <tr>
+                                    <td>Auger bits</td>
+                                    <td>Available to drill holes for pipe sizes NPS 3/8 to 1 (see Figure 3-6c).</td>
+                                </tr>
+                                <tr>
+                                    <td>Flat boring bits</td>
+                                    <td>Have diameters from 1/4 in to 1-1/2 in. Used in small, pistol-grip electric drills (see Figure 3-6d).</td>
+                                </tr>
+                                <tr>
+                                    <td>High-speed hole cutters</td>
+                                    <td>Have many purposes: Some cut to depths of 1-3/4 in (45 mm). Used for cutting round holes in wood, steel, aluminum, copper, brass, sheet metal, stainless steel, and plastics. With carbide tips, they can cut ceramic tile (see Figure 3-6e).</td>
+                                </tr>
+                                <tr>
+                                    <td>Carbide-tip masonry bits</td>
+                                    <td>Used to cut holes in masonry brick, stone, plaster, slate, or concrete. The tip resists dulling and may be sharpened on a bench grinder using a silicon-carbide grinding wheel (see Figure 3-6f).</td>
+                                </tr>
+                                <tr>
+                                    <td>Chisels</td>
+                                    <td>Used in the hammer drill to break up such things as concrete tile (see Figure 3-6g).</td>
+                                </tr>
+                                <tr>
+                                    <td>Cruciform drill bits</td>
+                                    <td>Used in the hammer drill to drill hard materials such as marble and granite (see Figure 3-6h).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which type of electric drill is designed for drilling into concrete?",
+                    options: [
+                        "The ratchet drill",
+                        "The rotary hammer drill",
+                        "The thumb drill"
+                    ],
+                    correct: 1,
+                    explanation: "The rotary hammer drill is specifically designed for fast drilling in concrete, producing both drilling and hammering actions."
+                }
+            },
+            {
+                title: "Electric Saws and Grinders",
+                content: `
+                    <div class="section">
+                        <h2>Electric saws</h2>
+                        
+                        <p>Gas technicians/fitters often use electric saws of several different types. They allow for efficient, high-quality work. Removal of the burr, which is the sharp edge left by a saw, is recommended. Careful selection of saw type and blade can reduce burr to acceptable levels.</p>
+
+                        <h3>Cutting rates</h3>
+                        <p>A feed that is too light overheats the wheel. Heavy feeding may cause the wheel to wear quickly or to break. Feed rates depend on the type of material to be cut, the type of wheel being used, the operating speed of the machine, and the condition of the abrasive sawing machine.</p>
+
+                        <p>For most cutting operations, gas technicians/fitters use anti-welding lubricants. This reduces friction between the cutting blade and the cut material as well as the chances of burning or breaking the blade, giving a smoother, even cut.</p>
+
+                        <h3>Heavy-duty circular saws</h3>
+                        <p>Gas technicians/fitters use this most familiar type of circular saw (Figure 3-7) for making cuts along a marked line. They may help cut most shapes of plastic and non-ferrous metal stock such as pipe, tubing, and bars.</p>
+
+                        <div class="image-card">
+                            <div class="image-placeholder">⚙️</div>
+                            <div class="image-caption">Heavy-Duty Circular Saw</div>
+                            <div class="image-description">For cutting plastic and non-ferrous metals</div>
+                        </div>
+
+                        <h3>Chop saws</h3>
+                        <p>The chop saw (Figure 3-8) is a large cutting tool often used to cut steel. You can place it flat on the floor, on a bench, or on a sawhorse. Individual and gang cutting tasks are both possible with a chop saw. Pay special attention to the personal protective equipment required for safe use of the different saw blades, and always wear a full face shield approved for the use.</p>
+
+                        <h3>Reciprocating saws (saber saw)</h3>
+                        <p>Gas technicians/fitters widely use reciprocating saws (Figure 3-9), which are often called power hacksaws. They cut long pieces of pipe, wood, and laminates into lengths suitable for machining as well as pipe chases and oddly shaped holes in wood frame construction. They cut nearly any shape if you use the correct blade. Many types of reciprocating saws have more than one speed.</p>
+
+                        <h3>Saber saw blades</h3>
+                        <p>Blades for these saws are made from carbide steel and high-speed alloy steel. They are color coded according to their use. For example, a blade for cutting stainless steel may be coded bright blue, while a general-purpose blade for cutting wood that may contain nails may be black. Be sure to check that you have the correct blade for the job. The blades come in various lengths, pitches (number of teeth per inch), tooth shapes, and tooth patterns (sets).</p>
+
+                        <h2>Power grinders</h2>
+                        
+                        <p>Gas technicians/fitters must often fabricate brackets, stands, supports, and hangers while installing equipment. They use power grinders to do this.</p>
+
+                        <p>A power grinder helps:</p>
+                        <ul>
+                            <li>make cutting edges on cutting tools;</li>
+                            <li>cut metal to its desired shape and size; and</li>
+                            <li>make smooth, polished surfaces.</li>
+                        </ul>
+
+                        <p>Power grinders may be stationary or portable.</p>
+
+                        <h3>Angle grinders</h3>
+                        <p>The angle grinder is the most widely used grinder in the piping trades. It cleans and smooths metal surfaces. Angle grinders most often grinds bevels onto the end of pipes or cleans weld spatter off pipe and fittings.</p>
+
+                        <div class="image-card">
+                            <div class="image-placeholder">🛠️</div>
+                            <div class="image-caption">Portable Angle Grinder</div>
+                            <div class="image-description">Most widely used grinder in piping trades</div>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which type of blade is used with the chop saw to cut steel pipe or rod?",
+                    options: [
+                        "Large toothed blade",
+                        "Small toothed blade",
+                        "An abrasive type"
+                    ],
+                    correct: 2,
+                    explanation: "Chop saws use abrasive type blades to cut steel pipe or rod effectively."
+                }
+            },
+            {
+                title: "Chapter 3 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 3 Final Quiz</h2>
+                        <p>Test your knowledge of power tools and accessories for gas technicians and fitters.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all questions to complete the chapter. Each question is based on the CSA Gas Trade Training materials covered in the previous sections.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Why are electric power tools equipped with three-prong electrical plugs?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) The third prong prevents the plug from being installed upside down</li>
+                                <li onclick="selectQuizOption(0, 1)">b) The third prong is a ground for protection in case of short circuit</li>
+                                <li onclick="selectQuizOption(0, 2)">c) The third prong is a backup power feed to ensure performance</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>Which type of power tool is used to insert fasteners into concrete or steel?</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) 110V</li>
+                                <li onclick="selectQuizOption(1, 1)">b) 220V</li>
+                                <li onclick="selectQuizOption(1, 2)">c) Powder-actuated</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>Where should the operator stand when firing a powder-actuated tool?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) Behind it</li>
+                                <li onclick="selectQuizOption(2, 1)">b) To the side</li>
+                                <li onclick="selectQuizOption(2, 2)">c) Directly in front of the tool</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>Which type of electric drill is designed for drilling into concrete?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) The ratchet drill</li>
+                                <li onclick="selectQuizOption(3, 1)">b) The rotary hammer drill</li>
+                                <li onclick="selectQuizOption(3, 2)">c) The thumb drill</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>Which tool can be used to give a drill bit a start and to keep it from wandering?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) A thumb drill</li>
+                                <li onclick="selectQuizOption(4, 1)">b) An 'X' drawn on the spot</li>
+                                <li onclick="selectQuizOption(4, 2)">c) A centre punch</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>What should be done before inserting or removing drill bits from the chuck of a power drill?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) The drill should be put in reverse</li>
+                                <li onclick="selectQuizOption(5, 1)">b) The power cord should be disconnected</li>
+                                <li onclick="selectQuizOption(5, 2)">c) The drill should be in forward</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>Which type of blade is used with the chop saw to cut steel pipe or rod?</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) Large toothed blade</li>
+                                <li onclick="selectQuizOption(6, 1)">b) Small toothed blade</li>
+                                <li onclick="selectQuizOption(6, 2)">c) An abrasive type</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>How are blades used in reciprocating saws identified for use?</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) They are colour coded according to their use</li>
+                                <li onclick="selectQuizOption(7, 1)">b) They are identified with numbers</li>
+                                <li onclick="selectQuizOption(7, 2)">c) They are identified with letters</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>Which type of grinder is commonly used to grind bevels and clean weld spatters off pipes?</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) The offset grinder</li>
+                                <li onclick="selectQuizOption(8, 1)">b) The portable angle grinder</li>
+                                <li onclick="selectQuizOption(8, 2)">c) The hand grinder</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 10:</h4>
+                            <p>Power tools should not be operated in a gaseous or ______________ atmosphere.</p>
+                            <ul class="quiz-options" data-question="9">
+                                <li onclick="selectQuizOption(9, 0)">a) Wet</li>
+                                <li onclick="selectQuizOption(9, 1)">b) Dry</li>
+                                <li onclick="selectQuizOption(9, 2)">c) Explosive</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 11:</h4>
+                            <p>Power tools should not be operated when standing on a ___________ surface.</p>
+                            <ul class="quiz-options" data-question="10">
+                                <li onclick="selectQuizOption(10, 0)">a) Wet</li>
+                                <li onclick="selectQuizOption(10, 1)">b) Cold</li>
+                                <li onclick="selectQuizOption(10, 2)">c) Dry</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 12:</h4>
+                            <p>Powder-activated tools require one to take a course of instruction designed by the manufacturer before being qualified to operate the tool.</p>
+                            <ul class="quiz-options" data-question="11">
+                                <li onclick="selectQuizOption(11, 0)">a) True</li>
+                                <li onclick="selectQuizOption(11, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 3 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 3 - Power Tools and Accessories.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You're now ready to proceed to the next chapter in your gas trade training.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers based on the CSA provided quiz: b, c, a, b, c, b, c, a, b, c, a, a
+        const quizCorrectAnswers = [1, 2, 0, 1, 2, 1, 2, 0, 1, 2, 0, 0];
+        const quizExplanations = [
+            "The third prong is a ground for protection in case of short circuit. This protects the user against shock if the insulation should fail or a short circuit happens.",
+            "Powder-actuated tools are specifically designed to insert fasteners into hard substrates such as concrete and steel.",
+            "The operator should always stand behind the tool when firing a powder-actuated tool for safety reasons.",
+            "The rotary hammer drill is specifically designed for fast drilling in concrete, producing both drilling and hammering actions.",
+            "A centre punch can be used to give a drill bit a start and prevent it from wandering on the material surface.",
+            "The power cord should be disconnected before inserting or removing drill bits from the chuck for safety reasons.",
+            "Chop saws use abrasive type blades to cut steel pipe or rod effectively.",
+            "Blades for reciprocating saws are colour coded according to their use, making it easy to select the correct blade for the job.",
+            "The portable angle grinder is the most widely used grinder in piping trades for grinding bevels and cleaning weld spatters.",
+            "Power tools should not be operated in a gaseous or explosive atmosphere due to safety hazards.",
+            "Power tools should not be operated when standing on a wet surface due to electrical shock hazards.",
+            "True - Each company that manufactures powder-actuated tools has designed a short course of instruction that qualifies students for those tools."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 9) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 12; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 12) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/12 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/12 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 4a - Chapter 4: Reading and Interpreting the Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .code-box {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .hierarchy-diagram {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 4a - Utilization codes, acts, and regulations</h1>
+            <h2>Chapter 4 - Reading and interpreting the code</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 7</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 7;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>Researching a specific issue in the Codes can be a time-consuming and frustrating experience. Although many gas technicians are experienced with code use, some simple tricks or tips can make the exercise easier and more reliable for those less familiar with the Codes. This Chapter focuses on using various navigational techniques to access information contained in the Codes.</p>
+
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>describe the purpose of the CSA B149.1 Scope and identify where you can find it;</li>
+                            <li>describe the meanings of the terms "and", "or", and "shall" as used in CSA B149.1;</li>
+                            <li>describe the organizational structure of CSA B149.1;</li>
+                            <li>identify available aids to assist in locating requirements; and</li>
+                            <li>identify the process used to interpret the CSA B149 Codes and the Ontario requirements.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>And</td>
+                                    <td></td>
+                                    <td>In the CSA B149 Code, indicates that you must meet all the requirements that a word links</td>
+                                </tr>
+                                <tr>
+                                    <td>May</td>
+                                    <td></td>
+                                    <td>In the CSA B149 Code, indicates an advisory or optional statement</td>
+                                </tr>
+                                <tr>
+                                    <td>Or</td>
+                                    <td></td>
+                                    <td>In the CSA B149 Code, indicates that you must meet only one of the requirements that a word links</td>
+                                </tr>
+                                <tr>
+                                    <td>Shall</td>
+                                    <td></td>
+                                    <td>In the CSA B149 Code, indicates a mandatory requirement</td>
+                                </tr>
+                                <tr>
+                                    <td>Should</td>
+                                    <td></td>
+                                    <td>In the CSA B149 Code, indicates a recommendation or that which is advised but not mandatory</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding the specific language used in codes is essential for proper interpretation. Each term has a precise meaning that affects how requirements must be applied in the field.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which term in the CSA B149 Code indicates a mandatory requirement?",
+                    options: [
+                        "Should",
+                        "May", 
+                        "Shall",
+                        "Or"
+                    ],
+                    correct: 2,
+                    explanation: "The word 'shall' in the CSA B149 Code indicates a mandatory requirement that must be followed. This is different from 'should' which indicates a recommendation."
+                }
+            },
+            {
+                title: "Scope, Definitions, and Structure",
+                content: `
+                    <div class="section">
+                        <h2>Scope, definitions, abbreviations, and reference publications</h2>
+                        
+                        <h3>Scope</h3>
+                        <p>The first task is to determine which of the three CSA B149 Codes that cover gas technician work are applicable to the issue at hand. The first section of each Code outlines the scope of the Code — i.e., what it covers and does not cover. For example, it would be useless to apply the CSA B149.1 requirements to a propane installation on a recreational vehicle since only the CSA B149.2 applies to those installations.</p>
+
+                        <p>In some cases, more than one of the Codes may apply. For example, if the installation involves industrial propane-fired process ovens, compliance with all three Codes (CSA B149.1, CSA B149.2, and CSA B149.3) may be a requirement. In most cases, however, technicians use only one or two of the Codes. Residential propane or natural gas installations normally require reference to only the CSA B149.1 Code.</p>
+
+                        <h3>Definitions, abbreviations, and the use of specific terms</h3>
+                        <p>Words or terms appear in the definition pages of Section 3 of that Code. Both common and unusual terms have a specific meaning that is necessary for interpreting the Code Section and applying it as intended.</p>
+
+                        <p>The word <em>"shall"</em> is a key word that CSA B149.1 uses, and its importance is highlighted in the following Clause:</p>
+
+                        <div class="code-box">
+                            1.6 In this Code, unless approved otherwise by the authority having jurisdiction, "shall" indicates a mandatory requirement; "should" indicates a recommendation or that which is advised but not mandatory; "may" indicates an advisory or optional statement. Notes to the text do not include mandatory or alternative requirements. The purpose of a note is to separate from the text explanatory or informative material that is not properly a part of this Code. Notes to figures and tables, however, are considered part of the figure or table and are written as mandatory requirements. Legends to figures are also written as mandatory requirements.
+                        </div>
+
+                        <p>As indicated above, use of the words <em>"may"</em> or <em>"such as"</em> or non-use of the word <em>"shall"</em> means the text gives the direction an option, recommendation, or suggestion.</p>
+
+                        <p>Where the Code provides a list of requirements, pay careful attention to the words <em>"and"</em> and <em>"or"</em>. The use of <em>"and"</em> indicates that you must meet all the requirements that a word links, while the use of <em>"or"</em> indicates that you must meet only one of the requirements that the word links. Clauses 6.4.1 and 6.4.2 of CSA B149.1 help illustrate this point.</p>
+
+                        <p>You must comply with both (a) and (b) of Clause 6.4.1. Clause 6.4.2 gives you an option to use either (a) or (b) of Clause 6.4.2, but you shall use one of the two methods.</p>
+
+                        <p>The Codes use abbreviated names of organizations. Annex I of CSA B149.1 identifies each company or organization mentioned within the pages of the Code.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "When the CSA B149 Code uses the word 'and' in a list of requirements, what does this mean?",
+                    options: [
+                        "You must meet only one of the requirements that the word links",
+                        "You must meet all the requirements that the word links",
+                        "The requirements are optional or advisory",
+                        "The requirements are recommendations only"
+                    ],
+                    correct: 1,
+                    explanation: "The use of 'and' indicates that you must meet ALL the requirements that the word links, while 'or' indicates you must meet only ONE of the requirements that the word links."
+                }
+            },
+            {
+                title: "Reference Publications and Content Structure",
+                content: `
+                    <div class="section">
+                        <h2>Reference publications</h2>
+                        <p>The Code mentions numerous reference publications, standards, and other codes. Section 2 lists all the reference material that the Code uses. A complete listing of standards adopted in Ontario is available from TSSA in a document called <em>"Titles of Standards and Laboratory Test Reports Authorized in the Province of Ontario"</em>.</p>
+
+                        <p>It is sometimes necessary to refer to a standard or code referenced in CSA B149 to fully understand and comply with a requirement.</p>
+
+                        <h2>CSA B149.1 content</h2>
+
+                        <h3>Index and table of contents</h3>
+                        <p>Once you have chosen the correct Code, the best way to find specific information is to start with the index located at the back of the Code. It lists subject areas alphabetically and gives the section or clause number, table, or annex that addresses that subject.</p>
+
+                        <p>If you are unable to find the item in the index, try the table of contents pages at the front of the book. It lists the topics in the order in which they appear in the text under broad section headings such as "Pressure control" or "Piping and tubing systems, hose, and fittings". The more specific subsection titles listed below these headings should assist you in narrowing your search.</p>
+
+                        <p>You must take care when using the table of contents to check other sections that may apply to the issue at hand. For example, three sections of CSA B149.1 contain code requirements related to pressure testing.</p>
+
+                        <h3>Hierarchy of clauses</h3>
+                        <p>Use a hierarchical method of clause numbering to identify sections and subsections within the Code. Although the Code does not give each separate level a title (i.e., all levels are referred to as clauses), for explanatory purposes, this text uses terms for each level as shown in the following example:</p>
+
+                        <div class="hierarchy-diagram">
+                            <strong>Section 4.</strong> General<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;└─ <strong>Subsection 4.3</strong> Responsibilities of the installer<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ <strong>Clause 4.3.5</strong><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ <strong>Subclause 4.3.5 a)</strong>
+                        </div>
+
+                        <p>Read a clause in context with the subject covered in the higher-level subsection and section.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Navigation Tip</h4>
+                            <p>Always read clauses in context with their parent sections. Understanding the broader topic helps ensure proper interpretation of specific requirements.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the best starting point for finding specific information in the CSA B149.1 Code?",
+                    options: [
+                        "The table of contents at the front",
+                        "The index at the back of the Code",
+                        "Section 1 - Scope",
+                        "The annexes at the end"
+                    ],
+                    correct: 1,
+                    explanation: "The index at the back of the Code is the best starting point as it lists subject areas alphabetically with specific section, clause, table, or annex references for each topic."
+                }
+            },
+            {
+                title: "Changes, Highlighting, and Annexes",
+                content: `
+                    <div class="section">
+                        <h2>Changes and highlighting</h2>
+                        <p>Changes from a previous edition of the Code are not identified, and you may only find a change through careful comparison with the previous edition of the same Code. The 2015 edition of the CSA B149 series codes included a delta (Δ) in the margin to highlight a change which the 2020 editions do not.</p>
+
+                        <p>It is worthwhile spending some time reading through the Codes that apply to your work situation. A good practice is to mark the sections that you commonly reference with tabs and highlight the clauses that are important to your work. For example, it is recommended that you identify the piping and tubing sizing tables clearly so natural gas systems are not mistakenly sized using the propane tables.</p>
+
+                        <p>The current applicable Code should be readily available to every technician. A gas technician is expected to comply with the requirements that the Code provides.</p>
+
+                        <div class="warning-box">
+                            <h4>Important Practice</h4>
+                            <p>Mark commonly referenced sections with tabs and highlight important clauses. Be especially careful to clearly identify natural gas vs. propane sizing tables to avoid mixing them up during calculations.</p>
+                        </div>
+
+                        <h2>Annexes</h2>
+                        <p>At the back of the Code, you will find a section entitled "Annexes". This section is made up of engineering tables, procedures, and information developed to assist you with sizing piping/tubing systems or vents, as well as procedures for purging; protection of piping, meters, or tanks, and a wealth of other information.</p>
+
+                        <p>Usually, a clause within the Code refers you to these tables or pages. How the clause makes the reference determines whether the annex information is a requirement or a guideline providing a recommended means of complying with the Code.</p>
+
+                        <p>For example, Clause 6.3.2 of CSA B149.1 requires sizing of the piping/tubing system so that the pressure drop never exceeds 1 in w.c., when the supply pressure is between 7-14 in w.c. The Clause references the tables in the annexes only as one means of achieving this core requirement. On the other hand, Clause 6.23.7 specifically requires compliance with Annex H, which makes Annex H a requirement.</p>
+
+                        <div class="info-box">
+                            <h4>Annex Requirements vs. Guidelines</h4>
+                            <p>How a clause references an annex determines whether it's mandatory or advisory. When a clause specifically requires compliance with an annex, that annex becomes a requirement. When an annex is referenced as one means of achieving a requirement, it's a guideline.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "How do you determine if information in a CSA B149 Annex is mandatory or advisory?",
+                    options: [
+                        "All annexes are always mandatory",
+                        "All annexes are always advisory",
+                        "By how the clause within the Code references the annex",
+                        "By the title of the annex"
+                    ],
+                    correct: 2,
+                    explanation: "How a clause within the Code references an annex determines whether the annex information is mandatory or advisory. If a clause specifically requires compliance with an annex, it becomes mandatory. If referenced as one means of achieving a requirement, it's advisory."
+                }
+            },
+            {
+                title: "Applying and Interpreting Code Requirements",
+                content: `
+                    <div class="section">
+                        <h2>Applying and interpreting the Code and the Ontario requirements</h2>
+
+                        <h3>Ontario requirements</h3>
+                        <p>Remember that the Ontario amendments in the <em>Code Adoption Document</em> (available on coloured pages) has amended the national Code. It is essential to check these amendments. A good practice would be to cross out any amended sections in the Code and note the applicable page or change in the amendment section.</p>
+
+                        <p>As discussed earlier in this text, it is important to consider how all the legal requirements are interrelated. You should not view or apply the Code in isolation from the Act, regulations, standards, and manufacturer's instructions. They are all legal requirements that may pertain to the situation at hand.</p>
+
+                        <h3>Application of current Code to existing installations</h3>
+                        <p>Code requirements change in response to problems identified in the field or new technology and information. In some cases, these changes mean that existing installations no longer comply with the current Code.</p>
+
+                        <p>For example, the CSA B149 Codes allowed the venting of an appliance into an unlined chimney until the Code changed in 1978, requiring a clay-tile liner or metal liner in a chimney.</p>
+
+                        <p>Appliances installed before that code change could remain in operation since they were "in accordance with the Code at the time of installation", but any installations after the code change had to comply with the new requirement for liners.</p>
+
+                        <p>Unless the regulation or code specifically states that you must take action to bring existing installations into compliance with new requirements, consider existing installations to be in compliance.</p>
+
+                        <p>If the installation has a significant change or addition, the entire installation must be brought into compliance with current requirements.</p>
+
+                        <p>Using the chimney liner example, if the pre-1978 appliance was replaced or moved or if another appliance were added to the chimney after 1978, the entire installation would have to be brought into compliance with the requirements at the time of installation.</p>
+
+                        <p>Due diligence must be applied to any situation where it is found that the installation does not meet current requirements but is proven to have been installed in compliance with the requirements at the time of installation. The reason or intent of the change must be considered and the appropriate action taken to ensure that the installation is <em>safe</em>.</p>
+
+                        <div class="warning-box">
+                            <h4>Existing Installations Key Points</h4>
+                            <ul>
+                                <li>Existing installations are generally considered compliant if they met code requirements at time of installation</li>
+                                <li>Significant changes or additions require bringing entire installation into current compliance</li>
+                                <li>Due diligence must be applied to ensure safety even for grandfathered installations</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What must happen if an existing installation undergoes a significant change or addition?",
+                    options: [
+                        "Only the new work must comply with current requirements",
+                        "The entire installation must be brought into compliance with current requirements",
+                        "Nothing changes - existing installations are always grandfathered",
+                        "Only TSSA needs to be notified of the change"
+                    ],
+                    correct: 1,
+                    explanation: "If an installation has a significant change or addition, the entire installation must be brought into compliance with current requirements, not just the new work being performed."
+                }
+            },
+            {
+                title: "Conflicting Requirements and Code Interpretation",
+                content: `
+                    <div class="section">
+                        <h2>Conflicting legal requirements</h2>
+                        <p>When applying the Codes, you should remember to also consider the other legal requirements, such as those found in the Electrical Code, Building Code, municipal by-laws, and certified manufacturer's instructions, in order to ensure that your installation meets all legal requirements.</p>
+
+                        <p>Codes that other Acts—whether federal or provincial—accepted into law always specify the scope of application and often specifically delineate how they apply in relation to other laws covering the same topics. The Code or the Act or regulation accepting the Code may specify this.</p>
+
+                        <p>For example, CSA B149.1 requires the following in relation to electrical connections and components:</p>
+
+                        <div class="code-box">
+                            4.7.1 Electrical connections between an appliance and building wiring shall comply with the local electrical code or, in the absence of such, with the <em>Canadian Electrical Code, Part I</em>.
+                        </div>
+
+                        <p>As previously discussed, the scope of certificate in the <em>Fuel Industry Certificate Regulation</em> specifies the aspects of electrical work that require fuel technician certification and the limits beyond which the technician must have a valid certificate of qualification as an electrician issued under the <em>Trades Qualification and Apprenticeship Act</em>.</p>
+
+                        <p>Areas of conflict between other Acts, regulations, and accepted codes and standards are rare. You should direct interpretations to the two authorities having jurisdiction over any conflicting legal documents.</p>
+
+                        <p>In the event of a conflict between the <em>Technical Standards and Safety Act, 2000</em> (including the regulations, codes, and standards) and a municipal by-law, the Act prevails.</p>
+
+                        <p>In the event of a conflict between the Act, regulations, or codes and a manufacturer's certified instructions, the Act, regulations, or codes prevail.</p>
+
+                        <p>Nevertheless, due diligence indicates that if municipal by-laws or manufacturer's instructions are <em>more stringent</em> than the code requirement, the <em>most stringent</em> clause must take effect. In no case must the end result be <em>less</em> than the code requires.</p>
+
+                        <div class="info-box">
+                            <h4>Conflict Resolution Hierarchy</h4>
+                            <ul>
+                                <li>Technical Standards and Safety Act, 2000 prevails over municipal by-laws</li>
+                                <li>Act, regulations, or codes prevail over manufacturer's instructions</li>
+                                <li>Most stringent requirement must be followed</li>
+                                <li>End result must never be less than code requires</li>
+                            </ul>
+                        </div>
+
+                        <h2>Interpreting the Code</h2>
+                        <p>Certainly, there are always going to be disputes and grey areas in interpreting the Codes. This is a positive thing since it indicates that the Code is flexible and requires your input for proper application. It also leads to code development and the evolution of safety requirements.</p>
+
+                        <p>If you would like to have input into the development, improvement, or change regarding a code issue, you should contact the appropriate code committee via the information outlined in the Notes of the Preface of the Code:</p>
+
+                        <div class="code-box">
+                            <strong>(4)</strong> To submit a request for interpretation of this Code, please send the following information to <strong>inquiries@csagroup.org</strong> and include "Request for Interpretation" in the subject line:<br><br>
+                            a) define the problem, making reference to the specific clause, and, where appropriate, include an illustrative sketch;<br><br>
+                            b) provide an explanation of circumstances surrounding the actual field condition; and<br><br>
+                            c) where possible, phrase the request in such a way that a specific "yes" or "no" answer will address the issue.
+                        </div>
+
+                        <p>Committee interpretations are processed in accordance with the CSA Directives and guidelines governing standardization and are published in CSA's periodical Info Update, which is available on the CSA web site, www.csagroup.org.</p>
+
+                        <p>A legal interpretation for Ontario requires a written request made to Fuels Safety, TSSA.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Getting Code Interpretations</h4>
+                            <p><strong>Technical interpretations:</strong> Contact CSA Group at inquiries@csagroup.org<br>
+                            <strong>Legal interpretations for Ontario:</strong> Contact TSSA Fuels Safety in writing</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What principle applies when municipal by-laws or manufacturer's instructions are more stringent than code requirements?",
+                    options: [
+                        "Always follow the code requirements only",
+                        "The most stringent requirement must be followed",
+                        "Municipal by-laws always take precedence",
+                        "Manufacturer's instructions always take precedence"
+                    ],
+                    correct: 1,
+                    explanation: "Due diligence indicates that if municipal by-laws or manufacturer's instructions are more stringent than code requirements, the most stringent clause must take effect. The end result must never be less than what the code requires."
+                }
+            },
+            {
+                title: "Chapter 4 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 4 Final Quiz</h2>
+                        <p>Test your knowledge of reading and interpreting the code covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 9 questions to complete the chapter. These questions are based on the CSA training materials and test your understanding of how to navigate and interpret the CSA B149 codes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Are the provisions outlined in a CSA B149 Annex mandatory?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Yes</li>
+                                <li onclick="selectQuizOption(0, 1)">b) No</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Sometimes</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>Explain why a "Δ" appears in the margin of some of the clauses contained in the CSA B149 Codes.</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) Those clauses are not mandatory</li>
+                                <li onclick="selectQuizOption(1, 1)">b) Those clauses are under review</li>
+                                <li onclick="selectQuizOption(1, 2)">c) Those clauses are new or significantly different from the previous edition of the subject Code</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>What Code requirements apply to an installation where the appliance was installed many years ago?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) The requirements that were in effect at the time of the installation</li>
+                                <li onclick="selectQuizOption(2, 1)">b) The most current requirements</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>What CSA B149 Code contains requirements for propane appliances in recreational vehicles?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) CSA B149.1-15 Natural Gas and Propane Installation Code</li>
+                                <li onclick="selectQuizOption(3, 1)">b) CSA B149.2-15, Propane Storage and Handling Code</li>
+                                <li onclick="selectQuizOption(3, 2)">c) CAN/CSA-B149.3-15 Code for the Field Approval of Fuel-Related Components on Appliances and Equipment</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>Who should be consulted if there appears to be a conflict between governing Acts, Regulations, or Codes?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) Technical Standards and Safety Authority (TSSA)</li>
+                                <li onclick="selectQuizOption(4, 1)">b) Ministry of Labour (MOL)</li>
+                                <li onclick="selectQuizOption(4, 2)">c) Ontario Ministry of Government and Consumer Services (MGCS)</li>
+                                <li onclick="selectQuizOption(4, 3)">d) The applicable authority(ies) having jurisdiction</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>Indicate True or False: The CSA B149.1 Natural Gas and Propane Installation Code is the minimum standard when applied to installations?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) True</li>
+                                <li onclick="selectQuizOption(5, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>Name the section of the CSA B149.1 Natural Gas and Propane Installation Code that applies to piping and tubing.</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) Section 5</li>
+                                <li onclick="selectQuizOption(6, 1)">b) Section 7</li>
+                                <li onclick="selectQuizOption(6, 2)">c) Section 6</li>
+                                <li onclick="selectQuizOption(6, 3)">d) Section 8</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>What does Annex H refer to in the CSA B149.1 Natural Gas and Propane Installation Code?</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) Purging of piping and tubing systems where a readily accessible burner is not available or where an appliance is not equipped with a continuous pilot</li>
+                                <li onclick="selectQuizOption(7, 1)">b) Piping expansion and flexibility</li>
+                                <li onclick="selectQuizOption(7, 2)">c) Sizing and capacities of piping and tubing for propane</li>
+                                <li onclick="selectQuizOption(7, 3)">d) Vent sizing tables for Category I natural gas and propane appliances</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>Match the following definition with the correct term: "Indicates that you must meet all the requirements that a word links"</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) And</li>
+                                <li onclick="selectQuizOption(8, 1)">b) May</li>
+                                <li onclick="selectQuizOption(8, 2)">c) Or</li>
+                                <li onclick="selectQuizOption(8, 3)">d) Shall</li>
+                                <li onclick="selectQuizOption(8, 4)">e) Should</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 4 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 4 - Reading and interpreting the code.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You now understand how to effectively navigate and interpret the CSA B149 codes, including understanding scope, definitions, code structure, and the proper application of code requirements to various installation scenarios.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers (correct answer indices)
+        const quizCorrectAnswers = [2, 2, 0, 1, 3, 0, 2, 0, 0];
+        
+        const quizExplanations = [
+            "The provisions in CSA B149 Annexes are sometimes mandatory - it depends on how the clause within the Code references the annex. If a clause specifically requires compliance with an annex, it becomes mandatory.",
+            "A 'Δ' (delta) symbol in the margin indicates clauses that are new or significantly different from the previous edition of the Code. This helps identify changes from previous versions.",
+            "Code requirements that apply to older installations are the requirements that were in effect at the time of the installation, unless specifically required to be updated or if significant changes are made.",
+            "CSA B149.2-15 Propane Storage and Handling Code contains requirements for propane appliances in recreational vehicles. CSA B149.1 would not apply to recreational vehicle installations.",
+            "The applicable authority(ies) having jurisdiction should be consulted if there appears to be a conflict between governing Acts, Regulations, or Codes, as they have the authority to resolve such conflicts.",
+            "True - The CSA B149.1 Code represents the minimum standard when applied to installations. More stringent requirements may apply from other sources, but nothing should be less than what the code requires.",
+            "Section 6 of CSA B149.1 applies to piping and tubing systems. This section contains requirements for materials, installation, testing, and other aspects of piping and tubing.",
+            "Annex H refers to purging of piping and tubing systems where a readily accessible burner is not available or where an appliance is not equipped with a continuous pilot.",
+            "The word 'And' indicates that you must meet ALL the requirements that the word links, while 'Or' means you must meet only ONE of the requirements that the word links."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 6) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 9; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 9) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/9 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/9 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSSA G2 Practice Exam - Premium Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .payment-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-to-site {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-site:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .pricing-card {
+            text-align: center;
+            padding: 30px;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e6eaff 100%);
+        }
+
+        .price {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .price-subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .checkmark {
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .payment-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .payment-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .payment-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .security-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .security-info p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .already-purchased {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .already-purchased h3 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .access-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .access-button:hover {
+            background: #218838;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .payment-container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .price {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 TSSA G2 Practice Exam</h1>
+            <p>Professional Certification Training</p>
+        </div>
+
+        <div class="payment-container">
+            <a href="index.html" class="back-to-site">← Back to LARK Labs</a>
+            
+            <div id="purchaseSection">
+                <div class="pricing-card">
+                    <h2>Premium G2 Simulator Access</h2>
+                    <div class="price">$79.99</div>
+                    <div class="price-subtitle">One-time payment • Lifetime access</div>
+                    
+                    <ul class="features-list">
+                        <li><span class="checkmark">✓</span> 500+ Real G2 Exam Questions</li>
+                        <li><span class="checkmark">✓</span> Unlimited Practice Tests</li>
+                        <li><span class="checkmark">✓</span> Detailed Answer Explanations</li>
+                        <li><span class="checkmark">✓</span> Progress Tracking & Analytics</li>
+                        <li><span class="checkmark">✓</span> Timed Mock Exams</li>
+                        <li><span class="checkmark">✓</span> Mobile & Desktop Access</li>
+                        <li><span class="checkmark">✓</span> Regular Content Updates</li>
+                    </ul>
+
+                    <button id="paymentButton" class="payment-button">
+                        🔒 Get Instant Access Now
+                    </button>
+                </div>
+
+                <div class="security-info">
+                    <p><strong>🔒 Secure Payment</strong></p>
+                    <p>Your payment is processed securely by Stripe</p>
+                    <p>We never store your payment information</p>
+                </div>
+            </div>
+
+            <div id="alreadyPurchased" class="already-purchased" style="display: none;">
+                <h3>✅ Access Granted!</h3>
+                <p>You already have lifetime access to the G2 Practice Exam Simulator.</p>
+                <button id="accessButton" class="access-button">
+                    Launch G2 Simulator
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user already has access on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUserAccess();
+        });
+
+        function checkUserAccess() {
+            // For demonstration purposes, let's add a way to force showing payment
+            const urlParams = new URLSearchParams(window.location.search);
+            const forcePayment = urlParams.get('force_payment');
+            
+            if (forcePayment === 'true') {
+                // Don't check for existing access, always show payment
+                return;
+            }
+            
+            // Check if user has already purchased (stored in localStorage for demo)
+            const hasPurchased = localStorage.getItem('g2_simulator_purchased');
+            
+            if (hasPurchased === 'true') {
+                showAccessGranted();
+            }
+        }
+
+        function showAccessGranted() {
+            document.getElementById('purchaseSection').style.display = 'none';
+            document.getElementById('alreadyPurchased').style.display = 'block';
+        }
+
+        // Payment button click handler - FIXED VERSION
+        document.getElementById('paymentButton').addEventListener('click', function() {
+            // Redirect directly to your Stripe payment link - NO DEMO CODE
+            window.location.href = 'https://buy.stripe.com/28E8wQ1H7brSdL07Wg7ok02';
+        });
+
+        // Access button click handler
+        document.getElementById('accessButton').addEventListener('click', function() {
+            // Redirect to the protected G2 simulator
+            window.location.href = 'g2_simulator_protected.html';
+        });
+
+        // Demo function to reset purchase status (for testing)
+        function resetPurchaseStatus() {
+            localStorage.removeItem('g2_simulator_purchased');
+            location.reload();
+        }
+
+        // Add reset button for demo (remove in production)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const resetButton = document.createElement('button');
+            resetButton.textContent = 'Reset Demo (Dev Only)';
+            resetButton.style.cssText = 'position: fixed; top: 10px; right: 10px; z-index: 1000; background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;';
+            resetButton.onclick = resetPurchaseStatus;
+            document.body.appendChild(resetButton);
+        }
+    </script>
+</body>
+</html>

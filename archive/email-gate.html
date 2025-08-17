@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Gate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .email-gate {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .email-gate h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .email-gate p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        input[type="email"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        input[type="email"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .error {
+            color: #e74c3c;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .success {
+            color: #27ae60;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-gate">
+        <h2>One-Time Access Setup</h2>
+        <p>Please enter your email address for <strong>permanent access</strong> to this content. You'll only need to do this once on this device.</p>
+        <p><small>We'll send you occasional updates and valuable resources. Your email stays secure with us.</small></p>
+        
+        <form id="emailForm">
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+                <div id="message"></div>
+            </div>
+            
+            <button type="submit" class="btn">Continue</button>
+        </form>
+    </div>
+
+    <script>
+        // Check if user has already provided email
+        const userEmail = localStorage.getItem('userEmail');
+        const redirectSection = new URLSearchParams(window.location.search).get('redirect') || 'training';
+        
+        if (userEmail) {
+            // User already provided email, redirect immediately to index with section
+            window.location.href = `index.html#${redirectSection}`;
+        }
+        
+        document.getElementById('emailForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const messageDiv = document.getElementById('message');
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                messageDiv.innerHTML = '<div class="error">Please enter a valid email address.</div>';
+                return;
+            }
+            
+            // Store email in localStorage list
+            let emailList = JSON.parse(localStorage.getItem('collectedEmails') || '[]');
+            
+            // Check if email already exists
+            if (!emailList.some(entry => entry.email === email)) {
+                emailList.push({
+                    email: email,
+                    page: redirectSection,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleDateString()
+                });
+                localStorage.setItem('collectedEmails', JSON.stringify(emailList));
+            }
+            
+            // Store current user email
+            localStorage.setItem('userEmail', email);
+            
+            messageDiv.innerHTML = '<div class="success">Thank you! Accessing content...</div>';
+            
+            setTimeout(() => {
+                // Redirect back to index.html with section anchor
+                window.location.href = `index.html#${redirectSection}`;
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

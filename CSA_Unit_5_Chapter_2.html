@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 5 - Chapter 2: Basic Electrical Theory and Concepts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #3498db;
+        }
+
+        .diagram-placeholder {
+            width: 300px;
+            height: 250px;
+            margin: 0 auto;
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        .atomic-structure {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 5 - Introduction to electricity</h1>
+            <h2>Chapter 2 - Basic electrical theory and concepts</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 8</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 8;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>The gas technician/fitter requires a basic knowledge of electrical theory in order to understand the operation of electrical components and circuits.</p>
+
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>describe atoms, electrons, and electricity;</li>
+                            <li>describe electrostatic charges and fields; and</li>
+                            <li>describe the production and use of electricity.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Atom</td>
+                                    <td></td>
+                                    <td>Smallest particle of matter that can take part in a chemical reaction</td>
+                                </tr>
+                                <tr>
+                                    <td>Conductor</td>
+                                    <td></td>
+                                    <td>Material through which electric current can pass</td>
+                                </tr>
+                                <tr>
+                                    <td>Electric current</td>
+                                    <td></td>
+                                    <td>Transfer of electrical energy from moving electrons</td>
+                                </tr>
+                                <tr>
+                                    <td>Electromagnetism</td>
+                                    <td></td>
+                                    <td>Phenomenon when any conductor of electric current acts like a magnet</td>
+                                </tr>
+                                <tr>
+                                    <td>Insulator</td>
+                                    <td></td>
+                                    <td>A substance or device that does not readily conduct electricity</td>
+                                </tr>
+                                <tr>
+                                    <td>Ion</td>
+                                    <td></td>
+                                    <td>An atom or molecule with a net electric charge due to the loss or gain of one or more electrons</td>
+                                </tr>
+                                <tr>
+                                    <td>Static electricity</td>
+                                    <td></td>
+                                    <td>Energy in the form of a stationary electric charge such as that stored in thunderclouds or friction-produced</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding basic electrical theory is essential for gas technicians as many modern gas appliances and systems rely on electrical components for ignition, control, and safety systems.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the primary reason gas technicians need to understand basic electrical theory?",
+                    options: [
+                        "To become qualified electricians",
+                        "To understand the operation of electrical components and circuits", 
+                        "To install electrical wiring systems",
+                        "To troubleshoot power company issues"
+                    ],
+                    correct: 1,
+                    explanation: "Gas technicians require a basic knowledge of electrical theory to understand the operation of electrical components and circuits that are integral to modern gas appliances and systems."
+                }
+            },
+            {
+                title: "Atoms and Molecules",
+                content: `
+                    <div class="section">
+                        <h2>Atoms, electrons, and electricity</h2>
+                        
+                        <h3>Atoms and molecules</h3>
+                        <p>Everything that has mass or occupies space is what you call matter. The smallest particle of matter that can take part in a chemical reaction is an atom. Atoms are the submicroscopic building blocks of matter. They combine to form larger particles called molecules. Atoms and molecules are much too small to be seen or weighed directly.</p>
+
+                        <p>Atoms and molecules form various elements and compounds. An element is a substance made up of only one kind of atom. A compound contains more than one type of atom, chemically combined. Water is an example of a compound. Each water molecule is made up of one oxygen atom and two hydrogen atoms. To understand electricity, you must know something about the structure of atoms.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Key Concept</h4>
+                            <p><strong>Matter:</strong> Anything that has mass or occupies space<br>
+                            <strong>Atom:</strong> Smallest particle of matter that can take part in a chemical reaction<br>
+                            <strong>Molecule:</strong> Two or more atoms combined together</p>
+                        </div>
+
+                        <h3>Atomic structure</h3>
+                        <p>Atoms are made up of smaller particles, called subatomic particles:</p>
+                        <ul>
+                            <li>neutrons;</li>
+                            <li>protons; and</li>
+                            <li>electrons.</li>
+                        </ul>
+
+                        <p>Although scientists have found further subdivisions of these particles, it is only necessary for our understanding of electricity to focus on protons and electrons.</p>
+
+                        <div class="diagram-container">
+                            <h4>Figure 2-1: A carbon atom</h4>
+                            <div class="diagram-placeholder">
+                                <div style="font-size: 2rem; margin-bottom: 10px;">⚛️</div>
+                                <div>Carbon Atom Structure</div>
+                                <div style="font-size: 0.8rem; margin-top: 10px;">
+                                    Nucleus (6 protons + 6 neutrons)<br>
+                                    6 electrons in orbits
+                                </div>
+                            </div>
+                            <p style="margin-top: 15px; font-style: italic;">The centre of the atom is the nucleus (plural nuclei), which houses protons and neutrons. Electrons revolve around the nucleus in orbits.</p>
+                        </div>
+
+                        <p>The centre of the atom is the nucleus (plural nuclei), which houses protons and neutrons. Electrons revolve around the nucleus in orbits.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What are the three main subatomic particles that make up an atom?",
+                    options: [
+                        "Protons, electrons, and ions",
+                        "Neutrons, protons, and electrons",
+                        "Molecules, protons, and electrons",
+                        "Neutrons, ions, and electrons"
+                    ],
+                    correct: 1,
+                    explanation: "Atoms are made up of three main subatomic particles: neutrons and protons (which are housed in the nucleus), and electrons (which revolve around the nucleus in orbits)."
+                }
+            },
+            {
+                title: "Electrical Properties of Atoms",
+                content: `
+                    <div class="section">
+                        <h2>The number of subatomic particles in an atom</h2>
+                        
+                        <p>The number of electrons, protons, and neutrons in the atoms of an element determines how that element behaves.</p>
+
+                        <p>Atoms of different elements have different numbers of protons in their nuclei. This number is the atomic number that identifies that element. For example, the nucleus of a carbon atom always contains 6 protons, and you say that the atomic number of carbon is 6. The atomic number of helium is 2, and the atomic number of copper is 29.</p>
+
+                        <h3>Sizes of subatomic particles</h3>
+                        <p>Subatomic particles are extremely small. Electrons are about three times as large as protons, but they are 1840 times lighter. They are easy to move. Neutrons have about the same mass as protons.</p>
+
+                        <h3>Electrical charges of subatomic particles</h3>
+                        <p>The electron carries the basic unit of electrical charge. For historical reasons, an electron's charge is considered to be a negative (-) charge. Because it is free to move, an electron actively participates in the transfer of electrical energy.</p>
+
+                        <p>The proton carries a positive (+) charge, opposite to that of an electron. It has the same size of charge as the electron's negative one. Protons are not directly active in the flow of electrical energy, but they do influence the flow of electrons.</p>
+
+                        <p>The nucleus of an atom has an overall positive electrical charge due to the protons. The negatively charged electrons revolve around the positive nucleus.</p>
+
+                        <div class="info-box">
+                            <h4>Electrical Charge Summary</h4>
+                            <p><strong>Electron:</strong> Negative (-) charge, easy to move, carries electrical energy<br>
+                            <strong>Proton:</strong> Positive (+) charge, fixed in nucleus, influences electron flow<br>
+                            <strong>Neutron:</strong> No charge (neutral), provides atomic mass</p>
+                        </div>
+
+                        <div class="diagram-container">
+                            <h4>Figure 2-2: Negative electrons revolve in orbits around the positively charged nucleus</h4>
+                            <div class="diagram-placeholder">
+                                <div style="font-size: 2rem; margin-bottom: 10px;">⚛️</div>
+                                <div>Atomic Structure</div>
+                                <div style="font-size: 0.8rem; margin-top: 10px;">
+                                    (+) Nucleus<br>
+                                    (-) Electrons in orbit
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which subatomic particle carries the basic unit of electrical charge and actively participates in the transfer of electrical energy?",
+                    options: [
+                        "Proton",
+                        "Neutron", 
+                        "Electron",
+                        "Ion"
+                    ],
+                    correct: 2,
+                    explanation: "The electron carries the basic unit of electrical charge and, because it is free to move, actively participates in the transfer of electrical energy. Electrons have a negative charge and are much lighter than protons."
+                }
+            },
+            {
+                title: "Atoms, Ions, and Conductors",
+                content: `
+                    <div class="section">
+                        <h2>Atoms and ions</h2>
+                        
+                        <p>Under normal circumstances, the atom has equal numbers of protons and electrons. These charges cancel each other out, and the atom as a whole is electrically neutral.</p>
+
+                        <p>An atom can receive a negative charge through the addition of electrons. It can receive a positive charge through removal of electrons. When charging an atom occurs these ways, the atom becomes ionized and is now an ion. For example, a positive ion is an atom that has had one or more electrons removed.</p>
+
+                        <p>Since protons are firmly bound into the nucleus, only electrons can take part in ionizing the atom.</p>
+
+                        <div class="table">
+                            <thead>
+                                <tr>
+                                    <th>If it has...</th>
+                                    <th>Then it...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Fewer electrons than protons</td>
+                                    <td>Has a positive charge</td>
+                                </tr>
+                                <tr>
+                                    <td>More electrons than protons</td>
+                                    <td>Has a negative charge</td>
+                                </tr>
+                                <tr>
+                                    <td>The same number of electrons and protons</td>
+                                    <td>Is neutral</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h2>Conductors and insulators</h2>
+                        
+                        <p>Some materials, including copper and aluminum, have electrons that are easy to free. They are said to have many free electrons and are conductors. Conductors allow easy transfer of electrical energy.</p>
+
+                        <p>Some other materials, such as glass and rubber, have electrons that are very difficult to free. They are said to have few free electrons and are insulators. Insulators block the transfer of electrical energy.</p>
+
+                        <div class="warning-box">
+                            <h4>Safety Note</h4>
+                            <p>Understanding conductors and insulators is crucial for electrical safety. Copper wires conduct electricity, while plastic insulation prevents dangerous electrical contact. Always respect electrical safety protocols when working with gas appliances that have electrical components.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What happens when an atom has more electrons than protons?",
+                    options: [
+                        "It becomes a positive ion",
+                        "It becomes a negative ion", 
+                        "It remains electrically neutral",
+                        "It becomes a conductor"
+                    ],
+                    correct: 1,
+                    explanation: "When an atom has more electrons than protons, it has a negative charge and becomes a negative ion. The extra electrons give the atom an overall negative electrical charge."
+                }
+            },
+            {
+                title: "Electrostatic Charges and Fields",
+                content: `
+                    <div class="section">
+                        <h2>Electrostatic charges and fields</h2>
+                        
+                        <p>Electrostatic charges and fields are also known as static electricity. Static electricity is energy in the form of a stationary electric charge such as that stored in thunderclouds or produced by friction. For example, when you rub together certain pairs of materials (such as fur and a rubber rod), an electrostatic charge is produced. The friction produces heat energy that releases electrons from the atoms on the surface of one of the materials.</p>
+
+                        <h3>Electrical charges</h3>
+                        <p>An object may possess a positive electrical charge, a negative electrical charge, or it may be electrically neutral. The type of charge that an object has depends on the number of electrons and protons it has.</p>
+
+                        <h3>Law of electrical charges</h3>
+                        <p>A fundamental law governs the way charged particles behave:</p>
+                        
+                        <div class="info-box">
+                            <h4>Fundamental Law of Electrical Charges</h4>
+                            <p><strong>Like charges repel and unlike charges attract.</strong></p>
+                        </div>
+
+                        <p>Negatively charged particles repel other negatively charged particles. They tend to move away from each other. Similarly, positively charged particles repel each other. However, negatively charged particles attract positively charged particles. They tend to move toward each other.</p>
+
+                        <p>Because of this law:</p>
+                        <ul>
+                            <li>Protons (+) and electrons (-) attract each other.</li>
+                            <li>Protons repel other protons.</li>
+                            <li>Electrons repel other electrons.</li>
+                        </ul>
+
+                        <h3>Electrostatic forces and fields</h3>
+                        <p>The electrical charges on protons and electrons are electrostatic charges. An electrostatic charge has an electrostatic field associated with it and, within this field, electrostatic forces occur. These forces are the forces of attraction and repulsion between charged particles.</p>
+
+                        <p>The strength of the forces of attraction and repulsion depends on:</p>
+                        <ul>
+                            <li>the amount of charge on each object; and</li>
+                            <li>the square of the distance between the objects.</li>
+                        </ul>
+
+                        <p>The greater the electric charges on the objects, the greater the electrostatic force. Also, the closer the charged objects are to each other, the greater the electrostatic force.</p>
+
+                        <div class="diagram-container">
+                            <h4>Lines of force around charged particles</h4>
+                            <div class="diagram-placeholder">
+                                <div style="display: flex; justify-content: space-around;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">➡️⚡️⬅️</div>
+                                        <div style="font-size: 0.8rem;">Negative charge<br>(arrows point inward)</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">⬅️⚡️➡️</div>
+                                        <div style="font-size: 0.8rem;">Positive charge<br>(arrows point outward)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "According to the fundamental law of electrical charges, what happens between unlike charges?",
+                    options: [
+                        "They repel each other",
+                        "They attract each other",
+                        "They remain neutral", 
+                        "They cancel each other out"
+                    ],
+                    correct: 1,
+                    explanation: "According to the fundamental law of electrical charges, 'like charges repel and unlike charges attract.' This means that positive and negative charges (unlike charges) attract each other."
+                }
+            },
+            {
+                title: "Production and Use of Electricity",
+                content: `
+                    <div class="section">
+                        <h2>Production and use of electricity</h2>
+                        
+                        <p>During removal of electrons from their atoms (so that they are free to move), the moving electrons may transfer electrical energy. The term electric current usually refers to this.</p>
+
+                        <h3>Production of electricity</h3>
+                        <p>The following are examples of ways to apply enough force to remove the electrons:</p>
+                        <ul>
+                            <li>heat—thermoelectricity;</li>
+                            <li>magnetism—electromagnetism;</li>
+                            <li>chemicals—electrochemistry;</li>
+                            <li>pressure—piezoelectricity; and</li>
+                            <li>light—photoelectricity.</li>
+                        </ul>
+
+                        <h4>Thermoelectricity</h4>
+                        <p>The application of heat to two different metals joined together leads to the transfer of electrons across the junction, resulting in one side becoming positive with respect to the other. This is the action of a thermocouple. Several thermocouples, when joined, form a thermopile.</p>
+                        
+                        <p>Thermocouples often function as thermometers to detect and measure temperature. The current that a thermocouple produces is enough to hold in a small electromagnet within a gas valve, indicating the presence or absence of a pilot flame.</p>
+
+                        <div class="tip-box">
+                            <h4>🔥 Gas Industry Application</h4>
+                            <p>Thermocouples are widely used in gas appliances as safety devices. They generate a small electrical current when heated by a pilot flame, which keeps a safety valve open. If the pilot goes out, the thermocouple cools, stops generating current, and the safety valve closes.</p>
+                        </div>
+
+                        <h4>Electromagnetism</h4>
+                        <p>Magnetic force fields surround magnets, which have magnetic poles that attract or repel each other. When a conductor passes a magnetic field, the forces of the magnetic field act on the electrons in the conductor, causing them to move through the conductor. The same thing happens if you hold steady the conductor in a moving magnetic field. An electric generator produces electricity by electromagnetism.</p>
+
+                        <h4>Electrochemistry</h4>
+                        <p>A flashlight battery is a common example of the electrochemical production of electricity. A battery is a group of voltaic cells. A voltaic cell is a product of immersing two different metal electrodes in a chemical solution called electrolyte. This creates a difference of potential between the two electrodes.</p>
+
+                        <p>Chemical action that results in the transfer of electrons from one electrode to the other through the electrolyte causes the difference in potential. The electrode that gives up electrons becomes positively charged and the other electrode, which gains electrons, becomes negatively charged.</p>
+
+                        <h4>Piezoelectricity</h4>
+                        <p>Force from the application of pressure to certain crystal materials drives the free electrons out of orbit. Positive and negative charges build up on opposite sides of the material. You use this principle in such things as spark igniters for gas barbecues.</p>
+
+                        <h4>Photoelectricity</h4>
+                        <p>When light strikes certain materials (such as potassium and sodium), the energy from the light causes the atoms to release electrons. This is the photoelectric effect.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which method of electricity production is commonly used in gas barbecue spark igniters?",
+                    options: [
+                        "Thermoelectricity",
+                        "Electromagnetism",
+                        "Piezoelectricity",
+                        "Photoelectricity"
+                    ],
+                    correct: 2,
+                    explanation: "Piezoelectricity is used in gas barbecue spark igniters. When pressure is applied to certain crystal materials, it drives free electrons out of orbit, creating charges that produce a spark for ignition."
+                }
+            },
+            {
+                title: "Electric Current and Circuit Fundamentals",
+                content: `
+                    <div class="section">
+                        <h2>Electric current</h2>
+                        
+                        <p>In static electricity, electric charges are at rest. Static electricity normally does not perform useful work. To use electrical energy to do work, set the electrons in directed motion.</p>
+
+                        <p>When you make electrons to move in the same direction, they produce an electric current. The flow of electric current carries energy that can perform work. The more electrons that move in the same direction, the greater the flow of current and the greater the amount of available energy.</p>
+
+                        <h3>Conducting and insulating materials</h3>
+                        
+                        <h4>Conductors</h4>
+                        <p>Materials that conduct electricity well and have low electrical resistance are conductors. Most metals are good conductors, but some are better than others. Silver is the best pure metal conductor, with copper second. Because of its relatively low cost, copper is most commonly used for wires. Technicians use aluminum, also a good conductor, for high-voltage transmission lines because it is much lighter and cheaper than copper.</p>
+
+                        <p>Conductors heat up when current is flowing through them. This is a good thing in the case of conductors that work as heating elements, but not a good thing in the case of using conductors in electrical transmission.</p>
+
+                        <h4>Insulators</h4>
+                        <p>Many materials do not conduct electricity well. They are insulators. Plastic, glass, and porcelain are poor conductors of electricity and are extensively used as electrical insulators. Household wiring consists of pure copper conductors with a plastic layer of insulation. This insulation provides protection from electric shock and prevents short-circuiting of the system.</p>
+
+                        <p>Lower voltages require less insulation, so relatively thin plastic can be used. For higher voltages, thicker plastic insulation must be used. For very high voltages, plastic is not an adequate insulator. At very high voltages, porcelain, glass, air, or oil function as insulators.</p>
+
+                        <div class="warning-box">
+                            <h4>⚡ High Voltage Safety</h4>
+                            <p>High-voltage electricity can arc or jump across an air gap from one point to another if the voltage between the two points is strong enough. For this reason, personnel must remain well clear of high-voltage equipment. Lightning is an example of electricity passing through air, requiring billions of volts.</p>
+                        </div>
+
+                        <h3>Electron movement in a conductor</h3>
+                        <p>In the atoms of a good electrical conductor (such as copper wire), free electrons are in constant but random motion. The nuclei stay in a relatively distinct pattern, but the free electrons change orbits at random and the atoms share the free electrons. Metallic bonding binds the atoms together.</p>
+
+                        <h3>Current flow</h3>
+                        <p>To produce a flow of electricity or current in a conductor, make the electrons move in a direction along the conductor by placing opposite (positive and negative) charges on the ends of the conductor. The free negative electrons move toward the positive charge and away from the negative charge.</p>
+
+                        <p>Individual electrons do not move very far in the conductor, but the effect of electric current moves down the conductor at the speed of light (297,600 km per second). As each electron leaves its own orbit and enters another, it repels another electron out of orbit, and so on. The rapidly moving current is the impulse of these changes moving along the length of the conductor. This is similar to the impulse of falling dominoes moving the length of the row, while each domino makes only a slight movement.</p>
+
+                        <h3>Direct current and alternating current</h3>
+                        <p>When current flows in a constant direction, it is a direct current (dc). Alternating current (ac), on the other hand, regularly reverses direction and occurs during reversal of the polarity of each end of the conductor, which is always the case with house current.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What type of current regularly reverses direction and is used in household electrical systems?",
+                    options: [
+                        "Direct current (dc)",
+                        "Static current",
+                        "Alternating current (ac)",
+                        "Continuous current"
+                    ],
+                    correct: 2,
+                    explanation: "Alternating current (ac) regularly reverses direction and occurs during reversal of the polarity of each end of the conductor. This is always the case with house current, unlike direct current (dc) which flows in a constant direction."
+                }
+            },
+            {
+                title: "Chapter 2 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 2 Final Quiz</h2>
+                        <p>Test your knowledge of basic electrical theory and concepts covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 7 questions to complete the chapter. These questions are based on the CSA training materials and test your understanding of basic electrical theory and concepts.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Atoms are made of what three particles?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Neutrons, protons, and electrons</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Neutrons, ions, and electrons</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Protons, electrons, and ohms</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>Which particle carries the basic unit of electrical charge?</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) Neutron</li>
+                                <li onclick="selectQuizOption(1, 1)">b) Proton</li>
+                                <li onclick="selectQuizOption(1, 2)">c) Electron</li>
+                                <li onclick="selectQuizOption(1, 3)">d) Ion</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>How is an atom given a negative charge?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) By subtracting electrons</li>
+                                <li onclick="selectQuizOption(2, 1)">b) By adding electrons</li>
+                                <li onclick="selectQuizOption(2, 2)">c) By adding protons</li>
+                                <li onclick="selectQuizOption(2, 3)">d) By subtracting protons</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>When is an object considered to be electrically neutral?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) When it has the same number of electrons and protons</li>
+                                <li onclick="selectQuizOption(3, 1)">b) When the negative ions are removed</li>
+                                <li onclick="selectQuizOption(3, 2)">c) When the neutrons have been removed</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>What is produced when electrons are made to move in the same direction?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) Ampere</li>
+                                <li onclick="selectQuizOption(4, 1)">b) Ohm</li>
+                                <li onclick="selectQuizOption(4, 2)">c) Electrical impedance</li>
+                                <li onclick="selectQuizOption(4, 3)">d) Electrical current</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>What is a material called that does not conduct electricity well?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) Insulator</li>
+                                <li onclick="selectQuizOption(5, 1)">b) Conductor</li>
+                                <li onclick="selectQuizOption(5, 2)">c) Resistor</li>
+                                <li onclick="selectQuizOption(5, 3)">d) Capacitor</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>What is the term used to describe current that flows in a constant direction?</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) Alternating current</li>
+                                <li onclick="selectQuizOption(6, 1)">b) Straight current</li>
+                                <li onclick="selectQuizOption(6, 2)">c) Direct current</li>
+                                <li onclick="selectQuizOption(6, 3)">d) Discontinuous current</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 2 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 2 - Basic electrical theory and concepts.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You now understand the fundamental principles of electrical theory, including atomic structure, electrical charges, conductors and insulators, and the basic production and use of electricity. This knowledge will help you work safely and effectively with the electrical components found in modern gas appliances.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers (correct answer indices)
+        const quizCorrectAnswers = [0, 2, 1, 0, 3, 0, 2];
+        
+        const quizExplanations = [
+            "Atoms are made up of three main subatomic particles: neutrons and protons (in the nucleus) and electrons (which orbit the nucleus).",
+            "The electron carries the basic unit of electrical charge. Electrons have a negative charge and are free to move, making them actively participate in the transfer of electrical energy.",
+            "An atom is given a negative charge by adding electrons. When there are more electrons than protons, the atom has a net negative charge and becomes a negative ion.",
+            "An object is considered electrically neutral when it has the same number of electrons and protons. The positive and negative charges cancel each other out.",
+            "When electrons are made to move in the same direction, they produce electrical current. The flow of electric current carries energy that can perform work.",
+            "A material that does not conduct electricity well is called an insulator. Examples include plastic, glass, and rubber, which have electrons that are difficult to free.",
+            "Current that flows in a constant direction is called direct current (dc). This is different from alternating current (ac), which regularly reverses direction."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 7) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 7; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 7) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/7 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/7 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

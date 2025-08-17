@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 5 - Chapter 7: Electrical Measuring Instruments</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .figure-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .figure-container h4 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .figure-container p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .precautions-table {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .precautions-column {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .precautions-column h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .precautions-column.dont h4 {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+
+            .precautions-table {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 5 - Introduction to Electricity</h1>
+            <h2>Chapter 7 - Electrical Measuring Instruments</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 8</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 8;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>The gas technician/fitter requires knowledge of electrical measuring instruments. It is important to understand how to safely use and interpret instrument readings to effectively troubleshoot the types of electrical equipment and circuits in the gas industry.</p>
+
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>identify and select common electrical measuring instruments;</li>
+                            <li>describe how to use electrical measuring instruments; and</li>
+                            <li>read electrical measuring instruments.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Digital multimeter</td>
+                                    <td>DMM</td>
+                                    <td>Digital electronic measuring instrument that combines several functions in one Unit</td>
+                                </tr>
+                                <tr>
+                                    <td>Volt-ohm-milliammeter</td>
+                                    <td>VOM</td>
+                                    <td>Electronic measuring instrument that combines several functions in one Unit</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Electrical measuring instruments are essential tools for gas technicians. Understanding their proper use ensures safe and effective troubleshooting of electrical systems in gas appliances and equipment.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What does DMM stand for?",
+                    options: [
+                        "Digital Measuring Machine",
+                        "Digital Multimeter",
+                        "Direct Measuring Module",
+                        "Digital Multi-Machine"
+                    ],
+                    correct: 1,
+                    explanation: "DMM stands for Digital Multimeter - a digital electronic measuring instrument that combines several functions in one unit, including voltage, current, and resistance measurements."
+                }
+            },
+            {
+                title: "Common Electrical Measuring Instruments",
+                content: `
+                    <div class="section">
+                        <h2>Common electrical measuring instruments</h2>
+                        
+                        <p>The three most common electrical measuring instruments are:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Instrument</th>
+                                    <th>Used to Measure</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Voltmeter</td>
+                                    <td>Voltage</td>
+                                </tr>
+                                <tr>
+                                    <td>Ammeter</td>
+                                    <td>Current</td>
+                                </tr>
+                                <tr>
+                                    <td>Ohmmeter</td>
+                                    <td>Resistance and continuity</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Multimeters</h3>
+                        <p>The functions of each individual instrument can be combined into a single versatile instrument called multimeter. Multimeters are more commonly used in the field and are often known by other names such as volt-ohm-milliammeter (VOM) and digital multimeter (DMM). A multimeter saves having to purchase numerous individual meters.</p>
+
+                        <h3>Features of analogue and digital multimeters</h3>
+                        <p>Electrical measuring instruments have traditionally been analogue. Analogue meters consist of a needle-type pointer that moves across a fixed scale. Modern instruments display digitally, using liquid-crystal or light-emitting diodes (LED). Digital instruments are not necessarily more accurate than analogue instruments, but they are often easier to read. Digital instruments will retain their accuracy regardless of how you position them, while analogue instruments are somewhat delicate and requires placement on a horizontal surface to retain their accuracy.</p>
+
+                        <p>Digital multimeters can vary greatly in their operation and functions. Most multimeters can measure both alternating current (ac) and direct current (dc), whereas some voltmeters and ammeters can measure only one type of current. Always refer to the instrument's operating instruction booklet before using it to confirm its safe and proper use.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Important Note</h4>
+                            <p>If you can understand how to use a voltmeter, an ammeter, and an ohmmeter, then it becomes very easy to understand how to use a multimeter.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the purpose of a multimeter?",
+                    options: [
+                        "It can be used to measure voltage, current, and resistance",
+                        "It can be used for other functions than electrical",
+                        "It can provide power when needed"
+                    ],
+                    correct: 0,
+                    explanation: "A multimeter's purpose is to measure voltage, current, and resistance in a single versatile instrument. This eliminates the need to purchase numerous individual meters and makes field work more efficient."
+                }
+            },
+            {
+                title: "Measuring Voltage",
+                content: `
+                    <div class="section">
+                        <h2>Measuring voltage, current, and resistance</h2>
+                        
+                        <h3>Measuring voltage</h3>
+                        <p>In order to measure voltage, you must connect a voltmeter across the two points in the circuit where the voltage appears (see Figure 7-1) or, in other words, in parallel with the part of the circuit under test.</p>
+
+                        <div class="figure-container">
+                            <h4>Figure 7-1</h4>
+                            <p>To measure voltage across resistance R₁, voltmeter is connected in parallel with R₁</p>
+                            <p>[Circuit diagram showing voltmeter connected in parallel with resistor R₁]</p>
+                        </div>
+
+                        <p>It is very important that the addition of the voltmeter into a circuit has very little effect on the conditions normally existing in the circuit. A voltmeter, therefore, must have a very high internal resistance, so that operating the instrument will draw very little current from that circuit. For maximum accuracy, a voltmeter's internal resistance should be many times higher than any resistance encountered in the circuit under test. Analogue voltmeters have internal resistances in the thousands of ohms, while digital instruments often have internal resistances in the millions of ohms.</p>
+
+                        <div class="warning-box">
+                            <h4>⚠️ Critical Safety Point</h4>
+                            <p>Always ensure that the voltmeter's internal resistance is much higher than the circuit resistance to avoid affecting the circuit's normal operation and to ensure accurate readings.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "When using a meter to measure voltage, how must the voltmeter be connected into the circuit?",
+                    options: [
+                        "In series with the circuit",
+                        "Does not matter as long as it is connected in the circuit",
+                        "In parallel with the circuit"
+                    ],
+                    correct: 2,
+                    explanation: "A voltmeter must be connected in parallel with the circuit or component being tested. This allows it to measure the voltage drop across the component without significantly affecting the circuit's operation."
+                }
+            },
+            {
+                title: "Measuring Current",
+                content: `
+                    <div class="section">
+                        <h2>Measuring current</h2>
+                        
+                        <p>In order to measure current, break down the circuit at the point where you will measure the current and insert the ammeter (see Figure 7-2). In other words, you must connect an ammeter in series with the circuit under test. (In order to avoid danger, before breaking any circuit to insert an ammeter, it is first necessary to switch the circuit off.)</p>
+
+                        <div class="figure-container">
+                            <h4>Figure 7-2</h4>
+                            <p>To measure current through a circuit, break circuit and insert ammeter in series</p>
+                            <p>[Circuit diagram showing ammeter inserted in series with the circuit]</p>
+                        </div>
+
+                        <p>It is very important to note that the insertion of the ammeter is designed to have very little effect on the normal current flowing in the circuit. The internal resistance of the ammeter is therefore very low, normally a fraction of an ohm. Due to the ammeter's low internal resistance, you must avoid connecting it across a load under test or the supply voltage itself. This would cause high current to flow through the ammeter, seriously damaging the instrument and possibly harming the operator. Some ammeters come with a fuse or circuit-breaker for protecting the instrument. Should this happen, however, you should never assume that this is adequate protection.</p>
+
+                        <div class="warning-box">
+                            <h4>⚠️ DANGER - Critical Safety Warning</h4>
+                            <p>NEVER connect an ammeter in parallel with a circuit or across the supply voltage. This will cause extremely high current flow that can seriously damage the instrument and potentially harm the operator. Always turn off power before inserting an ammeter into a circuit.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "When using a meter to measure current, how must the ammeter be connected into the circuit?",
+                    options: [
+                        "In parallel with the circuit",
+                        "In series with the circuit",
+                        "Does not matter as long as it is connected in the circuit"
+                    ],
+                    correct: 1,
+                    explanation: "An ammeter must be connected in series with the circuit. This means breaking the circuit and inserting the ammeter so that all current flows through it. Always turn off power before making this connection."
+                }
+            },
+            {
+                title: "Measuring Resistance",
+                content: `
+                    <div class="section">
+                        <h2>Measuring resistance</h2>
+                        
+                        <p>Ohm's law tells us that, with a fixed value of voltage across a circuit, the value of current flowing depends upon the resistance of that circuit:</p>
+                        <ul>
+                            <li>The higher the resistance, the lower the current flow.</li>
+                            <li>The lower the resistance, the higher the current flow.</li>
+                        </ul>
+
+                        <p>In other words, the value of the current flowing through a circuit is a guide to the resistance of that circuit. This is the principle of operation of the ohmmeter.</p>
+
+                        <p>The ohmmeter is an instrument similar to an ammeter connected in series with a rheostat (variable resistor) and a battery (see Figure 7-3). A case with a scale, terminals, and the variable resistor's control-knob visible contains these components. The ohmmeter works in the following manner:</p>
+
+                        <ol>
+                            <li>The test-leads are connected to the instrument's terminals and are first short-circuited together.</li>
+                            <li>Adjustment of rheostat occurs until the instrument registers full-scale deflection—this corresponds to zero ohms.</li>
+                            <li>Now, the test-leads are connected to the circuit or component under test.</li>
+                        </ol>
+
+                        <div class="figure-container">
+                            <h4>Figure 7-3</h4>
+                            <p>Schematic of ohmmeter operation</p>
+                            <p>[Diagram showing ohmmeter circuit with battery, rheostat, and meter]</p>
+                        </div>
+
+                        <p>The resulting current through the ohmmeter will be lower than it was before, because of the added resistance, and the instrument's pointer will register somewhat less than full-scale deflection. Rather than calibrating the scale in amperes, which is what the instrument is really reading, the manufacturer has calibrated it directly in ohms.</p>
+
+                        <h3>Analogue ohmmeter scale</h3>
+                        <p>Unlike the voltmeter and the ammeter, the most noticeable thing about an analogue ohmmeter's scale is that you read it from right to left. Furthermore, it is non-linear. This means that the graduations that represent the higher values of resistance (to the left side of the scale) are very close together, while those representing lower values (to the right side of the scale) have wider spacings.</p>
+
+                        <div class="figure-container">
+                            <h4>Figure 7-4</h4>
+                            <p>Non-linear, analogue ohmmeter scale</p>
+                            <p>Difficult-to-read scale (left) | Easy-to-read scale (right)</p>
+                            <p>[Scale showing compressed high resistance values on left, expanded low resistance values on right]</p>
+                        </div>
+
+                        <h3>Zero ohms adjustment</h3>
+                        <p>Using the built-in rheostat to adjust for full-scale deflection is what you call zero ohms adjustment. You must perform it before using the ohmmeter to measure resistance. This compensates for any variation in the voltage of the instrument's battery. If you cannot achieve zero ohms adjustment, it means the battery is too weak and needs replacement.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Should an ohmmeter be connected into a live circuit?",
+                    options: [
+                        "Yes",
+                        "No"
+                    ],
+                    correct: 1,
+                    explanation: "No, an ohmmeter should never be connected to a live circuit. The ohmmeter has its own internal battery and connecting it to a live circuit could damage the instrument and give false readings. Always ensure circuits are de-energized before resistance measurements."
+                }
+            },
+            {
+                title: "Ohmmeter Precautions and Variable Range Instruments",
+                content: `
+                    <div class="section">
+                        <h2>Ohmmeter operating precautions</h2>
+                        
+                        <div class="precautions-table">
+                            <div class="precautions-column">
+                                <h4>Do...</h4>
+                                <ul>
+                                    <li>Always be aware of inadvertently measuring the resistance of other components that are connected in parallel with the component under test. You may have to physically remove the component from the circuit before performing the test.</li>
+                                    <li>Technicians/fitters very often use ohmmeters to check for continuity—to confirm, for example, that a circuit, or component, is not open-circuited. When checking continuity, the actual resistance of the circuit or component is unimportant—a simple deflection of the pointer confirms continuity.</li>
+                                    <li>Always switch an ohmmeter off when measurements are completed. If you fail to do this, and the test-leads are accidentally left shorted together, then the instrument's battery will very quickly discharge.</li>
+                                </ul>
+                            </div>
+                            <div class="precautions-column dont">
+                                <h4>Do not/never...</h4>
+                                <ul>
+                                    <li>Just like the ammeter, an ohmmeter must never be connected across a live load or the supply voltage itself. This would cause high current to flow through the ammeter, seriously damaging the instrument and possibly harming the operator!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h2>Variable range instruments</h2>
+                        <p>In order to extend their versatility, most electrical measuring instruments have several ranges. For example, you may adjust a voltmeter to read: 0 to 5 V, 0 to 10 V, 0 to 25 V, and 0 to 100 V.</p>
+
+                        <h3>Scale selection</h3>
+                        <p>An analogue voltmeter may have four separate scales or only one scale (say, 0 to 5 V), in which case you must multiply its reading by factors of x2, x5, or x20, according to the selected range. The method for selecting the range on such an instrument varies from manufacturer to manufacturer, with the most common being a rotary knob that aligns with ranges engraved onto the case. Modern digital instruments often select the appropriate range automatically.</p>
+
+                        <h3>Range selection</h3>
+                        <p>If you are unsure of the value of voltage or current that you are about to measure, always start with the highest range and work down until you achieve the greatest readable deflection of the pointer. Despite this, you should always estimate the likely value of voltage or current before performing the test, just in case it is beyond even the highest range of the instrument.</p>
+
+                        <p>For maximum accuracy with analogue instruments, always select the range that gives the greatest readable deflection because all instruments are calibrated to give maximum accuracy at full-scale deflection.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Accuracy Tip</h4>
+                            <p>For example, suppose a 100 V voltmeter is manufactured to an accuracy of ±5%. This accuracy applies to the instrument's full-scale deflection. When it indicates 100 V, the actual voltage could be anywhere between 95 V and 105 V. However, when the same instrument indicates only 10 V, it is still accurate to ±5 V, so the actual voltage could range from 5 V to 15 V!</p>
+                        </div>
+
+                        <p>In the case of an ohmmeter, you must adjust the instrument for zero ohms:</p>
+                        <ul>
+                            <li>each time its range is changed; and</li>
+                            <li>before you use it to take a measurement.</li>
+                        </ul>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What should be done if the value of voltage or current to be measured is unknown?",
+                    options: [
+                        "Start with the highest range and work down",
+                        "Start with the lowest range and work up",
+                        "Start in the middle of the range"
+                    ],
+                    correct: 0,
+                    explanation: "Always start with the highest range and work down until you achieve the greatest readable deflection. This prevents damage to the instrument from over-range conditions and ensures the most accurate reading possible."
+                }
+            },
+            {
+                title: "Using Digital Multimeters (DMM)",
+                content: `
+                    <div class="section">
+                        <h2>Using electrical measuring instruments</h2>
+                        
+                        <h3>Digital multimeter (DMM)</h3>
+                        <p>As discussed in Unit 2 Fasteners, Tools and Testing Instruments > Chapter 6. Electrical Testing Instruments, a digital multimeter has all the functions of an analogue multimeter plus advanced features. The primary difference to the technician/fitter is the way the user reads the data. DMMs have extended features depending on the make and model.</p>
+
+                        <div class="figure-container">
+                            <h4>Figure 7-5</h4>
+                            <p>Field service technician's multimeter</p>
+                            <p>[Image of a typical digital multimeter showing display and control knobs]</p>
+                        </div>
+
+                        <p>The following illustrations from a user's manual give typical examples of taking measurements with a common digital multimeter. See Figures 7-6 to 7-9.</p>
+
+                        <div class="info-box">
+                            <h4>Key DMM Features</h4>
+                            <ul>
+                                <li>Digital display for easy reading</li>
+                                <li>Auto-ranging capabilities</li>
+                                <li>Multiple measurement functions</li>
+                                <li>High accuracy and precision</li>
+                                <li>Built-in safety features</li>
+                            </ul>
+                        </div>
+
+                        <h3>Measurement Examples</h3>
+                        
+                        <h4>Measuring Resistance and Testing for Continuity</h4>
+                        <div class="warning-box">
+                            <h4>⚠️ Warning</h4>
+                            <p>To avoid electric shock, injury, or damage to the meter, disconnect circuit power and discharge all high-voltage capacitors before testing resistance, continuity, diodes, or capacitance.</p>
+                        </div>
+
+                        <p>Note: The continuity function works best as a fast, convenient method to check for opens and shorts. For maximum accuracy in making resistance measurements, use the meter's resistance (Ω) function.</p>
+
+                        <h4>Measuring AC and DC Voltage</h4>
+                        <p>With the function switch in the AUTO-V position, the meter automatically selects a dc or ac voltage measurement based on the input applied between the V or + and COM jacks. This function also sets the meter's input impedance to approximately 3kΩ to reduce the possibility of false readings due to ghost voltages.</p>
+
+                        <h4>Measuring AC and DC Current</h4>
+                        <div class="warning-box">
+                            <h4>⚠️ Warning</h4>
+                            <p>To avoid personal injury or damage to the meter:</p>
+                            <ul>
+                                <li>Never attempt to make an in-circuit current measurement when the open-circuit potential to earth is >600V.</li>
+                                <li>Check the meter's fuse before testing.</li>
+                                <li>Use the proper terminals, switch position, and range for your measurement.</li>
+                                <li>Never place the probes in parallel with a circuit or component when the leads are plugged into the A (amps) terminals.</li>
+                            </ul>
+                            <p>Turn circuit power off, break the circuit, insert the meter in series with the circuit, and then turn circuit power on.</p>
+                        </div>
+
+                        <h4>Measuring Current Above 10 Amps</h4>
+                        <p>The millivolt and voltage function of the meter can be used with an optional mV/A output current probe to measure currents that exceed the rating of the meter. Make sure the meter has the correct function selected, ac or dc, for your current probe.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What does the term 'VOM' stand for in reference to a multimeter?",
+                    options: [
+                        "Volts, ohms, milliamps",
+                        "Volts, oscillating, millivolts",
+                        "Volts, other, microamps"
+                    ],
+                    correct: 0,
+                    explanation: "VOM stands for Volt-Ohm-Milliammeter (sometimes called Volt-Ohm-Milliamps). This describes the three primary functions of the instrument: measuring volts, ohms (resistance), and milliamps (current)."
+                }
+            },
+            {
+                title: "Chapter 7 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 7 Final Quiz</h2>
+                        <p>Test your knowledge of electrical measuring instruments covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 9 questions to complete the chapter. These questions are based on the CSA training materials and test your understanding of electrical measuring instruments used in the gas industry.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>What type of electrical meter is used for measuring resistance and continuity?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Ammeter</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Ohmmeter</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Voltmeter</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>What is the purpose of a multimeter?</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) It can be used to measure voltage, current, and resistance.</li>
+                                <li onclick="selectQuizOption(1, 1)">b) It can be used for other functions than electrical.</li>
+                                <li onclick="selectQuizOption(1, 2)">c) It can provide power when needed.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>When using a meter to measure voltage, how must the voltmeter be connected into the circuit?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) In series with the circuit.</li>
+                                <li onclick="selectQuizOption(2, 1)">b) Does not matter as long as it is connected in the circuit.</li>
+                                <li onclick="selectQuizOption(2, 2)">c) In parallel with the circuit.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>When using a meter to measure current, how must the ammeter be connected into the circuit?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) In parallel with the circuit.</li>
+                                <li onclick="selectQuizOption(3, 1)">b) In series with the circuit.</li>
+                                <li onclick="selectQuizOption(3, 2)">c) Does not matter as long as it is connected in the circuit.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>Should an ohmmeter be connected into a live circuit?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) Yes</li>
+                                <li onclick="selectQuizOption(4, 1)">b) No</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>What should be done if the value of voltage or current to be measured is unknown?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) Start with the highest range and work down.</li>
+                                <li onclick="selectQuizOption(5, 1)">b) Start with the lowest range and work up.</li>
+                                <li onclick="selectQuizOption(5, 2)">c) Start in the middle of the range.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>Select the best description for the term "linear scale".</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) A linear scale has one hundred equal divisions each located next to a number.</li>
+                                <li onclick="selectQuizOption(6, 1)">b) A linear scale has four equal quarters.</li>
+                                <li onclick="selectQuizOption(6, 2)">c) A linear scale has ten large equal divisions each located next to a number.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>What is the term used to describe a meter scale which is very cramped on the high resistance end?</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) Cramped</li>
+                                <li onclick="selectQuizOption(7, 1)">b) Non-linear</li>
+                                <li onclick="selectQuizOption(7, 2)">c) Small linear</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>What does the term "VOM" stand for in reference to a multimeter?</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) Volts, ohms, milliamps</li>
+                                <li onclick="selectQuizOption(8, 1)">b) Volts, oscillating, millivolts</li>
+                                <li onclick="selectQuizOption(8, 2)">c) Volts, other, microamps</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 7 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 7 - Electrical Measuring Instruments.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You now understand the proper use of electrical measuring instruments including voltmeters, ammeters, ohmmeters, and multimeters. You know how to safely connect these instruments and interpret their readings for effective troubleshooting in gas industry applications.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers (correct answer indices)
+        const quizCorrectAnswers = [1, 0, 2, 1, 1, 0, 2, 1, 0];
+        
+        const quizExplanations = [
+            "An ohmmeter is the electrical meter used for measuring resistance and continuity. It operates by sending a small current through the component and measuring the resulting voltage drop.",
+            "A multimeter's purpose is to measure voltage, current, and resistance in a single versatile instrument, combining the functions of multiple individual meters.",
+            "A voltmeter must be connected in parallel with the circuit or component being tested to measure the voltage drop across it without significantly affecting circuit operation.",
+            "An ammeter must be connected in series with the circuit, meaning the circuit must be broken and the ammeter inserted so all current flows through it.",
+            "No, an ohmmeter should never be connected to a live circuit. It has its own internal battery and connecting to live circuits could damage the instrument and give false readings.",
+            "Always start with the highest range and work down to prevent instrument damage and achieve the most accurate reading possible.",
+            "A linear scale has ten large equal divisions each located next to a number, providing uniform spacing across the measurement range.",
+            "Non-linear describes a meter scale that is very cramped on the high resistance end, with graduations becoming closer together at higher values.",
+            "VOM stands for Volt-Ohm-Milliammeter (or Volts, ohms, milliamps), describing the three primary measurement functions of the instrument."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 7) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 9; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 9) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/9 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/9 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 1 Safety - Chapter 4: Fire Safety Practices</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .module-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .module-header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .module-header h2 {
+            color: #e74c3c;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .learning-objectives {
+            background: #f8f9fa;
+            border-left: 5px solid #e74c3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+
+        .fire-triangle {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .triangle-element {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .triangle-element:hover {
+            transform: scale(1.05);
+        }
+
+        .fire-classes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .fire-class {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .fire-class:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .class-a { border-color: #27ae60; background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; }
+        .class-b { border-color: #e74c3c; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
+        .class-c { border-color: #3498db; background: linear-gradient(135deg, #3498db, #2980b9); color: white; }
+        .class-d { border-color: #f39c12; background: linear-gradient(135deg, #f39c12, #e67e22); color: white; }
+        .class-k { border-color: #34495e; background: linear-gradient(135deg, #34495e, #2c3e50); color: white; }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question p {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .option.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #fff;
+        }
+
+        .option.correct {
+            background: #27ae60;
+            border-color: #2ecc71;
+        }
+
+        .option.incorrect {
+            background: #e74c3c;
+            border-color: #c0392b;
+        }
+
+        .check-button, .next-button {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 20px 10px 0 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .check-button:hover, .next-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .hazards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .hazard-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid #e74c3c;
+            transition: transform 0.3s ease;
+        }
+
+        .hazard-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .extinguisher-guide {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .extinguisher-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .extinguisher-type {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .extinguisher-type:hover {
+            border-color: #e74c3c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .key-terms {
+            background: #e8f4f8;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+        }
+
+        .term {
+            margin-bottom: 15px;
+        }
+
+        .term strong {
+            color: #2c3e50;
+        }
+
+        .prevention-pyramid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .pyramid-level {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 30px;
+            margin: 5px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: bold;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .pyramid-level:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .pyramid-level:nth-child(1) { width: 80%; }
+        .pyramid-level:nth-child(2) { width: 70%; }
+        .pyramid-level:nth-child(3) { width: 60%; }
+        .pyramid-level:nth-child(4) { width: 50%; }
+        .pyramid-level:nth-child(5) { width: 40%; }
+
+        .completion-message {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            font-size: 1.2em;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .navigation {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .fire-triangle {
+                flex-direction: column;
+            }
+            
+            .triangle-element {
+                width: 120px;
+                height: 120px;
+                font-size: 0.9em;
+            }
+            
+            .fire-classes {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-header h1 {
+                font-size: 2em;
+            }
+            
+            .pyramid-level {
+                width: 90% !important;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="module-header">
+            <h1>CSA Unit 1 - Safety</h1>
+            <h2>Chapter 4: Fire Safety Practices</h2>
+            <p>Gas technicians/fitters are often exposed to hazardous materials that are flammable or potentially explosive. This module will help you understand fire prevention, detection, and response.</p>
+            
+            <div class="learning-objectives">
+                <h3>Learning Objectives</h3>
+                <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <li>Identify Common Fire Hazards in the gas industry environment</li>
+                    <li>Identify Classes of Fires and their characteristics</li>
+                    <li>Describe Firefighting Equipment used in the industry</li>
+                    <li>Match Equipment with Class of Fire for proper selection</li>
+                </ul>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Section 1: Understanding Fire -->
+        <div class="content-section" id="section1">
+            <h2 class="section-title">Understanding Fire</h2>
+            
+            <div class="key-terms">
+                <h3>Key Terminology</h3>
+                <div class="term">
+                    <strong>Fire extinguisher nameplate:</strong> Plate on fire extinguishers which designate, by means of a rating code, the types of fires for which each extinguisher can be used.
+                </div>
+                <div class="term">
+                    <strong>First-aid firefighting:</strong> Extinguishing a fire in its initial stages by using whatever is readily at hand, before the fire can get out of control.
+                </div>
+                <div class="term">
+                    <strong>Oxidation:</strong> Union of a substance with oxygen.
+                </div>
+            </div>
+
+            <p>Fire is the rapid oxidation of a flammable material in the chemical process of combustion, releasing heat, light, and various reaction products. Oxidation takes place at varying rates, from very slow processes like rusting iron to extremely fast reactions like exploding gunpowder.</p>
+
+            <h3>The Combustion Triangle & Tetrahedron</h3>
+            <p>The combustion triangle illustrates the three elements needed for fire:</p>
+            
+            <div class="fire-triangle">
+                <div class="triangle-element">
+                    <div>
+                        <strong>FUEL</strong><br>
+                        Combustible materials like wood, gasoline, paper
+                    </div>
+                </div>
+                <div class="triangle-element">
+                    <div>
+                        <strong>HEAT</strong><br>
+                        Sufficient temperature to reach ignition point
+                    </div>
+                </div>
+                <div class="triangle-element">
+                    <div>
+                        <strong>OXYGEN</strong><br>
+                        Usually from air (O₂ and N₂)
+                    </div>
+                </div>
+            </div>
+
+            <p>The advanced combustion tetrahedron adds a fourth element: the <strong>uninhibited chemical reaction</strong>. This model provides a more complete understanding of fire behavior.</p>
+
+            <h3>Rates of Oxidation</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <tr style="background: #f8f9fa;">
+                    <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Rate of Oxidation</th>
+                    <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Example</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 12px;">Very slow</td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">Rusting iron (not fire)</td>
+                </tr>
+                <tr style="background: #f8f9fa;">
+                    <td style="border: 1px solid #ddd; padding: 12px;">Slow</td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">Spontaneous heating of materials (oil-soaked rags)</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 12px;">Fast</td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">Burning paper or wood</td>
+                </tr>
+                <tr style="background: #f8f9fa;">
+                    <td style="border: 1px solid #ddd; padding: 12px;">Extremely fast</td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">Exploding gunpowder</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Knowledge Check 1 -->
+        <div class="knowledge-check" id="check1">
+            <h3>🧠 Knowledge Check 1</h3>
+            <div class="question">
+                <p>What are the three elements of the fire triangle?</p>
+                <div class="options">
+                    <div class="option" data-answer="correct">Fuel, Heat, and Oxygen</div>
+                    <div class="option" data-answer="incorrect">Fuel, Water, and Air</div>
+                    <div class="option" data-answer="incorrect">Heat, Light, and Sound</div>
+                    <div class="option" data-answer="incorrect">Oxygen, Carbon Dioxide, and Nitrogen</div>
+                </div>
+                <button class="check-button" onclick="checkAnswer(1)">Check Answer</button>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+        </div>
+
+        <!-- Section 2: Classes of Fires -->
+        <div class="content-section" id="section2">
+            <h2 class="section-title">Classes of Fires</h2>
+            
+            <p>Fires are divided into main types or classes, which dictate the type of extinguisher required to fight them. Fires are rated by type: A, B, C, D, and K. These designations are also used to rate fire extinguishers.</p>
+
+            <div class="fire-classes">
+                <div class="fire-class class-a">
+                    <h3>Class A</h3>
+                    <p><strong>Symbol:</strong> Green triangle with "A"</p>
+                    <p><strong>Materials:</strong> Ordinary combustibles such as wood, cloth, paper, rubber, and many plastics</p>
+                    <p><strong>Characteristic:</strong> These materials leave ash when they burn</p>
+                    <p><strong>Extinguishing Agent:</strong> Water or dry formula agents that use heat-absorbing (cooling) effects</p>
+                </div>
+
+                <div class="fire-class class-b">
+                    <h3>Class B</h3>
+                    <p><strong>Symbol:</strong> Red square with "B"</p>
+                    <p><strong>Materials:</strong> Flammable liquids such as gasoline, oil, grease, tar, oil-based paint, lacquer, and flammable gases</p>
+                    <p><strong>Extinguishing Agent:</strong> Agents that prevent vapor release or interrupt combustion via oxygen depletion</p>
+                </div>
+
+                <div class="fire-class class-c">
+                    <h3>Class C</h3>
+                    <p><strong>Symbol:</strong> Blue circle with "C"</p>
+                    <p><strong>Materials:</strong> Energized electrical equipment such as wiring, circuit breakers, machinery, or appliances</p>
+                    <p><strong>Danger:</strong> Risk of electrical shock</p>
+                    <p><strong>Extinguishing Agent:</strong> Non-conductive agents to protect the operator</p>
+                </div>
+
+                <div class="fire-class class-d">
+                    <h3>Class D</h3>
+                    <p><strong>Symbol:</strong> Yellow star with "D"</p>
+                    <p><strong>Materials:</strong> Certain combustible metals such as magnesium, titanium, zirconium, sodium, or potassium</p>
+                    <p><strong>Extinguishing Agent:</strong> Dry powder that absorbs heat and smothers flames, cutting off oxygen</p>
+                </div>
+
+                <div class="fire-class class-k">
+                    <h3>Class K</h3>
+                    <p><strong>Symbol:</strong> Black hexagon with "K"</p>
+                    <p><strong>Materials:</strong> Vegetable oils, animal oils, or fats in cooking appliances</p>
+                    <p><strong>Environment:</strong> Commercial kitchens</p>
+                    <p><strong>Extinguishing Agent:</strong> Wet chemical that forms a foam blanket to smother the fire</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Knowledge Check 2 -->
+        <div class="knowledge-check" id="check2">
+            <h3>🧠 Knowledge Check 2</h3>
+            <div class="question">
+                <p>Which class of fire involves energized electrical equipment?</p>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Class A</div>
+                    <div class="option" data-answer="incorrect">Class B</div>
+                    <div class="option" data-answer="correct">Class C</div>
+                    <div class="option" data-answer="incorrect">Class D</div>
+                </div>
+                <button class="check-button" onclick="checkAnswer(2)">Check Answer</button>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+        </div>
+
+        <!-- Section 3: Fire Hazards in Gas Industry -->
+        <div class="content-section" id="section3">
+            <h2 class="section-title">Principal Fire Hazards in the Gas Industry</h2>
+
+            <div class="hazards-grid">
+                <div class="hazard-card">
+                    <h3>🔥 Combustible Materials Near Open Flame</h3>
+                    <p>Materials that can easily catch fire should be kept away from any open flames.</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h3>⛽ Gas Leaks</h3>
+                    <p>Undetected gas leaks can lead to dangerous accumulations of flammable gas.</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h3>🗂️ Improper Cylinder Storage</h3>
+                    <p>LP-gas storage cylinders near oxygen cylinders, electrical circuits, welding tools, or flammable liquids.</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h3>🏠 Defective Venting Systems</h3>
+                    <p>Broken or improperly installed venting systems can lead to gas buildup.</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h3>🚛 Careless Handling of Gas Cylinders</h3>
+                    <p>Improper transportation or handling of gas cylinders can lead to leaks or damage.</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h3>🏠 Indoor Storage Issues</h3>
+                    <p>Storage of gas cylinders in indoor, badly ventilated locations increases fire risk.</p>
+                </div>
+            </div>
+
+            <h3>Welding and Burning Fire Hazards</h3>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li><strong>Flying Sparks or Slag:</strong> Can travel great distances and cause immediate or smoldering fires</li>
+                <li><strong>Welding Against Wood or Dust:</strong> Can result in smoldering fires that ignite hours later</li>
+                <li><strong>Poor Grounding:</strong> During welding, sometimes causes electrical motor fires</li>
+                <li><strong>Soldering and Brazing:</strong> Around flammable materials can ignite fires</li>
+                <li><strong>Improper Torch Use:</strong> Improper use of oxyacetylene torches can lead to fires</li>
+                <li><strong>Inadequate Ventilation:</strong> Of storage areas can lead to dangerous gas accumulation</li>
+            </ul>
+
+            <h3>Electrical Fire Hazards</h3>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li><strong>Short Circuits and Arcing:</strong> Electrical malfunctions that produce heat and sparks</li>
+                <li><strong>Broken Electrical Wiring:</strong> Damaged wires expose conductors creating fire hazards</li>
+                <li><strong>Light Bulbs Near Flammables:</strong> Light bulbs in contact with dust or oil can generate ignition heat</li>
+                <li><strong>Unprotected Equipment:</strong> Unprotected bulbs and switches in dusty areas create fire risks</li>
+            </ul>
+        </div>
+
+        <!-- Knowledge Check 3 -->
+        <div class="knowledge-check" id="check3">
+            <h3>🧠 Knowledge Check 3</h3>
+            <div class="question">
+                <p>What is a major hazard when welding against wood or in dusty areas?</p>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Immediate explosion</div>
+                    <div class="option" data-answer="correct">Smoldering fire that may not ignite until hours later</div>
+                    <div class="option" data-answer="incorrect">Electric shock</div>
+                    <div class="option" data-answer="incorrect">Gas leak formation</div>
+                </div>
+                <button class="check-button" onclick="checkAnswer(3)">Check Answer</button>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+        </div>
+
+        <!-- Section 4: Fire Extinguishers -->
+        <div class="content-section" id="section4">
+            <h2 class="section-title">Fire Extinguisher Types & Selection</h2>
+
+            <p>Fire extinguishers are a gas technician/fitter's main firefighting tools. It is critical that gas technicians/fitters know the location and method of operating each extinguisher in their workplace.</p>
+
+            <div class="extinguisher-guide">
+                <h3>Main Extinguisher Types</h3>
+                <div class="extinguisher-types">
+                    <div class="extinguisher-type">
+                        <h4>Water Extinguisher</h4>
+                        <p>Effective on Class A fires (ordinary combustibles)</p>
+                    </div>
+                    <div class="extinguisher-type">
+                        <h4>Dry Chemical</h4>
+                        <p>Some types effective on multiple fire classes</p>
+                    </div>
+                    <div class="extinguisher-type">
+                        <h4>CO₂ Extinguisher</h4>
+                        <p>Effective on Class B and C fires</p>
+                    </div>
+                    <div class="extinguisher-type">
+                        <h4>Class D Extinguisher</h4>
+                        <p>Specifically for flammable metals</p>
+                    </div>
+                    <div class="extinguisher-type">
+                        <h4>Class K Extinguisher</h4>
+                        <p>For cooking oils and fats in commercial kitchens</p>
+                    </div>
+                    <div class="extinguisher-type">
+                        <h4>Multipurpose</h4>
+                        <p>Effective on multiple fire classes</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Fire Extinguisher Markings & Ratings</h3>
+            <p>The nameplates of fire extinguishers designate, by means of a rating code, the types of fires for which you can use each extinguisher. Underwriters' Laboratories of Canada (ULC) ratings show the relative hazard, coverage, and travel distance specifications.</p>
+
+            <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                <h4>Example ULC Rating Codes:</h4>
+                <ul>
+                    <li><strong>1-A 10-B:C</strong> - Light hazard coverage for Class A (3000 sq ft), Class B (10 sq ft), sufficient for Class C</li>
+                    <li><strong>2-A 10-B:C</strong> - Higher Class A coverage (6000 sq ft), same B and C protection</li>
+                    <li><strong>4-A 40-B:C</strong> - High capacity for large areas and multiple fire classes</li>
+                </ul>
+            </div>
+
+            <h3>Specialized Extinguishers</h3>
+            <p><strong>Class D Extinguishers:</strong> The type needed depends on the flammable metals present:</p>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Copper extinguishing medium for lithium and lithium alloy metals</li>
+                <li>Sodium chloride extinguisher for magnesium, sodium, potassium, uranium, and powdered aluminum</li>
+            </ul>
+
+            <p><strong>Class K Extinguishers:</strong> Rated for kitchen fires involving cooking oils and deep fryers. Example: A 2A:K rating contains the equivalent to 2.5 gallons of water and is approved for cooking oil fires.</p>
+        </div>
+
+        <!-- Knowledge Check 4 -->
+        <div class="knowledge-check" id="check4">
+            <h3>🧠 Knowledge Check 4</h3>
+            <div class="question">
+                <p>Which type of extinguisher should be used on energized electrical equipment?</p>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Water extinguisher</div>
+                    <div class="option" data-answer="correct">CO₂ or dry chemical extinguisher rated for Class C</div>
+                    <div class="option" data-answer="incorrect">Class K extinguisher</div>
+                    <div class="option" data-answer="incorrect">Class D extinguisher</div>
+                </div>
+                <button class="check-button" onclick="checkAnswer(4)">Check Answer</button>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+        </div>
+
+        <!-- Section 5: Fire Prevention -->
+        <div class="content-section" id="section5">
+            <h2 class="section-title">Fire Prevention Principles</h2>
+
+            <p>Fire prevention is based on removing one or more elements of the fire triangle/tetrahedron:</p>
+
+            <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                <div style="margin-bottom: 20px;">
+                    <h4>🚫 Removing Fuel</h4>
+                    <p>Shutting off the valve of the gas main is an example of fuel starvation.</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h4>❄️ Removing Heat</h4>
+                    <p>Applying suppressant or water to the fire for cooling.</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h4>💨 Removing Oxygen</h4>
+                    <p>Covering the fire with a lid, wet blanket, or sand, or use carbon dioxide, foam, or dry chemical.</p>
+                </div>
+
+                <div>
+                    <h4>⚡ Breaking Chemical Reaction</h4>
+                    <p>Using a flashback arrestor to interrupt the combustion process.</p>
+                </div>
+            </div>
+
+            <h3>Prevention Hierarchy</h3>
+            <div class="prevention-pyramid">
+                <div class="pyramid-level">Proper Training - Comprehensive safety education</div>
+                <div class="pyramid-level">Regular Inspections - Scheduled equipment checks</div>
+                <div class="pyramid-level">Maintenance Procedures - Routine system upkeep</div>
+                <div class="pyramid-level">Hazard Identification - Proactive risk recognition</div>
+                <div class="pyramid-level">Safety Protocols - Clear handling procedures</div>
+            </div>
+
+            <h3>Safe Gas Cylinder Storage</h3>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li><strong>Use Well-Ventilated Areas:</strong> Store in areas with adequate ventilation</li>
+                <li><strong>Control Temperature:</strong> Keep away from heat sources and direct sunlight</li>
+                <li><strong>Separate Different Types:</strong> Store full and empty cylinders separately</li>
+                <li><strong>Secure Cylinders:</strong> Always secure in upright position</li>
+                <li><strong>Mark Clearly:</strong> Ensure proper labeling with contents and hazard warnings</li>
+            </ul>
+
+            <h3>Responding to Gas Leaks</h3>
+            <ol style="margin: 20px 0; padding-left: 20px;">
+                <li><strong>Detect:</strong> Identify gas odor or use detection equipment</li>
+                <li><strong>Shut Off:</strong> Turn off gas supply at source if safe to do so</li>
+                <li><strong>Ventilate:</strong> Open windows and doors to disperse gas</li>
+                <li><strong>Report:</strong> Contact emergency services and gas provider</li>
+                <li><strong>Evacuate:</strong> Leave the area until declared safe</li>
+            </ol>
+        </div>
+
+        <!-- Knowledge Check 5 -->
+        <div class="knowledge-check" id="check5">
+            <h3>🧠 Knowledge Check 5</h3>
+            <div class="question">
+                <p>What is the correct order of steps when responding to a gas leak?</p>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Evacuate, Detect, Shut Off, Ventilate, Report</div>
+                    <div class="option" data-answer="correct">Detect, Shut Off, Ventilate, Report, Evacuate</div>
+                    <div class="option" data-answer="incorrect">Report, Detect, Evacuate, Shut Off, Ventilate</div>
+                    <div class="option" data-answer="incorrect">Shut Off, Ventilate, Detect, Report, Evacuate</div>
+                </div>
+                <button class="check-button" onclick="checkAnswer(5)">Check Answer</button>
+                <div class="feedback" id="feedback5"></div>
+            </div>
+        </div>
+
+        <!-- Section 6: Safety Protocols -->
+        <div class="content-section" id="section6">
+            <h2 class="section-title">Safety Protocols & Equipment</h2>
+
+            <h3>Personal Protective Equipment for Fire Safety</h3>
+            <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                <div style="margin-bottom: 15px;">
+                    <h4>🧥 Flame-Resistant Clothing</h4>
+                    <p>Specialized garments designed to resist ignition and provide protection from heat and flames. These include coveralls, jackets, and pants made from materials that self-extinguish when removed from a fire source.</p>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h4>👓 Eye and Face Protection</h4>
+                    <p>Safety goggles and face shields that protect against sparks, flying debris, and radiant heat. These should be rated for high-temperature environments.</p>
+                </div>
+
+                <div>
+                    <h4>🧤 Hand Protection</h4>
+                    <p>Heat-resistant gloves that allow for dexterity while providing protection from burns and hot surfaces.</p>
+                </div>
+            </div>
+
+            <h3>Fire Detection Systems</h3>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li><strong>Smoke detectors:</strong> Detect visible or invisible particles of combustion</li>
+                <li><strong>Heat detectors:</strong> Activate when temperature reaches a predetermined level</li>
+                <li><strong>Flame detectors:</strong> Respond to optical radiation emitted by flames</li>
+                <li><strong>Gas detectors:</strong> Identify presence of combustible or toxic gases</li>
+            </ul>
+
+            <h3>Emergency Response Planning</h3>
+            <ol style="margin: 20px 0; padding-left: 20px;">
+                <li><strong>Develop evacuation plans:</strong> Create clear routes and assembly points</li>
+                <li><strong>Assign responsibilities:</strong> Designate emergency coordinators</li>
+                <li><strong>Provide equipment:</strong> Ensure access to appropriate firefighting tools</li>
+                <li><strong>Conduct drills:</strong> Practice emergency procedures regularly</li>
+                <li><strong>Document procedures:</strong> Maintain accessible emergency information</li>
+            </ol>
+
+            <h3>Training Requirements</h3>
+            <div style="background: #e8f4f8; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                <ul>
+                    <li><strong>100%</strong> of gas technicians should receive comprehensive fire safety training</li>
+                    <li><strong>4 Key Components:</strong> Prevention, detection, response, and evacuation</li>
+                    <li><strong>12 Monthly Checks:</strong> Recommended frequency for inspecting fire equipment</li>
+                    <li><strong>2 Annual Drills:</strong> Minimum fire evacuation drills per year</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Final Knowledge Check -->
+        <div class="knowledge-check" id="check6">
+            <h3>🧠 Final Knowledge Check</h3>
+            <div class="question">
+                <p>What is first-aid firefighting?</p>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Medical treatment for burn victims</div>
+                    <div class="option" data-answer="correct">Extinguishing a fire in its initial stages using readily available materials</div>
+                    <div class="option" data-answer="incorrect">Professional firefighting by emergency services</div>
+                    <div class="option" data-answer="incorrect">Installing fire detection systems</div>
+                </div>
+                <button class="check-button" onclick="checkAnswer(6)">Check Answer</button>
+                <div class="feedback" id="feedback6"></div>
+            </div>
+        </div>
+
+        <!-- Module Summary -->
+        <div class="content-section" id="summary">
+            <h2 class="section-title">Summary of Fire Safety Practices</h2>
+            
+            <h3>Key Concepts Covered:</h3>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li>Understanding the combustion process and fire triangle/tetrahedron</li>
+                <li>Identifying common fire hazards in the gas industry</li>
+                <li>Recognizing different classes of fires (A, B, C, D, K)</li>
+                <li>Selecting appropriate firefighting equipment for specific fire types</li>
+                <li>Implementing preventive measures to reduce fire risks</li>
+                <li>Proper storage and handling of gas equipment</li>
+                <li>Emergency response procedures</li>
+                <li>Regulatory compliance requirements</li>
+            </ul>
+
+            <div style="background: #e8f4f8; border-radius: 10px; padding: 20px; margin: 20px 0; border-left: 5px solid #3498db;">
+                <h4>Remember:</h4>
+                <p>Gas technicians/fitters must maintain comprehensive knowledge of fire safety practices to protect themselves, their colleagues, and property. By understanding fire behavior, recognizing hazards, and knowing how to respond appropriately, technicians can prevent fires from occurring and minimize damage when they do occur.</p>
+            </div>
+        </div>
+
+        <!-- Completion Message -->
+        <div class="completion-message hidden" id="completionMessage">
+            <h2>🎉 Congratulations!</h2>
+            <p>You have successfully completed CSA Unit 1 Safety - Chapter 4: Fire Safety Practices</p>
+            <p>You are now better equipped to identify fire hazards, select appropriate firefighting equipment, and implement safety protocols in gas industry environments.</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-button" id="prevButton" onclick="previousSection()" disabled>Previous</button>
+            <span id="sectionIndicator">Section 1 of 7</span>
+            <button class="nav-button" id="nextButton" onclick="nextSection()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 1;
+        let totalSections = 7;
+        let answersChecked = [false, false, false, false, false, false];
+        let allAnswersCorrect = [false, false, false, false, false, false];
+
+        function updateProgress() {
+            const progress = (currentSection / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function updateNavigation() {
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            const sectionIndicator = document.getElementById('sectionIndicator');
+
+            prevButton.disabled = currentSection === 1;
+            nextButton.disabled = currentSection === totalSections;
+            
+            sectionIndicator.textContent = `Section ${currentSection} of ${totalSections}`;
+            updateProgress();
+        }
+
+        function showSection(sectionNum) {
+            // Hide all sections
+            const sections = ['section1', 'section2', 'section3', 'section4', 'section5', 'section6', 'summary'];
+            const checks = ['check1', 'check2', 'check3', 'check4', 'check5', 'check6'];
+            
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.style.display = 'none';
+            });
+            
+            checks.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.style.display = 'none';
+            });
+
+            // Show current section
+            switch(sectionNum) {
+                case 1:
+                    document.getElementById('section1').style.display = 'block';
+                    document.getElementById('check1').style.display = 'block';
+                    break;
+                case 2:
+                    document.getElementById('section2').style.display = 'block';
+                    document.getElementById('check2').style.display = 'block';
+                    break;
+                case 3:
+                    document.getElementById('section3').style.display = 'block';
+                    document.getElementById('check3').style.display = 'block';
+                    break;
+                case 4:
+                    document.getElementById('section4').style.display = 'block';
+                    document.getElementById('check4').style.display = 'block';
+                    break;
+                case 5:
+                    document.getElementById('section5').style.display = 'block';
+                    document.getElementById('check5').style.display = 'block';
+                    break;
+                case 6:
+                    document.getElementById('section6').style.display = 'block';
+                    document.getElementById('check6').style.display = 'block';
+                    break;
+                case 7:
+                    document.getElementById('summary').style.display = 'block';
+                    const allCorrect = allAnswersCorrect.every(answer => answer === true);
+                    if (allCorrect) {
+                        document.getElementById('completionMessage').classList.remove('hidden');
+                    }
+                    break;
+            }
+
+            updateNavigation();
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections) {
+                currentSection++;
+                showSection(currentSection);
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 1) {
+                currentSection--;
+                showSection(currentSection);
+            }
+        }
+
+        function checkAnswer(questionNum) {
+            const options = document.querySelectorAll(`#check${questionNum} .option`);
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            let selectedOption = null;
+            let isCorrect = false;
+
+            // Find selected option
+            options.forEach(option => {
+                if (option.classList.contains('selected')) {
+                    selectedOption = option;
+                    isCorrect = option.dataset.answer === 'correct';
+                }
+            });
+
+            if (!selectedOption) {
+                feedback.innerHTML = 'Please select an answer first.';
+                feedback.className = 'feedback incorrect';
+                return;
+            }
+
+            // Mark all options with correct/incorrect styling
+            options.forEach(option => {
+                if (option.dataset.answer === 'correct') {
+                    option.classList.add('correct');
+                } else {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none'; // Disable further clicking
+            });
+
+            // Update feedback
+            if (isCorrect) {
+                feedback.innerHTML = '✅ Correct! Well done.';
+                feedback.className = 'feedback correct';
+                allAnswersCorrect[questionNum - 1] = true;
+            } else {
+                feedback.innerHTML = '❌ Incorrect. The correct answer is highlighted in green.';
+                feedback.className = 'feedback incorrect';
+            }
+
+            answersChecked[questionNum - 1] = true;
+            
+            // Disable check button
+            const checkButton = document.querySelector(`#check${questionNum} .check-button`);
+            checkButton.disabled = true;
+            checkButton.textContent = 'Answer Checked';
+        }
+
+        // Add click handlers for options
+        document.addEventListener('DOMContentLoaded', function() {
+            const allOptions = document.querySelectorAll('.option');
+            allOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from siblings
+                    const siblings = this.parentElement.querySelectorAll('.option');
+                    siblings.forEach(sibling => sibling.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                });
+            });
+
+            // Initialize the first section
+            showSection(1);
+        });
+    </script>
+</body>
+</html>

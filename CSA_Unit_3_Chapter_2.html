@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 3 - Chapter 2: Combustion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #3498db;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #2980b9, #21618c);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #2980b9;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #21618c;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .formula-display {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #3498db;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .triangle-diagram {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+        }
+
+        .combustion-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .element-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #e74c3c;
+        }
+
+        .element-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+        }
+
+        .element-description {
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 3 - Properties, Characteristics, and Safe Handling of Fuel Gases</h1>
+            <h2>Chapter 2 - Combustion</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 9</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 9;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>The gas technician/fitter must ensure safe and controlled combustion is occurring in an appliance's combustion zone. The technician's/fitter's understanding of the combustion process and the chemical reactions involved are the basis for much of the installation and service work they will perform in the gas industry.</p>
+                        
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>explain the requirements of combustion;</li>
+                            <li>describe the differences between complete and incomplete combustion;</li>
+                            <li>describe air supply requirements;</li>
+                            <li>describe causes of incomplete combustion; and</li>
+                            <li>describe characteristics and requirements of a stable flame.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Combustion</td>
+                                    <td>-</td>
+                                    <td>A chemical process in which the rapid oxidation of fuel results in the production of energy (heat)</td>
+                                </tr>
+                                <tr>
+                                    <td>Combustion air</td>
+                                    <td>-</td>
+                                    <td>The air for the satisfactory combustion of a gas</td>
+                                </tr>
+                                <tr>
+                                    <td>Complete combustion</td>
+                                    <td>-</td>
+                                    <td>All fuel is completely burned, and no harmful products of incomplete combustion are produced</td>
+                                </tr>
+                                <tr>
+                                    <td>Dilution air</td>
+                                    <td>-</td>
+                                    <td>The ambient air that is admitted to a venting system at the draft control device of the appliance</td>
+                                </tr>
+                                <tr>
+                                    <td>Excess air</td>
+                                    <td>-</td>
+                                    <td>The air supplied to the combustion zone in excess of the required air for perfect combustion</td>
+                                </tr>
+                                <tr>
+                                    <td>Ventilation air</td>
+                                    <td>-</td>
+                                    <td>Air that is admitted to a space containing an appliance to replace air exhausted through a ventilation opening or by means of exfiltration</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding combustion principles is essential for gas technicians to ensure safe and efficient operation of gas appliances and to troubleshoot combustion-related problems.</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Terminology Continued",
+                content: `
+                    <div class="section">
+                        <h2>Terminology (Continued)</h2>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Flue gas condensation</td>
+                                    <td>-</td>
+                                    <td>Process that involves the cooling of flue gas below its water dew point and the recovery of heat released from the resulting condensation as low temperature heat</td>
+                                </tr>
+                                <tr>
+                                    <td>Incomplete combustion</td>
+                                    <td>-</td>
+                                    <td>The lack of oxygen to burn the fuel gas completely</td>
+                                </tr>
+                                <tr>
+                                    <td>Parts per million</td>
+                                    <td>ppm</td>
+                                    <td>Measurement of one part per 1 000 000 (10⁶)</td>
+                                </tr>
+                                <tr>
+                                    <td>Perfect or stoichiometric combustion</td>
+                                    <td>-</td>
+                                    <td>Theoretical (or mathematically exact) volume of air that you must mix with fuel gas to achieve perfect combustion</td>
+                                </tr>
+                                <tr>
+                                    <td>Pounds per square inch absolute</td>
+                                    <td>psia</td>
+                                    <td>Pressure resulting from a force of one pound-force applied to an area of one square inch; pressure is relative to a vacuum rather than the ambient atmospheric pressure</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="warning-box">
+                            <h4>Safety Notice</h4>
+                            <p>Understanding the difference between complete and incomplete combustion is crucial for safety. Incomplete combustion can produce dangerous carbon monoxide and other harmful products.</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Requirements of Combustion",
+                content: `
+                    <div class="section">
+                        <h2>Requirements of Combustion</h2>
+                        
+                        <p>Combustion is a chemical process in which the rapid oxidation of fuel results in the production of energy (heat). To start and sustain combustion, you must have three ingredients mixed together in the correct proportions:</p>
+                        
+                        <div class="combustion-elements">
+                            <div class="element-box">
+                                <div class="element-title">🔥 FUEL</div>
+                                <div class="element-description">Usually natural gas or liquid petroleum gases</div>
+                            </div>
+                            <div class="element-box">
+                                <div class="element-title">💨 OXYGEN</div>
+                                <div class="element-description">Obtained from the air surrounding a burner</div>
+                            </div>
+                            <div class="element-box">
+                                <div class="element-title">🌡️ HEAT</div>
+                                <div class="element-description">Enough to bring the fuel to ignition point</div>
+                            </div>
+                            <div class="element-box">
+                                <div class="element-title">⚡ UNINHIBITED REACTION</div>
+                                <div class="element-description">Uninhibited Chemical Chain Reaction</div>
+                            </div>
+                        </div>
+
+                        <p>If any one of these elements is absent, combustion will not take place nor will it support itself after an element is removed. This three-way relationship is commonly referred to as the combustion triangle (Figure 2-1).</p>
+
+                        <div class="triangle-diagram">
+                            <div class="image-placeholder">
+                                🔺<br>
+                                COMBUSTION TRIANGLE<br>
+                                <small>FUEL + OXYGEN + HEAT = COMBUSTION</small>
+                            </div>
+                        </div>
+
+                        <p>You can think of the combustion process as a living entity—it requires air to breathe, fuel as sustenance, and heat to create movement. Without one of the three, combustion ceases to exist.</p>
+
+                        <p>The combustion triangle introduces the three basic elements required for combustion: air (O₂ and N₂), fuel (natural gas, propane), and ignition (heat). The advanced combustion triangle introduces six additional elements that aid the technician/fitter in understanding and controlling combustion: time, temperature, turbulence, oxygen, carbon dioxide, and excess air. The nine elements of the advanced combustion triangle are all related to the understanding of combustion and combustion control.</p>
+
+                        <div class="info-box">
+                            <h4>Advanced Combustion Triangle Elements</h4>
+                            <p>Time, temperature, and turbulence all relate to oxygen, carbon dioxide, and excess air, in that better mixing of air and fuel reduces the amount of excess air required for complete combustion.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the term used for the chemical process in which the rapid oxidation of fuel results in the production of heat?",
+                    options: [
+                        "Ignition",
+                        "Explosion",
+                        "Combustion",
+                        "Oxidation"
+                    ],
+                    correct: 2,
+                    explanation: "Combustion is the chemical process in which the rapid oxidation of fuel results in the production of energy (heat)."
+                }
+            },
+            {
+                title: "Elements of Combustion and Chemistry",
+                content: `
+                    <div class="section">
+                        <h2>Elements of Combustion</h2>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Element</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Fuel</td>
+                                    <td>Natural gas, propane, and butane are hydrocarbon fuels burned in a gaseous state.</td>
+                                </tr>
+                                <tr>
+                                    <td>Heat/Ignition</td>
+                                    <td>Igniting the air gas mixture requires the supply of enough heat by a previously lit small flame such as a pilot, an ignition spark, or a hot surface igniter. Once you have provided this initial heat, the heat released from the combustion process sustains itself.</td>
+                                </tr>
+                                <tr>
+                                    <td>Oxygen</td>
+                                    <td>For the combustion process to consume oxygen, it must be readily available. Generally, the required oxygen supply comes from the air. Because air contains only 20% oxygen and 80% nitrogen, we must supply a much larger volume of air than the combustion process would require if the supply were pure oxygen.</td>
+                                </tr>
+                                <tr>
+                                    <td>Temperature</td>
+                                    <td>Temperature of combustion is important for efficiency and combustion control. The better the air fuel mixture, the more time the flame is given to burn, and the hotter the flame temperature. The increased flame temperature increases the radiant heat transfer to the heat exchanger.</td>
+                                </tr>
+                                <tr>
+                                    <td>Time</td>
+                                    <td>Time is an important variable for combustion control. Time relates to the air fuel mixture and how long the flame is given to burn. Time relates to temperature.</td>
+                                </tr>
+                                <tr>
+                                    <td>Turbulence</td>
+                                    <td>Turbulence relates to the air fuel mixture, flame temperature, and heat transfer.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Ignition Temperatures</h3>
+                        <p>Ignition temperatures vary according to the type of gas used, as Table 2-1 shows.</p>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Gas</th>
+                                    <th>Chemical designation</th>
+                                    <th>Ignition temperature</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Natural gas</td>
+                                    <td>CH₄</td>
+                                    <td>1300°F (700°C)</td>
+                                </tr>
+                                <tr>
+                                    <td>Propane</td>
+                                    <td>C₃H₈</td>
+                                    <td>920°F (495°C)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>The Chemistry of Combustion</h3>
+                        <p>The chemistry of combustion is the reaction which takes place between fuel gas and oxygen when heated to ignition temperature. Mixing the elements of hydrocarbons with enough oxygen to support combustion leads to the formation of carbon dioxide (CO₂), water vapour (H₂O), and heat as the products of combustion.</p>
+
+                        <p>The chemical formula expressing the combustion reaction for natural gas and oxygen is:</p>
+                        
+                        <div class="formula-display">
+                            CH₄ + 2O₂ → CO₂ + 2H₂O + heat
+                        </div>
+
+                        <p>The chemical formula describing the combustion reaction for propane and oxygen is:</p>
+                        
+                        <div class="formula-display">
+                            C₃H₈ + 5O₂ → 3CO₂ + 4H₂O + heat
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>Safety Note</h4>
+                            <p>Nitrogen introduced into the combustion system is an inert gas, in that it doesn't chemically react in the combustion process. Nitrogen does absorb heat, increase flue gas volume and, at high flame temperatures, has a thermal fixation for oxygen, binding to oxygen to form nitric oxide and nitrogen dioxide commonly referred to as NOₓ gases. NOₓ gases are toxic, and concentrations of 15 ppm are immediately dangerous to life and health.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Approximately what percentage of air is oxygen?",
+                    options: [
+                        "20%",
+                        "25%",
+                        "79%",
+                        "1.2%"
+                    ],
+                    correct: 0,
+                    explanation: "Air contains only 20% oxygen and 80% nitrogen, which is why we must supply a much larger volume of air than would be needed if using pure oxygen."
+                }
+            },
+            {
+                title: "Types of Combustion",
+                content: `
+                    <div class="section">
+                        <h2>Differences between Complete and Incomplete Combustion</h2>
+                        
+                        <p>This section describes the following three types of combustion, each determined by the initial air supply:</p>
+                        <ul>
+                            <li>perfect or stoichiometric combustion;</li>
+                            <li>complete combustion; and</li>
+                            <li>incomplete combustion.</li>
+                        </ul>
+
+                        <h3>Perfect or Stoichiometric Combustion</h3>
+                        <p>Perfect or stoichiometric combustion refers to the theoretical (or mathematically exact) volume of air that you must mix with fuel gas to achieve perfect combustion. This gas-air mixture is often called the ideal combustion ratio.</p>
+
+                        <p>The formula for perfect combustion is used for theoretical calculations only. This is because most gas burners cannot mathematically mix exact gas and air volumes together to produce satisfactory combustion. In practice, some of the hydrogen and carbon produced will combine with oxygen so incomplete combustion will occur.</p>
+
+                        <p>Because air is 20% oxygen (O₂) and 80% nitrogen (N₂), nitrogen is included in the perfect combustion equation for natural gas. In the following formula for perfect combustion, there are 8 parts of nitrogen to two parts of oxygen. Note that nitrogen is inert and doesn't chemically react in the combustion process.</p>
+
+                        <div class="formula-display">
+                            CH₄ + 2O₂ + 8N₂ → CO₂ + 2H₂O + 8N₂ + heat
+                        </div>
+
+                        <p>For propane, the perfect combustion equation is:</p>
+                        
+                        <div class="formula-display">
+                            C₃H₈ + 5O₂ + 20N₂ → 3CO₂ + 4H₂O + 20N₂ + heat
+                        </div>
+
+                        <h3>Complete Combustion</h3>
+                        <p>Since perfect combustion is only possible in theory, you must adjust the equipment to ensure complete burning of all fuel and prevent the production of harmful products from incomplete combustion. This process is complete combustion.</p>
+
+                        <p>Normally, to achieve complete combustion, technicians/fitters supply more air to the combustion process than perfect combustion requires to ensure that all atoms of carbon and hydrogen unite with enough atoms of oxygen to produce complete combustion.</p>
+
+                        <p>Below is the complete combustion formula:</p>
+                        
+                        <div class="formula-display">
+                            CH₄ + 2O₂ + 8N₂ + excess air → CO₂ + 2H₂O + 8N₂ + excess air + heat
+                        </div>
+
+                        <p>For propane, the complete combustion formula is:</p>
+                        
+                        <div class="formula-display">
+                            C₃H₈ + 5O₂ + 20N₂ + excess air → 3CO₂ + 4H₂O + 20N₂ + excess air + heat
+                        </div>
+
+                        <div class="tip-box">
+                            <h4>💡 Key Point</h4>
+                            <p>Complete combustion ensures all fuel is burned and no harmful products are produced, but requires excess air above the theoretical perfect combustion requirements.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What are the approximate ignition temperatures (in °F and °C) for propane?",
+                    options: [
+                        "1020°F (495°C)",
+                        "1300°F (700°C)",
+                        "1000°F (538°C)",
+                        "600°F (315°C)"
+                    ],
+                    correct: 0,
+                    explanation: "Propane has an ignition temperature of 920°F (495°C), while natural gas has a higher ignition temperature of 1300°F (700°C)."
+                }
+            },
+            {
+                title: "Incomplete Combustion and Products",
+                content: `
+                    <div class="section">
+                        <h2>Incomplete Combustion</h2>
+                        
+                        <p>Where there is not enough oxygen to burn the fuel gas completely, some of the fuel will not unite with its oxygen counterpart and will leave unburned fuel in the flue gas. The unburned fuel will contain carbon, hydrogen, carbon monoxide, and complex chains of alcohols called aldehydes.</p>
+
+                        <p>The flue gas products of incomplete combustion (particularly carbon monoxide and hydrogen) are often grouped together as combustibles. Carbon monoxide and aldehydes in any quantity are toxic and life threatening.</p>
+
+                        <p>The following formula illustrates an example of a chemical reaction that results from the lack of air in the natural gas combustion formula. The result is incomplete combustion.</p>
+                        
+                        <div class="formula-display">
+                            CH₄ + 10₂ + 4N₂ → CO + H₂O + H + 4N₂ + heat
+                        </div>
+
+                        <p>The following formula illustrates an example of a chemical reaction that results from the lack of air in the propane combustion formula. The result is incomplete combustion.</p>
+                        
+                        <div class="formula-display">
+                            C₃H₈ + 4O₂ + 16N₂ → CO + H₂O + H + 16N₂ + heat
+                        </div>
+
+                        <h3>Products of Incomplete Combustion</h3>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Carbon monoxide</td>
+                                    <td>Carbon monoxide is one of the most harmful products of incomplete combustion. It is toxic (i.e., it can cause death if enough is inhaled). Since it has no odour, taste, or smell, it is hard to detect without proper equipment. In higher concentrations, it is combustible.</td>
+                                </tr>
+                                <tr>
+                                    <td>Aldehydes</td>
+                                    <td>Aldehydes are a group of transparent, colourless gases with a suffocating smell, produced by the partial oxidation of fuel gas. Because of this, they are easily detected. They are toxic and irritating to the eyes, throat, and nose.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>Other factors besides insufficient air can cause incomplete combustion. The Causes of Incomplete Combustion section describes these in more detail.</p>
+
+                        <h3>Measurement</h3>
+                        <p>Measured carbon monoxide levels can vary greatly depending on where they are taken. For example, measurements taken upstream of the draft hood diverter on a water heater will render higher CO levels than downstream of the draft hood, where the sample will be diluted with room air entering the draft hood relief opening. One way to compensate is to express the CO measurement on an air-free basis.</p>
+
+                        <p>You can calculate CO air free using the following formula:</p>
+                        
+                        <div class="formula-display">
+                            CO air free = (20.9)/(20.9 - %oxygen%O₂) × measured CO ppm
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>Danger</h4>
+                            <p>Carbon monoxide is extremely dangerous. Even small amounts can be lethal. Always ensure proper ventilation and use CO detectors when working with gas appliances.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is added to the combustion process to ensure complete combustion?",
+                    options: [
+                        "Primary air",
+                        "Excess air",
+                        "Ventilation air",
+                        "Combustion air"
+                    ],
+                    correct: 1,
+                    explanation: "Excess air is added to the combustion process to ensure complete combustion by providing sufficient oxygen for all fuel to burn completely."
+                }
+            },
+            {
+                title: "Air Supply Requirements",
+                content: `
+                    <div class="section">
+                        <h2>Air Supply Requirements</h2>
+                        
+                        <p>The efficient and safe operation of gas-fired appliances relies on an adequate supply of air. For present purposes, we divide our air supply into three main categories:</p>
+                        <ul>
+                            <li>combustion air (theoretical);</li>
+                            <li>excess air; and</li>
+                            <li>dilution air.</li>
+                        </ul>
+
+                        <h3>Combustion Air</h3>
+                        <p>Combustion air is the air required for the satisfactory combustion of a gas. Normally, combustion air includes excess air, but here, combustion air will refer to the theoretical air discussed earlier in perfect combustion.</p>
+
+                        <p>You can further classify combustion air into two:</p>
+                        <ul>
+                            <li>primary air; and</li>
+                            <li>secondary air.</li>
+                        </ul>
+
+                        <h4>Primary Air</h4>
+                        <p>Primary air refers to the combustion air that is mixed with fuel gas before ignition (Figure 2-6). The amount of primary air is normally considered to be one-third of the theoretical amount of air used for combustion.</p>
+
+                        <div class="image-placeholder">
+                            🔥 BURNER DIAGRAM<br>
+                            Primary air mixed with gas before ignition<br>
+                            <small>Primary air + Gas → Combustion</small>
+                        </div>
+
+                        <h4>Secondary Air</h4>
+                        <p>The secondary air required to complete the combustion of the gas is mixed with the fuel at the point of combustion. Secondary air is supplied from around the flames (Figure 2-7) and is generally considered to be two-thirds of the theoretical air considered for perfect combustion.</p>
+
+                        <h3>Excess Air</h3>
+                        <p>Excess air is the air you supply to the combustion zone in excess of the required air for perfect combustion to ensure there is sufficient oxygen for complete combustion to occur. Because the excess air is over and above what is theoretically needed in the combustion process, it absorbs heat, which it carries off through the venting system. This, in turn, reduces the appliance's efficiency. So, you must keep excess air to a minimum.</p>
+
+                        <h3>Dilution Air</h3>
+                        <p>Dilution air is the ambient air that is admitted to a venting system at the draft control device of the appliance. Use it for two purposes:</p>
+                        <ul>
+                            <li>to cool the hot vent gases; and</li>
+                            <li>to provide a source of air to the draft control device (so that it can control the draft influence on the combustion chamber).</li>
+                        </ul>
+
+                        <p>The lack of a draft control device in the equipment means no dilution air is required.</p>
+
+                        <div class="info-box">
+                            <h4>Air Supply Categories Summary</h4>
+                            <p>For each 1000 Btu or 1 MBH of appliance input, the ratio of air is as follows:</p>
+                            <ul>
+                                <li>1000 Btu (1 MBH) of fuel × 10 = ft³ combustion air;</li>
+                                <li>1000 Btu (1 MBH) of fuel × 5 = ft³ excess air;</li>
+                                <li>1000 Btu (1 MBH) of fuel × 15 = ft³ dilution air; and</li>
+                                <li>1000 Btu (1 MBH) of fuel × 30 = ft³ total air.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the air-to-gas ratio that applies to all fuel gases?",
+                    options: [
+                        "Each (1000 Btu of fuel input) × 10 ft³ air = perfect combustion",
+                        "Each (1000 Btu of fuel input) × 10 ft³ air = complete combustion", 
+                        "Each (1000 Btu of fuel input) × 10 ft³ air = perfect ignition",
+                        "Each (1000 Btu of fuel input) × 5 ft³ air = perfect combustion"
+                    ],
+                    correct: 0,
+                    explanation: "The standard ratio for all fuel gases is that each 1000 Btu of fuel input requires 10 ft³ of air for perfect combustion."
+                }
+            },
+            {
+                title: "Calculating Air Volumes and Causes of Incomplete Combustion",
+                content: `
+                    <div class="section">
+                        <h2>Calculating the Volumes of Air Supply</h2>
+                        
+                        <p>For the purpose of calculating volumes of required air, air supply has the following categories:</p>
+                        <ul>
+                            <li>combustion air supply;</li>
+                            <li>excess air supply;</li>
+                            <li>dilution air supply; and</li>
+                            <li>total air supply.</li>
+                        </ul>
+
+                        <h3>Combustion Air Supply Volume</h3>
+                        <p>The natural gas industry has always used a 10:1 ratio for the air-gas mixture required to achieve perfect combustion. This, of course, refers only to natural gas and air. The Differences between Complete and Incomplete Combustion section examines the chemical formula for perfect combustion. There, in terms of volume, one cubic foot (1 ft³) of natural gas combines with 10 cubic feet (10 ft³) of air.</p>
+                        
+                        <div class="formula-display">
+                            1 ft³ CH₄ + 10 ft³ air = perfect combustion
+                        </div>
+
+                        <p>As a gas technician/fitter, you will work with many types of fuel gases, and they all have something in common when it comes to perfect combustion. For each 1000 Btu of heat that the combustion process produces, you will need 10 ft³ of air for perfect combustion. See the following formula:</p>
+                        
+                        <div class="formula-display">
+                            1000 Btu of input + 10 ft³ air = perfect combustion
+                        </div>
+
+                        <h3>Examples</h3>
+                        
+                        <h4>Example 1—Natural Gas</h4>
+                        <p>Calculate the volume of combustion air required for an appliance with an 80,000 Btu/h input, fired on natural gas.</p>
+                        
+                        <div class="formula-display">
+                            80,000 Btu/h / 1,000 Btu/ft³ × 10 = 800ft³/h combustion air
+                        </div>
+
+                        <h4>Example 2—Propane</h4>
+                        <p>Calculate the volume of combustion air required for an appliance with a 250,000 Btu/h input, fired on propane.</p>
+                        
+                        <div class="formula-display">
+                            250,000Btu/h / 1,000Btu/ft³ × 10 = 2,500ft³/h combustion air
+                        </div>
+
+                        <p>1000 Btu of input requires 10 ft³ of combustion air supply, whatever the type of fuel gas used.</p>
+
+                        <h3>Excess Air Supply Volume</h3>
+                        <p>The excess air that you supply to a burner ensures the combination of all fuel with oxygen to produce complete combustion. A lack of excess air may cause varying degrees of incomplete combustion, while too much excess air can cool the flame and cause incomplete combustion. Too much excess air will increase the volume of gases in the heat exchanger and may cause spillage of flue gases. Too much excess air will carry off heat, reducing the efficiency of the appliance.</p>
+
+                        <p>Modern fan-assisted burners and power burners can operate efficiently, often with as little as 20–30% excess air. For atmospheric burners, complete combustion that occurs with a volume of excess air equal to 50% of the combustion air volume is usually acceptable. A relationship between Btu of input and the volume of excess air required can be as follows:</p>
+                        
+                        <div class="formula-display">
+                            1000 Btu of input requires 5 ft³ of excess air supply
+                        </div>
+
+                        <h2>Causes of Incomplete Combustion</h2>
+                        
+                        <p>It is important to know that incomplete combustion occurs from causes other than insufficient air. For example, the combustion process must maintain a minimum temperature. If at any time the flame is quenched below that temperature, then you may have incomplete combustion that produces toxic products.</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Cause</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Flame temperature</td>
+                                    <td>The combustion process must maintain a temperature of approximately 1300°F (649°C) for natural gas or 920°F (495°C) for propane. If at any time the flame is quenched below that temperature, you may have incomplete combustion and toxic products.</td>
+                                </tr>
+                                <tr>
+                                    <td>Cracked heat exchanger</td>
+                                    <td>A heat exchanger is the component of a gas appliance that takes the heat from the hot flue gases and transfers it to the supply air that helps heat the building. On occasion, this component will develop a crack that allows the supply air to come into contact with the hot flue gases. This can cause excessive air movement in the combustion chamber and adversely affect the flame, causing incomplete combustion.</td>
+                                </tr>
+                                <tr>
+                                    <td>Blocked venting</td>
+                                    <td>If the venting on a gas appliance becomes blocked, the flue gases will not be able to reach the outdoors and will spill out of the draft hood and remain in the room. If the products of combustion are not leaving the room, then combustion air is not entering. In time, this lack of combustion air will cause incomplete combustion and a carbon monoxide condition.</td>
+                                </tr>
+                                <tr>
+                                    <td>Induced draft appliance</td>
+                                    <td>If an appliance has a fan-assisted or induced-draft combustion chamber, it has sensing devices that will shut down the burner if the venting becomes blocked.</td>
+                                </tr>
+                                <tr>
+                                    <td>Negative air pressure</td>
+                                    <td>Many venting systems rely on natural draft to move the products of combustion outdoors. Room pressure can affect this draft. If excessive air exhausted from the building produces a negative pressure in the room, the pressure will affect the combustion process and could cause incomplete combustion.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="warning-box">
+                            <h4>Critical Safety Point</h4>
+                            <p>Any condition that causes incomplete combustion can result in dangerous carbon monoxide production. Regular maintenance and proper installation are essential for safe operation.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What are the total air volume supply requirements for an atmospheric burner?",
+                    options: [
+                        "10 ft³ of air for each 1000 Btu of input",
+                        "50 ft³ of air for each 1000 Btu of input",
+                        "30 ft³ of air for each 1000 Btu of input",
+                        "15 ft³ of air for each 1000 Btu of input"
+                    ],
+                    correct: 2,
+                    explanation: "The total air supply requirement for atmospheric burners is 30 ft³ of air for each 1000 Btu of input (10 ft³ combustion + 5 ft³ excess + 15 ft³ dilution)."
+                }
+            },
+            {
+                title: "Stable Flame Characteristics and Requirements",
+                content: `
+                    <div class="section">
+                        <h2>Characteristics and Requirements of a Stable Flame</h2>
+                        
+                        <p>A stable flame is a flame that does not waver, lift off the burner, or flash back into the mixing tube.</p>
+
+                        <p>Flame colour and shape are characteristics of the flame and as such can only give an indication of flame quality. You must perform a combustion analysis to accurately test flame quality and completeness of combustion, as well as for presence of toxic gases, i.e., carbon monoxide (CO).</p>
+
+                        <h3>Qualities of a Stable Flame</h3>
+                        <p>A stable atmospheric Bunsen burner flame has several colour zones. Each of these zones marks a stage in the burning of gas (Figure 2-11).</p>
+
+                        <div class="image-placeholder">
+                            🔥 STABLE BUNSEN FLAME<br>
+                            Inner cone (blue) - Outer cone (darker) - Outer mantle (colorless)<br>
+                            <small>Three distinct zones indicate proper combustion</small>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Color Zone</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Inner cone</td>
+                                    <td>The inner cone is a thin blue cone on the burner tip. The inner cone marks the first step in the burning process where burning of gas happens to form products such as aldehydes, alcohols, carbon monoxide, and hydrogen. The velocity of the unburned gas-air mixture forms the shape of the inner cone.</td>
+                                </tr>
+                                <tr>
+                                    <td>Outer cone</td>
+                                    <td>The outer cone is a darker, outer cone that surrounds the inner cone. This is where the secondary air diffuses into the flame. If enough secondary air is present, and other conditions are favourable, the complete burning of products from the inner cone happens here, yielding the final products, carbon dioxide and water vapour.</td>
+                                </tr>
+                                <tr>
+                                    <td>Outer mantle</td>
+                                    <td>The outer mantle is a colourless mantle that surrounds the outer cone. Since complete burning usually happens at the outer cone, there are almost no unburned gases at the outer mantle. This nearly invisible mantle only glows because of the combustion products' high temperature.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Requirements of a Stable Flame</h3>
+                        <p>To achieve a stable flame on an atmospheric burner, you need to maintain a fine balance between the flame speed and the flow velocity. Adjusting the primary air supply or the gas flow rates will change the flame speed and flow velocities. A properly adjusted Bunsen-type burner flame is predominantly blue when you properly adjust the primary air (Figure 2-12).</p>
+
+                        <h4>Primary Air Supply</h4>
+                        <p>The primary air supply sets the flame characteristics. If premixing of the proper amount of primary air with the gas happens, the burner will provide a stable blue flame. Adjustments to the air supply will cause the flame to change shape and colour.</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Adjustment</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Air increase</td>
+                                    <td>As the percentage of primary air increases, the flame sharpens and the inner cone gets smaller. When adjustment of the primary air creates a 10% gas-air mixture for natural gas (or a 6% propane-air mixture), the flame reaches its maximum speed. Beyond this point, although adding more primary air increases flow velocity, the flame speed slows down proportionately. The flame will then start to lift off the burner port. Any further increase of primary air supply will eventually cause complete flame liftoff.</td>
+                                </tr>
+                                <tr>
+                                    <td>Air decrease</td>
+                                    <td>When the percentage of primary air decreases, the burning speed decreases since complete combustion requires more secondary air. The flame gets longer, becomes more luminous, and burning speed slows down. Further reduction of the primary air supply will result in the appearance of yellow tips in the flames and the formation of carbon. The flames will become completely yellow if all primary air is shut off.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Too Little Air Supply</h4>
+                        <p>As primary or secondary air supply is decreased, the percentage of CO₂ in the flue gases increases. The theoretical maximum CO₂ produced during complete combustion is 11.8% for natural gas or 13.8% for propane. In practice, when the flue gas percentage of CO₂ reaches 10% or higher for natural gas (11.5% or higher for propane), the air being supplied becomes insufficient, and carbon monoxide may be produced.</p>
+
+                        <h4>Gas Supply</h4>
+                        <p>The amount of gas-air mixture passing through a port—called port loading—is also important for creating a stable flame. Burner port-loading is expressed as the number of Btu/h per square inch of port area, as the following formula shows:</p>
+                        
+                        <div class="formula-display">
+                            Port loading = Input rate, Btu/h (kW) / Port area, in²(mm²)
+                        </div>
+
+                        <p>You can change the port loading by altering either the orifice size or the gas pressure (manifold pressure). For most applications using natural gas, a port loading between 25,000 Btu/h and 30,000 Btu/h per square inch of port area provides a stable flame.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Flame Adjustment Guidelines</h4>
+                            <p>A properly adjusted flame should be predominantly blue with clearly defined inner and outer cones. Yellow tips or lifting flames indicate adjustment problems that need correction.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What are the three-colour zones of a stable Bunsen flame?",
+                    options: [
+                        "Center cone, top cone, outer mantle",
+                        "Bottom cone, top cone, outer mantle",
+                        "Inner cone, outer cone, inner mantle",
+                        "Inner cone, outer cone, outer mantle"
+                    ],
+                    correct: 3,
+                    explanation: "A stable Bunsen flame has three distinct colour zones: the inner cone (blue), the outer cone (darker), and the outer mantle (colourless)."
+                }
+            },
+            {
+                title: "Chapter 2 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 2 Final Quiz</h2>
+                        <p>Test your knowledge of combustion principles covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 26 questions to complete the chapter. Each question is based on the CSA Gas Trade Training materials covered in the previous sections.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>What is the term used for the chemical process in which the rapid oxidation of fuel results in the production of heat?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Ignition</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Explosion</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Combustion</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>Approximately what percentage of air is oxygen?</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) 20%</li>
+                                <li onclick="selectQuizOption(1, 1)">b) 25%</li>
+                                <li onclick="selectQuizOption(1, 2)">c) 79%</li>
+                                <li onclick="selectQuizOption(1, 3)">d) 1.2%</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>What are the approximate ignition temperatures (in °F and °C) for propane?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) 1020°F (495°C)</li>
+                                <li onclick="selectQuizOption(2, 1)">b) 1300°F (700°C)</li>
+                                <li onclick="selectQuizOption(2, 2)">c) 1000°F (538°C)</li>
+                                <li onclick="selectQuizOption(2, 3)">d) 600°F (315°C)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>What are the approximate ignition temperatures (in °F and °C) for natural gas?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) 1000°F (538°C)</li>
+                                <li onclick="selectQuizOption(3, 1)">b) 600°F (315°C)</li>
+                                <li onclick="selectQuizOption(3, 2)">c) 1300°F (700°C)</li>
+                                <li onclick="selectQuizOption(3, 3)">d) 1020°F (495°C)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>What are the products of combustion for a hydrocarbon fuel?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) CO₄, H₂O, and heat</li>
+                                <li onclick="selectQuizOption(4, 1)">b) CO₂, H₂O₂, and heat</li>
+                                <li onclick="selectQuizOption(4, 2)">c) CO₂, H₂O, and heat</li>
+                                <li onclick="selectQuizOption(4, 3)">d) 2CO₂, H₂O, and heat</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>State the formula for perfect combustion for natural gas.</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) CH₄ + 2O₂ + 8N₂ > CO₂ + 2H₂O + 8N₂ + Heat</li>
+                                <li onclick="selectQuizOption(5, 1)">b) CH₄ + 2O₂ + 8N₂ > 2CO + 2H₂O + 8N₂ + Heat</li>
+                                <li onclick="selectQuizOption(5, 2)">c) CH₄ + 2O₂ + 8N₂ > CO₂ + 4H₂O + 8N₂ + Heat</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>What is added to the combustion process to ensure complete combustion?</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) Primary air</li>
+                                <li onclick="selectQuizOption(6, 1)">b) Excess air</li>
+                                <li onclick="selectQuizOption(6, 2)">c) Ventilation air</li>
+                                <li onclick="selectQuizOption(6, 3)">d) Combustion air</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>Name two products of incomplete combustion.</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) Water Vapour and Carbon dioxide</li>
+                                <li onclick="selectQuizOption(7, 1)">b) Nitrogen and Carbon</li>
+                                <li onclick="selectQuizOption(7, 2)">c) Carbon monoxide and aldehydes</li>
+                                <li onclick="selectQuizOption(7, 3)">d) Nitrogen and water vapour</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>How are the three divisions of air supply categorized?</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) Combustion air, pressurized air, dilution air</li>
+                                <li onclick="selectQuizOption(8, 1)">b) Combustion air, excess air, primary air</li>
+                                <li onclick="selectQuizOption(8, 2)">c) Combustion air, excess air, dilution air</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 10:</h4>
+                            <p>What is the term used to describe the air that is mixed with fuel gas before the point of ignition?</p>
+                            <ul class="quiz-options" data-question="9">
+                                <li onclick="selectQuizOption(9, 0)">a) Primary air</li>
+                                <li onclick="selectQuizOption(9, 1)">b) Excess air</li>
+                                <li onclick="selectQuizOption(9, 2)">c) Dilution air</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 11:</h4>
+                            <p>What is the purpose of dilution air?</p>
+                            <ul class="quiz-options" data-question="10">
+                                <li onclick="selectQuizOption(10, 0)">a) To remove the hot vent gases and to control the draft influence on the combustion chamber</li>
+                                <li onclick="selectQuizOption(10, 1)">b) To increase the hot vent gases and to control the draft influence on the combustion chamber</li>
+                                <li onclick="selectQuizOption(10, 2)">c) To cool the hot vent gases and to control the draft influence on the combustion chamber</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 12:</h4>
+                            <p>What is the air-to-gas ratio that applies to all fuel gases?</p>
+                            <ul class="quiz-options" data-question="11">
+                                <li onclick="selectQuizOption(11, 0)">a) Each (1000 Btu of fuel input) × 10 ft³ air = perfect combustion</li>
+                                <li onclick="selectQuizOption(11, 1)">b) Each (1000 Btu of fuel input) × 10 ft³ air = complete combustion</li>
+                                <li onclick="selectQuizOption(11, 2)">c) Each (1000 Btu of fuel input) × 10 ft³ air = perfect ignition</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 13:</h4>
+                            <p>What is the normal percentage of combustion air to excess air requirements for an atmospheric burner?</p>
+                            <ul class="quiz-options" data-question="12">
+                                <li onclick="selectQuizOption(12, 0)">a) The volume of excess air equal to 10% of combustion air requirements is considered acceptable.</li>
+                                <li onclick="selectQuizOption(12, 1)">b) The volume of excess air equal to 50% of combustion air requirements is considered acceptable.</li>
+                                <li onclick="selectQuizOption(12, 2)">c) The volume of excess air equal to 100% of combustion air requirements is considered acceptable.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 14:</h4>
+                            <p>What are the total air volume supply requirements for an atmospheric burner?</p>
+                            <ul class="quiz-options" data-question="13">
+                                <li onclick="selectQuizOption(13, 0)">a) 10 ft³ of air for each 1000 Btu of input</li>
+                                <li onclick="selectQuizOption(13, 1)">b) 50 ft³ of air for each 1000 Btu of input</li>
+                                <li onclick="selectQuizOption(13, 2)">c) 30 ft³ of air for each 1000 Btu of input</li>
+                                <li onclick="selectQuizOption(13, 3)">d) 15 ft³ of air for each 1000 Btu of input</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 15:</h4>
+                            <p>What are the three-colour zones of a stable Bunsen flame?</p>
+                            <ul class="quiz-options" data-question="14">
+                                <li onclick="selectQuizOption(14, 0)">a) Center cone, top cone, outer mantle</li>
+                                <li onclick="selectQuizOption(14, 1)">b) Bottom cone, top cone, outer mantle</li>
+                                <li onclick="selectQuizOption(14, 2)">c) Inner cone, outer cone, inner mantle</li>
+                                <li onclick="selectQuizOption(14, 3)">d) Inner cone, outer cone, outer mantle</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 16:</h4>
+                            <p>Which of the following is not one of the Combustion Triangle elements?</p>
+                            <ul class="quiz-options" data-question="15">
+                                <li onclick="selectQuizOption(15, 0)">a) Carbon dioxide</li>
+                                <li onclick="selectQuizOption(15, 1)">b) Fuel</li>
+                                <li onclick="selectQuizOption(15, 2)">c) Heat</li>
+                                <li onclick="selectQuizOption(15, 3)">d) Oxygen</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 17:</h4>
+                            <p>Correctly complete the following sentence with the appropriate chemical designation provided: _________ is the chemical designation for natural gas. Its ignition temperature is 1300°F or 700°C.</p>
+                            <ul class="quiz-options" data-question="16">
+                                <li onclick="selectQuizOption(16, 0)">a) CH₂</li>
+                                <li onclick="selectQuizOption(16, 1)">b) CH₃</li>
+                                <li onclick="selectQuizOption(16, 2)">c) CH₄</li>
+                                <li onclick="selectQuizOption(16, 3)">d) CH₅</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 18:</h4>
+                            <p>Correctly complete the following sentence with the appropriate temperature provided: An ignition temperature of __________ °F or 495°C and a chemical designation of C₃H₈ identifies propane.</p>
+                            <ul class="quiz-options" data-question="17">
+                                <li onclick="selectQuizOption(17, 0)">a) 1030°F</li>
+                                <li onclick="selectQuizOption(17, 1)">b) 1020°F</li>
+                                <li onclick="selectQuizOption(17, 2)">c) 1050°F</li>
+                                <li onclick="selectQuizOption(17, 3)">d) 1040°F</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 19:</h4>
+                            <p>Correctly complete the following sentence with the appropriate term provided: ___________________ is subdivided into the two classifications of primary air and secondary air.</p>
+                            <ul class="quiz-options" data-question="18">
+                                <li onclick="selectQuizOption(18, 0)">a) Combustion air</li>
+                                <li onclick="selectQuizOption(18, 1)">b) Excess air</li>
+                                <li onclick="selectQuizOption(18, 2)">c) Ventilation air</li>
+                                <li onclick="selectQuizOption(18, 3)">d) Total air</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 20:</h4>
+                            <p>What type of air describes the volume of air required to allow the appliance to operate safely and efficiently?</p>
+                            <ul class="quiz-options" data-question="19">
+                                <li onclick="selectQuizOption(19, 0)">a) Combustion air</li>
+                                <li onclick="selectQuizOption(19, 1)">b) Total air</li>
+                                <li onclick="selectQuizOption(19, 2)">c) Excess air</li>
+                                <li onclick="selectQuizOption(19, 3)">d) Ventilation air</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 21:</h4>
+                            <p>Correctly complete the following sentence with the appropriate percentage provided: The volume of excess air required for the efficient operation of atmospheric burner-fired equipment is equal to _______________ of the combustion air requirement or 5 ft³ for each 1000 Btu.</p>
+                            <ul class="quiz-options" data-question="20">
+                                <li onclick="selectQuizOption(20, 0)">a) 25%</li>
+                                <li onclick="selectQuizOption(20, 1)">b) 75%</li>
+                                <li onclick="selectQuizOption(20, 2)">c) 100%</li>
+                                <li onclick="selectQuizOption(20, 3)">d) 50%</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 22:</h4>
+                            <p>Indicate True or False: The volume of dilution air required for appliances equipped with a draft control device should be equal to the total of the combustion and excess air supplied the burner or 15 ft³ for each 1000 Btu.</p>
+                            <ul class="quiz-options" data-question="21">
+                                <li onclick="selectQuizOption(21, 0)">a) True</li>
+                                <li onclick="selectQuizOption(21, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 23:</h4>
+                            <p>Correctly complete the following sentence with the appropriate temperature provided: The combustion process must maintain a temperature of approximately _____________°F (700°C) for natural gas.</p>
+                            <ul class="quiz-options" data-question="22">
+                                <li onclick="selectQuizOption(22, 0)">a) 1000°F</li>
+                                <li onclick="selectQuizOption(22, 1)">b) 1300°F</li>
+                                <li onclick="selectQuizOption(22, 2)">c) 1200°F</li>
+                                <li onclick="selectQuizOption(22, 3)">d) 1100°F</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 24:</h4>
+                            <p>Correctly complete the following sentence with the appropriate number provided: 100 000 Btu/h requires _________ ft³ combustion air.</p>
+                            <ul class="quiz-options" data-question="23">
+                                <li onclick="selectQuizOption(23, 0)">a) 1000</li>
+                                <li onclick="selectQuizOption(23, 1)">b) 10</li>
+                                <li onclick="selectQuizOption(23, 2)">c) 100</li>
+                                <li onclick="selectQuizOption(23, 3)">d) 10 000</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 25:</h4>
+                            <p>Indicate True or False: 255 000 Btu/h requires 2550 ft³ combustion air.</p>
+                            <ul class="quiz-options" data-question="24">
+                                <li onclick="selectQuizOption(24, 0)">a) True</li>
+                                <li onclick="selectQuizOption(24, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 26:</h4>
+                            <p>Match the following air categories with their descriptions:</p>
+                            <ul class="quiz-options" data-question="25">
+                                <li onclick="selectQuizOption(25, 0)">a) Primary air is mixed with fuel gas before ignition</li>
+                                <li onclick="selectQuizOption(25, 1)">b) Secondary air is supplied from around the flames</li>
+                                <li onclick="selectQuizOption(25, 2)">c) Excess air ensures complete combustion</li>
+                                <li onclick="selectQuizOption(25, 3)">d) All of the above are correct</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 2 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 2 - Combustion.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You're now ready to proceed to the next chapter in your gas training program.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers based on the CSA provided quiz
+        const quizCorrectAnswers = [2, 0, 0, 2, 2, 0, 1, 2, 2, 0, 2, 0, 1, 2, 3, 0, 2, 1, 0, 1, 3, 0, 1, 0, 0, 3];
+        
+        const quizExplanations = [
+            "Combustion is the chemical process in which the rapid oxidation of fuel results in the production of energy (heat).",
+            "Air contains approximately 20% oxygen and 80% nitrogen.",
+            "Propane has an ignition temperature of 920°F (495°C).",
+            "Natural gas has an ignition temperature of 1300°F (700°C).",
+            "The products of combustion for hydrocarbon fuels are CO₂, H₂O, and heat.",
+            "The formula for perfect combustion of natural gas is CH₄ + 2O₂ + 8N₂ → CO₂ + 2H₂O + 8N₂ + Heat.",
+            "Excess air is added to the combustion process to ensure complete combustion.",
+            "Carbon monoxide and aldehydes are two harmful products of incomplete combustion.",
+            "The three divisions of air supply are combustion air, excess air, and dilution air.",
+            "Primary air is the term used to describe air that is mixed with fuel gas before ignition.",
+            "The purpose of dilution air is to cool the hot vent gases and to control the draft influence on the combustion chamber.",
+            "Each 1000 Btu of fuel input requires 10 ft³ of air for perfect combustion.",
+            "The volume of excess air equal to 50% of combustion air requirements is considered acceptable for atmospheric burners.",
+            "Total air volume supply requirements for atmospheric burners is 30 ft³ of air for each 1000 Btu of input.",
+            "The three-colour zones of a stable Bunsen flame are inner cone, outer cone, and outer mantle.",
+            "Carbon dioxide is not one of the basic Combustion Triangle elements (fuel, heat, oxygen).",
+            "CH₄ is the chemical designation for natural gas.",
+            "Propane has an ignition temperature of 1020°F (495°C).",
+            "Combustion air is subdivided into primary air and secondary air.",
+            "Total air describes the volume of air required to allow the appliance to operate safely and efficiently.",
+            "The volume of excess air required is equal to 50% of the combustion air requirement.",
+            "True - The volume of dilution air should equal the total of combustion and excess air (15 ft³ for each 1000 Btu).",
+            "The combustion process must maintain approximately 1300°F (700°C) for natural gas.",
+            "100,000 Btu/h requires 1000 ft³ combustion air (100,000 ÷ 1000 × 10 = 1000).",
+            "True - 255,000 Btu/h requires 2550 ft³ combustion air (255,000 ÷ 1000 × 10 = 2550).",
+            "All statements about air categories are correct: primary air is mixed before ignition, secondary air comes from around flames, and excess air ensures complete combustion."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 8) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 26; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 26) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/26 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/26 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

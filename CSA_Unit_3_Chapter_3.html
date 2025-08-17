@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 3 - Chapter 3: Gas Hazards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .formula-display {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .flowchart {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-box {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .action-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .action-table th,
+        .action-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .action-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 3 - Properties, Characteristics, and Safe Handling of Fuel Gases</h1>
+            <h2>Chapter 3 - Gas Hazards</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 8</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 8;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>A gas technician/fitter must know how to investigate, detect, and remedy gas leaks, incomplete combustion, and the effects of corrosive vapours on gas-fired appliances and equipment in a safe and efficient manner.</p>
+                        
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>identify combustible gas indicators;</li>
+                            <li>describe how to investigate gas leaks;</li>
+                            <li>describe how to investigate incomplete combustion; and</li>
+                            <li>describe the effects of corrosive vapours.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Combustible gas indicator</td>
+                                    <td>CGI</td>
+                                    <td>Instrument for detecting gas-air (or vapour-air) mixtures to determine the explosive levels of the mixture</td>
+                                </tr>
+                                <tr>
+                                    <td>Lower explosive limit</td>
+                                    <td>LEL</td>
+                                    <td>The lowest concentration (percentage) of a gas or a vapour in air capable of producing a flash of fire in presence of an ignition source (arc, flame, heat)</td>
+                                </tr>
+                                <tr>
+                                    <td>Upper explosive limit</td>
+                                    <td>UEL</td>
+                                    <td>The highest concentration (percentage) of a gas or a vapour in air capable of producing a flash of fire in presence of an ignition source (arc, flame, and heat)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding gas hazards is essential for technician safety and public safety. Proper detection and response to gas leaks and incomplete combustion can save lives and prevent property damage.</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Combustible Gas Indicators",
+                content: `
+                    <div class="section">
+                        <h2>Combustible Gas Indicators</h2>
+                        
+                        <p>A combustible gas indicator (CGI) is an instrument for detecting gas-air (or vapour-air) mixtures to determine the explosive levels of the mixture.</p>
+                        
+                        <p>A combustible gas indicator can save lives. A gas technician/fitter should know how to use it and make sure that it is accurate. A gas technician/fitter must become thoroughly familiar with the operation and limitations of the indicator and should be satisfied that the instrument is in proper operating condition.</p>
+
+                        <h3>General Guidelines</h3>
+                        <ul>
+                            <li>Audio alarms correspond to a factory-set parts per million (ppm) level of gas. You can shut off the alarm in certain circumstances to avoid causing distress to the public.</li>
+                            <li>You should perform calibration regularly and according to manufacturer's instructions.</li>
+                            <li>Some CGI Units come with probes and hoses (including pumps and battery packs) for remote sampling. Always use the appropriate accessories when required.</li>
+                        </ul>
+
+                        <p>There are two basic types of CGIs: solid-state and filament. The solid-state type, which can sense gases at as little as 2–3 ppm of gas in air, is more commonly used and much more sensitive than the filament type.</p>
+
+                        <h3>Solid-state Indicator</h3>
+                        <p>The solid-state CGI is a small, light hand-held Unit. It comes with a light-emitting diode (LED) display, a digital readout, or an analogue dial indicator, and an audible alarm.</p>
+
+                        <div class="image-placeholder">
+                            🔍 SOLID-STATE CGI<br>
+                            Digital display showing % LEL and ppm readings<br>
+                            <small>Typical solid-state combustible gas indicator</small>
+                        </div>
+
+                        <p>Some models are adjustable to detect several gases at one time. The readout indicates the gas level in ppm or percent of lower explosive limit (LEL). For each instrument, you need to check the manufacturer's manual to determine how to read the display and for the settings of the LELs of specific gases and vapours.</p>
+
+                        <h3>Filament-type Indicator</h3>
+                        <p>The filament-type indicator works on the principle of catalytic combustion. The meter draws the air-and-gas mixture through the sampling inlet and across the detector filament. The filament consists of a catalytic material that ignites the mixture at a low temperature and then registers the percent of explosive limits on a dial.</p>
+
+                        <div class="warning-box">
+                            <h4>Important Safety Note</h4>
+                            <p>Be aware that the filament type is not as sensitive as the solid-state type and must be purged manually before sampling.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which type of combustible gas indicator is more sensitive and commonly used?",
+                    options: [
+                        "Filament type",
+                        "Solid-state type",
+                        "Analogue type",
+                        "Digital type"
+                    ],
+                    correct: 1,
+                    explanation: "The solid-state type CGI is more commonly used and much more sensitive than the filament type, capable of sensing gases at as little as 2-3 ppm of gas in air."
+                }
+            },
+            {
+                title: "CGI Operation and Conversion Charts",
+                content: `
+                    <div class="section">
+                        <h2>Conversion Charts</h2>
+                        
+                        <p>Each indicator is calibrated to a specific gas, and conversion charts are available if you wish to use to check for other gases or vapours.</p>
+
+                        <p>Because each manufacturer makes many different models, you should be sure you have the correct instrument for the job at hand. An instrument calibrated for a known gas at the manufacturer's plant (a standard calibration) is usually most suitable. However, a CGI that is calibrated for one specific gas (such as hydrogen or methane) may or may not read correctly on other substances. Therefore, make sure you have a CGI that can read the gas you are testing for.</p>
+
+                        <h3>Sample Gases to be Tested</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Common Gases Detected by CGI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Acetone</td><td>Halon</td><td>Naphtha</td></tr>
+                                <tr><td>Alcohol</td><td>Hydrogen sulphide</td><td>Natural gas</td></tr>
+                                <tr><td>Ammonia</td><td>Industrial solvents</td><td>Propane</td></tr>
+                                <tr><td>Butane</td><td>Jet fuel</td><td>Refrigerant</td></tr>
+                                <tr><td>Carbon monoxide</td><td>Lacquer thinners</td><td>Smoke</td></tr>
+                                <tr><td>Gasoline</td><td>Methane</td><td>Steam</td></tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Conversion Chart Example</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Combustible Gas</th>
+                                    <th>Multiply % LEL reading by</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Acetone</td><td>1.1</td></tr>
+                                <tr><td>Acetylene</td><td>0.7</td></tr>
+                                <tr><td>2,3 Dimethylpentane</td><td>1.2</td></tr>
+                                <tr><td>Ethane</td><td>0.7</td></tr>
+                                <tr><td>Gasoline (unleaded)</td><td>1.3</td></tr>
+                                <tr><td>Hydrogen</td><td>0.6</td></tr>
+                                <tr><td>Methane</td><td>0.5</td></tr>
+                                <tr><td>Methanol</td><td>0.6</td></tr>
+                                <tr><td>n-Pentane</td><td>1.0</td></tr>
+                                <tr><td>Propane</td><td>0.8</td></tr>
+                            </tbody>
+                        </table>
+
+                        <p>The following relative responses to selected combustible gases are typical of an instrument calibrated using Pentane.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Calibration Tip</h4>
+                            <p>Always check the manufacturer's manual for specific conversion factors and calibration procedures for your particular CGI model.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Why might a CGI calibrated for one specific gas not read correctly on other substances?",
+                    options: [
+                        "Because all gases have the same explosive limits",
+                        "Because different gases have different response characteristics",
+                        "Because the CGI only works with natural gas",
+                        "Because conversion charts are not available"
+                    ],
+                    correct: 1,
+                    explanation: "Different gases have different response characteristics in CGI sensors. This is why conversion charts are needed when testing for gases other than the one the instrument was calibrated for."
+                }
+            },
+            {
+                title: "CGI Operation Guidelines",
+                content: `
+                    <div class="section">
+                        <h2>Accessories</h2>
+                        
+                        <p>Carefully consider which accessories you choose to use. When in doubt, consult the manufacturer's manual.</p>
+
+                        <div class="info-box">
+                            <h4>Do...</h4>
+                            <ul>
+                                <li>When probing overhead, use a non-conducting probe in case you touch a "hot" electrical circuit.</li>
+                                <li>No CGI will operate when filled with liquid. Should you be sampling enclosed vessels, which may contain liquids, be sure there is a liquid trap in the sampling system to prevent the liquid from entering the indicator.</li>
+                                <li>Use the hoses provided.</li>
+                            </ul>
+                        </div>
+
+                        <h3>Calibration</h3>
+                        <p>For most Units, calibration test kits are available. Periodically check the indicator calibration to ensure the indicator is working correctly. Refer to the manufacturer's manual for correct settings.</p>
+
+                        <h3>CGI Dos and Don'ts</h3>
+                        <table class="action-table">
+                            <thead>
+                                <tr>
+                                    <th>Do...</th>
+                                    <th>Do not/never...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Follow the proper instructions for the care and maintenance of your CGI.</td>
+                                    <td>If the CGI has flashback arresters, do not remove them.</td>
+                                </tr>
+                                <tr>
+                                    <td>Always read the instruction book that accompanies each instrument. In it you will find complete instructions, possible troubles and remedies, and an exploded diagram of all parts with their stock number.</td>
+                                    <td>Use the indicator for sampling gasoline vapours containing TEL (tetraethyllead), unless the indicator has received approval for this application.</td>
+                                </tr>
+                                <tr>
+                                    <td>Use the supplied accessories.</td>
+                                    <td>Let the sampling hose or probe reach into a liquid.</td>
+                                </tr>
+                                <tr>
+                                    <td>Check the battery periodically.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Be aware of how temperature and pressure can affect the explosive range readings.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Turn the indicator off when not in use.</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="warning-box">
+                            <h4>Safety First</h4>
+                            <p>First and foremost, when responding to a gas leak call, your concern is safety. Remember that you can replace property, but not lives!</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What must be the first concern when responding to a gas leak call?",
+                    options: [
+                        "Response time",
+                        "Type of odour present",
+                        "Safety (public and personal)",
+                        "Equipment needed"
+                    ],
+                    correct: 2,
+                    explanation: "Safety must always be the first concern when responding to a gas leak call. This includes both public safety and personal safety. Property can be replaced, but lives cannot."
+                }
+            },
+            {
+                title: "Investigating Gas Leaks - Steps 1-4",
+                content: `
+                    <div class="section">
+                        <h2>Investigating Gas Leaks</h2>
+                        
+                        <p>First and foremost, when responding to a gas leak call, your concern is safety. The following information about what to do in the event of a gas leak call is based on safety first. Remember that you can replace property, but not lives!</p>
+
+                        <div class="flowchart">
+                            <div class="step-box">Step 1 - PREPARE</div>
+                            <div class="step-box">Step 2 - KNOCK</div>
+                            <div class="step-box">Step 3 - COMMUNICATE</div>
+                            <div class="step-box">Step 4 - TAKE A READING</div>
+                        </div>
+
+                        <h3>Step 1—Prepare</h3>
+                        <h4>a) Prepare the combustible gas indicator by:</h4>
+                        <ul>
+                            <li>purging it in clean air (if required); and</li>
+                            <li>switching it on.</li>
+                        </ul>
+
+                        <h4>b) Other useful pieces of equipment to bring to the call include:</h4>
+                        <ul>
+                            <li>leak detection soap solution (bubbles);</li>
+                            <li>a pressure gauge or manometer;</li>
+                            <li>a safety flashlight (Class 1); and</li>
+                            <li>a pipe wrench.</li>
+                        </ul>
+
+                        <h3>Step 2—Knock</h3>
+                        <p>When arriving at the premises with the suspected leak, knock on the door. Do not use the doorbell, as this could cause ignition if gas is present in the area of the doorbell's power source.</p>
+
+                        <h3>Step 3—Communicate</h3>
+                        <h4>a) Identify yourself.</h4>
+                        <h4>b) Inquire about the situation to obtain further facts.</h4>
+                        <h4>c) Inform them:</h4>
+                        <ul>
+                            <li>not to smoke;</li>
+                            <li>not to use any appliances;</li>
+                            <li>not to operate any electrical switch; and</li>
+                            <li>not to use any phone, pager, or cell phone in the building.</li>
+                        </ul>
+
+                        <h3>Step 4—Take a Reading</h3>
+                        <p>Determine whether the gas supply is natural gas or propane to know where to take the reading:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>If...</th>
+                                    <th>Then...</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>The natural gas appliances are in the basement.</td>
+                                    <td>A good place to test is, in the basement stairwell, immediately after you enter the building, near the top of the door.</td>
+                                    <td>Natural gas is lighter than air, with a specific gravity of approximately 0.60. Consequently, it tends to rise or follow any path of least resistance.</td>
+                                </tr>
+                                <tr>
+                                    <td>The supply is propane.</td>
+                                    <td>A good place to begin testing for propane leaks is at floor level.</td>
+                                    <td>The specific gravity of propane is greater than that of air, it is heavier and will tend to collect at lower levels.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>💡 Detection Strategy</h4>
+                            <p>Understanding the specific gravity differences between natural gas and propane is crucial for effective leak detection. Always start testing in the appropriate locations based on the gas type.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Where is a good place to test when checking for combustible gas if natural gas appliances are located in the basement?",
+                    options: [
+                        "In the basement stairwell",
+                        "At the front door of the house",
+                        "At the vent termination of an appliance",
+                        "At floor level"
+                    ],
+                    correct: 0,
+                    explanation: "For natural gas appliances in basements, test in the basement stairwell near the top of the door. Natural gas is lighter than air and tends to rise, so it will collect in higher areas."
+                }
+            },
+            {
+                title: "Gas Leak Response - Steps 5-7",
+                content: `
+                    <div class="section">
+                        <h2>Steps 5-7: Response Actions</h2>
+
+                        <h3>CGI Reading Interpretation</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>If the CGI reading...</th>
+                                    <th>Then...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Is above the LEL, which indicates that the concentration of fuel is near or above the explosive limits</td>
+                                    <td>
+                                        <ul>
+                                            <li>There is no time to waste.</li>
+                                            <li>You must make safe immediately and calmly.</li>
+                                            <li>Follow the steps below for when the reading is above the LEL.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Is well below the LEL, which is 4% for natural gas and 2.4% for propane</td>
+                                    <td>
+                                        <ul>
+                                            <li>There is a problem, but you have some margin for safety.</li>
+                                            <li>Proceed with caution.</li>
+                                            <li>A reading below LEL indicates that the immediate area you are in has a margin of safety; however, the immediate area of the leak could be above the LEL.</li>
+                                            <li>Follow the steps below for when the reading is well below the LEL.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Step 5—Make Safe Immediately</h3>
+                        <h4>Take actions based on the reading levels:</h4>
+
+                        <table class="action-table">
+                            <thead>
+                                <tr>
+                                    <th>Steps for make safe when...</th>
+                                    <th>Action</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="5">The reading is above the LEL.</td>
+                                    <td>1) Evacuate the occupant(s)—including you!</td>
+                                    <td>
+                                        <ul>
+                                            <li>In larger buildings, you should notify and instruct the building manager to activate the emergency evacuation plan.</li>
+                                            <li>Stay calm, but positive, when directing people.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2) Do not cross-ventilate.</td>
+                                    <td>
+                                        <ul>
+                                            <li>When gas concentrations are near the explosive limits, cross-ventilating is dangerous—it is possible that you might move potentially explosive concentrations of gas to a possible source of ignition. For this reason, it is not considered safe practice to cross-ventilate when the UEL reading is at a critical point.</li>
+                                            <li>In such concentrations, it is also not recommended to open basement windows from inside or outside.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3) On your way out, turn off service riser valve or propane cylinder/tank shutoff valve.</td>
+                                    <td>
+                                        <ul>
+                                            <li>Do not return to the building with a wrench to turn off the main shutoff valve. Several deaths in the industry have occurred from such actions.</li>
+                                            <li>If you happen to have a wrench with you as you exit the building and you pass by the service riser, you can shut it off. However, by the time you get to your vehicle, call for help, and locate your tools, as some time will have passed and the inside situation may have worsened.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4) Call for help using a telephone located at a safe distance from the area of the leak.</td>
+                                    <td>
+                                        <ul>
+                                            <li>In your calls to the fire department, police, and gas utility supplier, provide the:</li>
+                                            <li>property address;</li>
+                                            <li>actions taken;</li>
+                                            <li>information on the suspected cause;</li>
+                                            <li>types of crew and equipment required; and</li>
+                                            <li>any other backup personnel required.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5) Do not return to the building.</td>
+                                    <td>
+                                        <ul>
+                                            <li>Keep everyone, after evacuation, at a safe distance from the hazard area. If an explosive mixture is present in a building, no one, not even the gas technician/fitter, should go near it after vacating the building. There have been too many situations where the gas technician(s)/fitter(s) return to the building to shut off the gas and inadvertently create ventilation, only to have the building explode. Several deaths in the industry have resulted from such actions.</li>
+                                            <li>Following building evacuation, stay clear and keep others at a safe distance. Remember that buildings are replaceable, lives aren't.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="warning-box">
+                            <h4>Critical Safety Warning</h4>
+                            <p>Never return to a building after evacuation due to explosive gas concentrations. This has resulted in multiple fatalities in the industry. Buildings are replaceable, lives are not.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What should you do if the CGI reading is above the LEL (Lower Explosive Limit)?",
+                    options: [
+                        "Proceed with caution and investigate further",
+                        "Evacuate immediately and do not cross-ventilate",
+                        "Open windows to ventilate the area",
+                        "Continue testing to find the exact source"
+                    ],
+                    correct: 1,
+                    explanation: "If the CGI reading is above the LEL, you must evacuate immediately and avoid cross-ventilation. Cross-ventilating when gas concentrations are near explosive limits is dangerous as it could move explosive gas concentrations to ignition sources."
+                }
+            },
+            {
+                title: "Incomplete Combustion Investigation",
+                content: `
+                    <div class="section">
+                        <h2>Investigating Incomplete Combustion</h2>
+                        
+                        <p>If, when responding to an odour call, you determine that the odour is not a natural gas or propane leak, you should check for carbon monoxide. Carbon monoxide is a colourless, odourless, toxic gas with a specific gravity of 0.98.</p>
+
+                        <p>Whilst carbon monoxide is odourless by itself, the creation of aldehydes and sulphur dioxide, which are irritating and toxic substances may cause a pungent odour that sometimes accompanies CO.</p>
+
+                        <p>Technicians/Fitters should test for carbon monoxide as they enter a structure any increase over outside ambient levels should be investigated to determine the source.</p>
+
+                        <div class="image-placeholder">
+                            ⚠️ CARBON MONOXIDE FORMATION<br>
+                            Methane + Incomplete Air = CO + H₂O + H + N₂<br>
+                            <small>Incomplete combustion produces dangerous carbon monoxide</small>
+                        </div>
+
+                        <h3>Carbon Monoxide Characteristics</h3>
+                        <p>Carbon monoxide is a product of incomplete combustion. It is a direct and cumulative poison. Carbon monoxide bonds with blood hemoglobin to form carboxyhemoglobin. Carbon monoxide bonds with hemoglobin 200 times easier than oxygen. CO replaces oxygen in the blood until it completely overcomes the body. Death from CO occurs rapidly at high concentrations. The victim inhaling the toxic concentration of the gas becomes helpless before realizing that danger exists. Chronic exposure to low levels of carbon monoxide can compound preexisting health conditions and is often misdiagnosed as flu-like symptoms, i.e., headache, nausea, vomiting, head stiffness, and fatigue.</p>
+
+                        <h3>CO Concentrations and Toxic Symptoms</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Concentration of CO in air</th>
+                                    <th>Inhalation time</th>
+                                    <th>Toxic symptoms developed*</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>200 ppm</td>
+                                    <td>2–3 h</td>
+                                    <td>Slight headache, tiredness, dizziness, and nausea</td>
+                                </tr>
+                                <tr>
+                                    <td>400 ppm</td>
+                                    <td>1–2 h</td>
+                                    <td>Frontal headache</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>3+ h</td>
+                                    <td>Life-threatening</td>
+                                </tr>
+                                <tr>
+                                    <td>800 ppm</td>
+                                    <td>45 min</td>
+                                    <td>Dizziness, nausea, and convulsions</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>2 h</td>
+                                    <td>Unconsciousness</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>2–3 h</td>
+                                    <td>Death</td>
+                                </tr>
+                                <tr>
+                                    <td>1 600 ppm</td>
+                                    <td>20 min</td>
+                                    <td>Headache, dizziness, and nausea</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>60 min</td>
+                                    <td>Death</td>
+                                </tr>
+                                <tr>
+                                    <td>3 200 ppm</td>
+                                    <td>5–10 min</td>
+                                    <td>Headache, dizziness, and nausea</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>30 min</td>
+                                    <td>Death</td>
+                                </tr>
+                                <tr>
+                                    <td>6 400 ppm</td>
+                                    <td>1–2 min</td>
+                                    <td>Headache, dizziness, and nausea</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>10–15 min</td>
+                                    <td>Death</td>
+                                </tr>
+                                <tr>
+                                    <td>12 800 ppm</td>
+                                    <td>1–3 min</td>
+                                    <td>Death</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><em>*Symptoms can vary significantly based on age, sex, weight, and overall state of health.</em></p>
+
+                        <h3>CO Testing Equipment</h3>
+                        <p>Instruments for testing CO concentrations come in two types: pump and electronic.</p>
+
+                        <h4>Electronic CO Testers</h4>
+                        <p>Electronic CO testers, like the Bacharach Monoxor® III Unit, are light-weight, portable, hand-held solid-state instruments with continuous readout digital displays. They can measure and display CO levels from 0 to 2 000 ppm. To take a reading, the operator inserts the attached sensor probe into the flue or airspace being sampled and reads the indicated value on the tester display.</p>
+
+                        <div class="warning-box">
+                            <h4>Immediate Danger</h4>
+                            <p>Carbon monoxide concentrations of 15 ppm are immediately dangerous to life and health. Any detection of CO above ambient levels requires immediate investigation and corrective action.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "At what concentration and time exposure does carbon monoxide become life-threatening?",
+                    options: [
+                        "200 ppm for 1-2 hours",
+                        "400 ppm for 3+ hours",
+                        "800 ppm for 45 minutes",
+                        "1600 ppm for 20 minutes"
+                    ],
+                    correct: 1,
+                    explanation: "According to the toxicity table, 400 ppm of CO becomes life-threatening after 3+ hours of exposure. Lower concentrations can also be dangerous with longer exposure times."
+                }
+            },
+            {
+                title: "CSA Chapter 3 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 3 Final Quiz</h2>
+                        <p>Test your knowledge of gas hazards covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 15 questions to complete the chapter. Each question is based on the CSA Gas Trade Training materials covered in the previous sections.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Which of the following is a type of combustible gas indicator?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Handheld type</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Pump type</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Filament type</li>
+                                <li onclick="selectQuizOption(0, 3)">d) Wand type</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>How are combustible gas indicators calibrated?</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) By applying a known concentration of gas to the instrument, then checking the response</li>
+                                <li onclick="selectQuizOption(1, 1)">b) By applying an unknown concentration of gas to the instrument, then checking the response</li>
+                                <li onclick="selectQuizOption(1, 2)">c) By checking the response of the instrument at a test point</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>What must be the first concern when responding to a gas leak call?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) Response time</li>
+                                <li onclick="selectQuizOption(2, 1)">b) Type of odour present</li>
+                                <li onclick="selectQuizOption(2, 2)">c) Safety (public and personal)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>Where is a good place to test when checking combustible gas if the natural gas appliances is located in the basement?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) In the basement stairwell</li>
+                                <li onclick="selectQuizOption(3, 1)">b) At the front door of the house</li>
+                                <li onclick="selectQuizOption(3, 2)">c) At the vent termination of an appliance</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>Indicate True or False: One of the methods to ventilate combustible gas is to open the doors and windows.</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) True</li>
+                                <li onclick="selectQuizOption(4, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>Which of the following is not a location that should be checked when testing for combustible gases?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) All conduit entry points</li>
+                                <li onclick="selectQuizOption(5, 1)">b) Below grade cracks in basement walls</li>
+                                <li onclick="selectQuizOption(5, 2)">c) Around windows and doors</li>
+                                <li onclick="selectQuizOption(5, 3)">d) Floor drains</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>How quickly will death occur if a person is exposed to a concentration of 800 ppm of CO?</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) 30 minutes</li>
+                                <li onclick="selectQuizOption(6, 1)">b) 2 to 3 hours</li>
+                                <li onclick="selectQuizOption(6, 2)">c) 1 hour</li>
+                                <li onclick="selectQuizOption(6, 3)">d) 8 hours</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>What must be done if a crack is found in a furnace heat exchanger?</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) The furnace heat exchanger must be welded</li>
+                                <li onclick="selectQuizOption(7, 1)">b) The furnace heat exchanger be patched with furnace cement</li>
+                                <li onclick="selectQuizOption(7, 2)">c) Nothing, the furnace is safe to use</li>
+                                <li onclick="selectQuizOption(7, 3)">d) The heat exchanger or entire furnace must be replaced</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>What can CO/Air concentration of 1600 ppm for 20 mins cause?</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) Dizziness, nausea, convulsions</li>
+                                <li onclick="selectQuizOption(8, 1)">b) Headache, dizziness, nausea</li>
+                                <li onclick="selectQuizOption(8, 2)">c) Death</li>
+                                <li onclick="selectQuizOption(8, 3)">d) Unconsciousness</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 10:</h4>
+                            <p>What can CO/Air concentration of 800 ppm for over 2 hrs cause?</p>
+                            <ul class="quiz-options" data-question="9">
+                                <li onclick="selectQuizOption(9, 0)">a) Slight headache, tiredness, dizziness, nausea</li>
+                                <li onclick="selectQuizOption(9, 1)">b) Death</li>
+                                <li onclick="selectQuizOption(9, 2)">c) Unconsciousness</li>
+                                <li onclick="selectQuizOption(9, 3)">d) Dizziness, nausea, convulsions</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 11:</h4>
+                            <p>What can CO/Air concentration of 800 ppm for 2 hrs cause?</p>
+                            <ul class="quiz-options" data-question="10">
+                                <li onclick="selectQuizOption(10, 0)">a) Unconsciousness</li>
+                                <li onclick="selectQuizOption(10, 1)">b) Frontal headache</li>
+                                <li onclick="selectQuizOption(10, 2)">c) Dizziness, nausea, convulsions</li>
+                                <li onclick="selectQuizOption(10, 3)">d) Headache, dizziness, nausea</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 12:</h4>
+                            <p>What can CO/Air concentration of 800 ppm for 45 mins cause?</p>
+                            <ul class="quiz-options" data-question="11">
+                                <li onclick="selectQuizOption(11, 0)">a) Slight headache, tiredness, dizziness, nausea</li>
+                                <li onclick="selectQuizOption(11, 1)">b) Severe headache, dizziness, nausea</li>
+                                <li onclick="selectQuizOption(11, 2)">c) Dizziness, nausea</li>
+                                <li onclick="selectQuizOption(11, 3)">d) Dizziness, nausea, convulsions</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 13:</h4>
+                            <p>Indicate True or False: Down-draft spillage of a vent can be caused by the draw of an exhaust fan elsewhere in the building.</p>
+                            <ul class="quiz-options" data-question="12">
+                                <li onclick="selectQuizOption(12, 0)">a) True</li>
+                                <li onclick="selectQuizOption(12, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 14:</h4>
+                            <p>Indicate True or False: The operation of a wood-burning fireplace on the main floor of a home can cause a chimney to which a basement furnace is venting to reverse its venting action.</p>
+                            <ul class="quiz-options" data-question="13">
+                                <li onclick="selectQuizOption(13, 0)">a) True</li>
+                                <li onclick="selectQuizOption(13, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 15:</h4>
+                            <p>Indicate True or False: Because a dryer is exhausted, not vented, its operation can't affect the proper venting of the gas appliances installed in an R2000 home.</p>
+                            <ul class="quiz-options" data-question="14">
+                                <li onclick="selectQuizOption(14, 0)">a) True</li>
+                                <li onclick="selectQuizOption(14, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 3 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 3 - Gas Hazards.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You're now ready to proceed to the next chapter in your gas training program.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers based on the CSA provided quiz
+        const quizCorrectAnswers = [2, 0, 2, 0, 1, 2, 1, 3, 1, 1, 0, 3, 0, 0, 1];
+        
+        const quizExplanations = [
+            "Filament type is a type of combustible gas indicator that works on the principle of catalytic combustion.",
+            "CGIs are calibrated by applying a known concentration of gas to the instrument, then checking the response.",
+            "Safety (public and personal) must be the first concern when responding to a gas leak call.",
+            "In the basement stairwell is the best place to test for natural gas since it's lighter than air and rises.",
+            "False - Opening doors and windows when concentrations are near explosive limits can be dangerous.",
+            "Around windows and doors is not typically a location that should be checked when testing for combustible gases.",
+            "Death can occur in 2 to 3 hours when exposed to 800 ppm of CO.",
+            "The heat exchanger or entire furnace must be replaced if a crack is found in a furnace heat exchanger.",
+            "1600 ppm CO for 20 minutes causes headache, dizziness, and nausea.",
+            "800 ppm CO for over 2 hours causes death.",
+            "800 ppm CO for 2 hours causes unconsciousness.",
+            "800 ppm CO for 45 minutes causes dizziness, nausea, and convulsions.",
+            "True - Down-draft spillage of a vent can be caused by the draw of an exhaust fan elsewhere in the building.",
+            "True - The operation of a wood-burning fireplace can cause chimney draft reversal.",
+            "False - Dryer operation can affect proper venting of gas appliances in tight homes like R2000 homes."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 7) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 15; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 15) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/15 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/15 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

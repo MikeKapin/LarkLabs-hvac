@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 2 - Chapter 6: Electrical Testing Instruments</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #2980b9, #21618c);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #2980b9;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #21618c;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .image-caption {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .image-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #3498db;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .electrical-diagram {
+            background: #f8f9fa;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .meter-visual {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 2 - Fasteners, Tools and Testing Equipment</h1>
+            <h2>Chapter 6 - Electrical Testing Instruments</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 8</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 8;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>The gas technician/fitter must use various electrical testing instruments. This Chapter identifies them and describes the basic ways to handle and store them.</p>
+                        
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter you will be able to:</p>
+                        <ul>
+                            <li>describe the purposes of electrical testing instruments; and</li>
+                            <li>describe storage and handling requirements of electrical testing instruments.</li>
+                        </ul>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Electrical testing instruments are essential tools for gas technicians working on electrical equipment. Proper understanding of their function and careful handling ensures accurate measurements and safe operation.</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Terminology",
+                content: `
+                    <div class="section">
+                        <h2>Terminology</h2>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Amperes</td>
+                                    <td>A</td>
+                                    <td>Flow rates of electric charge.</td>
+                                </tr>
+                                <tr>
+                                    <td>Milliamperes</td>
+                                    <td>mA</td>
+                                    <td>One thousandth of an ampere.</td>
+                                </tr>
+                                <tr>
+                                    <td>Microamperes</td>
+                                    <td>μA</td>
+                                    <td>One millionth of an ampere.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ohms</td>
+                                    <td>Ω</td>
+                                    <td>Measurements of resistance.</td>
+                                </tr>
+                                <tr>
+                                    <td>Kilohms</td>
+                                    <td>kΩ</td>
+                                    <td>One thousand ohms.</td>
+                                </tr>
+                                <tr>
+                                    <td>Resistance</td>
+                                    <td></td>
+                                    <td>The ability of a substance to resist the flow of current.</td>
+                                </tr>
+                                <tr>
+                                    <td>Volts</td>
+                                    <td>V</td>
+                                    <td>Measures of electric potential.</td>
+                                </tr>
+                                <tr>
+                                    <td>Millivolts</td>
+                                    <td>mV</td>
+                                    <td>One thousandth of a volt.</td>
+                                </tr>
+                                <tr>
+                                    <td>Volts direct current</td>
+                                    <td>Vdc</td>
+                                    <td>Measure of electric potential in a direct current circuit.</td>
+                                </tr>
+                                <tr>
+                                    <td>Volts alternating current</td>
+                                    <td>Vac</td>
+                                    <td>Measure of electric potential in an alternating current circuit.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="electrical-diagram">
+                            <h4>Basic Electrical Measurements</h4>
+                            <p style="font-size: 2rem; margin: 20px 0;">⚡</p>
+                            <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+                                <div><strong>VOLTAGE (V)</strong><br>Electric Potential</div>
+                                <div><strong>CURRENT (A)</strong><br>Flow of Charge</div>
+                                <div><strong>RESISTANCE (Ω)</strong><br>Opposition to Flow</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What does the abbreviation 'mA' stand for?",
+                    options: [
+                        "Mega-amperes",
+                        "Milliamperes",
+                        "Micro-amperes",
+                        "Maximum amperes"
+                    ],
+                    correct: 1,
+                    explanation: "mA stands for milliamperes, which is one thousandth of an ampere."
+                }
+            },
+            {
+                title: "Purposes of Electrical Testing Instruments",
+                content: `
+                    <div class="section">
+                        <h2>Purposes of electrical testing instruments</h2>
+                        
+                        <p>This section enables the gas technician/fitter to recognize various electrical testing instruments and the purpose they serve. Unit 5 Introduction to Electricity provides specific information in greater detail.</p>
+
+                        <p>The testing instruments a gas technician/fitter may encounter while working on electrical equipment will either be permanent or hand-held and portable.</p>
+
+                        <p>Electrical systems may require a number of different tests to diagnose problems or simply record operating conditions. The following are some common electrical instruments used in the gas industry:</p>
+                        
+                        <ul>
+                            <li>alternating current (ac) or direct current (dc) voltage meters or combinations of the two;</li>
+                            <li>amperage meters to read current;</li>
+                            <li>ohmmeters to read resistance;</li>
+                            <li>multimeters, which combine the functions of the meters above, and can be used to measure small values of voltages and amperages, among others; and</li>
+                            <li>power meters to measure wattage and usage.</li>
+                        </ul>
+
+                        <p>It is essential to know what type of electrical power you are dealing with. Electrical meters may be analogue or digital:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Analogue meters</td>
+                                    <td>Have a scale and pointer. The pointer's movement is directly and continuously related to the measured quantity.</td>
+                                </tr>
+                                <tr>
+                                    <td>Digital meters</td>
+                                    <td>Interpret the measured quantity electronically in discrete numerical data (digits).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>Electrical testing instruments come in a variety of different makes, models, and configurations. Depending on the task, the gas technician/fitter will need one or more meters to conduct the testing.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which type of electrical meter uses a scale and pointer?",
+                    options: [
+                        "The analogue type",
+                        "The digital type",
+                        "The ammeter",
+                        "The multimeter"
+                    ],
+                    correct: 0,
+                    explanation: "Analogue meters have a scale and pointer, where the pointer's movement is directly and continuously related to the measured quantity."
+                }
+            },
+            {
+                title: "Voltmeters and Millivoltmeters",
+                content: `
+                    <div class="section">
+                        <h2>Voltmeters and millivoltmeters</h2>
+                        
+                        <p>Electrical potential and voltage are measured in volts (V) or millivolts (mV).</p>
+
+                        <p>Voltmeters measure the difference of electric potential between two points in a circuit. In the field, a multimeter is more commonly used.</p>
+
+                        <p>An analogue voltmeter operates without batteries. It draws a very small current from the measured circuit. This current drives a pivoted coil to which the pointer is attached. The scale is marked in volts or millivolts.</p>
+
+                        <div class="meter-visual">
+                            <h4>Voltmeter Operation</h4>
+                            <div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+                                <div style="text-align: center;">
+                                    <p style="font-size: 2rem;">📏</p>
+                                    <p>Analogue Scale<br>with Pointer</p>
+                                </div>
+                                <div style="font-size: 3rem; color: #3498db;">⚡</div>
+                                <div style="text-align: center;">
+                                    <p style="font-size: 2rem;">🔋</p>
+                                    <p>Circuit Under<br>Test</p>
+                                </div>
+                            </div>
+                            <p><strong>Measures potential difference between two points</strong></p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What do voltmeters measure?",
+                    options: [
+                        "The amount of resistance in a circuit",
+                        "The amount of load on a circuit", 
+                        "The difference of electrical potential between two points in a circuit"
+                    ],
+                    correct: 2,
+                    explanation: "Voltmeters measure the difference of electric potential between two points in a circuit."
+                }
+            },
+            {
+                title: "Ammeters and Microammeters",
+                content: `
+                    <div class="section">
+                        <h2>Ammeters and microammeters</h2>
+                        
+                        <p>The size of an electric current flow is measured in amperes (A), milliamperes (mA), or microamperes (μA).</p>
+
+                        <p>Ammeters measure the current flowing through a circuit. In the field, a clamp on multimeter is more commonly used.</p>
+
+                        <p>An analogue ammeter operates without batteries. It is inserted into the circuit so that the full current being measured flows through the instrument. The current drives a pivoted coil to which the pointer is attached. The scale is marked in amperes, milliamperes, or microamperes.</p>
+
+                        <div class="image-grid">
+                            <div class="image-card">
+                                <div class="image-placeholder">🔌</div>
+                                <div class="image-caption">Ammeter in Circuit</div>
+                                <div class="image-description">Measures current flow through the circuit</div>
+                            </div>
+                            <div class="image-card">
+                                <div class="image-placeholder">📏</div>
+                                <div class="image-caption">Clamp-on Ammeter</div>
+                                <div class="image-description">Measures current without breaking the circuit</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which type of electrical meter measures the current flowing through a circuit?",
+                    options: [
+                        "An ammeter",
+                        "An ohmmeter", 
+                        "A voltmeter"
+                    ],
+                    correct: 0,
+                    explanation: "An ammeter measures the current flowing through a circuit. In the field, a clamp-on multimeter is more commonly used."
+                }
+            },
+            {
+                title: "Ohmmeters and Multimeters",
+                content: `
+                    <div class="section">
+                        <h2>Ohmmeters</h2>
+                        
+                        <p>The ability of a substance to resist the flow of current is called resistance and is measured in ohms (Ω) or kilohms (kΩ).</p>
+
+                        <p>You can use an ohmmeter to measure both resistance and continuity of a circuit. (An open circuit represents an infinitely large resistance to current flow.) It is easily distinguished from an ammeter or voltmeter because its scale reads from right to left. In the field, a multimeter is more commonly used.</p>
+
+                        <p>A flashlight type of battery powers the ohmmeter. This drives current through the tested circuit's resistance. This current drives a pivoted coil to which the pointer is attached. Although current is being measured, the scale is marked in ohms.</p>
+
+                        <p>It is important to set the zero for each measurement. This action also tests the battery. It is also important to switch off the ohmmeter when you finish measuring, so that the battery is not drained.</p>
+
+                        <h2>Multimeters</h2>
+                        
+                        <p>A multimeter is essentially an ammeter, voltmeter, and ohmmeter combined in a single portable case. It has two advantages: it is easier to carry and less expensive than several single-function meters.</p>
+
+                        <div class="image-grid">
+                            <div class="image-card">
+                                <div class="image-placeholder">📟</div>
+                                <div class="image-caption">Analogue Multimeter</div>
+                                <div class="image-description">Traditional meter with multiple scales and function switch</div>
+                            </div>
+                            <div class="image-card">
+                                <div class="image-placeholder">📱</div>
+                                <div class="image-caption">Digital Multimeter (DMM)</div>
+                                <div class="image-description">Modern electronic measurement device</div>
+                            </div>
+                        </div>
+
+                        <p>As shown in Figure 6-1 (conceptual), a multimeter has the following features:</p>
+                        <ul>
+                            <li>a function switch that sets the meter to measure ac, dc, or resistance;</li>
+                            <li>a range switch to select the correct range for the voltage, current, or resistance being tested;</li>
+                            <li>a zero-ohms adjustment knob (this compensates for variations in the internal battery voltage of the meter);</li>
+                            <li>a zero adjustment for the pointer (zero is set with a screwdriver before each measurement);</li>
+                            <li>a reset button to restore the instrument to normal operation if the internal circuit breaker shuts off due to overcurrent; and</li>
+                            <li>several jacks for connecting circuit leads.</li>
+                        </ul>
+
+                        <p>The most common multimeter used today is the digital multimeter (DMM). It usually has multiple or auto ranges of use.</p>
+
+                        <h3>Digital multimeter (DMM)</h3>
+                        <p>A DMM has all the functions of an analogue multimeter plus advanced features. The primary difference to the technician/fitter is the way the user reads the data. DMMs have extended features depending on the make and model; Unit 5 Introduction to Electricity discusses this in more detail.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which type of electrical meter combines a voltmeter, ohmmeter, and ammeter in one unit?",
+                    options: [
+                        "An ohmmeter",
+                        "An ammeter",
+                        "A multimeter",
+                        "A voltmeter"
+                    ],
+                    correct: 2,
+                    explanation: "A multimeter is essentially an ammeter, voltmeter, and ohmmeter combined in a single portable case."
+                }
+            },
+            {
+                title: "Storage and Handling Requirements",
+                content: `
+                    <div class="section">
+                        <h2>Storage and handling requirements of electrical testing instruments</h2>
+                        
+                        <p>The gas technician/fitter uses many varied tools. Some are simple and inexpensive, but others are complex, sensitive, and expensive. For the most part, electrical test instruments fall into the second category.</p>
+
+                        <p>If you roughly handle or improperly use these instruments, they could be easily damaged. This will render them useless for accurate measurement, which could be dangerous.</p>
+
+                        <h3>To take care of instruments:</h3>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Do...</th>
+                                    <th>Do not/never...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Store instruments in their cases when they are not in use.</td>
+                                    <td>Allow them to become damp, or expose them to high temperatures and humidity.</td>
+                                </tr>
+                                <tr>
+                                    <td>Remove batteries if you must store the instruments for long periods.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Check the battery compartment from time to time to ensure that no corrosion is taking place due to leaking batteries.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Keep a spare set of batteries for digital instruments. Unlike some analogue instruments, they will not function without batteries.</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Store test-leads so that they aren't allowed to become damaged—torn insulation, for example, could result in electrocution.</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="warning-box">
+                            <h4>⚠️ Safety Warning</h4>
+                            <p>Analogue instruments are more delicate than digital instruments—they have moving parts on jeweled bearings and can get out of alignment if badly mistreated. Despite this, they are designed for use in the field and have been around for much longer than digital instruments. Be careful with analogue instruments—do not, for example, allow them to bounce about in the back of a vehicle.</p>
+                        </div>
+
+                        <div class="tip-box">
+                            <h4>💡 Best Practice Tips</h4>
+                            <p>Always follow manufacturer's recommendations for calibration and use. Regular maintenance and proper storage will extend the life of your electrical testing instruments and ensure accurate readings for safe operation.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Why should you remove batteries when storing digital instruments for long periods?",
+                    options: [
+                        "To save battery life",
+                        "To prevent corrosion from leaking batteries",
+                        "To keep the instrument lighter",
+                        "Digital instruments don't need batteries"
+                    ],
+                    correct: 1,
+                    explanation: "You should remove batteries when storing instruments for long periods to prevent corrosion that can occur from leaking batteries."
+                }
+            },
+            {
+                title: "Chapter 6 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 6 Final Quiz</h2>
+                        <p>Test your knowledge of electrical testing instruments for gas technicians and fitters.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all questions to complete the chapter. Each question is based on the CSA Gas Trade Training materials covered in the previous sections.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Which type of electrical meter uses a scale and pointer?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) The analogue type</li>
+                                <li onclick="selectQuizOption(0, 1)">b) The digital type</li>
+                                <li onclick="selectQuizOption(0, 2)">c) The ammeter</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>What do voltmeters measure?</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) The amount of resistance in a circuit</li>
+                                <li onclick="selectQuizOption(1, 1)">b) The amount of load on a circuit</li>
+                                <li onclick="selectQuizOption(1, 2)">c) The difference of electrical potential between two points in a circuit</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>Which type of electrical meter measures the current flowing through a circuit?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) An ammeter</li>
+                                <li onclick="selectQuizOption(2, 1)">b) An ohmmeter</li>
+                                <li onclick="selectQuizOption(2, 2)">c) A voltmeter</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>In what units is the resistance of an electrical circuit measured?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) Amps</li>
+                                <li onclick="selectQuizOption(3, 1)">b) Ohms</li>
+                                <li onclick="selectQuizOption(3, 2)">c) Volts</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>Which type of electrical meter combines a voltmeter, ohmmeter, and ammeter in one unit?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) An ohmmeter</li>
+                                <li onclick="selectQuizOption(4, 1)">b) An ammeter</li>
+                                <li onclick="selectQuizOption(4, 2)">c) A multimeter</li>
+                                <li onclick="selectQuizOption(4, 3)">d) A voltmeter</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>Which type of meter measures both resistance and continuity?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) An ohmmeter</li>
+                                <li onclick="selectQuizOption(5, 1)">b) A millivoltmeter</li>
+                                <li onclick="selectQuizOption(5, 2)">c) An ammeter</li>
+                                <li onclick="selectQuizOption(5, 3)">d) A multimeter</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>Which type of meter measures ac, cd, or resistance?</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) A multimeter</li>
+                                <li onclick="selectQuizOption(6, 1)">b) A voltmeter</li>
+                                <li onclick="selectQuizOption(6, 2)">c) A wattmeter</li>
+                                <li onclick="selectQuizOption(6, 3)">d) An ammeter</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>It is essential to know when using an electrical meter, whether the power source is _____________ current or direct current.</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) Unused</li>
+                                <li onclick="selectQuizOption(7, 1)">b) Alternating</li>
+                                <li onclick="selectQuizOption(7, 2)">c) Stored</li>
+                                <li onclick="selectQuizOption(7, 3)">d) Power</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>Electrical test instruments should not be exposed to high temperature or _____________.</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) Low temperature</li>
+                                <li onclick="selectQuizOption(8, 1)">b) Dry atmospheres</li>
+                                <li onclick="selectQuizOption(8, 2)">c) Humidity</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 10:</h4>
+                            <p>A test-lead _____________ is potentially dangerous and could result in electrocution.</p>
+                            <ul class="quiz-options" data-question="9">
+                                <li onclick="selectQuizOption(9, 0)">a) With a thicker cord</li>
+                                <li onclick="selectQuizOption(9, 1)">b) That is very long</li>
+                                <li onclick="selectQuizOption(9, 2)">c) That is missing insulation</li>
+                                <li onclick="selectQuizOption(9, 3)">d) With a lot of insulation</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 6 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 6 - Electrical Testing Instruments.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You're now ready to proceed to the next chapter in your gas trade training.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz correct answers based on the CSA quiz: a, c, a, b, c, a, a, b, c, c
+        const quizCorrectAnswers = [0, 2, 0, 1, 2, 0, 0, 1, 2, 2];
+        const quizExplanations = [
+            "Analogue meters have a scale and pointer, where the pointer's movement is directly and continuously related to the measured quantity.",
+            "Voltmeters measure the difference of electric potential between two points in a circuit.",
+            "An ammeter measures the current flowing through a circuit. In the field, a clamp-on multimeter is more commonly used.",
+            "Resistance is measured in ohms (Ω) or kilohms (kΩ).",
+            "A multimeter is essentially an ammeter, voltmeter, and ohmmeter combined in a single portable case.",
+            "An ohmmeter can measure both resistance and continuity of a circuit. An open circuit represents an infinitely large resistance to current flow.",
+            "A multimeter can measure ac, dc, or resistance depending on the function switch setting.",
+            "It is essential to know whether the power source is alternating current or direct current when using electrical meters.",
+            "Electrical test instruments should not be exposed to high temperature or humidity as this can damage them.",
+            "A test-lead that is missing insulation is potentially dangerous and could result in electrocution."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 7) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 10; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 10) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/10 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/10 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

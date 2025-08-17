@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LARK Labs HVAC Tools & Training – Free Resources for Canadian Gas Technicians</title>
+    <meta name="description" content="LARK Labs offers free professional-grade HVAC tools, calculators, and certification training for Canadian gas technicians, students, and educators. Access AI-powered diagnostics, TSSA exam simulators, and more—built by industry experts.">
+    <meta name="keywords" content="CSA B149.1 study guide, TSSA G2 practice exam, HVAC certification prep Canada, free HVAC calculators, Gas Technician 2 training, Gas Technician 3 training, HVAC field tools app, HVAC troubleshooting assistant, Canadian gas technician certification">
+    
+    <!-- SEO Enhancements -->
+    <link rel="canonical" href="https://larklabs.org/" />
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="LARK Labs - HVAC Training and Tools">
+    <meta name="theme-color" content="#3498db">
+    <link rel="icon" type="image/png" href="https://larklabs.org/favicon.png" />
+    <link rel="apple-touch-icon" href="https://larklabs.org/apple-touch-icon.png" />
+    
+    <!-- Open Graph for Facebook/LinkedIn -->
+    <meta property="og:title" content="Free HVAC Tools & Canadian Gas Technician Training - LARK Labs">
+    <meta property="og:description" content="Professional-grade HVAC calculators, TSSA G2 & G3 exam simulators, and CSA B149.1 study guides - completely free for Canadian HVAC professionals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://larklabs.org/">
+    <meta property="og:image" content="https://larklabs.org/logo.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free HVAC Tools & Canadian Gas Technician Training">
+    <meta name="twitter:description" content="Professional-grade HVAC calculators and certification training for Canadian gas technicians.">
+    <meta name="twitter:image" content="https://larklabs.org/logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(52, 152, 219, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        /* Mobile menu toggle button - hidden by default */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 300px 0 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
+                        radial-gradient(circle at 30% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #ecf0f1;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        /* Reduced padding for main sections to prevent header obstruction */
+        .main-content-with-header {
+            padding: 200px 0 80px 0;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            padding-top: 100px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section#home {
+            padding-top: 0 !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            margin-top: 0;
+            color: #3498db;
+        }
+
+        /* Study Guide Section */
+        .study-guide-section {
+            background: rgba(52, 152, 219, 0.08);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .study-guide-section h2 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .study-guide-section ul {
+            color: #ecf0f1;
+            font-size: 1.1rem;
+            margin-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .study-guide-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(52, 152, 219, 0.2);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .tool-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .tool-card p {
+            color: #bdc3c7;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .status-available {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+        }
+
+        .status-premium {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .status-coming-soon {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        /* NEW Badge */
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        /* PREMIUM Badge */
+        .premium-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        /* REVOLUTIONARY Badge */
+        .revolutionary-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #e74c3c, #ff6b6b, #e74c3c);
+            background-size: 200% 200%;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 12px rgba(231, 76, 60, 0.6);
+            animation: revolutionaryPulse 3s infinite, gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes revolutionaryPulse {
+            0% { transform: scale(1); box-shadow: 0 2px 12px rgba(231, 76, 60, 0.6); }
+            50% { transform: scale(1.08); box-shadow: 0 4px 20px rgba(231, 76, 60, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 2px 12px rgba(231, 76, 60, 0.6); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Revolutionary Tool Card Styles */
+        .revolutionary-tool {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), rgba(255, 107, 107, 0.05));
+            border: 2px solid rgba(231, 76, 60, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revolutionary-tool::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(231, 76, 60, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .revolutionary-tool:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(231, 76, 60, 0.3);
+            border-color: rgba(231, 76, 60, 0.5);
+        }
+
+        .revolutionary-icon {
+            background: linear-gradient(45deg, #e74c3c, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: iconGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes iconGlow {
+            0% { filter: drop-shadow(0 0 5px rgba(231, 76, 60, 0.5)); }
+            100% { filter: drop-shadow(0 0 15px rgba(231, 76, 60, 0.8)); }
+        }
+
+        /* Coming Soon Preview Styles */
+        .coming-soon-preview {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(231, 76, 60, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .preview-screens {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-screen {
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(45deg, #e74c3c, #ff6b6b);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            animation: screenFlicker 2s infinite alternate;
+        }
+
+        @keyframes screenFlicker {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .status-revolutionary {
+            background: linear-gradient(45deg, #e74c3c, #ff6b6b);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Newsletter Signup */
+        .newsletter-signup {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .newsletter-signup h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .newsletter-form button {
+            padding: 12px 24px;
+            background: #3498db;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* About Section */
+        .about-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .founder-section {
+            background: rgba(52, 152, 219, 0.08);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 3rem;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .founder-section h3 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .founder-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ecf0f1;
+            text-align: justify;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .feature-item .icon {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        /* Quote */
+        .quote {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* FAQ Section Styles */
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .faq-section h3 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(52, 152, 219, 0.08);
+            border-radius: 10px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer {
+            color: #ecf0f1;
+            line-height: 1.6;
+        }
+
+        /* Accessibility Improvements */
+        *:focus {
+            outline: 2px solid #3498db;
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .tool-card {
+                border: 2px solid #ffffff;
+            }
+            
+            .cta-button {
+                border: 2px solid #ffffff;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        /* External Link Icon */
+        .external-link::after {
+            content: "↗";
+            font-size: 0.8em;
+            margin-left: 5px;
+            opacity: 0.7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Mobile navigation styles */
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .logo {
+                gap: 10px;
+            }
+
+            .logo img {
+                height: 45px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(26, 26, 26, 0.98);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid rgba(52, 152, 219, 0.3);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 2rem;
+                margin: 0;
+                border-radius: 0;
+                width: 100%;
+                font-size: 1.1rem;
+                transition: all 0.3s;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                background: rgba(52, 152, 219, 0.2);
+                color: #3498db;
+            }
+
+            /* Rest of mobile styles */
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-card {
+                padding: 1.5rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .main-content-with-header {
+                padding: 180px 0 80px 0;
+            }
+
+            /* Mobile-specific adjustments */
+            .container {
+                padding: 0 15px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .cta-button {
+                margin: 5px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            .logo img {
+                height: 35px;
+            }
+
+            .hero {
+                padding: 250px 0 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+
+            .main-content-with-header {
+                padding: 160px 0 60px 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .tool-card {
+                padding: 1rem;
+            }
+
+            .tool-icon {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <img src="logo.png" alt="LARK Labs HVAC Training and Tools Logo - Free Canadian Gas Technician Resources" style="height: 60px; width: auto;">
+            </div>
+            
+            <!-- Mobile menu toggle button -->
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="sr-only">Open navigation menu</span>
+                ☰
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="showSection('home'); closeMobileMenu();" class="active">Home</a></li>
+                <li><a onclick="showSection('tools'); closeMobileMenu();">Tools</a></li>
+                <li><a onclick="showSection('training'); closeMobileMenu();">Training</a></li>
+                <li><a onclick="showSection('downloads'); closeMobileMenu();">Downloads</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a onclick="showSection('resources'); closeMobileMenu();">Resources</a></li>
+                <li><a onclick="showSection('about'); closeMobileMenu();">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HOME SECTION -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="container">
+                    <h1>Free HVAC Tools & Canadian Gas Technician Training</h1>
+                    <p>Professional-grade calculators, TSSA G2 & G3 exam simulators, CSA B149.1 study guides, and certification training resources - completely free for Canadian HVAC technicians, students, and educators</p>
+                    <a href="#" class="cta-button" onclick="showSection('tools')">Browse HVAC Tools</a>
+                    <a href="#" class="cta-button secondary" onclick="showSection('downloads')">Free Downloads</a>
+                </div>
+            </div>
+
+            <div class="container main-content">
+                <div class="quote">
+                    "The right tools and training make all the difference in professional HVAC work" - LARK Labs
+                </div>
+
+                <!-- CSA B149.1 Study Guide Section -->
+                <div class="study-guide-section">
+                    <h2>CSA B149.1 Study Guide for Canadian Gas Technicians</h2>
+                    <p style="text-align: center; color: #bdc3c7; margin-bottom: 1.5rem;">
+                        Prepare for the CSA B149.1 gas code exam with our free, interactive study guide. Access chapter-by-chapter review questions, quick reference charts, and expert explanations—all designed for Canadian Gas Technician 2 and 3 certification.
+                    </p>
+                    <ul style="color: #ecf0f1; font-size: 1.1rem; margin-left: 2rem; margin-bottom: 2rem;">
+                        <li>✔️ Search the full <a href="https://codecompass-api.vercel.app/" target="_blank" style="color: #3498db; text-decoration: none;">CSA B149.1 code with Code Compass</a></li>
+                        <li>✔️ Practice with realistic <a href="#" onclick="showSection('training')" style="color: #3498db; text-decoration: none;">chapter review questions</a></li>
+                        <li>✔️ Download quick reference guides for offline study</li>
+                        <li>✔️ Get tips from experienced Canadian HVAC educators</li>
+                    </ul>
+                    <div style="text-align: center;">
+                        <a href="https://codecompass-api.vercel.app/" target="_blank" class="cta-button external-link">Access Code Compass Now</a>
+                        <a href="#" onclick="showSection('training')" class="cta-button secondary">Start Practice Tests</a>
+                    </div>
+                </div>
+
+                <h2 class="section-title">What We Offer Canadian HVAC Professionals</h2>
+                
+                <!-- Revolutionary AI Tool Preview for Home Page -->
+                <div class="tools-grid" style="margin-bottom: 2rem;">
+                    <div class="tool-card revolutionary-tool" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto;">
+                        <div class="new-badge revolutionary-badge">REVOLUTIONARY</div>
+                        <div class="tool-icon revolutionary-icon">🤖</div>
+                        <h3 style="text-align: center; font-size: 1.8rem;">AI HVAC Troubleshooting Assistant - Coming Q4 2025</h3>
+                        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">Revolutionary diagnostic tool providing detailed sequence of operations, step-by-step troubleshooting guides, and comprehensive fault analysis for all HVAC makes and models.</p>
+                        <div class="coming-soon-preview">
+                            <div class="preview-screens">
+                                <div class="preview-screen">📱</div>
+                                <div class="preview-screen">💻</div>
+                                <div class="preview-screen">🔧</div>
+                            </div>
+                            <p style="font-size: 1rem; color: #e74c3c; font-weight: bold; margin: 1rem 0; text-align: center;">🚀 Game-Changing HVAC Technology - Beta Testing Begins Q4 2025</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <span class="tool-status status-revolutionary">🚀 Revolutionary Tool - Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="showSection('tools')" role="button" tabindex="0" aria-label="View Professional HVAC Calculators">
+                        <div class="tool-icon" aria-hidden="true">🧮</div>
+                        <h3>Professional HVAC Calculators</h3>
+                        <p>Load calculations, unit conversions, and refrigeration P-T charts for Canadian HVAC technicians</p>
+                        <span class="tool-status status-available">Available Now</span>
+                    </div>
+                    <div class="tool-card" onclick="showSection('training')" role="button" tabindex="0" aria-label="Access TSSA G2 and G3 Practice Exams">
+                        <div class="tool-icon" aria-hidden="true">🎓</div>
+                        <h3>TSSA G2 & G3 Practice Exams</h3>
+                        <p>Complete exam simulators to help you pass your Canadian Gas Technician certification</p>
+                        <span class="tool-status status-available">Available Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.location.href='community.html'" role="button" tabindex="0" aria-label="Join Canadian HVAC Community">
+                        <div class="tool-icon" aria-hidden="true">💬</div>
+                        <h3>Canadian HVAC Community</h3>
+                        <p>Connect with other Canadian technicians and students to share knowledge and experience</p>
+                        <span class="tool-status status-available">Available Now</span>
+                    </div>
+                    <div class="tool-card" onclick="showSection('resources')" role="button" tabindex="0" aria-label="Search CSA B149.1 Code">
+                        <div class="tool-icon" aria-hidden="true">📚</div>
+                        <h3>CSA B149.1 Code Search Tool</h3>
+                        <p>Search through Canadian gas codes, CSA B149.1, TSSA regulations, and safety standards</p>
+                        <span class="tool-status status-available">Available Now</span>
+                    </div>
+                </div>
+
+                <!-- FAQ Section for SEO -->
+                <div class="faq-section">
+                    <h3>Frequently Asked Questions</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">How do I study for the TSSA G2 exam?</div>
+                        <div class="faq-answer">Our <a href="#" onclick="showSection('training')" style="color: #3498db; text-decoration: none;">TSSA G2 practice exam simulator</a> provides 500+ questions with detailed explanations, covering all certification topics. Combined with our <a href="https://codecompass-api.vercel.app/" target="_blank" style="color: #3498db; text-decoration: none;">CSA B149.1 study guide and Code Compass tool</a>, you'll have comprehensive preparation for your Gas Technician 2 certification.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">What's the best free HVAC calculator for Canadian standards?</div>
+                        <div class="faq-answer">Our <a href="#" onclick="showSection('tools')" style="color: #3498db; text-decoration: none;">HVAC Pro Tools app</a> includes professional-grade calculators specifically designed for Canadian HVAC work, including heat load calculations with Canadian climate data, refrigeration P-T charts for all common refrigerants, and unit converters for imperial/metric systems.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Are these tools suitable for HVAC students and educators?</div>
+                        <div class="faq-answer">Absolutely! All our tools are designed for students, working technicians, and educators. They're used in Canadian HVAC programs and are completely free for educational use. Our training modules align with CSA certification requirements.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">How do I prepare for the CSA B149.1 exam?</div>
+                        <div class="faq-answer">Use our <a href="https://codecompass-api.vercel.app/" target="_blank" style="color: #3498db; text-decoration: none;">Code Compass tool</a> to search and study CSA B149.1 regulations, combined with our comprehensive <a href="#" onclick="showSection('training')" style="color: #3498db; text-decoration: none;">chapter review questions</a> covering all units from safety protocols to advanced piping systems and appliance installation.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">What makes these HVAC tools different from others?</div>
+                        <div class="faq-answer">Our tools are built by experienced HVAC professionals and educators specifically for the Canadian market. They include Canadian climate data, CSA standards, TSSA regulations, and are designed based on 20+ years of field experience and 10 years of teaching HVAC programs.</div>
+                    </div>
+                </div>
+
+                <div class="newsletter-signup">
+                    <h3>Stay Updated with LARK Labs</h3>
+                    <p>Get notified when new HVAC tools, training modules, and certification resources are released</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email for HVAC updates">
+                        <button type="submit">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOOLS SECTION -->
+        <section id="tools" class="section">
+            <div class="container main-content-with-header">
+                <h2 class="section-title">Professional HVAC Tools & Calculators for Canadian Technicians</h2>
+                
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="window.open('https://codecompass-api.vercel.app/', '_blank')">
+                        <div class="tool-icon">🧭</div>
+                        <h3>Code Compass - CSA B149.1 Search Tool</h3>
+                        <p>Our flagship gas code and regulations search tool for quick reference to Canadian standards</p>
+                        <span class="tool-status status-available external-link">Launch App</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./hvac-load-calculator.html', '_blank')">
+                        <div class="tool-icon">🏠</div>
+                        <h3>Canadian Heat & Cooling Load Calculator</h3>
+                        <p>Calculate heating and cooling requirements for residential and commercial spaces with Canadian climate data</p>
+                        <span class="tool-status status-available external-link">Launch Calculator</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./superheat-subcooling-calculator.html', '_blank')">
+                        <div class="tool-icon">🌡️</div>
+                        <h3>Superheat & Subcooling Calculator</h3>
+                        <p>Calculate superheat and subcooling values for system diagnostics with comprehensive refrigerant database</p>
+                        <span class="tool-status status-available external-link">Launch Calculator</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./pt-chart-generator.html', '_blank')">
+                        <div class="tool-icon">📊</div>
+                        <h3>Refrigeration P-T Charts</h3>
+                        <p>Interactive pressure-temperature charts for all common refrigerants including A2L and natural refrigerants</p>
+                        <span class="tool-status status-available external-link">Launch P-T Charts</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./duct_sizing_calculator.html', '_blank')">
+                        <div class="new-badge">NEW</div>
+                        <div class="tool-icon">🌪️</div>
+                        <h3>Professional Duct Sizing Calculator</h3>
+                        <p>Size ductwork for optimal airflow and efficiency with professional-grade calculations</p>
+                        <span class="tool-status status-available external-link">Launch Calculator</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./universal_unit_converter.html', '_blank')">
+                        <div class="tool-icon">📐</div>
+                        <h3>HVAC Unit Converter</h3>
+                        <p>Convert between imperial and metric units instantly for Canadian HVAC work</p>
+                        <span class="tool-status status-available external-link">Launch Converter</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./psychrometric_calculator.html', '_blank')">
+                        <div class="tool-icon">📊</div>
+                        <h3>Psychrometric Calculator</h3>
+                        <p>Advanced air property calculations and analysis for HVAC professionals</p>
+                        <span class="tool-status status-available external-link">Launch Calculator</span>
+                    </div>
+                    <div class="tool-card revolutionary-tool">
+                        <div class="new-badge revolutionary-badge">REVOLUTIONARY</div>
+                        <div class="tool-icon revolutionary-icon">🤖</div>
+                        <h3>AI HVAC Troubleshooting Assistant</h3>
+                        <p>Revolutionary diagnostic tool providing detailed sequence of operations, step-by-step troubleshooting guides, and comprehensive fault analysis for all HVAC makes and models. Features include flash code interpretation, common problem databases, and AI-powered diagnostic recommendations.</p>
+                        <div style="margin: 1rem 0; text-align: left;">
+                            <h4 style="color: #e74c3c; margin-bottom: 0.8rem; font-size: 1rem;">🚀 Revolutionary Features:</h4>
+                            <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
+                                <li>🔍 Universal make/model compatibility</li>
+                                <li>⚡ Real-time flash code decoder</li>
+                                <li>📋 Interactive sequence of operations</li>
+                                <li>🎯 AI-powered fault diagnosis</li>
+                                <li>📊 Performance optimization tips</li>
+                                <li>📱 Mobile-optimized interface</li>
+                                <li>🔧 Equipment-specific procedures</li>
+                            </ul>
+                        </div>
+                        <div class="coming-soon-preview">
+                            <div class="preview-screens">
+                                <div class="preview-screen">📱</div>
+                                <div class="preview-screen">💻</div>
+                                <div class="preview-screen">🔧</div>
+                            </div>
+                            <p style="font-size: 0.9rem; color: #e74c3c; font-weight: bold; margin: 1rem 0;">Beta Testing Begins Q2 2025</p>
+                        </div>
+                        <span class="tool-status status-revolutionary">🚀 Revolutionary Tool - Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRAINING SECTION -->
+        <section id="training" class="section">
+            <div class="container main-content-with-header">
+                <h2 class="section-title">Canadian HVAC Training & Gas Technician Certification</h2>
+                
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="window.open('./A2L_Course.html', '_blank')">
+                        <div class="tool-icon">🧪</div>
+                        <h3>A2L Refrigerant Training Module</h3>
+                        <p>Comprehensive training on mildly flammable A2L refrigerants including safety protocols, handling procedures, and regulatory compliance. Complete this course to earn your A2L Refrigerant Safety Certificate and stay current with industry standards for R-32, R-454B, and other next-generation refrigerants.</p>
+                        <span class="tool-status status-available external-link">Start Training</span>
+                    </div>
+                    <div class="tool-card" onclick="window.location.href='g2_premium_access.html'">
+                        <div class="premium-badge">PREMIUM</div>
+                        <div class="tool-icon">🔥</div>
+                        <h3>TSSA G2 Practice Exam - Premium</h3>
+                        <p>Master your Gas Technician 2 certification with comprehensive practice exams. Premium simulator with 500+ questions, detailed explanations, and unlimited access.</p>
+                        <span class="tool-status status-premium">Premium - $79.99</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./TSSA_G3_Exam_SimulatorV3.html', '_blank')">
+                        <div class="tool-icon">🔥</div>
+                        <h3>TSSA G3 Practice Exam - Free</h3>
+                        <p>Prepare for your Gas Technician 3 certification with realistic practice tests covering all exam topics</p>
+                        <span class="tool-status status-available external-link">Start Exam</span>
+                    </div>
+                    <div class="tool-card" onclick="window.location.href='G2_modules_payment.html'">
+                        <div class="premium-badge">PREMIUM</div>
+                        <div class="tool-icon">🎓</div>
+                        <h3>CSA Gas Technician 2 - Learning Modules</h3>
+                        <p>Comprehensive learning modules for Gas Technician 2 certification training with interactive content and assessments covering advanced piping systems, appliances, and controls</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="cta-button" onclick="event.stopPropagation(); window.open('./G2/index.html', '_blank')" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Browse All Materials</button>
+                            <button class="cta-button secondary" onclick="event.stopPropagation(); showCSAG2ChapterQuestions();" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Chapter Reviews</button>
+                        </div>
+                        <span class="tool-status status-premium">Premium Access</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G3/index.html', '_blank')">
+                        <div class="tool-icon">🎓</div>
+                        <h3>CSA Gas Technician 3 - Learning Modules</h3>
+                        <p>Comprehensive learning modules for Gas Technician 3 certification training with interactive content and assessments</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="cta-button" onclick="event.stopPropagation(); window.open('./G3/index.html', '_blank')" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Browse All Materials</button>
+                            <button class="cta-button secondary" onclick="event.stopPropagation(); showCSAChapterQuestions();" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Chapter Reviews</button>
+                        </div>
+                        <span class="tool-status status-available external-link">Access Modules</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">🎥</div>
+                        <h3>HVAC Video Tutorials</h3>
+                        <p>Step-by-step video guides for common HVAC procedures and Canadian code compliance</p>
+                        <span class="tool-status status-coming-soon">Coming Soon</span>
+                    </div>
+                </div>
+
+                <div class="quote">
+                    "Education is the foundation of excellence in the Canadian HVAC industry" - LARK Labs
+                </div>
+            </div>
+        </section>
+
+        <!-- CSA CHAPTER QUESTIONS SECTION -->
+        <section id="csa-chapters" class="section">
+            <div class="container main-content-with-header">
+                <h2 class="section-title">CSA Gas Technician Chapter Questions</h2>
+                <p style="text-align: center; margin-bottom: 2rem; color: #bdc3c7;">
+                    Interactive chapter-by-chapter study guides for CSA Gas Trade Training. Each unit contains comprehensive questions to help you master the material.
+                </p>
+                
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_1_Safety_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🛡️</div>
+                        <h3>Unit 1 - Safety</h3>
+                        <p>On-the-Job Safety, Government Acts, Hazardous Materials, Fire Safety</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_2_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🔧</div>
+                        <h3>Unit 2 - Tools & Equipment</h3>
+                        <p>Fasteners, Hand Tools, Power Tools, Measuring & Testing Instruments</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_3_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">⛽</div>
+                        <h3>Unit 3 - Gas Properties</h3>
+                        <p>Fuel Gas Properties, Combustion, Gas Hazards & Safe Handling</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_4_&_4a_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">📋</div>
+                        <h3>Unit 4 & 4a - Codes</h3>
+                        <p>Utilization Codes, Acts, Regulations & Ontario Supplement</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">⚡</div>
+                        <h3>Unit 5 - Basic Electricity</h3>
+                        <p>Electrical Safety, Theory, Circuits, Magnetism, AC/DC & Instruments</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html', '_blank')">
+                        <div class="tool-icon">📐</div>
+                        <h3>Unit 6 - Technical Drawings, Manuals and Graphs</h3>
+                        <p>Technical Drawings, Reference Manuals, Charts & Graph Interpretation</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_7_Customer_Relations_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🤝</div>
+                        <h3>Unit 7 - Customer Relations</h3>
+                        <p>Professional Communication, Customer Service & Workplace Relations</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_8_Intro_to_Piping_Reviews.html', '_blank')">
+                        <div class="tool-icon">🔩</div>
+                        <h3>Unit 8 - Intro to Gas Piping Systems</h3>
+                        <p>Gas Piping Materials, Installation Methods & System Components</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html', '_blank')">
+                        <div class="tool-icon">🔥</div>
+                        <h3>Unit 9 - Intro to Gas Appliances</h3>
+                        <p>Gas Appliance Types, Components, Operation & Safety Features</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                </div>
+
+                <div class="quote">
+                    "Each unit builds upon the previous knowledge - master each chapter to ensure comprehensive understanding" - LARK Labs
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="cta-button" onclick="showSection('training')">← Back to Training</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSA GAS TECHNICIAN 2 CHAPTERS SECTION -->
+        <section id="csa-g2-chapters" class="section">
+            <div class="container main-content-with-header">
+                <h2 class="section-title">CSA Gas Technician 2 - Advanced Training Modules</h2>
+                <p style="text-align: center; margin-bottom: 2rem; color: #bdc3c7;">
+                    Advanced chapter-by-chapter study guides for CSA Gas Technician 2 certification. These modules cover advanced piping systems, appliances, controls, and specialized installations.
+                </p>
+                
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_10_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🔧</div>
+                        <h3>Unit 10 - Advanced Piping Systems</h3>
+                        <p>Advanced piping design, installation techniques, and system optimization</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_11_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">⚙️</div>
+                        <h3>Unit 11 - Pressure Regulators</h3>
+                        <p>Pressure regulation systems, selection, installation, and maintenance</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_12_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">⚡</div>
+                        <h3>Unit 12 - Basic Electricity for Gas Fired Appliances</h3>
+                        <p>Electrical systems specific to gas appliances and controls</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_13_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🎛️</div>
+                        <h3>Unit 13 - Controls</h3>
+                        <p>Gas appliance control systems, thermostats, and safety devices</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_14_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🏢</div>
+                        <h3>Unit 14 - The Building as a System</h3>
+                        <p>Building envelope, ventilation, and system interactions</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_15_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🏠</div>
+                        <h3>Unit 15 - Domestic Appliances</h3>
+                        <p>Residential gas appliances, installation, and servicing</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_16_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">❄️</div>
+                        <h3>Unit 16 - Gas Fired Refrigerators</h3>
+                        <p>Gas refrigeration systems, operation, and maintenance</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_17_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🔥</div>
+                        <h3>Unit 17 - Conversion Burners</h3>
+                        <p>Burner conversion systems and installation procedures</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_18_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🚿</div>
+                        <h3>Unit 18 - Water Heaters and Combination Systems</h3>
+                        <p>Gas water heating systems and combination units</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_19_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🌪️</div>
+                        <h3>Unit 19 - Forced Warm Air Appliances</h3>
+                        <p>Forced air heating systems, ductwork, and air distribution</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_20_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">💧</div>
+                        <h3>Unit 20 - Hydronic Heating Systems</h3>
+                        <p>Hot water heating systems, boilers, and hydronic distribution</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_21_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🏠</div>
+                        <h3>Unit 21 - Space Heaters and Fireplaces</h3>
+                        <p>Direct vent heaters, fireplaces, and space heating appliances</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_22_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">💨</div>
+                        <h3>Unit 22 - Venting Systems</h3>
+                        <p>Venting design, installation, and safety requirements</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_23_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">💨</div>
+                        <h3>Unit 23 - Forced Air Add-Ons</h3>
+                        <p>Air conditioning, heat pumps, and system enhancements</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./G2/CSA_Unit_24_Chapter_Reviews.html', '_blank')">
+                        <div class="tool-icon">🌬️</div>
+                        <h3>Unit 24 - Air Handling</h3>
+                        <p>Air handling systems, filtration, and indoor air quality</p>
+                        <span class="tool-status status-available external-link">Study Now</span>
+                    </div>
+                </div>
+
+                <div class="quote">
+                    "Advanced training builds upon fundamental knowledge to create expert-level technicians" - LARK Labs
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="cta-button" onclick="showSection('training')">← Back to Training</button>
+                    <button class="cta-button secondary" onclick="window.open('./G2/index.html', '_blank')">Browse All G2 Materials</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FREE DOWNLOADS SECTION -->
+        <section id="downloads" class="section">
+            <div class="container main-content-with-header">
+                <h2 class="section-title">Free HVAC Downloads for Canadian Technicians</h2>
+                <p style="text-align: center; margin-bottom: 3rem; color: #bdc3c7; font-size: 1.2rem;">
+                    Download our comprehensive HVAC tools and resources for offline use. Most downloads are completely free for Canadian HVAC professionals, students, and educators.
+                </p>
+                
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="window.open('./HVAC_PRO_Tools.html', '_blank')">
+                        <div class="tool-icon">📱</div>
+                        <h3>HVAC Pro Tools App</h3>
+                        <p>Your complete HVAC calculation toolkit in one comprehensive application. This powerful web app includes all our professional-grade calculators and tools, designed for both field work and educational use.</p>
+                        
+                        <div style="margin: 1rem 0; text-align: left;">
+                            <h4 style="color: #3498db; margin-bottom: 0.8rem;">Included Tools:</h4>
+                            <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem;">
+                                <li>🏠 Heat & Cooling Load Calculator</li>
+                                <li>🌡️ Superheat & Subcooling Calculator</li>
+                                <li>📊 Refrigeration P-T Charts</li>
+                                <li>🌪️ Duct Sizing Calculator</li>
+                                <li>📐 Universal Unit Converter</li>
+                                <li>📈 Psychrometric Calculator</li>
+                                <li>💨 Vent Sizing Tool (Coming Soon)</li>
+                                <li>🔧 Additional HVAC Utilities</li>
+                            </ul>
+                        </div>
+                        
+                        <span class="tool-status status-available external-link">🚀 Launch HVAC Pro Tools</span>
+                    </div>
+                    
+                    <div class="tool-card" onclick="window.open('./G3/', '_blank')">
+                        <div class="tool-icon">🔥</div>
+                        <h3>CSA Gas Technician 3 - Study Materials</h3>
+                        <p>Browse and download individual study materials, reference guides, and practice resources for all nine units. Access what you need, when you need it - from safety protocols to gas appliance operation.</p>
+                        <span class="tool-status status-available external-link">Browse Materials</span>
+                    </div>
+                    
+                    <div class="tool-card" onclick="window.location.href='g2_modules_premium_access.html'">
+                        <div class="premium-badge">PREMIUM</div>
+                        <div class="tool-icon">🔧</div>
+                        <h3>CSA Gas Technician 2 Unit Content</h3>
+                        <p>Comprehensive downloadable training materials for CSA Gas Technician 2 certification. Features advanced content covering installation techniques, system design, troubleshooting procedures, and safety protocols. Perfect for technicians advancing from G3 to G2 certification levels.</p>
+                        <span class="tool-status status-premium">Premium Access</span>
+                    </div>
+                </div>
+
+                <div class="quote">
+                    "The best tools are the ones you have with you when you need them" - LARK Labs
+                </div>
+
+                <div class="newsletter-signup">
+                    <h3>🔔 Get Download Notifications</h3>
+                    <p>Be the first to know when new tools and resources become available for download</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email for HVAC updates">
+                        <button type="submit">Notify Me</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESOURCES SECTION -->
+        <section id="resources" class="section">
+            <div class="container main-content-with-header">
+                <h2 class="section-title">Canadian Gas Codes & HVAC Resources</h2>
+                
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="window.open('https://codecompass-api.vercel.app/', '_blank')">
+                        <div class="tool-icon">📋</div>
+                        <h3>Code Compass - CSA B149.1 & Gas Codes</h3>
+                        <p>Search through Canadian gas codes and regulations quickly and efficiently</p>
+                        <span class="tool-status status-available external-link">Access Now</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">📖</div>
+                        <h3>CSA B149.1 Reference Guide</h3>
+                        <p>Natural gas and propane installation code quick reference guide for Canadian technicians</p>
+                        <span class="tool-status status-coming-soon">Coming Soon</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">⚖️</div>
+                        <h3>TSSA Regulations Database</h3>
+                        <p>Technical Standards and Safety Authority regulations and updates for Ontario</p>
+                        <span class="tool-status status-coming-soon">Coming Soon</span>
+                    </div>
+                </div>
+
+                <div class="quote">
+                    "Knowledge of Canadian codes and regulations is essential for safe, professional HVAC work" - LARK Labs
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="section">
+            <div class="container main-content-with-header">
+                <h2 class="section-title">About LARK Labs</h2>
+                
+                <div class="about-content">
+                    <p><strong>LARK Labs</strong> was founded with a mission to bridge the gap between traditional HVAC education and the digital age. With 20 years of field experience and 10 years of teaching experience, including serving as Program Coordinator at Fanshawe College, we understand the real-world challenges faced by Canadian HVAC professionals.</p>
+
+                    <div class="quote">
+                        "Technology should serve people, not the other way around" - LARK Labs Philosophy
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div class="icon">🎓</div>
+                            <h4>Educational Excellence</h4>
+                            <p>Tools designed by educators for real learning outcomes</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">🔧</div>
+                            <h4>Field Experience</h4>
+                            <p>Solutions grounded in 20+ years of hands-on HVAC work</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">💻</div>
+                            <h4>Modern Technology</h4>
+                            <p>Cutting-edge tools that work seamlessly on any device</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">🌟</div>
+                            <h4>Community First</h4>
+                            <p>Free tools that serve the Canadian HVAC professional community</p>
+                        </div>
+                    </div>
+
+                    <h3>Who We Serve</h3>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div class="icon">🎓</div>
+                            <h4>Students</h4>
+                            <p>Aspiring HVAC professionals seeking comprehensive learning resources</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">👨‍🏫</div>
+                            <h4>Educators</h4>
+                            <p>Teachers and trainers looking for innovative instructional tools</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">🔧</div>
+                            <h4>Technicians</h4>
+                            <p>Working professionals who need reliable tools for daily operations</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">👔</div>
+                            <h4>Business Owners</h4>
+                            <p>HVAC companies seeking to improve efficiency and employee development</p>
+                        </div>
+                    </div>
+
+                    <p>At LARK Labs, we're not just developing software – we're cultivating the future of the Canadian HVAC industry. Through innovative technology, comprehensive education, and unwavering commitment to excellence, we're helping to ensure that the next generation of HVAC professionals is better equipped and better prepared.</p>
+                </div>
+
+                <div class="founder-section">
+                    <h3>About the Founder of LARK Labs</h3>
+                    <p>As HRAC Program Coordinator at Fanshawe College, I bring over two decades of comprehensive experience spanning industry practice, education, and program leadership in the heating, ventilation, air conditioning, and refrigeration sector. My career foundation was built through 14 years as owner-operator of Mike's Heating and Home Comfort, providing me with deep understanding of the practical challenges and opportunities facing HVAC professionals and business owners.</p>
+                    
+                    <p>For the past decade, I have served as an instructor at Fanshawe College, where I have dedicated the last five years to coordinating the Heating, Refrigeration and Air Conditioning program, the 313D Refrigeration Apprenticeship, and the Ontario Youth Apprenticeship Programs. This dual perspective of field experience and educational leadership has given me unique insight into the evolving needs of the industry.</p>
+                    
+                    <p>Recognizing a critical gap between traditional field experience and emerging technology, I have developed innovative solutions to bridge this divide. My initiatives include creating comprehensive mobile tools and digital resources designed to enhance efficiency and effectiveness for HVAC technicians, students, and business owners. These platforms consolidate essential HVAC tools in one accessible location while providing free training modules and practice examinations for TSSA G3 and G2 certification preparation.</p>
+                    
+                    <p>My commitment to advancing industry standards extends to developing certificate programs that keep professionals current with best practices and technological advancements. Through these efforts, I am dedicated to promoting workplace safety, professional development, and operational excellence across the Canadian HVAC community.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 LARK Labs - Free HVAC Tools & Training Resources for Canadian Gas Technicians</p>
+            <p>Empowering Canadian HVAC professionals with innovative technology solutions</p>
+            <p>Contact: <a href="mailto:lark_labs@outlook.com" style="color: #3498db;">lark_labs@outlook.com</a></p>
+        </div>
+    </footer>
+
+    <!-- Schema Markup for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I study for the TSSA G2 exam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our TSSA G2 practice exam simulator provides 500+ questions with detailed explanations, covering all certification topics. Combined with our CSA B149.1 study guide and Code Compass tool, you'll have comprehensive preparation for your Gas Technician 2 certification."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the best free HVAC calculator for Canadian standards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our HVAC Pro Tools app includes professional-grade calculators specifically designed for Canadian HVAC work, including heat load calculations with Canadian climate data, refrigeration P-T charts for all common refrigerants, and unit converters for imperial/metric systems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are these tools suitable for HVAC students and educators?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely! All our tools are designed for students, working technicians, and educators. They're used in Canadian HVAC programs and are completely free for educational use. Our training modules align with CSA certification requirements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prepare for the CSA B149.1 exam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use our Code Compass tool to search and study CSA B149.1 regulations, combined with our comprehensive chapter review questions covering all units from safety protocols to advanced piping systems and appliance installation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes these HVAC tools different from others?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our tools are built by experienced HVAC professionals and educators specifically for the Canadian market. They include Canadian climate data, CSA standards, TSSA regulations, and are designed based on 20+ years of field experience and 10 years of teaching HVAC programs."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "Code Compass",
+      "operatingSystem": "Web",
+      "applicationCategory": "HVAC Tool",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CAD"
+      },
+      "description": "CSA B149.1 code search tool for Canadian gas technicians and HVAC professionals",
+      "url": "https://codecompass-api.vercel.app/",
+      "creator": {
+        "@type": "Organization",
+        "name": "LARK Labs"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "HVAC Pro Tools",
+      "operatingSystem": "Web",
+      "applicationCategory": "HVAC Calculator",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CAD"
+      },
+      "description": "Professional-grade HVAC calculators and tools for Canadian technicians including heat load calculations, P-T charts, and unit converters",
+      "creator": {
+        "@type": "Organization",
+        "name": "LARK Labs"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "LARK Labs",
+      "url": "https://larklabs.org",
+      "logo": "https://larklabs.org/logo.png",
+      "description": "Free professional-grade HVAC tools and training for Canadian gas technicians",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "lark_labs@outlook.com",
+        "contactType": "Customer Service"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "HRAC Program Coordinator",
+        "jobTitle": "Program Coordinator at Fanshawe College"
+      },
+      "sameAs": [
+        "https://larklabs.org"
+      ]
+    }
+    </script>
+
+    <script>
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const isExpanded = navLinks.classList.contains('active');
+            
+            navLinks.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            
+            // Update screen reader text
+            const srText = menuToggle.querySelector('.sr-only');
+            srText.textContent = isExpanded ? 'Open navigation menu' : 'Close navigation menu';
+        }
+
+        function closeMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+        });
+
+        // Add this new function to save emails
+        function saveEmailToList(email, source) {
+            // Get existing email list or create empty array
+            let emailList = JSON.parse(localStorage.getItem('collectedEmails') || '[]');
+            
+            // Check if email already exists
+            const existingEmail = emailList.find(entry => entry.email === email);
+            if (existingEmail) {
+                // Update the existing entry's timestamp
+                existingEmail.timestamp = new Date().toISOString();
+                existingEmail.date = new Date().toLocaleDateString();
+                existingEmail.page = source; // Update source if different
+            } else {
+                // Add new email entry
+                emailList.push({
+                    email: email,
+                    page: source,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleDateString()
+                });
+            }
+            
+            // Save back to localStorage
+            localStorage.setItem('collectedEmails', JSON.stringify(emailList));
+        }
+
+        function setupEventListeners() {
+            // Newsletter signup
+            const newsletterForms = document.querySelectorAll('.newsletter-form');
+            newsletterForms.forEach(form => {
+                const button = form.querySelector('button');
+                const input = form.querySelector('input');
+                
+                if (button && input) {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const email = input.value.trim();
+                        
+                        // Basic email validation
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!email) {
+                            alert('Please enter an email address.');
+                            return;
+                        }
+                        if (!emailRegex.test(email)) {
+                            alert('Please enter a valid email address.');
+                            return;
+                        }
+                        
+                        // Save email to localStorage (THIS IS THE NEW PART)
+                        saveEmailToList(email, 'newsletter-signup');
+                        
+                        // Show success message
+                        alert('Thank you for subscribing! You will receive updates about new tools and features.');
+                        input.value = ''; // Clear the input
+                    });
+                }
+            });
+
+            // Animate tool cards on hover
+            const toolCards = document.querySelectorAll('.tool-card');
+            toolCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+                
+                // Add keyboard support for tool cards
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+        }
+
+        // Navigation functionality
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Find and activate current nav link
+            const currentLink = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+            if (currentLink) {
+                currentLink.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Function to show CSA Chapter Questions
+        function showCSAChapterQuestions() {
+            showSection('csa-chapters');
+        }
+
+        // Function to show CSA G2 Chapter Questions
+        function showCSAG2ChapterQuestions() {
+            showSection('csa-g2-chapters');
+        }
+    </script>
+</body>
+</html>

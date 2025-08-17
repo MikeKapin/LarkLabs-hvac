@@ -1,0 +1,23 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <!-- Blue background with rounded corners -->
+    <rect width="512" height="512" rx="51" fill="#1e40af"/>
+    
+    <!-- Toolbox body -->
+    <rect x="85" y="170" width="342" height="213" rx="17" fill="#374151"/>
+    
+    <!-- Toolbox top/lid -->
+    <rect x="85" y="149" width="342" height="34" rx="17" fill="#4b5563"/>
+    
+    <!-- Toolbox handle -->
+    <rect x="192" y="128" width="128" height="34" rx="17" fill="#6b7280"/>
+    
+    <!-- HVAC text -->
+    <text x="256" y="264" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="white" text-anchor="middle">HVAC</text>
+    
+    <!-- Tools text -->
+    <text x="256" y="332" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="white" text-anchor="middle">Tools</text>
+    
+    <!-- Yellow indicator dots -->
+    <circle cx="149" cy="319" r="8" fill="#fbbf24"/>
+    <circle cx="363" cy="319" r="8" fill="#fbbf24"/>
+</svg>

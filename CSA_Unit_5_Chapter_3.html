@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 5 - Chapter 2: Components and Operation of a Simple Electrical Circuit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .circuit-diagram {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #3498db;
+        }
+
+        .formula-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 5 - Introduction to Electricity</h1>
+            <h2>Chapter 2 - Components and Operation of a Simple Electrical Circuit</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 8</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 8;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>The gas technician/fitter requires a basic knowledge of the components and operation of simple electrical circuits in order to connect and troubleshoot the type of electrical equipment he/she encounters in the gas industry.</p>
+
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>describe the components of a simple electrical circuit; and</li>
+                            <li>describe the operation of a simple electrical circuit.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Electromotive force</td>
+                                    <td>emf</td>
+                                    <td>Potential difference of an energy source (for example, battery or generator)</td>
+                                </tr>
+                                <tr>
+                                    <td>Ohm's law</td>
+                                    <td></td>
+                                    <td>States that the current flowing in an electrical circuit is directly proportional to the applied voltage</td>
+                                </tr>
+                                <tr>
+                                    <td>Potential</td>
+                                    <td></td>
+                                    <td>Positive or negative, measured at one point with respect to another</td>
+                                </tr>
+                                <tr>
+                                    <td>Potential difference</td>
+                                    <td></td>
+                                    <td>Difference in potential between any two points in a circuit</td>
+                                </tr>
+                                <tr>
+                                    <td>Resistance</td>
+                                    <td></td>
+                                    <td>Opposition that a material offers to the flow of current</td>
+                                </tr>
+                                <tr>
+                                    <td>Voltage</td>
+                                    <td></td>
+                                    <td>Alternative term for potential difference</td>
+                                </tr>
+                                <tr>
+                                    <td>Voltage drop</td>
+                                    <td></td>
+                                    <td>Potential difference across individual loads in a circuit</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding electrical circuits is essential for gas technicians as modern gas equipment often incorporates electrical components for ignition, control, and safety systems.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What does EMF stand for?",
+                    options: [
+                        "Electronic Magnetic Force",
+                        "Electromotive Force", 
+                        "Electric Motor Function",
+                        "Energy Management Factor"
+                    ],
+                    correct: 1,
+                    explanation: "EMF stands for Electromotive Force, which is the potential difference of an energy source such as a battery or generator."
+                }
+            },
+            {
+                title: "Components of a Simple Electrical Circuit",
+                content: `
+                    <div class="section">
+                        <h2>Components of a Simple Electrical Circuit</h2>
+                        
+                        <h3>Electrical Circuits</h3>
+                        <p>An electric circuit performs work using electrical energy. The part of the circuit that does the work is the <strong>load</strong>. The circuit provides a path for the flow of electric current. In a closed circuit, the path is complete and current can flow. In an open circuit, the path is incomplete and current cannot flow. Opening a circuit is possible through breakage, by disconnection from an energy source, or by a switch.</p>
+
+                        <p>A simple electrical circuit consists of the following components:</p>
+                        <ul>
+                            <li>an energy source (such as a battery or a wall plug);</li>
+                            <li>conductors (connecting wires); and</li>
+                            <li>a load (a device that uses electrical energy to do work).</li>
+                        </ul>
+
+                        <p>A circuit often has a switch and an overcurrent protective device such as a fuse or circuit breaker.</p>
+
+                        <div class="circuit-diagram">
+                            <h4>Basic Electrical Circuit Components</h4>
+                            <p><strong>Power Source → Conductor → Load → Conductor → Power Source</strong></p>
+                            <p style="margin-top: 15px;">Three elements required to form an electrical circuit</p>
+                        </div>
+
+                        <h3>Energy Sources, Potential, and Electromotive Force</h3>
+                        <p>An electrical energy source may supply electrical energy in several ways. For example, a wet-cell battery produces electrochemical energy, which is in the form of a potential difference between the charges on the output terminals. This is the measure of the ability (potential) of a unit of electric charge to do a certain amount of work. You may compare the negative charge at one terminal and the positive charge at the other with the low and high-pressure points in a fluid piping system.</p>
+
+                        <p>The difference in the potential between the two terminals provides the force to drive the current. This force is the <strong>electromotive force (emf)</strong>. The unit that indicates the strength of the emf is the <strong>volt (V)</strong>. For example, a power source might be a 12-volt battery. You often call sources of emf voltage sources.</p>
+
+                        <p>The sizes of voltages may vary a great deal, so the size of the units used can also vary:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Voltage</th>
+                                    <th>Equivalent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1 volt (1 V)</td>
+                                    <td>1000 millivolts (= 10³ mV)<br>1,000,000 microvolts (= 10⁶ µV)</td>
+                                </tr>
+                                <tr>
+                                    <td>1 kilovolt (1 kV)</td>
+                                    <td>1000 volts (= 10³ V)</td>
+                                </tr>
+                                <tr>
+                                    <td>1 megavolt (1 MV)</td>
+                                    <td>1,000,000 volts (= 10⁶ V)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What are the three basic components required for a simple electrical circuit?",
+                    options: [
+                        "Battery, resistor, and capacitor",
+                        "Energy source, conductors, and load", 
+                        "Voltage, current, and resistance",
+                        "Switch, fuse, and transformer"
+                    ],
+                    correct: 1,
+                    explanation: "A simple electrical circuit requires three basic components: an energy source (like a battery), conductors (connecting wires), and a load (device that uses electrical energy to do work)."
+                }
+            },
+            {
+                title: "Current Flow and Conductors",
+                content: `
+                    <div class="section">
+                        <h2>Current Flow</h2>
+                        
+                        <p>Electric current flows whenever there is a difference of potential across a circuit. Electrons tend to flow toward the positive terminal. The amount of voltage across the circuit determines how much current can flow through the load. The polarity of the source determines the direction of current flow.</p>
+
+                        <p><strong>Ampere (A)</strong> is a measure of current, which may be quite small or very large:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Current</th>
+                                    <th>Equivalent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1 ampere (1 A)</td>
+                                    <td>1000 milliamperes (= 10³ mA)<br>1,000,000 microamperes (= 10⁶ µA)</td>
+                                </tr>
+                                <tr>
+                                    <td>1000 amperes</td>
+                                    <td>1 kiloampere (= 1 kA)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h2>Conductors</h2>
+                        
+                        <p>The ease with which a current flows through a conductor varies. In DC circuits, the opposition that a material offers to the flow of current is what you call <strong>resistance</strong>.</p>
+
+                        <p>A conductor in a circuit should have low resistance, allowing maximum current flow. Copper wire is the most commonly used conductor. You may use more expensive (even silver) wires in some specialized equipment.</p>
+
+                        <p>Materials with high resistance oppose the flow of current. The unit of measurement of resistance is the <strong>ohm (Ω)</strong>. Some resistances are very large, so you may use a larger unit:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ohm (Ω)</th>
+                                    <th>Equivalent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1 kilohm (1 kΩ)</td>
+                                    <td>1000 ohms (= 10³ Ω)</td>
+                                </tr>
+                                <tr>
+                                    <td>1 megohm (1 MΩ)</td>
+                                    <td>1,000,000 ohms (= 10⁶ Ω)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>Some are small, for example:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ohm (Ω)</th>
+                                    <th>Equivalent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1 milliohm (1 mΩ)</td>
+                                    <td>0.001 ohms (= 10⁻³ Ω)</td>
+                                </tr>
+                                <tr>
+                                    <td>1 microhm (1 µΩ)</td>
+                                    <td>0.000001 ohms (= 10⁻⁶ Ω)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>💡 Important Note</h4>
+                            <p>Good conductors have low resistance (like copper wire), while insulators have very high resistance. This principle is crucial for safe and efficient electrical installations in gas equipment.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the unit of measurement for electrical resistance?",
+                    options: [
+                        "Ampere (A)",
+                        "Volt (V)", 
+                        "Ohm (Ω)",
+                        "Watt (W)"
+                    ],
+                    correct: 2,
+                    explanation: "The ohm (Ω) is the unit of measurement for electrical resistance, which represents the opposition that a material offers to the flow of current."
+                }
+            },
+            {
+                title: "Loads, Switches, and Circuit Protection",
+                content: `
+                    <div class="section">
+                        <h2>Load</h2>
+                        
+                        <p>The load uses electrical energy to do useful work such as producing motion, light, or sound or providing heating.</p>
+
+                        <p>The load usually has resistance in the electrical circuit. The energy source performs work by driving the current through the resistive load. The term <strong>load</strong> also refers to the amount of energy demanded from the source. For example, when you increase or decrease the load, it means that the energy source is supplying more or less energy.</p>
+
+                        <h2>Switches</h2>
+                        
+                        <p>A switch opens or closes an electric circuit as required. The simplest type has two pieces of conducting metal connected to the conductor of the circuit. You arrange switches so that they can easily make or break contact with the conductor.</p>
+
+                        <div class="circuit-diagram">
+                            <h4>Switch Operation</h4>
+                            <p><strong>Open Switch:</strong> Circuit is broken, no current flows</p>
+                            <p><strong>Closed Switch:</strong> Circuit is complete, current flows</p>
+                        </div>
+
+                        <p>Contacts in an electrical relay function as switches in control circuits. These contacts are either <strong>normally closed (NC)</strong> or <strong>normally open (NO)</strong>. When you energize a relay, the contacts switch position to energize or de-energize circuits. Control circuits frequently employ relays containing both NO and NC contacts depending on the circuit requirements.</p>
+
+                        <h2>Circuit Protective Devices</h2>
+                        
+                        <p>Circuit protective devices include:</p>
+                        <ul>
+                            <li>fuses;</li>
+                            <li>circuit breakers; and</li>
+                            <li>thermal and magnetic overloads.</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <h4>Safety Consideration</h4>
+                            <p>Circuit protective devices are essential for preventing electrical fires and equipment damage. They automatically interrupt current flow when dangerous conditions occur, such as overloads or short circuits.</p>
+                        </div>
+
+                        <h2>Electrical Pressure Terms</h2>
+                        
+                        <p>Several terms are used for electrical pressure:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Potential</td>
+                                    <td>Positive or negative, measured at one point with respect to another</td>
+                                </tr>
+                                <tr>
+                                    <td>Potential difference</td>
+                                    <td>Difference in potential between any two points in a circuit</td>
+                                </tr>
+                                <tr>
+                                    <td>Voltage</td>
+                                    <td>Alternative term for potential difference</td>
+                                </tr>
+                                <tr>
+                                    <td>Electromotive force (emf)</td>
+                                    <td>Potential difference of an energy source (for example, battery or generator)</td>
+                                </tr>
+                                <tr>
+                                    <td>Voltage drop</td>
+                                    <td>Potential difference across individual loads in a circuit</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>Often, you use voltage interchangeably with potential difference and emf and never in place of the term potential.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the primary purpose of an electrical switch?",
+                    options: [
+                        "To change alternating current to direct current",
+                        "To open or close an electrical circuit as required", 
+                        "To increase voltage in a circuit",
+                        "To reduce resistance in a circuit"
+                    ],
+                    correct: 1,
+                    explanation: "The primary purpose of an electrical switch is to open or close an electrical circuit as required, allowing control over when current flows through the circuit."
+                }
+            },
+            {
+                title: "Ohm's Law and Circuit Operation",
+                content: `
+                    <div class="section">
+                        <h2>Ohm's Law</h2>
+                        
+                        <p>The three quantities, voltage (V or E for emf), current (I), and resistance (R), are present in any complete electrical circuit.</p>
+
+                        <p>Ohm's law defines the relationship between current flow (amperes), electrical pressure (volts), and resistance in a circuit (ohms) is very specific: <strong>The current flowing in an electrical circuit is directly proportional to the applied voltage.</strong> That is, as voltage increases, current increases. As resistance increases, current decreases, and vice versa.</p>
+
+                        <p>Expressed more simply: It takes an emf of 1 volt to push a current of 1 ampere through 1 ohm of resistance.</p>
+
+                        <div class="formula-box">
+                            <p>I = E/R &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; R = E/I &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; E = I × R</p>
+                        </div>
+
+                        <p>When any two of these quantities are known, it is simple to calculate the third. These equations use amperes, volts, and ohms. If you use larger or smaller units other than these, you must convert them first to these basic units.</p>
+
+                        <h3>Using Ohm's Law to Calculate Circuit Values</h3>
+
+                        <h4>Current Calculation Example</h4>
+                        <p>A circuit has a 20-volt source of emf and a resistor with resistance of 10 ohms. How much current flows in this circuit?</p>
+
+                        <p>Substitute the values E = 20 V and R = 10 Ω into the Ohm's law equation for calculating current:</p>
+
+                        <div class="formula-box">
+                            I = E/R = 20V/10Ω = 2A
+                        </div>
+
+                        <p>A current of 2 amperes flows in this circuit.</p>
+
+                        <p>You might need to use a calculation like this to see if the current in a circuit will exceed the safe current rating of a resistor.</p>
+
+                        <h4>Resistance Calculation Example</h4>
+                        <p>A circuit with a variable resistance has a 60-volt source of emf, and a current of 5 amperes flows in the circuit. What is the resistance?</p>
+
+                        <div class="formula-box">
+                            R = E/I = 60V/5A = 12Ω
+                        </div>
+
+                        <p>The resistance in this circuit is 12 ohms. Resistance and current are inversely proportional. Therefore, to double the current, halve the resistance by adjusting to reduce resistance in the circuit to 6 ohms.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Ohm's Law Memory Aid</h4>
+                            <p>Remember the Ohm's law triangle: Cover the value you want to find, and the remaining two values show you the formula to use.</p>
+                        </div>
+
+                        <h2>Electron Flow in a Circuit</h2>
+                        
+                        <p>An electric current is the movement of electrons along a conductor. Electrons are extremely small atomic particles that have a negative electric charge. The flow of these electrons through a conductor can cause any combination of the following three effects:</p>
+                        <ul>
+                            <li>heating of the conductor;</li>
+                            <li>chemical changes; and</li>
+                            <li>production of a magnetic field around the conductor.</li>
+                        </ul>
+
+                        <p>You can use these effects to power machinery and other devices.</p>
+
+                        <h2>Circuit Analogy - Water Flow</h2>
+                        
+                        <p>An electric circuit is like the flow of water through a piping system. In a piping system, you can measure the pressure of the water and the volume of water flowing through the system at any point. For water to flow through the pipe, there must be a difference in pressure. The water flows from the area of higher pressure to the area of lower pressure.</p>
+
+                        <p>The amount of water flowing through a piping system depends on two things:</p>
+                        <ul>
+                            <li>the pressure applied across the piping; and</li>
+                            <li>the restrictions in the piping.</li>
+                        </ul>
+
+                        <p>The same variables as water flow affect the flow of electricity. The amount of electricity flowing through an electric circuit depends on the electrical pressure (termed potential difference or voltage) applied and the restriction (termed resistance) in the wiring circuit.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "According to Ohm's law, if voltage increases and resistance stays the same, what happens to current?",
+                    options: [
+                        "Current decreases",
+                        "Current increases", 
+                        "Current stays the same",
+                        "Current becomes zero"
+                    ],
+                    correct: 1,
+                    explanation: "According to Ohm's law (I = E/R), current is directly proportional to voltage. When voltage increases and resistance stays the same, current increases proportionally."
+                }
+            },
+            {
+                title: "Work, Power, and Series Circuits",
+                content: `
+                    <div class="section">
+                        <h2>Work and Power</h2>
+                        
+                        <p><strong>Work</strong> is the process of changing one form of energy into another. For example, a motor changes electrical energy into kinetic energy, so it is doing work. <strong>Power</strong> is the rate at which work is done. The faster work is done, the greater the power.</p>
+
+                        <p>The unit of electrical work is the joule (J). A more common unit of work is the kilowatt hour (kWh).</p>
+
+                        <p>The unit of power (P) is watts (W) or horsepower (hp). A watt is the consumed power when 1 ampere of current flows through a potential difference of 1 volt in 1 second. Power values are often very large, and larger units of measurement are used.</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Power</th>
+                                    <th>Equivalent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1 watt (1 W)</td>
+                                    <td>1 joule/second (1 J/s)<br>0.00134 horsepower (0.00134 hp)</td>
+                                </tr>
+                                <tr>
+                                    <td>1 kilowatt (1 kW)</td>
+                                    <td>3413 Btu/h<br>1000 W (= 10³ W)</td>
+                                </tr>
+                                <tr>
+                                    <td>1 hp</td>
+                                    <td>746 W</td>
+                                </tr>
+                                <tr>
+                                    <td>1 megawatt (1 MW)</td>
+                                    <td>1,000,000 W (= 10⁶ W)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Power and Ohm's Law</h3>
+                        
+                        <p>In electric circuits, power is a function of current flow and applied voltage. Power is the rate at which you supply energy to a circuit. In direct current circuits, it can be calculated using the following formula:</p>
+
+                        <div class="formula-box">
+                            Power in watts = (current in amperes) × (voltage in volts)
+                            <br><br>
+                            P = I × E &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; E = P/I &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; I = P/E
+                        </div>
+
+                        <p>For example, in a circuit with 60 volts and 5 amperes:</p>
+                        <div class="formula-box">
+                            P = I × E = 5A × 60V = 300W
+                        </div>
+                        <p>Therefore, the power of this circuit is 300 watts.</p>
+
+                        <h2>Series Circuits</h2>
+                        
+                        <p>The circuits described so far have only one possible path for the current flow. The same amount of current flows through every part of each circuit. The parts of the circuit follow one after the other in series in a single loop. This is called a <strong>series circuit</strong>.</p>
+
+                        <p>Although simple circuits may have only one load, such as a resistor, series circuits may have several or many loads connected end to end (connected in series). Older forms of Christmas tree lights are connected in series. Each lamp is a resistive load. Current through each of them is the same.</p>
+
+                        <div class="warning-box">
+                            <h4>Series Circuit Characteristic</h4>
+                            <p>If one lamp burns out or if the switch becomes open, the entire string goes out because the series circuit has been broken and current cannot flow. Note that an open switch has infinite resistance (∞), while a closed switch or closed contacts have zero resistance (0 Ω).</p>
+                        </div>
+
+                        <h3>Calculating Values in a Series Circuit</h3>
+                        
+                        <p>In a series circuit, the total resistance (R<sub>T</sub>) is the sum of all the individual resistances in the circuit.</p>
+
+                        <div class="formula-box">
+                            R<sub>T</sub> = R₁ + R₂ + R₃ + R₄ + R₅
+                        </div>
+
+                        <p>For example, if resistors are 8Ω + 4Ω + 6Ω + 7Ω + 10Ω = 35Ω</p>
+
+                        <p>Use this value in the Ohm's law equation to find the current in the circuit:</p>
+                        <div class="formula-box">
+                            I = E/R<sub>T</sub> = 70V/35Ω = 2A
+                        </div>
+
+                        <p>Thus, the current all around this series circuit is 2 amperes.</p>
+
+                        <h3>Series Voltage Drops</h3>
+                        
+                        <p>As electrons move from the negative to the positive terminal, they lose energy to the circuit resistance. This occurrence is <strong>voltage drop</strong>. As the current flows through each resistor, energy is lost, mostly to heat. Some voltage is lost at each resistor around the circuit.</p>
+
+                        <p><strong>Total voltage drop in a circuit equals the applied voltage of the energy source.</strong> This is true for circuits with one load or 20 loads. The voltage drop across each load is proportional to the resistance of that load.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Series Circuit Rules</h4>
+                            <ul>
+                                <li>Current is the same throughout the circuit</li>
+                                <li>Total resistance = sum of all individual resistances</li>
+                                <li>Total voltage drop = applied voltage</li>
+                                <li>Voltage drop across each load is proportional to its resistance</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "In a series circuit with resistors of 2Ω, 4Ω, and 6Ω connected to a 24V source, what is the total current?",
+                    options: [
+                        "1 ampere",
+                        "2 amperes", 
+                        "3 amperes",
+                        "4 amperes"
+                    ],
+                    correct: 1,
+                    explanation: "Total resistance = 2Ω + 4Ω + 6Ω = 12Ω. Using Ohm's law: I = E/R = 24V/12Ω = 2 amperes."
+                }
+            },
+            {
+                title: "Parallel and Series-Parallel Circuits",
+                content: `
+                    <div class="section">
+                        <h2>Parallel Circuits</h2>
+                        
+                        <p>If some parts of a circuit are connected in parallel, the current is not the same in all parts of the circuit. Current flows through more than one complete path. These paths are what you call <strong>branches</strong>. The supply voltage is common to each branch.</p>
+
+                        <p>If one branch of a parallel circuit becomes open, current still flows through the other branches. For example, ordinary house lamps are connected in parallel; if one burns out, the rest stay lit.</p>
+
+                        <div class="circuit-diagram">
+                            <h4>Parallel Circuit Characteristics</h4>
+                            <p><strong>Multiple paths for current flow</strong></p>
+                            <p><strong>Same voltage across each branch</strong></p>
+                            <p><strong>Different currents in each branch (based on resistance)</strong></p>
+                        </div>
+
+                        <h3>Calculating Values in a Parallel Circuit</h3>
+                        
+                        <p>In a parallel circuit, you can calculate the total resistance (R<sub>T</sub>) using the following formula:</p>
+
+                        <div class="formula-box">
+                            1/R<sub>T</sub> = 1/R₁ + 1/R₂ + 1/R₃
+                        </div>
+
+                        <p>If the total current and voltage of a parallel circuit are known, you can calculate the total resistance from Ohm's law:</p>
+
+                        <div class="formula-box">
+                            R<sub>T</sub> = E<sub>T</sub>/I<sub>T</sub>
+                        </div>
+
+                        <h3>Parallel Voltage and Current</h3>
+                        
+                        <p>Parallel loads are connected directly across the same energy source. This means that, when loads are connected in parallel, <strong>the entire source voltage is applied across each branch</strong>. This is the most important and useful feature of a parallel circuit, because all loads are supplied with a common voltage.</p>
+
+                        <p>The current in each branch is inversely proportional to the resistance of the load in the branch (Ohm's law). Branches with less resistance carry more current and vice versa.</p>
+
+                        <p>When resistances are connected in parallel, they reduce overall opposition to current flow. For example:</p>
+
+                        <div class="tip-box">
+                            <h4>Parallel Circuit Example</h4>
+                            <p>In a simple circuit with a 6-volt power source and a resistance of 3 ohms, a current of 2 amps flows.</p>
+                            <p>If another load with 4 ohms resistance is connected in parallel:</p>
+                            <ul>
+                                <li>2 amperes still flows through the 3-ohm resistor</li>
+                                <li>1.5 amperes now flows through the 4-ohm resistor</li>
+                                <li>Total current has increased to 3.5 amperes</li>
+                            </ul>
+                        </div>
+
+                        <h2>Series-Parallel Circuits</h2>
+                        
+                        <p>Circuits that combine series and parallel connections are called <strong>series-parallel circuits</strong>. You can systematically break down series-parallel or combination circuits into series and parallel components. The same laws that apply to individual series and parallel circuits are applicable to the analysis of series-parallel circuits.</p>
+
+                        <h3>Calculating Values in Series-Parallel Circuits</h3>
+                        
+                        <p>In order to calculate values in a series-parallel circuit, it is necessary to break the circuit down into its equivalent series components by means of the product-over-sum method of calculating the equivalent resistance of pairs of parallel resistances in the circuit.</p>
+
+                        <p>Steps for analyzing series-parallel circuits:</p>
+                        <ol>
+                            <li>Calculate the equivalent resistances of parallel components</li>
+                            <li>Replace parallel components with their equivalent resistances</li>
+                            <li>Apply series circuit laws to determine:
+                                <ul>
+                                    <li>total circuit resistance</li>
+                                    <li>total line current</li>
+                                    <li>voltage drops across series components</li>
+                                    <li>branch current flow</li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <div class="formula-box">
+                            For calculating line current: I = E/R<sub>T</sub>
+                            <br>
+                            For voltage drops: E = I × R
+                            <br>
+                            For branch currents: Use voltage drop and individual resistance
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Circuit Analysis Summary</h4>
+                            <p><strong>Series Circuits:</strong> Same current, different voltages</p>
+                            <p><strong>Parallel Circuits:</strong> Same voltage, different currents</p>
+                            <p><strong>Series-Parallel:</strong> Combination of both principles</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "In a parallel circuit, what voltage is applied across each branch?",
+                    options: [
+                        "Only what is required for the load",
+                        "75% of the source voltage", 
+                        "The entire source voltage",
+                        "Voltage divided by number of branches"
+                    ],
+                    correct: 2,
+                    explanation: "In a parallel circuit, the entire source voltage is applied across each branch. This is the most important feature of parallel circuits - all loads receive the same voltage."
+                }
+            },
+            {
+                title: "Chapter 2 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 2 Final Quiz</h2>
+                        <p>Test your knowledge of electrical circuit components and operation covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 16 questions to complete the chapter. These questions are based on the CSA training materials and test your understanding of electrical circuits, Ohm's law, and circuit analysis.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>What is the unit to indicate the strength of electromotive force?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Amps</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Ohms</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Volts</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>What is the unit to measure electric current?</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) Amperes</li>
+                                <li onclick="selectQuizOption(1, 1)">b) Ohms</li>
+                                <li onclick="selectQuizOption(1, 2)">c) Volts</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>What is the unit to measure the restriction of electric circuits?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) Amperes</li>
+                                <li onclick="selectQuizOption(2, 1)">b) Ohms</li>
+                                <li onclick="selectQuizOption(2, 2)">c) Volts</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>What is the unit to measure electrical power?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) Amperage</li>
+                                <li onclick="selectQuizOption(3, 1)">b) Ohms</li>
+                                <li onclick="selectQuizOption(3, 2)">c) Watts or horsepower</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>What is the purpose of an electrical switch?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) To change alternating current to direct current</li>
+                                <li onclick="selectQuizOption(4, 1)">b) To change direct current to alternating current</li>
+                                <li onclick="selectQuizOption(4, 2)">c) To open or close an electrical circuit as required</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>What is Ohm's law?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) The current flowing in an electrical circuit is directly proportional to the applied voltage</li>
+                                <li onclick="selectQuizOption(5, 1)">b) The resistance in a circuit is directly proportional to the amperage of the circuit</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>What type of circuit allows only one possible path for current flow?</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) Open circuit</li>
+                                <li onclick="selectQuizOption(6, 1)">b) Parallel circuit</li>
+                                <li onclick="selectQuizOption(6, 2)">c) Series circuit</li>
+                                <li onclick="selectQuizOption(6, 3)">d) Short circuit</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>What must the voltage drop in a circuit equal?</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) Amperage in the circuit</li>
+                                <li onclick="selectQuizOption(7, 1)">b) Resistance in the circuit</li>
+                                <li onclick="selectQuizOption(7, 2)">c) Voltage of the energy source</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>What type of circuit allows current to flow through more than one complete path?</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) Open circuit</li>
+                                <li onclick="selectQuizOption(8, 1)">b) Parallel circuit</li>
+                                <li onclick="selectQuizOption(8, 2)">c) Series circuit</li>
+                                <li onclick="selectQuizOption(8, 3)">d) Short circuit</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 10:</h4>
+                            <p>In a parallel circuit, what voltage is applied across each branch?</p>
+                            <ul class="quiz-options" data-question="9">
+                                <li onclick="selectQuizOption(9, 0)">a) Only what is required for the load</li>
+                                <li onclick="selectQuizOption(9, 1)">b) 75% of what is required</li>
+                                <li onclick="selectQuizOption(9, 2)">c) The entire source voltage</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 11:</h4>
+                            <p>What is the total current (IT) in a parallel circuit with 24V source and three branches: 6Ω, 12Ω, and 3Ω?</p>
+                            <ul class="quiz-options" data-question="10">
+                                <li onclick="selectQuizOption(10, 0)">a) 3 amperes</li>
+                                <li onclick="selectQuizOption(10, 1)">b) 9 amperes</li>
+                                <li onclick="selectQuizOption(10, 2)">c) 12 amperes</li>
+                                <li onclick="selectQuizOption(10, 3)">d) 14 amperes</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 12:</h4>
+                            <p>What is the resistance of R3 in a parallel circuit with 100V source, if the total current draw is 7A and the other resistances are 25Ω and 50Ω?</p>
+                            <ul class="quiz-options" data-question="11">
+                                <li onclick="selectQuizOption(11, 0)">a) 25Ω</li>
+                                <li onclick="selectQuizOption(11, 1)">b) 50Ω</li>
+                                <li onclick="selectQuizOption(11, 2)">c) 75Ω</li>
+                                <li onclick="selectQuizOption(11, 3)">d) 100Ω</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 13:</h4>
+                            <p>In a series-parallel circuit with 12V source, 3Ω resistor from A to B, and parallel combination of 12Ω and 3Ω from B to C, what is the voltage drop between points A to B?</p>
+                            <ul class="quiz-options" data-question="12">
+                                <li onclick="selectQuizOption(12, 0)">a) 3 volts</li>
+                                <li onclick="selectQuizOption(12, 1)">b) 6.7 volts</li>
+                                <li onclick="selectQuizOption(12, 2)">c) 9 volts</li>
+                                <li onclick="selectQuizOption(12, 3)">d) 12 volts</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 14:</h4>
+                            <p>In the same circuit as Question 13, what is the voltage drop between points B to C?</p>
+                            <ul class="quiz-options" data-question="13">
+                                <li onclick="selectQuizOption(13, 0)">a) 5.3 volts</li>
+                                <li onclick="selectQuizOption(13, 1)">b) 6.7 volts</li>
+                                <li onclick="selectQuizOption(13, 2)">c) 9 volts</li>
+                                <li onclick="selectQuizOption(13, 3)">d) 12 volts</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 15:</h4>
+                            <p>In the same circuit as Question 13, what is the voltage drop between points A to C?</p>
+                            <ul class="quiz-options" data-question="14">
+                                <li onclick="selectQuizOption(14, 0)">a) 4 volts</li>
+                                <li onclick="selectQuizOption(14, 1)">b) 6 volts</li>
+                                <li onclick="selectQuizOption(14, 2)">c) 9 volts</li>
+                                <li onclick="selectQuizOption(14, 3)">d) 12 volts</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 16:</h4>
+                            <p>What would happen if a switch were closed that bypasses all loads in a circuit?</p>
+                            <ul class="quiz-options" data-question="15">
+                                <li onclick="selectQuizOption(15, 0)">a) Battery would short out</li>
+                                <li onclick="selectQuizOption(15, 1)">b) Loads would be energized</li>
+                                <li onclick="selectQuizOption(15, 2)">c) Nothing would happen</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 2 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 2 - Components and Operation of a Simple Electrical Circuit.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You now understand the components of electrical circuits, Ohm's law, and how to analyze series, parallel, and series-parallel circuits. This knowledge is essential for working with electrical components in gas equipment.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers (correct answer indices)
+        const quizCorrectAnswers = [2, 0, 1, 2, 2, 0, 2, 2, 1, 2, 3, 3, 1, 0, 3, 0];
+        
+        const quizExplanations = [
+            "Volts is the unit to indicate the strength of electromotive force (emf), which is the potential difference of an energy source.",
+            "Amperes is the unit to measure electric current, representing the flow of electrons through a conductor.",
+            "Ohms is the unit to measure the restriction (resistance) of electric circuits, representing opposition to current flow.",
+            "Watts or horsepower are the units to measure electrical power, representing the rate at which work is done.",
+            "The purpose of an electrical switch is to open or close an electrical circuit as required, controlling current flow.",
+            "Ohm's law states that the current flowing in an electrical circuit is directly proportional to the applied voltage (when resistance remains constant).",
+            "A series circuit allows only one possible path for current flow, with components connected end to end.",
+            "In any circuit, the voltage drop must equal the voltage of the energy source - this is conservation of energy.",
+            "A parallel circuit allows current to flow through more than one complete path, with branches providing multiple routes.",
+            "In a parallel circuit, the entire source voltage is applied across each branch - this is the key characteristic of parallel circuits.",
+            "In the parallel circuit: I₁=24V/6Ω=4A, I₂=24V/12Ω=2A, I₃=24V/3Ω=8A. Total current IT=4+2+8=14A.",
+            "Using parallel circuit analysis: I₁=100V/25Ω=4A, I₂=100V/50Ω=2A. If total current is 7A, then I₃=7-4-2=1A. Therefore R₃=100V/1A=100Ω.",
+            "In this series-parallel circuit, the equivalent resistance of the parallel branch (12Ω||3Ω) is 2.4Ω. Total resistance is 3+2.4=5.4Ω. Current is 12V/5.4Ω=2.22A. Voltage drop across 3Ω resistor is 2.22A×3Ω≈6.7V.",
+            "The voltage drop across the parallel branch is 12V - 6.7V = 5.3V (since voltage drops must sum to source voltage).",
+            "The total voltage drop from A to C equals the source voltage, which is 12 volts.",
+            "If a switch bypasses all loads creating a direct path from positive to negative terminal, the battery would short out, potentially causing damage and creating a dangerous condition."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 7) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 16; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 16) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/16 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/16 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

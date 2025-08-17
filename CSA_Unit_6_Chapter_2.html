@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 6 - Chapter 2: Technical Manuals and Manufacturer's Specifications</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .code-box {
+            background: #f8f9fa;
+            border: 2px solid #34495e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .steps-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .step {
+            background: white;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .step h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 6 - Technical manuals, specifications, drawings, and graphs</h1>
+            <h2>Chapter 2 - Technical manuals and manufacturer's specifications</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 8</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 8;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>Manufacturer's technical manuals and specifications are materials that the gas technician/fitter will need for installations, parts replacement, or troubleshooting procedures. This Chapter will explain where the various data is located and how the technician/fitter can interpret it.</p>
+
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>locate manufacturer's installation data; and</li>
+                            <li>troubleshoot problems.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Manufacturer's certified installation and service manual</td>
+                                    <td></td>
+                                    <td>From a manufacturer, document with all necessary information for the installation and basic maintenance of an appliance</td>
+                                </tr>
+                                <tr>
+                                    <td>Troubleshooting procedure</td>
+                                    <td></td>
+                                    <td>Series of specific steps to locate the source of a problem to make the product or process operational again</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Technical manuals and manufacturer's specifications are essential tools for gas technicians. They provide critical information for safe installation, proper maintenance, and effective troubleshooting of gas appliances and equipment.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What are the two main objectives of this chapter?",
+                    options: [
+                        "Learn safety protocols and installation techniques",
+                        "Locate manufacturer's installation data and troubleshoot problems", 
+                        "Understand gas codes and regulations",
+                        "Master piping and venting systems"
+                    ],
+                    correct: 1,
+                    explanation: "The two main objectives are to locate manufacturer's installation data and to troubleshoot problems. These skills are essential for gas technicians working with various appliances and equipment."
+                }
+            },
+            {
+                title: "Manufacturer's Installation Data",
+                content: `
+                    <div class="section">
+                        <h2>Manufacturer's installation data</h2>
+                        
+                        <p>Manufacturers provide certified installation and service manuals with their appliances. Although the literature varies from company to company and from product to product, the manual will include all necessary information for the installation and basic maintenance of the appliance. It is up to the gas technician/fitter to find it!</p>
+
+                        <p>The following excerpts from manufacturer's manuals show the various ways of presenting installation information. Again, it is up to the gas technician/fitter to <strong>read the complete manual</strong> and study the charts and diagrams before work commences in order to begin locating the tools, hardware, wiring, and piping needed for a trouble-free installation.</p>
+
+                        <p>Gas appliance manufacturer's installation instructions typically include a list of tools and measuring instruments needed to complete the installation. They also include instructions on how to uncrate, locate, install, test, and commission the appliance.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Important Practice</h4>
+                            <p>Always read the complete manual and study all charts and diagrams before beginning any installation work. This preparation will help you identify all necessary tools, hardware, wiring, and piping requirements for a successful installation.</p>
+                        </div>
+
+                        <h3>Model number</h3>
+                        <p>Manufacturers often publish one set of instructions for many different models of the same series of appliances. Table 2-1 shows a typical example of the different vent and combustion pipe details for six different models of the same appliance.</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Model number or series</th>
+                                    <th>Combustion air pipe</th>
+                                    <th>Combustion air pipe terminal</th>
+                                    <th>Vent pipe</th>
+                                    <th>Vent terminal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Model 40ME</td>
+                                    <td>2 in diameter</td>
+                                    <td>2 in diameter</td>
+                                    <td>2 in diameter</td>
+                                    <td>2 in diameter</td>
+                                </tr>
+                                <tr>
+                                    <td>Model 50 ME</td>
+                                    <td rowspan="2">20–50 ft</td>
+                                    <td rowspan="2">90° elbow</td>
+                                    <td rowspan="2">20–50 ft</td>
+                                    <td rowspan="2">45° elbow</td>
+                                </tr>
+                                <tr>
+                                    <td>Model 40/50ME</td>
+                                </tr>
+                                <tr>
+                                    <td>Model 70ME</td>
+                                    <td>3 in diameter</td>
+                                    <td>3 in diameter</td>
+                                    <td>3 in diameter<br>20–60 ft</td>
+                                    <td>3 in diameter</td>
+                                </tr>
+                                <tr>
+                                    <td>Model 80ME</td>
+                                    <td rowspan="2">20–60 ft</td>
+                                    <td rowspan="2">90° elbow</td>
+                                    <td rowspan="2"></td>
+                                    <td rowspan="2">90° elbow</td>
+                                </tr>
+                                <tr>
+                                    <td>Model 70/80ME</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="example-box">
+                            <h4>Table 2-1: Example of air and venting information for various models</h4>
+                            <p>This table demonstrates how manufacturers present different specifications for various models within the same appliance series. Notice how pipe diameters, lengths, and terminal configurations vary by model.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the primary reason manufacturers often publish one set of instructions for multiple models?",
+                    options: [
+                        "To reduce printing costs",
+                        "To simplify inventory management",
+                        "Because many different models of the same series share common installation procedures",
+                        "To meet regulatory requirements"
+                    ],
+                    correct: 2,
+                    explanation: "Manufacturers publish one set of instructions for multiple models because many different models of the same series share common installation procedures. However, specific details like pipe sizes and venting requirements may vary by model, which is why detailed specification tables are included."
+                }
+            },
+            {
+                title: "Tools and Hardware Requirements",
+                content: `
+                    <div class="section">
+                        <h2>Tools and hardware</h2>
+                        
+                        <p>Manufacturers will often indicate the tools and hardware required for the installation, as shown by the following examples:</p>
+
+                        <div class="code-box">
+                            Level each Unit by adjusting leveling bolts or legs. Use a spirit level and level Unit four ways.... Use a Robertshaw test instrument with special disc type thermocouple, or reliable "surface" type thermometer.
+                        </div>
+
+                        <p>They may also indicate when hardware is supplied, for example:</p>
+
+                        <div class="code-box">
+                            Secure in place with two hex nuts supplied.
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Tools and Hardware Documentation</h4>
+                            <p>Manufacturer's instructions will specify:</p>
+                            <ul>
+                                <li>Required tools for installation</li>
+                                <li>Special measuring instruments needed</li>
+                                <li>Hardware that is supplied with the unit</li>
+                                <li>Hardware that must be purchased separately</li>
+                                <li>Specific brand recommendations when applicable</li>
+                            </ul>
+                        </div>
+
+                        <h3>Wiring and piping</h3>
+                        <p>Most manuals come with wiring and piping diagrams that often come with schedules (Table 2-2) and keys (Table 2-3).</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Gas pilot orifice schedule</th>
+                                    <th>Natural gas</th>
+                                    <th>LP gas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>J(R) 15A-10, J(R) 30A-10(12), J50A-15-flame rod</td>
+                                    <td>Std. #44</td>
+                                    <td>N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>J(R) 15A-10, J(R) 30A-10(12) Scanner</td>
+                                    <td>Std. #36</td>
+                                    <td>Std. #44</td>
+                                </tr>
+                                <tr>
+                                    <td>J50A-15 Scanner</td>
+                                    <td>Std. #36</td>
+                                    <td>Std. #44</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="example-box">
+                            <h4>Table 2-2: Example of gas orifice schedule</h4>
+                            <p>This schedule shows the different orifice sizes required for various gas types and appliance models.</p>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Description</th>
+                                </tr>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Component</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>A67</td>
+                                    <td>Receiver–infrared</td>
+                                </tr>
+                                <tr>
+                                    <td>B3</td>
+                                    <td>Motor–blower</td>
+                                </tr>
+                                <tr>
+                                    <td>GV1</td>
+                                    <td>Valve–gas-millivolt</td>
+                                </tr>
+                                <tr>
+                                    <td>R32</td>
+                                    <td>Potentiometer</td>
+                                </tr>
+                                <tr>
+                                    <td>S1</td>
+                                    <td>Thermostat–room</td>
+                                </tr>
+                                <tr>
+                                    <td>S10</td>
+                                    <td>Control–fan</td>
+                                </tr>
+                                <tr>
+                                    <td>S66</td>
+                                    <td>Switch–wall</td>
+                                </tr>
+                                <tr>
+                                    <td>TC1</td>
+                                    <td>Thermopile</td>
+                                </tr>
+                                <tr>
+                                    <td>Y1</td>
+                                    <td>Generator–piezo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="example-box">
+                            <h4>Table 2-3: Example of wiring diagram key</h4>
+                            <p>Wiring diagram keys help technicians identify components using standardized symbols and abbreviations.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What information do wiring and piping schedules typically provide?",
+                    options: [
+                        "Only electrical specifications",
+                        "Component identification keys and specifications for different gas types and models",
+                        "Installation timeline requirements",
+                        "Warranty information"
+                    ],
+                    correct: 1,
+                    explanation: "Wiring and piping schedules provide component identification keys and specifications for different gas types and models. These schedules help technicians understand which components to use and how they are identified in the diagrams."
+                }
+            },
+            {
+                title: "Replacement Parts and Specifications",
+                content: `
+                    <div class="section">
+                        <h2>Replacement parts</h2>
+                        
+                        <p>The manuals will sometimes specify details on the replacement parts, as shown in the following example:</p>
+
+                        <div class="code-box">
+                            Replacement wire must be type "TW" (63°F or 35°C temperature rise) wire or equivalent.
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>Critical Requirement</h4>
+                            <p>When replacement parts are specified in manufacturer's instructions, these specifications must be followed exactly. Using incorrect replacement parts can compromise safety and void warranties.</p>
+                        </div>
+
+                        <div class="tip-box">
+                            <h4>💡 Replacement Parts Best Practices</h4>
+                            <p>When ordering replacement parts:</p>
+                            <ul>
+                                <li>Always reference the specific model number</li>
+                                <li>Use only manufacturer-specified part numbers when available</li>
+                                <li>Verify temperature ratings and specifications</li>
+                                <li>Check for any special installation requirements</li>
+                                <li>Ensure replacement parts meet or exceed original specifications</li>
+                            </ul>
+                        </div>
+
+                        <h3>Parts identification and ordering</h3>
+                        <p>Manufacturer's manuals typically include detailed parts diagrams with part numbers, making it easier to identify and order the correct replacement components. These diagrams often show exploded views of the appliance, clearly labeling each component with its corresponding part number.</p>
+
+                        <p>When ordering replacement parts, always provide:</p>
+                        <ul>
+                            <li>Complete model number of the appliance</li>
+                            <li>Serial number when requested</li>
+                            <li>Specific part number from the manual</li>
+                            <li>Description of the part</li>
+                            <li>Any relevant specifications (voltage, gas type, etc.)</li>
+                        </ul>
+
+                        <div class="example-box">
+                            <h4>Example: Wire Specification</h4>
+                            <p>In the example above, the manual specifies "TW" type wire with specific temperature ratings. This ensures the replacement wire can handle the thermal conditions of the application safely.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "When replacing parts in gas appliances, what is the most important consideration?",
+                    options: [
+                        "Finding the least expensive option",
+                        "Using parts that are readily available",
+                        "Following manufacturer specifications exactly",
+                        "Upgrading to newer technology"
+                    ],
+                    correct: 2,
+                    explanation: "Following manufacturer specifications exactly is the most important consideration when replacing parts. This ensures safety, maintains proper operation, and preserves warranty coverage. Using incorrect parts can compromise safety and performance."
+                }
+            },
+            {
+                title: "Troubleshooting Problems",
+                content: `
+                    <div class="section">
+                        <h2>Troubleshooting problems</h2>
+                        
+                        <p>This section provides general information about troubleshooting problems. Its purpose is to help you develop a consistent, analytical approach to troubleshooting problems.</p>
+
+                        <h3>Troubleshooting procedure</h3>
+                        <p>In any troubleshooting situation, it is necessary to consider the entire system and sequence of operation including not only the burner, controls, wiring, etc., but also air supply, fuel supply, and the condition and characteristics of the flame itself. In order to cover all areas of burner operation, the troubleshooting procedure is broken down into a series of specific steps.</p>
+
+                        <div class="steps-container">
+                            <h4>Systematic Troubleshooting Approach</h4>
+                            
+                            <div class="step">
+                                <h4>Step 1—Know the system</h4>
+                                <p>In other words, do your homework. Study the manufacturer's technical manuals. Know how the system works.</p>
+                                <p>Keep up with the latest service bulletins. Read them and then file them in a handy place. This month's bulletin may cover the problem on the appliance, giving the cause and remedy.</p>
+                            </div>
+
+                            <div class="step">
+                                <h4>Step 2—Ask questions and look for symptoms</h4>
+                                <p>Usually, the information available on arrival at the installation consists of a simple statement such as "The burner shuts down." Start by asking all the questions possible of anyone that might have some knowledge of what happened.</p>
+                                
+                                <p><strong>For example:</strong></p>
+                                <ul>
+                                    <li>When does the shutdown occur?</li>
+                                    <li>What part of the cycle?</li>
+                                    <li>How long after the startup?</li>
+                                    <li>Does a shutdown occur after every start?</li>
+                                    <li>How is the light off?</li>
+                                </ul>
+                                
+                                <p>These are only sample questions. The information you need will depend on the individual situation.</p>
+                                
+                                <p>Examine the equipment and look for symptoms. A symptom is a sign that the equipment is operating abnormally (e.g., discoloration is a symptom of excessively high heat).</p>
+                            </div>
+
+                            <div class="step">
+                                <h4>Step 3—Evaluate Your Information</h4>
+                                <p>Use the supplied manufacturer's manuals, charts, service suggestions, together with your personal experience, to evaluate any information you have concerning the problem.</p>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Troubleshooting Mindset</h4>
+                            <p>Effective troubleshooting requires a systematic approach that considers the entire system, not just individual components. This methodical process helps ensure that all potential causes are investigated and the root problem is identified.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the first step in effective troubleshooting?",
+                    options: [
+                        "Start testing components immediately",
+                        "Ask the customer what's wrong",
+                        "Know the system - study the manufacturer's technical manuals",
+                        "Check the gas supply"
+                    ],
+                    correct: 2,
+                    explanation: "The first step is to know the system by studying the manufacturer's technical manuals. Understanding how the system is supposed to work is essential before you can effectively diagnose what's wrong with it."
+                }
+            },
+            {
+                title: "Advanced Troubleshooting Steps",
+                content: `
+                    <div class="section">
+                        <h2>Advanced troubleshooting steps</h2>
+                        
+                        <p>The conclusions you have drawn at this stage only provide an idea of where to look for the exact solution to the problem.</p>
+
+                        <div class="steps-container">
+                            <div class="step">
+                                <h4>Step 4—Make a trial run</h4>
+                                <p>Cycle the burner system and observe.</p>
+                                <ul>
+                                    <li>Was each step of the startup according to the design sequence?</li>
+                                    <li>Did any deviations occur?</li>
+                                    <li>Did the shutdown occur exactly as described?</li>
+                                    <li>Did anything else happen?</li>
+                                    <li>Have any new facts been established</li>
+                                </ul>
+                                <p>While you perform the trial run, make a note of any new information.</p>
+                            </div>
+
+                            <div class="step">
+                                <h4>Step 5—Re-evaluate</h4>
+                                <p>You can often make the re-evaluation of available facts during the trial run. Look over your list of possible causes and decide which are most likely and which are easiest to verify.</p>
+                                <p>Remember that in some instances, more than one factor may be contributing to the problem and you must consider this in the solution.</p>
+                                <p>Reach your decision on the leading causes and plan to check them first.</p>
+                            </div>
+
+                            <div class="step">
+                                <h4>Step 6—Test your conclusions</h4>
+                                <p>After determining the apparent cause(s) of the appliance problem, perform a second test run to see if the evaluation is correct. If you have not found the answer, you must make a new evaluation that includes any new information that you have obtained during the second test run. More than one re-evaluation test may be necessary to get all the information you need to positively identify the cause(s) of the problem.</p>
+                            </div>
+
+                            <div class="step">
+                                <h4>Step 7—Correct the condition(s)</h4>
+                                <p>At this stage, you would be confident in adjusting or replacing the faulty part(s). (Note that you cannot adjust all parts in the field—check with the manufacturer's manual.) Do a final run-through to check that you have solved the problem. When ordering replacement parts, make sure that you provide the model number of the equipment.</p>
+                            </div>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>Important Safety Note</h4>
+                            <p>Always follow proper safety procedures during troubleshooting. Turn off gas supplies and electrical power when necessary. Never bypass safety devices during testing, and always restore all safety systems before leaving the job.</p>
+                        </div>
+
+                        <div class="tip-box">
+                            <h4>💡 Troubleshooting Tips</h4>
+                            <ul>
+                                <li>Document your findings throughout the process</li>
+                                <li>Don't skip steps even if you think you know the problem</li>
+                                <li>Test your hypothesis before making repairs</li>
+                                <li>Always perform a final verification test after repairs</li>
+                                <li>Keep detailed records for future reference</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Why is it important to perform a trial run during troubleshooting?",
+                    options: [
+                        "To warm up the equipment",
+                        "To observe the actual system operation and identify deviations from normal sequence",
+                        "To test if the problem has been fixed",
+                        "To satisfy the customer"
+                    ],
+                    correct: 1,
+                    explanation: "A trial run allows you to observe the actual system operation and identify deviations from the normal design sequence. This provides valuable information about what's happening versus what should be happening, helping to narrow down the problem."
+                }
+            },
+            {
+                title: "Troubleshooting Guide Example",
+                content: `
+                    <div class="section">
+                        <h2>Sample manufacturer's troubleshooting guide</h2>
+                        
+                        <p>The following table shows a typical troubleshooting guide that manufacturers include in their service manuals. This example demonstrates how problems are categorized by symptoms, with corresponding possible causes and recommended service actions.</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nature of trouble</th>
+                                    <th>Possible Cause</th>
+                                    <th>Service</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="4"><strong>Unable to light Pilot</strong></td>
+                                    <td>1. Gas knob dial not correctly positioned</td>
+                                    <td>1. Follow lighting instruction</td>
+                                </tr>
+                                <tr>
+                                    <td>2. Pilot orifice clogged</td>
+                                    <td>2. Clean or replace</td>
+                                </tr>
+                                <tr>
+                                    <td>3. Pilot tube pinched or clogged</td>
+                                    <td>3. Clean, repair, or replace</td>
+                                </tr>
+                                <tr>
+                                    <td>4. Air in gas line</td>
+                                    <td>4. Purge air from gas line</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="4"><strong>Pilot does not stay lit when red button is released</strong></td>
+                                    <td>5. Loose Thermocouple</td>
+                                    <td>5. Tighten connection at thermostat</td>
+                                </tr>
+                                <tr>
+                                    <td>6. Thermocouple breakdown</td>
+                                    <td>6. Replace</td>
+                                </tr>
+                                <tr>
+                                    <td>7. Safety magnet breakdown</td>
+                                    <td>7. Replace Thermostat</td>
+                                </tr>
+                                <tr>
+                                    <td>8. Thermostat's single use gas shut-off device has opened</td>
+                                    <td>8. Replace Thermostat</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2"><strong>Not enough hot water</strong></td>
+                                    <td>9. Heater undersized</td>
+                                    <td>9. Reduce rate of hot water usage</td>
+                                </tr>
+                                <tr>
+                                    <td>10. Low gas pressure</td>
+                                    <td>10. Check gas supply pressure and manifold pressure</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3"><strong>Water too hot or not hot enough</strong></td>
+                                    <td>11. Thermostat setting too high or low</td>
+                                    <td>11. Change settings as required</td>
+                                </tr>
+                                <tr>
+                                    <td>12. Thermostat out of calibration</td>
+                                    <td>12. Replace</td>
+                                </tr>
+                                <tr>
+                                    <td>13. High water temperature</td>
+                                    <td>13. Thermostat out of calibration, replace</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="4"><strong>Yellow flame</strong></td>
+                                    <td>14. Scale on top of burner</td>
+                                    <td>14. Shut off heater and remove scale</td>
+                                </tr>
+                                <tr>
+                                    <td>15. Combustion air inlets or flueway restricted</td>
+                                    <td>15. Remove lint or debris and inspect air inlet opening for restrictions</td>
+                                </tr>
+                                <tr>
+                                    <td>16. Not enough combustion or ventilation air supplied to the room</td>
+                                    <td>16. Refer to Section E in Introduction section of this manual</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Rumbling noise</strong></td>
+                                    <td>17. Scale or sediment in tank</td>
+                                    <td>17. Clean tank - See Maintenance Sec IF</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="warning-box">
+                            <h4>CAUTION!</h4>
+                            <p>For your safety, DO NOT attempt to repair thermostat, burner or gas piping. Refer repairs to qualified service personnel.</p>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>How to Obtain Service Assistance</h4>
+                            <p><strong>1)</strong> Should you have any questions about your new water heater, or if it requires adjustment, repair, or routine maintenance. It is suggested that you first contact your installer, plumbing contractor or previously agreed upon service agency. In the event that the firm has moved, or is unavailable, refer to the telephone directory commercial listing or local utility for qualified service assistance.</p>
+                            
+                            <p><strong>2)</strong> Should your problem not be solved to your complete satisfaction, you should contact the Manufacturer's Regional Service Manager at the office closest to your location as listed below or the National Service Department at 1-800-000-000.</p>
+
+                            <p><strong>When contacting the manufacturer, the following information should be made available:</strong></p>
+                            <ul>
+                                <li>Model and serial numbers of the water heater as shown on the name plate on the jacket of the heater.</li>
+                                <li>Address where the water heater is located and can be seen.</li>
+                                <li>Name and address of installer and any service agency who performed service on the water heater.</li>
+                                <li>Date of original installation and dates any service work was performed.</li>
+                                <li>Details of the problem as you can best describe them.</li>
+                                <li>List of people, with dates, who have been contacted regarding this issue.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "According to the troubleshooting guide, what is the most likely cause if a pilot light won't stay lit when the red button is released?",
+                    options: [
+                        "Gas knob not positioned correctly",
+                        "Loose thermocouple connection",
+                        "Pilot orifice clogged",
+                        "Air in gas line"
+                    ],
+                    correct: 1,
+                    explanation: "A loose thermocouple is the most common cause when a pilot won't stay lit after the red button is released. The thermocouple generates a small electrical current when heated by the pilot flame, which keeps the gas valve open. If the connection is loose, this signal is interrupted and the valve closes."
+                }
+            },
+            {
+                title: "Chapter 2 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 2 Final Quiz</h2>
+                        <p>Test your knowledge of technical manuals and manufacturer's specifications covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 7 questions to complete the chapter. These questions are based on the CSA training materials and test your understanding of manufacturer's documentation and troubleshooting procedures.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Do manufacturers often publish one set of instructions for different models of the same series of appliances?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Yes</li>
+                                <li onclick="selectQuizOption(0, 1)">b) No</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>Which of the following are often included in the manufacturer's installation manual?</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) Wiring diagrams and architectural designs</li>
+                                <li onclick="selectQuizOption(1, 1)">b) Piping diagrams and Floor plans</li>
+                                <li onclick="selectQuizOption(1, 2)">c) Piping and wiring diagrams</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>Which of the following may be a possible reason why the pilot does not stay lit when the red button is released?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) Loose thermocouple</li>
+                                <li onclick="selectQuizOption(2, 1)">b) High limit is open</li>
+                                <li onclick="selectQuizOption(2, 2)">c) Thermostat not calling for heat</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>When a loose thermocouple is the reason why the pilot does not stay lit, what is the service requirement?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) Increase pilot size</li>
+                                <li onclick="selectQuizOption(3, 1)">b) Change gas valve</li>
+                                <li onclick="selectQuizOption(3, 2)">c) Replace the thermocouple</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>Which of the following may be a possible cause for a yellow flame and sooting problem?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) Scale on top of burner</li>
+                                <li onclick="selectQuizOption(4, 1)">b) Gas pressure is too high</li>
+                                <li onclick="selectQuizOption(4, 2)">c) Gas pressure is too low</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>When scale on top of the burner causes a yellow flame and sooting, what is the service requirement?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) Replace appliance</li>
+                                <li onclick="selectQuizOption(5, 1)">b) Shut off heater and remove scale</li>
+                                <li onclick="selectQuizOption(5, 2)">c) Replace burner</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>What should be the first step in any troubleshooting procedure?</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) Start testing components immediately</li>
+                                <li onclick="selectQuizOption(6, 1)">b) Know the system - study the manufacturer's technical manuals</li>
+                                <li onclick="selectQuizOption(6, 2)">c) Ask the customer what happened</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 2 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 2 - Technical manuals and manufacturer's specifications.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You now understand how to locate and interpret manufacturer's installation data, use troubleshooting procedures effectively, and find the technical information needed for safe and proper gas appliance installation and service.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers (correct answer indices) - based on the CSA quiz document
+        const quizCorrectAnswers = [0, 2, 0, 2, 0, 1, 1];
+        
+        const quizExplanations = [
+            "Yes, manufacturers often publish one set of instructions for different models of the same series of appliances because they share common installation procedures, though specific details may vary by model.",
+            "Piping and wiring diagrams are commonly included in manufacturer's installation manuals to help technicians understand the connections and configurations required.",
+            "A loose thermocouple is a common reason why a pilot light won't stay lit when the red button is released, as it fails to maintain the electrical signal needed to keep the gas valve open.",
+            "When a loose thermocouple is causing the problem, the service requirement is typically to replace the thermocouple rather than just tightening connections, as the component may be damaged.",
+            "Scale on top of the burner can cause incomplete combustion, leading to a yellow flame and sooting problems by restricting proper air flow and mixing.",
+            "When scale on the burner causes yellow flame and sooting, the service requirement is to shut off the heater and remove the scale to restore proper combustion.",
+            "The first step in troubleshooting should be to know the system by studying the manufacturer's technical manuals. Understanding how the system should work is essential before diagnosing problems."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 7) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 7; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 7) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/7 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/7 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

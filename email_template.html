@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LARK Labs Email Template</title>
+    <style>
+        /* Reset styles for email compatibility */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+        
+        /* Main email styles */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #f8fafc;
+            font-family: Arial, sans-serif;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header styles */
+        .header-content {
+            background-color: #ffffff;
+            position: relative;
+            padding: 25px;
+        }
+        
+        .header-main {
+            background-color: white;
+            position: relative;
+            z-index: 10;
+            padding: 25px;
+            border-bottom: 3px solid #e5e7eb;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo-bird {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            z-index: 20;
+            background-color: white;
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .company-info {
+            flex: 1;
+        }
+        
+        .company-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1e40af;
+            margin: 0;
+            line-height: 1.2;
+            text-shadow: none;
+        }
+        
+        .tagline {
+            font-size: 14px;
+            color: #1f2937;
+            margin: 8px 0 0 0;
+            font-weight: 600;
+        }
+        
+        .contact-info {
+            font-size: 11px;
+            color: #1f2937;
+            margin-top: 10px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        
+        /* Content styles */
+        .content {
+            padding: 35px 25px;
+            line-height: 1.6;
+            color: #374151;
+        }
+        
+        .content h1 {
+            color: #1e40af;
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .content h2 {
+            color: #4b5563;
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .content p {
+            margin-bottom: 16px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #dbeafe, #f3f4f6);
+            border-left: 5px solid #3b82f6;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: #1e40af;
+            font-weight: 500;
+        }
+        
+        .quote-highlight {
+            text-align: center;
+            font-size: 18px;
+            color: #1e40af;
+            font-style: italic;
+            margin: 25px 0;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 25px 0;
+        }
+        
+        .service-item {
+            background-color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        
+        .service-emoji {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .service-title {
+            color: #1e40af;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .service-desc {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #3b82f6, #1e40af);
+            color: white !important;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 25px 0;
+            transition: transform 0.2s;
+            text-align: center;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .experience-stats {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1e40af;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        
+        /* Footer styles */
+        .footer {
+            background-color: #f9fafb;
+            padding: 25px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        
+        .footer-content {
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        
+        .footer-links {
+            margin: 20px 0;
+        }
+        
+        .footer-links a {
+            color: #3b82f6;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 500;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .philosophy {
+            color: #1e40af;
+            font-weight: 600;
+            font-style: italic;
+        }
+        
+        /* Responsive styles */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+            
+            .header-main {
+                padding: 20px 15px;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .logo-bird {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .company-name {
+                font-size: 28px;
+            }
+            
+            .content {
+                padding: 25px 15px;
+            }
+            
+            .content h1 {
+                font-size: 22px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quote-highlight {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header-content">
+            <div class="header-main">
+                <div class="logo-container">
+                    <!-- Simplified logo for email compatibility -->
+                    <div class="logo-bird">
+                        <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="birdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#3B82F6"/>
+                                    <stop offset="50%" style="stop-color:#6B7280"/>
+                                    <stop offset="100%" style="stop-color:#DC2626"/>
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="28" cy="35" rx="20" ry="14" fill="url(#birdGrad)" opacity="1"/>
+                            <ellipse cx="32" cy="30" rx="16" ry="10" fill="#3B82F6" opacity="0.9"/>
+                            <ellipse cx="36" cy="35" rx="12" ry="8" fill="#DC2626" opacity="1"/>
+                            <circle cx="48" cy="25" r="9" fill="#1E40AF" opacity="1"/>
+                            <circle cx="50" cy="23" r="2" fill="white"/>
+                            <circle cx="51" cy="22" r="1" fill="#1E40AF"/>
+                            <polygon points="57,23 64,21 60,27" fill="#DC2626"/>
+                            <circle cx="23" cy="27" r="1" fill="#EF4444"/>
+                            <circle cx="30" cy="25" r="1" fill="#3B82F6"/>
+                            <circle cx="34" cy="42" r="1" fill="#DC2626"/>
+                            <circle cx="10" cy="35" r="4" fill="#3B82F6" opacity="0.8"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="company-info">
+                        <h1 class="company-name">LARK LABS</h1>
+                        <p class="tagline">Bridging Traditional HVAC Education & the Digital Age</p>
+                        <div class="contact-info">
+                            www.larklabs.org | Free HVAC Tools & Training
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Advancing HVAC Education Through Innovation</h1>
+            
+            <p>Dear HVAC Professional,</p>
+            
+            <p>Welcome to LARK Labs, where we're revolutionizing HVAC education by combining decades of field experience with cutting-edge digital tools. Our mission is to bridge the gap between traditional HVAC training and the demands of today's technology-driven industry.</p>
+            
+            <div class="quote-highlight">
+                "Technology should serve people, not the other way around"<br>
+                <strong>— LARK Labs Philosophy</strong>
+            </div>
+            
+            <div class="experience-stats">
+                <div style="display: flex; justify-content: space-around;">
+                    <div>
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Years Field Experience</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Years Teaching Experience</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Who We Serve</h2>
+            
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="service-emoji">🎓</span>
+                    <div class="service-title">Students</div>
+                    <div class="service-desc">Aspiring HVAC professionals seeking comprehensive learning resources</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-emoji">👨🏫</span>
+                    <div class="service-title">Educators</div>
+                    <div class="service-desc">Teachers and trainers looking for innovative instructional tools</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-emoji">🔧</span>
+                    <div class="service-title">Technicians</div>
+                    <div class="service-desc">Working professionals who need reliable tools for daily operations</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-emoji">👔</span>
+                    <div class="service-title">Business Owners</div>
+                    <div class="service-desc">HVAC companies seeking to improve efficiency and employee development</div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>Educational Excellence:</strong> Our tools are designed by educators for real learning outcomes, grounded in field experience and modern technology that works seamlessly on any device.
+            </div>
+            
+            <p>At LARK Labs, we're not just developing software – we're cultivating the future of the HVAC industry. Through innovative technology, comprehensive education, and unwavering commitment to excellence, we're helping to ensure that the next generation of HVAC professionals is better equipped and better prepared.</p>
+            
+            <a href="https://www.larklabs.org" class="cta-button">Explore Our Free Tools</a>
+            
+            <p>Join the HVAC professionals who trust LARK Labs to advance their education and career development.</p>
+            
+            <p>Best regards,<br>
+            <strong>The LARK Labs Team</strong><br>
+            <em>Where field experience meets innovation</em></p>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <p><strong>LARK Labs</strong> - Free HVAC Tools & Training</p>
+                <p class="philosophy">"Technology should serve people, not the other way around"</p>
+                
+                <div class="footer-links">
+                    <a href="#">Free Tools</a>
+                    <a href="#">Training Resources</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Contact</a>
+                </div>
+                
+                <p style="margin-top: 25px; font-size: 10px; color: #9ca3af;">
+                    © 2025 LARK Labs. All rights reserved.<br>
+                    Bridging traditional HVAC education and the digital age.<br>
+                    <a href="#" style="color: #9ca3af;">Unsubscribe</a> | <a href="#" style="color: #9ca3af;">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

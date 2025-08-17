@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 4 - Chapter 1: Codes, Acts, and Regulations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .agency-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .agency-table th, .agency-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        .agency-table th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .agency-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 4 - Utilization codes, acts, and regulations</h1>
+            <h2>Chapter 1 - Codes, acts, and regulations</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 9</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 9;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>The aims of the gas industry are to:</p>
+                        <ul>
+                            <li>convey gas as potential energy to a place or appliance;</li>
+                            <li>ignite the gas; and</li>
+                            <li>use the energy to perform a useful purpose.</li>
+                        </ul>
+
+                        <p>The responsibility of those involved in the gas industry is to achieve these aims in a safe and organized manner. From the time a developer conceives a gas system to the time the system comes online, an individual or a group of individuals must take responsibility for the various phases along the way.</p>
+
+                        <p>Gas technicians/fitters must stay aware of the duties, responsibilities, and regulations governing the entire industry if they wish to play their part in making the process proceed smoothly.</p>
+                        
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>identify the agencies and bodies that govern gas and propane installations;</li>
+                            <li>describe the scope of installation codes and acts;</li>
+                            <li>locate sections in CSA B149.1 <em>Natural gas and propane installation code</em>;</li>
+                            <li>locate information in Section 4, General, of CSA B149.1 <em>Natural gas and propane installation code</em>; and</li>
+                            <li>locate sections in CSA B149.2 <em>Propane storage and handling code</em>.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Act</td>
+                                    <td></td>
+                                    <td>Government-legislated legal documents that determine the powers of inspectors, directors, etc., as well as enable the government to write regulations</td>
+                                </tr>
+                                <tr>
+                                    <td>Code</td>
+                                    <td></td>
+                                    <td>Typically helps define best practices for products, services, and processes<br><br>Government regulatory bodies adopt this to help address safety concerns for consumers and businesses</td>
+                                </tr>
+                                <tr>
+                                    <td>Regulation</td>
+                                    <td></td>
+                                    <td>Legal directives that focus on specific areas</td>
+                                </tr>
+                                <tr>
+                                    <td>Standard</td>
+                                    <td></td>
+                                    <td>Defines an agreed-upon way to produce products, perform certain processes, or supply materials in a regular, repeatable manner</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding codes, acts, and regulations is fundamental for gas technicians/fitters. These documents ensure safe practices and legal compliance in gas installations across Canada.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What are the three main aims of the gas industry?",
+                    options: [
+                        "Transport, store, and distribute gas",
+                        "Convey gas as potential energy, ignite the gas, and use the energy for a useful purpose",
+                        "Install, maintain, and repair gas systems",
+                        "Manufacture, test, and certify gas equipment"
+                    ],
+                    correct: 1,
+                    explanation: "The three main aims of the gas industry are to: convey gas as potential energy to a place or appliance, ignite the gas, and use the energy to perform a useful purpose."
+                }
+            },
+            {
+                title: "Agencies and Bodies - Standards vs Codes",
+                content: `
+                    <div class="section">
+                        <h2>Agencies and bodies that govern natural gas and propane installations</h2>
+                        
+                        <p>Federal, provincial, and territorial acts and regulations can reference safety and installation standards and codes.</p>
+
+                        <h3>Standards vs Codes</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Standards</th>
+                                    <th>Codes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Standards define an agreed-upon way to produce products, perform certain processes, or supply materials in a regular, repeatable manner.</td>
+                                    <td>Codes typically help define best practices for products, services, and processes. Government regulatory bodies adopt them to help address safety concerns for consumers and businesses.</td>
+                                </tr>
+                                <tr>
+                                    <td>They are normally narrower in scope than a code and cover a limited range of issues.</td>
+                                    <td>In general, codes are much broader in scope than a standard and cover a wider range of issues. The various provinces, territories, and jurisdictions that adopt codes also give them the force of law.</td>
+                                </tr>
+                                <tr>
+                                    <td>Referencing them in an adopted code or jurisdictional regulation allow them to obtain the force of law.</td>
+                                    <td>Codes often reference other standards, giving them additional visibility and weight within the industries that use them.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>The regulations and requirements under which the gas industry must work are numerous and vary from jurisdiction to jurisdiction throughout the world. This section describes some of the responsibilities of various agencies and bodies governing local gas industries. These references are in alphabetical arrangement for ease of reference.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Important Note</h4>
+                            <p>Codes and standards provide the framework for safe gas installations, but they must be adopted by jurisdictional authorities to have legal force.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the main difference between standards and codes in terms of scope?",
+                    options: [
+                        "Standards are broader in scope than codes",
+                        "Codes are broader in scope than standards",
+                        "Standards and codes have the same scope",
+                        "Neither standards nor codes have defined scope"
+                    ],
+                    correct: 1,
+                    explanation: "Standards are normally narrower in scope than codes and cover a limited range of issues, while codes are much broader in scope and cover a wider range of issues."
+                }
+            },
+            {
+                title: "Agencies and Organizations",
+                content: `
+                    <div class="section">
+                        <h2>Agencies/organizations</h2>
+                        
+                        <table class="agency-table">
+                            <thead>
+                                <tr>
+                                    <th>Agency</th>
+                                    <th>Abbreviation</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSA Group</td>
+                                    <td>CSA</td>
+                                    <td>CSA organization has accreditation to develop standards and codes including the CSA B149 series of installation codes.<br><br>North America and other nations recognize CSA Group to provide testing and certification services for a broad range of product categories, including electrical, gas-fired, plumbing, personal protective equipment, and others, to applicable approved standards.</td>
+                                </tr>
+                                <tr>
+                                    <td>Intertech Testing Services</td>
+                                    <td>ITS</td>
+                                    <td>ITS is an agency that has accreditation to test appliances, equipment, components, and accessories to an applicable approved standard.</td>
+                                </tr>
+                                <tr>
+                                    <td>Propane Gas Association of Canada</td>
+                                    <td>PGAC</td>
+                                    <td>PGAC is one of a number of organizations responsible for registering the persons who re-qualify refillable propane cylinders.</td>
+                                </tr>
+                                <tr>
+                                    <td>Transport Canada</td>
+                                    <td>TC</td>
+                                    <td>TC is the federal department that oversees the transportation of dangerous goods through Canada and certifies propane cylinders.</td>
+                                </tr>
+                                <tr>
+                                    <td>United States Department of Transportation</td>
+                                    <td>US DOT</td>
+                                    <td>The U.S. DOT has federal jurisdiction over the various transportation modes. The department is also responsible for transportation safety improvements and enforcement in the U.S.</td>
+                                </tr>
+                                <tr>
+                                    <td>Underwriters Laboratories Inc.</td>
+                                    <td>UL</td>
+                                    <td>UL is the organization that has accreditation to test and certify appliances, equipment, components, and accessories to applicable approved standards. A product certified by UL for Canada will bear the marking "cUL".</td>
+                                </tr>
+                                <tr>
+                                    <td>Underwriters Laboratories of Canada</td>
+                                    <td>ULC</td>
+                                    <td>ULC is the organization that accreditation to test and certify appliances, equipment, components, and accessories to applicable approved standards. It also has accreditation to develop standards. It certifies the majority of vent materials that Canada uses.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Agencies Overview</h4>
+                            <p>These agencies work together to ensure the safety and standardization of gas equipment and installations across North America. Each has specific roles in testing, certification, and regulation.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which organization is responsible for certifying propane cylinders in Canada?",
+                    options: [
+                        "CSA Group",
+                        "Transport Canada (TC)",
+                        "PGAC",
+                        "ULC"
+                    ],
+                    correct: 1,
+                    explanation: "Transport Canada (TC) is the federal department that oversees the transportation of dangerous goods through Canada and certifies propane cylinders."
+                }
+            },
+            {
+                title: "Governmental Authorities",
+                content: `
+                    <div class="section">
+                        <h2>Governmental authorities</h2>
+                        
+                        <p>Federal, provincial, and territorial authorities with jurisdiction in Canada have the mandate to govern the safe handling, installation, servicing, use, and maintenance of natural gas and propane equipment. Usually, a regulatory function (i.e., one that writes regulations/bulletins) and an inspection function handle this. The specific ministry and/or agency responsible varies from jurisdiction to jurisdiction.</p>
+
+                        <table class="agency-table">
+                            <thead>
+                                <tr>
+                                    <th>Jurisdiction</th>
+                                    <th>Regulatory Authority</th>
+                                    <th>Inspection Authority</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Federal</td>
+                                    <td>Human Resources and Skills<br>Occupational Safety, Health, and Fire Prevention Division</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Alberta</td>
+                                    <td>Municipal Affairs<br>Plumbing and Gas Safety Standards</td>
+                                    <td>Safety Codes Council</td>
+                                </tr>
+                                <tr>
+                                    <td>British Columbia</td>
+                                    <td>British Columbia Safety Authority (BCSA)</td>
+                                    <td>British Columbia Safety Authority (BCSA)</td>
+                                </tr>
+                                <tr>
+                                    <td>Manitoba</td>
+                                    <td colspan="2">Manitoba Underwriters Laboratories Inc. (UL)<br>Labor and Immigration<br>Mechanical & Engineering Branch</td>
+                                </tr>
+                                <tr>
+                                    <td>New Brunswick</td>
+                                    <td colspan="2">Department of Public Safety<br>Safety Code Services (SCS)</td>
+                                </tr>
+                                <tr>
+                                    <td>Newfoundland and Labrador</td>
+                                    <td colspan="2">Department of Government Services and Lands</td>
+                                </tr>
+                                <tr>
+                                    <td>Northwest Territories</td>
+                                    <td colspan="2">Department of Public Works and Services</td>
+                                </tr>
+                                <tr>
+                                    <td>Nova Scotia</td>
+                                    <td colspan="2">Department of Labour and Advanced Education</td>
+                                </tr>
+                                <tr>
+                                    <td>Nunavut</td>
+                                    <td colspan="2">Government of Nunavut<br>Dept. of Community & Government Services</td>
+                                </tr>
+                                <tr>
+                                    <td>Ontario</td>
+                                    <td>Ministry of Consumer Services</td>
+                                    <td>Technical Standards and Safety Authority (TSSA)</td>
+                                </tr>
+                                <tr>
+                                    <td>Prince Edward Island</td>
+                                    <td colspan="2">Department of Labour</td>
+                                </tr>
+                                <tr>
+                                    <td>Québec</td>
+                                    <td colspan="2">Régie du bâtiment du Québec</td>
+                                </tr>
+                                <tr>
+                                    <td>Saskatchewan</td>
+                                    <td colspan="2">SaskPower Corporation</td>
+                                </tr>
+                                <tr>
+                                    <td>Yukon</td>
+                                    <td colspan="2">Community & Transportation Services<br>Public Safety Branch</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="warning-box">
+                            <h4>Recent Federal Legislation</h4>
+                            <p><strong>Note:</strong> Under recently adopted federal legislation, the Agreement for Internal Trade (AIT) now enables gas technician/fitter certificate holders to apply to different provincial jurisdictions for similar level gas certification without further examination, testing, or interview. Check with the provincial authority in question in order to apply as an "Out-of-Province Candidate" and receive their equivalent certification.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What does the Agreement for Internal Trade (AIT) enable for gas technicians?",
+                    options: [
+                        "Automatic certification in all provinces",
+                        "The ability to apply for similar level certification in different provinces without further examination",
+                        "Higher wages across provinces",
+                        "Exemption from all provincial regulations"
+                    ],
+                    correct: 1,
+                    explanation: "The AIT enables gas technician/fitter certificate holders to apply to different provincial jurisdictions for similar level gas certification without further examination, testing, or interview as an 'Out-of-Province Candidate'."
+                }
+            },
+            {
+                title: "Installation Codes and Acts - CSA B149.1",
+                content: `
+                    <div class="section">
+                        <h2>The scope of installation codes and acts</h2>
+                        
+                        <p>The installation codes and acts for natural gas and propane cover very specific installations. The following information on the scope of each Code and Act details what it applies to and what is excluded.</p>
+
+                        <h3>Natural gas and propane installation code, CSA B149.1</h3>
+                        
+                        <p>The <em>Natural gas and propane installation code</em>, CSA B149.1, establishes the essential requirements and minimum standards for the installation of natural gas and propane appliances and equipment.</p>
+
+                        <div class="warning-box">
+                            <h4>Important Note</h4>
+                            <p><strong>Note:</strong> The Code only applies to certain natural gas and propane applications. It is the gas technician's/fitter's responsibility to determine whether the Code is suitable for the specific application.</p>
+                        </div>
+
+                        <h3>Suitable applications</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>This Code applies to the installation of...</th>
+                                    <th>This Code does not apply to...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>• Appliances, equipment, components, and accessories where you will use gas for fuel purposes<br><br>• Piping and tubing systems extending from the termination of the utility installation or from the distributor's propane tank<br><br>• Vehicle-refuelling appliances and associated equipment meeting the requirements of a general-purpose appliance to fill a natural-gas-fueled vehicle<br><br>• Stationary gas engines and turbines</td>
+                                    <td>• Marine or pipeline terminals<br><br>• Gas that works as feedstock in petroleum refineries or chemical plants<br><br>• Utility pipeline distribution and transmission pipelines<br><br>• Storage and handling of liquefied natural gas or underground reservoirs for natural gas<br><br>• Installation of NGV fuel systems, containers, and refuelling stations<br><br>• Storage and utilization of compressed natural gas on boats<br><br>• Installation of vehicle-refuelling appliances when NGV storage containers are installed as part of the system<br><br>• Refrigerated storage or underground reservoirs for propane<br><br>• Propane used on boats<br><br>• Propane used as a propellant in aerosol containers<br><br>• Butane fuel cylinders of 175 g capacity or less<br><br>• The installation of containers and equipment to be used for propane in distribution locations and filling plants and on tank trucks, tank trailers, and cargo liners<br><br>• Propane used as refrigerant</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "CSA B149.1 applies to which of the following installations?",
+                    options: [
+                        "Marine terminals and pipeline distribution",
+                        "Appliances and equipment where gas is used for fuel purposes",
+                        "Underground reservoirs for natural gas storage",
+                        "Propane used as refrigerant"
+                    ],
+                    correct: 1,
+                    explanation: "CSA B149.1 applies to appliances, equipment, components, and accessories where gas is used for fuel purposes, along with associated piping and tubing systems."
+                }
+            },
+            {
+                title: "CSA B149.2 - Propane Storage and Handling",
+                content: `
+                    <div class="section">
+                        <h2>Propane storage and handling code, CSA B149.2</h2>
+                        
+                        <p>The <em>Propane storage and handling code</em> aims to establish essential requirements and minimum standards for the storage and handling of propane, as well as the installation of appliances, equipment, and containers on highway vehicles, recreational vehicles, mobile housing, food service Units, and wash-mobiles for regulatory adoption.</p>
+
+                        <div class="warning-box">
+                            <h4>Important Note</h4>
+                            <p><strong>Note:</strong> The Code only applies to certain propane applications. It is the gas technician's/fitter's responsibility to determine whether the Code is suitable for the specific application.</p>
+                        </div>
+
+                        <h3>Suitable applications</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>This Code applies to...</th>
+                                    <th>This Code does not apply to...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>• Storage, handling, and transfer of propane<br><br>• Propane used as an engine fuel in other than motor vehicles<br><br>• Installation, operation, and maintenance of containers and equipment that you will use for propane at customer locations, distribution locations and filling plants</td>
+                                    <td>• Transportation of propane<br><br>• Manufacture, selection, and use of standardized means of containment under the Transportation of Dangerous Goods Act and Regulations<br><br>• Marine or pipeline terminals<br><br>• New containers which have not contained propane or used containers identified as having been purged to less than 5% of the LEL as determined by a calibrated meter<br><br>• Gas that works as feedstock in petroleum refineries or chemical plants<br><br>• Utility pipeline distribution and transmission pipelines<br><br>• Refrigerated storage or underground reservoirs for propane<br><br>• Propane used on boats<br><br>• Propane used as a propellant in aerosol containers<br><br>• Butane fuel cylinders of 6.2 oz (175 g) capacity or less<br><br>• Any equipment extending downstream from the inlet to any container pressure regulator (commonly referred to as first-stage regulator)<br><br>• The installation of propane fuel system components and tanks on vehicles covered by CSA B149.5<br><br>• Propane used as refrigerant</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "CSA B149.2 covers which of the following?",
+                    options: [
+                        "Transportation of propane by truck",
+                        "Storage, handling, and transfer of propane",
+                        "Marine terminals for propane",
+                        "Propane used as refrigerant"
+                    ],
+                    correct: 1,
+                    explanation: "CSA B149.2 covers storage, handling, and transfer of propane, as well as installation, operation, and maintenance of containers and equipment for propane use."
+                }
+            },
+            {
+                title: "Acts and Regulations",
+                content: `
+                    <div class="section">
+                        <h2>Acts and regulations</h2>
+                        
+                        <p>Acts are government-legislated legal documents that determine the powers of inspectors, directors, etc., as well as enable the government to write regulations. Regulations are legal directives that focus on specific areas.</p>
+
+                        <p>Table 1-2 lists acts and regulations that pertain to installation requirements for natural gas and propane equipment in the Canadian provinces and territories.</p>
+
+                        <div class="info-box">
+                            <h4>Important</h4>
+                            <p>While the listed acts and regulations are current at the time of writing, they do change from time to time. The gas technician/fitter should obtain copies of the current acts and regulations, read them, and become familiar with them.</p>
+                        </div>
+
+                        <h3>Sample Provincial Acts and Regulations</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Province/Territory</th>
+                                    <th>Acts</th>
+                                    <th>Regulations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Alberta</td>
+                                    <td>Safety Codes Act<br>- R5. A 2000, S-1</td>
+                                    <td>Administrative Items Regulation<br>- Alberta Regulation 16/2004<br><br>Certification and Permit Regulation<br>- Alberta Regulation 295/2009<br><br>Gas Code Regulation<br>- Alberta Regulation 111/2010</td>
+                                </tr>
+                                <tr>
+                                    <td>British Columbia</td>
+                                    <td>Safety Standards Act</td>
+                                    <td>Gas Safety Regulation<br>[includes amendments up to B.C. Reg. 150/2011, August 12, 2011]</td>
+                                </tr>
+                                <tr>
+                                    <td>Ontario</td>
+                                    <td>Technical Standards and Safety Act<br>Last amendment: 2018, c. 7, s. 12-24.</td>
+                                    <td>Fuel Industry Certificates O. Reg. 215/01<br><br>Gaseous Fuels O. Reg. 212/01<br><br>Propane Storage and Handling O. Reg. 211/01</td>
+                                </tr>
+                                <tr>
+                                    <td>Saskatchewan</td>
+                                    <td>Gas Inspection Act<br>R.S.S. 1993, c. G-3.2</td>
+                                    <td>Gas Inspection Regulations, c. G-3.2, Reg. 1, as amended by Saskatchewan Regulations 32/96, 37/2000, 90/2004, 12/2005, 46/2008, 128/2010 and 105/2015.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>💡 Research Tip</h4>
+                            <p>Always check the most current versions of acts and regulations in your jurisdiction, as these documents are updated regularly. Provincial government websites are the best source for current legislation.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the difference between Acts and Regulations?",
+                    options: [
+                        "Acts are more specific than regulations",
+                        "Acts determine powers of inspectors and enable government to write regulations; regulations are legal directives focusing on specific areas",
+                        "Acts and regulations are the same thing",
+                        "Regulations are broader than acts"
+                    ],
+                    correct: 1,
+                    explanation: "Acts are government-legislated legal documents that determine the powers of inspectors, directors, etc., and enable the government to write regulations. Regulations are legal directives that focus on specific areas."
+                }
+            },
+            {
+                title: "CSA B149.1 Sections and Structure",
+                content: `
+                    <div class="section">
+                        <h2>Sections in the Natural gas and propane installation code (CSA B149.1)</h2>
+                        
+                        <p>Below is a brief outline of the sections in CSA B149.1, <em>Natural gas and propane installation code</em>, which contains 10 sections:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Section/clause</th>
+                                    <th>Title</th>
+                                    <th>This Section contains...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Scope</td>
+                                    <td>The scope of the Code</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Reference publications</td>
+                                    <td>A listing of the publications referenced throughout the Code</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Definitions</td>
+                                    <td>Definitions of terms used throughout the Code</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>General</td>
+                                    <td>General requirements regarding the approval and installation of appliances, accessories, components, equipment, and materials</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Pressure controls</td>
+                                    <td>Requirements on allowable pressures in various types of buildings and devices for controlling pressures</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Gas piping systems</td>
+                                    <td>Minimum requirements for the material, size, pressure allowance at specific locations, installation, protection, testing, purging, and identification of piping and tubing systems, hose, and fittings</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Installation of specific types of appliances</td>
+                                    <td>Minimum installation requirements for boilers, pressure boosters, carbon dioxide generators, conversion burners, commercial cooking appliances, residential ranges, clothes dryers, furnaces, heaters, decorative appliances and gas logs, hot-plates, incinerators, lighting, refrigerators, direct vent appliances, and stationary engines</td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Venting Systems and Air Supply for Appliances</td>
+                                    <td>Minimum requirements for venting systems and air supply for appliances</td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Natural Gas Compressors and Cylinders</td>
+                                    <td>Minimum requirements for installation of natural gas compressors, and cylinder filling, storage, and utilization</td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Residential fuelling appliances (RFAs) and vehicle fuelling appliances (VRAs) used for natural gas without Storage</td>
+                                    <td>Minimum requirements for the installation of vehicle refuelling appliances without storage</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Section/Clause 4, General</h3>
+                        <p>The General section (Clause 4) of CSA B149.1, <em>Natural gas and propane installation code</em>, contains pertinent information on the general requirements for gas and propane installations. Clause 4 contains 25 subsections:</p>
+
+                        <div class="info-box">
+                            <h4>See additional information on Clause 4 of CSA B149.1 Natural gas and propane installation code below.</h4>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Subsection</th>
+                                    <th>Title</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>4.1</td><td>Application</td></tr>
+                                <tr><td>4.2</td><td>Approval of appliances, accessories, components, equipment, and material</td></tr>
+                                <tr><td>4.3</td><td>Responsibilities of the installer</td></tr>
+                                <tr><td>4.4</td><td>Training and quality of labour</td></tr>
+                                <tr><td>4.5</td><td>Suitability of use</td></tr>
+                                <tr><td>4.6</td><td>Meter and service regulator installations</td></tr>
+                                <tr><td>4.7</td><td>Electrical connections and components</td></tr>
+                                <tr><td>4.8</td><td>Mobile homes and recreational vehicles</td></tr>
+                                <tr><td>4.9</td><td>Hazardous and corrosive locations</td></tr>
+                                <tr><td>4.10</td><td>Smoking</td></tr>
+                                <tr><td>4.11</td><td>Isolation of safety devices</td></tr>
+                                <tr><td>4.12</td><td>Leak detection</td></tr>
+                                <tr><td>4.13</td><td>Appliance clearances to combustible material</td></tr>
+                                <tr><td>4.14</td><td>Accessibility</td></tr>
+                                <tr><td>4.15</td><td>Outdoor installations</td></tr>
+                                <tr><td>4.16</td><td>Appliances in garages</td></tr>
+                                <tr><td>4.17</td><td>Appliance ductwork connections</td></tr>
+                                <tr><td>4.18</td><td>Combined heating systems</td></tr>
+                                <tr><td>4.19</td><td>Appliances protected by automatic fire-extinguishing systems</td></tr>
+                                <tr><td>4.20</td><td>Control of appliances with self-energized pilots</td></tr>
+                                <tr><td>4.21</td><td>Defective heat exchangers</td></tr>
+                                <tr><td>4.22</td><td>High-altitude installations</td></tr>
+                                <tr><td>4.23</td><td>Protection of appliances from physical damage</td></tr>
+                                <tr><td>4.24</td><td>Odorization</td></tr>
+                                <tr><td>4.25</td><td>Mobile homes and recreational vehicles</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "How many sections does CSA B149.1 contain?",
+                    options: [
+                        "8 sections",
+                        "10 sections",
+                        "12 sections",
+                        "15 sections"
+                    ],
+                    correct: 1,
+                    explanation: "CSA B149.1, Natural gas and propane installation code, contains 10 sections covering everything from scope and definitions to specific appliance installation requirements."
+                }
+            },
+            {
+                title: "CSA Unit 4 Chapter 1 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 1 Final Quiz</h2>
+                        <p>Test your knowledge of codes, acts, and regulations covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 37 questions to complete the chapter. Each question is based on the CSA Gas Trade Training materials covered in the previous sections.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Match the following definitions with the correct terms - Acceptable to the authority having jurisdiction:</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Approved</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Chimney</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Direct-vent appliance</li>
+                                <li onclick="selectQuizOption(0, 3)">d) Pressure regulator</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>Match the following definitions with the correct terms - A primarily vertical shaft that encloses at least one flue for conducting flue gases outdoors:</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) Approved</li>
+                                <li onclick="selectQuizOption(1, 1)">b) Chimney</li>
+                                <li onclick="selectQuizOption(1, 2)">c) Direct-vent appliance</li>
+                                <li onclick="selectQuizOption(1, 3)">d) Pressure regulator</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>Match the following definitions with the correct terms - An appliance constructed so that all the combustion air is supplied directly from, and the products of combustion are vented directly to, the outdoors by independent enclosed passageways connected directly to the appliance:</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) Approved</li>
+                                <li onclick="selectQuizOption(2, 1)">b) Chimney</li>
+                                <li onclick="selectQuizOption(2, 2)">c) Direct-vent appliance</li>
+                                <li onclick="selectQuizOption(2, 3)">d) Pressure regulator</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>Match the following definitions with the correct terms - A device, either adjustable or non-adjustable, for controlling and maintaining, within acceptable limits, a uniform outlet pressure:</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) Approved</li>
+                                <li onclick="selectQuizOption(3, 1)">b) Chimney</li>
+                                <li onclick="selectQuizOption(3, 2)">c) Direct-vent appliance</li>
+                                <li onclick="selectQuizOption(3, 3)">d) Pressure regulator</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>Indicate True or False: A venting system removes flue gases to the outdoors by means of a chimney, vent connector vent, or a natural or mechanical exhaust system.</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) True</li>
+                                <li onclick="selectQuizOption(4, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>Which of the following describes a continuous pilot?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) A pilot that is automatically lighted each time there is a call for heat, and that is cut off automatically at the end of the trial-for-ignition period of the main burner</li>
+                                <li onclick="selectQuizOption(5, 1)">b) A pilot that burns without turndown throughout the entire time the burner is in service, whether the main burner is firing or not</li>
+                                <li onclick="selectQuizOption(5, 2)">c) A pilot that is automatically lighted each time there is a call for heat, and that burns during the entire period that the main burner is firing</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>Indicate True or False: An enclosed structure is the entire building in which an appliance is installed.</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) False</li>
+                                <li onclick="selectQuizOption(6, 1)">b) True</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>What type of burner is not equipped with a mechanical device for supplying combustion air?</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) Forced-draft burner</li>
+                                <li onclick="selectQuizOption(7, 1)">b) Fan-assisted burner</li>
+                                <li onclick="selectQuizOption(7, 2)">c) Natural-draft burner</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>Match the maximum gas pressures (in psig) permitted inside buildings - One- and two-family dwellings and row housing:</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) 20 psig (140 kPa)</li>
+                                <li onclick="selectQuizOption(8, 1)">b) 5 psig (35 kPa) or 20 psig (140 kPa)</li>
+                                <li onclick="selectQuizOption(8, 2)">c) 66 psig (450 kPa) for natural gas and 20 psig (140 kPa) for propane</li>
+                                <li onclick="selectQuizOption(8, 3)">d) 2 psi (14kPa)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 10:</h4>
+                            <p>Where can you determine the volume of gas to be used for sizing pipe systems to an appliance?</p>
+                            <ul class="quiz-options" data-question="9">
+                                <li onclick="selectQuizOption(9, 0)">a) The appliance rating plate or the appliance manufacturer</li>
+                                <li onclick="selectQuizOption(9, 1)">b) The back of the Codebook</li>
+                                <li onclick="selectQuizOption(9, 2)">c) In the Regulation</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 11:</h4>
+                            <p>According to Table 6.1, what is the maximum allowable pressure drop when a natural gas piping and tubing system supply pressure is less than 7 inches w.c.?</p>
+                            <ul class="quiz-options" data-question="10">
+                                <li onclick="selectQuizOption(10, 0)">a) 1 inch w.c. (0.250 kPa)</li>
+                                <li onclick="selectQuizOption(10, 1)">b) There is no maximum allowable pressure drop</li>
+                                <li onclick="selectQuizOption(10, 2)">c) 0.5 inches w.c. (0.125 kPa)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 12:</h4>
+                            <p>Can a gas pipe be supported by another gas pipe?</p>
+                            <ul class="quiz-options" data-question="11">
+                                <li onclick="selectQuizOption(11, 0)">a) Yes, if it is a smaller diameter</li>
+                                <li onclick="selectQuizOption(11, 1)">b) Yes, if it is a larger diameter</li>
+                                <li onclick="selectQuizOption(11, 2)">c) No</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 13:</h4>
+                            <p>Match the correct depth of cover required on an underground gas line - Residential:</p>
+                            <ul class="quiz-options" data-question="12">
+                                <li onclick="selectQuizOption(12, 0)">a) 15 inches (400 mm) minimum</li>
+                                <li onclick="selectQuizOption(12, 1)">b) 24 inches (610 mm)</li>
+                                <li onclick="selectQuizOption(12, 2)">c) 48 inches (1200 mm)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 14:</h4>
+                            <p>Can gas piping be passed under a building?</p>
+                            <ul class="quiz-options" data-question="13">
+                                <li onclick="selectQuizOption(13, 0)">a) Yes, if it is at least 24 inches (610 mm) below the footings</li>
+                                <li onclick="selectQuizOption(13, 1)">b) Yes, if it is at least 15 inches (400 mm) below the footings</li>
+                                <li onclick="selectQuizOption(13, 2)">c) No</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 15:</h4>
+                            <p>When piping is extended from one building to another, where must the shut-off valves be located?</p>
+                            <ul class="quiz-options" data-question="14">
+                                <li onclick="selectQuizOption(14, 0)">a) At the point of exit of the first building and the point of entry of the second building</li>
+                                <li onclick="selectQuizOption(14, 1)">b) At the appliance</li>
+                                <li onclick="selectQuizOption(14, 2)">c) At the meter</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 16:</h4>
+                            <p>What is the minimum clearance required for each side of a commercial clothes dryer and the combustible material?</p>
+                            <ul class="quiz-options" data-question="15">
+                                <li onclick="selectQuizOption(15, 0)">a) 12 inches (300 mm)</li>
+                                <li onclick="selectQuizOption(15, 1)">b) 18 inches (450 mm)</li>
+                                <li onclick="selectQuizOption(15, 2)">c) 48 inches (1200 mm)</li>
+                                <li onclick="selectQuizOption(15, 3)">d) 24 inches (610 mm)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 17:</h4>
+                            <p>Match the minimum clearance required for a central furnace - Above:</p>
+                            <ul class="quiz-options" data-question="16">
+                                <li onclick="selectQuizOption(16, 0)">a) 1 inch (25 mm)</li>
+                                <li onclick="selectQuizOption(16, 1)">b) 24 inches (600 mm)</li>
+                                <li onclick="selectQuizOption(16, 2)">c) 6 inches (150 mm)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 18:</h4>
+                            <p>What type of room heater is allowed in a bathroom?</p>
+                            <ul class="quiz-options" data-question="17">
+                                <li onclick="selectQuizOption(17, 0)">a) Direct-vent type</li>
+                                <li onclick="selectQuizOption(17, 1)">b) Ventless</li>
+                                <li onclick="selectQuizOption(17, 2)">c) Electric only</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 19:</h4>
+                            <p>Match the minimum clearance required for a swimming pool heater - Front:</p>
+                            <ul class="quiz-options" data-question="18">
+                                <li onclick="selectQuizOption(18, 0)">a) 18 inches (450 mm)</li>
+                                <li onclick="selectQuizOption(18, 1)">b) 48 inches (1200 mm)</li>
+                                <li onclick="selectQuizOption(18, 2)">c) 36 inches (900 mm)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 20:</h4>
+                            <p>How far from a property line must a natural gas cylinder be stored if the aggregate capacity of the expanded gas exceeds 18 000 cubic feet (500 000 L)?</p>
+                            <ul class="quiz-options" data-question="19">
+                                <li onclick="selectQuizOption(19, 0)">a) 100 ft (15 m)</li>
+                                <li onclick="selectQuizOption(19, 1)">b) 75 ft (11.25 m)</li>
+                                <li onclick="selectQuizOption(19, 2)">c) 50 ft (7.5 m)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 21:</h4>
+                            <p>May a vehicle that is being refuelled with natural gas have its engine running?</p>
+                            <ul class="quiz-options" data-question="20">
+                                <li onclick="selectQuizOption(20, 0)">a) Yes, provided it is 25 feet from a building</li>
+                                <li onclick="selectQuizOption(20, 1)">b) No</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 22:</h4>
+                            <p>Who may transfer propane from one container to another?</p>
+                            <ul class="quiz-options" data-question="21">
+                                <li onclick="selectQuizOption(21, 0)">a) Anyone as long as they stay in attendance at the transfer point</li>
+                                <li onclick="selectQuizOption(21, 1)">b) The holder of a certificate recognized by the authority having jurisdiction</li>
+                                <li onclick="selectQuizOption(21, 2)">c) A person trained by the employer on the operation of the equipment</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 23:</h4>
+                            <p>What is the maximum permitted filling density of a propane cylinder?</p>
+                            <ul class="quiz-options" data-question="22">
+                                <li onclick="selectQuizOption(22, 0)">a) 65%</li>
+                                <li onclick="selectQuizOption(22, 1)">b) 100%</li>
+                                <li onclick="selectQuizOption(22, 2)">c) 80%</li>
+                                <li onclick="selectQuizOption(22, 3)">d) 90%</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 24:</h4>
+                            <p>In which tables of the Propane Storage and Handling Code can the maximum filling density of a propane tank be found?</p>
+                            <ul class="quiz-options" data-question="23">
+                                <li onclick="selectQuizOption(23, 0)">a) Tables C2 and C3</li>
+                                <li onclick="selectQuizOption(23, 1)">b) Tables 7.3 and 7.4</li>
+                                <li onclick="selectQuizOption(23, 2)">c) Tables 7.1 and 7.2</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 25:</h4>
+                            <p>May a building that has a propane vaporizer be permitted to have a drain to a sewer or a sump pit?</p>
+                            <ul class="quiz-options" data-question="24">
+                                <li onclick="selectQuizOption(24, 0)">a) Yes, provided it has a removable cap</li>
+                                <li onclick="selectQuizOption(24, 1)">b) No</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 26:</h4>
+                            <p>Propane-burning appliances installed in a mobile home must comply with which standard?</p>
+                            <ul class="quiz-options" data-question="25">
+                                <li onclick="selectQuizOption(25, 0)">a) CSA Z240.4.1-09 (R2014)</li>
+                                <li onclick="selectQuizOption(25, 1)">b) CSA B149.2</li>
+                                <li onclick="selectQuizOption(25, 2)">c) CSA B149.3</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 27:</h4>
+                            <p>What are the installer's responsibilities towards the user before he or she leaves an installation?</p>
+                            <ul class="quiz-options" data-question="26">
+                                <li onclick="selectQuizOption(26, 0)">a) Shall instruct the user in the safe and correct operation of all appliances or equipment installed</li>
+                                <li onclick="selectQuizOption(26, 1)">b) Shall advise the user the instructions have been left with the appliance</li>
+                                <li onclick="selectQuizOption(26, 2)">c) Shall instruct the user to read the manufacturers literature while the installation is being completed</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 28:</h4>
+                            <p>What Standard must meter and service regulator installations be in accordance with?</p>
+                            <ul class="quiz-options" data-question="27">
+                                <li onclick="selectQuizOption(27, 0)">a) CSA Z662</li>
+                                <li onclick="selectQuizOption(27, 1)">b) CSA B149.2</li>
+                                <li onclick="selectQuizOption(27, 2)">c) CSA B149.1</li>
+                                <li onclick="selectQuizOption(27, 3)">d) CSA B149.3</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 29:</h4>
+                            <p>Suppose an appliance requires a clearance of 24 inches. By how much can the clearance above the appliance be reduced if the surrounding surface is covered with 28 gauge sheet metal, spaced out 1 inch?</p>
+                            <ul class="quiz-options" data-question="28">
+                                <li onclick="selectQuizOption(28, 0)">a) 9 inches</li>
+                                <li onclick="selectQuizOption(28, 1)">b) 6 inches</li>
+                                <li onclick="selectQuizOption(28, 2)">c) 12 inches</li>
+                                <li onclick="selectQuizOption(28, 3)">d) 3 inches</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 30:</h4>
+                            <p>In general, what is the minimum service clearance surrounding an appliance?</p>
+                            <ul class="quiz-options" data-question="29">
+                                <li onclick="selectQuizOption(29, 0)">a) 18 inches</li>
+                                <li onclick="selectQuizOption(29, 1)">b) 24 inches</li>
+                                <li onclick="selectQuizOption(29, 2)">c) 12 inches</li>
+                                <li onclick="selectQuizOption(29, 3)">d) 36 inches</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 31:</h4>
+                            <p>Indicate True or False: A furnace or water heater needs to be certified specifically for use within a mobile home if the home has been placed in a permanent location.</p>
+                            <ul class="quiz-options" data-question="30">
+                                <li onclick="selectQuizOption(30, 0)">a) True</li>
+                                <li onclick="selectQuizOption(30, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 32:</h4>
+                            <p>Who is responsible for inspecting and determining whether a used appliance is suitable for continued use?</p>
+                            <ul class="quiz-options" data-question="31">
+                                <li onclick="selectQuizOption(31, 0)">a) The installer</li>
+                                <li onclick="selectQuizOption(31, 1)">b) The homeowner</li>
+                                <li onclick="selectQuizOption(31, 2)">c) The manufacturer</li>
+                                <li onclick="selectQuizOption(31, 3)">d) The fuel supplier</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 33:</h4>
+                            <p>If there is a conflict between the manufacturer's certified installation instructions and the Codebook, which requirements are to be followed?</p>
+                            <ul class="quiz-options" data-question="32">
+                                <li onclick="selectQuizOption(32, 0)">a) The Code</li>
+                                <li onclick="selectQuizOption(32, 1)">b) The manufacturer's instructions</li>
+                                <li onclick="selectQuizOption(32, 2)">c) Either requirement can be followed</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 34:</h4>
+                            <p>What are the minimum dimensions of an access opening to a space containing a gas appliance?</p>
+                            <ul class="quiz-options" data-question="33">
+                                <li onclick="selectQuizOption(33, 0)">a) 24 × 30 in (610 × 760 mm)</li>
+                                <li onclick="selectQuizOption(33, 1)">b) 18 x 18 in (450 x 450 mm)</li>
+                                <li onclick="selectQuizOption(33, 2)">c) 30 x 30 in (760 x 760 mm)</li>
+                                <li onclick="selectQuizOption(33, 3)">d) 24 x 24 in (610 x 610 mm)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 35:</h4>
+                            <p>What is the minimum distance an appliance burner may be located from the floor of a repair garage?</p>
+                            <ul class="quiz-options" data-question="34">
+                                <li onclick="selectQuizOption(34, 0)">a) 4.5 ft (1400 mm)</li>
+                                <li onclick="selectQuizOption(34, 1)">b) 18 inches (450 mm)</li>
+                                <li onclick="selectQuizOption(34, 2)">c) 36 inches (900 mm)</li>
+                                <li onclick="selectQuizOption(34, 3)">d) 24 inches (610 mm)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 36:</h4>
+                            <p>What must be done with a defective heat exchanger of a furnace?</p>
+                            <ul class="quiz-options" data-question="35">
+                                <li onclick="selectQuizOption(35, 0)">a) It shall be replaced</li>
+                                <li onclick="selectQuizOption(35, 1)">b) It should be patched</li>
+                                <li onclick="selectQuizOption(35, 2)">c) It should be welded</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 37:</h4>
+                            <p>What are the controls necessary for two or more appliances with self-energizing pilots?</p>
+                            <ul class="quiz-options" data-question="36">
+                                <li onclick="selectQuizOption(36, 0)">a) Each installed separately with separate thermostats</li>
+                                <li onclick="selectQuizOption(36, 1)">b) Installed with one thermostat to control all of the appliances</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 1 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 1 - Codes, Acts, and Regulations.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You're now ready to proceed to the next chapter in your gas training program.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers based on the CSA provided quiz
+        const quizCorrectAnswers = [
+            0, 1, 2, 3, 0, 1, 0, 2, 3, 0, 2, 2, 0, 2, 0, 1, 0, 0, 1, 2, 
+            1, 1, 2, 2, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0
+        ];
+        
+        const quizExplanations = [
+            "Approved means acceptable to the authority having jurisdiction.",
+            "Chimney is a primarily vertical shaft that encloses at least one flue for conducting flue gases outdoors.",
+            "Direct-vent appliance is constructed so that all combustion air is supplied directly from outdoors and products of combustion are vented directly to outdoors.",
+            "Pressure regulator is a device for controlling and maintaining a uniform outlet pressure within acceptable limits.",
+            "True - A venting system removes flue gases to the outdoors by means of a chimney, vent connector vent, or natural/mechanical exhaust system.",
+            "A continuous pilot burns without turndown throughout the entire time the burner is in service, whether the main burner is firing or not.",
+            "False - An enclosed structure is not necessarily the entire building; it refers to the specific enclosed area where the appliance is installed.",
+            "Natural-draft burner is not equipped with a mechanical device for supplying combustion air.",
+            "One- and two-family dwellings and row housing have a maximum of 2 psi (14kPa).",
+            "The volume of gas can be determined from the appliance rating plate or the appliance manufacturer.",
+            "The maximum allowable pressure drop for supply pressure less than 7 inches w.c. is 0.5 inches w.c. (0.125 kPa).",
+            "No - A gas pipe cannot be supported by another gas pipe.",
+            "Residential underground gas lines require 15 inches (400 mm) minimum depth of cover.",
+            "Gas piping cannot be passed under a building.",
+            "Shut-off valves must be located at the point of exit of the first building and the point of entry of the second building.",
+            "Commercial clothes dryers require 18 inches (450 mm) clearance on each side from combustible material.",
+            "Central furnaces require 1 inch (25 mm) clearance above.",
+            "Only direct-vent type room heaters are allowed in bathrooms.",
+            "Swimming pool heaters require 48 inches (1200 mm) front clearance.",
+            "Natural gas cylinders with aggregate capacity exceeding 18,000 cubic feet must be stored 50 ft (7.5 m) from property lines.",
+            "No - Vehicles being refuelled with natural gas may not have their engines running.",
+            "Only the holder of a certificate recognized by the authority having jurisdiction may transfer propane between containers.",
+            "The maximum permitted filling density of a propane cylinder is 80%.",
+            "Maximum filling density of propane tanks can be found in Tables 7.1 and 7.2.",
+            "No - Buildings with propane vaporizers may not have drains to sewers or sump pits.",
+            "Propane-burning appliances in mobile homes must comply with CSA Z240.4.1-09 (R2014).",
+            "Installers shall instruct users in the safe and correct operation of all appliances or equipment installed.",
+            "Meter and service regulator installations must be in accordance with CSA Z662.",
+            "Clearance above an appliance can be reduced by 9 inches when protected with 28 gauge sheet metal spaced 1 inch out.",
+            "The minimum service clearance surrounding an appliance is generally 24 inches.",
+            "False - Furnaces and water heaters do not need special mobile home certification if the home is in a permanent location.",
+            "The installer is responsible for inspecting and determining whether a used appliance is suitable for continued use.",
+            "The Code takes precedence over manufacturer's instructions when there is a conflict.",
+            "Access openings to spaces containing gas appliances must be minimum 24 × 30 in (610 × 760 mm).",
+            "Appliance burners in repair garages must be located minimum 4.5 ft (1400 mm) from the floor.",
+            "Defective heat exchangers must be replaced.",
+            "Two or more appliances with self-energizing pilots must each be installed separately with separate thermostats."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 8) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 37; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 37) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/37 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/37 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

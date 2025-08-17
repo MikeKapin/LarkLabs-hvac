@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 5 - Chapter 6: AC Power Supplies and Basic Transformer Theory and Operation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 30px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .diagram-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .transformer-diagram {
+            display: inline-block;
+            position: relative;
+            border: 2px solid #34495e;
+            padding: 20px;
+            margin: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .winding-primary, .winding-secondary {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 20px;
+        }
+
+        .core {
+            display: inline-block;
+            width: 20px;
+            height: 80px;
+            background: #7f8c8d;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        .coil {
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.2;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .formula-box {
+            background: #e8f4f8;
+            border: 2px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 5 - Introduction to electricity</h1>
+            <h2>Chapter 6 - AC Power Supplies and Basic Transformer Theory and Operation</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by CSA Group • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 8</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 8;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>The gas technician/fitter requires a basic understanding of 120-volt alternating (ac) circuits typically present in a residential application. Additionally, proper sizing, connection, and troubleshooting of various types of transformers in the gas industry require knowledge of transformer theory and operation.</p>
+
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>describe basic component identification characteristics in a 120-volt ac circuit; and</li>
+                            <li>describe the principles of transformer operation.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Transformer</td>
+                                    <td></td>
+                                    <td>Electrical device that transfers energy between two or more circuits through electromagnetic induction and commonly helps increase or decrease the voltages of alternating current in electric power applications</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding electrical distribution systems and transformer operation is essential for gas technicians working with equipment that requires electrical connections. This knowledge helps ensure safe installation and troubleshooting of gas appliances with electrical components.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the main purpose of a transformer?",
+                    options: [
+                        "To convert AC to DC current",
+                        "To transfer energy between circuits and change voltage levels", 
+                        "To measure electrical current",
+                        "To provide electrical grounding"
+                    ],
+                    correct: 1,
+                    explanation: "A transformer is an electrical device that transfers energy between two or more circuits through electromagnetic induction and commonly helps increase or decrease the voltages of alternating current in electric power applications."
+                }
+            },
+            {
+                title: "AC Power Supplies and Electrical Distribution",
+                content: `
+                    <div class="section">
+                        <h2>AC Power Supplies</h2>
+                        
+                        <h3>Electrical Distribution</h3>
+                        <p>An electrical distribution system allows generation and delivery of electricity at various voltages. Voltages are either stepped-up or stepped-down with transformers.</p>
+
+                        <h3>120 Volt AC Receptacles</h3>
+                        <p>By the time electricity reaches a standard receptacle, such as that found in your home, the voltage has decreased to 120 volts ac from a much higher distribution voltage. Generally, electricity arrives at the receptacle inside a two-conductor cable and includes a ground wire.</p>
+
+                        <p>Generally, the colour of insulation identifies each wire:</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Colour</th>
+                                    <th>Is used for...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>White or natural grey</td>
+                                    <td>Insulated, neutral conductors</td>
+                                </tr>
+                                <tr>
+                                    <td>Black (sometimes red or blue)</td>
+                                    <td>Insulated live or hot conductors</td>
+                                </tr>
+                                <tr>
+                                    <td>Green</td>
+                                    <td>Only for ground conductors</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>💡 Important Safety Note</h4>
+                            <p>Each outlet must have at least 6 inches (150 mm) of free conductor for making joints or for the connection to receptacles.</p>
+                        </div>
+
+                        <p>You usually identify the terminals on receptacles to indicate which conductor is to be connected. For example, the neutral wire terminal has a metallic coating for identification, is made of metal that is substantially white (silvery) in colour, or has a "W" or "WHITE" marking adjacent to the terminal. The colour of the ground terminal (screw head, nut, or clamp) is green.</p>
+
+                        <div class="warning-box">
+                            <h4>Terminal Identification</h4>
+                            <p><strong>Neutral Terminal:</strong> Metallic coating, white/silvery color, or "W"/"WHITE" marking</p>
+                            <p><strong>Ground Terminal:</strong> Green colored screw head, nut, or clamp</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What color wire insulation is used for live or hot conductors?",
+                    options: [
+                        "White or natural grey",
+                        "Green",
+                        "Black (sometimes red or blue)", 
+                        "Yellow"
+                    ],
+                    correct: 2,
+                    explanation: "Black wire insulation (sometimes red or blue) is used for insulated live or hot conductors. White or natural grey is used for neutral conductors, and green is used only for ground conductors."
+                }
+            },
+            {
+                title: "Single-Phase Transformer Operation",
+                content: `
+                    <div class="section">
+                        <h2>Principles of Transformer Operation</h2>
+                        
+                        <h3>Single-phase Transformer Operation</h3>
+                        <p>Although most large-current transformers are three-phase, for simplicity this section discusses only single-phase. The principle is the same for three phase, except that there are three sets of windings instead of just one.</p>
+
+                        <div class="diagram-container">
+                            <div class="diagram-title">Figure 6-1: Single-phase Transformer</div>
+                            <div class="transformer-diagram">
+                                <div class="winding-primary">
+                                    <div class="coil">Primary winding</div>
+                                    <div class="coil">(Np = 100)</div>
+                                    <div style="margin-top: 10px;">
+                                        <div>Vp = 200V</div>
+                                        <div>Ip = 10A</div>
+                                    </div>
+                                </div>
+                                <div class="core">
+                                    <div style="position: absolute; top: -25px; left: -15px; font-size: 12px; width: 50px;">Laminated silicon-steel core</div>
+                                </div>
+                                <div class="winding-secondary">
+                                    <div class="coil">Secondary winding</div>
+                                    <div class="coil">(Ns = 1000)</div>
+                                    <div style="margin-top: 10px;">
+                                        <div>Vs = 2000V</div>
+                                        <div>Is = 1A</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p>Figure 6-1 shows a transformer core with a primary winding and a secondary winding. The windings are actually wound around each other on a real transformer. However, for simplicity of understanding, the figure shows two separate windings. The current is supplied to the primary winding and the output is from the secondary winding. In this example, there are 100 turns (Np = 100) in the primary and 1000 turns (Ns = 1000) in the secondary.</p>
+
+                        <h3>How It Works</h3>
+                        <p>When the primary winding of this transformer takes an alternating voltage, a current flows and a magnetic field develops around the winding. Since the alternating current flow is fluctuating at 60 Hz, the magnetic field will likewise fluctuate. With alternating current, the current increases to a peak value, then decreases to zero for each fluctuation. The magnetic field associated with this current fluctuates at the same frequency.</p>
+
+                        <p>The flux lines cut through the secondary winding and induce a voltage into the winding. This is the same electromagnetic induction that takes place in a generator.</p>
+
+                        <div class="info-box">
+                            <h4>Key Principle</h4>
+                            <p>If the number of turns in the secondary winding equals the number of turns in the primary winding, the secondary voltage would equal the primary voltage. Since the secondary winding in this step-up transformer has more turns than the primary, the secondary voltage is greater. This is due to the flux lines cutting through a greater number of secondary winding turns. The greater the number of turns, the greater the voltage generated.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "To which winding of a transformer is the current supplied?",
+                    options: [
+                        "The secondary winding",
+                        "The primary winding", 
+                        "Both the primary and secondary winding",
+                        "Neither winding"
+                    ],
+                    correct: 1,
+                    explanation: "Current is supplied to the primary winding of a transformer. The output comes from the secondary winding through electromagnetic induction."
+                }
+            },
+            {
+                title: "Transformer Output Calculations",
+                content: `
+                    <div class="section">
+                        <h2>Transformer Output Calculation</h2>
+                        
+                        <p>You can calculate the secondary (output) voltage of a transformer by multiplying the primary voltage by the ratio of turns in the secondary to primary coils.</p>
+
+                        <div class="formula-box">
+                            <strong>Vs/Vp = Ns/Np</strong>
+                            <br><br>
+                            where:<br>
+                            Vs = secondary voltage<br>
+                            Vp = primary voltage<br>
+                            Ns = turns in secondary coil<br>
+                            Np = turns in primary coil
+                        </div>
+
+                        <p>In Figure 6-1, the secondary coil has 1000 turns and the primary has 100 turns. This means that the secondary voltage is 10 times the primary voltage (1000 ÷ 100). Since the primary voltage is 200 V, then the secondary voltage will be 2000 V (200 × 10).</p>
+
+                        <h3>Power and Current Relationships</h3>
+                        <p>Transformer efficiency is very high, so the output power is very close to the input power. Since power is a function of the voltage times the current, you can calculate the secondary current if you know the primary current.</p>
+
+                        <div class="formula-box">
+                            <strong>VpIp = VsIs</strong>
+                            <br><br>
+                            Therefore: <strong>Is = (Vp/Vs) × Ip</strong>
+                        </div>
+
+                        <p>In the example, the primary current is 10 A. Since output voltage increases by ten times and the power remains the same, the current must decrease by ten times. The current in the secondary winding must therefore be 1 A. Since the secondary current is lower than the primary current in a step-up transformer, the size of the conductor in the secondary winding can be smaller.</p>
+
+                        <p>Therefore, you can make the winding with the most turns of smaller-diameter wire.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Step-Down Transformers</h4>
+                            <p>In a step-down transformer, the operation is exactly the same. However, the secondary winding has fewer turns than the primary winding so the secondary voltage is less than the primary voltage. Also, the secondary current is greater than the primary current.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "If the number of turns on a secondary winding of a transformer is greater than the number of turns on a primary winding, is the secondary voltage greater or lesser than the primary voltage?",
+                    options: [
+                        "Lesser",
+                        "Greater", 
+                        "Equal",
+                        "It depends on the current"
+                    ],
+                    correct: 1,
+                    explanation: "When the secondary winding has more turns than the primary winding, the secondary voltage is greater than the primary voltage. This is called a step-up transformer."
+                }
+            },
+            {
+                title: "Self-Regulating Transformers",
+                content: `
+                    <div class="section">
+                        <h2>Self-Regulating Transformers</h2>
+                        
+                        <p>Transformers are also self-regulating. This means that, as the current flow through the secondary winding changes, the primary current also changes. If opening a switch or circuit breaker stops the secondary current, the primary current flow also stops.</p>
+
+                        <div class="diagram-container">
+                            <div class="diagram-title">Figure 6-2: Transformer with Open Secondary Circuit</div>
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                                <p><strong>Upper Circuit:</strong> Simple coil with AC power supply</p>
+                                <p>Current flow approaching zero (Ip = 0)</p>
+                                <p>Applied voltage vs. Induced voltage (back EMF)</p>
+                                <br>
+                                <p><strong>Lower Circuit:</strong> Complete transformer</p>
+                                <p>Primary windings: Ip = 0</p>
+                                <p>Secondary windings: Is = 0 (open circuit)</p>
+                            </div>
+                        </div>
+
+                        <p>In the upper portion of Figure 6-2 is a simple coil of conductor that wraps around a steel core. An ac voltage applied to the coil normally results in a flow of current through the wire. In fact, since there are no resistors in this circuit, a large current flow results. This is the case in a dc circuit. But in a properly designed alternating current circuit, very little current will flow.</p>
+
+                        <h3>Back EMF (Electromotive Force)</h3>
+                        <p>The alternating current is again causing a magnetic field to build up and collapse around the coils 120 times per second. As the lines of flux pass through the primary winding, they induce a voltage in that winding. This induced voltage is the opposite of applied voltage and acts to limit applied voltage. For example, if a 60 Hz supply is connected to the coil with a voltage of 220 V, the fluctuating magnetic field induces a voltage in the winding that is equal to the applied voltage, but in the opposite direction.</p>
+
+                        <p>The two voltages (applied and induced) very nearly cancel each other out, so only a very small current flows. The induced voltage is often what you call back emf. Another term for source voltage is electromotive force (emf). Back emf plays an important part in limiting the current flow through electric machines.</p>
+
+                        <div class="warning-box">
+                            <h4>Key Understanding</h4>
+                            <p>Back EMF is crucial for transformer operation. It prevents excessive current flow in the primary winding when there's no load on the secondary, making transformers self-protecting devices.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What does 'self-regulating' mean in transformer operation?",
+                    options: [
+                        "The transformer adjusts its own voltage automatically",
+                        "As the current flow to the secondary winding changes, the primary current flow also changes", 
+                        "The transformer maintains constant temperature",
+                        "The transformer prevents electrical overloads"
+                    ],
+                    correct: 1,
+                    explanation: "'Self-regulating' means that as the current flow through the secondary winding changes, the primary current also changes. This allows transformers to automatically adjust their power consumption based on load demand."
+                }
+            },
+            {
+                title: "Secondary Circuit Effects and Load Response",
+                content: `
+                    <div class="section">
+                        <h2>Secondary Circuit Effects</h2>
+                        
+                        <p>The bottom part of Figure 6-2 shows a simple transformer with the secondary circuit open at the switch. Since no current flows through this circuit, it has no effect on the transformer, which operates as though there were only one coil. Thus, when the secondary circuit is open, the primary current flow decreases to a very small value. Although there is no current flow in the secondary circuit, the field produced by the very small primary current maintains the terminal voltage of the transformer's secondary winding's terminal voltage.</p>
+
+                        <h3>Load Connection Effects</h3>
+                        <p>When the switch is closed and a small load is placed across the secondary circuit, enough current flows to supply this load. This current flow in the secondary winding now produces a magnetic field of its own. This is alternating current, so the magnetic field builds up, collapses, and passes through the winding coils. The magnetic field that the secondary winding current produced is opposite the magnetic field that the primary winding current produced.</p>
+
+                        <p>Because the secondary field opposes the primary field, the primary field is reduced. This is the magnetic field that produced the back emf. Since the primary field is reduced, the back emf is reduced in the primary winding. The reduction in the back emf causes more current to flow in the primary winding.</p>
+
+                        <div class="info-box">
+                            <h4>Load Response Mechanism</h4>
+                            <p>As the secondary load increases, the current flow through the secondary winding increases. This increase in current strengthens the secondary field which, in turn, weakens the primary field. This further reduces back emf and increases primary current flow. To simplify, any increase in the secondary current flow results in a proportional increase in primary current flow. For this reason, transformers are said to be self-regulating.</p>
+                        </div>
+
+                        <h3>Practical Implications</h3>
+                        <p>This self-regulating characteristic means that:</p>
+                        <ul>
+                            <li>Transformers only draw the power they need based on load demand</li>
+                            <li>No-load conditions result in minimal primary current</li>
+                            <li>Increased secondary load automatically increases primary current</li>
+                            <li>Transformers are inherently efficient devices</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <h4>💡 Energy Conservation</h4>
+                            <p>This self-regulating behavior demonstrates the principle of energy conservation in transformers - energy is only transferred when there's a demand (load) on the secondary side.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "How is the secondary voltage of a transformer calculated?",
+                    options: [
+                        "By dividing the primary voltage by the ratio of turns in the secondary to primary coils",
+                        "By multiplying the primary voltage by the ratio of turns in the secondary to primary coils", 
+                        "By multiplying the primary voltage by the number of turns in the primary coil",
+                        "By adding the primary voltage to the turns ratio"
+                    ],
+                    correct: 1,
+                    explanation: "The secondary voltage is calculated by multiplying the primary voltage by the ratio of turns in the secondary to primary coils. This is expressed as: Vs = Vp × (Ns/Np)."
+                }
+            },
+            {
+                title: "Auto-transformers",
+                content: `
+                    <div class="section">
+                        <h2>Auto-transformers</h2>
+                        
+                        <p>An autotransformer differs from the transformer described above in that it consists of a single coil, arranged as shown in Figure 6-3.</p>
+
+                        <p>An autotransformer is a power transformer with one continuous winding, part of which serves as the primary winding and all of which serves as the secondary winding, or vice versa. Secondary voltages are supplied across any pair of a series of connections (taps).</p>
+
+                        <div class="diagram-container">
+                            <div class="diagram-title">Figure 6-3: Autotransformer Connections</div>
+                            <div style="background: #f8f9fa; padding: 30px; border-radius: 8px; margin: 15px 0; text-align: center;">
+                                <div style="display: inline-block; border: 2px solid #34495e; padding: 20px; background: white; border-radius: 8px;">
+                                    <div style="margin-bottom: 10px;">Vp ○——————————————————○</div>
+                                    <div style="margin-bottom: 10px;">　　│　　　　　　　　　　　　　　│</div>
+                                    <div style="margin-bottom: 10px;">　　│◯◯◯◯◯◯◯◯◯◯◯◯│</div>
+                                    <div style="margin-bottom: 10px;">　　│　　　　　　　　　　　　　　│</div>
+                                    <div style="margin-bottom: 10px;">　　○—————————————————○ Vs</div>
+                                    <div style="font-size: 12px; margin-top: 15px;">Single continuous winding with taps</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Key Characteristics</h3>
+                        <p>An important thing to note is that there is no electrical isolation between the primary and secondary of an autotransformer. For this reason, autotransformers are more economical to manufacture than other types and, for the same reason, are also more vulnerable to catastrophic failure.</p>
+
+                        <div class="warning-box">
+                            <h4>Safety Consideration</h4>
+                            <p><strong>No Electrical Isolation:</strong> Unlike conventional transformers, autotransformers provide no electrical isolation between primary and secondary circuits. This makes them more economical but also more vulnerable to failure and potentially less safe in certain applications.</p>
+                        </div>
+
+                        <h3>Advantages and Disadvantages</h3>
+                        <div class="info-box">
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>More economical to manufacture</li>
+                                <li>Smaller size for same power rating</li>
+                                <li>Higher efficiency</li>
+                                <li>Lower cost</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>No electrical isolation</li>
+                                <li>More vulnerable to catastrophic failure</li>
+                                <li>Safety concerns in some applications</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What type of transformer consists of a single coil that serves as both the primary and secondary windings?",
+                    options: [
+                        "AC transformer",
+                        "DC transformer",
+                        "Autotransformer", 
+                        "Isolation transformer"
+                    ],
+                    correct: 2,
+                    explanation: "An autotransformer consists of a single coil that serves as both the primary and secondary windings. It has one continuous winding with taps to provide different voltage levels."
+                }
+            },
+            {
+                title: "Chapter 6 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 6 Final Quiz</h2>
+                        <p>Test your knowledge of AC power supplies and transformer theory covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 8 questions to complete the chapter. These questions are based on the CSA training materials and test your understanding of electrical concepts essential for gas technicians.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Normally, what color is the insulation on the live conductor in a 120 V ac circuit?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Black</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Green</li>
+                                <li onclick="selectQuizOption(0, 2)">c) White</li>
+                                <li onclick="selectQuizOption(0, 3)">d) Red</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>Complete the following statement with the appropriate word(s) provided: A conductor having white insulation is normally connected to the ______________ colored terminal on a 120 V ac receptacle.</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) Darker or Gold</li>
+                                <li onclick="selectQuizOption(1, 1)">b) Black</li>
+                                <li onclick="selectQuizOption(1, 2)">c) White or silvery</li>
+                                <li onclick="selectQuizOption(1, 3)">d) Green</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>To which winding of a transformer is the current supplied?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) The primary winding</li>
+                                <li onclick="selectQuizOption(2, 1)">b) The secondary winding</li>
+                                <li onclick="selectQuizOption(2, 2)">c) Both the primary and secondary winding</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>If the number of turns on a secondary winding of a transformer is greater than the number of turns on a primary winding, is the secondary voltage greater or lesser than the primary voltage?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) Lesser</li>
+                                <li onclick="selectQuizOption(3, 1)">b) Greater</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>How is the secondary voltage of a transformer calculated?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) By dividing the primary voltage by the ratio of turns in the secondary to primary coils.</li>
+                                <li onclick="selectQuizOption(4, 1)">b) By multiplying the primary voltage by the ratio of turns in the secondary to primary coils.</li>
+                                <li onclick="selectQuizOption(4, 2)">c) By multiplying the primary voltage by the number of turns in the primary coil.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>What type of transformer has a secondary winding with fewer turns than the primary winding?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) Step-down transformer</li>
+                                <li onclick="selectQuizOption(5, 1)">b) Step-up transformer</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>Indicate True or False: "Self-regulating" means that as the current flow to the secondary winding changes, the primary current flow also changes</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) True</li>
+                                <li onclick="selectQuizOption(6, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>What type of transformer consists of a single coil that serves as both the primary and secondary windings?</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) AC transformer</li>
+                                <li onclick="selectQuizOption(7, 1)">b) DC transformer</li>
+                                <li onclick="selectQuizOption(7, 2)">c) Autotransformer</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 6 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 6 - AC Power Supplies and Basic Transformer Theory and Operation.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You now understand the fundamentals of AC electrical systems, wire color coding, transformer operation principles, and the self-regulating characteristics of transformers essential for gas appliance installation and troubleshooting.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers (correct answer indices)
+        const quizCorrectAnswers = [0, 2, 0, 1, 1, 0, 0, 2];
+        
+        const quizExplanations = [
+            "Black insulation (option a) is normally used on the live conductor in a 120 V ac circuit. Black, and sometimes red or blue, indicates live or hot conductors.",
+            "White or silvery (option c) colored terminals are used for neutral conductors with white insulation. The neutral terminal has a metallic coating or is substantially white/silvery in color.",
+            "The primary winding (option a) is where current is supplied to the transformer. The output comes from the secondary winding through electromagnetic induction.",
+            "Greater (option b) - When the secondary winding has more turns than the primary winding, the secondary voltage is greater than the primary voltage, creating a step-up transformer.",
+            "By multiplying the primary voltage by the ratio of turns in the secondary to primary coils (option b). This is expressed as: Vs = Vp × (Ns/Np).",
+            "Step-down transformer (option a) - A transformer with fewer secondary turns than primary turns produces lower secondary voltage, making it a step-down transformer.",
+            "True (option a) - Self-regulating means that as the current flow to the secondary winding changes, the primary current flow also changes automatically to match the load demand.",
+            "Autotransformer (option c) - An autotransformer consists of a single continuous coil with taps that serves as both primary and secondary windings, providing no electrical isolation."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 7) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 8; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 8) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/8 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/8 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

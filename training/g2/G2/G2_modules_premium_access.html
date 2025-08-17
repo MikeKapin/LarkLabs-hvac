@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA G2 Learning Modules - Premium Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #ecf0f1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content-wrapper {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .access-required {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .premium-content {
+            background: rgba(52, 152, 219, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            display: none;
+        }
+
+        .pricing-card {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid #3498db;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3498db;
+            margin: 1rem 0;
+        }
+
+        .price-subtitle {
+            color: #95a5a6;
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .features-list h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li::before {
+            content: "✅ ";
+            margin-right: 0.5rem;
+        }
+
+        .purchase-button {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .purchase-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(39, 174, 96, 0.4);
+        }
+
+        .access-button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 10px 0;
+        }
+
+        .access-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.4);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .module-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            color: #333;
+        }
+
+        .module-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .module-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .module-card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .module-status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            background: #28a745;
+            color: white;
+        }
+
+        .back-button {
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s;
+            margin-top: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(149, 165, 166, 0.3);
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            border-left: 4px solid #3498db;
+        }
+
+        .trust-indicators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .trust-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trust-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-table {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-table h3 {
+            color: #3498db;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-row:first-child {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .check {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .cross {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 20px;
+            border-top: 3px solid #667eea;
+            margin-top: 50px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lark-labs-branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .created-by-text {
+            font-size: 1.1em;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .lark-labs-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .lark-labs-logo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+        }
+
+        .lark-bird {
+            width: 32px;
+            height: 32px;
+            background: #5BC0DE;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lark-bird::before {
+            content: '🐦';
+            font-size: 18px;
+            filter: hue-rotate(200deg);
+        }
+
+        .lark-bird::after {
+            content: '💬';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 12px;
+            animation: chirp 2s infinite;
+        }
+
+        @keyframes chirp {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .lark-text {
+            color: white;
+            font-weight: bold;
+            font-size: 1.4em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .lark-labs {
+            font-size: 1.6em;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .lark-tagline {
+            font-size: 0.85em;
+            color: #A8A8A8;
+            font-weight: normal;
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        .copyright {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 15px;
+        }
+
+        .copyright-year {
+            font-weight: bold;
+            color: #4A90E2;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .price {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .trust-indicators {
+                grid-template-columns: 1fr;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lark-labs-branding {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .lark-text {
+                font-size: 1.2em;
+            }
+
+            .lark-labs {
+                font-size: 1.4em;
+            }
+
+            .footer {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="container">
+            <div class="header">
+                <h1>🎓 CSA G2 Learning Modules</h1>
+                <p>Advanced Professional Training Materials for Gas Technician 2 Certification</p>
+            </div>
+
+            <!-- Access Required Section -->
+            <div id="accessRequired" class="access-required">
+                <div class="pricing-card">
+                    <h2>Premium Learning Modules Access</h2>
+                    <div class="price">$129.00</div>
+                    <div class="price-subtitle">One-time payment • Lifetime access</div>
+                    
+                    <div class="features-list">
+                        <h3>Complete G2 Learning Package:</h3>
+                        <ul>
+                            <li>Complete Units 10-24 Learning Materials</li>
+                            <li>Interactive Chapter Reviews & Quizzes</li>
+                            <li>Downloadable Study Guides & References</li>
+                            <li>Progress Tracking & Assessments</li>
+                            <li>Advanced Piping Systems Training</li>
+                            <li>Controls & Safety Systems Modules</li>
+                            <li>Mobile & Desktop Compatible</li>
+                            <li>Regular Content Updates</li>
+                            <li>Expert-Verified Content</li>
+                            <li>Lifetime Access - No Subscriptions</li>
+                        </ul>
+                    </div>
+
+                    <button class="purchase-button" onclick="redirectToStripe()">
+                        🔒 Get Premium Access Now
+                    </button>
+
+                    <div id="successMessage" class="success-message">
+                        <h3>🎉 Payment Successful!</h3>
+                        <p>Welcome to G2 Learning Modules Premium! Your access has been activated.</p>
+                    </div>
+                </div>
+
+                <div class="comparison-table">
+                    <h3>Free vs Premium Comparison</h3>
+                    <div class="comparison-row">
+                        <div>Feature</div>
+                        <div>Free</div>
+                        <div>Premium</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div>Learning Units</div>
+                        <div class="cross">Units 1-9 only</div>
+                        <div class="check">All Units 10-24</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div>Interactive Quizzes</div>
+                        <div class="cross">Limited</div>
+                        <div class="check">Full access</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div>Progress Tracking</div>
+                        <div class="cross">✗</div>
+                        <div class="check">✓</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div>Downloadable Resources</div>
+                        <div class="cross">✗</div>
+                        <div class="check">✓</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div>Regular Updates</div>
+                        <div class="cross">✗</div>
+                        <div class="check">✓</div>
+                    </div>
+                </div>
+
+                <div class="trust-indicators">
+                    <div class="trust-item">
+                        <div class="trust-icon">🎓</div>
+                        <h4>Expert Created</h4>
+                        <p>Developed by certified HVAC educators with 20+ years experience</p>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">✅</div>
+                        <h4>CSA Aligned</h4>
+                        <p>Content aligned with official CSA B149.1 code and G2 curriculum</p>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">📱</div>
+                        <h4>Any Device</h4>
+                        <p>Works perfectly on phones, tablets, and computers</p>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">🔄</div>
+                        <h4>Always Updated</h4>
+                        <p>Regular content updates to match current standards</p>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <p>"These learning modules were exactly what I needed to understand the advanced G2 concepts. The interactive content made complex topics much easier to grasp. Highly recommended!"</p>
+                    <strong>- Jennifer K., Licensed Gas Technician</strong>
+                </div>
+
+                <div class="testimonial">
+                    <p>"The comprehensive coverage of Units 10-24 saved me countless hours of study time. The quiz features helped me identify my weak areas and focus my preparation."</p>
+                    <strong>- David M., HVAC Professional</strong>
+                </div>
+            </div>
+
+            <!-- Premium Content Section -->
+            <div id="premiumContent" class="premium-content">
+                <h2>🎉 Welcome to G2 Learning Modules Premium!</h2>
+                <p>You now have lifetime access to our comprehensive G2 learning system with advanced training materials.</p>
+                
+                <div class="modules-grid">
+                    <div class="module-card" onclick="window.location.href='./G2/index.html'">
+                        <h3>📚 Complete Learning Materials</h3>
+                        <p>Access all Units 10-24 with comprehensive content, interactive elements, and downloadable resources</p>
+                        <span class="module-status">Full Access</span>
+                    </div>
+                    
+                    <div class="module-card" onclick="showChapterQuestions()">
+                        <h3>📝 Interactive Quizzes</h3>
+                        <p>Chapter-by-chapter review questions and assessments to test your knowledge</p>
+                        <span class="module-status">Full Access</span>
+                    </div>
+                    
+                    <div class="module-card" onclick="window.location.href='g2_premium_access.html'">
+                        <h3>🔥 Practice Exam</h3>
+                        <p>Complete G2 practice exam simulator to prepare for your certification test</p>
+                        <span class="module-status">Full Access</span>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 2rem 0;">
+                    <a href="./G2/index.html" class="access-button">
+                        📚 Start Learning Now
+                    </a>
+                    <a href="#" class="access-button" onclick="showChapterQuestions()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">
+                        📝 Take Practice Quizzes
+                    </a>
+                </div>
+
+                <div class="features-list" style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 10px; margin-top: 2rem;">
+                    <h3>📚 Study Tips for Success:</h3>
+                    <ul style="margin-top: 1rem;">
+                        <li>Work through each unit systematically</li>
+                        <li>Take notes on key concepts and regulations</li>
+                        <li>Use the interactive quizzes to test understanding</li>
+                        <li>Review areas where you score lower</li>
+                        <li>Practice with real-world scenarios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="./index.html" class="back-button">← Back to LARK Labs</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer with Lark Labs Branding -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="lark-labs-branding">
+                <span class="created-by-text">Created by:</span>
+                <div class="lark-labs-logo">
+                    <div class="lark-bird"></div>
+                    <div class="lark-text">
+                        <div class="lark-labs">LARK LABS</div>
+                        <div class="lark-tagline">SOFTWARE DEVELOPMENT</div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <strong>© <span class="copyright-year">2025</span> Lark Labs Software Development. All Rights Reserved.</strong><br>
+                This software and its content are protected by copyright law. Unauthorized reproduction, distribution, or modification is strictly prohibited. 
+                The CSA G2 Learning Modules are designed for educational purposes only and are not affiliated with or endorsed by CSA Group.
+                All trademarks and registered trademarks are the property of their respective owners.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple access control with persistent storage
+        function hasAccess() {
+            return localStorage.getItem('g2_learning_purchased') === 'true';
+        }
+
+        function checkAccess() {
+            if (hasAccess()) {
+                document.getElementById('premiumContent').style.display = 'block';
+                document.getElementById('accessRequired').style.display = 'none';
+            } else {
+                document.getElementById('premiumContent').style.display = 'none';
+                document.getElementById('accessRequired').style.display = 'block';
+            }
+        }
+
+        function grantAccess() {
+            localStorage.setItem('g2_learning_purchased', 'true');
+            localStorage.setItem('g2_learning_access_date', new Date().toISOString());
+            checkAccess();
+        }
+
+        function redirectToStripe() {
+            // Use the Stripe link from the original file
+            window.location.href = 'https://buy.stripe.com/fZu8wQ3PfcvWfT87Wg7ok03';
+        }
+
+        function showChapterQuestions() {
+            // Redirect to main page and trigger the G2 chapters section
+            window.location.href = 'index.html#g2-chapters';
+        }
+
+        function simulatePurchase() {
+            // Show loading state
+            const button = document.querySelector('.purchase-button');
+            const originalText = button.innerHTML;
+            button.innerHTML = '⏳ Processing Payment...';
+            button.disabled = true;
+
+            // Simulate payment processing
+            setTimeout(() => {
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Grant access after a short delay
+                setTimeout(() => {
+                    grantAccess();
+                    // Reset button for next time (in case localStorage is cleared)
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 2000);
+            }, 2000);
+        }
+
+        // Check access status when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAccess();
+        });
+
+        // Add demo buttons for testing (remove in production)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const demoControls = document.createElement('div');
+            demoControls.style.cssText = 'position: fixed; top: 10px; right: 10px; z-index: 1000; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px;';
+            demoControls.innerHTML = `
+                <button onclick="grantAccess()" style="background: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin: 2px; font-size: 12px;">Grant Access</button>
+                <button onclick="localStorage.removeItem('g2_learning_purchased'); location.reload();" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin: 2px; font-size: 12px;">Reset Access</button>
+            `;
+            document.body.appendChild(demoControls);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 1 Safety - Chapter 3: Hazardous Materials in the Gas Industry</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: #555;
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .module-nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            transform: scale(1.05);
+        }
+
+        .section {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h3 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .subsection {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+
+        .subsection h4 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .warning-box {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d35400;
+        }
+
+        .warning-box h4 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .safety-tip {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #229954;
+        }
+
+        .pictogram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pictogram-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .pictogram-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pictogram-symbol {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #e74c3c;
+        }
+
+        .quiz-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #3498db;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #ecf0f1;
+        }
+
+        .option:hover {
+            background: #e8f4fd;
+            border-color: #3498db;
+        }
+
+        .option.selected {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .option.correct {
+            background: #27ae60;
+            color: white;
+            border-color: #229954;
+        }
+
+        .option.incorrect {
+            background: #e74c3c;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        .quiz-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .feedback.correct {
+            background: #d5f4e6;
+            color: #27ae60;
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: #fdf2f2;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+        }
+
+        .sds-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .sds-section {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sds-section h5 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .material-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .material-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #e74c3c;
+        }
+
+        .material-card h5 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .do-dont {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .do-list, .dont-list {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .do-list {
+            border-top: 4px solid #27ae60;
+        }
+
+        .dont-list {
+            border-top: 4px solid #e74c3c;
+        }
+
+        .do-list h5 {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        .dont-list h5 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        .completion-certificate {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .completion-certificate h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: white;
+            border: none;
+        }
+
+        .navigation-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .prev-btn, .next-btn {
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 73, 94, 0.4);
+        }
+
+        .prev-btn:disabled, .next-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header h2 {
+                font-size: 1.4em;
+            }
+            
+            .nav-buttons {
+                justify-content: center;
+            }
+            
+            .nav-btn {
+                font-size: 0.8em;
+                padding: 10px 15px;
+            }
+            
+            .do-dont {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation-controls {
+                flex-direction: column;
+            }
+        }
+
+        .key-term {
+            background: #e8f4fd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #2980b9;
+            font-weight: 600;
+        }
+
+        .emergency-steps {
+            counter-reset: step-counter;
+        }
+
+        .emergency-step {
+            counter-increment: step-counter;
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #e74c3c;
+            position: relative;
+        }
+
+        .emergency-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: 20px;
+            background: #e74c3c;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .emergency-step h5 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            margin-left: 20px;
+        }
+
+        .emergency-step p {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 1 - Safety</h1>
+            <h2>Chapter 3: Hazardous Materials in the Gas Industry</h2>
+            <p>A comprehensive learning module covering the Workplace Hazardous Materials Information System (WHMIS) 2015, safety procedures, and best practices for handling hazardous materials in the gas industry.</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div id="progressText">Progress: 0%</div>
+        </div>
+
+        <div class="module-nav">
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="showSection('introduction')">Introduction</button>
+                <button class="nav-btn" onclick="showSection('whmis-overview')">WHMIS 2015</button>
+                <button class="nav-btn" onclick="showSection('ghs-terminology')">GHS Terminology</button>
+                <button class="nav-btn" onclick="showSection('labels-sds')">Labels & SDS</button>
+                <button class="nav-btn" onclick="showSection('pictograms')">Hazard Pictograms</button>
+                <button class="nav-btn" onclick="showSection('liquid-solvents')">Liquid Solvents</button>
+                <button class="nav-btn" onclick="showSection('toxic-materials')">Toxic Materials</button>
+                <button class="nav-btn" onclick="showSection('fuel-gases')">Fuel Gases</button>
+                <button class="nav-btn" onclick="showSection('safety-procedures')">Safety Procedures</button>
+                <button class="nav-btn" onclick="showSection('emergency-response')">Emergency Response</button>
+                <button class="nav-btn" onclick="showSection('completion')">Completion</button>
+            </div>
+        </div>
+
+        <!-- Introduction Section -->
+        <div id="introduction" class="section active">
+            <h3>Learning Objectives</h3>
+            <div class="subsection">
+                <h4>By the end of this module, you will be able to:</h4>
+                <ul>
+                    <li><strong>Understand WHMIS 2015:</strong> Describe the Workplace Hazardous Materials Information System</li>
+                    <li><strong>Know Safety Procedures:</strong> Describe safe handling, storage, disposal, and transportation of hazardous materials</li>
+                    <li><strong>Apply Knowledge:</strong> Use this information to work safely with hazardous materials in the gas industry</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Important Safety Notice</h4>
+                <p>In the gas industry, technicians and fitters are exposed to a variety of potentially toxic and explosive materials. Federal and provincial legislation provides for the gas technician's/fitter's right to know about major risks and required safety protection measures.</p>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 1: Learning Objectives</h4>
+                <div class="question">
+                    <h4>What does WHMIS stand for?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Workplace Health Management Information System</div>
+                        <div class="option" onclick="selectOption(this, true)">Workplace Hazardous Materials Information System</div>
+                        <div class="option" onclick="selectOption(this, false)">Workplace Hazard Monitoring Information System</div>
+                        <div class="option" onclick="selectOption(this, false)">Workplace Health and Materials Information System</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'WHMIS provides workers, employers, and suppliers with vital information about hazardous materials in the workplace.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- WHMIS Overview Section -->
+        <div id="whmis-overview" class="section">
+            <h3>WHMIS 2015 Overview</h3>
+            
+            <div class="subsection">
+                <h4>What is WHMIS 2015?</h4>
+                <p>The <span class="key-term">Workplace Hazardous Materials Information System (WHMIS)</span> was established in 1988 and updated through legislation in 2015. It provides workers, employers, and suppliers of materials with vital information about hazardous materials in the workplace.</p>
+            </div>
+
+            <div class="subsection">
+                <h4>Global Alignment</h4>
+                <p>WHMIS 2015 aligns with the <span class="key-term">Globally Harmonized System of Classification and Labelling of Chemicals (GHS)</span>, created by the United Nations. This international standardization ensures consistent hazard communication worldwide.</p>
+            </div>
+
+            <div class="subsection">
+                <h4>Essential Understanding for Gas Technicians/Fitters</h4>
+                <p>Gas technicians and fitters must understand their rights and responsibilities relating to WHMIS 2015 and maintain good housekeeping practices to ensure safety.</p>
+            </div>
+
+            <div class="subsection">
+                <h4>WHMIS 2015 Legislation</h4>
+                <div class="do-dont">
+                    <div class="do-list">
+                        <h5>✅ Federal Legislation</h5>
+                        <p>Deals with the importation and sale of controlled products. This includes establishing criteria for including hazardous products and requirements for suppliers to provide appropriate labels and SDS.</p>
+                    </div>
+                    <div class="dont-list">
+                        <h5>🏛️ Provincial Legislation</h5>
+                        <p>Concerned with the storage, handling, and use of hazardous products in the workplace. Through amendments to Occupational Safety and Health Regulations, ensures employers provide worker education and training.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 2: WHMIS 2015</h4>
+                <div class="question">
+                    <h4>WHMIS 2015 aligns with which international system?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">International Safety Standards (ISS)</div>
+                        <div class="option" onclick="selectOption(this, true)">Globally Harmonized System (GHS)</div>
+                        <div class="option" onclick="selectOption(this, false)">World Health Organization Standards</div>
+                        <div class="option" onclick="selectOption(this, false)">International Chemical Safety System</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! WHMIS 2015 aligns with the Globally Harmonized System (GHS) created by the United Nations.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- GHS Terminology Section -->
+        <div id="ghs-terminology" class="section">
+            <h3>GHS Terminology</h3>
+            
+            <div class="subsection">
+                <h4>Key GHS Terms</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>Hazard Group</h5>
+                        <p><strong>Physical hazards group:</strong> Based on physical or chemical property</p>
+                        <p><strong>Health hazards group:</strong> Based on the health effect of the product</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>Hazard Class</h5>
+                        <p>Products that have similar hazardous properties.</p>
+                        <p><strong>Examples:</strong> Flammable gases, oxidizing liquids, gases under pressure, acute toxicity, aspiration hazard</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>Hazard Category</h5>
+                        <p>How hazardous the product is.</p>
+                        <p><strong>Examples:</strong> Category 1, 1B, 2, 2A, etc.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 3: GHS Terminology</h4>
+                <div class="question">
+                    <h4>Which GHS term describes how hazardous a product is?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Hazard Group</div>
+                        <div class="option" onclick="selectOption(this, false)">Hazard Class</div>
+                        <div class="option" onclick="selectOption(this, true)">Hazard Category</div>
+                        <div class="option" onclick="selectOption(this, false)">Hazard Type</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! Hazard Category describes how hazardous the product is (e.g., Category 1, 1B, 2, 2A).')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Labels and SDS Section -->
+        <div id="labels-sds" class="section">
+            <h3>Labels and Safety Data Sheets (SDS)</h3>
+            
+            <div class="subsection">
+                <h4>GHS Label Elements</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🔣 Symbols</h5>
+                        <p>GHS hazard pictograms - visual symbols that quickly identify hazard types</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>⚠️ Signal Words</h5>
+                        <p><strong>"Danger"</strong> for more severe hazards<br>
+                        <strong>"Warning"</strong> for less severe hazards<br>
+                        Only one signal word appears on a label</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>📋 Hazard Statements</h5>
+                        <p>Brief, standardized statements to describe the product's hazards. Includes phrases assigned to a hazard class and category.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🛡️ Precautionary Statements</h5>
+                        <p>Focus on "general", "prevention", "response", "storage", and "disposal" information on how to minimize or prevent harmful effects.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Types of Labels</h4>
+                <div class="do-dont">
+                    <div class="do-list">
+                        <h5>Supplier Label</h5>
+                        <ul>
+                            <li>Provided or affixed by the supplier</li>
+                            <li>Appears on all hazardous products received in Canada</li>
+                            <li>No other label required if product always used in original container</li>
+                        </ul>
+                    </div>
+                    <div class="dont-list">
+                        <h5>Workplace Label</h5>
+                        <p><strong>Required when:</strong></p>
+                        <ul>
+                            <li>Hazardous product is produced at the workplace</li>
+                            <li>Product is decanted into another container</li>
+                            <li>Supplier label becomes lost or illegible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Safety Data Sheets (SDS)</h4>
+                <p>SDS evolved from Material Safety Data Sheets (MSDS) under WHMIS 2015. They are more detailed than labels and provide comprehensive hazard information.</p>
+                
+                <div class="warning-box">
+                    <h4>SDS Update Requirements</h4>
+                    <p>SDS are updated when suppliers make significant changes. These changes must be communicated as soon as possible to consumers. SDS contain 16 information sections, with sections 12-15 optional for suppliers.</p>
+                </div>
+
+                <div class="sds-sections">
+                    <div class="sds-section">
+                        <h5>Section 1: Identification</h5>
+                        <p>Product identifier, supplier info, emergency phone number</p>
+                    </div>
+                    <div class="sds-section">
+                        <h5>Section 2: Hazard Identification</h5>
+                        <p>Hazard classification, label elements, other hazards</p>
+                    </div>
+                    <div class="sds-section">
+                        <h5>Section 3: Composition</h5>
+                        <p>Chemical name, CAS number, concentration</p>
+                    </div>
+                    <div class="sds-section">
+                        <h5>Section 4: First-aid Measures</h5>
+                        <p>By route of exposure, symptoms, medical attention</p>
+                    </div>
+                    <div class="sds-section">
+                        <h5>Section 5: Fire-fighting Measures</h5>
+                        <p>Extinguishing media, specific hazards, protective equipment</p>
+                    </div>
+                    <div class="sds-section">
+                        <h5>Section 6: Accidental Release</h5>
+                        <p>Personal precautions, containment, cleanup methods</p>
+                    </div>
+                    <div class="sds-section">
+                        <h5>Section 7: Handling and Storage</h5>
+                        <p>Safe handling precautions, storage conditions</p>
+                    </div>
+                    <div class="sds-section">
+                        <h5>Section 8: Exposure Controls/PPE</h5>
+                        <p>Control parameters, engineering controls, protection measures</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 4: Labels and SDS</h4>
+                <div class="question">
+                    <h4>How many sections does a complete SDS contain?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">12 sections</div>
+                        <div class="option" onclick="selectOption(this, false)">14 sections</div>
+                        <div class="option" onclick="selectOption(this, true)">16 sections</div>
+                        <div class="option" onclick="selectOption(this, false)">18 sections</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! SDS contain 16 information sections, with sections 12-15 optional for suppliers.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Hazard Pictograms Section -->
+        <div id="pictograms" class="section">
+            <h3>WHMIS 2015 Hazard Pictograms</h3>
+            
+            <div class="subsection">
+                <h4>Understanding Pictograms</h4>
+                <p>Hazard pictograms are symbols with red borders in a diamond shape that easily and visibly identify products by hazard group, hazard class, and hazard category. Pictograms display on labels and SDS.</p>
+            </div>
+
+            <div class="pictogram-grid">
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">🔥</div>
+                    <h5>Flammable</h5>
+                    <p>Flammable gases, liquids, solids; pyrophoric materials; self-heating substances; organic peroxides</p>
+                </div>
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">🔴</div>
+                    <h5>Oxidizing</h5>
+                    <p>Oxidizing gases, liquids, and solids (categories 1, 2, 3)</p>
+                </div>
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">💀</div>
+                    <h5>Toxic</h5>
+                    <p>Acute toxicity (oral, dermal, inhalation) categories 1, 2, 3</p>
+                </div>
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">🧪</div>
+                    <h5>Corrosive</h5>
+                    <p>Corrosive to metals; skin corrosion/irritation; serious eye damage</p>
+                </div>
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">💥</div>
+                    <h5>Explosive</h5>
+                    <p>Self-reactive substances and mixtures, organic peroxides (types A, B)</p>
+                </div>
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">⚠️</div>
+                    <h5>Health Hazard</h5>
+                    <p>Carcinogenicity, mutagenicity, reproductive toxicity, respiratory sensitization</p>
+                </div>
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">❗</div>
+                    <h5>Exclamation Mark</h5>
+                    <p>Acute toxicity (category 4), skin/eye irritation, respiratory sensitization</p>
+                </div>
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">🧬</div>
+                    <h5>Biohazardous</h5>
+                    <p>Biohazardous infectious materials that can cause diseases in people or animals</p>
+                </div>
+                <div class="pictogram-card">
+                    <div class="pictogram-symbol">⚙️</div>
+                    <h5>Compressed Gas</h5>
+                    <p>Compressed gases, liquefied gases, refrigerated liquefied gases, dissolved gases</p>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 5: Pictograms</h4>
+                <div class="question">
+                    <h4>Which pictogram would you find on containers of propane gas?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Toxic (skull and crossbones)</div>
+                        <div class="option" onclick="selectOption(this, true)">Flammable and Compressed Gas</div>
+                        <div class="option" onclick="selectOption(this, false)">Corrosive</div>
+                        <div class="option" onclick="selectOption(this, false)">Explosive</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! Propane is both flammable and under pressure, so it would display both the flammable and compressed gas pictograms.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Liquid Solvents Section -->
+        <div id="liquid-solvents" class="section">
+            <h3>Liquid Solvents, Glues, and Resins</h3>
+            
+            <div class="subsection">
+                <h4>What are Solvents?</h4>
+                <p>Solvents are liquids that dissolve other substances. They are used as cleaning agents to dissolve oils, greases, and resins, and in the production of paints, lacquers, adhesives, and cements for plastic and fibreglass.</p>
+                
+                <div class="warning-box">
+                    <h4>⚠️ Health Risks</h4>
+                    <p>Exposure to solvents may present a permanent threat to your health and reduce your awareness, thereby increasing the potential for mistakes and accidents.</p>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Methods of Solvent Exposure</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🫁 Inhalation</h5>
+                        <p>Excessive breathing of solvent vapours affects the central nervous system, causing dizziness, nausea, headaches, sleepiness, unconsciousness, and possibly death. Can cause serious damage to blood, lungs, liver, and kidneys.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>✋ Skin Contact</h5>
+                        <p>All solvents can dry and irritate skin with continuous contact, leaving skin subject to disabling dermatitis and opening the way to serious infection. Many solvents are easily absorbed through skin.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>👄 Ingestion</h5>
+                        <p>Accidental swallowing of industrial solvents is rare because of their unpleasant odour that usually identifies them.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Safety Precautions for Handling Liquid Solvents</h4>
+                <div class="do-dont">
+                    <div class="do-list">
+                        <h5>✅ DO</h5>
+                        <ul>
+                            <li>Use only approved containers in good condition</li>
+                            <li>Keep containers tightly closed when not in use</li>
+                            <li>Clean up liquid spills immediately</li>
+                            <li>Check grounding of large drums containing flammable liquids</li>
+                            <li>Avoid skin contact and practice proper personal hygiene</li>
+                            <li>Always use personal protective equipment (PPE)</li>
+                        </ul>
+                    </div>
+                    <div class="dont-list">
+                        <h5>❌ DO NOT</h5>
+                        <ul>
+                            <li>Use a container for any liquid other than its intended purpose</li>
+                            <li>Use sawdust to absorb spills unless you can immediately dispose of it safely</li>
+                            <li>Smoke or produce sparks near flammable liquids</li>
+                            <li>Work with a solvent if you're unsure of its properties</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Storage of Liquid Solvents</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>📍 Storage Location</h5>
+                        <p>Solvents may be stored in above-ground or underground tanks. Outside storage is preferred, but drums should be protected from direct sunlight and heat sources.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🚫 No Smoking or Eating</h5>
+                        <p>Do not smoke or eat in any area where solvents or volatile substances are stored or used. Risk of fire from sparks or food contamination is extreme.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🏷️ Clear Labeling</h5>
+                        <p>Contents of each drum should be clearly labelled to prevent accidents from improper use or incorrect mixtures. Include handling precautions and emergency actions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 6: Liquid Solvents</h4>
+                <div class="question">
+                    <h4>What is the most dangerous route of solvent exposure?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Skin contact</div>
+                        <div class="option" onclick="selectOption(this, true)">Inhalation</div>
+                        <div class="option" onclick="selectOption(this, false)">Ingestion</div>
+                        <div class="option" onclick="selectOption(this, false)">Eye contact</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! Inhalation is the most dangerous as it affects the central nervous system and can cause unconsciousness or death.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Toxic Materials Section -->
+        <div id="toxic-materials" class="section">
+            <h3>Toxic Materials in the Gas Industry</h3>
+            
+            <div class="subsection">
+                <h4>Categories of Toxic Materials</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🧪 Chemical Solvents, Glues, and Resins</h5>
+                        <p>Gas technicians use various products to join fittings for plastic pipe in venting systems. Solvents and glues used with ABS, PVC, and CPVC products are toxic. Special PPE required in unventilated or confined spaces.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>☢️ Chlorine</h5>
+                        <p>Non-flammable, strong oxidant with disagreeable, suffocating odour. Strong eye and lung irritant. Exposure to 15-30 ppm causes burning sensation in eyes, nose, and throat.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🏗️ Asbestos</h5>
+                        <p>One of the most dangerous substances. Designated substance that must be reported to employer. Microscopic fibres can cause permanent lung damage. Requires certified training for handling.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>💨 Sewer Gas</h5>
+                        <p>Mixture of vapours including methane, hydrogen sulfide, carbon monoxide. Some gases are combustible and explosive. Testing required before entering sewers.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>⚡ Metal Fumes</h5>
+                        <p>Zinc or cadmium fumes from cutting galvanized materials with oxyacetylene torch produce highly toxic, dense white smoke. Requires proper ventilation or breathing equipment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Chlorine Exposure Effects</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🫁 Respiratory Effects</h5>
+                        <p>Affects upper and lower respiratory tract. Symptoms include eye and throat irritation, choking, restlessness, nausea, vomiting, shortness of breath, chest pain, and fluid in lungs.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>💀 Severe Exposure</h5>
+                        <p>Brief exposure to very high concentrations (800 ppm) may cause death from suffocation. Skin or eye contact causes severe local irritation and burns.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🔥 Combustion Properties</h5>
+                        <p>While not explosive or flammable, chlorine supports combustion. Water in certain concentrations is explosive with chlorine gas when ignited by a spark.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Asbestos Safety Precautions</h4>
+                <div class="emergency-steps">
+                    <div class="emergency-step">
+                        <h5>Certified Training</h5>
+                        <p>Personnel working with asbestos removal must successfully complete a certified asbestos abatement course.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Authority Contact</h5>
+                        <p>Must contact the authority having jurisdiction (typically Ministry of Labour) before removing asbestos.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Proper Protection</h5>
+                        <p>Always use appropriate respiratory protection and protective clothing when working with asbestos.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Decontamination</h5>
+                        <p>Follow proper decontamination procedures after working with asbestos materials.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 7: Toxic Materials</h4>
+                <div class="question">
+                    <h4>What concentration of chlorine exposure can cause death from suffocation?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">100 ppm</div>
+                        <div class="option" onclick="selectOption(this, false)">400 ppm</div>
+                        <div class="option" onclick="selectOption(this, true)">800 ppm</div>
+                        <div class="option" onclick="selectOption(this, false)">1200 ppm</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! Brief exposure to very high concentrations (800 ppm) of chlorine may cause death from suffocation.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Fuel Gases Section -->
+        <div id="fuel-gases" class="section">
+            <h3>Common Fuel Gases</h3>
+            
+            <div class="subsection">
+                <h4>Types of Fuel Gases</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>⛽ Gasoline</h5>
+                        <p>Liquid fuel used primarily in vehicles and small engines. Designed to ignite easily, making it extremely dangerous.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🚛 Diesel</h5>
+                        <p>Liquid fuel used in diesel engines and heating systems. Less volatile than gasoline but still hazardous.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🔴 Propane (LP-gas)</h5>
+                        <p>Liquefied petroleum gas used for heating, cooking, and vehicles. Heavier than air (density 1.5), collects in low areas.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🔵 Natural Gas</h5>
+                        <p>Gaseous fuel distributed through pipeline systems. Lighter than air (density 0.6), rises and disperses.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>LP-gas and Natural Gas Properties</h4>
+                <p>Both fuels are <span class="key-term">non-toxic</span> and should not harm anyone breathing low concentrations near minor leaks. In pure states, both are tasteless, colourless, and odourless. <span class="key-term">Mercaptan</span> is added as a safety measure so they can be detected at 1% atmospheric concentration.</p>
+                
+                <div class="warning-box">
+                    <h4>⚠️ Dangerous Mixtures</h4>
+                    <p>The combination of LP-gas or natural gas and oxygen produces an extremely dangerous mixture. If a leak is suspected, immediately shut off the supply at its source and check for leaks with an approved testing agent.</p>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Gas Density Characteristics</h4>
+                <div class="do-dont">
+                    <div class="do-list">
+                        <h5>🔵 Natural Gas (Lighter than Air)</h5>
+                        <p>Relative density 0.6 - rises and is dissipated by air currents. Tends to accumulate near ceilings and upper areas.</p>
+                    </div>
+                    <div class="dont-list">
+                        <h5>🔴 Propane (Heavier than Air)</h5>
+                        <p>Relative density 1.5 - descends and collects in low points. Invisible pockets can remain ready to ignite from spark sources like electrical switches.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Safety Precautions for Gasoline and Diesel</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🚫 No Smoking</h5>
+                        <p>Smoking prohibited while working with fuel gases. Gasoline's flammable limits are 1%-16%.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🧽 Not for Cleaning</h5>
+                        <p>Never use gasoline and diesel as cleaning agents. Use proper solvents designed for cleaning.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>⚡ Prevent Sparks</h5>
+                        <p>When transferring fuels, avoid sparks that may cause ignition. Ensure proper grounding.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🧹 Clean Spills Properly</h5>
+                        <p>Place cleanup materials in designated, sealed containers. Never use sawdust unless immediately disposable.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Transportation Requirements</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>📦 Approved Containers</h5>
+                        <p>Transport and store in approved containers bearing CSA or ULC labels. Ensure containers are not damaged and properly secured.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🚗 Vehicle Transport</h5>
+                        <p>Never carry gasoline and flammable liquids in passenger compartment. Transport upright, braced, or otherwise secured.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🧯 Fire Extinguisher</h5>
+                        <p>Keep ABC fire extinguisher in driver's compartment while transporting gasoline or flammable liquids in a van.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 8: Fuel Gases</h4>
+                <div class="question">
+                    <h4>Which fuel gas is heavier than air and collects in low areas?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Natural Gas</div>
+                        <div class="option" onclick="selectOption(this, true)">Propane</div>
+                        <div class="option" onclick="selectOption(this, false)">Methane</div>
+                        <div class="option" onclick="selectOption(this, false)">Hydrogen</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! Propane is heavier than air (density 1.5) and collects in low points, while natural gas is lighter than air and rises.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Safety Procedures Section -->
+        <div id="safety-procedures" class="section">
+            <h3>Safety Procedures and Good Housekeeping</h3>
+            
+            <div class="subsection">
+                <h4>Worker Rights and Responsibilities</h4>
+                <div class="do-dont">
+                    <div class="do-list">
+                        <h5>✅ Worker Rights</h5>
+                        <ul>
+                            <li>Right to know about hazards in the workplace</li>
+                            <li>Right to access up-to-date SDS information</li>
+                            <li>Right to proper training on hazardous materials</li>
+                            <li>Right to appropriate personal protective equipment</li>
+                        </ul>
+                    </div>
+                    <div class="dont-list">
+                        <h5>📋 Worker Responsibilities</h5>
+                        <ul>
+                            <li>Participate in education and training programs</li>
+                            <li>Use information to work safely with hazardous products</li>
+                            <li>Report missing or illegible labels</li>
+                            <li>Notify supervisors of additional precautions needed</li>
+                            <li>Follow proper handling, storage, and disposal procedures</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Employer Responsibilities</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>📚 Education & Training</h5>
+                        <p>Establish education and training programs for workers exposed to hazardous products</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🏷️ Labeling</h5>
+                        <p>Ensure all hazardous products are properly labeled</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>📄 SDS Availability</h5>
+                        <p>Maintain current SDS for each hazardous product</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>👁️ Accessibility</h5>
+                        <p>Make labels and SDS readily available to workers</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Good Housekeeping Practices</h4>
+                <div class="emergency-steps">
+                    <div class="emergency-step">
+                        <h5>Follow Proper Procedures</h5>
+                        <p>The responsibility of a gas technician/fitter is to follow proper handling, storage, and use requirements for hazardous materials.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Consult SDS</h5>
+                        <p>Consult the SDS provided by the employer and ensure you have the most recent updates to these sheets.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Read Manufacturer Instructions</h5>
+                        <p>Ensure you read and follow directions on manufacturers' information sheets when handling hazardous products.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Seek Help When Needed</h5>
+                        <p>If information on proper handling is not available, contact your area's Construction Safety Association for help.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Consult Supervisor</h5>
+                        <p>If you cannot obtain needed information, consult your supervisor before using any product to ensure you are completely informed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 9: Safety Procedures</h4>
+                <div class="question">
+                    <h4>Who is responsible for establishing education and training programs for hazardous materials?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Workers</div>
+                        <div class="option" onclick="selectOption(this, true)">Employers</div>
+                        <div class="option" onclick="selectOption(this, false)">Suppliers</div>
+                        <div class="option" onclick="selectOption(this, false)">Government</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! Employers are required to establish education and training programs for workers exposed to hazardous products.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Emergency Response Section -->
+        <div id="emergency-response" class="section">
+            <h3>Emergency Response and First Aid</h3>
+            
+            <div class="subsection">
+                <h4>Emergency Response Procedures</h4>
+                <div class="emergency-steps">
+                    <div class="emergency-step">
+                        <h5>Identify the Hazard</h5>
+                        <p>Consult labels and SDS to understand the specific hazards of the material involved.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Protect Yourself and Others</h5>
+                        <p>Use appropriate PPE and evacuate unnecessary personnel from the area.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Contain the Hazard</h5>
+                        <p>For spills, use appropriate containment methods as specified in the SDS.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Report the Incident</h5>
+                        <p>Notify supervisors and appropriate emergency response personnel.</p>
+                    </div>
+                    <div class="emergency-step">
+                        <h5>Document the Incident</h5>
+                        <p>Record all details of the incident and response actions taken.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Spill Cleanup Procedures</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🚨 Alert</h5>
+                        <p>Notify others in the area about the spill</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🛡️ Protect</h5>
+                        <p>Put on appropriate PPE before approaching the spill</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>📦 Contain</h5>
+                        <p>Use appropriate materials to prevent spreading</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🧹 Clean</h5>
+                        <p>Use proper absorbents and disposal containers</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>📝 Report</h5>
+                        <p>Document the incident according to workplace procedures</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>First Aid for Hazardous Materials Exposure</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🫁 Inhalation</h5>
+                        <p>Move victim to fresh air. If breathing is difficult, administer oxygen if available and trained to do so. Seek medical attention immediately.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>✋ Skin Contact</h5>
+                        <p>Remove contaminated clothing. Flush affected area with water for at least 15 minutes. For chemical burns or persistent irritation, seek medical attention.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>👁️ Eye Contact</h5>
+                        <p>Flush eyes with water for at least 15 minutes, holding eyelids open. Remove contact lenses if present. Seek medical attention immediately.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>👄 Ingestion</h5>
+                        <p>Do not induce vomiting unless directed by medical personnel. If conscious, rinse mouth with water. Seek immediate medical attention.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Hazardous Waste Disposal</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🧪 Liquid Solvents and Glues</h5>
+                        <p>Must be disposed of in approved containers through licensed hazardous waste disposal companies. Never pour down drains or sewers.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🧽 Contaminated Materials</h5>
+                        <p>Rags, absorbents, and other materials contaminated with hazardous substances must be placed in designated containers and disposed of as hazardous waste.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>📦 Empty Containers</h5>
+                        <p>Even empty containers that held hazardous materials must be handled according to regulations. Some may be recycled after proper cleaning.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🏗️ Asbestos Materials</h5>
+                        <p>Must be wetted, double-bagged in specially marked bags, and disposed of only at facilities licensed to accept asbestos waste.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Knowledge Check 10: Emergency Response</h4>
+                <div class="question">
+                    <h4>For how long should you flush eyes that have been exposed to hazardous chemicals?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">5 minutes</div>
+                        <div class="option" onclick="selectOption(this, false)">10 minutes</div>
+                        <div class="option" onclick="selectOption(this, true)">15 minutes</div>
+                        <div class="option" onclick="selectOption(this, false)">20 minutes</div>
+                    </div>
+                </div>
+                <button class="quiz-btn" onclick="checkAnswer(this, 'Correct! Flush eyes with water for at least 15 minutes, holding eyelids open, and seek medical attention immediately.')">Check Answer</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Completion Section -->
+        <div id="completion" class="section">
+            <div class="completion-certificate">
+                <h3>🎓 Module Completion Certificate</h3>
+                <p>Congratulations! You have successfully completed</p>
+                <h4>CSA Unit 1 Safety - Chapter 3: Hazardous Materials in the Gas Industry</h4>
+                <p>You now have the knowledge and skills to work safely with hazardous materials in accordance with WHMIS 2015 requirements.</p>
+                <div id="completionDate"></div>
+            </div>
+
+            <div class="subsection">
+                <h4>Summary of Key Learning Points</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>📚 Knowledge</h5>
+                        <p>Understanding WHMIS 2015 and hazardous materials properties</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🛡️ Protection</h5>
+                        <p>Using appropriate PPE and safety measures</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>📋 Procedures</h5>
+                        <p>Following proper handling, storage, and disposal methods</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🚨 Emergency Response</h5>
+                        <p>Knowing what to do in case of exposure or spills</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>📖 Continuous Learning</h5>
+                        <p>Staying updated on regulations and best practices</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Information Resources</h4>
+                <div class="material-types">
+                    <div class="material-card">
+                        <h5>🏥 Canadian Centre for Occupational Health and Safety</h5>
+                        <p>Visit www.ccohs.ca for more information on chlorine and other hazardous materials.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🚛 Transport Canada</h5>
+                        <p>For Transportation of Dangerous Goods (TDG) information: http://www.tc.gc.ca/eng/tdg/safety-menu.htm</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>📋 CSA Standards</h5>
+                        <p>Reference CSA B149.2, CSA B340, and CSA-B622 for transportation requirements.</p>
+                    </div>
+                    <div class="material-card">
+                        <h5>🏛️ Provincial Resources</h5>
+                        <p>WHMIS 2015 leaflets available through provincial Workers Compensation Board or Workers Safety Insurance Board.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h4>Final Assessment: Comprehensive Review</h4>
+                <div class="question">
+                    <h4>1. Which pictogram would indicate a product that can cause cancer?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Exclamation mark</div>
+                        <div class="option" onclick="selectOption(this, true)">Health hazard (human silhouette)</div>
+                        <div class="option" onclick="selectOption(this, false)">Toxic (skull and crossbones)</div>
+                        <div class="option" onclick="selectOption(this, false)">Corrosive</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <h4>2. What is the first step when responding to a hazardous material spill?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Begin cleanup immediately</div>
+                        <div class="option" onclick="selectOption(this, false)">Call emergency services</div>
+                        <div class="option" onclick="selectOption(this, true)">Identify the hazard using labels and SDS</div>
+                        <div class="option" onclick="selectOption(this, false)">Evacuate the building</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>3. Which fuel gas is heavier than air and requires special ventilation considerations?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Natural gas</div>
+                        <div class="option" onclick="selectOption(this, true)">Propane</div>
+                        <div class="option" onclick="selectOption(this, false)">Methane</div>
+                        <div class="option" onclick="selectOption(this, false)">Hydrogen</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>4. What does SDS stand for in WHMIS 2015?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Standard Data Sheet</div>
+                        <div class="option" onclick="selectOption(this, true)">Safety Data Sheet</div>
+                        <div class="option" onclick="selectOption(this, false)">Supplier Data Sheet</div>
+                        <div class="option" onclick="selectOption(this, false)">Substance Data Sheet</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>5. Which exposure route for solvents affects the central nervous system most directly?</h4>
+                    <div class="options">
+                        <div class="option" onclick="selectOption(this, false)">Skin contact</div>
+                        <div class="option" onclick="selectOption(this, true)">Inhalation</div>
+                        <div class="option" onclick="selectOption(this, false)">Eye contact</div>
+                        <div class="option" onclick="selectOption(this, false)">Ingestion</div>
+                    </div>
+                </div>
+
+                <button class="quiz-btn" onclick="checkFinalAssessment()">Submit Final Assessment</button>
+                <div class="feedback" style="display: none;"></div>
+            </div>
+
+            <div id="finalResults" style="display: none;">
+                <div class="safety-tip">
+                    <h4>🎉 Excellent Work!</h4>
+                    <p>You have demonstrated a comprehensive understanding of hazardous materials safety in the gas industry. Remember to always prioritize safety and continue learning about new regulations and best practices.</p>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>📋 Important Reminders</h4>
+                    <ul>
+                        <li>Always consult current SDS before working with any hazardous material</li>
+                        <li>Use appropriate PPE for each specific hazard</li>
+                        <li>Follow proper storage and disposal procedures</li>
+                        <li>Report any safety concerns to your supervisor immediately</li>
+                        <li>Stay current with WHMIS 2015 training and updates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation-controls">
+            <button class="prev-btn" onclick="previousSection()">← Previous Section</button>
+            <div id="sectionInfo"></div>
+            <button class="next-btn" onclick="nextSection()">Next Section →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let completedSections = [true, false, false, false, false, false, false, false, false, false, false];
+        let quizResults = [];
+        
+        const sections = [
+            'introduction',
+            'whmis-overview', 
+            'ghs-terminology',
+            'labels-sds',
+            'pictograms',
+            'liquid-solvents',
+            'toxic-materials',
+            'fuel-gases',
+            'safety-procedures',
+            'emergency-response',
+            'completion'
+        ];
+
+        const sectionTitles = [
+            'Introduction',
+            'WHMIS 2015 Overview',
+            'GHS Terminology',
+            'Labels & SDS',
+            'Hazard Pictograms',
+            'Liquid Solvents',
+            'Toxic Materials',
+            'Fuel Gases',
+            'Safety Procedures',
+            'Emergency Response',
+            'Completion'
+        ];
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navigation buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update current section index
+            currentSection = sections.indexOf(sectionId);
+            updateProgress();
+            updateNavigationControls();
+            
+            // Mark section as completed when viewed
+            completedSections[currentSection] = true;
+            
+            // Show completion date if on completion section
+            if (sectionId === 'completion') {
+                document.getElementById('completionDate').innerHTML = 
+                    '<p><strong>Completed:</strong> ' + new Date().toLocaleDateString() + '</p>';
+            }
+        }
+
+        function nextSection() {
+            if (currentSection < sections.length - 1) {
+                currentSection++;
+                showSectionByIndex(currentSection);
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                showSectionByIndex(currentSection);
+            }
+        }
+
+        function showSectionByIndex(index) {
+            const sectionId = sections[index];
+            showSection(sectionId);
+            
+            // Update nav button appearance
+            document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+                btn.classList.remove('active');
+                if (i === index) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function updateProgress() {
+            const completedCount = completedSections.filter(completed => completed).length;
+            const progressPercent = (completedCount / completedSections.length) * 100;
+            
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+            document.getElementById('progressText').textContent = 
+                `Progress: ${Math.round(progressPercent)}% (${completedCount}/${completedSections.length} sections)`;
+        }
+
+        function updateNavigationControls() {
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const sectionInfo = document.getElementById('sectionInfo');
+            
+            prevBtn.disabled = currentSection === 0;
+            nextBtn.disabled = currentSection === sections.length - 1;
+            
+            sectionInfo.textContent = `${currentSection + 1} of ${sections.length}: ${sectionTitles[currentSection]}`;
+        }
+
+        function selectOption(element, isCorrect) {
+            // Remove previous selections in this question
+            const questionDiv = element.closest('.question');
+            questionDiv.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Mark this option as selected
+            element.classList.add('selected');
+            element.dataset.correct = isCorrect;
+        }
+
+        function checkAnswer(button, explanation) {
+            const quizContainer = button.closest('.quiz-container');
+            const questionDiv = quizContainer.querySelector('.question');
+            const selectedOption = questionDiv.querySelector('.option.selected');
+            const feedback = quizContainer.querySelector('.feedback');
+            
+            if (!selectedOption) {
+                alert('Please select an answer before checking.');
+                return;
+            }
+            
+            const isCorrect = selectedOption.dataset.correct === 'true';
+            
+            // Show correct/incorrect styling
+            questionDiv.querySelectorAll('.option').forEach(opt => {
+                if (opt.dataset.correct === 'true') {
+                    opt.classList.add('correct');
+                } else if (opt.classList.contains('selected') && opt.dataset.correct === 'false') {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // Show feedback
+            feedback.style.display = 'block';
+            feedback.textContent = explanation;
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            // Disable button
+            button.disabled = true;
+            button.textContent = isCorrect ? '✓ Correct!' : '✗ Incorrect';
+            
+            // Record result
+            quizResults.push(isCorrect);
+        }
+
+        function checkFinalAssessment() {
+            const questions = document.querySelectorAll('#completion .question');
+            let correctAnswers = 0;
+            let allAnswered = true;
+            
+            questions.forEach((question, index) => {
+                const selectedOption = question.querySelector('.option.selected');
+                if (!selectedOption) {
+                    allAnswered = false;
+                    return;
+                }
+                
+                const isCorrect = selectedOption.dataset.correct === 'true';
+                if (isCorrect) correctAnswers++;
+                
+                // Show correct answers
+                question.querySelectorAll('.option').forEach(opt => {
+                    if (opt.dataset.correct === 'true') {
+                        opt.classList.add('correct');
+                    } else if (opt.classList.contains('selected') && opt.dataset.correct === 'false') {
+                        opt.classList.add('incorrect');
+                    }
+                });
+            });
+            
+            if (!allAnswered) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+            
+            const percentage = (correctAnswers / questions.length) * 100;
+            const feedback = document.querySelector('#completion .feedback');
+            const finalResults = document.getElementById('finalResults');
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${percentage >= 80 ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <h4>Final Assessment Results</h4>
+                <p>You scored ${correctAnswers} out of ${questions.length} (${Math.round(percentage)}%)</p>
+                <p>${percentage >= 80 ? 
+                    '🎉 Congratulations! You have successfully completed the module.' : 
+                    '📚 Please review the material and retake the assessment. You need 80% to pass.'
+                }</p>
+            `;
+            
+            if (percentage >= 80) {
+                finalResults.style.display = 'block';
+                completedSections[currentSection] = true;
+                updateProgress();
+            }
+            
+            // Disable submit button
+            event.target.disabled = true;
+            event.target.textContent = percentage >= 80 ? '✓ Passed!' : '✗ Try Again';
+        }
+
+        // Initialize the module
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            updateNavigationControls();
+            
+            // Add click handlers to navigation buttons
+            document.querySelectorAll('.nav-btn').forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    currentSection = index;
+                    showSectionByIndex(currentSection);
+                });
+            });
+        });
+
+        // Auto-save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('csa_safety_ch3_progress', JSON.stringify({
+                currentSection: currentSection,
+                completedSections: completedSections,
+                quizResults: quizResults,
+                lastAccessed: new Date().toISOString()
+            }));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('csa_safety_ch3_progress');
+            if (saved) {
+                const data = JSON.parse(saved);
+                currentSection = data.currentSection || 0;
+                completedSections = data.completedSections || completedSections;
+                quizResults = data.quizResults || [];
+                updateProgress();
+            }
+        }
+
+        // Load progress on page load
+        document.addEventListener('DOMContentLoaded', loadProgress);
+
+        // Save progress when leaving page
+        window.addEventListener('beforeunload', saveProgress);
+
+        // Auto-save every 30 seconds
+        setInterval(saveProgress, 30000);
+    </script>
+</body>
+</html>

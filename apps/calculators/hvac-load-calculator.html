@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canadian Heat & Cooling Load Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            background: white;
+            border-radius: 0;
+            box-shadow: none;
+            overflow-y: auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .unit-toggle {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .unit-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+            flex: 1;
+            background: white;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .input-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .results-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .result-item h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .result-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .climate-info {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #3498db;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .credits {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .lark-logo {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: #3498db;
+            margin-left: 5px;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Download button styling */
+        .download-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+                overflow: hidden;
+            }
+            
+            .container {
+                width: 100%;
+                height: 100vh;
+                position: fixed;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+                overflow-y: auto;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Canadian HVAC Load Calculator</h1>
+            <p>Professional heating and cooling load calculations for Canadian climates</p>
+            <div style="margin-top: 15px;">
+                <button class="download-btn" onclick="downloadApp()">
+                    📱 Download App
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 class="section-title" style="margin-bottom: 0;">Building Information</h2>
+                    <button class="unit-toggle" onclick="toggleUnits()">
+                        📏 Switch to <span id="unit-display">Imperial</span>
+                    </button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="province">Province/Territory <span class="tooltip" data-tooltip="Climate data varies significantly across Canada">ℹ️</span></label>
+                    <select id="province">
+                        <option value="">Select Province/Territory</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="AB">Alberta</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="ON">Ontario</option>
+                        <option value="QC">Quebec</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="NS">Nova Scotia</option>
+                        <option value="PE">Prince Edward Island</option>
+                        <option value="NL">Newfoundland and Labrador</option>
+                        <option value="YT">Yukon</option>
+                        <option value="NT">Northwest Territories</option>
+                        <option value="NU">Nunavut</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="area">Floor Area <span id="area-unit">(ft²)</span> <span class="tooltip" data-tooltip="Total conditioned floor area">ℹ️</span></label>
+                    <input type="number" id="area" placeholder="e.g., 1600" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="ceiling-height">Ceiling Height <span id="height-unit">(ft)</span></label>
+                    <input type="number" id="ceiling-height" placeholder="e.g., 8" min="6" max="16" step="0.1" value="8">
+                </div>
+
+                <div class="form-group">
+                    <label for="insulation">Insulation Level</label>
+                    <select id="insulation">
+                        <option value="poor">Poor (R-8 walls, R-20 attic)</option>
+                        <option value="average" selected>Average (R-12 walls, R-30 attic)</option>
+                        <option value="good">Good (R-20 walls, R-40 attic)</option>
+                        <option value="excellent">Excellent (R-24+ walls, R-50+ attic)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="windows">Window Area <span id="window-unit">(ft²)</span> <span class="tooltip" data-tooltip="Total area of all windows and doors with glass">ℹ️</span></label>
+                    <input type="number" id="windows" placeholder="e.g., 270" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="window-type">Window Type</label>
+                    <select id="window-type">
+                        <option value="single">Single Pane</option>
+                        <option value="double" selected>Double Pane</option>
+                        <option value="triple">Triple Pane</option>
+                        <option value="low-e">Low-E Double Pane</option>
+                        <option value="low-e-triple">Low-E Triple Pane</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="occupants">Number of Occupants</label>
+                    <input type="number" id="occupants" placeholder="e.g., 4" min="1" value="4">
+                </div>
+
+                <div class="form-group">
+                    <label for="building-age">Building Age</label>
+                    <select id="building-age">
+                        <option value="new">New (2010+)</option>
+                        <option value="recent">Recent (1990-2009)</option>
+                        <option value="older" selected>Older (1970-1989)</option>
+                        <option value="old">Old (Pre-1970)</option>
+                    </select>
+                </div>
+
+                <button class="calculate-btn" onclick="calculateLoads()">
+                    🔥❄️ Calculate Heating & Cooling Loads
+                </button>
+            </div>
+
+            <div class="results-section">
+                <h2 class="section-title">Calculation Results</h2>
+                <div id="results">
+                    <p style="text-align: center; color: #7f8c8d; margin-top: 50px; font-size: 1.1em;">
+                        Enter building details and click calculate to see your heating and cooling load requirements.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // Global unit system variable
+        let isMetric = false;
+
+        // Canadian climate data by province (heating degree days and cooling degree days)
+        const climateData = {
+            'BC': { hdd: 2800, cdd: 150, winterTemp: -8, summerTemp: 28, zone: 'Marine West Coast', winterTempF: 18, summerTempF: 82 },
+            'AB': { hdd: 4500, cdd: 280, winterTemp: -25, summerTemp: 26, zone: 'Continental', winterTempF: -13, summerTempF: 79 },
+            'SK': { hdd: 5200, cdd: 350, winterTemp: -28, summerTemp: 25, zone: 'Continental', winterTempF: -18, summerTempF: 77 },
+            'MB': { hdd: 5100, cdd: 320, winterTemp: -27, summerTemp: 26, zone: 'Continental', winterTempF: -17, summerTempF: 79 },
+            'ON': { hdd: 3800, cdd: 300, winterTemp: -18, summerTemp: 28, zone: 'Continental', winterTempF: 0, summerTempF: 82 },
+            'QC': { hdd: 4200, cdd: 250, winterTemp: -22, summerTemp: 26, zone: 'Continental', winterTempF: -8, summerTempF: 79 },
+            'NB': { hdd: 4100, cdd: 180, winterTemp: -18, summerTemp: 24, zone: 'Maritime', winterTempF: 0, summerTempF: 75 },
+            'NS': { hdd: 3600, cdd: 120, winterTemp: -12, summerTemp: 23, zone: 'Maritime', winterTempF: 10, summerTempF: 73 },
+            'PE': { hdd: 3800, cdd: 150, winterTemp: -14, summerTemp: 24, zone: 'Maritime', winterTempF: 7, summerTempF: 75 },
+            'NL': { hdd: 4800, cdd: 80, winterTemp: -18, summerTemp: 20, zone: 'Maritime', winterTempF: 0, summerTempF: 68 },
+            'YT': { hdd: 6500, cdd: 100, winterTemp: -35, summerTemp: 20, zone: 'Subarctic', winterTempF: -31, summerTempF: 68 },
+            'NT': { hdd: 7200, cdd: 120, winterTemp: -35, summerTemp: 22, zone: 'Subarctic', winterTempF: -31, summerTempF: 72 },
+            'NU': { hdd: 8500, cdd: 50, winterTemp: -40, summerTemp: 15, zone: 'Arctic', winterTempF: -40, summerTempF: 59 }
+        };
+
+        // Insulation R-values (Imperial and Metric)
+        const insulationValues = {
+            'poor': { wall: 8, ceiling: 20, floor: 12 },
+            'average': { wall: 12, ceiling: 30, floor: 20 },
+            'good': { wall: 20, ceiling: 40, floor: 25 },
+            'excellent': { wall: 24, ceiling: 50, floor: 30 }
+        };
+
+        // Window U-values (Imperial: BTU/hr·ft²·°F, Metric: W/m²·K)
+        const windowUValues = {
+            'single': { imperial: 1.02, metric: 5.8 },
+            'double': { imperial: 0.49, metric: 2.8 },
+            'triple': { imperial: 0.32, metric: 1.8 },
+            'low-e': { imperial: 0.35, metric: 2.0 },
+            'low-e-triple': { imperial: 0.21, metric: 1.2 }
+        };
+
+        function downloadApp() {
+            // Get the complete HTML content
+            const fullHTML = document.documentElement.outerHTML;
+            
+            const blob = new Blob([fullHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create download link
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Canadian_HVAC_Calculator.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Show confirmation
+            alert('📱 App downloaded successfully! You can now open the HTML file in any web browser to use the calculator offline.');
+        }
+
+        function toggleUnits() {
+            isMetric = !isMetric;
+            const unitDisplay = document.getElementById('unit-display');
+            const areaUnit = document.getElementById('area-unit');
+            const heightUnit = document.getElementById('height-unit');
+            const windowUnit = document.getElementById('window-unit');
+            
+            const areaInput = document.getElementById('area');
+            const heightInput = document.getElementById('ceiling-height');
+            const windowInput = document.getElementById('windows');
+
+            if (isMetric) {
+                unitDisplay.textContent = 'Imperial';
+                areaUnit.textContent = '(m²)';
+                heightUnit.textContent = '(m)';
+                windowUnit.textContent = '(m²)';
+                
+                // Convert current values to metric
+                if (areaInput.value) areaInput.value = Math.round(parseFloat(areaInput.value) * 0.092903);
+                if (heightInput.value) heightInput.value = (parseFloat(heightInput.value) * 0.3048).toFixed(1);
+                else heightInput.value = '2.4';
+                if (windowInput.value) windowInput.value = Math.round(parseFloat(windowInput.value) * 0.092903);
+                
+                areaInput.placeholder = 'e.g., 150';
+                heightInput.placeholder = 'e.g., 2.4';
+                windowInput.placeholder = 'e.g., 25';
+                
+                heightInput.min = '2';
+                heightInput.max = '5';
+            } else {
+                unitDisplay.textContent = 'Metric';
+                areaUnit.textContent = '(ft²)';
+                heightUnit.textContent = '(ft)';
+                windowUnit.textContent = '(ft²)';
+                
+                // Convert current values to imperial
+                if (areaInput.value) areaInput.value = Math.round(parseFloat(areaInput.value) / 0.092903);
+                if (heightInput.value) heightInput.value = (parseFloat(heightInput.value) / 0.3048).toFixed(1);
+                else heightInput.value = '8';
+                if (windowInput.value) windowInput.value = Math.round(parseFloat(windowInput.value) / 0.092903);
+                
+                areaInput.placeholder = 'e.g., 1600';
+                heightInput.placeholder = 'e.g., 8';
+                windowInput.placeholder = 'e.g., 270';
+                
+                heightInput.min = '6';
+                heightInput.max = '16';
+            }
+        }
+
+        function calculateLoads() {
+            // Get input values
+            const province = document.getElementById('province').value;
+            let area = parseFloat(document.getElementById('area').value);
+            let ceilingHeight = parseFloat(document.getElementById('ceiling-height').value);
+            const insulation = document.getElementById('insulation').value;
+            let windowArea = parseFloat(document.getElementById('windows').value);
+            const windowType = document.getElementById('window-type').value;
+            const occupants = parseInt(document.getElementById('occupants').value);
+            const buildingAge = document.getElementById('building-age').value;
+
+            // Validation
+            if (!province || !area || isNaN(windowArea) || !occupants) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Convert imperial to metric for calculations if needed
+            let areaM2 = isMetric ? area : area * 0.092903;
+            let heightM = isMetric ? ceilingHeight : ceilingHeight * 0.3048;
+            let windowAreaM2 = isMetric ? windowArea : windowArea * 0.092903;
+
+            const climate = climateData[province];
+            const insul = insulationValues[insulation];
+            const windowU = windowUValues[windowType].metric;
+            const volume = areaM2 * heightM;
+
+            // Calculate heat loss components
+            const wallArea = Math.sqrt(areaM2) * 4 * heightM - windowAreaM2;
+            const ceilingArea = areaM2;
+            const floorArea = areaM2;
+
+            // Heat loss calculations (W)
+            const wallLoss = (wallArea / insul.wall) * (21 - climate.winterTemp);
+            const ceilingLoss = (ceilingArea / insul.ceiling) * (21 - climate.winterTemp);
+            const floorLoss = (floorArea / insul.floor) * (21 - climate.winterTemp) * 0.5;
+            const windowLoss = windowAreaM2 * windowU * (21 - climate.winterTemp);
+            
+            // Air infiltration
+            const infiltrationMultiplier = buildingAge === 'new' ? 0.3 : buildingAge === 'recent' ? 0.4 : buildingAge === 'older' ? 0.6 : 0.8;
+            const infiltrationLoss = volume * infiltrationMultiplier * 1.2 * 1000 * (21 - climate.winterTemp) / 3600;
+
+            const totalHeatLoss = wallLoss + ceilingLoss + floorLoss + windowLoss + infiltrationLoss;
+
+            // Add safety factor
+            const designHeatLoad = totalHeatLoss * 1.2;
+            const heatingCapacityBtu = designHeatLoad * 3.412;
+
+            // Cooling load calculations
+            const coolingLoad = calculateCoolingLoad(areaM2, windowAreaM2, windowU, occupants, climate, insul);
+            const coolingCapacityBtu = coolingLoad * 3.412;
+            const coolingTons = coolingCapacityBtu / 12000;
+
+            // Display results
+            displayResults({
+                province,
+                climate,
+                designHeatLoad,
+                heatingCapacityBtu,
+                coolingLoad,
+                coolingCapacityBtu,
+                coolingTons,
+                area: areaM2,
+                areaDisplay: area,
+                insulation,
+                windowType
+            });
+        }
+
+        function calculateCoolingLoad(areaM2, windowAreaM2, windowU, occupants, climate, insul) {
+            // Simplified cooling load calculation
+            const wallArea = Math.sqrt(areaM2) * 4 * 2.4 - windowAreaM2;
+            
+            // Solar heat gain through windows (W)
+            const solarGain = windowAreaM2 * 300; // Average solar heat gain factor for Canada
+            
+            // Heat gain through walls and roof
+            const wallGain = (wallArea / insul.wall) * (climate.summerTemp - 21) * 0.7; // Reduced due to thermal mass
+            const roofGain = (areaM2 / insul.ceiling) * (climate.summerTemp - 21 + 10); // +10°C for roof surface temp
+            
+            // Internal gains
+            const occupantGain = occupants * 100; // 100W per person
+            const applianceGain = areaM2 * 5; // 5W/m² for appliances and lighting
+            
+            // Ventilation load
+            const ventilationGain = areaM2 * 2 * 1.2 * 1000 * (climate.summerTemp - 21) / 3600; // 2 L/s per m²
+            
+            return solarGain + wallGain + roofGain + occupantGain + applianceGain + ventilationGain;
+        }
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            const areaUnit = isMetric ? 'm²' : 'ft²';
+            const loadUnit = isMetric ? 'W/m²' : 'BTU/h·ft²';
+            const winterTemp = isMetric ? data.climate.winterTemp + '°C' : data.climate.winterTempF + '°F';
+            const summerTemp = isMetric ? data.climate.summerTemp + '°C' : data.climate.summerTempF + '°F';
+            
+            // Calculate load densities
+            const heatingDensity = isMetric ? 
+                Math.round(data.designHeatLoad / data.area) : 
+                Math.round(data.heatingCapacityBtu / data.areaDisplay);
+            const coolingDensity = isMetric ? 
+                Math.round(data.coolingLoad / data.area) : 
+                Math.round(data.coolingCapacityBtu / data.areaDisplay);
+            
+            resultsDiv.innerHTML = `
+                <div class="result-item">
+                    <h3>🔥 Heating Load</h3>
+                    <div class="result-value">${Math.round(data.designHeatLoad).toLocaleString()} W</div>
+                    <div style="margin-top: 8px; color: #666;">
+                        ${Math.round(data.heatingCapacityBtu).toLocaleString()} BTU/h
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <h3>❄️ Cooling Load</h3>
+                    <div class="result-value">${Math.round(data.coolingLoad).toLocaleString()} W</div>
+                    <div style="margin-top: 8px; color: #666;">
+                        ${Math.round(data.coolingCapacityBtu).toLocaleString()} BTU/h<br>
+                        ${data.coolingTons.toFixed(1)} Tons
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <h3>📊 Load Density</h3>
+                    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                        <span>Heating: <strong>${heatingDensity} ${loadUnit}</strong></span>
+                        <span>Cooling: <strong>${coolingDensity} ${loadUnit}</strong></span>
+                    </div>
+                </div>
+
+                <div class="climate-info">
+                    <h4>🌡️ Climate Information - ${data.province}</h4>
+                    <p><strong>Zone:</strong> ${data.climate.zone}</p>
+                    <p><strong>Design Temperatures:</strong></p>
+                    <p>• Winter: ${winterTemp} | Summer: ${summerTemp}</p>
+                    <p><strong>Degree Days:</strong> ${data.climate.hdd.toLocaleString()} HDD | ${data.climate.cdd} CDD</p>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Professional Note:</strong> These calculations provide estimates based on simplified methods. 
+                    For final equipment sizing and installation, consult with a licensed HVAC professional who can perform 
+                    detailed Manual J calculations and consider local building codes.
+                </div>
+
+                <div class="credits">
+                    Created by <span class="lark-logo">🐦 Lark Labs</span>
+                </div>
+            `;
+        }
+
+        // Initialize with default province selection and imperial units
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('province').value = 'ON'; // Default to Ontario
+            // Calculator starts in Imperial mode by default
+        });
+    </script>
+</body>
+</html>

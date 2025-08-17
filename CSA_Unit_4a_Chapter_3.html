@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 4a - Chapter 3: Regulations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .law-box {
+            background: #ecf0f1;
+            border: 2px solid #34495e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        .regulation-box {
+            background: #f8f9fa;
+            border: 2px solid #6c757d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        .clause-box {
+            background: #e9ecef;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 4a - Utilization codes, acts, and regulations</h1>
+            <h2>Chapter 3 - Regulations</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 12</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 12;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>A number of regulations fall under the <em>Technical Standards and Safety Act, 2000</em>. Gas technicians need to be familiar with the regulations that directly relate to their activities, including the:</p>
+                        <ul>
+                            <li><em>Fuel Industry Certificates Regulation, 215/01</em></li>
+                            <li><em>Gaseous Fuels Regulation, 212/01</em>; and</li>
+                            <li><em>Propane Storage and Handling Regulation, 211/01</em></li>
+                        </ul>
+
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>identify the three main regulations and their respective scopes;</li>
+                            <li>locate the definitions in each regulation and identify their significance;</li>
+                            <li>identify who can work on gas equipment;</li>
+                            <li>identify the various certificates required for someone to work on gas and propane equipment;</li>
+                            <li>identify duties and responsibilities of gas technicians, employees, gas distributors, contractors, and property owners;</li>
+                            <li>describe the actions that a gas technician must take following an accident or occurrence; and</li>
+                            <li>identify gas appliances that have received approval.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Appliance</td>
+                                    <td></td>
+                                    <td>A device that consumes or is intended to consume a gas and includes all valves, fittings, controls, and components attached or to be attached to it</td>
+                                </tr>
+                                <tr>
+                                    <td>Code adoption document</td>
+                                    <td></td>
+                                    <td>The "Gaseous Fuels Code Adoption Document" adopted as part of this Regulation under Ontario Regulation 223/01</td>
+                                </tr>
+                                <tr>
+                                    <td>Contractor</td>
+                                    <td></td>
+                                    <td>A person who carries on, in whole or in part, the business of installing, removing, repairing, altering, or servicing appliances and includes a person or an agent of the person who agrees to install, remove, repair, alter, or service appliances sold or leased by the person</td>
+                                </tr>
+                                <tr>
+                                    <td>Direct supervision</td>
+                                    <td></td>
+                                    <td>The supervision by a supervising certificate holder who is on site near a trainee and is available to assist and supervise the trainee</td>
+                                </tr>
+                                <tr>
+                                    <td>Distributor</td>
+                                    <td></td>
+                                    <td>A person who supplies gas to an end user ("distribute" and "distribution" have corresponding meanings)</td>
+                                </tr>
+                                <tr>
+                                    <td>General supervision</td>
+                                    <td></td>
+                                    <td>The supervision by a supervising certificate holder who may or may not be on site but who is readily available to assist a trainee</td>
+                                </tr>
+                                <tr>
+                                    <td>Multi-Endorsement Certificate Holder</td>
+                                    <td>MECH</td>
+                                    <td>A designation for a person who holds one or more of the listed certificates</td>
+                                </tr>
+                                <tr>
+                                    <td>Record of training</td>
+                                    <td>ROT</td>
+                                    <td>An approved training provider-issued record that indicates training of a person</td>
+                                </tr>
+                                <tr>
+                                    <td>Supervising certificate holder</td>
+                                    <td></td>
+                                    <td>A person who holds a certificate under this Regulation and provides supervision to a trainee</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding the definitions in each regulation is crucial as they form the foundation for interpreting all requirements and obligations within the regulatory framework.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Which three main regulations fall under the Technical Standards and Safety Act, 2000 that gas technicians need to be familiar with?",
+                    options: [
+                        "Fuel Industry Certificates Regulation 215/01, Gaseous Fuels Regulation 212/01, and Propane Storage and Handling Regulation 211/01",
+                        "Gas Safety Regulation, Propane Handling Regulation, and Certificate Requirements Regulation",
+                        "Installation Standards Regulation, Equipment Approval Regulation, and Safety Compliance Regulation",
+                        "Natural Gas Regulation, Propane Gas Regulation, and Equipment Certification Regulation"
+                    ],
+                    correct: 0,
+                    explanation: "The three main regulations that gas technicians need to be familiar with are: Fuel Industry Certificates Regulation 215/01, Gaseous Fuels Regulation 212/01, and Propane Storage and Handling Regulation 211/01."
+                }
+            },
+            {
+                title: "Fuel Industry Certificates Regulation 215/01",
+                content: `
+                    <div class="section">
+                        <h2>Fuel Industry Certificates Regulation 215/01</h2>
+                        
+                        <p>The fuel industry certificate is proof of having achieved a recognized level of skills and knowledge that permits the holder to carry out certain tasks it authorizes.</p>
+
+                        <p>People, especially customers and the courts, view a certificate as a proof of "expertise". Although the raising standards for achieving certification continues, a certificate is actually not a proof of expertise but rather a proof of having met a minimum standard of qualification to conduct certain work. The <em>Fuel Industry Certificates Regulation</em> specifies the certification requirements to work on hydrocarbon-fueled appliances and equipment.</p>
+
+                        <p>It is important to understand the rights, duties, and responsibilities that come with a certificate, as well as the allowable scope of work for the certificate holder and those of his or her co-workers or employees.</p>
+
+                        <h3>Definitions</h3>
+                        
+                        <p>The beginning of the regulation defines some important words to clarify their intent and application for all documents to which this regulation applies. A definition in the <em>Fuel Industry Certificates Regulation</em> applies to the other regulations and the codes that this text will discuss later, unless those documents use the word with a new definition.</p>
+
+                        <p>Continually refer to the definition section when reading and interpreting any regulation.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Direct supervision"</strong> means the supervision by a supervising certificate holder who is on site in close proximity to a trainee and is available to assist and supervise the trainee.</p>
+                        </div>
+
+                        <div class="regulation-box">
+                            <p><strong>"General supervision"</strong> means the supervision by a supervising certificate holder who may or may not be on site but who is readily available to assist a trainee.</p>
+                        </div>
+
+                        <div class="regulation-box">
+                            <p><strong>"Supervising certificate holder"</strong> means a person who holds a certificate under this Regulation and provides supervision to a trainee.</p>
+                        </div>
+
+                        <p>The use of the word "supervision" has always been to regulate and control the type of work that an entry-level or lower-level certificate holder can do to gain work experience.</p>
+
+                        <p>The new certification regulation recognizes that trainees—whether entry-level technicians or those seeking higher level certification—must have a means of learning the skills and knowledge of the higher level certificate categories while at the same time being of value to themselves and the company they work for while they are learning.</p>
+
+                        <div class="warning-box">
+                            <h4>Important Safety Concern</h4>
+                            <p>An important safety concern is that on-the-job training experience means allowing a person to conduct work that he or she is not fully qualified for.</p>
+                        </div>
+
+                        <p>The clauses that use the above definitions of supervision address that safety concern while allowing on-the-job training and increasing the value of trainees to employers.</p>
+
+                        <p>Reference to the specific clause is necessary for interpreting what type of supervision is necessary and when. However, the underlying principles are as follows:</p>
+
+                        <p>General supervision by a supervising certificate holder may be allowed for tasks that require only a minimum skill/knowledge level and pose only a minimal safety risk to the worker and the public.</p>
+
+                        <p>Direct supervision by a supervising certificate holder may be allowed for tasks that are inherently more difficult and have a higher potential for problems. Close supervision is required in these cases.</p>
+
+                        <p>The Act and the Regulations confer significant duties and responsibilities on both the supervisor and employer of trainees.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Record of training"</strong> means a record issued by an approved training provider that indicates training received by a person.</p>
+                        </div>
+
+                        <p>A record of training or ROT is different from a certificate. Where a specific task requires only a short training course (usually one to three days), the certification regulation may allow either a person holding a certificate or an ROT to complete the work.</p>
+
+                        <p>ROTs apply mostly to propane transfers, cylinder inspection, and work on construction heaters or roofing equipment. Maintaining an ROT may require re-training at regular intervals.</p>
+
+                        <p>A record of training card must be available to an inspector to prove compliance with an ROT requirement. The accredited training provider, not TSSA, is responsible for issuing the card.</p>
+
+                        <div class="info-box">
+                            <h4>ROT Card Example</h4>
+                            <p>ROT cards are issued by approved training providers and must contain specific information including the training company name, contact information, and the type of training completed.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the difference between 'Direct supervision' and 'General supervision'?",
+                    options: [
+                        "There is no difference - they are the same thing",
+                        "Direct supervision requires the supervisor to be on site in close proximity, while general supervision allows the supervisor to be off-site but readily available",
+                        "General supervision is more strict than direct supervision",
+                        "Direct supervision is only for G.1 certificate holders, general supervision is for all others"
+                    ],
+                    correct: 1,
+                    explanation: "Direct supervision means the supervising certificate holder is on site in close proximity to the trainee, while general supervision means the supervising certificate holder may or may not be on site but is readily available to assist a trainee."
+                }
+            },
+            {
+                title: "Application and Certificate Requirements",
+                content: `
+                    <div class="section">
+                        <h2>Application and requirement to comply</h2>
+                        
+                        <p>The <em>Fuel Industry Certificates Regulation</em> is accepted by and applies to the following regulations and codes that this Unit will discuss later:</p>
+                        <ul>
+                            <li><em>Gaseous Fuels Regulation 212/01;</em></li>
+                            <li><em>Propane Storage and Handling Regulation 211/01;</em> and</li>
+                            <li>CSA B149.1, CSA B149.2, and CSA B149.3.</li>
+                        </ul>
+
+                        <p>Interpretation of the certification requirements is only possible with reference to the Act, regulations, and codes that the <em>Fuel Industry Certificates Regulation</em> covers.</p>
+
+                        <div class="clause-box">
+                            <p><strong>Clause 2. (2)</strong> Every person engaged in an activity, use of equipment, process or procedure to which the Act and this Regulation apply shall comply with the Act and this Regulation.</p>
+                            <p><strong>(3)</strong> For the purposes of subsection (2), the reference to an activity, use of equipment, process or procedure includes, but is not limited to, design, construction, erection, installation, maintenance, alteration, service, use or disposal.</p>
+                        </div>
+
+                        <p>This clause applies to every person but possibly more so, in the eyes of the law, to certificate holders, who must be fully aware of their duties and responsibilities.</p>
+
+                        <h2>Certificate types</h2>
+                        
+                        <p>The requirement to be a certificate holder is given in Clause 3 along with a list of 36 certificate types that apply to the natural gas, propane, and fuel oil industries, as well as the recently added hydrogen certification (H2). A portion of this clause reproduced below shows the main certificate types related to gas technicians.</p>
+
+                        <div class="clause-box">
+                            <p><strong>3. (1)</strong> No person shall perform the functions of a certificate holder without first having obtained a certificate from the director designating the person as one or more of the following:</p>
+                            <p>1. A gas technician 1 ("G.1 certificate")</p>
+                            <p>2. A gas technician 2 ("G.2 certificate")</p>
+                            <p>3. A gas technician 3 ("G.3 certificate")</p>
+                            <p>4. A gas piping fitter ("GP certificate")</p>
+                            <p>5. A liquid propane fitter ("LP certificate")</p>
+                            <p>8. A domestic appliance technician ("DA certificate")</p>
+                            <p>9. A recreational vehicles technician 1 ("RV.1 certificate")</p>
+                            <p>10. A recreational vehicles technician 2 ("RV.2 certificate")</p>
+                            <p>11. An industrial maintenance technician ("IMT certificate")</p>
+                            <p>12. A refuelling station installer – natural gas ("RSI-NG certificate")</p>
+                        </div>
+
+                        <p>The abbreviation of the certificate type appears on the wallet card of those who hold the certificate. A person who holds one or more of the listed certificates receives one certificate (for the same fee) and has the designation MECH preceding the abbreviations for those certificates. MECH stands for Multi-Endorsement Certificate Holder.</p>
+
+                        <h3>Renewals</h3>
+                        
+                        <div class="clause-box">
+                            <p><strong>3. (3)</strong> An application for a certificate or a renewal thereof shall be in the form published by the designated administrative authority and be accompanied by the fee set by the authority.</p>
+                            <p><strong>4. (3)</strong> An application for renewal of a certificate may be made before the certificate expires or within one year after it has expired.</p>
+                            <p><strong>(4)</strong> A person who applies for renewal of a certificate before the date of expiry or within one year after the date of expiry shall successfully complete an upgrading course by the date specified by the director.</p>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Certificate Renewal Requirements</h4>
+                            <p>Holders renew their certificates every two years on their birthday at a minimal cost. The certificate holder receives a renewal form at his/her last known address approximately 60 days before the expiry date.</p>
+                        </div>
+
+                        <p>It is the certificate holder's responsibility to ensure renewal of the certificate prior to the expiry date. A key component of this responsibility is to notify TSSA about changes of address.</p>
+
+                        <div class="warning-box">
+                            <h4>Certificate Expiry Consequences</h4>
+                            <p>Failure to renew the certificate by the expiry date results in a suspension of the certificate until completion of the renewal or for one year, whichever comes first. It is illegal to function as a certificate holder with a suspended certificate.</p>
+                        </div>
+
+                        <p>Failure to renew the certificate within one year of the expiry date automatically causes revocation of the certificate. Re-activation of a revoked certificate requires a new application and documentation that the applicant is competent to hold the certificate.</p>
+
+                        <h3>No transfer</h3>
+                        <div class="regulation-box">
+                            <p><strong>17.</strong> A certificate is not transferable.</p>
+                        </div>
+
+                        <h3>Expiry of certificates</h3>
+                        <div class="clause-box">
+                            <p><strong>4. (2)</strong> A certificate or renewal of a certificate expires on the date indicated on the certificate.</p>
+                            <p><strong>(6)</strong> The addition of a designation to a certificate after the certificate is issued does not change the expiry date of the certificate.</p>
+                        </div>
+
+                        <h3>Notice of change of address</h3>
+                        <div class="clause-box">
+                            <p><strong>19. (1)</strong> A person who holds a certificate shall notify the director within 30 days after any change in his or her address.</p>
+                            <p><strong>(2)</strong> The director is not responsible for misdirected notices or renewals resulting from the certificate holder's failure to comply with subsection (1).</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What happens if a certificate holder fails to renew their certificate by the expiry date?",
+                    options: [
+                        "Nothing - they can continue working as normal",
+                        "They get a warning letter and 30 days to renew",
+                        "The certificate is suspended until renewal or for one year, whichever comes first",
+                        "They must retake the entire certification exam"
+                    ],
+                    correct: 2,
+                    explanation: "Failure to renew the certificate by the expiry date results in a suspension of the certificate until completion of the renewal or for one year, whichever comes first. It is illegal to function as a certificate holder with a suspended certificate."
+                }
+            },
+            {
+                title: "Qualifications and Scope of Certificates",
+                content: `
+                    <div class="section">
+                        <h2>Qualifications and prerequisites</h2>
+                        
+                        <p>The gas technician should read and become familiar with the basic qualifications necessary to hold a specific certificate as given in Clauses 5 through 16 of the <em>Fuel Industry Certificates Regulation</em>.</p>
+
+                        <p>Note that in most cases where the certificate category consists of different levels (e.g., Gas Technician 1, 2, and 3), the lower level certificate is required as a prerequisite.</p>
+
+                        <p>To qualify for a certificate, an applicant must complete a training program with a series of examinations that are approved by the director and delivered by a training organization accredited for the purpose and registered with TSSA. See Clauses 5.(1) and (3).</p>
+
+                        <p>The director may give exemption from the requirement to complete a training program. See Clause 5.(2).</p>
+
+                        <p>If a person fails the exam for a certificate, he/she cannot re-take the exam until he/she submits a new application and fee and 30 days have passed (see Clause 5. (4)). Three consecutive examination failures will require the applicant to seek further training.</p>
+
+                        <h2>Scope of certificates</h2>
+                        
+                        <p>Clauses 20 to 52 of the <em>Fuel Industry Certificates Regulation</em> specifies the type of work that each certificate category permits is specified as the scope of certificate.</p>
+
+                        <p>Only a holder of a certificate can conduct any tasks that fall within the specified scope of that certificate, unless the regulation states that another certificate category can conduct the work under the direct or general supervision of the applicable certificate holder.</p>
+
+                        <p>The general lay-out of the "scope of certificates" section is to provide detailed information on the tasks allowed for the highest certificate in a category (e.g., G.1 among the gas technician categories) and then reference which aspects of the higher certificate can be completed under the lower certificate.</p>
+
+                        <h3>G.1 scope</h3>
+                        
+                        <p>Gas Technician 1 certification is the highest level certificate in the gas industry. The work permitted for the holders of this valuable certificate includes that permitted of the following certificate types: G.2, G.3, DA, GP, IMT, RV.1/.2, CDT, RE-O, and the construction heater group of certificates, except as they relate to fuel oil appliances.</p>
+
+                        <p>However, G.1 certificate holders require further training and certification to conduct the work of the following certificates to which the regulation applies: LP, ICE, GPI, RSI/T-NG, PPO-1/-2/-3, PCI-1, PTO-1, and any of the certificates dealing with fuel oil equipment.</p>
+
+                        <div class="clause-box">
+                            <p><strong>20. (1)</strong> A person who is the holder of a G.1 certificate may install, inspect, alter, purge, activate, repair, service or remove a natural gas or propane appliance of any BTU input and the equipment and accessories essential to its operation.</p>
+                            <p><strong>(2)</strong> A person who is certified to carry out the functions described in subsection(1), may also do the following:</p>
+                            <p>1. Install, inspect, test, alter, purge, activate, repair, service or remove any piping or tubing, or component in a piping or tubing system, to an appliance downstream of the natural gas meter or propane vapour service valve.</p>
+                        </div>
+
+                        <h3>G.2 scope</h3>
+                        
+                        <p>The G.1 scope of certificate forms the base for lower-level certificates that simply reference the G.1 scope. As such, G.2, G.3, DA, GP, and IMT certificate holders must refer to the G.1 scope to understand what they are permitted to do.</p>
+
+                        <p>For example, the scope of a G.2 certificate is essentially the same as a G.1 certificate but is limited to work on appliances with inputs of 400,000 Btuh or less. The applicable section is quoted below since this is the most common certificate.</p>
+
+                        <div class="clause-box">
+                            <p><strong>21. (1)</strong> A person who is the holder of a G.2 certificate may install, inspect, alter, purge, activate, repair, service or remove a natural gas or propane appliance that has an input of 400,000 Btuh or less and the equipment and accessories essential to its operation.</p>
+                            <p><strong>(2)</strong> When performing a function described in subsection (1), the person may do the following:</p>
+                            <p>1. Perform the functions described in paragraphs 1 to 10 of subsection 20.(2) that the holder of a G.1 certificate may perform.</p>
+                            <p>2. Under the direct supervision of a person who is the holder of a G.1 certificate, perform all of the functions that fall within the scope of the supervising certificate holder's certificate.</p>
+                        </div>
+
+                        <h3>G.3 scope</h3>
+                        
+                        <p>The details of the scope of the G.3 certificate are important not only to the gas technician but also to their employees, supervisors, and coworkers.</p>
+
+                        <div class="clause-box">
+                            <p><strong>22. (1)</strong> A person who is the holder of a G.3 certificate may, under the general supervision of a person who is the holder of a G.1, G.2 or DA certificate, carry out the following functions on a propane or natural gas appliance that falls within the scope of the supervising certificate holder's certificate, but only if the person has demonstrated the essential skills required to perform such work and has had that experience documented and signed-off by the supervising certificate holder in a form as set out and published by the director:</p>
+                            <p>1. Install, test, activate or purge gas piping or tubing that is less than two and one-half inches in diameter or a component in a piping or tubing system to an appliance downstream of a natural gas meter or propane service valve up to an appliance control valve, including the completion of a pressure test tag.</p>
+                            <p>2. Reactivate a previously installed or converted appliance.</p>
+                            <p>3. Clean and lubricate an appliance.</p>
+                            <p>4. Clean, remove or replace a vent connector, venting or a draft control device.</p>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>Critical G.3 Limitations</h4>
+                            <p>The G.3 certificate is primarily intended for entry-level workers. A G.3 can only conduct work under supervision. The type of supervision (direct or general) and the type of supervising certificate holder depends on the type of work as identified in Clause 22.</p>
+                        </div>
+
+                        <p>Three critical points require emphasis:</p>
+                        <ol>
+                            <li>Only G.1, G.2, or DA certificate holders can determine whether a G.3 certificate holder has demonstrated the essential skills and acquired the work experience to allow work under the lowest level of supervision — general supervision.</li>
+                            <li>General supervision of a G.3 certificate holder is only permitted for the tasks identified in Items 1 through 4 of Clause 22.(1) and only by G.1, G.2, or DA certificate holders.</li>
+                            <li>A G.1, G.2, DA, GP, or IMT allows direct supervision of a G.3 certificate holder. The purpose of supervision is to allow monitoring of a trainee so that tackling or correction of any problems before they become a safety hazard is possible.</li>
+                        </ol>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "A G.3 certificate holder can work under general supervision, but only after what requirement is met?",
+                    options: [
+                        "They complete 40 hours of on-the-job training",
+                        "They pass an additional written exam",
+                        "They demonstrate essential skills and have that experience documented and signed-off by a supervising certificate holder",
+                        "They work for 6 months under direct supervision first"
+                    ],
+                    correct: 2,
+                    explanation: "A G.3 certificate holder can work under general supervision only if they have demonstrated the essential skills required and have had that experience documented and signed-off by the supervising certificate holder (G.1, G.2, or DA) in a form published by the director."
+                }
+            },
+            {
+                title: "Other Certificate Types and Exemptions",
+                content: `
+                    <div class="section">
+                        <h3>Supervising certificate holder</h3>
+                        
+                        <div class="clause-box">
+                            <p><strong>53.</strong> A supervising certificate holder providing direct supervision to a person is responsible for the work of the supervised person. O. Reg. 215/01, s. 53.</p>
+                        </div>
+
+                        <h3>GP scope</h3>
+                        
+                        <p>The Gas Piping Fitter certificate falls between the G.3 and G.2 certificates in breadth of scope. It is a certificate for those involved only in the installation of pipe and tubing systems (not appliances).</p>
+
+                        <p>Although the appliance input does not limit the GP certificate, the holder cannot activate an appliance for the first time or perform any service, maintenance, or repair on appliances. Read Clauses 29. (1), (2), and (3) of the Regulation to learn the specific activities that a GP Certificate holder is permitted to perform.</p>
+
+                        <p>Regarding the GP's ability to supervise a G.3 certificate holder, note that there is no specific allowance for a GP to provide general supervision of a G.3 certificate holder. Therefore, a GP is only permitted to provide direct supervision of a G.3 certificate holder.</p>
+
+                        <h3>DA scope</h3>
+                        
+                        <p>The Domestic Appliance certificate also falls between the G.3 and G.2 certificates. Read Clauses 31.(1), (2), and (3) of the Regulation to learn the specific activities that a DA certificate holder is permitted to perform.</p>
+
+                        <p>Although a DA can activate, service, and install natural gas and vapour propane appliances, the important limitations are as follows:</p>
+                        <ul>
+                            <li>the maximum input of a single appliance is 100,000 Btuh;</li>
+                            <li>the appliances must be unvented or a vented refrigerator; and</li>
+                            <li>construction heaters are excluded from the scope.</li>
+                        </ul>
+
+                        <p>Note that a DA certificate holder is only permitted to supervise a G.3 in relation to work that is within the above scope.</p>
+
+                        <h3>IMT scope</h3>
+                        
+                        <p>The scope of the Industrial Maintenance Technician (IMT) certificate is primarily limited to work that a worker can do on specific equipment. Read Clauses 30. (1), (2), and (3) of the Regulation to learn the specific activities that an IMT certificate holder is permitted to perform.</p>
+
+                        <p>This certificate is pertinent and available to workers and employers who have defined needs that the regular Gas Technician certificates cannot meet.</p>
+
+                        <p>The IMT certificate often better serves the specific needs and abilities of the industrial and institutional workers, as well as appliance manufacturers' employees who work on the owner's appliance outside of the manufacturing facility.</p>
+
+                        <p>Regarding an IMT's ability to supervise a G.3, note that there is no specific allowance for an IMT to provide general supervision of a G.3 certificate holder. Therefore, an IMT certificate holder may only provide direct supervision of a G.3.</p>
+
+                        <h3>LP scope</h3>
+                        
+                        <p>A G.1, G.2, GP, or IMT may hold a Liquid Propane certificate only as an endorsement to the existing certification.</p>
+
+                        <p>This prerequisite ensures that persons authorized to work on liquid propane systems already have strong skills and knowledge that apply to vapour piping and appliance installations. Read Clauses 26. (1) and (2) of the Regulation to learn the specific activities that a LP Certificate holder is permitted to perform.</p>
+
+                        <h3>GUT-1 and GUT-2 scope</h3>
+                        
+                        <p>This scope is specifically appropriate for a gas distribution company, as it serves a distributor's customer base for inspections and meter turn-ons. The Gas Utility Technician certificate holder must be an employee of a gas utility, and the certificate is effective only during those hours of employment serving the distributor's customers. The GUT-1 certificate holder may inspect, test, adjust, purge, or activate natural gas or propane appliances as a gas company employee, but is not allowed to service or install equipment. The GUT-2 certification is limited to equipment under 400,000 Btuh input.</p>
+
+                        <h3>Other certificates</h3>
+                        
+                        <p>The scopes of certificate discussed above (G.1, G.2, G.3, GP, DA, IMT, LP, and GUT) are the most common. However, there are also some less common certificates applicable to the natural gas and propane industry that are worth noting. Table 3-1 lists these certificates and the corresponding references in the Regulation.</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Certificate</th>
+                                    <th>Title</th>
+                                    <th>Regulation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>RSI-NG and RST-NG</td>
+                                    <td>Refuelling station installer and refuelling station service technician</td>
+                                    <td>Clauses 24 and 25</td>
+                                </tr>
+                                <tr>
+                                    <td>RV.1 and RV.2 Certificates</td>
+                                    <td>Recreational vehicles</td>
+                                    <td>Clauses 32 and 33</td>
+                                </tr>
+                                <tr>
+                                    <td>PPO-1, PPO-2, PPO-3</td>
+                                    <td>Propane plant operator</td>
+                                    <td>Clauses 34, 35, and 36</td>
+                                </tr>
+                                <tr>
+                                    <td>PCI-1</td>
+                                    <td>Propane cylinder inspector</td>
+                                    <td>Clause 37</td>
+                                </tr>
+                                <tr>
+                                    <td>PTO-1</td>
+                                    <td>Propane truck operator</td>
+                                    <td>Clause 38</td>
+                                </tr>
+                                <tr>
+                                    <td>CDT</td>
+                                    <td>Crop dryer technician</td>
+                                    <td>Clause 52</td>
+                                </tr>
+                                <tr>
+                                    <td>CH-O1, CH-O2, CH-SM1, and CH-SM2</td>
+                                    <td>Construction heater operator and construction heater service and maintenance technician</td>
+                                    <td>Clauses 47 to 50</td>
+                                </tr>
+                                <tr>
+                                    <td>RE-O</td>
+                                    <td>Roofing equipment operator</td>
+                                    <td>Clause 51</td>
+                                </tr>
+                                <tr>
+                                    <td>H2</td>
+                                    <td>Hydrogen technician</td>
+                                    <td>Clause 52.1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="regulation-box">
+                            <p><strong>54.</strong> A person holding a record of training is required to undergo either full retraining or skills retesting at three year intervals or, if the competence of the person is in question, at shorter intervals as set by the director. O. Reg. 253/08, s. 33.</p>
+                        </div>
+
+                        <h2>Exemptions from certification</h2>
+                        
+                        <p>Clause 55 of the <em>Fuel Industry Certificates Regulation</em> lists activities and individuals that do not require certification, such as owners of buildings, original equipment manufacturers, etc. See Clause 55.</p>
+
+                        <p>Although these exemptions from fuels certification exist for specialty cases, compliance with the applicable regulatory and code requirements is still a requirement for the exempted persons. In the case of the homeowner, for example, the home must be a single detached dwelling and the person must be the owner. The installation must undergo completion to code standards, inspection by the distributor, and activation by a gas technician.</p>
+
+                        <div class="info-box">
+                            <h4>Important Note on Exemptions</h4>
+                            <p>Even when exemptions exist, all work must still comply with applicable codes and regulations, and proper inspection and activation procedures must be followed.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Who is authorized to work on liquid propane systems?",
+                    options: [
+                        "Gas technician 3 (G.3 certificate holder)",
+                        "Liquid propane fitter (LP certificate holder)",
+                        "Gas technician 2 (G.2 certificate holder)",
+                        "Gas piping fitter (GP certificate holder)"
+                    ],
+                    correct: 1,
+                    explanation: "A Liquid Propane fitter (LP certificate holder) is specifically authorized to work on liquid propane systems. The LP certificate can only be held as an endorsement to an existing G.1, G.2, GP, or IMT certification."
+                }
+            },
+            {
+                title: "Gaseous Fuels Regulation 212/01",
+                content: `
+                    <div class="section">
+                        <h2>Gaseous Fuels Regulation 212/01</h2>
+                        
+                        <p>As we continue down the pyramid of laws governing the gas industry, the legal requirements become more specific and easier to relate to day-to-day activities.</p>
+
+                        <p>The <em>Gaseous Fuels Regulation</em> specifies important duties and responsibilities for all parties involved in activities related to appliances, equipment, components, and accessories where gaseous fuels are used for fuel purposes.</p>
+
+                        <p>Since this regulation speaks directly to the gas technician's duties and responsibilities related to gas-fired appliances, keep the principle of due diligence in mind while reading, interpreting, and applying its requirements.</p>
+
+                        <h3>Definitions</h3>
+                        
+                        <p>Important definitions are given at the beginning of a legal document to clarify the intent and application of terms used in the document. A definition in the <em>Gaseous Fuels Regulation</em> applies to the other regulations and the Codes that will appear later in this Unit unless the documents use the word with a new definition.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Appliance"</strong> means a device that consumes or is intended to consume a gas and includes all valves, fittings, controls, and components attached or to be attached to it.</p>
+                        </div>
+
+                        <p>This is an important definition to remember when considering the responsibilities concerning leaving an appliance in a safe working order. Proper interpretation requires reference to the definition of "gas" in this regulation and "equipment", "accessory", and "component" in CSA B149.1.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Approved"</strong> means,</p>
+                            <p>(a) with respect to a standard or a laboratory test report, that it is listed in "Titles of Standards and Laboratory Test Reports Authorized in the Province of Ontario under the Ontario Gas Utilization Code" as published by the designated administrative authority from time to time,</p>
+                            <p>(b) with respect to an appliance, equipment, a component or an accessory, that it bears the label or symbol of a designated testing organization or a label or symbol authorized by the director certifying that it complies with an approved standard or a laboratory test report, or</p>
+                            <p>(c) with respect to an installation or work, that it complies with this Regulation.</p>
+                        </div>
+
+                        <p>Regulation and codes use the word <strong>approved</strong> to qualify important requirements, such as restricting the use of appliances or designating duties and responsibilities. The definition has not changed substantially for decades. You must clearly understand it to interpret regulations and codes.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Code adoption document"</strong> means the "Gaseous Fuels Code Adoption Document" adopted as part of this Regulation under Ontario Regulation 223/01.</p>
+                        </div>
+
+                        <p>The code adoption documents allow for greater flexibility in adopting new codes and responding to technological changes. The Gaseous Fuels Code Adoption Document as amended by the Director's Order of Amendment (April 10, 2017) adopted and amended CSA B149.1, <em>Natural gas and propane installation code</em>. The pink pages of the Ontario edition of CSA B149.1-15 contain this document.</p>
+
+                        <h3>Key Definitions Continued</h3>
+
+                        <div class="regulation-box">
+                            <p><strong>"Contractor"</strong> means a person who carries on, in whole or in part, the business of installing, removing, repairing, altering, or servicing appliances, and includes a person or an agent of the person who agrees to install, remove, repair, alter or service appliances sold or leased by the person.</p>
+                        </div>
+
+                        <p>This regulation places significant duties and responsibilities on contractors, so it is important to decide if activities fall within the definition of a <em>contractor</em>.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Distributor"</strong> means a person who supplies gas to an end user, and "distribute" and "distribution" have corresponding meanings.</p>
+                        </div>
+
+                        <p>The deregulation of the natural gas industry has created some confusion about who is a distributor. The above definition clearly refers to the supplier—the company that owns and controls the pipeline supply system in the case of natural gas. The company that sells the gas through the natural gas pipeline is not the distributor. For propane installations, the distributor owns and controls the propane supply system.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Gas"</strong> means a gas as defined in the code adoption document.</p>
+                        </div>
+
+                        <p>The code adoption document actually accepts the definition of "gas" given in CSA B149.1, which states the following:</p>
+
+                        <div class="clause-box">
+                            <p><strong>1.3</strong> Where the term "gas" is used, the requirements of this Code apply equally to, any of the following gases or mixtures of them: natural gas, manufactured gas, or mixtures of propane gas and air, propane, propylene, butanes (normal butane and isobutane), and butylenes.</p>
+                        </div>
+
+                        <div class="regulation-box">
+                            <p><strong>"Install"</strong> includes placing an appliance in position for permanent or temporary use, venting it and connecting piping to it, and "installation" has a corresponding meaning.</p>
+                        </div>
+
+                        <p>Together with the definition of "installer" that the Code uses, consider this wide-ranging definition when interpreting the duties and responsibilities surrounding installation requirements.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "According to the Gaseous Fuels Regulation, what does the term 'Approved' mean when referring to an appliance?",
+                    options: [
+                        "It has been tested by TSSA",
+                        "It bears the label or symbol of a designated testing organization or a label authorized by the director",
+                        "It has been installed by a certified technician", 
+                        "It meets Canadian electrical standards"
+                    ],
+                    correct: 1,
+                    explanation: "With respect to an appliance, 'Approved' means that it bears the label or symbol of a designated testing organization or a label or symbol authorized by the director certifying that it complies with an approved standard or a laboratory test report."
+                }
+            },
+            {
+                title: "Application and Initial Activation",
+                content: `
+                    <div class="section">
+                        <h2>Application</h2>
+                        
+                        <p>It is obviously important to determine whether the regulation applies to the type of installation or activity that you are working on. Read Clause 2. of this Regulation, which identifies what it does and does not apply to.</p>
+
+                        <p>Installations that are exempt from this regulation are subject to requirements established in other legal documents. For example, appliance and piping installations on boats are subject to the federal <em>Canada Shipping Act</em>.</p>
+
+                        <h2>Prohibited activities without approval</h2>
+                        
+                        <p>The Regulation prohibits activities conducted without approval. Read Clauses 4. (1) and (2).</p>
+
+                        <p>The regulation takes a practical and reasonable approach by allowing the usually prohibited activity if the appliance, equipment, or thing has received approval prior to use. As such, the unapproved appliance could undergo activation and testing before use for its intended purpose.</p>
+
+                        <h2>Certificates required for various activities</h2>
+                        
+                        <p>The requirement to receive certification in accordance with the <em>Fuel Industry Certificates Regulation</em> is endorsed in this Regulation (see 6. (1), (2), and (3)). Both regulations provide a limited exemption for duct cleaning as long as "the person does not interfere with the appliance, equipment, or thing".</p>
+
+                        <p>Interpreting or using the exemption allowed in 6.(3) requires the application of due diligence. The exemption to proper certification for the task only applies to lower level certificate holders (e.g., G.3) working in the presence of the holder of the proper certificate.</p>
+
+                        <p>An uncertified helper must never conduct any of the activities listed in 6. (1). However, a certificate holder who lacks authorization to repair or service an appliance (such as a G.3 or GP) can conduct this work if an appropriate certificate holder (e.g., G.1, G.2, DA, IMT, LP) is immediately present and in full control of the activity that falls within the scope of the supervising certificate holder.</p>
+
+                        <p>The <em>Fuel Industry Certificates Regulation</em> is referenced in the definition of "certificate" in the <em>Gaseous Fuels Regulation</em>. As such, the two documents support each other, and you must read them jointly when interpreting certification requirements.</p>
+
+                        <p>For example, the <em>Fuel Industry Certificates Regulation</em> exemption for duct cleaning allows cleaning of the fans, which you should not consider separately from the exemption given in this regulation.</p>
+
+                        <h2>Initial putting into use</h2>
+
+                        <div class="clause-box">
+                            <p><strong>7. (1)</strong> Where premises are connected to a supply of gas for the first time, no person shall put an appliance in the premises into use for the first time until the distributor has examined the installation of the appliance and is satisfied that the installation and use of the appliance are in compliance with this Regulation.</p>
+                            <p><strong>(2)</strong> An examination under subsection (1) shall include an examination of all appliances intended to be installed at the time of occupation of the premises.</p>
+                        </div>
+
+                        <p>Initial activation of an installation supplied for the first time carries with it specific duties, responsibilities, and liabilities.</p>
+
+                        <p>Part 2 of the clause places a new condition on the distributor to ensure the examination of all the appliances intended for use. This prevents acceptance of an installation on the basis of examining a construction heater rather than the final installation and all appliances.</p>
+
+                        <p>The above clause not only places significant duties and responsibilities on the distributor, but also prohibits a person who is not a representative of the distributor from initially activating an installation for the first time until the distributor has inspected and accepted the installation.</p>
+
+                        <div class="warning-box">
+                            <h4>Important Activation Rule</h4>
+                            <p>This clause does not apply to the activation of an appliance on premises with an existing gas supply. Only initial connections to gas supply for the first time require distributor examination before activation.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What must be done before an appliance is activated in a building that has just been connected to natural gas for the first time?",
+                    options: [
+                        "A provincial fuels inspector must first examine the installation",
+                        "The distributor must first examine the installation of the appliance and be satisfied that it complies with the Regulation",
+                        "The installer's direct supervisor must examine the installation",
+                        "The installer's general supervisor must examine the installation"
+                    ],
+                    correct: 1,
+                    explanation: "When premises are connected to a supply of gas for the first time, the distributor must first examine the installation of the appliance and be satisfied that the installation and use of the appliance are in compliance with the Regulation before any appliance can be put into use."
+                }
+            },
+            {
+                title: "Duties and Responsibilities",
+                content: `
+                    <div class="section">
+                        <h2>Duty of an employer</h2>
+                        
+                        <p>Employers are given significant duties and responsibilities to inform and monitor their employees concerning compliance with the Act and this regulation. See Clauses 11. (1) and (2).</p>
+
+                        <p>Due diligence suggests that the notification should be in writing rather than verbal and be based on proof that the employee understands what it means to comply with the Act and this regulation. Certification or training would constitute proof in this regard.</p>
+
+                        <p>The phrase "every precaution reasonable in the circumstances" obviously speaks to the issue of due diligence. The actions that the employer takes to ensure employee compliance must include a procedure and recordkeeping process for reasonable monitoring of the employees' actions.</p>
+
+                        <h2>Accident or occurrence reporting and investigation</h2>
+                        
+                        <p>Read Clauses 12. (1), (2), and (3), which detail a certificate holder's responsibilities in reporting an incident or accident and the responsibilities associated with not disturbing the scene.</p>
+
+                        <p>The requirement to notify an inspector in the event of an accident or occurrence suspected to result from the use, storage, or handling of gas applies to certificate holders, ROT holders, and contractors, as well as the distributor.</p>
+
+                        <p>The Act requires the director to "order such investigation as he or she considers necessary on being notified of an accident or incident" (see Clause 25 of the Act).</p>
+
+                        <p>Accident investigation allows for the identification of safety problems, as well as the effective enforcement of the Act and regulations.</p>
+
+                        <p>Non-investigation of an incident due to lack of notification or unnecessary disturbance of the evidence is a lost opportunity to improve safety in the gas industry. Recent amendments to the Act allow TSSA to administer separate Inspection and Investigation departments.</p>
+
+                        <p>Failure to notify an inspector in these cases or interfering with an incident site raises serious concerns of obstruction and cover-up.</p>
+
+                        <p>The word "appears" used in the first line of the above clause is intentionally vague. The judgment must be based on due diligence—i.e., would any other reasonable person suspect that the use, storage, or handling of gas caused the incident?</p>
+
+                        <p>Clause 12 applies to every person but possibly more so, in the eyes of the law, to certificate holders who must be fully aware of their duties and responsibilities.</p>
+
+                        <div class="warning-box">
+                            <h4>Reporting Obligations</h4>
+                            <p>Certificate holders, ROT holders, and contractors have specific legal obligations to report accidents or occurrences and must not disturb incident scenes except as necessary for safety.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is one step a certificate holder does when it appears that there has been a CO poisoning incident?",
+                    options: [
+                        "Immediately shut off the supply of gas to the appliance or work",
+                        "Immediately ask the gas supplier to shut off the supply of gas to the appliance or work",
+                        "Immediately ask the user of the appliance to contact the gas supplier to shut off the supply of gas",
+                        "Immediately call the local fire department to shut off the supply of gas"
+                    ],
+                    correct: 0,
+                    explanation: "When it appears there has been a CO poisoning incident, a certificate holder should immediately shut off the supply of gas to the appliance or work, as this constitutes an immediate safety hazard requiring direct action."
+                }
+            },
+            {
+                title: "Unacceptable Conditions and Distributor Duties",
+                content: `
+                    <div class="section">
+                        <h2>Duties and responsibilities of distributors, certificate holders, and owners concerning unacceptable conditions</h2>
+
+                        <div class="clause-box">
+                            <p><strong>13.(1)</strong> In this section and in section 14, <strong>"Unacceptable condition"</strong> means</p>
+                            <p>(a) with respect to an appliance, container or work, that it is being used for a purpose other than that for which it was approved;</p>
+                            <p>(b) with respect to an appliance, container or work, that any alteration to it or any deterioration of it, is likely to impair its safe operation; or</p>
+                            <p>(c) with respect to an appliance or work, that the condition of piping, tubing or hoses, the venting of products of combustion, the supply of air for combustion or the clearance from adjacent combustible matter is likely to impair its safe operation or that the appliance or work does not meet the requirements of this Regulation or, where it was installed before this Regulation came into force, that it does not meet the requirements of the predecessor to this Regulation as it existed when the appliance or work was installed.</p>
+                        </div>
+
+                        <p>This regulation directs the actions a Gas Technician certificate holder must take to make a situation safer. The public relies on the expertise of a knowledgeable certificate holder to make decisions and perform work that is in the best interest of public safety.</p>
+
+                        <p>These rights and responsibilities are listed to guide and support a gas technician's work in the field and provide the legal basis for taking action to correct a risky situation that may cause harm to occupants, the public, or oneself.</p>
+
+                        <p>Distributors and certificate holders often become aware of an appliance or installation that does not comply with the regulations for various reasons (lack of maintenance, physical damage, improper installation, etc.).</p>
+
+                        <p>Examples of "immediate hazards" might be an ineffective venting system, a cracked heat exchanger, or a supply line leak, to name just a few.</p>
+
+                        <p>The regulations have always given specific direction to distributors, certificate holders, and owners on when and how to act in cases of unsafe appliances and installations.</p>
+
+                        <p>The direction given in Clauses 13 and 14 of this regulation confirms and extends the duties and responsibilities of all parties.</p>
+
+                        <p>Interpretation of these clauses depends on a clear understanding of the term "unacceptable condition", along with a reasoned judgment of what constitutes an immediate hazard.</p>
+
+                        <h3>Distributor Actions for Immediate Hazards</h3>
+
+                        <div class="clause-box">
+                            <p><strong>13. (2)</strong> where a distributor finds that an appliance or work is in an unacceptable condition and that it constitutes an immediate hazard, the distributor shall</p>
+                            <p>(a) immediately shut off the supply of gas to the appliance or work;</p>
+                            <p>(b) promptly notify the user in writing of the unacceptable condition, including a direction that the appliance or work not be used until the condition is corrected; and</p>
+                            <p>(c) affix a notice containing the information referred to in clause (d) to the appliance or work.</p>
+                        </div>
+
+                        <p>Distributors have significantly more power to control the supply of gas to an appliance or work compared to contractors or certificate holders.</p>
+
+                        <p>Although certificate holders have similar duties and responsibilities, they must enlist the help of the distributor who has ultimate control over the gas supply.</p>
+
+                        <p>These actions will help ensure the shutoff of fuel supplies and the awareness of all parties of the situation that you have uncovered, made safe, and will keep safe until such time as it is corrected.</p>
+
+                        <h3>Certificate Holder Actions for Immediate Hazards</h3>
+
+                        <div class="clause-box">
+                            <p><strong>13. (3)</strong> Where a holder of a certificate or ROT finds that an appliance or work is in an unacceptable condition and that it constitutes an immediate hazard, the holder shall,</p>
+                            <p>(a) immediately shut off the supply of gas to the appliance or work;</p>
+                            <p>(b) promptly give oral notice of the shutting off of the gas to the distributor;</p>
+                            <p>(c) promptly give a written notice to the user,</p>
+                            <p>(i) describing the condition that constitutes the immediate hazard, and</p>
+                            <p>(ii) directing that the appliance or work not be used until the condition is corrected;</p>
+                            <p>(d) within 14 days of finding the condition, give written notice of the condition to the distributor, including notice that the supply of gas has been shut off; and</p>
+                            <p>(e) affix a notice containing the information required in clause (c) to the appliance or work.</p>
+                        </div>
+
+                        <div class="tip-box">
+                            <h4>Notice Requirements</h4>
+                            <p>The means of satisfying Item (e) include:</p>
+                            <ul>
+                                <li>affixing a copy of the written notice required by Item (c); or</li>
+                                <li>affixing a tag designed specifically for the purpose.</li>
+                            </ul>
+                        </div>
+
+                        <p>Recordkeeping is an essential aspect of compliance with these duties and responsibilities. Records of notification also reduce potential liability.</p>
+
+                        <div class="info-box">
+                            <h4>Tag Example</h4>
+                            <p>A "DO NOT USE" tag should contain clear information about the hazardous condition, who identified it, and contact information. The tag serves as an immediate visual warning to prevent use of dangerous equipment.</p>
+                        </div>
+
+                        <p>Owners and users of the appliance or work share in the duties, responsibilities, and liabilities associated with the actions of a distributor or certificate holder. (See 13. (4) and (5).)</p>
+
+                        <p>The notice affixed to the appliance or work entails certain restrictions and conditions for removal:</p>
+
+                        <h3>Notice Removal Requirements</h3>
+
+                        <div class="clause-box">
+                            <p><strong>13. (6)</strong> Where a notice is affixed to an appliance or work under clause (2) (c) or (3) (e), no person shall remove the notice unless the person holds a certificate for that purpose and on removing the notice the person shall endorse his or her certificate number, name and address on the notice and send it by prepaid registered mail or deliver it to the distributor.</p>
+                        </div>
+
+                        <p>Where a distributor or certificate holder finds an appliance or work in an unacceptable condition and it does not constitute an immediate hazard, shutoff of the gas does not have to be immediate.</p>
+
+                        <p>Providing the owner with immediate written notice describing the condition and advising him/her of the sending of a notice to the distributor is still a requirement for the certificate holder. He/she must also give the same written notice to the distributor within 14 days and affix a notice to the appliance or work.</p>
+
+                        <p>It is the responsibility of the certificate holder who finds the unacceptable condition to set the time period for correcting the unacceptable condition. The time period should be reasonable and cannot exceed 90 days. The certificate holder must include the required completion date in the notices that he/she provided the owner and the distributor with.</p>
+
+                        <p>The owner and user are responsible for responding to the notice of an unacceptable condition. Only a certificate holder can remove the notice (affixed to the appliance or equipment). The notice of correction must be sent to the distributor.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Who can remove a 'DO NOT USE' notice that has been affixed to an appliance?",
+                    options: [
+                        "Owner",
+                        "Distributor", 
+                        "User",
+                        "Certificate holder"
+                    ],
+                    correct: 3,
+                    explanation: "Only a certificate holder can remove a 'DO NOT USE' notice that has been affixed to an appliance. When removing the notice, the person must endorse their certificate number, name and address on the notice and send it to the distributor."
+                }
+            },
+            {
+                title: "Additional Distributor Responsibilities and Appliance Approval",
+                content: `
+                    <div class="section">
+                        <h2>Additional responsibilities of a distributor</h2>
+                        
+                        <p>The distributor's duties and responsibilities do not end with the initial examination required under Clause 7 nor with the action required upon identifying an unacceptable condition. They are ongoing.</p>
+
+                        <div class="clause-box">
+                            <p><strong>16.</strong> No distributor shall supply gas to a premise unless the distributor is satisfied that the installation and use of the appliance or work comply with this Regulation and,</p>
+                            <p>(a) unless the distributor has inspected the appliance or work at least once within the previous 10 years; or</p>
+                            <p>(b) unless the distributor has inspected the appliance or work in accordance with a quality assurance inspection program.</p>
+                        </div>
+
+                        <p>Reference to a quality assurance inspection program in Part (b) of the clause consists of a set of policies and procedures for auditing and responding to existing installation concerns. It must meet the approval of the director and is subject to audit by TSSA.</p>
+
+                        <h3>Owner and User Responsibilities</h3>
+
+                        <div class="clause-box">
+                            <p><strong>15.</strong> An owner or user of an appliance, equipment, a work or any other thing employed in the handling or use of gas shall ensure that the appliance, equipment, work or thing employed in the handling or use of gas is maintained in a safe operating condition.</p>
+                        </div>
+
+                        <p>Certificate holders may wish to advise their customers of their legal responsibilities by referencing the above clause.</p>
+
+                        <div class="warning-box">
+                            <h4>Maintenance Responsibility</h4>
+                            <p>Failure to maintain appliances in a safe operating condition is the single largest cause of accidents. Past regulations recognize the owner's and user's responsibilities to maintain the equipment.</p>
+                        </div>
+
+                        <p>TSSA has issued a safety directive over the past four heating seasons requiring gas technicians to ensure annual maintenance of domestic heating boilers and that carbon monoxide levels in the vent are below 100 ppm (otherwise, they must shut the boiler down). This reflects TSSA safety data collection indicating the importance of annual maintenance, which is ultimately the responsibility of the appliance owner.</p>
+
+                        <h2>Approval of appliances</h2>
+                        
+                        <p>For an appliance, equipment, component, or accessory to gain approval for sale, lease, rent, or installation in Ontario, its construction must be according to the applicable recognized standard, and it must undergo testing by and receive labelling from a designated certification organization.</p>
+
+                        <p>The approval process may happen:</p>
+                        <ul>
+                            <li><strong>Off-site</strong> from where you will install the appliance, equipment, etc. (typically this is a certification process); or</li>
+                            <li><strong>On-site</strong> (typically through field approval by TSSA)</li>
+                        </ul>
+
+                        <p>The former is the most common with mass-produced appliances, equipment, etc., certified off-site in a testing laboratory, while on-site testing and approval usually works for one-of-a-kind or larger appliances.</p>
+
+                        <p>Clause 18 of the <em>Gaseous Fuels Regulation</em> outlines the requirements for off-site testing and approval, while Clause 19 deals with on-site testing and approval.</p>
+
+                        <p>Gas technicians should look for a certification marking on an appliance rating plate, valve body, hose, manufacturer's instruction, etc., to ensure that the item is <strong>approved</strong>.</p>
+
+                        <p>They would then check the marking against the list of certification organizations provided in the natural gas or propane regulations to determine if it receives designation for the purpose in Ontario.</p>
+
+                        <p>The regulation does not list the designated testing organizations. Rather it states the following:</p>
+
+                        <div class="clause-box">
+                            <p><strong>18. (3)</strong> The organizations accredited by the Standards Council of Canada are designated as organizations to test appliances, equipment, components and accessories to the applicable approved standards or laboratory test reports for the purposes of this Regulation.</p>
+                        </div>
+
+                        <h2>Certification organizations</h2>
+                        
+                        <p>There are dozens of testing organizations, but the Standards Council of Canada designated only five certification organizations to certify gas appliances, equipment, components, and accessories. Below are the organizations, along with their corresponding certification marks:</p>
+
+                        <div class="info-box">
+                            <h4>Approved Certification Organizations</h4>
+                            <p>The five designated certification organizations for gas equipment in Canada are:</p>
+                            <ul>
+                                <li><strong>CSA Group</strong> - Various certification marks including CSA symbols</li>
+                                <li><strong>Intertek Testing Services</strong> - ETL and related marks</li>
+                                <li><strong>OMNI Test Laboratories Inc.</strong> - OMNI marks</li>
+                                <li><strong>Underwriters' Laboratories of Canada</strong> - ULC marks</li>
+                                <li><strong>Underwriters Laboratories Inc.</strong> - UL marks with 'C' designation for Canada</li>
+                            </ul>
+                        </div>
+
+                        <p>Note that the ETL, Warnock Hersey, OTL, and UL Marks must have a letter "c" beside the label to designate that the gas equipment has received certification for Canada. If the Warnock Hersey mark lacks a "c" and a "US", it has gained certification for Canada.</p>
+
+                        <p>On-site testing of appliances, equipment, components, or accessories is more common in industrial installations. Certificate holders involved with industrial, custom, one-of-a-kind, or foreign appliances will want to review Clause 19 of the regulation.</p>
+
+                        <div class="info-box">
+                            <h4>TSSA Field Approval</h4>
+                            <p>TSSA conducts the testing and approval for these types of appliances, equipment, components, and accessories. If its fuel features comply with the approved standard or laboratory test report or CSA B149.3-15 and this regulation, an inspector applies a TSSA field label. This approval is site-specific, so transfer of the appliance to another site requires re-approval.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "How does one identify an appliance that has been approved?",
+                    options: [
+                        "On the appliance is a recognized certification mark or TSSA Field Approval label",
+                        "If it is sold in Canada it is considered approved and no mark is required", 
+                        "It has an Energy rating label affixed",
+                        "Look up on Standard Council of Canada web site for the most current list of appliances approved for sale in Canada"
+                    ],
+                    correct: 0,
+                    explanation: "An approved appliance will have a recognized certification mark from one of the designated testing organizations or a TSSA Field Approval label. Gas technicians should look for these markings on appliance rating plates, valve bodies, or manufacturer's instructions."
+                }
+            },
+            {
+                title: "Contractor Registration and Propane Regulations",
+                content: `
+                    <div class="section">
+                        <h2>Contractor registration</h2>
+
+                        <div class="clause-box">
+                            <p><strong>21. (1)</strong> No person shall act as a contractor unless the person is registered for the purpose.</p>
+                        </div>
+
+                        <p>Most Acts or regulations employ registration of activities and equipment as a means of cataloguing and controlling the activity or equipment. For example, registering under the Business Services Act is a requirement for businesses and registering under the Highway Traffic Act for vehicles.</p>
+
+                        <p>The purpose in all cases is the same. Registration allows the authority having jurisdiction to know who has control and responsibility over the activity or equipment for notification purposes. Registration requirements also give the authority control over the activity or equipment in that it can refuse or revoke registration if a person does not meet the requirements.</p>
+
+                        <p>Contractor registration allows TSSA to track compliance and contact those in the business of installing, removing, repairing, altering, or servicing appliances. It is also a means for customers of such businesses to determine whether the company is working in compliance with safety requirements.</p>
+
+                        <p>Contractor registration is a type of "authorization" as identified in the Act. It carries with it specific duties, responsibilities, and rights separate from certification, licenses, or other forms of registration.</p>
+
+                        <div class="regulation-box">
+                            <p>Clause 21 deals with contractor registrations and should be read in entirety.</p>
+                        </div>
+
+                        <p>The requirement to clearly display the registration number on field vehicles will ensure higher compliance with the registration requirement, as well as customer recognition of your commitment to industry requirements.</p>
+
+                        <div class="info-box">
+                            <h4>Vehicle Registration Display</h4>
+                            <p>Field vehicles must clearly display the contractor registration number, which helps ensure compliance and provides customer confidence in the contractor's commitment to regulatory requirements.</p>
+                        </div>
+
+                        <p>It is worth noting that separate registration numbers are a requirement for "subcontractors".</p>
+
+                        <h2>Propane Storage and Handling Regulation 211/01</h2>
+                        
+                        <p>The <em>Propane Storage and Handling Regulation</em> is very similar to the <em>Gaseous Fuels Regulation</em> but applies to fewer technicians. It specifies important duties and responsibilities for technicians, contractors, distributors, owners, and users involved in the following activities:</p>
+                        <ul>
+                            <li>the storage, handling, transportation, and transfer of propane;</li>
+                            <li>the installation of appliances, equipment, components, accessories, and containers on highway vehicles, recreational vehicles, mobile housing, outdoor food service Units, and wash-mobiles when technicians use propane for fuel purposes; and</li>
+                            <li>the installation of containers and equipment that technicians will use for propane in distribution locations and filling plants and on tank trucks, tank trailers, and cargo liners.</li>
+                        </ul>
+
+                        <h3>Definitions</h3>
+                        
+                        <p>As noted in previous Sections, important definitions are given at the beginning of a legal document to clarify their intent and application for all documents. A definition in the <em>Propane Storage and Handling Regulation</em> applies to other regulations and codes unless those documents use the word with a new definition.</p>
+
+                        <p>Continually refer to the definition section when reading and interpreting any regulation.</p>
+
+                        <p>Many definitions are similar to those covered within <strong>Definitions</strong> in the <em>Gaseous Fuels Regulation 212/01</em> section and are not reproduced here. These include "appliance", "approved", and "contractor".</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Code adoption document"</strong> means the "Propane Code Adoption Document" adopted as part of this Regulation under Ontario Regulation 223/01.</p>
+                        </div>
+
+                        <p>The code adoption documents allow for greater flexibility in adopting new codes and responding to technological changes.</p>
+
+                        <p>The Propane Code Adoption Document as amended by the Director's Order of Amendment, July 1, 2017, adopted and amended CSA B149.2, <em>Propane Storage and Handling Code</em>. This Document is found in the salmon-coloured pages of the Ontario edition of CSA B149.2-15.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Distributor"</strong> means a person who conveys or supplies propane to an end user, but does not include a person who supplies propane to a vehicle or cylinder, and "distribute" and "distribution" have corresponding meanings.</p>
+                        </div>
+
+                        <p>The Act and this regulation place significant duties and responsibilities on distributors.</p>
+
+                        <p>It is important to note that this definition is different from that in the <em>Gaseous Fuels Regulation</em> (covered in Section 2). It specifically excludes persons who supply propane to vehicles or cylinders from being considered as distributors.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Equipment"</strong> means a device that is used in venting propane or in the handling of propane.</p>
+                        </div>
+
+                        <p>This definition should be read in conjunction with the definition of "handling" for full appreciation of its meaning when used in this regulation.</p>
+
+                        <div class="regulation-box">
+                            <p><strong>"Propane"</strong> means propane as defined in the code adoption document.</p>
+                        </div>
+
+                        <p>The code adoption document actually accepts the definition of "propane" given in the CSA B149.2-15 Code, which states the following:</p>
+
+                        <div class="clause-box">
+                            <p><strong>1.3</strong> Where the term "propane" is used, the requirements of this Code include, and apply equally to, any material that is composed predominantly of any of the following hydrocarbons or mixtures of them: propane, propylene, butanes (normal and isobutane), and butylenes.</p>
+                        </div>
+
+                        <h3>Application</h3>
+                        
+                        <p>It is obviously important to determine whether the regulation applies to the type of installation or activity that you are working on. Read Clause 2. of this regulation, which identifies what it does and does not apply to.</p>
+
+                        <p>Installations that are exempt are subject to requirements established in other legal documents. For example, appliance installations on boats are subject to the federal <em>Canada Shipping Act</em>.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the certificate that has as its main focus the installation of gas piping and tubing systems?",
+                    options: [
+                        "Gas technician 3 (G.3 certificate)",
+                        "Gas technician 2 (G.2 certificate)",
+                        "A gas piping fitter (GP certificate)",
+                        "Gas technician 1 (G.1 certificate)"
+                    ],
+                    correct: 2,
+                    explanation: "The Gas Piping Fitter (GP certificate) has as its main focus the installation of gas piping and tubing systems. Although appliance input does not limit the GP certificate, the holder cannot activate an appliance for the first time or perform service, maintenance, or repair on appliances."
+                }
+            },
+            {
+                title: "Propane Regulation Details and Safety Management",
+                content: `
+                    <div class="section">
+                        <h2>Risk and safety management plans</h2>
+                        
+                        <p>Amendments to O. Reg 211/01 in 2009 now require propane filling plants and facilities to have a safety plan in effect to identify how a licensed operator would handle a hazardous event, such as a fire or explosion, in the interest of public safety.</p>
+
+                        <div class="clause-box">
+                            <p><strong>3.1 (1)</strong> A person who holds a license to operate a retail outlet, filling plant, cardlock/keylock, private outlet or container refill centre shall prepare a risk and safety management plan, which shall, at a minimum, address the following matters:</p>
+                            <p>1. A hazard analysis that identifies possible hazardous scenarios, the frequency of those scenarios and their consequences, and that takes into account,</p>
+                            <p>i. the most severe incident or situation that could occur at the referenced facility based on the total capacity of propane at the referenced facility, and</p>
+                            <p>ii. any less severe incident or situation that could occur at the referenced facility.</p>
+                        </div>
+
+                        <h2>Duty of an employer</h2>
+                        
+                        <p>Clauses 5. (1) and (2) dealing with duties of an employer are similar to Clauses 11. (1) and (2) of the <em>Gaseous Fuels Regulation 212/01</em> section.</p>
+
+                        <h2>Certificates required for various activities</h2>
+                        
+                        <p>This regulation endorses the requirement to receive certification in accordance with the Fuel Industry Certificates Regulation. Like the <em>Gaseous Fuels Regulation</em>, this regulation provides a limited exemption for lower-level certificate holders to conduct the work within the scope of higher-level certificate holders when working <strong>in the actual presence</strong> of the appropriate level certificate holder. See Clauses 8. (1) and (2) of the Regulation.</p>
+
+                        <h2>Initial activation</h2>
+                        
+                        <p>Initial activation of an installation supplied for the first time entails specific duties, responsibilities, and liabilities.</p>
+
+                        <div class="clause-box">
+                            <p><strong>9. (1)</strong> Where premises are connected to a supply of propane for the first time, no person shall put into use for the first time an appliance in the premises that is connected to a propane supply until the distributor has examined the installation of the appliance and is satisfied that the installation and use of the appliance are in compliance with the Act and this Regulation.</p>
+                            <p><strong>(2)</strong> An examination under subsection (1) shall include the examination of all appliances to be installed at the time of occupation of the premises.</p>
+                        </div>
+
+                        <p>Sub clause (2) places a new condition on the distributor to ensure the examination of all the appliances intended for use. The practical application of this clause is limited since this regulation only applies to appliance installations on highway vehicles, RVs, mobile homes, outdoor food service Units, and wash-mobiles.</p>
+
+                        <p>Furthermore, the definition of distributor effectively excludes these types of installations since a person supplying propane to a vehicle or cylinder is not a distributor.</p>
+
+                        <h2>Prohibited activities without approval</h2>
+                        
+                        <p>Refer to Clause 12. (1) and (2) of the <em>Propane Storage and Handling Regulation</em>. Note that these clauses are similar to Clauses 4. (1) and (2) of the <em>Gaseous Fuels Regulation 212/01</em> section.</p>
+
+                        <h2>Accident or occurrence reporting and investigation</h2>
+                        
+                        <p>Refer to Clauses 15. (1), (2), and (3) of the <em>Propane Storage and Handling Regulation</em>. Note that these clauses are similar to Clauses 12. (1), (2), and (3) of the <em>Gaseous Fuels Regulation 212/01</em> section.</p>
+
+                        <h2>Duties and responsibilities of distributors, certificate holders, and owners concerning safe operation condition</h2>
+                        
+                        <p>This regulation has two important sections not found in the <em>Gaseous Fuels Regulation</em>.</p>
+
+                        <p>The following clauses clearly speak about the responsibilities of all parties and, as such, deserve close review and consideration.</p>
+
+                        <div class="clause-box">
+                            <p><strong>16.</strong> No person shall knowingly supply propane to or use an appliance, a container, equipment, a propane vehicle, a work or other thing employed in the handling or use of propane that does not comply with this Regulation or, where it was installed before this Regulation came into force, that does not comply with the requirements of the predecessor to this Regulation as it existed when it was installed.</p>
+                        </div>
+
+                        <div class="clause-box">
+                            <p><strong>17. (1)</strong> An owner and every person responsible for the operation of an appliance, a container, equipment, a work or any other thing employed in the handling or use of propane shall ensure that it is maintained in a safe operating condition.</p>
+                            <p><strong>(2)</strong> No person shall operate or permit to be operated, an appliance or work unless it is maintained in a safe operating condition and it complies with this Regulation or, where it was installed before this Regulation came into force, that it complies with the requirements of the predecessor to this Regulation as it existed when it was installed.</p>
+                        </div>
+
+                        <p>Failure to maintain appliances in a safe operating condition is the single largest cause of accidents. Past regulations recognize the responsibility of owners and users to maintain the equipment.</p>
+
+                        <p>Certificate holders may wish to advise their customers about their legal responsibilities by referencing Clause 17 above.</p>
+
+                        <h2>Responsibilities of a distributor</h2>
+                        
+                        <p>The distributor's duties and responsibilities do not end with the initial examination required under Clause 9 nor with the action required when an unacceptable condition is identified (as discussed below). They are ongoing like the propane supply, transfer, or transportation operations.</p>
+
+                        <div class="clause-box">
+                            <p><strong>18. (1)</strong> No distributor shall supply propane to a container that is connected to an appliance or work unless the distributor is satisfied that the installation and use of the appliance or work complies with the Act and this Regulation and</p>
+                            <p>(a) unless the distributor has inspected the appliance or work at least once within the previous 10 years; or</p>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>Inspection Requirements</h4>
+                            <p>Reference to a quality assurance program in Part 1 (b) consists of a set of policies and procedures for auditing and responding to existing installation concerns. It must meet the approval of the director and is subject to audit by TSSA.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Match the term to its definition for supervision types:",
+                    options: [
+                        "Direct supervision: Supervision by a supervising certificate holder who is on site in close proximity to a trainee and is available to assist and supervise the trainee",
+                        "General supervision: Supervision by a supervising certificate holder who may or may not be on site but who is readily available to assist a trainee",
+                        "Both A and B are correct",
+                        "Neither A nor B are correct"
+                    ],
+                    correct: 2,
+                    explanation: "Both definitions are correct. Direct supervision requires the supervisor to be on site in close proximity to the trainee, while general supervision allows the supervisor to be off-site but readily available to assist."
+                }
+            },
+            {
+                title: "Chapter 3 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 3 Final Quiz</h2>
+                        <p>Test your knowledge of the regulations covered in this chapter, including the Fuel Industry Certificates Regulation, Gaseous Fuels Regulation, and Propane Storage and Handling Regulation.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 13 questions to complete the chapter. These questions are based on the CSA training materials and test your understanding of the regulatory framework governing gas technicians in Ontario.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>What is one correct action that a holder of a certificate or ROT must take if he or she finds that an appliance is in an unacceptable condition but does not constitute an immediate hazard? _______ of the condition to the distributor who supplies gas to the appliance or work.</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Immediately give written notice</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Immediately give oral notice</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Within 5 business days send a registered letter with return receipt</li>
+                                <li onclick="selectQuizOption(0, 3)">d) Ask the user of the appliance to shut off the gas and have them provide details</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>What is one correct action that a holder of a certificate or ROT must take if he or she finds that an appliance is in an unacceptable condition but does not constitute an immediate hazard? _______ to the user of the appliance or work describing the condition and advising that notice of the condition has been given to the distributor.</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) Immediately give oral notice</li>
+                                <li onclick="selectQuizOption(1, 1)">b) Within 14 calendar days send a registered letter with return receipt</li>
+                                <li onclick="selectQuizOption(1, 2)">c) Within 5 business days send a registered letter with return receipt</li>
+                                <li onclick="selectQuizOption(1, 3)">d) Immediately give written notice</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>What is one correct action that a holder of a certificate or ROT must take if he or she finds that an appliance is in an unacceptable condition but does not constitute an immediate hazard? _______ of the condition to the distributor within 14 days of finding it.</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) Within 14 days give written notice</li>
+                                <li onclick="selectQuizOption(2, 1)">b) Within 7 days send a registered letter with return receipt</li>
+                                <li onclick="selectQuizOption(2, 2)">c) Within 5 business days give written notice</li>
+                                <li onclick="selectQuizOption(2, 3)">d) Within 1 calendar day send an email with return Delivery Receipt and Return Receipt features enabled</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>What is one correct action that a holder of a certificate or ROT must take if he or she finds that an appliance is in an unacceptable condition but does not constitute an immediate hazard? _______ containing the information required in clause (b) to the appliance or work.</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) Shut off the supply of gas and affix a notice</li>
+                                <li onclick="selectQuizOption(3, 1)">b) Call the appliance user then affix a notice</li>
+                                <li onclick="selectQuizOption(3, 2)">c) Affix a warning label</li>
+                                <li onclick="selectQuizOption(3, 3)">d) Affix a notice</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>Who is authorized to work on liquid propane systems?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) Gas technician 3 (G.3 certificate holder)</li>
+                                <li onclick="selectQuizOption(4, 1)">b) Liquid propane fitter (LP certificate holder)</li>
+                                <li onclick="selectQuizOption(4, 2)">c) Gas technician 2 (G.2 certificate holder)</li>
+                                <li onclick="selectQuizOption(4, 3)">d) Gas piping fitter (GP certificate holder)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>What is one step a certificate holder does when it appears that there has been a CO poisoning incident?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) Immediately shut off the supply of gas to the appliance or work</li>
+                                <li onclick="selectQuizOption(5, 1)">b) Immediately ask the gas supplier to shut off the supply of gas to the appliance or work</li>
+                                <li onclick="selectQuizOption(5, 2)">c) Immediately ask the user of the appliance to contact the gas supplier to shut off the supply of gas to the appliance or work</li>
+                                <li onclick="selectQuizOption(5, 3)">d) Immediately call the local fire department of the municipality to shut off the supply of gas to the appliance or work</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>Select the correct statement for the situation.</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) A G.3 certificate holder can install a gas appliance with an input rate in excess of 400,000 Btuh (117 kW) while under the general supervision of a G.1 certificate holder.</li>
+                                <li onclick="selectQuizOption(6, 1)">b) A G.3 certificate holder can install a gas appliance with an input rate in excess of 400,000 Btuh (117 kW) while under the direct supervision of a G.2 certificate holder.</li>
+                                <li onclick="selectQuizOption(6, 2)">c) A G.3 certificate holder can install a gas appliance with an input rate in excess of 400,000 Btuh (117 kW) while under the general supervision of a G.2 certificate holder.</li>
+                                <li onclick="selectQuizOption(6, 3)">d) A G.3 certificate holder can install a gas appliance with an input rate in excess of 400,000 Btuh (117 kW) while under the direct supervision of a G.1 certificate holder.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>How does one identify an appliance that has been approved?</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) On the appliance is a recognized certification mark or TSSA Field Approval label</li>
+                                <li onclick="selectQuizOption(7, 1)">b) If it is sold in Canada it is considered approved and no mark is required</li>
+                                <li onclick="selectQuizOption(7, 2)">c) It has an Energy rating label affixed</li>
+                                <li onclick="selectQuizOption(7, 3)">d) Look up on Standard Council of Canada web site for the most current list of appliances approved for sale in Canada</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>What is the certificate that has as its main focus the installation of gas piping and tubing systems?</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) Gas technician 3 (G.3 certificate)</li>
+                                <li onclick="selectQuizOption(8, 1)">b) Gas technician 2 (G.2 certificate)</li>
+                                <li onclick="selectQuizOption(8, 2)">c) A gas piping fitter (GP certificate)</li>
+                                <li onclick="selectQuizOption(8, 3)">d) Gas technician 1 (G.1 certificate)</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 10:</h4>
+                            <p>What must be done before an appliance is activated in a building that has just been connected to natural gas for the first time?</p>
+                            <ul class="quiz-options" data-question="9">
+                                <li onclick="selectQuizOption(9, 0)">a) A provincial fuels inspector must first examine the installation of the appliance and be satisfied that the installation and use of the appliance are in compliance with the Regulation.</li>
+                                <li onclick="selectQuizOption(9, 1)">b) The distributor must first examine the installation of the appliance and be satisfied that the installation and use of the appliance are in compliance with the Regulation.</li>
+                                <li onclick="selectQuizOption(9, 2)">c) The installer's direct supervisor must first examine the installation of the appliance and be satisfied that the installation and use of the appliance are in compliance with the Regulation.</li>
+                                <li onclick="selectQuizOption(9, 3)">d) The installer's general supervisor must first examine the installation of the appliance and be satisfied that the installation and use of the appliance are in compliance with the Regulation.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 11:</h4>
+                            <p>Who can remove a "DO NOT USE" notice that has been affixed to an appliance?</p>
+                            <ul class="quiz-options" data-question="10">
+                                <li onclick="selectQuizOption(10, 0)">a) Owner</li>
+                                <li onclick="selectQuizOption(10, 1)">b) Distributor</li>
+                                <li onclick="selectQuizOption(10, 2)">c) User</li>
+                                <li onclick="selectQuizOption(10, 3)">d) Certificate holder</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 12:</h4>
+                            <p>Select five organizations authorized to certify gas appliances in Ontario.</p>
+                            <ul class="quiz-options" data-question="11">
+                                <li onclick="selectQuizOption(11, 0)">a) Intertek Testing Services, OMNI-Test Laboratories Inc., Underwriters' Laboratories of Canada, Underwriters' Laboratories Inc., CSA Group Testing and Certification Inc.</li>
+                                <li onclick="selectQuizOption(11, 1)">b) CSA Group, UL, ETL, AHRI, QAI Laboratories</li>
+                                <li onclick="selectQuizOption(11, 2)">c) TSSA, CSA Group, UL, Intertek, OMNI</li>
+                                <li onclick="selectQuizOption(11, 3)">d) Standards Council of Canada, CSA Group, UL, Intertek, QPS</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 13:</h4>
+                            <p>Match the supervision terms to their definitions:</p>
+                            <ul class="quiz-options" data-question="12">
+                                <li onclick="selectQuizOption(12, 0)">a) Direct supervision: Supervision by a supervising certificate holder who is on site in close proximity to a trainee and is available to assist and supervise the trainee</li>
+                                <li onclick="selectQuizOption(12, 1)">b) General supervision: Supervision by a supervising certificate holder who may or may not be on site but who is readily available to assist a trainee</li>
+                                <li onclick="selectQuizOption(12, 2)">c) Both A and B are correct</li>
+                                <li onclick="selectQuizOption(12, 3)">d) Neither A nor B are correct</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 3 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 3 - Regulations.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You now understand the comprehensive regulatory framework governing gas technicians in Ontario, including certification requirements, duties and responsibilities, and safety procedures outlined in the three main regulations.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers (correct answer indices)
+        const quizCorrectAnswers = [1, 3, 0, 3, 1, 0, 3, 0, 2, 1, 3, 0, 2];
+        
+        const quizExplanations = [
+            "For unacceptable conditions that do not constitute immediate hazards, certificate holders must immediately give oral notice to the distributor who supplies gas to the appliance or work.",
+            "Certificate holders must immediately give written notice to the user describing the condition and advising that notice has been given to the distributor.",
+            "Certificate holders must give written notice of the condition to the distributor within 14 days of finding it.",
+            "Certificate holders must affix a notice containing the required information to the appliance or work.",
+            "Liquid propane fitter (LP certificate holder) is specifically authorized to work on liquid propane systems. The LP certificate can only be held as an endorsement to existing G.1, G.2, GP, or IMT certification.",
+            "When there appears to be a CO poisoning incident, a certificate holder should immediately shut off the supply of gas to the appliance or work as this constitutes an immediate safety hazard.",
+            "A G.3 certificate holder can install a gas appliance with an input rate in excess of 400,000 Btuh while under the direct supervision of a G.1 certificate holder, as G.3 holders require direct supervision for appliance installation work.",
+            "An approved appliance will have a recognized certification mark from one of the designated testing organizations or a TSSA Field Approval label on the appliance rating plate, valve body, or other components.",
+            "The Gas Piping Fitter (GP certificate) has as its main focus the installation of gas piping and tubing systems, though holders cannot activate appliances for the first time or perform service/maintenance on appliances.",
+            "When premises are connected to gas for the first time, the distributor must first examine the installation and be satisfied it complies with regulations before any appliance can be activated.",
+            "Only a certificate holder can remove a 'DO NOT USE' notice. When removing it, they must endorse their certificate number, name and address on the notice and send it to the distributor.",
+            "The five organizations authorized to certify gas appliances in Ontario are: Intertek Testing Services, OMNI-Test Laboratories Inc., Underwriters' Laboratories of Canada, Underwriters' Laboratories Inc., and CSA Group Testing and Certification Inc.",
+            "Both definitions are correct. Direct supervision requires the supervisor to be on site in close proximity, while general supervision allows the supervisor to be off-site but readily available."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 11) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 13; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 13) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/13 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/13 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>

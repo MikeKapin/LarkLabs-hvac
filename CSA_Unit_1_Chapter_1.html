@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 1 Safety - Chapter 1: On-the-job Safety Measures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .module-header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .module-header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .module-header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .objective-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .objective-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .terminology-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .terminology-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .terminology-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .terminology-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .safety-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .safety-item:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #f39c12;
+        }
+
+        .knowledge-check h3 {
+            color: #d35400;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            border-color: #3498db;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: #3498db;
+            color: white;
+        }
+
+        .option.correct {
+            background: #27ae60;
+            color: white;
+        }
+
+        .option.incorrect {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #f39c12;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .do-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #28a745;
+        }
+
+        .dont-box {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #dc3545;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: white;
+            border-radius: 25px;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #bdc3c7;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            background: #3498db;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .do-dont-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                display: none;
+            }
+            
+            .module-header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation" id="navigation">
+        <!-- Navigation dots will be added dynamically -->
+    </div>
+
+    <div class="container">
+        <div class="module-header">
+            <h1>CSA Unit 1 - Safety</h1>
+            <p>Chapter 1: On-the-job Safety Measures</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Section 1: Introduction -->
+        <div class="section" data-section="1">
+            <h2>Introduction to Gas Technician/Fitter Safety</h2>
+            <p>Safety is the responsibility of all workers in all trades. Gas technicians/fitters routinely work in potentially dangerous locations with equipment that could cause injury to oneself and others. A gas technician/fitter must be thoroughly familiar with hazards and safety procedures that relate to work habits, work sites, and use of various tools and equipment.</p>
+            
+            <div class="info-box">
+                <strong>Remember:</strong> Safety is not just about following rules—it's about developing a mindset that prioritizes well-being in every decision and action you take on the job.
+            </div>
+        </div>
+
+        <!-- Section 2: Safety Objectives -->
+        <div class="section" data-section="2">
+            <h2>Safety Objectives</h2>
+            <p>By the end of this chapter, you will be able to:</p>
+            
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>Personal Safety Factors</h3>
+                    <p>Understanding the importance of proper work habits, clothing, and protective equipment</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Site Hazards and Protections</h3>
+                    <p>Recognizing potential dangers in the workplace and implementing appropriate safeguards</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Tools and Equipment Safety</h3>
+                    <p>Properly maintaining and using all tools and equipment to prevent accidents</p>
+                </div>
+                <div class="objective-card">
+                    <h3>General Safe Work Habits</h3>
+                    <p>Establishing routines and practices that prioritize safety in all work situations</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Knowledge Check 1 -->
+        <div class="knowledge-check">
+            <h3>🧠 Knowledge Check 1</h3>
+            <div class="question">
+                <h4>1. Who is responsible for safety in the workplace?</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Only supervisors and managers</div>
+                    <div class="option" data-answer="incorrect">Only safety representatives</div>
+                    <div class="option" data-answer="correct">All workers in all trades</div>
+                    <div class="option" data-answer="incorrect">Only experienced workers</div>
+                </div>
+            </div>
+            <button class="btn" onclick="checkAnswers(1)">Check Answer</button>
+            <button class="btn" onclick="nextSection()" style="display:none;" id="next1">Continue</button>
+        </div>
+
+        <!-- Section 3: Key Terminology -->
+        <div class="section" data-section="3">
+            <h2>Key Terminology</h2>
+            <p>Before we dive deeper into safety practices, let's familiarize ourselves with important safety terminology:</p>
+            
+            <table class="terminology-table">
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Abbreviation</th>
+                        <th>Definition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Confined Space</strong></td>
+                        <td>-</td>
+                        <td>Work area where location, design, or construction restricts entry and exit and where equipment, operations, or atmospheres may pose hazards to health and safety.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Group Safety Equipment</strong></td>
+                        <td>-</td>
+                        <td>Equipment such as fire extinguishers and first aid kits supplied by the employer and positioned around the job site.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lockout Procedures</strong></td>
+                        <td>-</td>
+                        <td>Procedures using locks and safety tags to ensure the isolation and lock off of all sources of potential, kinetic, and stored energy during work on a system.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Musculoskeletal Disorder Hazards</strong></td>
+                        <td>MSD Hazards</td>
+                        <td>Aspects of the job or the process of doing the job that increase the risk of a worker developing a musculoskeletal disorder. Primary hazards are force, postures, and repetition.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Personal Protective Equipment</strong></td>
+                        <td>PPE</td>
+                        <td>Standard safety clothing and equipment designed to protect the wearer.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ventilation Equipment</strong></td>
+                        <td>-</td>
+                        <td>Equipment found in workshops designed for the removal of harmful dust or fumes.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 4: Personal Safety Overview -->
+        <div class="section" data-section="4">
+            <h2>Personal Safety Overview</h2>
+            <p>Personal safe work practices are as important as a gas technician's/fitter's trade skills. Personal safety is a combination of knowledge and awareness: a gas technician/fitter must be knowledgeable and skillful in the use and care of tools and aware of the hazards and safety procedures that apply to any job or job site.</p>
+            
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h3>Work Habits</h3>
+                    <p>Developing proper techniques and awareness of how actions affect others</p>
+                </div>
+                <div class="safety-item">
+                    <h3>MSD Hazards</h3>
+                    <p>Understanding and preventing musculoskeletal disorders through proper techniques</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Clothing</h3>
+                    <p>Wearing appropriate attire for specific work conditions</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Protective Equipment</h3>
+                    <p>Using proper PPE for head, respiratory, eye, hearing, hand, and foot protection</p>
+                </div>
+            </div>
+
+            <h3>Work Habits for Safety</h3>
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h4>Courtesy</h4>
+                    <p>Taking into account the safety of those you are working with. Put yourself in the other person's place and keep the other person in mind.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Attention</h4>
+                    <p>To the safety of your environment and those working nearby helps avoid accidents.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Safe Conduct</h4>
+                    <p>Includes wearing appropriate clothing and protective equipment, observing good housekeeping and safety procedures, and displaying common sense.</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Important:</strong> A competent worker learns skills to the point where they become automatic. Skilled workers have learned to do the job both safely and correctly without losing sight of how actions may affect the safety of other workers.
+            </div>
+        </div>
+
+        <!-- Knowledge Check 2 -->
+        <div class="knowledge-check">
+            <h3>🧠 Knowledge Check 2</h3>
+            <div class="question">
+                <h4>2. What does MSD stand for?</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Material Safety Document</div>
+                    <div class="option" data-answer="correct">Musculoskeletal Disorder</div>
+                    <div class="option" data-answer="incorrect">Manufacturing Safety Division</div>
+                    <div class="option" data-answer="incorrect">Mechanical System Design</div>
+                </div>
+            </div>
+            <div class="question">
+                <h4>3. The primary MSD hazards are:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Heat, cold, and noise</div>
+                    <div class="option" data-answer="correct">Force, postures, and repetition</div>
+                    <div class="option" data-answer="incorrect">Chemicals, radiation, and electricity</div>
+                    <div class="option" data-answer="incorrect">Fire, explosion, and fall hazards</div>
+                </div>
+            </div>
+            <button class="btn" onclick="checkAnswers(2)">Check Answers</button>
+            <button class="btn" onclick="nextSection()" style="display:none;" id="next2">Continue</button>
+        </div>
+
+        <!-- Section 5: MSD Hazards and Proper Lifting -->
+        <div class="section" data-section="5">
+            <h2>Musculoskeletal Disorder Hazards</h2>
+            
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h3>Force</h3>
+                    <p>The amount of effort exerted by the muscles and the amount of pressure on body parts that result from different job demands.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Posture</h3>
+                    <p>The position of various parts of the body during any activity. Good or "neutral" posture means joints are used near the middle of their full range of motion.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Repetition</h3>
+                    <p>The risk of developing an MSD increases when the same parts of the body are used repeatedly, with few breaks or chances to rest.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Other MSD Hazards</h3>
+                    <p>Contact stress, vibration, cold temperatures, hot work environments, and repeated impacts.</p>
+                </div>
+            </div>
+
+            <h3>Proper Lifting Technique</h3>
+            <p>For most joints, a good or "neutral" posture means that the joints are being used near the middle of their full range of motion. The farther a joint moves towards either end of its range of motion or the farther away from the neutral posture, the more awkward or poor the posture becomes and the more the muscles, tendons, and ligaments around the joint experience strain.</p>
+            
+            <div class="info-box">
+                <strong>Key Point:</strong> Always demonstrate good posture when lifting pipe or other materials. Keep your back straight, bend at the knees, and lift with your legs, not your back.
+            </div>
+        </div>
+
+        <!-- Section 6: Appropriate Work Clothing -->
+        <div class="section" data-section="6">
+            <h2>Appropriate Work Clothing</h2>
+            <p>For gas technicians/fitters, wearing street clothing is not usually recommended on the job. Each work task will dictate which work clothing is necessary for the job conditions.</p>
+            
+            <div class="do-dont-grid">
+                <div class="do-box">
+                    <h3>✅ DO</h3>
+                    <ul>
+                        <li>Always wear clothing supplied by the employer or as directed by the safety supervisor</li>
+                        <li>Wear non-synthetic breathable workwear that covers all exposed body parts</li>
+                        <li>Wear specific workwear for tasks requiring special ratings, such as flame-retardant clothing</li>
+                        <li>Wear clothing that protects your body from dirt, heat, sparks, and flying chips</li>
+                        <li>Wear caps or hairnets if you have long hair or a beard</li>
+                        <li>Remove rings, metal watchbands, bracelets, loose ties, and neck chains when working around electrical equipment</li>
+                    </ul>
+                </div>
+                <div class="dont-box">
+                    <h3>❌ DO NOT</h3>
+                    <ul>
+                        <li>Wear oily, greasy, or synthetic clothes since they are fire hazards and may cause skin irritation</li>
+                        <li>Tuck your pant legs inside your boots if you are working with or near a torch or grinder</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Personal Protective Equipment -->
+        <div class="section" data-section="7">
+            <h2>Personal Protective Equipment (PPE)</h2>
+            <p>Specific work conditions will dictate the necessary personal protective equipment (PPE) you will use as a gas technician/fitter. You should note, however, that safety equipment including PPE is considered the "last line of defence". You should employ first and foremost an awareness of your environment and safe work practice.</p>
+            
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h3>🪖 Head Protection</h3>
+                    <p>Hard hats and accessories to protect from falling objects</p>
+                </div>
+                <div class="safety-item">
+                    <h3>😷 Respiratory Protection</h3>
+                    <p>Masks and respirators to prevent inhalation of harmful substances</p>
+                </div>
+                <div class="safety-item">
+                    <h3>👓 Eye Protection</h3>
+                    <p>Safety glasses, goggles, and face shields for various tasks</p>
+                </div>
+                <div class="safety-item">
+                    <h3>🎧 Hearing Protection</h3>
+                    <p>Ear plugs and ear muffs to prevent hearing damage</p>
+                </div>
+                <div class="safety-item">
+                    <h3>🧤 Hand Protection</h3>
+                    <p>Various types of gloves for different hazards</p>
+                </div>
+                <div class="safety-item">
+                    <h3>👢 Foot Protection</h3>
+                    <p>Safety footwear with toe protection and other features</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Important Rule:</strong> As a general rule for tools, if you are not familiar with a piece of equipment, do not use it until you have read the instructions and are ready to proceed.
+            </div>
+        </div>
+
+        <!-- Knowledge Check 3 -->
+        <div class="knowledge-check">
+            <h3>🧠 Knowledge Check 3</h3>
+            <div class="question">
+                <h4>4. PPE is considered the:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">First line of defence</div>
+                    <div class="option" data-answer="correct">Last line of defence</div>
+                    <div class="option" data-answer="incorrect">Only necessary protection</div>
+                    <div class="option" data-answer="incorrect">Most important safety measure</div>
+                </div>
+            </div>
+            <div class="question">
+                <h4>5. When working around electrical equipment, you should NOT wear:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Safety glasses</div>
+                    <div class="option" data-answer="incorrect">Hard hat</div>
+                    <div class="option" data-answer="correct">Metal jewelry</div>
+                    <div class="option" data-answer="incorrect">Work boots</div>
+                </div>
+            </div>
+            <button class="btn" onclick="checkAnswers(3)">Check Answers</button>
+            <button class="btn" onclick="nextSection()" style="display:none;" id="next3">Continue</button>
+        </div>
+
+        <!-- Section 8: Site Hazards -->
+        <div class="section" data-section="8">
+            <h2>Site Hazards and Protection</h2>
+            <p>A gas technician/fitter will work in a variety of different work environments in many capacities and will encounter hazards specific to the work site. Site hazards change with each specific work site or area. Your first action is to identify the hazards and ask questions if you are unsure of the situation.</p>
+
+            <h3>Physical Hazards</h3>
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h4>Restricted Spaces</h4>
+                    <p>Working in cramped work areas with limited movement</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Access Difficulties</h4>
+                    <p>Challenges in gaining entry to work areas</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Moving Equipment</h4>
+                    <p>Non-fixed equipment or appliances that can shift</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Electrical Hazards</h4>
+                    <p>Exposed wiring or energized equipment</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Temperature Extremes</h4>
+                    <p>Very hot or cold environments that can cause injury</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Corrosive Residues</h4>
+                    <p>Chemical substances that can damage skin and equipment</p>
+                </div>
+            </div>
+
+            <h3>Atmospheric Hazards</h3>
+            <p>Atmospheric hazards are generally chemicals or materials in the air around the work site. They could also be in confined spaces and are often more difficult to assess.</p>
+            
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h4>Combustible Gases</h4>
+                    <p>Explosive gases and vapors that can ignite</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Oxygen Levels</h4>
+                    <p>Too much or too little oxygen in the atmosphere</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Toxic Fumes</h4>
+                    <p>Harmful gases like carbon monoxide (CO)</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Critical Safety Rule:</strong> You must check the atmosphere every time you plan to enter a confined space and regularly while you work there. Various types of gas detection equipment are available, and you must use the proper equipment to test specific conditions.
+            </div>
+        </div>
+
+        <!-- Section 9: Tool and Equipment Safety -->
+        <div class="section" data-section="9">
+            <h2>Safety of Tools and Equipment</h2>
+            <p>A gas technician/fitter is required to use hand, power, electric, and pneumatic tools. The use and care of tools is very important to any tradesperson. All these tools have specific safety rules geared to the specific type of tool to protect you and others from harm.</p>
+            
+            <h3>Hand Tools Safety</h3>
+            <div class="do-dont-grid">
+                <div class="do-box">
+                    <h3>✅ DO</h3>
+                    <ul>
+                        <li>Always select the proper tool for the job</li>
+                        <li>Keep hand tools clean, serviced, and in good condition</li>
+                        <li>Check that handles of hammers and axes fit tight into the head</li>
+                        <li>Only use pipe wrenches to turn or hold a pipe</li>
+                        <li>Pulling on wrenches is preferred to remain in control of the force</li>
+                        <li>When using sharp-edged tools, always cut away from the body</li>
+                        <li>Always wear appropriate PPE for the hazards presented</li>
+                    </ul>
+                </div>
+                <div class="dont-box">
+                    <h3>❌ DO NOT</h3>
+                    <ul>
+                        <li>Use a tool for a purpose other than what it is meant for</li>
+                        <li>Use damaged or unsafe tools</li>
+                        <li>Leave tools where they protrude or can fall and strike someone</li>
+                        <li>Use a file or rasp without a handle</li>
+                        <li>Use pipe extenders with wrenches</li>
+                        <li>Use pliers instead of a wrench or a wrench as a hammer</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Power Tool Safety</h3>
+            <p>Power tools require special attention to authorization, training, inspection, shutdown procedures, and adjustments.</p>
+            
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h4>Authorization</h4>
+                    <p>Only authorized persons are allowed to use power tools or equipment. Consult your supervisor.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Training</h4>
+                    <p>Before using any power tool, review the operation and safety manual for the specific tool.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Inspection</h4>
+                    <p>Before using any tool, check the condition of all guards, tool retainers, power supply cords, and accessories.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Shutdown</h4>
+                    <p>Shut off machinery when you leave the immediate area. Make sure revolving machinery has stopped before leaving.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Knowledge Check 4 -->
+        <div class="knowledge-check">
+            <h3>🧠 Knowledge Check 4</h3>
+            <div class="question">
+                <h4>6. When entering a confined space, you should:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Enter immediately if it looks safe</div>
+                    <div class="option" data-answer="correct">Test the atmosphere before entry and regularly while working</div>
+                    <div class="option" data-answer="incorrect">Only test if you smell something unusual</div>
+                    <div class="option" data-answer="incorrect">Trust that previous workers have already tested it</div>
+                </div>
+            </div>
+            <div class="question">
+                <h4>7. The proper way to use a wrench is to:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Push away from your body</div>
+                    <div class="option" data-answer="correct">Pull toward your body to maintain control</div>
+                    <div class="option" data-answer="incorrect">Use pipe extenders for more leverage</div>
+                    <div class="option" data-answer="incorrect">Use it as a hammer when needed</div>
+                </div>
+            </div>
+            <button class="btn" onclick="checkAnswers(4)">Check Answers</button>
+            <button class="btn" onclick="nextSection()" style="display:none;" id="next4">Continue</button>
+        </div>
+
+        <!-- Section 10: Lockout Procedures -->
+        <div class="section" data-section="10">
+            <h2>Lockout Procedures</h2>
+            <p>Lockout procedures are quite basic. If you work on a machine or system, use locks to ensure that all sources of hazardous energy are isolated and locked off during work.</p>
+            
+            <div class="warning-box">
+                <strong>Zero Energy State:</strong> Lockout must involve more than merely disconnecting the energy source. You must isolate and lock off all energy sources - potential, electrical, pneumatic, hydraulic, rotational, static or dynamic. This is called zero energy state.
+            </div>
+
+            <h3>Key Components of Lockout</h3>
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h4>Locks</h4>
+                    <p>Locks are keyed to render a system inoperative. Each worker has their own lock and key.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Safety Tags</h4>
+                    <p>Safety tags are used to identify the person who locks out a system and warn other workers not to operate the equipment.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Important Rules:</strong>
+                <ul>
+                    <li>Each worker has his or her own lock and key (combination locks are not allowed)</li>
+                    <li>Only those who placed the locks can remove the tags and locks</li>
+                    <li>The shift supervisor keeps a master key for use in an emergency</li>
+                    <li>It is against regulations and extremely dangerous to remove someone else's lock</li>
+                </ul>
+            </div>
+
+            <h3>Multiple Lockout</h3>
+            <p>Sometimes more than one person is working on a system or piece of machinery. A device called a safety hasp is used to hold multiple locks, ensuring that equipment cannot be reactivated until all workers have completed their tasks and removed their locks.</p>
+        </div>
+
+        <!-- Section 11: Ladder and Scaffold Safety -->
+        <div class="section" data-section="11">
+            <h2>Ladder and Scaffold Safety</h2>
+            <p>Accidents involving ladders and scaffolds are a major cause of injuries and fatalities in the workplace. Use the correct ladder for the job: do not improvise or use a ladder for any purpose other than its intended use.</p>
+
+            <h3>Common Ladder Hazards</h3>
+            <ul>
+                <li>Falls or slides from ladders because of slippery rungs or steps</li>
+                <li>Ladders not being properly secured to ground, wall, or other equipment</li>
+                <li>High winds that cause them to fall over</li>
+                <li>Workers leaning out at dangerous angles from ladders</li>
+                <li>Too close proximity to electrical lines, particularly aluminum ladders</li>
+                <li>Damaged or defective ladders</li>
+            </ul>
+
+            <h3>Proper Ladder Positioning</h3>
+            <div class="info-box">
+                <strong>3:1 Ratio Rule:</strong> Ensure the ladder is set 1 ft (30 cm) out for every 3 ft (90 cm) up. The top rails should be at least 3 ft (90 cm) above the sill or landing.
+            </div>
+
+            <h3>Ladder Usage Safety</h3>
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h4>Three-Point Contact</h4>
+                    <p>Face the ladder when going up or down and maintain "3-point contact" - two hands and one foot or two feet and one hand on the ladder at all times</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Tool Handling</h4>
+                    <p>Lift tools or materials with a hoist rope (in a bucket) rather than in your hands</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Safety Harness</h4>
+                    <p>At heights over 10 ft (3 m), wear a safety belt or harness that is tied to the building you are climbing to</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Knowledge Check 5 -->
+        <div class="knowledge-check">
+            <h3>🧠 Knowledge Check 5</h3>
+            <div class="question">
+                <h4>8. The proper ladder positioning ratio is:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">1:1 (1 foot out for every 1 foot up)</div>
+                    <div class="option" data-answer="incorrect">2:1 (1 foot out for every 2 feet up)</div>
+                    <div class="option" data-answer="correct">3:1 (1 foot out for every 3 feet up)</div>
+                    <div class="option" data-answer="incorrect">4:1 (1 foot out for every 4 feet up)</div>
+                </div>
+            </div>
+            <div class="question">
+                <h4>9. When climbing a ladder, you should maintain:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Two-point contact</div>
+                    <div class="option" data-answer="correct">Three-point contact</div>
+                    <div class="option" data-answer="incorrect">Four-point contact</div>
+                    <div class="option" data-answer="incorrect">One-point contact</div>
+                </div>
+            </div>
+            <button class="btn" onclick="checkAnswers(5)">Check Answers</button>
+            <button class="btn" onclick="nextSection()" style="display:none;" id="next5">Continue</button>
+        </div>
+
+        <!-- Section 12: Responsibilities -->
+        <div class="section" data-section="12">
+            <h2>Responsibilities of Parties Involved</h2>
+            <p>Everyone involved in a construction site has specific responsibilities for safety. The following are typical responsibilities found in provincial Acts and Regulations for construction projects:</p>
+
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h3>Constructor</h3>
+                    <p>Ensures measures and procedures required by Acts and Regulations are carried out on the job site</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Employer</h3>
+                    <p>Provides equipment, materials, safety clothing, and protective devices required by law</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Supervisor</h3>
+                    <p>Ensures workers follow safety procedures and use proper protective equipment</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Worker</h3>
+                    <p>Works in compliance with all applicable Acts and Regulations</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Health and Safety Representative</h3>
+                    <p>Performs site inspections and helps mediate disputes over unsafe conditions</p>
+                </div>
+            </div>
+
+            <h3>Worker Responsibilities in Detail</h3>
+            <ul>
+                <li><strong>Regulatory Compliance:</strong> Work in compliance with all applicable Acts and Regulations</li>
+                <li><strong>Equipment Usage:</strong> Use or wear the equipment, protective devices, or clothing that the employer requires</li>
+                <li><strong>Reporting Issues:</strong> Report any problem with equipment that may endanger workers, any contravention of Acts or Regulations, and any hazard on the job site</li>
+                <li><strong>Safe Work Practices:</strong> Never work in a manner that may endanger anyone and never engage in horseplay or unsafe conduct</li>
+            </ul>
+        </div>
+
+        <!-- Section 13: General Safety Rules -->
+        <div class="section" data-section="13">
+            <h2>General Safety Rules and Safe Work Practices</h2>
+            <p>The following safety rules apply in all training and work situations. You must follow these rules when doing any practical task.</p>
+
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h3>No Horseplay</h3>
+                    <p>Do not tolerate running, wrestling, throwing objects around, and all other types of unsafe behaviour in the shop.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Clean Up</h3>
+                    <p>Good housekeeping is a must: keep your work area clean; remove or protect protruding sharp objects; post hazard signs; store gas cylinders upright.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Tool Organization</h3>
+                    <p>Keep tools clean and store them properly when not in use.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Prevent Falling Hazards</h3>
+                    <p>Do not place articles on ladders or where there are falling hazards.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Adequate Lighting</h3>
+                    <p>You must be able to see what you are doing: if you need more light, use a trouble lamp.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>Proper Lifting</h3>
+                    <p>Use the correct posture and rigging equipment to prevent injury.</p>
+                </div>
+            </div>
+
+            <h3>Additional Safety Practices</h3>
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h4>Use Protective Equipment</h4>
+                    <p>Safety gear and clothing are required when working in the shop or job site.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Tag Defective Items</h4>
+                    <p>Tag tools or equipment that are defective and remove them from the work area.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Report Accidents</h4>
+                    <p>Report any accident or injury, no matter how minor, to your supervisor and first aid attendants.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Monitor Health</h4>
+                    <p>Report any health problems to your supervisor, even minor issues that could affect your safety.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>No Impairment</h4>
+                    <p>Do not work while impaired by alcohol or medication.</p>
+                </div>
+                <div class="safety-item">
+                    <h4>Address Unsafe Conditions</h4>
+                    <p>Correct any safety violation or unsafe condition right away or report it immediately.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Knowledge Check -->
+        <div class="knowledge-check">
+            <h3>🧠 Final Assessment</h3>
+            <div class="question">
+                <h4>10. Which of the following is NOT a worker responsibility?</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Report equipment problems to supervisor</div>
+                    <div class="option" data-answer="incorrect">Use required PPE</div>
+                    <div class="option" data-answer="correct">Purchase their own safety equipment</div>
+                    <div class="option" data-answer="incorrect">Work in compliance with safety regulations</div>
+                </div>
+            </div>
+            <div class="question">
+                <h4>11. The "last line of defence" in workplace safety is:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">Safety training</div>
+                    <div class="option" data-answer="incorrect">Safety procedures</div>
+                    <div class="option" data-answer="correct">Personal Protective Equipment (PPE)</div>
+                    <div class="option" data-answer="incorrect">Safety inspections</div>
+                </div>
+            </div>
+            <div class="question">
+                <h4>12. Zero energy state means:</h4>
+                <div class="options">
+                    <div class="option" data-answer="incorrect">The machine is turned off</div>
+                    <div class="option" data-answer="incorrect">The power cord is unplugged</div>
+                    <div class="option" data-answer="correct">All sources of hazardous energy are isolated and locked off</div>
+                    <div class="option" data-answer="incorrect">The emergency stop button is pressed</div>
+                </div>
+            </div>
+            <button class="btn" onclick="checkAnswers(6)">Check Answers</button>
+            <button class="btn" onclick="showCompletion()" style="display:none;" id="next6">Complete Module</button>
+        </div>
+
+        <!-- Completion Section -->
+        <div class="section" id="completion" style="display:none;">
+            <h2>🎉 Module Complete!</h2>
+            <p>Congratulations! You have successfully completed CSA Unit 1 - Safety, Chapter 1: On-the-job Safety Measures.</p>
+            
+            <h3>Key Takeaways:</h3>
+            <ul>
+                <li>Safety is the responsibility of all workers in all trades</li>
+                <li>Personal safety combines knowledge and awareness</li>
+                <li>PPE is the last line of defence - environmental awareness comes first</li>
+                <li>Proper lockout procedures are essential for equipment safety</li>
+                <li>Everyone on a construction site has specific safety responsibilities</li>
+                <li>Safe work practices must become automatic habits</li>
+            </ul>
+
+            <div class="info-box">
+                <h3>Safety Mindset Pyramid</h3>
+                <ol>
+                    <li><strong>Knowledge:</strong> Continuously learn about safety practices</li>
+                    <li><strong>Teamwork:</strong> Look out for yourself and your coworkers</li>
+                    <li><strong>Prevention:</strong> Take proactive steps to eliminate hazards</li>
+                    <li><strong>Awareness:</strong> Constantly be alert to your surroundings</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <strong>Remember:</strong> Always think about safety. If you do not, you are, quite literally, an accident looking for a place to happen!
+            </div>
+
+            <p><strong>Score:</strong> <span id="finalScore">0</span>% - <span id="scoreMessage">Great job!</span></p>
+        </div>
+
+        <!-- Safety Resources -->
+        <div class="section" data-section="14">
+            <h2>Safety Resources</h2>
+            <p>For additional health and safety information, consult these resources:</p>
+            
+            <div class="info-box">
+                <h3>Federal Resources</h3>
+                <p>Employment and Social Development Canada (ESDC): <br>
+                <a href="http://www.hrsdc.gc.ca/eng/labour/health_safety/index.shtml" target="_blank">http://www.hrsdc.gc.ca/eng/labour/health_safety/index.shtml</a></p>
+            </div>
+
+            <div class="info-box">
+                <h3>Canadian Government Safety Departments</h3>
+                <p>List of Canadian government departments with chief responsibility for occupational health and safety:<br>
+                <a href="http://www.ccohs.ca/oshanswers/information/govt.html" target="_blank">http://www.ccohs.ca/oshanswers/information/govt.html</a></p>
+            </div>
+
+            <div class="info-box">
+                <h3>Confined Space Safety</h3>
+                <p>Canadian Centre for Occupational Health and Safety:<br>
+                <a href="http://www.ccohs.ca" target="_blank">www.ccohs.ca</a></p>
+            </div>
+
+            <div class="info-box">
+                <h3>Workplace Health and Safety</h3>
+                <p>Canada's National Workplace Health and Safety website:<br>
+                <a href="http://www.canoshweb.org/" target="_blank">http://www.canoshweb.org/</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 1;
+        let totalSections = 14;
+        let knowledgeCheckScores = {};
+        let totalQuestions = 0;
+        let correctAnswers = 0;
+
+        // Initialize navigation
+        function initNavigation() {
+            const nav = document.getElementById('navigation');
+            for (let i = 1; i <= totalSections; i++) {
+                const navItem = document.createElement('div');
+                navItem.className = 'nav-item';
+                if (i === 1) navItem.classList.add('active');
+                navItem.addEventListener('click', () => scrollToSection(i));
+                nav.appendChild(navItem);
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = (currentSection / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionNum) {
+            const section = document.querySelector(`[data-section="${sectionNum}"]`);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+                currentSection = sectionNum;
+                updateNavigation();
+                updateProgress();
+            }
+        }
+
+        // Update navigation
+        function updateNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item, index) => {
+                item.classList.toggle('active', index + 1 === currentSection);
+            });
+        }
+
+        // Check answers for knowledge checks
+        function checkAnswers(checkNumber) {
+            const questions = document.querySelectorAll(`.knowledge-check:nth-of-type(${getKnowledgeCheckPosition(checkNumber)}) .question`);
+            let correct = 0;
+            let total = questions.length;
+
+            questions.forEach((question) => {
+                const options = question.querySelectorAll('.option');
+                const selectedOption = question.querySelector('.option.selected');
+                
+                options.forEach(option => {
+                    if (option.dataset.answer === 'correct') {
+                        option.classList.add('correct');
+                    } else if (option.classList.contains('selected')) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (selectedOption && selectedOption.dataset.answer === 'correct') {
+                    correct++;
+                }
+            });
+
+            knowledgeCheckScores[checkNumber] = { correct, total };
+            totalQuestions += total;
+            correctAnswers += correct;
+
+            // Show next button
+            document.getElementById(`next${checkNumber}`).style.display = 'inline-block';
+            
+            // Disable further clicking
+            questions.forEach((question) => {
+                const options = question.querySelectorAll('.option');
+                options.forEach(option => {
+                    option.style.pointerEvents = 'none';
+                });
+            });
+        }
+
+        // Get knowledge check position in DOM
+        function getKnowledgeCheckPosition(checkNumber) {
+            const positions = { 1: 3, 2: 5, 3: 7, 4: 9, 5: 11, 6: 13 };
+            return positions[checkNumber] || checkNumber;
+        }
+
+        // Next section
+        function nextSection() {
+            if (currentSection < totalSections) {
+                currentSection++;
+                scrollToSection(currentSection);
+            }
+        }
+
+        // Show completion
+        function showCompletion() {
+            document.getElementById('completion').style.display = 'block';
+            const finalScore = Math.round((correctAnswers / totalQuestions) * 100);
+            document.getElementById('finalScore').textContent = finalScore;
+            document.getElementById('scoreMessage').textContent = 
+                finalScore >= 90 ? 'Excellent work!' :
+                finalScore >= 80 ? 'Great job!' :
+                finalScore >= 70 ? 'Good effort!' :
+                'Consider reviewing the material and retaking the assessment.';
+            
+            document.getElementById('completion').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Handle option selection
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('option')) {
+                const question = e.target.closest('.question');
+                const options = question.querySelectorAll('.option');
+                
+                // Remove previous selection
+                options.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selection to clicked option
+                e.target.classList.add('selected');
+            }
+        });
+
+        // Intersection Observer for automatic section tracking
+        function initSectionObserver() {
+            const sections = document.querySelectorAll('[data-section]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionNum = parseInt(entry.target.dataset.section);
+                        if (sectionNum !== currentSection) {
+                            currentSection = sectionNum;
+                            updateNavigation();
+                            updateProgress();
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.3,
+                rootMargin: '-50px 0px -50px 0px'
+            });
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavigation();
+            initSectionObserver();
+            updateProgress();
+            
+            // Add animation delays to sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

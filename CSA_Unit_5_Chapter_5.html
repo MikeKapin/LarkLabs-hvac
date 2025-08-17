@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA Unit 5 - Chapter 5: Theory of Direct and Alternating Current</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            gap: 20px;
+        }
+
+        .navigation-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section h4 {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #a93226;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d68910;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box h4 {
+            color: #155724;
+            margin-bottom: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .knowledge-check h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .options li.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid white;
+        }
+
+        .options li.correct {
+            background: rgba(46, 204, 113, 0.8);
+        }
+
+        .options li.incorrect {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .check-btn {
+            background: white;
+            color: #e67e22;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #ecf0f1;
+        }
+
+        .check-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .formula-box {
+            background: #f8f9fa;
+            border: 2px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #ecf0f1;
+        }
+
+        .circuit-symbol {
+            font-size: 2rem;
+            margin: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 50%;
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            line-height: 40px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-options li.selected {
+            background: #d1ecf1;
+            border-color: #e74c3c;
+        }
+
+        .quiz-options li.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-options li.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .chapter-completion {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .chapter-completion.show {
+            display: block;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-quiz-btn:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSA Unit 5 - Introduction to Electricity</h1>
+            <h2>Chapter 5 - Theory of Direct and Alternating Current</h2>
+            <p>Gas Trade Training Materials</p>
+            <p><em>Created by Mike Kapin • Copyright 2025</em></p>
+        </div>
+
+        <div class="content-area">
+            <div class="navigation">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="section-counter">Section 1 of 10</span>
+            </div>
+            <div id="content"></div>
+            
+            <div class="navigation-bottom">
+                <button class="nav-btn" id="prev-btn" onclick="previousSection()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSection()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        let totalSections = 10;
+        let userAnswers = {};
+        let quizAnswers = {};
+
+        const sections = [
+            {
+                title: "Overview and Purpose",
+                content: `
+                    <div class="section">
+                        <h2>Overview</h2>
+                        
+                        <h3>Purpose</h3>
+                        <p>The gas technician/fitter requires knowledge of direct and alternating current theory in order to properly size, connect, and troubleshoot the type of electrical equipment encountered in the gas industry.</p>
+
+                        <h3>Objectives</h3>
+                        <p>At the end of this Chapter, you will be able to:</p>
+                        <ul>
+                            <li>describe direct and alternating current;</li>
+                            <li>describe leading and lagging in ac circuits; and</li>
+                            <li>describe capacitance in ac circuits.</li>
+                        </ul>
+
+                        <h3>Terminology</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Abbreviation (symbol)</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ac energy</td>
+                                    <td></td>
+                                    <td>Energy consumed in an ac circuit</td>
+                                </tr>
+                                <tr>
+                                    <td>Alternating current</td>
+                                    <td>ac or AC</td>
+                                    <td>Electric current that reverses its direction many times a second at regular intervals, typically used in power supplies</td>
+                                </tr>
+                                <tr>
+                                    <td>Direct current</td>
+                                    <td>dc or DC</td>
+                                    <td>Electric current flowing in one direction only</td>
+                                </tr>
+                                <tr>
+                                    <td>Waveform</td>
+                                    <td></td>
+                                    <td>Describes complete cycle of alternating current goes from zero to a maximum positive value, back through zero to a maximum negative value, and back again to zero</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box">
+                            <h4>Key Learning Point</h4>
+                            <p>Understanding the fundamental differences between direct and alternating current is essential for gas technicians working with electrical equipment. This knowledge enables proper troubleshooting, sizing, and connection of electrical components in gas systems.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the main difference between direct current (DC) and alternating current (AC)?",
+                    options: [
+                        "DC has higher voltage than AC",
+                        "DC flows in one direction only, while AC reverses direction regularly",
+                        "DC is used for high power applications, AC for low power",
+                        "DC requires transformers, AC does not"
+                    ],
+                    correct: 1,
+                    explanation: "Direct current (DC) flows in one direction only, while alternating current (AC) reverses its direction many times per second at regular intervals. This fundamental difference affects how each type of current is generated, transmitted, and used."
+                }
+            },
+            {
+                title: "Direct Current Fundamentals",
+                content: `
+                    <div class="section">
+                        <h2>Direct Current</h2>
+                        
+                        <p>In the first example, at the top of Figure 5-1, a battery supplies the circuit. Batteries have a positive and a negative terminal. The battery shown has a voltage of 12 V. In this case, when the circuit is connected, the current flows from one terminal to the other. The flow is always in the same direction and this is what you call direct current (DC).</p>
+
+                        <div class="diagram-container">
+                            <h4>DC Circuit Representation</h4>
+                            <div style="font-size: 1.5rem; margin: 20px 0;">
+                                <span style="color: #e74c3c;">+</span> ——————————— <span style="color: #3498db;">−</span>
+                            </div>
+                            <p><em>Battery with constant voltage producing direct current</em></p>
+                        </div>
+
+                        <p>Electronic devices, small appliances, and automobile electrical systems extensively use direct current. Some type of battery often supplies DC. Batteries have a very limited supply of electrical power. You must replace or recharge them regularly. This makes them impractical for some applications.</p>
+
+                        <h3>Characteristics of Direct Current</h3>
+                        <ul>
+                            <li>Current flows in one direction only</li>
+                            <li>One terminal is always negative, the other positive</li>
+                            <li>Direction reverses only if terminal connections are reversed</li>
+                            <li>Commonly supplied by batteries</li>
+                            <li>Used extensively in electronic devices and automotive systems</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <h4>DC Limitations</h4>
+                            <p>While DC is excellent for many applications, batteries have limitations in terms of energy storage capacity and need regular replacement or recharging. For large-scale power distribution, mechanical generation producing AC is more practical.</p>
+                        </div>
+
+                        <h3>DC Energy Sources</h3>
+                        <p>Energy sources that produce direct current are called DC energy sources. Batteries are DC energy sources. In a DC energy source, one terminal is always negative and the other positive.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "Why are batteries considered impractical for some large-scale applications?",
+                    options: [
+                        "They produce too much heat",
+                        "They have a very limited supply of electrical power and need regular replacement or recharging",
+                        "They cannot produce high voltages",
+                        "They only work with AC circuits"
+                    ],
+                    correct: 1,
+                    explanation: "Batteries have a very limited supply of electrical power and must be replaced or recharged regularly. This makes them impractical for large-scale applications that require substantial amounts of electrical power over extended periods."
+                }
+            },
+            {
+                title: "Alternating Current Fundamentals",
+                content: `
+                    <div class="section">
+                        <h2>Alternating Current</h2>
+                        
+                        <p>Another type of current flows alternately in both directions. The flow changes or alternates direction rapidly and constantly. This is what you call alternating current (AC). The energy consumed in an AC circuit is AC energy.</p>
+
+                        <div class="diagram-container">
+                            <h4>AC Generator Symbol</h4>
+                            <div class="circuit-symbol">∿</div>
+                            <p><em>AC source producing alternating current</em></p>
+                        </div>
+
+                        <p>Most motors and other devices in the home and industry operate using alternating current. Nearly all the energy consumed in the world is alternating current for the following reasons:</p>
+                        
+                        <ul>
+                            <li>It is more versatile than DC and is usable in a wide variety of ways</li>
+                            <li>It is cheaper to produce than DC</li>
+                            <li>It allows transmission of electricity over long distances more economically</li>
+                            <li>It easily transforms into lower or higher voltages for use in various equipment</li>
+                            <li>Transmission of AC energy at high voltage and low current keeps energy losses to a minimum</li>
+                            <li>Many combinations of voltage and current can produce the same energy level</li>
+                        </ul>
+
+                        <h3>North American AC Standards</h3>
+                        <p>In North America, generators produce and transmit electrical energy as alternating current with a frequency of 60 hertz (cycles per second). This means that the current flows in one direction for 1/120th of a second and then in the other direction for 1/120th of a second.</p>
+
+                        <div class="info-box">
+                            <h4>AC vs Water Flow</h4>
+                            <p>This is where current differs from water piping systems. Although alternating current changes direction continuously, transmission of the energy still occurs throughout the system.</p>
+                        </div>
+
+                        <p>In AC circuits, current, voltage, and resistance have the same relationships that they have in DC circuits. You use Ohm's law to calculate values in AC circuits in much the same way as for DC circuits.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the frequency of AC power in North America?",
+                    options: [
+                        "50 hertz (cycles per second)",
+                        "60 hertz (cycles per second)",
+                        "120 hertz (cycles per second)",
+                        "240 hertz (cycles per second)"
+                    ],
+                    correct: 1,
+                    explanation: "In North America, generators produce and transmit electrical energy as alternating current with a frequency of 60 hertz (cycles per second). This means the current alternates direction 60 times per second."
+                }
+            },
+            {
+                title: "AC Generators and Waveforms",
+                content: `
+                    <div class="section">
+                        <h2>AC Generators</h2>
+                        
+                        <p>The most common source of AC is the AC generator or alternator. Most AC generators produce an electromotive force (emf) by the rotary movement of a magnetic field within a coil. The movement of a conductor in a magnetic field induces a current in the conductor as follows:</p>
+                        
+                        <ol>
+                            <li>A conductor moved in a magnetic field, or vice versa, crosses the flux lines</li>
+                            <li>The field applies a force to the free electrons in the conductor, moving them</li>
+                            <li>The moving electrons result in a potential difference across the ends of the conductor</li>
+                        </ol>
+
+                        <h3>EMF of a Generator</h3>
+                        <p>The amount of voltage generated depends on:</p>
+                        <ul>
+                            <li>the strength of the magnetic field;</li>
+                            <li>how fast the conductor moves, cutting through the flux lines; and</li>
+                            <li>the angle at which the conductor cuts the flux lines.</li>
+                        </ul>
+
+                        <h3>How an AC Generator Works</h3>
+                        <p>To see how a generator works, imagine a single loop or coil of conducting wire placed between the poles of a permanent magnet. In practice, there is a series of windings in the machine called the rotor or armature.</p>
+                        
+                        <p>A simple generator works as follows:</p>
+                        <ol>
+                            <li>An outside power source such as flowing water, an internal combustion engine, or steam turns the coil</li>
+                            <li>As the loop rotates, the wire cuts the magnetic flux lines, generating a voltage at the ends of the loop</li>
+                            <li>The generator transfers the voltage to an external circuit via slip rings and brushes. These maintain proper electrical contact while allowing free rotation of the loop</li>
+                        </ol>
+
+                        <div class="tip-box">
+                            <h4>💡 Important Note</h4>
+                            <p>In reality, however, the coil is fixed and the field is made to rotate around it.</p>
+                        </div>
+
+                        <h2>The AC Waveform</h2>
+                        
+                        <p>A complete cycle of alternating current goes from zero to a maximum positive value, back through zero to a maximum negative value, and back again to zero. The voltage makes a similar pattern, rather like a wave.</p>
+
+                        <p>This graph of these changes with time is called the waveform. The correct name for the shape of this waveform is sinusoidal or a sine wave.</p>
+
+                        <div class="formula-box">
+                            <h4>AC Waveform Characteristics</h4>
+                            <p>360° = One complete rotation or cycle</p>
+                            <p>Positive half-cycle: 0° to 180°</p>
+                            <p>Negative half-cycle: 180° to 360°</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the correct name for the shape of an AC waveform?",
+                    options: [
+                        "Arc wave",
+                        "Sinusoidal or sine wave",
+                        "Tidal wave",
+                        "Square wave"
+                    ],
+                    correct: 1,
+                    explanation: "The correct name for the shape of an AC waveform is sinusoidal or sine wave. This describes the smooth, repetitive curve that goes from zero to maximum positive, back through zero to maximum negative, and back to zero."
+                }
+            },
+            {
+                title: "Phase and Generator Types",
+                content: `
+                    <div class="section">
+                        <h2>Phase and Frequency</h2>
+                        
+                        <p>At any point on the sine wave, the magnitude of the voltage (or current) is the distance to the time axis. When the waveform is below the zero line, the current has reversed direction. Note that the waveform is the same shape above and below the horizontal axis (symmetrical)—the positive and negative parts vary in the same way.</p>
+
+                        <p>You may divide the horizontal axis into degrees of rotation rather than units of time. This shows the 360° in one complete rotation or cycle. This graph shows how the output voltage (or current) of the generator varies with the position of the rotor.</p>
+
+                        <p>In Canada, standard AC electrical power goes through 60 complete cycles each second. That is, its frequency is 60 cycles per second or 60 hertz (60 Hz). A simple generator would turn 60 times each second to produce power at 60 hertz.</p>
+
+                        <p>You can describe phase as the difference in electrical degrees between two waveforms.</p>
+
+                        <h2>Single-Phase Generator</h2>
+                        <p>A single-phase generator produces one alternating (sinusoidal) voltage waveform.</p>
+
+                        <h2>Three-Phase Generator</h2>
+                        <p>You connect three-phase generators to provide three separate circuits. Each of these circuits carries a sinusoidal voltage waveform. The three waveforms are displaced by 120° from each other.</p>
+
+                        <div class="diagram-container">
+                            <h4>Three-Phase Displacement</h4>
+                            <p>Phase 1: 0°</p>
+                            <p>Phase 2: 120°</p>
+                            <p>Phase 3: 240°</p>
+                            <p><em>Each phase is displaced by 120° from the others</em></p>
+                        </div>
+
+                        <h2>Calculating Alternating Current</h2>
+                        
+                        <p>Alternating current is somewhat difficult to understand. Mathematically, the currents might appear to cancel out over time because the negative current during one-half of the cycle equals the positive current during the other half. In fact, however, the movement of electrons provides electrical energy. This is true whether they move back and forth or in one direction only.</p>
+
+                        <p>You therefore calculate current by determining the effective work that the electric current performs or heat it generates. This is what you refer to as root-mean-square or rms current and is the peak current (Vmax or Vm) divided by square root of 2 (0.707).</p>
+
+                        <div class="formula-box">
+                            <h4>RMS Formulas</h4>
+                            <p>Irms = 0.707 Imax</p>
+                            <p>Vrms = 0.707 Vmax</p>
+                        </div>
+
+                        <p>You always use this value when referring to the voltage of a circuit. Residential voltages in this country are 120 V, which is the rms voltage. The actual supplied voltage is alternating according to a sine curve with a peak of approximately 170 V.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What does a single-phase generator produce?",
+                    options: [
+                        "One alternating sinusoidal wave form",
+                        "High voltage",
+                        "Heat",
+                        "Three separate circuits"
+                    ],
+                    correct: 0,
+                    explanation: "A single-phase generator produces one alternating (sinusoidal) voltage waveform. This is in contrast to a three-phase generator which produces three separate sinusoidal waveforms displaced by 120° from each other."
+                }
+            },
+            {
+                title: "AC Circuit Components",
+                content: `
+                    <div class="section">
+                        <h2>Leading and Lagging in Alternating Currents</h2>
+                        
+                        <h3>AC Circuits</h3>
+                        <p>Every real electrical circuit exhibits a combination of resistance, inductance, and capacitance. The nature of the circuit determines which of these quantities predominates. For example, in a heating circuit, the resistance predominates; in motor circuits, the inductance predominates; in long supply lines, capacitance predominates. Whichever quantity predominates, the other two are always present to some extent or other—although, from a practical point of view, at least one of the others is so insignificant that you may ignore it.</p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Quality</th>
+                                    <th>Symbols</th>
+                                    <th>Definition</th>
+                                    <th>Measured in</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Resistance</td>
+                                    <td>R</td>
+                                    <td>Ratio of applied emf to the resulting current in a circuit and the real component of impedance in an ac circuit</td>
+                                    <td>Ohm (Ω)</td>
+                                </tr>
+                                <tr>
+                                    <td>Reactance</td>
+                                    <td>X</td>
+                                    <td>Depends upon a circuit's inductance or capacitance and the frequency of the supply voltage</td>
+                                    <td>Ohm (Ω)</td>
+                                </tr>
+                                <tr>
+                                    <td>Impedance</td>
+                                    <td>Z</td>
+                                    <td>Total opposition to the flow of current in a circuit and consists of a circuit's resistance and reactance</td>
+                                    <td>Ohm (Ω)</td>
+                                </tr>
+                                <tr>
+                                    <td>Inductance</td>
+                                    <td>L</td>
+                                    <td>Property of an electric circuit by virtue of which a varying current induces an emf in that circuit or an adjacent circuit</td>
+                                    <td>Henry (H)</td>
+                                </tr>
+                                <tr>
+                                    <td>Capacitance</td>
+                                    <td>C</td>
+                                    <td>Ratio of a quantity of electricity to a potential difference and ability of conductors separated by dielectric material to store energy</td>
+                                    <td>Farad (F)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>In order to understand the behaviour of ac circuits, it is usual to start off by considering the behaviour of circuits in which only one of the three quantities exist, then extend what you have learned to circuits that contain combinations of these quantities.</p>
+
+                        <div class="warning-box">
+                            <h4>Circuit Predominance</h4>
+                            <ul>
+                                <li><strong>Heating circuits:</strong> Resistance predominates</li>
+                                <li><strong>Motor circuits:</strong> Inductance predominates</li>
+                                <li><strong>Long supply lines:</strong> Capacitance predominates</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What does the term 'impedance' mean?",
+                    options: [
+                        "Impedance is the total flow of current in a circuit and is comprised of a circuit's resistance and reactance",
+                        "Impedance is the total magnetism in the flow of current in a circuit and is comprised of a circuit's resistance and reactance",
+                        "Impedance is the total opposition to the flow of current in a circuit and is comprised of a circuit's resistance and reactance"
+                    ],
+                    correct: 2,
+                    explanation: "Impedance (Z) is the total opposition to the flow of current in a circuit and consists of a circuit's resistance and reactance. It combines both resistive and reactive effects in AC circuits."
+                }
+            },
+            {
+                title: "Circuit Types and Phase Relationships",
+                content: `
+                    <div class="section">
+                        <h2>Purely Resistive Circuit</h2>
+                        
+                        <p>When an AC current flows through pure resistance, a voltage-drop (VR) occurs across that resistance. You use Ohm's law to calculate the value of that voltage-drop: VR = IR.</p>
+
+                        <p>As you would expect, when the current is maximum, the corresponding voltage-drop is also maximum; as the current falls to zero and reverses direction, the resulting voltage-drop also falls to zero and changes direction. We say that the current and voltage are in phase with each other.</p>
+
+                        <h2>Purely Inductive Circuit</h2>
+                        
+                        <p>When an AC current flows through pure inductance, a voltage (VL) appears across that inductance. Again, you use Ohm's law to calculate the value of that voltage. This time, however, the opposition to current is inductive-reactance (XL) and not resistance, so VL = I × XL.</p>
+
+                        <p>The changing current induces the voltage (VL) into the inductance. The greater the rate of change of current, the greater this voltage. The greatest rate of change occurs as the current passes through zero, so this is where the maximum voltage occurs.</p>
+
+                        <p>In a purely inductive circuit, the current peaks behind the voltage by 90°. It is said to lag the voltage by 90°.</p>
+
+                        <h2>Purely Capacitive Circuit</h2>
+                        
+                        <p>When an AC current flows through pure capacitance, a voltage (VC) appears across that capacitance. You use Ohm's law again to calculate the value of that voltage. This time, however, the opposition to current is capacitive-reactance (XC) and not resistance, so VL = I × XC.</p>
+
+                        <p>The voltage (VC) builds up across the plates of the capacitor as the current flows onto those plates. This voltage increases as the current decreases and reaches its maximum value as the current falls to zero.</p>
+
+                        <p>In a purely capacitive circuit, the current peaks ahead of the voltage by 90°. It is said to lead the voltage by 90°.</p>
+
+                        <div class="info-box">
+                            <h4>Phase Relationships Summary</h4>
+                            <ul>
+                                <li><strong>Resistive Circuit:</strong> Current and voltage are in phase (0°)</li>
+                                <li><strong>Inductive Circuit:</strong> Current lags voltage by 90°</li>
+                                <li><strong>Capacitive Circuit:</strong> Current leads voltage by 90°</li>
+                            </ul>
+                        </div>
+
+                        <h2>Resistive-Inductive (R-L) Circuit</h2>
+                        
+                        <p>Many real circuits are resistive-inductive (R-L) circuits. An R-L circuit is one that has both resistance and inductance. If the current in a purely resistive circuit is in phase with the voltage-drop, and the current in a purely inductive circuit lags the voltage-drop by 90°, then it follows that, in an R-L circuit, the current will lag the voltage by some angle between 0° and 90°. This is what you call the phase angle (θ, Greek letter phi). Exactly what this angle will be will depend on the values of the circuit's resistance and inductive-reactance.</p>
+
+                        <h2>Resistive-Capacitive (R-C) Circuit</h2>
+                        
+                        <p>Less common than R-L circuits, R-C circuits are those that have both resistance and capacitance. Current in an R-C circuit leads the voltage by some angle (the phase-angle, θ) between 0° and 90°.</p>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "In a purely inductive electrical circuit, the current peaks behind the voltage by how many degrees?",
+                    options: [
+                        "45°",
+                        "180°", 
+                        "90°",
+                        "0°"
+                    ],
+                    correct: 2,
+                    explanation: "In a purely inductive electrical circuit, the current peaks behind the voltage by 90°. This is referred to as the current lagging the voltage by 90°. The changing current induces voltage into the inductance, with maximum voltage occurring when current passes through zero."
+                }
+            },
+            {
+                title: "Resistance, Reactance, and Impedance",
+                content: `
+                    <div class="section">
+                        <h2>Resistance, Reactance, and Impedance</h2>
+                        
+                        <h3>Resistance</h3>
+                        <p>In purely resistive circuits, the opposition to current is resistance. Resistance (R) depends upon the length, cross-sectional area, and material of a conductor. You measure resistance in ohms.</p>
+
+                        <h3>Reactance</h3>
+                        <p>In purely inductive or capacitive circuits, you call the opposition to current:</p>
+                        <ul>
+                            <li>inductive reactance (XL); or</li>
+                            <li>capacitive reactance (XC).</li>
+                        </ul>
+
+                        <p>Reactance depends upon a circuit's inductance (L) or capacitance (C) and the frequency (f) of the supply voltage. You calculate it as follows:</p>
+
+                        <div class="formula-box">
+                            <h4>Reactance Formulas</h4>
+                            <p>(Inductive reactance) XL = 2πfL</p>
+                            <p>(Capacitive reactance) XC = 1/(2πfC)</p>
+                        </div>
+
+                        <p>You measure reactance in ohms.</p>
+
+                        <h3>Impedance</h3>
+                        <p>Impedance (Z) is the total opposition to the flow of current and consists of a circuit's resistance and reactance when:</p>
+
+                        <div class="formula-box">
+                            <h4>Impedance Formulas</h4>
+                            <p>Z² = R² + XL² &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; Z = √(R² + XL²)</p>
+                            <p>Z² = R² + XC² &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; Z = √(R² + XC²)</p>
+                            <p>Z² = R² + (XL - XC)² &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; Z = √(R² + (XL - XC)²)</p>
+                        </div>
+
+                        <p>You measure impedance in ohms.</p>
+
+                        <h2>Power Factor</h2>
+                        
+                        <p>The angle between the voltage and current sine curves is measurable. You call this angle the phase angle (θ, Greek letter phi). The cosine of this angle is the power factor of the circuit. A circuit's power factor varies between 0 (corresponding to a phase angle of 90°) and 1 (corresponding to 0°).</p>
+
+                        <h3>Power in AC Circuits</h3>
+                        <p>In AC circuits, the rate of supplying energy to a load is true power (or useful power, or active power). However, establishing alternating magnetic and electric fields requires some energy. The circuit supplies the energy to the fields as they expand, and the energy alternately returns to the circuit as the fields collapse. The rate of this alternate energy movement in the circuit is what you call reactive power and is necessary in addition to the circuit's true power.</p>
+
+                        <p>An AC circuit then must supply both true power and reactive power. The "total" of both these forms of power is what you call the apparent power of the circuit.</p>
+
+                        <div class="info-box">
+                            <h4>Power Types and Units</h4>
+                            <ul>
+                                <li><strong>True power:</strong> measured in watts (W)</li>
+                                <li><strong>Reactive power:</strong> measured in reactive volt amperes (var)</li>
+                                <li><strong>Apparent power:</strong> measured in volt amperes (V•A)</li>
+                            </ul>
+                        </div>
+
+                        <div class="formula-box">
+                            <h4>Power Relationships</h4>
+                            <p>(Apparent power)² = (True power)² + (Reactive power)²</p>
+                            <p>Apparent power = √((True power)² + (Reactive power)²)</p>
+                            <p>Apparent power = Voltage × Current</p>
+                            <p>True power = Apparent power × Power factor</p>
+                            <p>True power = Voltage × Current × Power factor</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "In what units is the apparent power of an electrical circuit measured?",
+                    options: [
+                        "Volt-amperes (VA)",
+                        "Millivolts (mV)",
+                        "Microamps",
+                        "Watts (W)"
+                    ],
+                    correct: 0,
+                    explanation: "The apparent power of an electrical circuit is measured in volt-amperes (VA). This is different from true power (measured in watts) and reactive power (measured in reactive volt-amperes or var)."
+                }
+            },
+            {
+                title: "Capacitance in AC Circuits",
+                content: `
+                    <div class="section">
+                        <h2>Capacitance in AC Circuits</h2>
+                        
+                        <h3>Capacitors</h3>
+                        <p>The two common types of capacitor that the gas technician/fitter will encounter in the field are the starting capacitor and the running capacitor. You use these capacitors to boost the starting torque and running efficiency of single-phase electric motors.</p>
+
+                        <p>The capacitor consists of two aluminum electrodes (plates) with dielectric material between them. The non-conducting dielectric prevents electron flow between the plates but allows storage of an electrical charge. The DC resistance of a capacitor is infinite (∞).</p>
+
+                        <h3>Starting Capacitors</h3>
+                        <p>The starting capacitor consists of two aluminum plates separated by a dielectric of chemically treated paper, impregnated with non-conducting electrolyte. Starting capacitors are available with capacitance ratings from 75 to 600 microfarads (μF) and with voltage ratings of 110 V to 330 V.</p>
+
+                        <p>Starting capacitors have relatively small cases. You only use them for a short period on each cycle of the motor they serve. Therefore, they have no need to dissipate heat, although their capacity is larger than that of running capacitors.</p>
+
+                        <h3>Running Capacitors</h3>
+                        <p>Running capacitors stay in the motor circuit for the entire cycle of operation. For this reason, they must have some means of dissipating the resulting heat. They do this by means of an oil-filled case. The oil-filled running capacitor is larger than the starting capacitor, but its capacity is smaller.</p>
+
+                        <div class="tip-box">
+                            <h4>💡 Capacitor Comparison</h4>
+                            <ul>
+                                <li><strong>Starting Capacitors:</strong> Small case, high capacity (75-600 μF), short-term use</li>
+                                <li><strong>Running Capacitors:</strong> Larger oil-filled case, lower capacity, continuous operation</li>
+                            </ul>
+                        </div>
+
+                        <h2>Capacitance in Series and Parallel</h2>
+                        
+                        <h3>Parallel Capacitance</h3>
+                        <p>The capacitance (e.g., μF) of two or more capacitors connected in parallel is the sum of the individual capacitances.</p>
+
+                        <div class="formula-box">
+                            <h4>Parallel Capacitance Formula</h4>
+                            <p>CT = C1 + C2 + C3 + ...</p>
+                        </div>
+
+                        <h3>Series Capacitance</h3>
+                        <p>For capacitors connected in series, the calculation is more complex:</p>
+
+                        <div class="formula-box">
+                            <h4>Series Capacitance Formula</h4>
+                            <p>1/CT = 1/C1 + 1/C2 + 1/C3 + ...</p>
+                            <p>or for 2 capacitors in series:</p>
+                            <p>CT = (C1 × C2)/(C1 + C2)</p>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>Important Note</h4>
+                            <p>For a given value of true power, the apparent power increases as the power factor falls. For low values of power factor, a generator must produce a large amount of apparent power in order to supply a relatively small amount of true power. As the apparent power determines the amount of current that a generator supplies, it is desirable to make the value of the apparent power as close as possible to the true power. You can achieve this by ensuring that the circuit's power factor is as high (as close to 1) as possible.</p>
+                        </div>
+                    </div>
+                `,
+                knowledgeCheck: {
+                    question: "What is the term used to describe the property of an electrical circuit in which a varying current induces an EMF in that circuit or in an adjacent circuit?",
+                    options: [
+                        "Capacitance",
+                        "Amperage", 
+                        "Inductance",
+                        "Resistance"
+                    ],
+                    correct: 2,
+                    explanation: "Inductance is the property of an electric circuit by virtue of which a varying current induces an electromotive force (EMF) in that circuit or an adjacent circuit. It is measured in henries (H)."
+                }
+            },
+            {
+                title: "Chapter 5 Final Quiz",
+                content: `
+                    <div class="section">
+                        <h2>Chapter 5 Final Quiz</h2>
+                        <p>Test your knowledge of direct and alternating current theory covered in this chapter.</p>
+                        
+                        <div class="info-box">
+                            <h4>Quiz Instructions</h4>
+                            <p>Answer all 19 questions to complete the chapter. These questions are based on the CSA training materials and test your understanding of electrical theory as it applies to gas industry equipment.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1:</h4>
+                            <p>Which type of electrical current flows in both directions?</p>
+                            <ul class="quiz-options" data-question="0">
+                                <li onclick="selectQuizOption(0, 0)">a) Bi-directional</li>
+                                <li onclick="selectQuizOption(0, 1)">b) Alternating</li>
+                                <li onclick="selectQuizOption(0, 2)">c) Direct</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 2:</h4>
+                            <p>Indicate True or False: Alternating current is more versatile than direct current.</p>
+                            <ul class="quiz-options" data-question="1">
+                                <li onclick="selectQuizOption(1, 0)">a) True</li>
+                                <li onclick="selectQuizOption(1, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 3:</h4>
+                            <p>What is the correct name for the ac wave form?</p>
+                            <ul class="quiz-options" data-question="2">
+                                <li onclick="selectQuizOption(2, 0)">a) Arc wave</li>
+                                <li onclick="selectQuizOption(2, 1)">b) Sinusoidal or sine wave</li>
+                                <li onclick="selectQuizOption(2, 2)">c) Tidal wave</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 4:</h4>
+                            <p>What does a single-phase generator produce?</p>
+                            <ul class="quiz-options" data-question="3">
+                                <li onclick="selectQuizOption(3, 0)">a) One alternating sinusoidal wave form</li>
+                                <li onclick="selectQuizOption(3, 1)">b) High voltage</li>
+                                <li onclick="selectQuizOption(3, 2)">c) Heat</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 5:</h4>
+                            <p>What does the term "impedance" mean?</p>
+                            <ul class="quiz-options" data-question="4">
+                                <li onclick="selectQuizOption(4, 0)">a) Impedance is the total flow of current in a circuit and is comprised of a circuit's resistance and reactance.</li>
+                                <li onclick="selectQuizOption(4, 1)">b) Impedance is the total magnetism in the flow of current in a circuit and is comprised of a circuit's resistance and reactance.</li>
+                                <li onclick="selectQuizOption(4, 2)">c) Impedance is the total opposition to the flow of current in a circuit and is comprised of a circuit's resistance and reactance.</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 6:</h4>
+                            <p>What is the term used to describe the property of an electrical circuit in which a varying current induces an EMF in that circuit or in an adjacent circuit?</p>
+                            <ul class="quiz-options" data-question="5">
+                                <li onclick="selectQuizOption(5, 0)">a) Capacitance</li>
+                                <li onclick="selectQuizOption(5, 1)">b) Amperage</li>
+                                <li onclick="selectQuizOption(5, 2)">c) Inductance</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 7:</h4>
+                            <p>In what units is the apparent power of an electrical circuit measured?</p>
+                            <ul class="quiz-options" data-question="6">
+                                <li onclick="selectQuizOption(6, 0)">a) Volt-amperes (VA)</li>
+                                <li onclick="selectQuizOption(6, 1)">b) Millivolts (mV)</li>
+                                <li onclick="selectQuizOption(6, 2)">c) Microamps</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 8:</h4>
+                            <p>Indicate True or False: Generally, an electrical circuit contains a combination of resistance, induction and capacitance.</p>
+                            <ul class="quiz-options" data-question="7">
+                                <li onclick="selectQuizOption(7, 0)">a) True</li>
+                                <li onclick="selectQuizOption(7, 1)">b) False</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 9:</h4>
+                            <p>A heating circuit will be dominated by ________.</p>
+                            <ul class="quiz-options" data-question="8">
+                                <li onclick="selectQuizOption(8, 0)">a) resistance</li>
+                                <li onclick="selectQuizOption(8, 1)">b) capacitance</li>
+                                <li onclick="selectQuizOption(8, 2)">c) inductance</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 10:</h4>
+                            <p>What is the electrical symbol representative of voltage drop?</p>
+                            <ul class="quiz-options" data-question="9">
+                                <li onclick="selectQuizOption(9, 0)">a) VC</li>
+                                <li onclick="selectQuizOption(9, 1)">b) VR</li>
+                                <li onclick="selectQuizOption(9, 2)">c) VD</li>
+                                <li onclick="selectQuizOption(9, 3)">d) VF</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 11:</h4>
+                            <p>What is the electrical symbol for inductive-reactance?</p>
+                            <ul class="quiz-options" data-question="10">
+                                <li onclick="selectQuizOption(10, 0)">a) Z</li>
+                                <li onclick="selectQuizOption(10, 1)">b) ZL</li>
+                                <li onclick="selectQuizOption(10, 2)">c) XL</li>
+                                <li onclick="selectQuizOption(10, 3)">d) X</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 12:</h4>
+                            <p>What is the electrical symbol for voltage capacitance?</p>
+                            <ul class="quiz-options" data-question="11">
+                                <li onclick="selectQuizOption(11, 0)">a) VR</li>
+                                <li onclick="selectQuizOption(11, 1)">b) VD</li>
+                                <li onclick="selectQuizOption(11, 2)">c) VF</li>
+                                <li onclick="selectQuizOption(11, 3)">d) VC</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 13:</h4>
+                            <p>What is the electrical symbol for impedance?</p>
+                            <ul class="quiz-options" data-question="12">
+                                <li onclick="selectQuizOption(12, 0)">a) Z</li>
+                                <li onclick="selectQuizOption(12, 1)">b) L</li>
+                                <li onclick="selectQuizOption(12, 2)">c) C</li>
+                                <li onclick="selectQuizOption(12, 3)">d) R</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 14:</h4>
+                            <p>What is impedance measured in?</p>
+                            <ul class="quiz-options" data-question="13">
+                                <li onclick="selectQuizOption(13, 0)">a) Volts</li>
+                                <li onclick="selectQuizOption(13, 1)">b) Ohms</li>
+                                <li onclick="selectQuizOption(13, 2)">c) Amps</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 15:</h4>
+                            <p>An R-L electrical circuit is one that has both resistance and __________.</p>
+                            <ul class="quiz-options" data-question="14">
+                                <li onclick="selectQuizOption(14, 0)">a) Impedance</li>
+                                <li onclick="selectQuizOption(14, 1)">b) Capacitance</li>
+                                <li onclick="selectQuizOption(14, 2)">c) Reactance</li>
+                                <li onclick="selectQuizOption(14, 3)">d) Inductance</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 16:</h4>
+                            <p>R-C circuits are those that have both resistance and __________.</p>
+                            <ul class="quiz-options" data-question="15">
+                                <li onclick="selectQuizOption(15, 0)">a) Impedance</li>
+                                <li onclick="selectQuizOption(15, 1)">b) Reactance</li>
+                                <li onclick="selectQuizOption(15, 2)">c) Inductance</li>
+                                <li onclick="selectQuizOption(15, 3)">d) Capacitance</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 17:</h4>
+                            <p>In a purely inductive electrical circuit, the current peaks behind the voltage by __________.</p>
+                            <ul class="quiz-options" data-question="16">
+                                <li onclick="selectQuizOption(16, 0)">a) 45°</li>
+                                <li onclick="selectQuizOption(16, 1)">b) 180°</li>
+                                <li onclick="selectQuizOption(16, 2)">c) 90°</li>
+                                <li onclick="selectQuizOption(16, 3)">d) 0°</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 18:</h4>
+                            <p>In long supply lines __________ predominates.</p>
+                            <ul class="quiz-options" data-question="17">
+                                <li onclick="selectQuizOption(17, 0)">a) resistance</li>
+                                <li onclick="selectQuizOption(17, 1)">b) capacitance</li>
+                                <li onclick="selectQuizOption(17, 2)">c) inductance</li>
+                            </ul>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h4>Question 19:</h4>
+                            <p>In a motor circuit __________ predominates.</p>
+                            <ul class="quiz-options" data-question="18">
+                                <li onclick="selectQuizOption(18, 0)">a) resistance</li>
+                                <li onclick="selectQuizOption(18, 1)">b) capacitance</li>
+                                <li onclick="selectQuizOption(18, 2)">c) inductance</li>
+                            </ul>
+                        </div>
+
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+                        
+                        <div class="quiz-feedback" id="quiz-results"></div>
+                    </div>
+
+                    <div class="chapter-completion" id="completion">
+                        <h3>🎉 Chapter 5 Complete!</h3>
+                        <p>Congratulations! You have successfully completed Chapter 5 - Theory of Direct and Alternating Current.</p>
+                        <div class="score-display">
+                            <h4>Your Score: <span id="final-score"></span></h4>
+                            <p>You now understand the fundamental principles of direct and alternating current, including AC generators, waveforms, phase relationships, impedance, and capacitance in AC circuits. This knowledge is essential for working with electrical equipment in the gas industry.</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // Quiz answers (correct answer indices)
+        const quizCorrectAnswers = [1, 0, 1, 0, 2, 2, 0, 0, 0, 1, 2, 3, 0, 1, 3, 3, 2, 1, 2];
+        
+        const quizExplanations = [
+            "Alternating current flows in both directions, changing or alternating direction rapidly and constantly.",
+            "True. Alternating current is more versatile than direct current and is usable in a wide variety of ways, cheaper to produce, and allows transmission over long distances more economically.",
+            "The correct name for the AC waveform is sinusoidal or sine wave, describing the smooth curve that goes from zero to maximum positive, back through zero to maximum negative, and back to zero.",
+            "A single-phase generator produces one alternating (sinusoidal) voltage waveform, as opposed to three-phase generators which produce three separate waveforms.",
+            "Impedance is the total opposition to the flow of current in a circuit and consists of a circuit's resistance and reactance combined.",
+            "Inductance is the property of an electric circuit by virtue of which a varying current induces an electromotive force (EMF) in that circuit or an adjacent circuit.",
+            "Apparent power of an electrical circuit is measured in volt-amperes (VA), which is different from true power (watts) and reactive power (var).",
+            "True. Generally, an electrical circuit contains a combination of resistance, inductance, and capacitance, with one typically predominating.",
+            "A heating circuit will be dominated by resistance, as the primary function is to convert electrical energy to heat through resistive elements.",
+            "VR is the electrical symbol representative of voltage drop across a resistor, calculated using Ohm's law as VR = IR.",
+            "XL is the electrical symbol for inductive reactance, which is the opposition to current flow in an inductive circuit.",
+            "VC is the electrical symbol for voltage across a capacitor in AC circuits.",
+            "Z is the electrical symbol for impedance, representing the total opposition to current flow in an AC circuit.",
+            "Impedance is measured in ohms (Ω), the same unit used for resistance and reactance.",
+            "An R-L electrical circuit has both resistance and inductance, causing the current to lag the voltage by some angle between 0° and 90°.",
+            "R-C circuits have both resistance and capacitance, causing the current to lead the voltage by some angle between 0° and 90°.",
+            "In a purely inductive electrical circuit, the current peaks behind the voltage by 90°, meaning the current lags the voltage by 90°.",
+            "In long supply lines, capacitance predominates due to the distributed capacitance between conductors over long distances.",
+            "In motor circuits, inductance predominates due to the inductive nature of motor windings and magnetic fields."
+        ];
+
+        function loadSection() {
+            const section = sections[currentSection];
+            let content = section.content;
+            
+            if (section.knowledgeCheck && currentSection < 9) {
+                content += createKnowledgeCheck(section.knowledgeCheck, currentSection);
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            updateNavigation();
+            updateProgress();
+        }
+
+        function createKnowledgeCheck(check, sectionIndex) {
+            return `
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <p>${check.question}</p>
+                        <ul class="options">
+                            ${check.options.map((option, index) => 
+                                `<li onclick="selectOption(${sectionIndex}, ${index})" data-index="${index}">${option}</li>`
+                            ).join('')}
+                        </ul>
+                        <button class="check-btn" onclick="checkAnswer(${sectionIndex}, ${check.correct}, '${check.explanation.replace(/'/g, "\\'")}')">Check Answer</button>
+                        <div class="feedback" id="feedback-${sectionIndex}"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(sectionIndex, optionIndex) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            userAnswers[sectionIndex] = optionIndex;
+        }
+
+        function checkAnswer(sectionIndex, correct, explanation) {
+            const options = document.querySelectorAll('.knowledge-check .options li');
+            const feedback = document.getElementById(`feedback-${sectionIndex}`);
+            const selected = userAnswers[sectionIndex];
+            
+            if (selected === undefined) {
+                alert('Please select an answer first.');
+                return;
+            }
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            feedback.style.display = 'block';
+            feedback.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <p><strong>${selected === correct ? 'Correct!' : 'Incorrect.'}</strong></p>
+                <p>${explanation}</p>
+            `;
+            
+            document.querySelector('.check-btn').disabled = true;
+        }
+
+        function selectQuizOption(questionIndex, optionIndex) {
+            const questionContainer = document.querySelector(`[data-question="${questionIndex}"]`);
+            const options = questionContainer.querySelectorAll('li');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let resultsHTML = '<h3>Quiz Results</h3>';
+            
+            for (let i = 0; i < 19; i++) {
+                const userAnswer = quizAnswers[i];
+                const correctAnswer = quizCorrectAnswers[i];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) score++;
+                
+                // Update visual feedback
+                const questionContainer = document.querySelector(`[data-question="${i}"]`);
+                const options = questionContainer.querySelectorAll('li');
+                options.forEach((option, index) => {
+                    if (index === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                resultsHTML += `
+                    <div style="margin: 15px 0; padding: 10px; border-radius: 5px; background: ${isCorrect ? '#d4edda' : '#f8d7da'};">
+                        <p><strong>Question ${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</strong></p>
+                        <p style="font-size: 0.9em;">${quizExplanations[i]}</p>
+                    </div>
+                `;
+            }
+            
+            const percentage = Math.round((score / 19) * 100);
+            resultsHTML += `<p><strong>Final Score: ${score}/19 (${percentage}%)</strong></p>`;
+            
+            document.getElementById('quiz-results').innerHTML = resultsHTML;
+            document.getElementById('quiz-results').classList.add('show');
+            document.querySelector('.submit-quiz-btn').disabled = true;
+            
+            // Show completion
+            document.getElementById('final-score').textContent = `${score}/19 (${percentage}%)`;
+            document.getElementById('completion').classList.add('show');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                loadSection();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prev-btn').disabled = currentSection === 0;
+            document.getElementById('next-btn').disabled = currentSection === totalSections - 1;
+            document.getElementById('section-counter').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Initialize
+        loadSection();
+    </script>
+</body>
+</html>
