@@ -431,6 +431,83 @@
             background: #f8f9fa;
         }
 
+        /* Safety Framework Styles */
+        .safety-framework {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .framework-pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pillar {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2a5298;
+        }
+
+        .pillar h5 {
+            color: #2a5298;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .pillar p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        /* Safety Layers Styles */
+        .safety-layers {
+            display: grid;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .layer {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #27ae60;
+        }
+
+        .layer h4 {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        .layer ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .layer li {
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        /* Maintenance Protocols */
+        .maintenance-protocols {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ffeaa7;
+            margin: 15px 0;
+        }
+
+        .maintenance-protocols h4 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
         /* Quiz Enhancements */
         .quiz-container {
             background: white;
@@ -506,6 +583,32 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            overflow: hidden;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-description {
+            margin-top: 15px;
+            color: #666;
+            font-style: italic;
+            text-align: center;
         }
 
         .video-grid {
@@ -1659,6 +1762,207 @@
             </div>
         </div>
 
+        <!-- Module 5: Installation Procedures and Best Practices -->
+        <div class="module" id="module5">
+            <div class="module-header">
+                <div class="module-number">5</div>
+                <div>
+                    <h2>Installation Procedures and Best Practices <button class="bookmark-btn" onclick="toggleBookmark(5)" data-bookmark="5">🔖</button></h2>
+                    <p>Comprehensive installation guidelines for A2L refrigerant systems in Canadian environments</p>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <div class="video-section">
+                    <h3>📹 Featured Training Video</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/fpmCCmCFQLA?start=923" 
+                                title="Understanding A2L Refrigerants" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="video-description">Understanding A2L Refrigerants - Essential knowledge for safe installation and handling</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>Installation Planning</h3>
+                    <p>Proper planning is crucial for safe A2L refrigerant system installation. Key considerations include:</p>
+                    <ul>
+                        <li>Site assessment for ventilation requirements</li>
+                        <li>Equipment placement and clearance specifications</li>
+                        <li>Electrical safety considerations</li>
+                        <li>Emergency procedures and equipment accessibility</li>
+                        <li>Canadian building code compliance verification</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>Installation Safety Protocols</h3>
+                    <div class="safety-checklist">
+                        <h4>Pre-Installation Safety Checklist</h4>
+                        <ul>
+                            <li>✓ Verify all personnel have A2L training certification</li>
+                            <li>✓ Confirm proper ventilation systems are operational</li>
+                            <li>✓ Test gas detection systems and alarms</li>
+                            <li>✓ Verify fire suppression systems are active</li>
+                            <li>✓ Ensure emergency procedures are posted and understood</li>
+                            <li>✓ Confirm all tools are non-sparking and properly grounded</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="quiz-section">
+                    <h3>Module 5 Knowledge Check</h3>
+                    <div class="quiz-question">
+                        <p><strong>Question:</strong> What is the minimum ventilation rate required for A2L refrigerant equipment rooms in Canadian installations?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" onclick="selectQuizAnswer(5, 1, false)">A) 0.25 CFM per sq ft</button>
+                            <button class="quiz-option" onclick="selectQuizAnswer(5, 2, true)">B) 0.5 CFM per sq ft</button>
+                            <button class="quiz-option" onclick="selectQuizAnswer(5, 3, false)">C) 1.0 CFM per sq ft</button>
+                            <button class="quiz-option" onclick="selectQuizAnswer(5, 4, false)">D) No specific requirement</button>
+                        </div>
+                        <div class="quiz-feedback">
+                            <p><strong>Correct!</strong> CSA B52:23 requires a minimum of 0.5 CFM per square foot for A2L equipment rooms.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-button" onclick="previousModule()">← Previous Module</button>
+                    <button class="nav-button" onclick="nextModule()">Next Module →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 6: LARK Labs A2L Safety Fundamentals -->
+        <div class="module" id="module6">
+            <div class="module-header">
+                <div class="module-number">6</div>
+                <div>
+                    <h2>LARK Labs A2L Safety Fundamentals <button class="bookmark-btn" onclick="toggleBookmark(6)" data-bookmark="6">🔖</button></h2>
+                    <p>Core safety principles and fundamental practices for A2L refrigerant handling</p>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <div class="video-section">
+                    <h3>📹 LARK Labs Safety Training</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/2d0zrXiJGH0" 
+                                title="LARK Labs A2L Safety Fundamentals" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="video-description">LARK Labs A2L Safety Fundamentals - Essential safety training for Canadian technicians</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>Fundamental Safety Principles</h3>
+                    <p>LARK Labs has developed comprehensive safety fundamentals specifically for Canadian HVAC professionals working with A2L refrigerants:</p>
+                    
+                    <div class="safety-framework">
+                        <h4>The LARK Safety Framework</h4>
+                        <div class="framework-pillars">
+                            <div class="pillar">
+                                <h5>🛡️ Prevention</h5>
+                                <p>Proactive measures to prevent refrigerant releases and ignition sources</p>
+                            </div>
+                            <div class="pillar">
+                                <h5>🔍 Detection</h5>
+                                <p>Early warning systems and monitoring for refrigerant presence</p>
+                            </div>
+                            <div class="pillar">
+                                <h5>🚨 Response</h5>
+                                <p>Emergency procedures and rapid containment protocols</p>
+                            </div>
+                            <div class="pillar">
+                                <h5>📚 Education</h5>
+                                <p>Ongoing training and certification maintenance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-button" onclick="previousModule()">← Previous Module</button>
+                    <button class="nav-button" onclick="nextModule()">Next Module →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 7: A2L Flammability Testing -->
+        <div class="module" id="module7">
+            <div class="module-header">
+                <div class="module-number">7</div>
+                <div>
+                    <h2>A2L Flammability Testing <button class="bookmark-btn" onclick="toggleBookmark(7)" data-bookmark="7">🔖</button></h2>
+                    <p>Understanding flammability characteristics and testing procedures for A2L refrigerants</p>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <div class="video-section">
+                    <h3>📹 Flammability Testing Procedures</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/MWD9-aykQtc" 
+                                title="A2L Flammability Testing" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="video-description">A2L Flammability Testing - Laboratory procedures and safety protocols</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>Flammability Classification System</h3>
+                    <p>A2L refrigerants are classified based on specific flammability characteristics:</p>
+                    
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>A2L Requirement</th>
+                                    <th>Testing Standard</th>
+                                    <th>Canadian Compliance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Burning Velocity</td>
+                                    <td>≤ 10 cm/s</td>
+                                    <td>ASTM E681</td>
+                                    <td>CSA B52:23</td>
+                                </tr>
+                                <tr>
+                                    <td>Heat of Combustion</td>
+                                    <td>≤ 19 MJ/kg</td>
+                                    <td>ASTM D240</td>
+                                    <td>Transport Canada</td>
+                                </tr>
+                                <tr>
+                                    <td>Ignition Energy</td>
+                                    <td>High (difficult to ignite)</td>
+                                    <td>EN 13760</td>
+                                    <td>TSSA Requirements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-button" onclick="previousModule()">← Previous Module</button>
+                    <button class="nav-button" onclick="nextModule()">Next Module →</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Module 8: Case Studies - Commercial Applications -->
         <div class="module" id="module8">
             <div class="module-header">
@@ -1752,6 +2056,195 @@
                                 <div class="video-title">Commercial A2L Installation Best Practices</div>
                                 <div class="video-description">Professional installation techniques for large commercial A2L systems.</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-button" onclick="previousModule()">← Previous Module</button>
+                    <button class="nav-button" onclick="nextModule()">Next Module →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 9: Safety Storage Practices -->
+        <div class="module" id="module9">
+            <div class="module-header">
+                <div class="module-number">9</div>
+                <div>
+                    <h2>Safety Storage Practices <button class="bookmark-btn" onclick="toggleBookmark(9)" data-bookmark="9">🔖</button></h2>
+                    <p>Proper storage, handling, and transportation of A2L refrigerants in Canadian facilities</p>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <div class="video-section">
+                    <h3>📹 Safety Storage Training</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/mAU8V0JCpbE?start=15" 
+                                title="Safety Storage Practices" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="video-description">Safety Storage Practices - Professional guidelines for A2L refrigerant storage and handling</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>Storage Facility Requirements</h3>
+                    <p>Canadian regulations require specific storage conditions for A2L refrigerants:</p>
+                    <ul>
+                        <li>Temperature-controlled environment (5°C to 40°C)</li>
+                        <li>Adequate ventilation with mechanical exhaust systems</li>
+                        <li>Gas detection systems with automatic shutdown</li>
+                        <li>Fire suppression systems appropriate for flammable gases</li>
+                        <li>Segregation from incompatible materials and ignition sources</li>
+                        <li>Compliance with Transport Canada TDG regulations</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>Handling and Transportation</h3>
+                    <div class="safety-checklist">
+                        <h4>Safe Handling Protocol</h4>
+                        <ul>
+                            <li>✓ Use approved cylinders with safety relief valves</li>
+                            <li>✓ Secure cylinders during transport with approved restraints</li>
+                            <li>✓ Maintain proper labeling and documentation</li>
+                            <li>✓ Train all personnel in emergency response procedures</li>
+                            <li>✓ Regular inspection of storage equipment and safety systems</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-button" onclick="previousModule()">← Previous Module</button>
+                    <button class="nav-button" onclick="nextModule()">Next Module →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 10: Advanced Safety Systems -->
+        <div class="module" id="module10">
+            <div class="module-header">
+                <div class="module-number">10</div>
+                <div>
+                    <h2>Advanced Safety Systems <button class="bookmark-btn" onclick="toggleBookmark(10)" data-bookmark="10">🔖</button></h2>
+                    <p>Sophisticated safety systems and monitoring technologies for A2L installations</p>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <div class="video-section">
+                    <h3>📹 Advanced Safety Technologies</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/MffAs84FeSY?start=27" 
+                                title="Advanced A2L Safety Systems" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="video-description">Advanced A2L Safety Systems - Modern monitoring and protection technologies</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>Integrated Safety Systems</h3>
+                    <p>Modern A2L installations incorporate multiple layers of safety protection:</p>
+                    
+                    <div class="safety-layers">
+                        <div class="layer">
+                            <h4>Layer 1: Prevention Systems</h4>
+                            <ul>
+                                <li>Refrigerant leak detection with automatic system shutdown</li>
+                                <li>Ventilation interlocks and emergency exhaust fans</li>
+                                <li>Electrical equipment classification and grounding</li>
+                                <li>Hot surface protection and ignition source elimination</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="layer">
+                            <h4>Layer 2: Detection and Monitoring</h4>
+                            <ul>
+                                <li>Multi-point gas detection arrays</li>
+                                <li>Continuous air quality monitoring</li>
+                                <li>Pressure monitoring and alarm systems</li>
+                                <li>Remote monitoring and alert systems</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="layer">
+                            <h4>Layer 3: Response and Mitigation</h4>
+                            <ul>
+                                <li>Automatic refrigerant isolation systems</li>
+                                <li>Emergency ventilation activation</li>
+                                <li>Fire suppression system integration</li>
+                                <li>Emergency communication and evacuation systems</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-button" onclick="previousModule()">← Previous Module</button>
+                    <button class="nav-button" onclick="nextModule()">Next Module →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 11: Maintenance and Servicing -->
+        <div class="module" id="module11">
+            <div class="module-header">
+                <div class="module-number">11</div>
+                <div>
+                    <h2>Maintenance and Servicing <button class="bookmark-btn" onclick="toggleBookmark(11)" data-bookmark="11">🔖</button></h2>
+                    <p>Safe maintenance practices and servicing procedures for A2L refrigerant systems</p>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <div class="content-section">
+                    <h3>Maintenance Safety Protocols</h3>
+                    <p>A2L refrigerant systems require enhanced safety measures during maintenance and service:</p>
+                    
+                    <div class="maintenance-protocols">
+                        <h4>Pre-Service Safety Checklist</h4>
+                        <ul>
+                            <li>✓ Verify gas detection systems are operational</li>
+                            <li>✓ Test ventilation systems and emergency exhaust</li>
+                            <li>✓ Ensure all electrical equipment is properly grounded</li>
+                            <li>✓ Remove or protect potential ignition sources</li>
+                            <li>✓ Have fire extinguisher and emergency equipment ready</li>
+                            <li>✓ Establish emergency communication procedures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>Refrigerant Recovery and Recycling</h3>
+                    <p>Proper recovery procedures for A2L refrigerants follow enhanced safety protocols:</p>
+                    <ul>
+                        <li>Use certified recovery equipment designed for A2L refrigerants</li>
+                        <li>Maintain continuous ventilation during recovery operations</li>
+                        <li>Monitor for refrigerant leaks throughout the process</li>
+                        <li>Follow proper cylinder labeling and storage procedures</li>
+                        <li>Comply with environmental regulations for refrigerant disposal</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-section">
+                    <h3>Module 11 Knowledge Check</h3>
+                    <div class="quiz-question">
+                        <p><strong>Question:</strong> During A2L refrigerant recovery, what is the most critical safety consideration?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" onclick="selectQuizAnswer(11, 1, false)">A) Speed of recovery</button>
+                            <button class="quiz-option" onclick="selectQuizAnswer(11, 2, true)">B) Continuous ventilation</button>
+                            <button class="quiz-option" onclick="selectQuizAnswer(11, 3, false)">C) Equipment cost</button>
+                            <button class="quiz-option" onclick="selectQuizAnswer(11, 4, false)">D) Cylinder pressure</button>
+                        </div>
+                        <div class="quiz-feedback">
+                            <p><strong>Correct!</strong> Continuous ventilation is essential to prevent refrigerant accumulation and potential ignition hazards.</p>
                         </div>
                     </div>
                 </div>
@@ -1924,13 +2417,13 @@
                 {title: 'Canadian Regulatory Framework', icon: '2'},
                 {title: 'Properties & Hazards', icon: '3'},
                 {title: 'System Design & Installation', icon: '4'},
-                {title: 'Safe Work Practices & PPE', icon: '5'},
-                {title: 'Servicing & Maintenance', icon: '6'},
-                {title: 'Emergency Response', icon: '7'},
+                {title: 'Installation Procedures', icon: '5'},
+                {title: 'LARK Labs Safety Fundamentals', icon: '6'},
+                {title: 'A2L Flammability Testing', icon: '7'},
                 {title: 'Case Studies - Commercial', icon: '8'},
-                {title: 'Case Studies - Residential', icon: '9'},
-                {title: 'Advanced Applications', icon: '10'},
-                {title: 'Quality Assurance & Testing', icon: '11'},
+                {title: 'Safety Storage Practices', icon: '9'},
+                {title: 'Advanced Safety Systems', icon: '10'},
+                {title: 'Maintenance and Servicing', icon: '11'},
                 {title: 'Final Assessment', icon: '12'}
             ];
 
