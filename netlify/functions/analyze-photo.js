@@ -314,7 +314,7 @@ SERIES: [model series/family]
 
 **MODE ADJUSTMENT:**
 ${mode === 'technician' ? 
-  'TECHNICIAN MODE: Focus on precise technical specifications, diagnostic data points, and service requirements.' :
+  'TECHNICIAN MODE: Provide comprehensive analysis with precise technical specifications, diagnostic data points, and service requirements. Include all details a professional technician would need for service work.' :
   'HOMEOWNER MODE: Include technical data but emphasize safety, maintenance, and when to call professionals.'
 }
 
@@ -677,31 +677,33 @@ function generateExecutiveSummary(equipmentDetails, comprehensiveData, mode) {
   
   let summary = `**🎯 INSTANT DIAGNOSTIC PACKAGE: ${brand} ${model}**\n\n`;
   
+  // Always show the home mode format first (users love this layout)
+  summary += `**COMPLETE EQUIPMENT PROFILE**\n`;
+  summary += `✅ Equipment identified and verified\n`;
+  summary += `✅ Owner's manual located\n`;
+  summary += `✅ Warranty status determined\n`;
+  summary += `✅ Safety information current\n\n`;
+  
+  summary += `**WHAT'S READY FOR YOU:**\n`;
+  summary += `• Full operation manual\n`;
+  summary += `• Maintenance schedule\n`;
+  summary += `• Troubleshooting guide\n`;
+  summary += `• Professional service contacts\n\n`;
+
+  // Add technical sections for technician mode
   if (mode === 'technician') {
-    summary += `**PROFESSIONAL ANALYSIS COMPLETE**\n`;
-    summary += `✅ Equipment database matched\n`;
-    summary += `✅ Official manuals located\n`;
-    summary += `✅ Wiring diagrams available\n`;
-    summary += `✅ Error codes loaded\n`;
-    summary += `✅ Safety bulletins current\n\n`;
-    
+    summary += `---\n\n**🔧 PROFESSIONAL TECHNICAL ANALYSIS**\n\n`;
     summary += `**DIAGNOSTIC READINESS:**\n`;
-    summary += `• Complete service documentation ready\n`;
-    summary += `• Manufacturer specs verified\n`;
-    summary += `• Parts data available\n`;
-    summary += `• Code compliance checked\n\n`;
-  } else {
-    summary += `**COMPLETE EQUIPMENT PROFILE**\n`;
-    summary += `✅ Equipment identified and verified\n`;
-    summary += `✅ Owner's manual located\n`;
-    summary += `✅ Warranty status determined\n`;
-    summary += `✅ Safety information current\n\n`;
+    summary += `✅ Technical specifications verified\n`;
+    summary += `✅ Service documentation compiled\n`;
+    summary += `✅ Diagnostic procedures ready\n`;
+    summary += `✅ Test sequences prepared\n\n`;
     
-    summary += `**WHAT'S READY FOR YOU:**\n`;
-    summary += `• Full operation manual\n`;
-    summary += `• Maintenance schedule\n`;
-    summary += `• Troubleshooting guide\n`;
-    summary += `• Professional service contacts\n\n`;
+    summary += `**PROFESSIONAL RESOURCES:**\n`;
+    summary += `• Technical startup sequences\n`;
+    summary += `• Diagnostic checklists\n`;
+    summary += `• Professional test procedures\n`;
+    summary += `• Safety protocols\n\n`;
   }
   
   summary += `**NEXT STEPS:** What specific issue are you experiencing with this ${type}?`;
@@ -727,20 +729,24 @@ function generateQuickAccessData(equipmentDetails, comprehensiveData) {
 }
 
 function generateDiagnosticProcedures(equipmentDetails, mode) {
+  // Always include home mode procedures first
+  const procedures = {
+    basicChecks: getHomeownerBasicChecks(equipmentDetails.type),
+    safetyFirst: getHomeownerSafety(equipmentDetails.type),
+    whenToCallPro: getWhenToCallPro(equipmentDetails.type)
+  };
+
+  // Add technical procedures for technician mode
   if (mode === 'technician') {
-    return {
+    procedures.technicalSection = {
       startupSequence: getTechnicalStartupSequence(equipmentDetails.type),
       diagnosticChecklist: getTechnicalDiagnosticChecklist(equipmentDetails.type),
       testProcedures: getTechnicalTestProcedures(equipmentDetails.type),
       safetyProcedures: getTechnicalSafetyProcedures(equipmentDetails.type)
     };
-  } else {
-    return {
-      basicChecks: getHomeownerBasicChecks(equipmentDetails.type),
-      safetyFirst: getHomeownerSafety(equipmentDetails.type),
-      whenToCallPro: getWhenToCallPro(equipmentDetails.type)
-    };
   }
+
+  return procedures;
 }
 
 // Enhanced structured data extraction
