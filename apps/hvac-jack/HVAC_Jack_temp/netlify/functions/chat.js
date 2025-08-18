@@ -151,6 +151,17 @@ exports.handler = async (event, context) => {
           responseMetadata.routeUsed = 'safety_priority';
           break;
 
+        case 'TROUBLESHOOTING_WIZARD':
+          response = await handleTroubleshootingWizard(
+            message, 
+            systemContext, 
+            conversationHistory, 
+            photoAnalysisData,
+            mode
+          );
+          responseMetadata.routeUsed = 'troubleshooting_wizard';
+          break;
+
         case 'HOMEOWNER_GUIDED':
           response = await handleHomeownerGuided(
             message, 
@@ -284,7 +295,15 @@ function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagno
     return routing;
   }
 
-  // PRIORITY 5: Homeowner guided support (homeowner mode + guidance needed)
+  // PRIORITY 5: Troubleshooting wizard (specific troubleshooting questions)
+  if (detectTroubleshootingWizardNeed(messageLower, systemContext)) {
+    routing.route = 'TROUBLESHOOTING_WIZARD';
+    routing.confidence = 85;
+    routing.reasons.push('Troubleshooting wizard needed', 'Step-by-step diagnostic required');
+    return routing;
+  }
+
+  // PRIORITY 6: Homeowner guided support (homeowner mode + guidance needed)
   if (mode === 'homeowner' && detectHomeownerGuidanceNeed(messageLower)) {
     routing.route = 'HOMEOWNER_GUIDED';
     routing.confidence = 75;
@@ -339,6 +358,45 @@ function detectTechnicalConsultation(message) {
   ];
   
   return technicalKeywords.some(keyword => message.includes(keyword));
+}
+
+function detectTroubleshootingWizardNeed(message, systemContext) {
+  const troubleshootingPatterns = [
+    // Specific appliance issues
+    'furnace won\'t start', 'furnace not heating', 'furnace short cycling',
+    'water heater not working', 'no hot water', 'water heater leaking',
+    'generator won\'t start', 'generator problems', 'generator not running',
+    'ac not cooling', 'air conditioner problems', 'heat pump issues',
+    'boiler not working', 'no heat from boiler',
+    
+    // Common HVAC symptoms
+    'strange noise from', 'unusual sound', 'grinding noise', 'squealing',
+    'system keeps cycling', 'short cycling', 'frequent on and off',
+    'not enough heat', 'not enough cooling', 'uneven temperatures',
+    'high utility bills', 'energy costs', 'efficiency problems',
+    'thermostat problems', 'thermostat not working',
+    
+    // Step-by-step requests
+    'walk me through', 'step by step', 'what should i check first',
+    'how do i diagnose', 'troubleshooting steps', 'diagnostic process',
+    'what could be wrong', 'possible causes', 'why is my',
+    'how to troubleshoot', 'where do i start', 'what to check'
+  ];
+  
+  const hasEquipmentType = systemContext?.equipmentType || 
+                          systemContext?.brand ||
+                          message.includes('furnace') || 
+                          message.includes('water heater') ||
+                          message.includes('generator') ||
+                          message.includes('air conditioner') ||
+                          message.includes('heat pump') ||
+                          message.includes('boiler');
+  
+  const hasTroubleshootingPattern = troubleshootingPatterns.some(pattern => 
+    message.includes(pattern)
+  );
+  
+  return hasTroubleshootingPattern && hasEquipmentType;
 }
 
 function detectHomeownerGuidanceNeed(message) {
@@ -402,6 +460,85 @@ async function handleTechnicalConsultation(message, systemContext, conversationH
 
 async function handleSafetyPriority(message, systemContext, mode) {
   return generateImmediateSafetyResponse(message, systemContext, mode);
+}
+
+async function handleTroubleshootingWizard(message, systemContext, conversationHistory, photoAnalysisData, mode) {
+  console.log('🔧 Initializing troubleshooting wizard...');
+  
+  const { TroubleshootingWizard } = require('./troubleshooting-wizard');
+  const wizard = new TroubleshootingWizard();
+  
+  // Extract equipment details from context
+  const equipmentData = {
+    type: systemContext?.equipmentType || extractEquipmentFromMessage(message),
+    brand: systemContext?.brand,
+    model: systemContext?.model,
+    photoAnalysis: photoAnalysisData?.structuredData
+  };
+  
+  // Start or continue troubleshooting session
+  const troubleshootingResult = await wizard.startTroubleshooting(message, equipmentData, mode);
+  
+  if (troubleshootingResult.success) {
+    const session = troubleshootingResult.session;
+    const currentStep = session.currentStep;
+    
+    let response = `🔧 **HVAC Troubleshooting Wizard Started**\n\n`;
+    response += `**Equipment**: ${equipmentData.type || 'HVAC System'}\n`;
+    response += `**Symptoms Detected**: ${session.symptoms}\n\n`;
+    
+    if (session.safetyWarnings.length > 0) {
+      response += `⚠️ **SAFETY FIRST:**\n`;
+      session.safetyWarnings.forEach(warning => {
+        response += `• ${warning}\n`;
+      });
+      response += `\n`;
+    }
+    
+    response += `**Next Step**: ${currentStep.instruction}\n\n`;
+    
+    if (currentStep.checkItems) {
+      response += `**Check these items:**\n`;
+      currentStep.checkItems.forEach(item => {
+        response += `□ ${item}\n`;
+      });
+      response += `\n`;
+    }
+    
+    response += `**After checking, tell me what you found and I'll guide you to the next step.**\n\n`;
+    response += `_Type 'stop troubleshooting' if you want to exit the wizard._`;
+    
+    // Store session in global store
+    if (!global.usageStore.diagnosticSessions) {
+      global.usageStore.diagnosticSessions = new Map();
+    }
+    global.usageStore.diagnosticSessions.set(session.sessionId, session);
+    
+    return response;
+  } else {
+    return `❌ **Troubleshooting Error**\n\n${troubleshootingResult.error}\n\nLet me provide general guidance instead...`;
+  }
+}
+
+function extractEquipmentFromMessage(message) {
+  const equipmentTypes = {
+    'furnace': 'furnace',
+    'water heater': 'water heater',
+    'generator': 'generator',
+    'air conditioner': 'air conditioner',
+    'ac': 'air conditioner',
+    'heat pump': 'heat pump',
+    'boiler': 'boiler',
+    'hvac': 'hvac system'
+  };
+  
+  const messageLower = message.toLowerCase();
+  for (const [keyword, type] of Object.entries(equipmentTypes)) {
+    if (messageLower.includes(keyword)) {
+      return type;
+    }
+  }
+  return 'hvac system';
 }
 
 async function handleHomeownerGuided(message, systemContext, conversationHistory, photoAnalysisData, mode) {

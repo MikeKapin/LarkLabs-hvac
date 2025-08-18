@@ -1426,6 +1426,13 @@ function displayClaudeAnalysisResult(analysisResult, mode) {
     // First, display the analysis results
     addMobileMessage('📸 **Rating Plate Analysis Complete!**\n\nClaude has analyzed your equipment photo:', 'ai');
     
+    // Check if capacitor data was enhanced via database lookup
+    if (analysisResult.capacitorLookup && analysisResult.capacitorLookup.enhanced) {
+        const capacitorSource = analysisResult.capacitorLookup.lookupSource;
+        const confidence = analysisResult.capacitorLookup.confidence;
+        addMobileMessage(`🔋 **Capacitor Data Enhanced!**\n\nCapacitor specifications found via ${capacitorSource} (${confidence}% confidence)`, 'ai');
+    }
+    
     const formattedResult = AnalysisFormatter.formatAnalysisResult(analysisResult, mode);
     
     if (!formattedResult.success) {
@@ -1715,20 +1722,36 @@ function generateManualSearchFallback(equipment, mode) {
                 }
 
                 if (data.capacitors && data.capacitors.length > 0) {
+                    const capacitorTitle = data.capacitorLookupSource ? 
+                        `🔋 Capacitor Requirements <span style="font-size: 0.75em; color: #A0AEC0;">(${data.capacitorLookupSource})</span>` :
+                        '🔋 Capacitor Requirements';
+                        
                     formatted += `
                         <div class="info-section">
-                            <div class="info-section-title">🔋 Capacitor Requirements</div>
+                            <div class="info-section-title">${capacitorTitle}</div>
                             <div class="capacitor-list">`;
                     
                     data.capacitors.forEach(cap => {
+                        const specs = cap.mfd ? `${cap.mfd} MFD, ${cap.voltage} ${cap.type}` : `${cap.voltage} ${cap.type}`;
+                        const notes = cap.notes ? `<div style="font-size: 0.7em; color: #A0AEC0; margin-top: 2px;">${cap.notes}</div>` : '';
+                        
                         formatted += `
                             <div class="capacitor-item">
                                 <div class="capacitor-component">${cap.component}</div>
-                                <div class="capacitor-specs">${cap.mfd} MFD, ${cap.voltage}V ${cap.type}</div>
+                                <div class="capacitor-specs">${specs}${notes}</div>
                             </div>`;
                     });
                     
-                    formatted += `</div></div>`;
+                    formatted += `</div>`;
+                    
+                    // Add database lookup confidence if available
+                    if (data.capacitorConfidence && data.capacitorConfidence < 80) {
+                        formatted += `<div style="font-size: 0.75em; color: #FBD38D; margin-top: 8px;">
+                            ⚠️ Verify these specifications with your equipment manual or existing capacitor labels
+                        </div>`;
+                    }
+                    
+                    formatted += `</div>`;
                 }
 
                 if (data.warranty) {

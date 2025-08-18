@@ -4,6 +4,7 @@
 const { OCRProcessor } = require('./ocr-processor');
 const { ErrorCodeDatabase, EquipmentDatabase } = require('./error-code-database');
 const { ComprehensiveEquipmentDatabase } = require('./equipment-database');
+const { CapacitorDatabase } = require('./capacitor-database');
 
 // Initialize shared storage for tracking photo analyses
 global.usageStore = global.usageStore || {
@@ -117,8 +118,12 @@ exports.handler = async (event, context) => {
     console.log('📚 Step 2: Enhanced data retrieval...');
     const comprehensiveData = await retrieveComprehensiveData(equipmentDetails, mode, equipmentLookup);
     
-    // STEP 4: Professional diagnostic compilation
-    console.log('🎯 Step 3: Professional diagnostic compilation...');
+    // STEP 4: Enhanced capacitor lookup if not found in photo
+    console.log('🔋 Step 3.5: Capacitor database lookup...');
+    const capacitorLookup = await enhanceCapacitorData(primaryAnalysis.structuredData, equipmentDetails, mode);
+    
+    // STEP 5: Professional diagnostic compilation
+    console.log('🎯 Step 4: Professional diagnostic compilation...');
     const diagnosticPackage = await compileDiagnosticPackage(
       primaryAnalysis, 
       equipmentDetails, 
@@ -151,6 +156,7 @@ exports.handler = async (event, context) => {
         structuredData: primaryAnalysis.structuredData,
         equipmentDetails: equipmentDetails,
         comprehensiveData: comprehensiveData,
+        capacitorLookup: capacitorLookup,
         diagnosticPackage: diagnosticPackage,
         responseTime,
         sessionId,
@@ -1027,4 +1033,65 @@ function generateProfessionalContacts(equipmentDetails) {
     localService: 'Find certified local technicians',
     emergency: 'Emergency service contacts'
   };
+}
+
+// Enhanced capacitor data lookup when not found in photo analysis
+async function enhanceCapacitorData(structuredData, equipmentDetails, mode) {
+  const capacitorDB = new CapacitorDatabase();
+  
+  // Check if capacitors were already found in photo analysis
+  const hasCapacitorData = structuredData.capacitors && structuredData.capacitors.length > 0;
+  
+  if (hasCapacitorData) {
+    console.log('🔋 Capacitors found in photo analysis, skipping database lookup');
+    return {
+      source: 'photo_analysis',
+      found: true,
+      capacitors: structuredData.capacitors,
+      enhanced: false
+    };
+  }
+
+  console.log('🔋 No capacitor data in photo, performing database lookup...');
+  
+  try {
+    const lookupResult = await capacitorDB.lookupCapacitorRequirements(equipmentDetails, mode);
+    
+    if (lookupResult.found) {
+      // Enhance structured data with found capacitors
+      structuredData.capacitors = lookupResult.capacitors;
+      structuredData.capacitorLookupSource = lookupResult.source;
+      structuredData.capacitorConfidence = lookupResult.confidence;
+      
+      console.log(`🔋 Capacitor data found via ${lookupResult.source} (confidence: ${lookupResult.confidence}%)`);
+      
+      return {
+        source: 'database_lookup',
+        found: true,
+        capacitors: lookupResult.capacitors,
+        lookupSource: lookupResult.source,
+        confidence: lookupResult.confidence,
+        recommendations: lookupResult.recommendations,
+        enhanced: true
+      };
+    } else {
+      console.log('🔋 No capacitor data found in database');
+      return {
+        source: 'none',
+        found: false,
+        capacitors: [],
+        enhanced: false
+      };
+    }
+    
+  } catch (error) {
+    console.error('🔋 Capacitor database lookup error:', error);
+    return {
+      source: 'error',
+      found: false,
+      capacitors: [],
+      error: error.message,
+      enhanced: false
+    };
+  }
 }
