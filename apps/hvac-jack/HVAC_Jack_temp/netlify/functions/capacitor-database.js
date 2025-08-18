@@ -104,20 +104,43 @@ class CapacitorDatabase {
   // Web search for capacitor specifications
   async searchWebCapacitorData(equipmentDetails) {
     try {
-      // This would integrate with your web search functionality
+      console.log('🔍 Performing live web search for capacitor specifications...');
       const searchQueries = this.buildCapacitorSearchQueries(equipmentDetails);
       
-      // For now, return structured placeholder that would be replaced with actual web search
+      // Perform actual web search using available search APIs
+      const searchResults = await this.performLiveWebSearch(searchQueries[0]);
+      
+      if (searchResults.success) {
+        const parsedCapacitors = await this.parseWebSearchResults(searchResults.results, equipmentDetails);
+        
+        if (parsedCapacitors.length > 0) {
+          return {
+            found: true,
+            capacitors: parsedCapacitors,
+            source: 'Live Web Search',
+            confidence: searchResults.confidence || 75,
+            searchQuery: searchQueries[0],
+            recommendations: [
+              'Web search results - verify with manufacturer documentation',
+              'Check existing capacitor markings before replacement', 
+              'Cross-reference with multiple sources when possible',
+              'Use exact MFD and voltage ratings - do not substitute'
+            ]
+          };
+        }
+      }
+      
+      // Fallback to cached/structured data if web search fails
       if (equipmentDetails.brand && equipmentDetails.model) {
         return {
           found: true,
           capacitors: await this.parseWebCapacitorData(equipmentDetails),
-          source: 'Web Search Results',
-          confidence: 70,
+          source: 'Cached Web Data',
+          confidence: 60,
           recommendations: [
-            'Verify capacitor specifications with manufacturer documentation',
-            'Check existing capacitor markings before replacement',
-            'Use exact MFD and voltage ratings - do not substitute'
+            'Using cached data - consider checking manufacturer website directly',
+            'Verify capacitor specifications with equipment manual',
+            'Check existing capacitor markings before replacement'
           ]
         };
       }
@@ -196,7 +219,12 @@ class CapacitorDatabase {
         'Note the MFD (microfarad) and voltage ratings',
         'Contact HVAC professional for proper capacitor selection',
         'Never guess capacitor specifications'
-      ]
+      ],
+      // NEW: Offer advanced web search option
+      webSearchAvailable: true,
+      webSearchPrompt: equipmentDetails.brand && equipmentDetails.model ? 
+        `Would you like me to search the web for specific capacitor requirements for your ${equipmentDetails.brand} ${equipmentDetails.model}? This will take a few more seconds but may provide exact specifications.` :
+        'Would you like me to search the web for more specific capacitor information? Please provide your equipment brand and model number for best results.'
     };
   }
 
@@ -487,6 +515,184 @@ class CapacitorDatabase {
         '1': { mfd: '20-25', voltage: '370V' }
       }
     };
+  }
+}
+
+  // Perform live web search using available APIs
+  async performLiveWebSearch(query) {
+    try {
+      // Use SerpAPI if available (you mentioned search capabilities in the codebase)
+      if (process.env.SERPAPI_KEY) {
+        return await this.searchWithSerpAPI(query);
+      }
+      
+      // Fallback to other search methods if available
+      // This could integrate with your existing web search functionality
+      
+      return { success: false, error: 'No web search API available' };
+      
+    } catch (error) {
+      console.error('Live web search error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // Search using SerpAPI
+  async searchWithSerpAPI(query) {
+    try {
+      const fetch = (await import('node-fetch')).default;
+      const params = new URLSearchParams({
+        q: query,
+        api_key: process.env.SERPAPI_KEY,
+        engine: 'google',
+        num: 10
+      });
+
+      const response = await fetch(`https://serpapi.com/search?${params}`);
+      
+      if (!response.ok) {
+        throw new Error(`SerpAPI error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      return {
+        success: true,
+        results: data.organic_results || [],
+        confidence: 75
+      };
+      
+    } catch (error) {
+      console.error('SerpAPI search error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // Parse web search results to extract capacitor specifications
+  async parseWebSearchResults(results, equipmentDetails) {
+    const capacitors = [];
+    const brand = equipmentDetails.brand?.toLowerCase();
+    const model = equipmentDetails.model?.toLowerCase();
+
+    for (const result of results.slice(0, 5)) { // Check first 5 results
+      const title = result.title?.toLowerCase() || '';
+      const snippet = result.snippet?.toLowerCase() || '';
+      const text = `${title} ${snippet}`;
+
+      // Look for capacitor specifications in the text
+      const capacitorData = this.extractCapacitorFromText(text, equipmentDetails);
+      if (capacitorData.length > 0) {
+        capacitors.push(...capacitorData);
+      }
+    }
+
+    // Remove duplicates and return best matches
+    return this.deduplicateCapacitors(capacitors);
+  }
+
+  // Extract capacitor specifications from text
+  extractCapacitorFromText(text, equipmentDetails) {
+    const capacitors = [];
+    
+    // Common patterns for capacitor specifications
+    const patterns = [
+      // "45 MFD 370V start capacitor"
+      /(\d+(?:\.\d+)?)\s*mfd?\s*(\d+)v?\s*(start|run|dual)?\s*capacitor/gi,
+      // "capacitor: 35 microfarad 370 volt"
+      /capacitor:?\s*(\d+(?:\.\d+)?)\s*(?:mfd?|microfarad)\s*(\d+)\s*(?:v|volt)/gi,
+      // "compressor capacitor 50MFD/370V"
+      /(compressor|fan|motor)\s*capacitor\s*(\d+(?:\.\d+)?)\s*mfd?\s*\/?\s*(\d+)v?/gi
+    ];
+
+    patterns.forEach(pattern => {
+      let match;
+      while ((match = pattern.exec(text)) !== null) {
+        const mfd = parseFloat(match[1] || match[2]);
+        const voltage = parseInt(match[2] || match[3] || '370');
+        const component = match[1]?.includes('compressor') ? 'Compressor' :
+                         match[1]?.includes('fan') ? 'Condenser Fan' :
+                         match[3] === 'start' ? 'Compressor Start' : 'Run Capacitor';
+        const type = match[3] || (component.includes('Compressor') ? 'Start Capacitor' : 'Run Capacitor');
+
+        if (mfd && mfd > 0 && voltage > 0) {
+          capacitors.push({
+            component: component,
+            mfd: mfd.toString(),
+            voltage: `${voltage}V`,
+            type: type,
+            notes: 'Found via web search - verify with equipment documentation'
+          });
+        }
+      }
+    });
+
+    return capacitors;
+  }
+
+  // Remove duplicate capacitor entries
+  deduplicateCapacitors(capacitors) {
+    const unique = [];
+    const seen = new Set();
+
+    for (const cap of capacitors) {
+      const key = `${cap.component}-${cap.mfd}-${cap.voltage}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        unique.push(cap);
+      }
+    }
+
+    return unique.slice(0, 4); // Return max 4 capacitors
+  }
+
+  // Advanced web search specifically for capacitor data
+  async performAdvancedCapacitorSearch(equipmentDetails, userQuery = null) {
+    console.log('🔍 Performing advanced capacitor web search...');
+    
+    const searchQuery = userQuery || this.buildAdvancedSearchQuery(equipmentDetails);
+    const searchResult = await this.performLiveWebSearch(searchQuery);
+    
+    if (searchResult.success) {
+      const capacitors = await this.parseWebSearchResults(searchResult.results, equipmentDetails);
+      
+      return {
+        success: true,
+        capacitors: capacitors,
+        source: 'Advanced Web Search',
+        confidence: capacitors.length > 0 ? 80 : 40,
+        searchQuery: searchQuery,
+        resultsFound: searchResult.results.length,
+        recommendations: [
+          'Advanced web search results - cross-reference with manufacturer specs',
+          'Always verify capacitor ratings with existing equipment labels',
+          'Consider calling manufacturer technical support for confirmation',
+          'Use exact specifications - close approximations can damage equipment'
+        ]
+      };
+    }
+
+    return {
+      success: false,
+      error: searchResult.error || 'Web search failed',
+      fallbackRecommendation: 'Please provide equipment brand and model for manual lookup, or check existing capacitor labels'
+    };
+  }
+
+  // Build advanced search query for better results
+  buildAdvancedSearchQuery(equipmentDetails) {
+    const brand = equipmentDetails.brand;
+    const model = equipmentDetails.model;
+    const type = equipmentDetails.type;
+
+    if (brand && model) {
+      return `"${brand}" "${model}" capacitor specifications MFD microfarad replacement parts manual`;
+    } else if (brand && type) {
+      return `"${brand}" ${type} capacitor specifications MFD start run replacement`;
+    } else if (type) {
+      return `${type} capacitor specifications MFD voltage replacement guide`;
+    }
+
+    return 'HVAC capacitor specifications MFD voltage guide';
   }
 }
 

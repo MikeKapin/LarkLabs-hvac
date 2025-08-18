@@ -1431,6 +1431,13 @@ function displayClaudeAnalysisResult(analysisResult, mode) {
         const capacitorSource = analysisResult.capacitorLookup.lookupSource;
         const confidence = analysisResult.capacitorLookup.confidence;
         addMobileMessage(`🔋 **Capacitor Data Enhanced!**\n\nCapacitor specifications found via ${capacitorSource} (${confidence}% confidence)`, 'ai');
+        
+        // Show web search option if available and confidence is low
+        if (analysisResult.capacitorLookup.webSearchAvailable && confidence < 70) {
+            setTimeout(() => {
+                showAdvancedSearchOption(analysisResult.capacitorLookup.webSearchPrompt, analysisResult);
+            }, 1000);
+        }
     }
     
     const formattedResult = AnalysisFormatter.formatAnalysisResult(analysisResult, mode);
@@ -3443,6 +3450,29 @@ What's your current diagnostic status?`
             // Prevent potential iframe navigation issues by sanitizing input
             const sanitizedMessage = message.replace(/javascript:/gi, '').replace(/data:/gi, '');
 
+            // Check for advanced search requests
+            const searchTriggers = ['search web', 'advanced search', 'web search', 'search online'];
+            const isAdvancedSearchRequest = searchTriggers.some(trigger => 
+                sanitizedMessage.toLowerCase().includes(trigger)
+            );
+            
+            if (isAdvancedSearchRequest && window.pendingWebSearch) {
+                window.mobileHvacJack.hapticFeedback('light');
+                addMobileMessage(sanitizedMessage, 'user');
+                input.value = '';
+                input.style.height = 'auto';
+                
+                // Extract custom query if provided
+                let customQuery = null;
+                const queryMatch = sanitizedMessage.match(/search.*?(?:for|about)\s+(.+)/i);
+                if (queryMatch) {
+                    customQuery = queryMatch[1].trim();
+                }
+                
+                await performAdvancedCapacitorSearch(customQuery);
+                return;
+            }
+
             window.mobileHvacJack.hapticFeedback('light');
             addMobileMessage(sanitizedMessage, 'user');
             input.value = '';
@@ -3587,6 +3617,129 @@ What's your current diagnostic status?`
             window.mobileHvacJack.updateMobileMemoryDisplay();
             window.mobileHvacJack.hapticFeedback('success');
         }
+
+        // Advanced capacitor search functions
+        function showAdvancedSearchOption(promptText, analysisResult) {
+            const searchOptionMessage = `🔍 **Advanced Search Available**\n\n${promptText}\n\nReply with **"search web"** or **"advanced search"** to find more specific capacitor data.`;
+            addMobileMessage(searchOptionMessage, 'ai');
+            
+            // Store analysis result for potential web search
+            window.pendingWebSearch = {
+                equipmentDetails: analysisResult.equipmentDetails,
+                sessionId: analysisResult.sessionId
+            };
+        }
+
+        async function performAdvancedCapacitorSearch(customQuery = null) {
+            if (!window.pendingWebSearch) {
+                addMobileMessage('❌ **Search Error**\n\nNo equipment data available for advanced search. Please analyze a rating plate first.', 'ai');
+                return;
+            }
+
+            try {
+                addMobileMessage('🔍 **Searching the web for specific capacitor data...**\n\nThis may take a few moments.', 'ai');
+                
+                const advancedSearchEndpoint = '../../../.netlify/functions/advanced-capacitor-search';
+                const mode = window.mobileHvacJack ? window.mobileHvacJack.currentMode : 'homeowner';
+                
+                const requestBody = {
+                    equipmentDetails: window.pendingWebSearch.equipmentDetails,
+                    sessionId: window.pendingWebSearch.sessionId,
+                    userQuery: customQuery,
+                    mode: mode
+                };
+
+                console.log('Sending advanced search request:', requestBody);
+                
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+                
+                const response = await fetch(advancedSearchEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                displayAdvancedSearchResults(result, mode);
+                
+                // Clear pending search
+                window.pendingWebSearch = null;
+
+            } catch (error) {
+                console.error('Advanced search error:', error);
+                
+                let errorMessage = '❌ **Advanced Search Failed**\n\n';
+                if (error.name === 'AbortError') {
+                    errorMessage += 'Search timed out. The web search is taking too long.';
+                } else if (error.message.includes('rate limit')) {
+                    errorMessage += 'Too many web searches recently. Please try again in a few minutes.';
+                } else {
+                    errorMessage += `${error.message}\n\nTry checking the existing capacitor labels on your equipment, or consult the equipment manual.`;
+                }
+                
+                addMobileMessage(errorMessage, 'ai');
+            }
+        }
+
+        function displayAdvancedSearchResults(result, mode) {
+            if (result.success && result.capacitors && result.capacitors.length > 0) {
+                let message = `🔍 **Advanced Web Search Complete!**\n\n`;
+                message += `Found ${result.capacitors.length} capacitor specification(s) via ${result.source}\n\n`;
+                
+                message += `**Search Query**: ${result.searchQuery}\n`;
+                message += `**Confidence**: ${result.confidence}%\n`;
+                message += `**Results Analyzed**: ${result.resultsFound}\n\n`;
+                
+                message += `**Capacitor Specifications:**\n`;
+                result.capacitors.forEach((cap, index) => {
+                    message += `${index + 1}. **${cap.component}**: ${cap.mfd} MFD, ${cap.voltage} ${cap.type}\n`;
+                    if (cap.notes) {
+                        message += `   _${cap.notes}_\n`;
+                    }
+                });
+                
+                if (result.recommendations && result.recommendations.length > 0) {
+                    message += `\n**Important Notes:**\n`;
+                    result.recommendations.forEach(rec => {
+                        message += `• ${rec}\n`;
+                    });
+                }
+                
+                addMobileMessage(message, 'ai');
+                
+            } else {
+                let message = `🔍 **Advanced Web Search Complete**\n\n`;
+                message += `Unfortunately, I couldn't find specific capacitor specifications in the web search results.\n\n`;
+                
+                if (result.searchQuery) {
+                    message += `**Search Query Used**: ${result.searchQuery}\n`;
+                    message += `**Results Analyzed**: ${result.resultsFound || 0}\n\n`;
+                }
+                
+                if (result.fallbackRecommendation) {
+                    message += `**Recommendation**: ${result.fallbackRecommendation}\n\n`;
+                }
+                
+                message += `**What you can do:**\n`;
+                message += `• Check existing capacitor labels for exact MFD and voltage\n`;
+                message += `• Look up your equipment model on the manufacturer's website\n`;
+                message += `• Contact the manufacturer's technical support\n`;
+                message += `• Ask an HVAC professional for assistance`;
+                
+                addMobileMessage(message, 'ai');
+            }
+        }
+
     </script>
     <!-- Enhanced fix for clickable and selectable manual links -->
 <style>

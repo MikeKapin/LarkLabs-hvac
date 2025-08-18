@@ -1072,7 +1072,9 @@ async function enhanceCapacitorData(structuredData, equipmentDetails, mode) {
         lookupSource: lookupResult.source,
         confidence: lookupResult.confidence,
         recommendations: lookupResult.recommendations,
-        enhanced: true
+        enhanced: true,
+        webSearchAvailable: lookupResult.webSearchAvailable || false,
+        webSearchPrompt: lookupResult.webSearchPrompt || null
       };
     } else {
       console.log('🔋 No capacitor data found in database');
