@@ -200,7 +200,9 @@ exports.handler = async (event, context) => {
 async function performFallbackAnalysis(imageData, mode) {
   console.log('📋 Performing fallback analysis during API overload...');
   
-  return `**FALLBACK ANALYSIS - API TEMPORARILY UNAVAILABLE**
+  // Return object with analysis property to match expected format
+  return {
+    analysis: `**FALLBACK ANALYSIS - API TEMPORARILY UNAVAILABLE**
 
 ⚠️ Claude's vision analysis is temporarily unavailable due to high server load.
 However, I can still help you with your HVAC equipment!
@@ -230,7 +232,12 @@ Since I can't read your rating plate right now, please provide:
 2. OR tell me your equipment details manually
 3. OR describe your specific HVAC problem for immediate help
 
-The servers are just busy - your photo analysis will work normally once they're available again!`;
+The servers are just busy - your photo analysis will work normally once they're available again!`,
+    brand: 'Unknown',
+    model: 'Unknown',
+    type: 'HVAC Equipment',
+    fallback: true
+  };
 }
 
 // Enhanced Claude analysis with OCR preprocessing
