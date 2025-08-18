@@ -548,47 +548,63 @@ async function searchCapacitorSpecs(equipmentDetails) {
       const fetch = (await import('node-fetch')).default;
       
       const searchQueries = [
-        `${equipmentDetails.brand} ${equipmentDetails.model} capacitor specifications MFD`,
-        `${equipmentDetails.brand} ${equipmentDetails.model} motor capacitor ratings`,
-        `${equipmentDetails.brand} ${equipmentDetails.model} compressor capacitor MFD voltage`,
-        `${equipmentDetails.brand} ${equipmentDetails.model} condenser fan motor capacitor`,
-        `${equipmentDetails.brand} ${equipmentDetails.model} blower motor capacitor specs`
+        `${equipmentDetails.brand} ${equipmentDetails.model} capacitor replacement MFD`,
+        `${equipmentDetails.brand} ${equipmentDetails.model} parts list capacitor`,
+        `${equipmentDetails.brand} ${equipmentDetails.model} motor capacitor specs`,
+        `"${equipmentDetails.brand} ${equipmentDetails.model}" compressor capacitor MFD voltage`,
+        `${equipmentDetails.brand} ${equipmentDetails.model} condenser fan capacitor`,
+        `${equipmentDetails.brand} model ${equipmentDetails.model} dual capacitor`,
+        `${equipmentDetails.brand} ${equipmentDetails.model} service manual capacitor specifications`
       ];
 
       const capacitorResults = [];
       
-      // Search for capacitor information
-      for (const query of searchQueries.slice(0, 2)) { // Limit to 2 searches to avoid timeout
+      console.log(`🔍 Searching for capacitor specs: ${equipmentDetails.brand} ${equipmentDetails.model}`);
+      
+      // Search for capacitor information - increased to 3 searches
+      for (const query of searchQueries.slice(0, 3)) {
         try {
-          const response = await fetch(`https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${process.env.SERPAPI_KEY}&engine=google&num=5`);
+          console.log(`🌐 SERP Query: ${query}`);
+          const response = await fetch(`https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${process.env.SERPAPI_KEY}&engine=google&num=8`);
           
           if (response.ok) {
             const data = await response.json();
             if (data.organic_results) {
-              capacitorResults.push(...data.organic_results.map(result => ({
+              const results = data.organic_results.map(result => ({
                 title: result.title,
                 snippet: result.snippet,
                 link: result.link,
                 query: query
-              })));
+              }));
+              capacitorResults.push(...results);
+              console.log(`✅ Found ${results.length} results for query: ${query.substring(0, 50)}...`);
             }
+          } else {
+            console.log(`❌ SERP API error: ${response.status}`);
           }
         } catch (searchError) {
-          console.log(`Capacitor search failed for query: ${query}`, searchError.message);
+          console.log(`❌ Capacitor search failed for query: ${query}`, searchError.message);
         }
       }
+
+      console.log(`📊 Total search results found: ${capacitorResults.length}`);
 
       // Parse capacitor information from search results
       const capacitorSpecs = parseCapacitorSpecs(capacitorResults, equipmentDetails);
       
       return {
-        success: true,
+        success: capacitorResults.length > 0,
         searchResults: capacitorResults,
         ...capacitorSpecs,
-        searchTerms: searchQueries
+        searchTerms: searchQueries,
+        debug: {
+          totalResults: capacitorResults.length,
+          queriesUsed: searchQueries.slice(0, 3)
+        }
       };
     } else {
       // Fallback when no SERP API - provide search guidance
+      console.log('⚠️ SERP API not configured, providing manual search guidance');
       return {
         success: false,
         reason: 'SERP API not configured - providing search guidance',
@@ -601,7 +617,7 @@ async function searchCapacitorSpecs(equipmentDetails) {
       };
     }
   } catch (error) {
-    console.error('Capacitor specs search error:', error);
+    console.error('❌ Capacitor specs search error:', error);
     return {
       success: false,
       reason: 'Capacitor search failed',
@@ -618,41 +634,185 @@ function parseCapacitorSpecs(searchResults, equipmentDetails) {
     condenserFanCapacitor: null,
     blowerCapacitor: null,
     dualCapacitor: null,
-    notes: []
+    commonCapacitors: [],
+    notes: [],
+    debug: {
+      totalResultsProcessed: searchResults.length,
+      patternsFound: 0,
+      specificMatches: []
+    }
   };
 
-  // Look for common capacitor patterns in search results
-  const mfdPattern = /(\d+(?:\.\d+)?)\s*(?:MFD|μF|uF)/gi;
-  const voltagePattern = /(\d+)\s*(?:V|volt)/gi;
+  console.log(`🔧 Parsing ${searchResults.length} search results for capacitor specs...`);
+
+  // Enhanced patterns for capacitor specifications
+  const mfdPatterns = [
+    /(\d+(?:\.\d+)?)\s*(?:MFD|μF|uF|microfarad)/gi,
+    /(\d+(?:\.\d+)?)\s*mfd/gi,
+    /(\d+(?:\.\d+)?)\s*uf/gi,
+    /(\d+(?:\.\d+)?)\s*micro/gi
+  ];
+  
+  const voltagePatterns = [
+    /(\d{2,3})\s*(?:V|volt|VAC)/gi,
+    /(\d{2,3})\s*vac/gi,
+    /(\d{2,3})\s*volts?/gi
+  ];
+
+  // Common HVAC capacitor ratings to look for
+  const commonCapacitorSpecs = [
+    { mfd: '35', voltage: '370', type: 'compressor' },
+    { mfd: '45', voltage: '370', type: 'compressor' },
+    { mfd: '55', voltage: '370', type: 'compressor' },
+    { mfd: '5', voltage: '370', type: 'condenser_fan' },
+    { mfd: '7.5', voltage: '370', type: 'condenser_fan' },
+    { mfd: '10', voltage: '370', type: 'blower' },
+    { mfd: '15', voltage: '370', type: 'blower' },
+    { mfd: '35/5', voltage: '370', type: 'dual' },
+    { mfd: '45/5', voltage: '370', type: 'dual' },
+    { mfd: '55/5', voltage: '370', type: 'dual' }
+  ];
   
   for (const result of searchResults) {
-    const text = (result.title + ' ' + result.snippet).toLowerCase();
+    const fullText = (result.title + ' ' + result.snippet);
+    const textLower = fullText.toLowerCase();
     
-    // Look for capacitor ratings
-    const mfdMatches = [...text.matchAll(mfdPattern)];
-    const voltageMatches = [...text.matchAll(voltagePattern)];
+    console.log(`🔍 Checking result: ${result.title.substring(0, 60)}...`);
     
-    if (mfdMatches.length > 0 && voltageMatches.length > 0) {
+    // Look for capacitor ratings using multiple patterns
+    let foundMFDs = [];
+    let foundVoltages = [];
+    
+    for (const pattern of mfdPatterns) {
+      const matches = [...fullText.matchAll(pattern)];
+      foundMFDs.push(...matches.map(m => m[1]));
+    }
+    
+    for (const pattern of voltagePatterns) {
+      const matches = [...fullText.matchAll(pattern)];
+      foundVoltages.push(...matches.map(m => m[1]));
+    }
+    
+    // Also check for common capacitor specs mentioned in text
+    for (const spec of commonCapacitorSpecs) {
+      if (textLower.includes(spec.mfd) && (textLower.includes('370') || textLower.includes('440'))) {
+        foundMFDs.push(spec.mfd);
+        foundVoltages.push(spec.voltage);
+        console.log(`✅ Found common spec pattern: ${spec.mfd} MFD`);
+      }
+    }
+    
+    if (foundMFDs.length > 0 || foundVoltages.length > 0) {
+      capacitorInfo.debug.patternsFound++;
+      
       const specs = {
-        mfd: mfdMatches.map(m => m[1]),
-        voltage: voltageMatches.map(m => m[1]),
+        mfd: [...new Set(foundMFDs)], // Remove duplicates
+        voltage: [...new Set(foundVoltages)],
         source: result.title,
-        link: result.link
+        link: result.link,
+        snippet: result.snippet
       };
       
-      if (text.includes('compressor')) {
+      console.log(`📋 Found specs - MFD: [${specs.mfd.join(', ')}], Voltage: [${specs.voltage.join(', ')}]`);
+      
+      // Categorize by component type
+      if (textLower.includes('compressor') && specs.mfd.length > 0) {
         capacitorInfo.compressorCapacitor = specs;
-      } else if (text.includes('condenser') || text.includes('fan')) {
+        capacitorInfo.debug.specificMatches.push('compressor');
+      }
+      
+      if ((textLower.includes('condenser') || textLower.includes('fan motor')) && specs.mfd.length > 0) {
         capacitorInfo.condenserFanCapacitor = specs;
-      } else if (text.includes('blower')) {
+        capacitorInfo.debug.specificMatches.push('condenser_fan');
+      }
+      
+      if (textLower.includes('blower') && specs.mfd.length > 0) {
         capacitorInfo.blowerCapacitor = specs;
-      } else if (text.includes('dual')) {
+        capacitorInfo.debug.specificMatches.push('blower');
+      }
+      
+      if (textLower.includes('dual') && specs.mfd.length > 0) {
         capacitorInfo.dualCapacitor = specs;
+        capacitorInfo.debug.specificMatches.push('dual');
+      }
+      
+      // Add to common capacitors if we have both MFD and voltage
+      if (specs.mfd.length > 0 && specs.voltage.length > 0) {
+        capacitorInfo.commonCapacitors.push(specs);
       }
     }
   }
 
+  console.log(`📊 Parsing complete: ${capacitorInfo.debug.patternsFound} patterns found, ${capacitorInfo.debug.specificMatches.length} specific matches`);
+  console.log(`🎯 Final results: Compressor: ${!!capacitorInfo.compressorCapacitor}, Fan: ${!!capacitorInfo.condenserFanCapacitor}, Blower: ${!!capacitorInfo.blowerCapacitor}, Dual: ${!!capacitorInfo.dualCapacitor}`);
+
   return capacitorInfo;
+}
+
+// Fallback capacitor database with common HVAC equipment specs
+function getFallbackCapacitorSpecs(equipmentDetails) {
+  const commonSpecs = {
+    // Common AC unit capacitors by tonnage/type
+    'air conditioner': {
+      '2 ton': { compressor: '35 MFD 370V', fan: '5 MFD 370V', dual: '35/5 MFD 370V' },
+      '2.5 ton': { compressor: '40 MFD 370V', fan: '5 MFD 370V', dual: '40/5 MFD 370V' },
+      '3 ton': { compressor: '45 MFD 370V', fan: '7.5 MFD 370V', dual: '45/5 MFD 370V' },
+      '4 ton': { compressor: '55 MFD 370V', fan: '7.5 MFD 370V', dual: '55/5 MFD 370V' },
+      '5 ton': { compressor: '65 MFD 370V', fan: '10 MFD 370V', dual: '65/5 MFD 370V' }
+    },
+    'heat pump': {
+      '2 ton': { compressor: '35 MFD 370V', fan: '5 MFD 370V', dual: '35/5 MFD 370V' },
+      '3 ton': { compressor: '45 MFD 370V', fan: '5 MFD 370V', dual: '45/5 MFD 370V' },
+      '4 ton': { compressor: '55 MFD 370V', fan: '7.5 MFD 370V', dual: '55/5 MFD 370V' }
+    },
+    'furnace': {
+      'blower': { motor: '10-15 MFD 370V' },
+      'inducer': { motor: '3-5 MFD 370V' }
+    }
+  };
+
+  // Try to extract tonnage from capacity data
+  let estimatedTonnage = null;
+  if (equipmentDetails.capacity) {
+    const capacity = equipmentDetails.capacity.toLowerCase();
+    if (capacity.includes('24000') || capacity.includes('2 ton')) estimatedTonnage = '2 ton';
+    else if (capacity.includes('30000') || capacity.includes('2.5 ton')) estimatedTonnage = '2.5 ton';
+    else if (capacity.includes('36000') || capacity.includes('3 ton')) estimatedTonnage = '3 ton';
+    else if (capacity.includes('48000') || capacity.includes('4 ton')) estimatedTonnage = '4 ton';
+    else if (capacity.includes('60000') || capacity.includes('5 ton')) estimatedTonnage = '5 ton';
+  }
+
+  const equipType = equipmentDetails.type?.toLowerCase() || '';
+  
+  if (commonSpecs[equipType] && estimatedTonnage && commonSpecs[equipType][estimatedTonnage]) {
+    return {
+      success: true,
+      fallbackDatabase: true,
+      source: 'Common HVAC Capacitor Database',
+      compressorCapacitor: commonSpecs[equipType][estimatedTonnage].compressor ? 
+        { specs: commonSpecs[equipType][estimatedTonnage].compressor } : null,
+      condenserFanCapacitor: commonSpecs[equipType][estimatedTonnage].fan ? 
+        { specs: commonSpecs[equipType][estimatedTonnage].fan } : null,
+      dualCapacitor: commonSpecs[equipType][estimatedTonnage].dual ? 
+        { specs: commonSpecs[equipType][estimatedTonnage].dual } : null,
+      blowerCapacitor: commonSpecs[equipType][estimatedTonnage].motor ? 
+        { specs: commonSpecs[equipType][estimatedTonnage].motor } : null,
+      notes: [`Estimated from ${estimatedTonnage} ${equipType}`, 'Always verify exact specifications before replacement']
+    };
+  }
+
+  // Generic fallback for unknown equipment
+  return {
+    success: false,
+    fallbackDatabase: true,
+    notes: ['Unable to determine specific capacitor requirements from available data'],
+    commonValues: [
+      'Compressor: 35-65 MFD, 370-440 VAC',
+      'Condenser Fan: 3-10 MFD, 370 VAC',
+      'Blower Motor: 5-20 MFD, 370 VAC',
+      'Dual Capacitors: 35/5, 45/5, 55/5 MFD, 370 VAC'
+    ]
+  };
 }
 
 // Enhanced data retrieval with equipment database integration
@@ -681,6 +841,37 @@ async function retrieveComprehensiveData(equipmentDetails) {
     
     // Search for capacitor data using equipment details
     const capacitorData = await searchCapacitorSpecs(equipmentDetails);
+    
+    // If web search didn't find useful data, try fallback database
+    if (!capacitorData.success || 
+        (!capacitorData.compressorCapacitor && !capacitorData.condenserFanCapacitor && 
+         !capacitorData.blowerCapacitor && !capacitorData.dualCapacitor &&
+         (!capacitorData.commonCapacitors || capacitorData.commonCapacitors.length === 0))) {
+      
+      console.log('🗃️ Web search incomplete, trying fallback capacitor database...');
+      const fallbackData = getFallbackCapacitorSpecs(equipmentDetails);
+      
+      // Merge web search and fallback data
+      capacitorData.fallbackUsed = true;
+      capacitorData.fallbackData = fallbackData;
+      
+      // Use fallback data if it's more complete
+      if (fallbackData.success) {
+        if (!capacitorData.compressorCapacitor && fallbackData.compressorCapacitor) {
+          capacitorData.compressorCapacitor = fallbackData.compressorCapacitor;
+        }
+        if (!capacitorData.condenserFanCapacitor && fallbackData.condenserFanCapacitor) {
+          capacitorData.condenserFanCapacitor = fallbackData.condenserFanCapacitor;
+        }
+        if (!capacitorData.blowerCapacitor && fallbackData.blowerCapacitor) {
+          capacitorData.blowerCapacitor = fallbackData.blowerCapacitor;
+        }
+        if (!capacitorData.dualCapacitor && fallbackData.dualCapacitor) {
+          capacitorData.dualCapacitor = fallbackData.dualCapacitor;
+        }
+        capacitorData.success = true;
+      }
+    }
     
     // Set default data with capacitor results
     comprehensiveData.manuals = [];
@@ -907,33 +1098,104 @@ function generateExecutiveSummary(equipmentDetails, comprehensiveData) {
   summary += `• Troubleshooting guide\n`;
   summary += `• Professional service contacts\n\n`;
 
-  // Add capacitor and warranty information section with search results
+  // Add capacitor and warranty information section with enhanced search results
   summary += `⚡ **CAPACITOR & WARRANTY INFORMATION**\n`;
   
   if (comprehensiveData.capacitorSpecs && comprehensiveData.capacitorSpecs.success) {
     const caps = comprehensiveData.capacitorSpecs;
-    summary += `🔍 **Capacitor Search Results Found:**\n`;
+    summary += `🔍 **Capacitor Specifications Found:**\n`;
     
-    if (caps.compressorCapacitor) {
-      summary += `• **Compressor:** ${caps.compressorCapacitor.mfd?.join('/')} MFD, ${caps.compressorCapacitor.voltage?.join('/')} V\n`;
+    // Show specific capacitors if found
+    let hasSpecificData = false;
+    
+    if (caps.compressorCapacitor && caps.compressorCapacitor.mfd?.length > 0) {
+      summary += `• **Compressor:** ${caps.compressorCapacitor.mfd.join('/')} MFD, ${caps.compressorCapacitor.voltage?.join('/') || '370'} VAC\n`;
+      hasSpecificData = true;
     }
-    if (caps.condenserFanCapacitor) {
-      summary += `• **Condenser Fan:** ${caps.condenserFanCapacitor.mfd?.join('/')} MFD, ${caps.condenserFanCapacitor.voltage?.join('/')} V\n`;
+    if (caps.condenserFanCapacitor && caps.condenserFanCapacitor.mfd?.length > 0) {
+      summary += `• **Condenser Fan:** ${caps.condenserFanCapacitor.mfd.join('/')} MFD, ${caps.condenserFanCapacitor.voltage?.join('/') || '370'} VAC\n`;
+      hasSpecificData = true;
     }
-    if (caps.blowerCapacitor) {
-      summary += `• **Blower Motor:** ${caps.blowerCapacitor.mfd?.join('/')} MFD, ${caps.blowerCapacitor.voltage?.join('/')} V\n`;
+    if (caps.blowerCapacitor && caps.blowerCapacitor.mfd?.length > 0) {
+      summary += `• **Blower Motor:** ${caps.blowerCapacitor.mfd.join('/')} MFD, ${caps.blowerCapacitor.voltage?.join('/') || '370'} VAC\n`;
+      hasSpecificData = true;
     }
-    if (caps.dualCapacitor) {
-      summary += `• **Dual Capacitor:** ${caps.dualCapacitor.mfd?.join('/')} MFD, ${caps.dualCapacitor.voltage?.join('/')} V\n`;
+    if (caps.dualCapacitor && caps.dualCapacitor.mfd?.length > 0) {
+      summary += `• **Dual Capacitor:** ${caps.dualCapacitor.mfd.join('/')} MFD, ${caps.dualCapacitor.voltage?.join('/') || '370'} VAC\n`;
+      hasSpecificData = true;
+    }
+    
+    // Show common capacitors found if no specific ones
+    if (!hasSpecificData && caps.commonCapacitors?.length > 0) {
+      summary += `• **Common Capacitors Found:**\n`;
+      for (const cap of caps.commonCapacitors.slice(0, 3)) { // Limit to 3 most relevant
+        if (cap.mfd?.length > 0) {
+          summary += `  - ${cap.mfd.join('/')} MFD, ${cap.voltage?.join('/') || '370'} VAC (from ${cap.source?.substring(0, 40)}...)\n`;
+        }
+      }
+      hasSpecificData = true;
+    }
+    
+    // Show fallback database results if used
+    if (!hasSpecificData && caps.fallbackUsed && caps.fallbackData) {
+      const fb = caps.fallbackData;
+      if (fb.success) {
+        summary += `• **Estimated Capacitor Specs (from database):**\n`;
+        if (fb.compressorCapacitor) {
+          summary += `  - **Compressor:** ${fb.compressorCapacitor.specs}\n`;
+          hasSpecificData = true;
+        }
+        if (fb.condenserFanCapacitor) {
+          summary += `  - **Condenser Fan:** ${fb.condenserFanCapacitor.specs}\n`;
+          hasSpecificData = true;
+        }
+        if (fb.dualCapacitor) {
+          summary += `  - **Dual Capacitor:** ${fb.dualCapacitor.specs}\n`;
+          hasSpecificData = true;
+        }
+        if (fb.blowerCapacitor) {
+          summary += `  - **Blower Motor:** ${fb.blowerCapacitor.specs}\n`;
+          hasSpecificData = true;
+        }
+        if (fb.notes?.length > 0) {
+          summary += `  📝 Note: ${fb.notes[0]}\n`;
+        }
+      } else if (fb.commonValues?.length > 0) {
+        summary += `• **Common HVAC Capacitor Values:**\n`;
+        for (const value of fb.commonValues) {
+          summary += `  - ${value}\n`;
+        }
+        hasSpecificData = true;
+      }
+    }
+    
+    // Show search stats
+    if (caps.debug) {
+      summary += `📊 **Search Results:** ${caps.debug.totalResults || 0} sources checked, ${caps.debug.patternsFound || 0} with capacitor data\n`;
+    }
+    
+    // Show data source
+    if (hasSpecificData) {
+      if (caps.fallbackUsed) {
+        summary += `🗃️ **Data Source:** Web search + HVAC database\n`;
+      } else {
+        summary += `🌐 **Data Source:** Web search results\n`;
+      }
+    }
+    
+    // If still no data found, show search guidance
+    if (!hasSpecificData) {
+      summary += `⚠️ **No specific capacitor data found**\n`;
+      summary += `🔍 Try searching: "${brand} ${model} capacitor replacement parts"\n`;
     }
   } else if (comprehensiveData.capacitorSpecs && comprehensiveData.capacitorSpecs.searchGuidance) {
-    summary += `🔍 **Capacitor Specs Search:** ${comprehensiveData.capacitorSpecs.searchGuidance}\n`;
+    summary += `🔍 **Manual Search Required:** ${comprehensiveData.capacitorSpecs.searchGuidance}\n`;
   } else {
-    summary += `🔍 **Capacitor Specs:** Search online for "${brand} ${model} capacitor specifications MFD voltage"\n`;
+    summary += `🔍 **Capacitor Lookup:** Search online for "${brand} ${model} capacitor specifications MFD voltage"\n`;
   }
   
   summary += `🛡️ **Factory Warranty:** Based on manufacture date - see analysis for current warranty status\n`;
-  summary += `🔧 **Service Notes:** Always verify exact capacitor ratings before replacement - incorrect ratings damage motors\n\n`;
+  summary += `⚠️ **Important:** Always verify exact capacitor ratings before replacement - incorrect ratings damage motors\n\n`;
 
   // Add manual search section to both modes (everyone gets this useful feature)
   summary += `🔍 **MANUAL & DOCUMENTATION SEARCH**\n`;

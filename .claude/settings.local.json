@@ -22,7 +22,9 @@
       "WebFetch(domain:codecompass-api.vercel.app)",
       "Bash(npx vercel:*)",
       "Bash(npx netlify deploy:*)",
-      "Bash(npx netlify:*)"
+      "Bash(npx netlify:*)",
+      "Bash(rm:*)",
+      "WebFetch(domain:spontaneous-halva-198bda.netlify.app)"
     ],
     "deny": [],
     "ask": [],
