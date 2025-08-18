@@ -395,7 +395,6 @@ MANUFACTURING: [date/year/code]
 EFFICIENCY: [SEER/AFUE/EF rating]
 CAPACITY: [heating/cooling capacity]
 SERIES: [model series/family]
-CAPACITORS: [motor capacitor specifications - compressor/condenser/blower MFD and voltage ratings]
 WARRANTY: [factory warranty period in years from manufacture date]
 
 **MODE ADJUSTMENT:**
@@ -403,17 +402,17 @@ Include technical data but emphasize safety, maintenance, and when to call profe
 
 Extract EVERY visible detail with professional precision, paying special attention to:
 
-**CRITICAL CAPACITOR INFORMATION:**
-• Look for any capacitor ratings on motors (MFD/μF values)
-• Note voltage ratings for compressor, condenser fan, and blower motors
-• Identify dual vs single capacitors and their wire color coding
-
 **FACTORY WARRANTY DETAILS:**
 • Calculate warranty coverage based on manufacture date
 • Note standard manufacturer warranty periods (typically 1-10 years)
 • Identify parts vs labor warranty differences
 
-This comprehensive data enables complete equipment analysis and service planning.`;
+**EQUIPMENT IDENTIFICATION:**
+• Precise brand, model, and serial number for capacitor specification lookup
+• Manufacturing date for warranty and parts cross-reference
+• Equipment type and series for technical specification searches
+
+This comprehensive data enables complete equipment analysis, service planning, and capacitor specification lookup.`;
 }
 
 // Extract equipment details with OCR enhancement
@@ -530,6 +529,132 @@ function extractEquipmentDetails(analysisResult, ocrResult = null) {
   return details;
 }
 
+// Search for capacitor specifications using web search
+async function searchCapacitorSpecs(equipmentDetails) {
+  if (!equipmentDetails.brand || !equipmentDetails.model) {
+    return {
+      success: false,
+      reason: 'Insufficient equipment details for capacitor search',
+      compressorCapacitor: null,
+      condenserFanCapacitor: null,
+      blowerCapacitor: null,
+      searchTerms: []
+    };
+  }
+
+  try {
+    // Use SERP API if available for capacitor specifications search
+    if (process.env.SERPAPI_KEY) {
+      const fetch = (await import('node-fetch')).default;
+      
+      const searchQueries = [
+        `${equipmentDetails.brand} ${equipmentDetails.model} capacitor specifications MFD`,
+        `${equipmentDetails.brand} ${equipmentDetails.model} motor capacitor ratings`,
+        `${equipmentDetails.brand} ${equipmentDetails.model} compressor capacitor MFD voltage`,
+        `${equipmentDetails.brand} ${equipmentDetails.model} condenser fan motor capacitor`,
+        `${equipmentDetails.brand} ${equipmentDetails.model} blower motor capacitor specs`
+      ];
+
+      const capacitorResults = [];
+      
+      // Search for capacitor information
+      for (const query of searchQueries.slice(0, 2)) { // Limit to 2 searches to avoid timeout
+        try {
+          const response = await fetch(`https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${process.env.SERPAPI_KEY}&engine=google&num=5`);
+          
+          if (response.ok) {
+            const data = await response.json();
+            if (data.organic_results) {
+              capacitorResults.push(...data.organic_results.map(result => ({
+                title: result.title,
+                snippet: result.snippet,
+                link: result.link,
+                query: query
+              })));
+            }
+          }
+        } catch (searchError) {
+          console.log(`Capacitor search failed for query: ${query}`, searchError.message);
+        }
+      }
+
+      // Parse capacitor information from search results
+      const capacitorSpecs = parseCapacitorSpecs(capacitorResults, equipmentDetails);
+      
+      return {
+        success: true,
+        searchResults: capacitorResults,
+        ...capacitorSpecs,
+        searchTerms: searchQueries
+      };
+    } else {
+      // Fallback when no SERP API - provide search guidance
+      return {
+        success: false,
+        reason: 'SERP API not configured - providing search guidance',
+        searchTerms: [
+          `${equipmentDetails.brand} ${equipmentDetails.model} capacitor specifications`,
+          `${equipmentDetails.brand} ${equipmentDetails.model} motor capacitor MFD`,
+          `${equipmentDetails.brand} ${equipmentDetails.model} compressor capacitor voltage`
+        ],
+        searchGuidance: `Search online for: "${equipmentDetails.brand} ${equipmentDetails.model} capacitor specifications"`
+      };
+    }
+  } catch (error) {
+    console.error('Capacitor specs search error:', error);
+    return {
+      success: false,
+      reason: 'Capacitor search failed',
+      error: error.message,
+      searchTerms: [`${equipmentDetails.brand} ${equipmentDetails.model} capacitor specifications`]
+    };
+  }
+}
+
+// Parse capacitor specifications from search results
+function parseCapacitorSpecs(searchResults, equipmentDetails) {
+  const capacitorInfo = {
+    compressorCapacitor: null,
+    condenserFanCapacitor: null,
+    blowerCapacitor: null,
+    dualCapacitor: null,
+    notes: []
+  };
+
+  // Look for common capacitor patterns in search results
+  const mfdPattern = /(\d+(?:\.\d+)?)\s*(?:MFD|μF|uF)/gi;
+  const voltagePattern = /(\d+)\s*(?:V|volt)/gi;
+  
+  for (const result of searchResults) {
+    const text = (result.title + ' ' + result.snippet).toLowerCase();
+    
+    // Look for capacitor ratings
+    const mfdMatches = [...text.matchAll(mfdPattern)];
+    const voltageMatches = [...text.matchAll(voltagePattern)];
+    
+    if (mfdMatches.length > 0 && voltageMatches.length > 0) {
+      const specs = {
+        mfd: mfdMatches.map(m => m[1]),
+        voltage: voltageMatches.map(m => m[1]),
+        source: result.title,
+        link: result.link
+      };
+      
+      if (text.includes('compressor')) {
+        capacitorInfo.compressorCapacitor = specs;
+      } else if (text.includes('condenser') || text.includes('fan')) {
+        capacitorInfo.condenserFanCapacitor = specs;
+      } else if (text.includes('blower')) {
+        capacitorInfo.blowerCapacitor = specs;
+      } else if (text.includes('dual')) {
+        capacitorInfo.dualCapacitor = specs;
+      }
+    }
+  }
+
+  return capacitorInfo;
+}
+
 // Enhanced data retrieval with equipment database integration
 async function retrieveComprehensiveData(equipmentDetails) {
   const comprehensiveData = {
@@ -551,14 +676,18 @@ async function retrieveComprehensiveData(equipmentDetails) {
   }
 
   try {
-    // Manual data retrieval removed - wasn't working properly
-    console.log('📚 Skipping manual data retrieval (not functional)');
+    // Enhanced capacitor lookup using web search
+    console.log('🔍 Searching for capacitor specifications...');
     
-    // Set basic default data instead
+    // Search for capacitor data using equipment details
+    const capacitorData = await searchCapacitorSpecs(equipmentDetails);
+    
+    // Set default data with capacitor results
     comprehensiveData.manuals = [];
     comprehensiveData.troubleshootingGuides = [];
     comprehensiveData.errorCodes = [];
     comprehensiveData.warrantyInfo = null;
+    comprehensiveData.capacitorSpecs = capacitorData;
 
     comprehensiveData.success = true;
     return comprehensiveData;
@@ -778,11 +907,33 @@ function generateExecutiveSummary(equipmentDetails, comprehensiveData) {
   summary += `• Troubleshooting guide\n`;
   summary += `• Professional service contacts\n\n`;
 
-  // Add capacitor and warranty information section
+  // Add capacitor and warranty information section with search results
   summary += `⚡ **CAPACITOR & WARRANTY INFORMATION**\n`;
-  summary += `🔋 **Motor Capacitors:** Check analysis for compressor, condenser fan, and blower motor capacitor ratings (MFD/μF and voltage)\n`;
+  
+  if (comprehensiveData.capacitorSpecs && comprehensiveData.capacitorSpecs.success) {
+    const caps = comprehensiveData.capacitorSpecs;
+    summary += `🔍 **Capacitor Search Results Found:**\n`;
+    
+    if (caps.compressorCapacitor) {
+      summary += `• **Compressor:** ${caps.compressorCapacitor.mfd?.join('/')} MFD, ${caps.compressorCapacitor.voltage?.join('/')} V\n`;
+    }
+    if (caps.condenserFanCapacitor) {
+      summary += `• **Condenser Fan:** ${caps.condenserFanCapacitor.mfd?.join('/')} MFD, ${caps.condenserFanCapacitor.voltage?.join('/')} V\n`;
+    }
+    if (caps.blowerCapacitor) {
+      summary += `• **Blower Motor:** ${caps.blowerCapacitor.mfd?.join('/')} MFD, ${caps.blowerCapacitor.voltage?.join('/')} V\n`;
+    }
+    if (caps.dualCapacitor) {
+      summary += `• **Dual Capacitor:** ${caps.dualCapacitor.mfd?.join('/')} MFD, ${caps.dualCapacitor.voltage?.join('/')} V\n`;
+    }
+  } else if (comprehensiveData.capacitorSpecs && comprehensiveData.capacitorSpecs.searchGuidance) {
+    summary += `🔍 **Capacitor Specs Search:** ${comprehensiveData.capacitorSpecs.searchGuidance}\n`;
+  } else {
+    summary += `🔍 **Capacitor Specs:** Search online for "${brand} ${model} capacitor specifications MFD voltage"\n`;
+  }
+  
   summary += `🛡️ **Factory Warranty:** Based on manufacture date - see analysis for current warranty status\n`;
-  summary += `🔧 **Service Notes:** Capacitor failures are common - proper ratings are critical for motor protection\n\n`;
+  summary += `🔧 **Service Notes:** Always verify exact capacitor ratings before replacement - incorrect ratings damage motors\n\n`;
 
   // Add manual search section to both modes (everyone gets this useful feature)
   summary += `🔍 **MANUAL & DOCUMENTATION SEARCH**\n`;
