@@ -115,7 +115,7 @@ exports.handler = async (event, context) => {
 
     // STEP 3: Enhanced data retrieval with database integration
     console.log('📚 Step 2: Enhanced data retrieval...');
-    const comprehensiveData = await retrieveComprehensiveData(equipmentDetails, mode, equipmentLookup);
+    const comprehensiveData = await retrieveComprehensiveData(equipmentDetails, mode);
     
     // STEP 4: Professional diagnostic compilation
     console.log('🎯 Step 3: Professional diagnostic compilation...');
