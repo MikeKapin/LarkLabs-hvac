@@ -456,33 +456,21 @@ async function retrieveComprehensiveData(equipmentDetails, mode, equipmentLookup
   }
 
   try {
-    // Parallel data retrieval for maximum speed
+    // Reduced data retrieval to prevent timeouts - keep essential searches only
     const dataPromises = [
       retrieveOfficialManuals(equipmentDetails),
-      retrieveWiringDiagrams(equipmentDetails),
       retrieveTroubleshootingData(equipmentDetails),
       retrieveErrorCodes(equipmentDetails),
-      retrieveSafetyBulletins(equipmentDetails),
-      retrieveWarrantyData(equipmentDetails),
-      retrieveRecallData(equipmentDetails),
-      retrieveEfficiencyData(equipmentDetails),
-      retrievePartsData(equipmentDetails),
-      retrieveCodeReferences(equipmentDetails, mode)
+      retrieveWarrantyData(equipmentDetails)
     ];
 
     const results = await Promise.allSettled(dataPromises);
     
-    // Process results
+    // Process results - only 4 promises now
     if (results[0].status === 'fulfilled') comprehensiveData.manuals = results[0].value;
-    if (results[1].status === 'fulfilled') comprehensiveData.wiringDiagrams = results[1].value;
-    if (results[2].status === 'fulfilled') comprehensiveData.troubleshootingGuides = results[2].value;
-    if (results[3].status === 'fulfilled') comprehensiveData.errorCodes = results[3].value;
-    if (results[4].status === 'fulfilled') comprehensiveData.safetyBulletins = results[4].value;
-    if (results[5].status === 'fulfilled') comprehensiveData.warrantyInfo = results[5].value;
-    if (results[6].status === 'fulfilled') comprehensiveData.recallAlerts = results[6].value;
-    if (results[7].status === 'fulfilled') comprehensiveData.efficiencyData = results[7].value;
-    if (results[8].status === 'fulfilled') comprehensiveData.partsData = results[8].value;
-    if (results[9].status === 'fulfilled') comprehensiveData.codeReferences = results[9].value;
+    if (results[1].status === 'fulfilled') comprehensiveData.troubleshootingGuides = results[1].value;
+    if (results[2].status === 'fulfilled') comprehensiveData.errorCodes = results[2].value;
+    if (results[3].status === 'fulfilled') comprehensiveData.warrantyInfo = results[3].value;
 
     comprehensiveData.success = true;
     return comprehensiveData;
