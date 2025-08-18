@@ -1,5 +1,4 @@
 [build]
-  base = "."
   functions = "netlify/functions"
   publish = "."
 
@@ -11,13 +10,3 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
-
-[[redirects]]
-  from = "/"
-  to = "/HVAC_Jack_Mobile_Updated.html"
-  status = 200
-  force = true
-
-[dev]
-  functions = "netlify/functions"
-  publish = "."
