@@ -1,6 +1,7 @@
 {
   "name": "HVAC Tool Vault Marketplace",
   "short_name": "Tool Vault",
+  "version": "1.0.1",
   "description": "Canada's premier peer-to-peer marketplace for HVAC professionals to buy, sell, and trade quality tools",
   "start_url": "./index.html",
   "display": "standalone",
@@ -53,7 +54,13 @@
       "src": "icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon-384x384.png",
