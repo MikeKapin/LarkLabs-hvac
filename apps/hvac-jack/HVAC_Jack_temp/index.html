@@ -1329,6 +1329,11 @@
 
                 console.log('Sending photo to Claude API for analysis...');
                 
+                // Preserve conversation state before photo analysis
+                if (window.mobileHvacJack) {
+                    window.mobileHvacJack.preserveConversationState();
+                }
+                
                 const analysisResult = await sendPhotoForAnalysis(imageData, mode, sessionId);
                 
                 document.getElementById('analysisLoading').classList.add('hidden');
@@ -1366,6 +1371,11 @@
         }
 
         async function sendPhotoForAnalysis(imageData, mode, sessionId) {
+            // Set photo processing flag to prevent connection interruptions
+            if (window.mobileHvacJack) {
+                window.mobileHvacJack.isProcessingPhoto = true;
+            }
+            
             const photoAnalysisEndpoint = '/.netlify/functions/analyze-photo';
             
             let base64Data = imageData;
@@ -1408,10 +1418,20 @@
                     responseTime: result.responseTime
                 });
 
+                // Clear photo processing flag on success
+                if (window.mobileHvacJack) {
+                    window.mobileHvacJack.isProcessingPhoto = false;
+                }
+
                 return result;
                 
             } catch (error) {
                 clearTimeout(timeoutId);
+                
+                // Clear photo processing flag on error
+                if (window.mobileHvacJack) {
+                    window.mobileHvacJack.isProcessingPhoto = false;
+                }
                 
                 if (error.name === 'AbortError') {
                     throw new Error('Analysis timed out. Please try again with a clearer photo.');
@@ -1458,7 +1478,13 @@ function displayClaudeAnalysisResult(analysisResult, mode) {
             window.mobileHvacJack.systemContext.equipmentType = equipment.type?.toLowerCase() || null;
             window.mobileHvacJack.systemContext.brand = equipment.brand || null;
             window.mobileHvacJack.systemContext.model = equipment.model || null;
+            window.mobileHvacJack.systemContext.serial = equipment.serial || null;
+            window.mobileHvacJack.systemContext.capacity = equipment.capacity || null;
+            window.mobileHvacJack.systemContext.manufacturingDate = equipment.manufacturingDate || null;
             window.mobileHvacJack.updateMobileMemoryDisplay();
+            // Immediately save the photo analysis results to localStorage
+            window.mobileHvacJack.saveConversation();
+            console.log('Photo analysis results saved to memory:', equipment);
         }
     }
 
@@ -1894,6 +1920,8 @@ function generateManualSearchFallback(equipment, mode) {
                     brand: null,
                     model: null,
                     serial: null,
+                    capacity: null,
+                    manufacturingDate: null,
                     symptoms: [],
                     previousActions: [],
                     currentProblem: null
@@ -1906,6 +1934,8 @@ function generateManualSearchFallback(equipment, mode) {
                 // Note: Manual search now uses the main chat endpoint, not a separate endpoint
                 this.isConnected = false;
                 this.isProcessing = false;
+                this.isProcessingPhoto = false;
+                this.conversationBackup = null;
                 this.connectionAttempts = 0;
                 this.maxConnectionAttempts = 3;
                 
@@ -2665,6 +2695,7 @@ function generateManualSearchFallback(equipment, mode) {
                     timestamp: new Date().toISOString()
                 };
                 localStorage.setItem('hvacJackMobileConversation', JSON.stringify(data));
+                console.log('Conversation saved to localStorage with equipment info:', this.systemContext);
             }
 
             addToConversation(role, content) {
@@ -2755,8 +2786,15 @@ function generateManualSearchFallback(equipment, mode) {
                             this.updateMobileStatus('connected', 'Jack is ready!');
                             this.hapticFeedback('success');
                             
+                            // Try to restore conversation state after successful connection
+                            const restored = this.restoreConversationState();
+                            if (restored) {
+                                addMobileMessage('🔄 **Connection Restored** - Your conversation has been recovered!', 'ai');
+                            }
+                            
                             await this.trackUsage('connection_success', {
-                                attempts: this.connectionAttempts
+                                attempts: this.connectionAttempts,
+                                conversationRestored: restored
                             });
                             
                             const existingErrors = document.querySelectorAll('.connection-error');
@@ -2784,7 +2822,8 @@ function generateManualSearchFallback(equipment, mode) {
                 
                 if (this.connectionAttempts < this.maxConnectionAttempts) {
                     this.updateMobileStatus('connecting', `Retrying... (${this.connectionAttempts}/${this.maxConnectionAttempts})`);
-                    setTimeout(() => this.checkBackendConnection(), 3000);
+                    // Increased retry interval to prevent aggressive reconnections
+                    setTimeout(() => this.checkBackendConnection(), 10000);
                     return;
                 }
                 
@@ -2991,11 +3030,13 @@ function generateManualSearchFallback(equipment, mode) {
                         console.warn('Error tracking failed:', trackError);
                     }
                     
-                    // Connection recovery logic
-                    if (this.isConnected && error.message.includes('fetch')) {
+                    // Connection recovery logic - only reconnect if not during photo analysis
+                    if (this.isConnected && error.message.includes('fetch') && !this.isProcessingPhoto) {
                         this.isConnected = false;
                         this.updateMobileStatus('error', 'Connection lost');
-                        setTimeout(() => this.checkBackendConnection(), 2000);
+                        // Increased reconnection delay and preserve conversation state
+                        this.preserveConversationState();
+                        setTimeout(() => this.checkBackendConnection(), 8000);
                     }
                     
                     // Generate safe fallback response
@@ -3026,6 +3067,37 @@ function generateManualSearchFallback(equipment, mode) {
                 } else {
                     return `📚 **Found manuals for your ${brandText} ${modelText}**\n\nWith the documentation above, I can help you with:\n\n**Safe troubleshooting steps**\n• Understanding error codes\n• Basic maintenance procedures\n• When to call for service\n• Safety precautions\n\nWhat specific problem are you experiencing with this unit?`;
                 }
+            }
+
+            // State preservation methods to prevent conversation loss
+            preserveConversationState() {
+                try {
+                    this.conversationBackup = {
+                        history: [...this.conversationHistory],
+                        mode: this.currentMode,
+                        systemContext: {...this.systemContext},
+                        timestamp: Date.now()
+                    };
+                    console.log('Conversation state preserved for recovery');
+                } catch (error) {
+                    console.warn('Failed to preserve conversation state:', error);
+                }
+            }
+
+            restoreConversationState() {
+                try {
+                    if (this.conversationBackup && (Date.now() - this.conversationBackup.timestamp < 300000)) { // 5 minutes
+                        this.conversationHistory = [...this.conversationBackup.history];
+                        this.currentMode = this.conversationBackup.mode;
+                        this.systemContext = {...this.conversationBackup.systemContext};
+                        this.updateMobileMemoryDisplay();
+                        console.log('Conversation state restored successfully');
+                        return true;
+                    }
+                } catch (error) {
+                    console.warn('Failed to restore conversation state:', error);
+                }
+                return false;
             }
 
             // Robust backend communication with comprehensive error handling
@@ -3571,6 +3643,8 @@ What's your current diagnostic status?`
                 brand: null,
                 model: null,
                 serial: null,
+                capacity: null,
+                manufacturingDate: null,
                 symptoms: [],
                 previousActions: [],
                 currentProblem: null
@@ -3726,8 +3800,8 @@ if (chatContainer) {
   observer.observe(chatContainer, { childList: true, subtree: true });
 }
 
-// Double-check every 5 seconds
-setInterval(runEnhancement, 5000);
+// Double-check every 30 seconds to reduce interference
+setInterval(runEnhancement, 30000);
 </script>
 </body>
 </html>
