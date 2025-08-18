@@ -61,7 +61,7 @@ exports.handler = async (event, context) => {
 
     const { imageData, mode: requestMode, sessionId: clientSessionId } = requestData;
     sessionId = clientSessionId || `enhanced_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    mode = requestMode || 'homeowner';
+    mode = 'homeowner'; // Single mode only - ignore request mode
     
     console.log('Enhanced Analysis Session:', sessionId);
     console.log('Mode:', mode);
@@ -124,15 +124,14 @@ exports.handler = async (event, context) => {
 
     // STEP 3: Enhanced data retrieval with database integration
     console.log('📚 Step 2: Enhanced data retrieval...');
-    const comprehensiveData = await retrieveComprehensiveData(equipmentDetails, mode);
+    const comprehensiveData = await retrieveComprehensiveData(equipmentDetails);
     
     // STEP 4: Professional diagnostic compilation
     console.log('🎯 Step 3: Professional diagnostic compilation...');
     const diagnosticPackage = await compileDiagnosticPackage(
       primaryAnalysis, 
       equipmentDetails, 
-      comprehensiveData, 
-      mode
+      comprehensiveData
     );
 
     const responseTime = (Date.now() - startTime) / 1000;
@@ -398,10 +397,7 @@ CAPACITY: [heating/cooling capacity]
 SERIES: [model series/family]
 
 **MODE ADJUSTMENT:**
-${mode === 'technician' ? 
-  'TECHNICIAN MODE: Provide comprehensive analysis with precise technical specifications, diagnostic data points, and service requirements. Include all details a professional technician would need for service work.' :
-  'HOMEOWNER MODE: Include technical data but emphasize safety, maintenance, and when to call professionals.'
-}
+Include technical data but emphasize safety, maintenance, and when to call professionals.
 
 Extract EVERY visible detail with professional precision. This data will be used for instant lookup of manuals, wiring diagrams, troubleshooting guides, error codes, and diagnostic procedures.`;
 }
@@ -521,7 +517,7 @@ function extractEquipmentDetails(analysisResult, ocrResult = null) {
 }
 
 // Enhanced data retrieval with equipment database integration
-async function retrieveComprehensiveData(equipmentDetails, mode, equipmentLookup = null) {
+async function retrieveComprehensiveData(equipmentDetails) {
   const comprehensiveData = {
     success: false,
     manuals: [],
@@ -741,11 +737,11 @@ async function retrieveCodeReferences(equipmentDetails, mode) {
 }
 
 // Compile comprehensive diagnostic package
-async function compileDiagnosticPackage(primaryAnalysis, equipmentDetails, comprehensiveData, mode) {
+async function compileDiagnosticPackage(primaryAnalysis, equipmentDetails, comprehensiveData) {
   const package = {
-    executiveSummary: generateExecutiveSummary(equipmentDetails, comprehensiveData, mode),
+    executiveSummary: generateExecutiveSummary(equipmentDetails, comprehensiveData),
     quickAccess: generateQuickAccessData(equipmentDetails, comprehensiveData),
-    diagnosticProcedures: generateDiagnosticProcedures(equipmentDetails, mode),
+    diagnosticProcedures: generateDiagnosticProcedures(equipmentDetails),
     maintenanceSchedule: generateMaintenanceSchedule(equipmentDetails),
     emergencyProcedures: generateEmergencyProcedures(equipmentDetails),
     professionalContacts: generateProfessionalContacts(equipmentDetails)
@@ -755,7 +751,7 @@ async function compileDiagnosticPackage(primaryAnalysis, equipmentDetails, compr
 }
 
 // Helper functions for data generation
-function generateExecutiveSummary(equipmentDetails, comprehensiveData, mode) {
+function generateExecutiveSummary(equipmentDetails, comprehensiveData) {
   const brand = equipmentDetails.brand || 'Unknown';
   const model = equipmentDetails.model || 'Unknown';
   const type = equipmentDetails.type || 'equipment';
@@ -815,7 +811,7 @@ function generateQuickAccessData(equipmentDetails, comprehensiveData) {
   };
 }
 
-function generateDiagnosticProcedures(equipmentDetails, mode) {
+function generateDiagnosticProcedures(equipmentDetails) {
   // Use identical home mode procedures for both modes
   return {
     basicChecks: getHomeownerBasicChecks(equipmentDetails.type),

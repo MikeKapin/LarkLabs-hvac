@@ -1100,9 +1100,9 @@
     <div class="main-app hidden" id="mainApp">
         <div class="mobile-header">
             <div class="mobile-header-content">
-                <div class="mobile-mode-toggle">
-                    <button class="mobile-mode-btn active" id="mobileHomeownerBtn" onclick="switchMode('homeowner')">🏠 Home</button>
-                    <button class="mobile-mode-btn" id="mobileTechnicianBtn" onclick="switchMode('technician')">🔧 Tech</button>
+                <!-- Mode toggle removed - single mode only -->
+                <div class="mobile-mode-title">
+                    🏠 HVAC Assistant
                 </div>
                 <div class="header-title">HVAC Jack</div>
                 <button class="header-settings-btn" onclick="showMobileMenu()">⚙️</button>
@@ -1888,7 +1888,7 @@ function generateManualSearchFallback(equipment, mode) {
             constructor() {
                 this.diagnosticsRun = 0;
                 this.conversationHistory = [];
-                this.currentMode = 'homeowner';
+                this.currentMode = 'homeowner'; // Single mode - always homeowner
                 this.systemContext = {
                     equipmentType: null,
                     brand: null,
@@ -3321,32 +3321,7 @@ What's your current diagnostic status?`
                 document.getElementById('mobileSendBtn').disabled = false;
             }
 
-            switchMode(mode) {
-                const oldMode = this.currentMode;
-                this.currentMode = mode;
-                this.hapticFeedback('light');
-                
-                this.trackUsage('mode_switched', {
-                    from_mode: oldMode,
-                    to_mode: mode
-                });
-                
-                document.getElementById('mobileHomeownerBtn').classList.toggle('active', mode === 'homeowner');
-                document.getElementById('mobileTechnicianBtn').classList.toggle('active', mode === 'technician');
-                
-                const placeholder = mode === 'homeowner' 
-                    ? 'Tell Jack what\'s wrong...' 
-                    : 'Describe symptoms and readings...';
-                document.getElementById('mobileInput').placeholder = placeholder;
-                
-                this.updateWelcomeMessage(mode);
-                
-                const modeMessage = mode === 'homeowner'
-                    ? '🏠 **Switched to Homeowner Mode** - I\'ll explain things simply and focus on safe DIY steps you can take.'
-                    : '🔧 **Switched to Technician Mode** - I\'ll provide detailed technical specs, measurements, and professional diagnostic procedures.';
-                    
-                this.addMobileMessage(modeMessage, 'ai');
-            }
+            // switchMode method removed - single homeowner mode only
 
             updateWelcomeMessage(mode) {
                 const welcomeElement = document.getElementById('mobileWelcomeMessage');
@@ -3535,11 +3510,7 @@ What's your current diagnostic status?`
             sendMobileMessage();
         }
 
-        function switchMode(mode) {
-            if (window.mobileHvacJack) {
-                window.mobileHvacJack.switchMode(mode);
-            }
-        }
+        // switchMode function removed - single mode only
 
         function toggleContext() {
             const details = document.getElementById('mobileContextDetails');
