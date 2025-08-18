@@ -198,13 +198,20 @@ async function performEnhancedClaudeAnalysis(imageData, mode, ocrResult = null) 
   // Use dynamic import for fetch
   const fetch = (await import('node-fetch')).default;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'x-api-key': apiKey,
-      'Content-Type': 'application/json',
-      'anthropic-version': '2023-06-01'
-    },
+  // Retry logic for handling temporary API overload errors
+  let response;
+  let attempts = 0;
+  const maxRetries = 3;
+  
+  while (attempts < maxRetries) {
+    try {
+      response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': apiKey,
+          'Content-Type': 'application/json',
+          'anthropic-version': '2023-06-01'
+        },
     body: JSON.stringify({
       model: "claude-3-5-sonnet-20241022",
       max_tokens: 4000,
@@ -236,12 +243,36 @@ Use this OCR text to verify and enhance your visual analysis.` : 'No OCR data av
           ]
         }
       ]
-    })
-  });
+        })
+      });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Claude API error: ${response.status} - ${errorText}`);
+      // Check if request was successful
+      if (response.ok) {
+        break; // Success, exit retry loop
+      }
+
+      // Handle specific retry cases
+      if (response.status === 529) { // Overloaded
+        attempts++;
+        if (attempts < maxRetries) {
+          console.log(`Claude API overloaded, retrying... (${attempts}/${maxRetries})`);
+          await new Promise(resolve => setTimeout(resolve, 1000 * attempts)); // Exponential backoff
+          continue;
+        }
+      }
+
+      // Non-retryable error or max retries reached
+      const errorText = await response.text();
+      throw new Error(`Claude API error: ${response.status} - ${errorText}`);
+
+    } catch (error) {
+      attempts++;
+      if (attempts >= maxRetries || !error.message.includes('529')) {
+        throw error; // Re-throw if max retries or non-retryable error
+      }
+      console.log(`API error, retrying... (${attempts}/${maxRetries}):`, error.message);
+      await new Promise(resolve => setTimeout(resolve, 1000 * attempts)); // Exponential backoff
+    }
   }
 
   const data = await response.json();
