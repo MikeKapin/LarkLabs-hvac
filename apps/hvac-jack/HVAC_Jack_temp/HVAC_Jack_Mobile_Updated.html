@@ -1366,7 +1366,7 @@
         }
 
         async function sendPhotoForAnalysis(imageData, mode, sessionId) {
-            const photoAnalysisEndpoint = '/.netlify/functions/analyze-photo';
+            const photoAnalysisEndpoint = '../../../.netlify/functions/analyze-photo';
             
             let base64Data = imageData;
             if (imageData.startsWith('data:')) {
@@ -1508,7 +1508,7 @@ async function performAutomaticManualSearch(equipment, analysisResult, mode) {
             sessionId: window.mobileHvacJack ? window.mobileHvacJack.sessionId : 'unknown'
         };
 
-        const response = await fetch('/.netlify/functions/chat', {
+        const response = await fetch('../../../.netlify/functions/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1899,10 +1899,10 @@ function generateManualSearchFallback(equipment, mode) {
                     currentProblem: null
                 };
                 // Backend API endpoints - Netlify Functions
-                this.apiEndpoint = '/.netlify/functions/chat';
-                this.healthEndpoint = '/.netlify/functions/health';
-                this.trackingEndpoint = '/.netlify/functions/track-usage';
-                this.photoAnalysisEndpoint = '/.netlify/functions/analyze-photo';
+                this.apiEndpoint = '../../../.netlify/functions/chat';
+                this.healthEndpoint = '../../../.netlify/functions/health';
+                this.trackingEndpoint = '../../../.netlify/functions/track-usage';
+                this.photoAnalysisEndpoint = '../../../.netlify/functions/analyze-photo';
                 // Note: Manual search now uses the main chat endpoint, not a separate endpoint
                 this.isConnected = false;
                 this.isProcessing = false;
