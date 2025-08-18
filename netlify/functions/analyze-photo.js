@@ -690,26 +690,23 @@ function generateExecutiveSummary(equipmentDetails, comprehensiveData, mode) {
   summary += `• Troubleshooting guide\n`;
   summary += `• Professional service contacts\n\n`;
 
-  // Add manual search section only for technician mode
-  if (mode === 'technician') {
-    summary += `🔍 Searching for official manuals and documentation...\n`;
-    summary += `📚 Manual Search for ${brand} ${equipmentDetails.model || 'Unknown Model'}\n\n`;
-    summary += `I'll help you find official documentation:\n\n`;
-    summary += `🔗 Official ${brand} Support: https://www.${brand.toLowerCase()}.com/\n`;
-    summary += `• Search for model: ${equipmentDetails.model || 'your model'}\n`;
-    summary += `• Download installation guides\n`;
-    summary += `• Find service manuals\n\n`;
-    summary += `General Manual Resources:\n`;
-    summary += `🔗 ManualsLib: https://www.manualslib.com/\n`;
-    summary += `🔗 RepairClinic: https://www.repairclinic.com/\n`;
-    summary += `🔗 AppliancePartsPros: https://www.appliancepartspros.com/\n\n`;
-    summary += `Search Tips:\n`;
-    summary += `• Use exact model: "${brand} ${equipmentDetails.model || 'your model'}"\n`;
-    summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} installation manual"\n`;
-    summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} service manual"\n`;
-    summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} user guide"\n\n`;
-    summary += `🔧 Ready for Diagnostics! What specific issue are you troubleshooting?\n\n`;
-  }
+  // Add manual search section to both modes (everyone gets this useful feature)
+  summary += `🔍 **MANUAL & DOCUMENTATION SEARCH**\n`;
+  summary += `📚 Find Official Documentation for ${brand} ${equipmentDetails.model || 'Unknown Model'}\n\n`;
+  summary += `**Official Manufacturer Support:**\n`;
+  summary += `🔗 ${brand} Support: https://www.${brand.toLowerCase()}.com/\n`;
+  summary += `• Search for model: ${equipmentDetails.model || 'your model'}\n`;
+  summary += `• Download installation guides\n`;
+  summary += `• Find service manuals\n\n`;
+  summary += `**General Manual Resources:**\n`;
+  summary += `🔗 ManualsLib: https://www.manualslib.com/\n`;
+  summary += `🔗 RepairClinic: https://www.repairclinic.com/\n`;
+  summary += `🔗 AppliancePartsPros: https://www.appliancepartspros.com/\n\n`;
+  summary += `**Search Tips:**\n`;
+  summary += `• Use exact model: "${brand} ${equipmentDetails.model || 'your model'}"\n`;
+  summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} installation manual"\n`;
+  summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} service manual"\n`;
+  summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} user guide"\n\n`;
   
   summary += `**NEXT STEPS:** What specific issue are you experiencing with this ${type}?`;
   
