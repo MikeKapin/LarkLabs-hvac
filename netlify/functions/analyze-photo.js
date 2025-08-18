@@ -1,7 +1,7 @@
 // netlify/functions/analyze-photo.js
 // Enhanced HVAC Jack photo analysis with OCR preprocessing and comprehensive data retrieval
 
-const { OCRProcessor } = require('./ocr-processor');
+// const { OCRProcessor } = require('./ocr-processor'); // Disabled for performance
 const { ErrorCodeDatabase, EquipmentDatabase } = require('./error-code-database');
 const { ComprehensiveEquipmentDatabase } = require('./equipment-database');
 
@@ -100,10 +100,9 @@ exports.handler = async (event, context) => {
       timestamp: new Date().toISOString()
     });
 
-    // STEP 0: OCR Preprocessing for enhanced accuracy
-    console.log('📝 Step 0: OCR text extraction...');
-    const ocrProcessor = new OCRProcessor();
-    const ocrResult = await ocrProcessor.extractText(imageData);
+    // STEP 0: OCR Preprocessing disabled for performance (causes timeouts)
+    console.log('📝 Step 0: OCR preprocessing skipped for performance...');
+    const ocrResult = { success: false, text: '', confidence: 0, reason: 'OCR disabled for performance' };
     
     // STEP 1: Enhanced Claude Vision Analysis with OCR data
     console.log('🔍 Step 1: Enhanced rating plate analysis...');
