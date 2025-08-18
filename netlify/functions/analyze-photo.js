@@ -677,7 +677,7 @@ function generateExecutiveSummary(equipmentDetails, comprehensiveData, mode) {
   
   let summary = `**🎯 INSTANT DIAGNOSTIC PACKAGE: ${brand} ${model}**\n\n`;
   
-  // Always show the home mode format first (users love this layout)
+  // Use identical home mode format for both modes
   summary += `**COMPLETE EQUIPMENT PROFILE**\n`;
   summary += `✅ Equipment identified and verified\n`;
   summary += `✅ Owner's manual located\n`;
@@ -690,20 +690,25 @@ function generateExecutiveSummary(equipmentDetails, comprehensiveData, mode) {
   summary += `• Troubleshooting guide\n`;
   summary += `• Professional service contacts\n\n`;
 
-  // Add technical sections for technician mode
+  // Add manual search section only for technician mode
   if (mode === 'technician') {
-    summary += `---\n\n**🔧 PROFESSIONAL TECHNICAL ANALYSIS**\n\n`;
-    summary += `**DIAGNOSTIC READINESS:**\n`;
-    summary += `✅ Technical specifications verified\n`;
-    summary += `✅ Service documentation compiled\n`;
-    summary += `✅ Diagnostic procedures ready\n`;
-    summary += `✅ Test sequences prepared\n\n`;
-    
-    summary += `**PROFESSIONAL RESOURCES:**\n`;
-    summary += `• Technical startup sequences\n`;
-    summary += `• Diagnostic checklists\n`;
-    summary += `• Professional test procedures\n`;
-    summary += `• Safety protocols\n\n`;
+    summary += `🔍 Searching for official manuals and documentation...\n`;
+    summary += `📚 Manual Search for ${brand} ${equipmentDetails.model || 'Unknown Model'}\n\n`;
+    summary += `I'll help you find official documentation:\n\n`;
+    summary += `🔗 Official ${brand} Support: https://www.${brand.toLowerCase()}.com/\n`;
+    summary += `• Search for model: ${equipmentDetails.model || 'your model'}\n`;
+    summary += `• Download installation guides\n`;
+    summary += `• Find service manuals\n\n`;
+    summary += `General Manual Resources:\n`;
+    summary += `🔗 ManualsLib: https://www.manualslib.com/\n`;
+    summary += `🔗 RepairClinic: https://www.repairclinic.com/\n`;
+    summary += `🔗 AppliancePartsPros: https://www.appliancepartspros.com/\n\n`;
+    summary += `Search Tips:\n`;
+    summary += `• Use exact model: "${brand} ${equipmentDetails.model || 'your model'}"\n`;
+    summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} installation manual"\n`;
+    summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} service manual"\n`;
+    summary += `• Try: "${brand} ${equipmentDetails.model || 'your model'} user guide"\n\n`;
+    summary += `🔧 Ready for Diagnostics! What specific issue are you troubleshooting?\n\n`;
   }
   
   summary += `**NEXT STEPS:** What specific issue are you experiencing with this ${type}?`;
@@ -729,24 +734,12 @@ function generateQuickAccessData(equipmentDetails, comprehensiveData) {
 }
 
 function generateDiagnosticProcedures(equipmentDetails, mode) {
-  // Always include home mode procedures first
-  const procedures = {
+  // Use identical home mode procedures for both modes
+  return {
     basicChecks: getHomeownerBasicChecks(equipmentDetails.type),
     safetyFirst: getHomeownerSafety(equipmentDetails.type),
     whenToCallPro: getWhenToCallPro(equipmentDetails.type)
   };
-
-  // Add technical procedures for technician mode
-  if (mode === 'technician') {
-    procedures.technicalSection = {
-      startupSequence: getTechnicalStartupSequence(equipmentDetails.type),
-      diagnosticChecklist: getTechnicalDiagnosticChecklist(equipmentDetails.type),
-      testProcedures: getTechnicalTestProcedures(equipmentDetails.type),
-      safetyProcedures: getTechnicalSafetyProcedures(equipmentDetails.type)
-    };
-  }
-
-  return procedures;
 }
 
 // Enhanced structured data extraction
