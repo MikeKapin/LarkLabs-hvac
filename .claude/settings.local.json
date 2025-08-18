@@ -19,7 +19,10 @@
       "Bash(curl:*)",
       "Bash(cp:*)",
       "WebFetch(domain:www.hrai.ca)",
-      "WebFetch(domain:codecompass-api.vercel.app)"
+      "WebFetch(domain:codecompass-api.vercel.app)",
+      "Bash(npx vercel:*)",
+      "Bash(npx netlify deploy:*)",
+      "Bash(npx netlify:*)"
     ],
     "deny": [],
     "ask": [],
