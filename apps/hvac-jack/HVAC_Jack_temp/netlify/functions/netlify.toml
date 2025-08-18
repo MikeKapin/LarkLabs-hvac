@@ -1,5 +1,5 @@
 [build]
-  base = "HVAC_Jack"
+  base = "."
   functions = "netlify/functions"
   publish = "."
 
