@@ -106,7 +106,17 @@ exports.handler = async (event, context) => {
     
     // STEP 1: Enhanced Claude Vision Analysis with OCR data
     console.log('🔍 Step 1: Enhanced rating plate analysis...');
-    const primaryAnalysis = await performEnhancedClaudeAnalysis(imageData, mode, ocrResult);
+    let primaryAnalysis;
+    try {
+      primaryAnalysis = await performEnhancedClaudeAnalysis(imageData, mode, ocrResult);
+    } catch (error) {
+      console.log('⚠️ Claude API unavailable, using fallback analysis...', error.message);
+      if (error.message.includes('529') || error.message.includes('Overloaded')) {
+        primaryAnalysis = await performFallbackAnalysis(imageData, mode);
+      } else {
+        throw error; // Re-throw non-overload errors
+      }
+    }
     
     // STEP 2: Extract equipment details for comprehensive lookup
     const equipmentDetails = extractEquipmentDetails(primaryAnalysis);
@@ -185,6 +195,43 @@ exports.handler = async (event, context) => {
     };
   }
 };
+
+// Fallback analysis when Claude API is overloaded
+async function performFallbackAnalysis(imageData, mode) {
+  console.log('📋 Performing fallback analysis during API overload...');
+  
+  return `**FALLBACK ANALYSIS - API TEMPORARILY UNAVAILABLE**
+
+⚠️ Claude's vision analysis is temporarily unavailable due to high server load.
+However, I can still help you with your HVAC equipment!
+
+**EQUIPMENT INFORMATION:**
+BRAND: [Unable to read from image - API overloaded]
+MODEL: [Unable to read from image - API overloaded] 
+TYPE: HVAC Equipment (assumed from context)
+VOLTAGE: [Unable to read from image - API overloaded]
+AMPERAGE: [Unable to read from image - API overloaded]
+BTU/CAPACITY: [Unable to read from image - API overloaded]
+
+**MANUAL IDENTIFICATION HELP:**
+Since I can't read your rating plate right now, please provide:
+• Equipment brand (e.g., Trane, Carrier, Lennox, Goodman, etc.)
+• Model number (usually largest text on rating plate)
+• What type of equipment (furnace, AC unit, heat pump, etc.)
+
+**WHAT I CAN STILL PROVIDE:**
+✅ General troubleshooting guidance
+✅ Safety recommendations
+✅ When to call a professional
+✅ Manual and documentation search assistance
+
+**NEXT STEPS:**
+1. Try the photo analysis again in a few minutes (servers should recover)
+2. OR tell me your equipment details manually
+3. OR describe your specific HVAC problem for immediate help
+
+The servers are just busy - your photo analysis will work normally once they're available again!`;
+}
 
 // Enhanced Claude analysis with OCR preprocessing
 async function performEnhancedClaudeAnalysis(imageData, mode, ocrResult = null) {
