@@ -1462,3 +1462,49 @@ Technical diagnostic support ready.${contextNote}
 
 **Current diagnostic status and readings?**`;
 }
+
+// Enhanced content validation for HVAC focus
+function validateEnhancedContent(message, mode = 'homeowner') {
+  const words = message.toLowerCase();
+  
+  // Enhanced validation - allowing broader HVAC and professional content
+  const forbiddenExactPhrases = [
+    'illegal activity', 'harm others', 'violence', 'weapons', 'drugs',
+    'explicit content', 'adult content'
+  ];
+  
+  for (const phrase of forbiddenExactPhrases) {
+    if (words.includes(phrase)) {
+      return {
+        isValid: false,
+        reason: `Content contains prohibited phrase: ${phrase}`
+      };
+    }
+  }
+  
+  return { isValid: true };
+}
+
+// Usage logging functions
+async function logBlockedContent(data) {
+  global.usageStore.blockedContent.push({
+    ...data,
+    timestamp: new Date().toISOString()
+  });
+}
+
+// Track user sessions
+function trackSession(sessionId, mode) {
+  if (!global.usageStore.sessions.has(sessionId)) {
+    global.usageStore.sessions.set(sessionId, {
+      startTime: Date.now(),
+      mode: mode,
+      messageCount: 0,
+      lastActivity: Date.now()
+    });
+  }
+  
+  const session = global.usageStore.sessions.get(sessionId);
+  session.messageCount++;
+  session.lastActivity = Date.now();
+}

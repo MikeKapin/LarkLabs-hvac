@@ -1,0 +1,40 @@
+{
+  "name": "lark-labs-website",
+  "version": "1.0.0",
+  "description": "LARK Labs HVAC Tools & Training Website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Static site - no build step required'",
+    "test": "echo 'No tests specified'"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.3",
+    "node-fetch": "^3.3.2",
+    "cheerio": "^1.0.0-rc.12",
+    "tesseract.js": "^5.0.5"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MikeKapin/LarkLabs-hvac.git"
+  },
+  "keywords": [
+    "hvac",
+    "training",
+    "tools",
+    "calculators",
+    "canadian",
+    "tssa",
+    "g2",
+    "g3",
+    "certification"
+  ],
+  "author": "LARK Labs",
+  "license": "MIT"
+}
