@@ -18,7 +18,8 @@
       "Bash(fc /b:*)",
       "Bash(curl:*)",
       "Bash(cp:*)",
-      "WebFetch(domain:www.hrai.ca)"
+      "WebFetch(domain:www.hrai.ca)",
+      "WebFetch(domain:codecompass-api.vercel.app)"
     ],
     "deny": [],
     "ask": [],
