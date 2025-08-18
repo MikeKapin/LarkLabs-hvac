@@ -16,6 +16,7 @@
   from = "/"
   to = "/HVAC_Jack.html"
   status = 200
+  force = true
 
 [dev]
   functions = "netlify/functions"
