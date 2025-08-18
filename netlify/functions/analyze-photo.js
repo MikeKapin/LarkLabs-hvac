@@ -395,11 +395,25 @@ MANUFACTURING: [date/year/code]
 EFFICIENCY: [SEER/AFUE/EF rating]
 CAPACITY: [heating/cooling capacity]
 SERIES: [model series/family]
+CAPACITORS: [motor capacitor specifications - compressor/condenser/blower MFD and voltage ratings]
+WARRANTY: [factory warranty period in years from manufacture date]
 
 **MODE ADJUSTMENT:**
 Include technical data but emphasize safety, maintenance, and when to call professionals.
 
-Extract EVERY visible detail with professional precision. This data will be used for instant lookup of manuals, wiring diagrams, troubleshooting guides, error codes, and diagnostic procedures.`;
+Extract EVERY visible detail with professional precision, paying special attention to:
+
+**CRITICAL CAPACITOR INFORMATION:**
+• Look for any capacitor ratings on motors (MFD/μF values)
+• Note voltage ratings for compressor, condenser fan, and blower motors
+• Identify dual vs single capacitors and their wire color coding
+
+**FACTORY WARRANTY DETAILS:**
+• Calculate warranty coverage based on manufacture date
+• Note standard manufacturer warranty periods (typically 1-10 years)
+• Identify parts vs labor warranty differences
+
+This comprehensive data enables complete equipment analysis and service planning.`;
 }
 
 // Extract equipment details with OCR enhancement
@@ -537,21 +551,14 @@ async function retrieveComprehensiveData(equipmentDetails) {
   }
 
   try {
-    // Reduced data retrieval to prevent timeouts - keep essential searches only
-    const dataPromises = [
-      retrieveOfficialManuals(equipmentDetails),
-      retrieveTroubleshootingData(equipmentDetails),
-      retrieveErrorCodes(equipmentDetails),
-      retrieveWarrantyData(equipmentDetails)
-    ];
-
-    const results = await Promise.allSettled(dataPromises);
+    // Manual data retrieval removed - wasn't working properly
+    console.log('📚 Skipping manual data retrieval (not functional)');
     
-    // Process results - only 4 promises now
-    if (results[0].status === 'fulfilled') comprehensiveData.manuals = results[0].value;
-    if (results[1].status === 'fulfilled') comprehensiveData.troubleshootingGuides = results[1].value;
-    if (results[2].status === 'fulfilled') comprehensiveData.errorCodes = results[2].value;
-    if (results[3].status === 'fulfilled') comprehensiveData.warrantyInfo = results[3].value;
+    // Set basic default data instead
+    comprehensiveData.manuals = [];
+    comprehensiveData.troubleshootingGuides = [];
+    comprehensiveData.errorCodes = [];
+    comprehensiveData.warrantyInfo = null;
 
     comprehensiveData.success = true;
     return comprehensiveData;
@@ -770,6 +777,12 @@ function generateExecutiveSummary(equipmentDetails, comprehensiveData) {
   summary += `• Maintenance schedule\n`;
   summary += `• Troubleshooting guide\n`;
   summary += `• Professional service contacts\n\n`;
+
+  // Add capacitor and warranty information section
+  summary += `⚡ **CAPACITOR & WARRANTY INFORMATION**\n`;
+  summary += `🔋 **Motor Capacitors:** Check analysis for compressor, condenser fan, and blower motor capacitor ratings (MFD/μF and voltage)\n`;
+  summary += `🛡️ **Factory Warranty:** Based on manufacture date - see analysis for current warranty status\n`;
+  summary += `🔧 **Service Notes:** Capacitor failures are common - proper ratings are critical for motor protection\n\n`;
 
   // Add manual search section to both modes (everyone gets this useful feature)
   summary += `🔍 **MANUAL & DOCUMENTATION SEARCH**\n`;
