@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#667eea">
+    <title>Megan's Separation Agreement Search</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .clear-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .results-info {
+            background: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .result-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .result-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clause-number {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .result-content {
+            padding: 20px;
+        }
+
+        .result-text {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .subclauses {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .subclause-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .subclause-item:last-child {
+            border-bottom: none;
+        }
+
+        .subclause-number {
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 10px;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-size: 1.2rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #667eea;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .header {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .search-section {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+            
+            #searchInput {
+                padding: 12px;
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+            
+            .search-btn, .clear-btn {
+                padding: 12px 20px;
+                font-size: 16px;
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            .result-header {
+                padding: 12px 15px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .clause-number {
+                font-size: 0.8rem;
+            }
+            
+            .result-content {
+                padding: 15px;
+            }
+            
+            .subclauses {
+                padding: 10px;
+            }
+            
+            .subclause-item {
+                padding: 6px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Touch-friendly buttons */
+        .search-btn, .clear-btn {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Prevent zoom on input focus (iOS) */
+        #searchInput {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Megan's Separation Agreement Search</h1>
+            <p>Search through Brian & Megan Gilmore Separation Agreement by keyword</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Enter keywords (e.g., 'PD Days', 'Amelia', 'Reid', 'Cole', 'child support')"
+                    autocomplete="off"
+                />
+                <button class="search-btn" onclick="performSearch()">Search</button>
+                <button class="clear-btn" onclick="clearSearch()">Clear</button>
+            </div>
+            <div id="resultsInfo" class="results-info" style="display: none;"></div>
+        </div>
+
+        <div id="searchResults"></div>
+    </div>
+
+    <script>
+        // Embedded agreement data - COMPLETE VERSION
+        const agreementData = {
+  "document_title": "Separation Agreement - Brian Mark Gilmore and Megan Teresa Gilmore",
+  "document_date": "November 27, 2020",
+  "clauses": [
+    {
+      "clause_number": "1",
+      "title": "Background",
+      "content": "Background information about Brian and Megan's marriage, separation, and children.",
+      "subclauses": [
+        {
+          "clause_number": "1.1",
+          "content": "Brian and Megan were married on September 19, 2009."
+        },
+        {
+          "clause_number": "1.2",
+          "content": "Brian and Megan separated on October 12, 2018. They will continue living separate and apart."
+        },
+        {
+          "clause_number": "1.3",
+          "content": "Brian and Megan have three children: Amelia Grace Gilmore, born November 1, 2010 (\"Amelia\"), Reid Brian Thomas Gilmore, born May 23, 2012 (\"Reid\"), and Cole David Mark Gilmore, born July 20, 2014 (\"Cole\")."
+        },
+        {
+          "clause_number": "1.4",
+          "content": "Brian and Megan agree to be bound by this Agreement which settles all parenting issues between them."
+        },
+        {
+          "clause_number": "1.5",
+          "content": "This Agreement replaces all oral or written agreements made between Brian and Megan."
+        }
+      ]
+    },
+    {
+      "clause_number": "2",
+      "title": "Definitions",
+      "content": "Legal definitions used throughout the Agreement.",
+      "subclauses": [
+        {
+          "clause_number": "2.1(a)",
+          "content": "In this Agreement: \"child(ren)\" means either Amelia, Reid and/or Cole."
+        },
+        {
+          "clause_number": "2.1(b)",
+          "content": "\"equalization payment\" means the payment referred to in s. 5(1) of the Family Law Act."
+        },
+        {
+          "clause_number": "2.1(c)",
+          "content": "\"Guidelines\" means the Federal Child Support Guidelines, as defined in s. 2(1) of the Divorce Act."
+        },
+        {
+          "clause_number": "2.1(d)",
+          "content": "\"net family property\" means net family property as defined in the Family Law Act."
+        },
+        {
+          "clause_number": "2.1(e)",
+          "content": "\"property\" means property as defined in the Family Law Act."
+        },
+        {
+          "clause_number": "2.2",
+          "content": "Any reference to a statute means the legislation bearing that name at the time the Agreement is signed and includes its regulations and any amending or successor legislation. For example, \"Family Law Act\" means the Family Law Act, R.S.O. 1990, c. F.3, as amended, and includes O.Reg. 391/97."
+        }
+      ]
+    },
+    {
+      "clause_number": "3",
+      "title": "Freedom From The Other",
+      "content": "Privacy and respect provisions between the parties.",
+      "subclauses": [
+        {
+          "clause_number": "3.1",
+          "content": "Brian and Megan will continue to respect each other and each other's privacy."
+        }
+      ]
+    },
+    {
+      "clause_number": "4",
+      "title": "Parenting",
+      "content": "Comprehensive parenting arrangements including custody, decision-making, and detailed scheduling for all three children.",
+      "subclauses": [
+        {
+          "clause_number": "4.1",
+          "content": "Brian and Megan will have shared custody of the children."
+        },
+        {
+          "clause_number": "4.2",
+          "content": "Brian and Megan will make important decisions about the children's welfare together, including decisions about the children's: (a) education; (b) major non-emergency health care; (c) major recreational activities; and (d) religious activities. If the parties cannot agree, they will use the section of this Agreement entitled \"Dispute Resolution\" to resolve the dispute."
+        },
+        {
+          "clause_number": "4.3",
+          "content": "If the child needs emergency medical care while with one parent, that parent will attend to the emergency and promptly notify the other of the emergency."
+        },
+        {
+          "clause_number": "4.4",
+          "content": "The parent residing with the children at the relevant time will make the daily decisions affecting their welfare."
+        },
+        {
+          "clause_number": "4.5",
+          "content": "Brian and Megan acknowledge and agree that: (a) Both parties may make inquiries and be given information by the children's care providers, teachers, school officials, doctors, dentists, health care providers, summer camp counsellors, extra-curricular activities or others involved with the children; (b) Both parties have an obligation to list both parents on any registration form regarding the children and must list both parties as emergency contacts on any forms when such information is requested; (c) The parties intend this paragraph to provide each of them with access to any information or documentation to which a parent of a child would otherwise have a right of access. If, for whatever reason, this paragraph itself is not sufficient (although both parties intend it to be sufficient authority for either of them), the parties will cooperate and execute any required authorization or direction necessary to enforce the intent of clause; (d) Until such time as the children attend post-secondary education, Megan's residence shall be used for the purposes of the children's primary contact information, registrations, government documents and designations pursuant to the Canada Revenue Agency or any other child benefit available to the parties. Until such time as the children attend post-secondary education, Brian's residence and contact information shall be the secondary contact information whenever applicable."
+        },
+        {
+          "clause_number": "4.6",
+          "content": "Megan shall keep and update the children's personal identification and shall provide copies of all documentation to Brian from time to time, except for the children's health cards, which shall travel with the children between the parties' residences. Any costs associated with updating the children's identification shall be deemed a section 7 expense."
+        },
+        {
+          "clause_number": "4.7",
+          "content": "Brian and Megan agree to: (a) Prefer the children's interest to their own and at all times keep the best interests of the children in mind; (b) Encourage the children to have a good relationship with each other and each party; (c) Exchange and communicate about the children, such communications to be by email or text, private, respectful, related solely to the children, and not shared with the children or third parties without the other party's consent; (d) Share all documents regarding the children electronically via email with the other party, rather than requiring the children to transport the documents between parties; (e) Refrain from discussing with the children, or with a third party in the presence of the children, present or past legal proceedings, issues between the parties in any such legal proceedings, or any conflicts between the parties; (f) Ensure that all information or documentation pertaining to the parties' separation and divorce, including all correspondence or email communication in respect thereof, is not accessible to the children; and (g) Not speak disparagingly about the other party to or in the presence of the children, and discourage others from doing so in the presence of the children."
+        },
+        {
+          "clause_number": "4.8",
+          "content": "The children will reside with the parties equally on the following basis: (a) The children will reside with Brian and Megan equally on an alternating weekly basis with exchanges to take place on Sundays at 7:00 p.m. or a time to be agreed upon by both parties in advance from time to time; (b) Brian and Megan will share all school vacations and holidays pursuant to the holiday residence schedule set out below, which will override the regular residence schedule herein."
+        },
+        {
+          "clause_number": "4.9",
+          "content": "This holiday residence schedule is in addition to the regular residence schedule above and overrides the regular residence schedule in the event of conflict. (The regular residence schedule and the holiday residence schedule are collectively referred to as the \"schedule\")."
+        },
+        {
+          "clause_number": "4.9(a)",
+          "content": "Family Day Weekend: For Family Day weekend, the children will reside with Brian in odd-numbered years and with Megan in even-numbered years, from 5:00 p.m. on Friday until Monday at 7:00 p.m."
+        },
+        {
+          "clause_number": "4.9(b)",
+          "content": "March Break: Brian and Megan shall equally share March Break, in accordance with the regular alternating weekend schedule, with exchanges happening on Wednesdays at 7:00 p.m. For greater clarity, as an example, if Megan has the children in her care for the first weekend of March Break, the children will remain with her from Friday after school until the following Wednesday at 7:00 p.m., at which time the children will transition to the Brian's care and the regular schedule shall continue as if not interrupted."
+        },
+        {
+          "clause_number": "4.9(c)",
+          "content": "Easter Weekend: In odd-numbered years, the children will reside with Megan from 5:00 p.m. on Thursday to until Sunday at 12:00 p.m. and with Brian from 12:00 p.m. on Sunday until Monday at 7:00 p.m."
+        },
+        {
+          "clause_number": "4.9(d)",
+          "content": "Easter Weekend: In even-numbered years, the children will reside with Brian from 5:00 p.m. on Thursday to until Sunday at 12:00 p.m. and with Megan from 12:00 p.m. on Sunday until Monday at 7:00 p.m."
+        },
+        {
+          "clause_number": "4.9(e)",
+          "content": "Mother's Day / Father's Day: If the children are not otherwise with Megan on Mother's Day weekend, the children will reside with Megan from Saturday at 7:00 p.m. until the end of her parenting time and the next access exchange in accordance with the regular schedule."
+        },
+        {
+          "clause_number": "4.9(f)",
+          "content": "Father's Day: If the children are not otherwise with Brian on Father's Day weekend, the children will reside with him on Father's Day weekend, from Saturday at 7:00 p.m. until the end of his parenting time and the next access exchange in accordance with the regular schedule."
+        },
+        {
+          "clause_number": "4.9(g)",
+          "content": "Victoria Day: For Victoria Day weekend, the children will reside with Megan in odd-numbered years and with Brian in even-numbered years, from 5:00 p.m. on Friday until Monday at 7:00 p.m."
+        },
+        {
+          "clause_number": "4.9(h)",
+          "content": "Canada Day: Regardless of on which day July 1 falls, for the first weekend in July, the children will reside with Brian in odd-numbered years and with Megan in even-numbered years, from 5:00 p.m. on Friday until Monday at 7:00 p.m."
+        },
+        {
+          "clause_number": "4.9(i)",
+          "content": "Civic Holiday Weekend: For Civic Holiday weekend, the children will reside with Brian in even-numbered years and with Megan in odd-numbered years, from 5:00 p.m. on Friday until Monday at 7:00 p.m."
+        },
+        {
+          "clause_number": "4.9(j)",
+          "content": "Summer Vacation: The children will reside with each of parent in accordance with the regular parenting schedule and specific holiday time set out above."
+        },
+        {
+          "clause_number": "4.9(k)",
+          "content": "Each year both parties shall be at liberty to register the children for summer day camps and/or daycare services during their weeks of summer holidays after consulting with each other regarding the children's preferences. Neither party shall expect the other party to contribute to the expense of any summer camp or daycare service during his or her week unless the other party has agreed to contribute to the expense in advance, in writing. If the parties both agree to contribute to the expense in advance, in writing then it shall be a section 7 expense governed by paragraph 5.4 of this Agreement"
+        },
+        {
+          "clause_number": "4.9(l)",
+          "content": "Paragraph 4.11 shall not apply to weekdays during summery holidays."
+        },
+        {
+          "clause_number": "4.9(m)",
+          "content": "For greater clarity, summer holidays shall commence on the first Sunday immediately after the end of each academic year until the Friday immediately preceding the Labour Day weekend."
+        },
+        {
+          "clause_number": "4.9(n)",
+          "content": "Labour Day Weekend / First Day of School: For Labour Day weekend, the children will reside with Brian in odd-numbered years and with Megan in even-numbered years, from 5:00 p.m. on Friday until Monday at 7:00 p.m."
+        },
+        {
+          "clause_number": "4.9(o)",
+          "content": "Both parents may attend the children's first day of school regardless of the parenting schedule."
+        },
+        {
+          "clause_number": "4.9(p)",
+          "content": "Thanksgiving: For Thanksgiving weekend, the children will reside with Megan in odd-numbered years and with Brian in even-numbered years, from 5:00 p.m. on Friday until Monday at 7:00 p.m."
+        },
+        {
+          "clause_number": "4.9(q)",
+          "content": "Halloween: For Halloween, the children will be with Brian in odd-numbered years and with Megan in even-numbered years."
+        },
+        {
+          "clause_number": "4.9(r)",
+          "content": "The party with the children for Halloween will retrieve the children from their bus stop and return the children to the residence they would have been residing in pursuant to the regular schedule by bedtime."
+        },
+        {
+          "clause_number": "4.9(s)",
+          "content": "The parent who has the children for Halloween will be responsible for the children's costumes and will provide photographs to the other parent of the children in their costumes."
+        },
+        {
+          "clause_number": "4.9(t)",
+          "content": "December School Break: Brian and Megan shall share each December vacation period (being the two-week vacation period defined by the London District Catholic School Board school calendar), as follows: (i) In even-numbered years, the children shall be: (1) With the Megan from 12:00 p.m. on December 24 to December 25 at 12:00 p.m. (2) With Brian from 12:00 p.m. on December 25 to December 26 at 12:00 p.m. (3) With Brian from 12:00 p.m. on December 31 to January 1 at 12:00 p.m.; and (4) With Megan from 12:00 p.m. on January 1 to January 2 at 12:00 p.m. (ii) In odd-numbered years, the children shall be: (1) With the Brian from 12:00 p.m. on December 24 to December 25 at 12:00 p.m. (2) With Megan from 12:00 p.m. on December 25 to December 26 at 12:00 p.m. (3) With Megan from 12:00 p.m. on December 31 to January 1 at 12:00 p.m.; and (4) With Brian from 12:00 p.m. on January 1 to January 2 at 12:00 p.m."
+        },
+        {
+          "clause_number": "4.9(u)",
+          "content": "The balance of the holidays (defined as after school on the last Friday before the school holiday until 7:00 p.m. the Sunday immediately before the start of school) shall be shared equally and determined by the parties no later than November 1 each year. In even-numbered years, Brian will have the children for the first half of the holidays and Megan will have the children for the second half of the holidays. In odd-numbered years, Megan will have the children for the first half of the holidays and Brian will have the children for the second half of the holidays."
+        },
+        {
+          "clause_number": "4.9(v)",
+          "content": "Parties' Birthdays: The children will reside with Megan on her birthday each year, regardless of the regular residence schedule. The children will reside with Brian on his birthday each year, regardless of the regular residence schedule. If a parent's birthday falls on a school day, the children will be in the care of that parent from after school until the return to school the following day."
+        },
+        {
+          "clause_number": "4.9(w)",
+          "content": "Child's Birthday: Each child will spend his or her birthday in accordance with the regular schedule."
+        },
+        {
+          "clause_number": "4.9(x)",
+          "content": "Professional Development Days: Each child will spend professional development days (P.D. Days) in accordance with the regular schedule. If either parent is unable to care for the children, they will give two-weeks' notice to the other parent and give that parent the opportunity to care for the children. If both parents are unable to care for the children, the regular schedule parent shall make alternative child care arrangements and shall be solely responsible for any childcare costs."
+        },
+        {
+          "clause_number": "4.10",
+          "content": "With respect to the schedule set out above, Brian and Megan further agree as follows: (a) Both parties will provide each other with their email addresses, current addresses and a phone number where they can be reached at all times; (b) Residency time will only be altered if both of parties agree; (c) With respect to the children's transitions between the parties, the party with the children shall be responsible for dropping off the children at the other party's home, unless otherwise agreed, at the commencement of the other party's time with the children; (d) There will be no make-up time for missed residency time, unless the parties agree otherwise in advance; (e) Neither party will object to the other's reasonable plans with the children and must respect each other's ability to care for the children appropriately."
+        },
+        {
+          "clause_number": "4.10(f)",
+          "content": "The parties will inform each other of the children's care providers, activities, and social engagements as they arise while in each parent's care."
+        },
+        {
+          "clause_number": "4.10(g)",
+          "content": "Neither party will arrange activities for the children during the other parent's residency time without the other parent's consent."
+        },
+        {
+          "clause_number": "4.10(h)",
+          "content": "Both parties may attend extracurricular activities and scheduled school events regardless of the schedule."
+        },
+        {
+          "clause_number": "4.10(i)",
+          "content": "The parties shall provide reasonable notice if a child requires non-emergency medical care or is ill while in his or her care."
+        },
+        {
+          "clause_number": "4.10(j)",
+          "content": "If a child is sick, the transition from one parent's care to the other parent's care is to proceed according to the schedule unless the child is too sick to travel between our homes according to the child's doctor."
+        },
+        {
+          "clause_number": "4.10(k)",
+          "content": "The children will be permitted to take any personal item, toy, gift or article of clothing between our homes, without restriction; and"
+        },
+        {
+          "clause_number": "4.10(l)",
+          "content": "Notwithstanding the above subparagraphs, the parties will at all times maintain a reasonable and flexible position respecting the residency arrangements for the children and at all times the best interests of the children will prevail. Accordingly, if special occasions, extracurricular activities, excursions or other opportunities become available to the children, or to either party, neither party will insist that the residency arrangements set out herein be adhered to without exception."
+        },
+        {
+          "clause_number": "4.11",
+          "content": "Brian and Megan agree that it is in the children's best interests to spend time with the other parent rather than with a third party. Accordingly, if a parent with whom the children are scheduled to be according to the schedule above cannot care for the children for a period in excess of four hours, that parent will notify the other parent and give the other parent the opportunity to do so. If the other parent cannot care for the children, the parent with whom the children are scheduled to be according to the schedule above will be solely and financially responsible for making alternate childcare arrangements and shall provide details to the other parent regarding who is caring for the children."
+        },
+        {
+          "clause_number": "4.12",
+          "content": "Brian and Megan may telephone and/or communicate by email or other means with the children on a daily basis. The children may contact either parent as they wish without interference."
+        },
+        {
+          "clause_number": "4.13",
+          "content": "With respect to the children's education, the parties agree as follows: (a) Both parties may attend all school functions regardless of the schedule; (b) Each party will obtain his or her own school calendar and school notices; (c) Both parties will attend parent-teacher meetings preferably together, but if that is not practical, then individually; (d) Each party will obtain their own school calendar and school notices; (e) With respect to school field trips or classroom events, the parties will alternate attendance. If one party is unable to attend, that party will immediately notify the other party, who may attend instead; and (f) Neither party will relocate the children's residence outside of their school district without the other's written consent or a court order."
+        },
+        {
+          "clause_number": "4.14",
+          "content": "If one of the parties proposes to change their home residence, the moving parent will give particulars of their new address and telephone number to the other."
+        },
+        {
+          "clause_number": "4.15",
+          "content": "To facilitate convenient travel with either party, any passport obtained for the children shall be in their name. Each party will give any consent required for such a passport and will not unreasonably withhold consent. The passport will be kept by Megan when not in use but will be temporarily given to Brian when reasonably required for his travel with the children outside Canada and shall return it at the next appropriate access exchange."
+        },
+        {
+          "clause_number": "4.16",
+          "content": "If either parent plans a vacation (with \"vacation\" defined as any interprovincial travel, international travel, or a trip within the Province of Ontario lasting more the 72 hours) with the children: (a) That party will give the other a detailed itinerary at least 30 days before it begins, or upon reasonable notice if a vacation is planned in less than 30 days, including relevant information such as the name of any flight carrier, and flight times, and/or train details, accommodation information, including address and telephone numbers. (b) If necessary, the parties will provide each other with a travel letter authorizing the children to travel with the other parent when such letter is reasonably required. The consent and travel letter, when needed, shall be provided no later than 10 days before any proposed travel by the other and, if a notarized letter is requested, it shall be paid for by the parent vacationing with the children."
+        },
+        {
+          "clause_number": "4.17",
+          "content": "If either parent plans a vacation without the children, that parent will give the other a telephone number where he or she can be reached in case of emergency or if the children wish to contact that parent."
+        },
+        {
+          "clause_number": "4.18",
+          "content": "In the event of the death of either party the deceased party's parents shall have access rights pertaining to the children, being a minimum of two consecutive days per month, at the convenience of the surviving party, It shall be the grandparents' responsibility for all travel related access."
+        }
+      ]
+    },
+    {
+      "clause_number": "5",
+      "title": "Child Support",
+      "content": "Child support arrangements including monthly payments and special expenses for all three children.",
+      "subclauses": [
+        {
+          "clause_number": "5.1",
+          "content": "In this section: (a) \"Table\" and \"income\" mean \"Table\" and \"income\" as those terms are defined in s. 2(1) of the Child Support Guidelines (the \"Guidelines\"); (b) \"special or extraordinary expenses\" means \"special or extraordinary expenses\" as this phrase is defined in s. 7(1) of the Guidelines; (c) \"child support\" refers to the monthly amount upon which the parties have agreed and may include both Table support and special or extraordinary expenses."
+        },
+        {
+          "clause_number": "5.2",
+          "content": "Amelia, Reid and Cole spend equal time residing with Brian and Megan. Brian and Megan share custody of the children. In determining the appropriate amount of child support to be paid, Brian and Megan have considered the Table amounts for each parent, the increased cost of this shared custody arrangement (including appropriate housing, transportation, and the duplication of toys, equipment and clothes), and the condition, means, needs and other circumstances of each parent and the children. To satisfy their respective obligation to pay child support: (a) Brian will pay monthly child support to Megan in the amount of $2,300.00 per month starting July 1, 2020, and on the first day of each month thereafter up to and including December 1, 2021; (b) Brian will pay monthly child support to Megan in the amount of $2,025.00 per month starting January 1, 2022, and on the first day of each month thereafter up to and including June 1, 2023, at which time there shall be a review of child support, taking into consider the parties' incomes and Megan's work history, job prospects, and/or her attempts to contribute to her own self-sufficiency; and (c) The parties will contribute to the children's special or extraordinary expenses as set out in the applicable special or extraordinary expense sections below."
+        },
+        {
+          "clause_number": "5.3",
+          "content": "Brian and Megan shall review and adjust the child support payable for so long as child support is payable until a terminating event under the termination section below or a change in child support under the sections below. (a) Brian and Megan shall review and adjust the child support payable for so long as child support is payable until a terminating event under the termination section below or a change in child support under the sections below. (b) On or before May 1 of each year, commencing May 1, 2023, the parties will exchange income information for the prior calendar year. Brian and Megan will use this information to adjust the section 9 child support payable, including both the Table amount and the proportionate sharing of the children's special or extraordinary expenses. (c) Any change in the Table amount and the proportionate sharing of the special or extraordinary expenses will commence on July 1 of each year, commencing July 1, 2023. If the parties do not agree about any change in child support, they will use the section of this Agreement entitled \"Dispute Resolution\" to resolve the issue(s)."
+        },
+        {
+          "clause_number": "5.4",
+          "content": "With respect to the children's special and extraordinary expenses, Brian and Megan acknowledge and agree to the following: (a) Brian's proportionate share of section 7 expenses shall be 75% and Megan's proportionate share of section expenses shall be 25% until July 1, 2023, at which time the parties' proportionate share shall be readjusted in accordance with the parties' incomes. (b) Either Brian or Megan will pay their proportionate share of the children's special or extraordinary expenses within five days of either parent delivering proof the expense. In determining her contribution to the expense, either parent may deduct any income tax benefit or other subsidy received for that special or extraordinary expense. (c) Brian and Megan acknowledge that they shall proportionately contribute to the following section 7 expenses for the children which shall include, but may not be limited to, the following: (i) medical expenses not covered by the parties' respective insurance providers; and (ii) extracurricular activity expenses, including registration fees, equipment costs, tournament fees. (d) Brian and Megan acknowledge that they shall share equally certain non-section 7 expenses for the children which shall include, but may not be limited to, the following: (i) Back-to-school items, including backpacks, lunch items, indoor shoes, school supplies; (ii) Seasonal clothing such as winter coats, boots, splash-pants, rainboots, swimming items; (iii) Annual school pictures, extracurricular activity pictures; (iv) School lunches, field trips, school fees; and (v) Gifts to teachers, care providers. (e) Brian and Megan acknowledge and agree that from time to time Megan assists Brian with childcare when the children are deemed to be in Brian's care. As such, Brian provides Megan with a modest financial contribution for the children's necessities. Brian and Megan will agree to any financial contributions made by Brian from time to time. If one parent has the children in their primary care for any significant period of time (such as three consecutive months or one-half of any twelve month period), Brian and Megan shall review the support obligations in this Agreement, but affirm it is their intention to resume a shared parenting schedule as soon as practical and the payment of support pursuant to the Guidelines. (f) The parties will only contribute to expenses for the children in accordance with paragraphs 5.4 (c) and (d) herein, that are in addition to those expenses specifically listed in those paragraphs, if both parties consent to the expense in advance, in writing. Neither party will unreasonably withhold consent. If the parties cannot agree, they will use the section of this Agreement entitled \"Dispute Resolution\" to resolve this issue."
+        },
+        {
+          "clause_number": "5.5",
+          "content": "With respect to post-secondary education costs: (a) In each child's grade 12 year the parties will discuss and attempt to agree as to contribution by each party, and the child, towards the child's post-secondary education expenses for the child's first degree or diploma. The parties shall take into consideration the child's residential circumstances while attending school, and the then existing means, needs, and circumstances of the parties and the child. Prior to determining each party's reasonable contribution to the child's post-secondary educational costs Brian and Megan shall first deduct a reasonable contribution to these expenses expected from the child, which may include savings, investments, gifts, summer and/or part-time employment, scholarships, loans, bursaries, etc. In the event that Brian and Megan cannot agree on the child's reasonable contribution to these expenses, they will use the section of this Agreement entitled \"Dispute Resolution\" to resolve the issue. (b) With respect to Registered Education Savings Plans, Brian and Megan acknowledge and agree: (i) Brian is holding in trust RESP 588669614 with a total investment of $9,877.70 on the date of separation, and the parties further acknowledge and agree that: (1) The RESP funds as of the date of separation shall be made equally available to the children for their first year of post-secondary education expenses ($9,877.70÷3 = $3,292.56); (2) Brian and Megan shall receive equal credit for the RESP monies held in trust by Brian as of the date of separation and the monies shall be credited against each parent's contribution to each child's post-secondary expenses. For greater clarity, it is understood that one-half of each child's RESP fund or $1,646.18 ($3,292.56÷2) shall be credited to both Brian and Megan towards each parents' contributions to each child's first year of post-secondary education expenses; and (3) The parties acknowledge that Brian may choose to contribute to this RESP after the date of separation and such contributions shall be considered part of Brian's proportionate share to the cost of the children's education. (ii) Brian and Megan may establish RESPs for the children on the following basis: (1) Each party shall have access to half the government grant each year as may be available. (2) Any amounts saved in the RESPs are to be considered the parent's respective savings for his or her future obligation to contribute to the child's education. (3) In the event that either party is unable to contribute the maximum amount per child in any given year, thereby accessing half of the grant, he or she will advise the other party by October 31 in any given year so that the other party has the opportunity to contribute an additional amount to his or her own account."
+        },
+        {
+          "clause_number": "5.6",
+          "content": "If a child ceases to be a \"child\" as defined in the Guidelines because he or she has interrupted his or her schooling for any purpose, but he or she later returns to school full-time and is still under the age of 21, then he or she will be deemed once again to be a \"child\" as defined in the Guidelines and support will resume until an event ending child support occurs."
+        },
+        {
+          "clause_number": "5.7",
+          "content": "If either parent's obligation to support a child ends, the parties will determine the support payable for the other children at that time under the Guidelines."
+        },
+        {
+          "clause_number": "5.8",
+          "content": "Child support ends for each child when: (a) the child ceases to be a \"child\" as defined in the Divorce Act; (b) the child no longer resides with the custodial parent, (\"resides\" includes the child living away from home for school, summer employment or vacation); (c) the child turns 18, unless he or she is unable to become self-supporting due to illness, disability, education or other cause; (d) the child becomes self-supporting; (e) the child obtains one post-secondary degree or diploma; (f) the child marries; (g) the child dies; or (h) a party dies, provided that the security in the section of this Agreement entitled \"Life Insurance\" is in place at the time of death."
+        },
+        {
+          "clause_number": "5.9",
+          "content": "All available government benefits (such as the Canada Child Benefit (including the Child Disability Benefit if applicable), the refundable children's GST/HST credits, and the Ontario Child Benefit for the children), will be paid to Brian and Megan in accordance with Canada Revenue Agency directives. The parties will complete any application necessary to effect the payment of these benefits/credits. These benefits/credits will not affect the Table amount of child support in this Agreement."
+        },
+        {
+          "clause_number": "5.10",
+          "content": "Brian will claim Reid and Megan will claim Cole as their dependants for the eligible dependent credit. In the event that either party fails to claim their designated child in a given tax year, he or she shall reimburse the other for any financial penalties associated with this failure to do so. This credit will not affect the Table amount of child support in this Agreement."
+        },
+        {
+          "clause_number": "5.11",
+          "content": "If the income tax credits for a child's post-secondary educational institution are not fully used by the child, Brian and Megan will claim the unused portion of the income tax credits in that tax year proportionate to their annual contributions."
+        },
+        {
+          "clause_number": "5.12",
+          "content": "Either Brian or Megan may seek a change in child support if there is a material change in the condition, means, needs or other circumstances of Brian, Megan, Amelia, Reid or Cole that would affect child support. A material change in the condition, means, needs or other circumstances of the parents or children may be foreseen or unforeseen, foreseeable or unforeseeable, and may include: (a) a material change in either party's financial position; (b) a change causing undue hardship for either party or the children; (c) a change in the number of children entitled to receive support under this Agreement; (d) a change in the child's special or extraordinary expenses; (e) a change in the child's residence that affects the amount of child support under the Guidelines; (f) a child turning 18 years of age; or (g) a change in the child's need for support."
+        },
+        {
+          "clause_number": "5.13",
+          "content": "Whoever seeks a change will give the other, in writing: (a) notice of the proposed change; (b) evidence supporting the proposed change; and (c) any request for information necessary to determine the issue."
+        }
+      ]
+    },
+    {
+      "clause_number": "6",
+      "title": "Dispute Resolution",
+      "content": "Process for resolving disagreements between the parties.",
+      "subclauses": [
+        {
+          "clause_number": "6.1",
+          "content": "If Brian and Megan disagree about a reviewable or variable term of this Agreement, they will first try to resolve the dispute through negotiation, either between themselves or with their respective lawyers, on the following terms: (a) The party seeking a change in the parenting agreement, will make the request for review or variation by giving the other, in writing: (i) notice of the proposed change; (ii) evidence supporting the proposed change; and (iii) any requests for information from the other necessary to determine the issue. (b) A request under subsection (a) above will be answered within 30 days. (c) After exchanging any information required by this Agreement, Brian and Megan will meet personally or through their respective counsel to resolve the issues in dispute. If Brian and Megan come to an agreement, they will sign and date an amending Agreement before witnesses."
+        },
+        {
+          "clause_number": "6.2",
+          "content": "If Brian and Megan are unable to resolve the dispute through negotiation within 60 days of the request for review or variation, the parties may mediate/arbitrate the issue and the parties will share the cost of mediation."
+        },
+        {
+          "clause_number": "6.3",
+          "content": "If Brian and Megan are unable to resolve the dispute, either party may bring an application to the court to resolve the dispute. Except in the case of emergency, the party making an application to the court will give the other party no less than 30 days' notice of the application."
+        }
+      ]
+    },
+    {
+      "clause_number": "7",
+      "title": "Spousal Support",
+      "content": "Spousal support arrangements including lump sum payment and ongoing release.",
+      "subclauses": [
+        {
+          "clause_number": "7.1",
+          "content": "In full satisfaction of his spousal support obligation, Brian will forthwith make a lump sum spousal support payment to Megan in the amount of $114,000.00 ($95,000.00 grossed up) transferred from his Hydro One Pension Plan to Megan's RRSP account no. 451147763."
+        },
+        {
+          "clause_number": "7.2",
+          "content": "As a result of the terms of this Agreement, and upon payment of the lump spousal support set out above and upon completion of the property settlement set out in this Agreement, Brian and Megan are financially independent of each other and release their respective rights to spousal support from the other, now and forever. Brian and Megan intend this Agreement to be forever final and non-variable."
+        },
+        {
+          "clause_number": "7.3",
+          "content": "For greater certainty, Brian and Megan acknowledge that: (a) Brian and Megan have negotiated this Agreement in an unimpeachable fashion and that the terms of this Agreement fully represent their intentions and expectations; (b) Brian and Megan have had independent legal advice and all the disclosure the parties have requested and require to understand the nature and consequences of this Agreement, and to come to the conclusion, as the parties do, that the terms of this Agreement, including the release of all spousal support rights, reflect an equitable sharing of the economic consequences of their relationship and its breakdown; (c) the terms of this Agreement substantially comply with the overall objectives of the Divorce Act now and in the future; (d) Brian and Megan require the courts to respect their autonomy to achieve certainty and finality in our lives; (e) the terms of this Agreement and, in particular, this release of spousal support, reflect the parties particular objectives and concerns, and are intended to be a final and certain settling of all spousal support issues between Brian and Megan. Among other considerations, the parties are also relying on this spousal release, in particular, upon which to base their future lives; (f) Brian and Megan specifically wish to be able to pursue their separate and independent lives, no matter what changes may occur. Brian and Megan specifically anticipate that one or both of them may lose their job, become ill and be unable to work, have additional child care responsibilities that will interfere with their ability to work, find their financial resources diminished or exhausted whether through his or her own fault or not, or be affected by general economic and family conditions changing over time. Changes in their circumstances may be catastrophic, unanticipated or beyond their imagination. Nevertheless, no change, no matter how extreme or consequential for either or both of them, will alter this Agreement and their view that the terms of this Agreement reflect their intention to always be separate financially. Brian and Megan fully accept that no change whatsoever in either or both of their circumstances will entitle either of the parties to spousal support from the other, now and forever. (g) In short, Brian and Megan expect the courts to enforce fully this spousal support release no matter what occurs in the future."
+        }
+      ]
+    },
+    {
+      "clause_number": "8",
+      "title": "Medical and Dental Benefits",
+      "content": "Health insurance coverage arrangements for the children and parties.",
+      "subclauses": [
+        {
+          "clause_number": "8.1",
+          "content": "In this section, \"medical\" means all mental and physical health needs, including prescriptions, vision care, psychological counselling, dental and orthodontic costs, chiropractic costs, speech therapy, occupational therapy, physiotherapy, homeopathy, acupuncture and massage therapy."
+        },
+        {
+          "clause_number": "8.2",
+          "content": "Brian will maintain the children as a beneficiary of medical, extended health and dental coverage through his employment for as long as it is available to him and the children are eligible for coverage."
+        },
+        {
+          "clause_number": "8.3",
+          "content": "Brian will maintain his medical, extended health and dental coverage through his employment for Megan for as long as Megan qualifies for coverage. Brian will immediately reimburse Megan for all amounts recovered by him for expenses incurred by Megan for herself. Brian will give Megan reasonable notice when benefit coverage for Megan will no longer be available to her benefit."
+        },
+        {
+          "clause_number": "8.4",
+          "content": "Medical expenses for the children not covered by either parent's extended health insurance are special or extraordinary expenses and will be paid according to the applicable special or extraordinary expense sections above."
+        },
+        {
+          "clause_number": "8.5",
+          "content": "Brian will: (a) provide a copy of his medical benefit booklet to Megan, together with any updated information on coverage from time to time; (b) will sign documentation authorizing Megan to make claims directly to Brian's insurer; (c) promptly submit receipts given to him by Megan to the insurer if Megan is unable to make claims directly to Brian's insurer; and (d) immediately re-direct the reimbursement amounts to Megan via e-transfer."
+        }
+      ]
+    },
+    {
+      "clause_number": "9",
+      "title": "Life Insurance",
+      "content": "Life insurance requirements for the security of the children's future support.",
+      "subclauses": [
+        {
+          "clause_number": "9.1",
+          "content": "As long as both Brian and Megan are obligated to pay child support, they will: (a) Keep a life insurance policy in force for the children with a face value of $550,000.00; (b) Not borrow against the policy and ensue that each policy remains unencumbered; (c) Designated and keep each other as the trustee for the policy for at least one year after each parent's obligation to pay child support ends in accordance with the child support termination provisions in this Agreement after which time either parent can deal with the policy as he or she wishes; (d) Upon request, either party shall provide a copy of the policy to the requesting parent with such request to not exceed one request per year; (e) If a policy cannot be maintained for any reason, Brian and Megan will immediately obtain replacement coverage at a reasonable cost, ensuring no gap in coverage; and (f) If a policy is not in force when either party dies, in addition to any other remedy Brian and Megan may have against the other's estate, he or she may apply under the Succession Law Reform Act for relief for any child. (g) Either Brian or Megan may occasionally ask that the policy amount be reduced. The following factors may be taken into account in setting the appropriate amount of insurance: (i) The support owed, (ii) The estimated remaining period of the obligation, (iii) Any increase in premium or change in policy, and (iv) Any other change in circumstance since the policy amount was last set."
+        }
+      ]
+    },
+    {
+      "clause_number": "10",
+      "title": "Matrimonial Home",
+      "content": "Details about the sale and distribution of proceeds from the matrimonial home.",
+      "subclauses": [
+        {
+          "clause_number": "10.1",
+          "content": "Brian and Megan acknowledge and agree their matrimonial home, municipally known as 92 Mill Street West, Otterville, Ontario was sold on June 27, 2019, and Megan's one-half of the net sale proceeds were released to her in June 2019. The remaining net sale proceeds are to be distributed in accordance with this Agreement."
+        }
+      ]
+    },
+    {
+      "clause_number": "11",
+      "title": "Equalization of Property",
+      "content": "Property settlement including payments and asset transfers between the parties.",
+      "subclauses": [
+        {
+          "clause_number": "11.1",
+          "content": "Brian will make an equalization payment to Megan as follows: (a) Brian will make a payment to Megan of $82,000.00 from his portion of the remaining sale proceeds of the matrimonial home and the balance of the proceeds shall be paid to Brian. Upon signing this Agreement, the parties shall sign a joint direction to Mr. Battin, whose office is holding the proceeds, to this effect. (b) Brian will rollover $27,000.00 his Royal Bank of Canada RRSP account (no. 693-09012-1-7) to Megan's Royal Bank of Canada RRSP (no. 433006889) for a credit of $22,500.00 pursuant to s. 146(16) of the Income Tax Act. Brian will also complete Form T2220 and deliver it immediately to Megan to effect the rollover. Brian confirms that these RRSPs are not locked in and are available now for Megan to transfer to other RRSP assets or collapse. Brian also confirms that Megan is not liable for any commissions or other charges on the transfer or collapse of these RRSPs except her own income tax. (c) Megan had possession of the parties' 2010 Dodge Caravan. Brian transferred sole ownership to Megan as part of the property resolution between them and they ensured that Megan did not pay any sales tax on the transfer."
+        },
+        {
+          "clause_number": "11.2",
+          "content": "The payment in paragraph 11.1 represents the total equalization payment owed by Brian to Megan, and upon full payment and completion of the balance of the property transfers and payments in this Agreement is in full satisfaction of all claims under Part I of the Family Law Act."
+        },
+        {
+          "clause_number": "11.3",
+          "content": "Brian and Megan have divided the accumulated Royal Bank of Canada Reward Points."
+        }
+      ]
+    },
+    {
+      "clause_number": "12",
+      "title": "Debts",
+      "content": "Individual responsibility for personal debts and liabilities.",
+      "subclauses": [
+        {
+          "clause_number": "12.1",
+          "content": "Brian and Megan will each be solely responsible for payment of each one's own personal debts and liabilities and will indemnify the other from any expense or liability with respect to each one's own personal debts and liabilities."
+        }
+      ]
+    },
+    {
+      "clause_number": "13",
+      "title": "Releases",
+      "content": "Full and final settlement releasing all claims between the parties.",
+      "subclauses": [
+        {
+          "clause_number": "13.1",
+          "content": "This Agreement is a full and final settlement of all issues between Brian and Megan and all rights and obligations arising out of their relationship."
+        },
+        {
+          "clause_number": "13.2",
+          "content": "Except as otherwise provided in this Agreement, Brian and Megan release each other from all claims at common law, in equity or by statute against each other, including claims under the Divorce Act, the Family Law Act, and the Succession Law Reform Act."
+        }
+      ]
+    },
+    {
+      "clause_number": "14",
+      "title": "Divorce",
+      "content": "Provisions regarding divorce proceedings and costs.",
+      "subclauses": [
+        {
+          "clause_number": "14.1",
+          "content": "The costs of any application for a divorce judgment or order will be paid by the party seeking an uncontested divorce."
+        },
+        {
+          "clause_number": "14.2",
+          "content": "If a divorce judgment or order issues, none of the sections of this Agreement will be incorporated into the judgment or order and all of the terms of this Agreement will continue."
+        }
+      ]
+    },
+    {
+      "clause_number": "15",
+      "title": "Financial Disclosure and Independent Legal Advice",
+      "content": "Confirmation of financial disclosure and independent legal representation.",
+      "subclauses": [
+        {
+          "clause_number": "15.1",
+          "content": "Brian and Megan have disclosed their income, assets and other liabilities existing at the date of marriage, date of separation and the date of this Agreement for the purposes of executing the within Agreement as written. The parties acknowledge and agree they are satisfied with the financial information they have about the other party to complete the support and property sections of this Agreement."
+        },
+        {
+          "clause_number": "15.2",
+          "content": "Independent Legal Advice: (a) Brian and Megan have both had independent legal advice, Brian from Erin Reid and Megan from Genevieve M. Samuels. (b) Brian and Megan: (i) understand their respective rights and obligations under this Agreement and its nature and consequences; (ii) acknowledge that this Agreement is fair and reasonable; (iii) acknowledge that they are not under any undue influence or duress; and (iv) acknowledge that both are signing this Agreement voluntarily."
+        }
+      ]
+    },
+    {
+      "clause_number": "16",
+      "title": "General Terms",
+      "content": "Legal framework and enforceability provisions.",
+      "subclauses": [
+        {
+          "clause_number": "16.1",
+          "content": "The interpretation of this Agreement is governed by the laws of Ontario."
+        },
+        {
+          "clause_number": "16.2",
+          "content": "Brian and Megan acknowledge and agree that this Agreement is a separation agreement entered into under section 54 of the Family Law Act, and is a domestic contract that prevails over all matters dealt with in the Family Law Act."
+        },
+        {
+          "clause_number": "16.3",
+          "content": "There are no representations, collateral agreements, warranties or conditions affecting this Agreement. There are no implied agreements arising from this Agreement and this Agreement between the parties constitutes the complete agreement between them."
+        },
+        {
+          "clause_number": "16.4",
+          "content": "The parties' negotiation of this Separation Agreement have been in good faith and Brian and Megan acknowledge and agree that each have fully disclosed all information necessary or requested in order to resolve the parties' rights and entitlements as set out in this Agreement."
+        },
+        {
+          "clause_number": "16.5",
+          "content": "Except as otherwise provided in this Agreement, the invalidity or unenforceability of any term of this Agreement does not affect the validity or enforceability of any other term. Any invalid term will be treated as severed from the remaining terms."
+        },
+        {
+          "clause_number": "16.6",
+          "content": "The section headings contained in this Agreement are for convenience only and do not affect the meaning or interpretation of any term of this Agreement."
+        },
+        {
+          "clause_number": "16.7",
+          "content": "Brian and Megan's failure to insist on the strict performance of any terms in this Agreement will not be a waiver of any term."
+        },
+        {
+          "clause_number": "16.8",
+          "content": "Brian and Megan will sign any documents necessary to give effect to this Agreement."
+        },
+        {
+          "clause_number": "16.9",
+          "content": "Where consent is required under this Agreement, it will not be unreasonably withheld. If Brian and Megan cannot agree whether consent is being reasonably withheld, they will use the section of this Agreement entitled \"Dispute Resolution\" to resolve the matter."
+        },
+        {
+          "clause_number": "16.10",
+          "content": "Any amendments to this Agreement must be in writing, signed by the parties, dated and witnessed."
+        },
+        {
+          "clause_number": "16.11",
+          "content": "This Agreement survives the death of Brian and Megan and enures to the benefit of and binds Brian and Megan's heirs, executors, estate trustees, personal representatives and assigns."
+        },
+        {
+          "clause_number": "16.12",
+          "content": "Brian and Megan will each inform the executors, estate trustees, personal representatives named in each one's will that this Agreement exists, and where a copy is located."
+        },
+        {
+          "clause_number": "16.13",
+          "content": "The parties will pay their own costs for the negotiation and preparation of this Agreement."
+        },
+        {
+          "clause_number": "16.14",
+          "content": "This Agreement was prepared jointly by both parties."
+        },
+        {
+          "clause_number": "16.15",
+          "content": "The effective date of this Agreement is the date on which the latter party signs it."
+        }
+      ]
+    }
+  ]
+};
+
+        // Initialize the application
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('Data loaded successfully. Total clauses:', agreementData.clauses.length);
+            
+            // Add enter key support for search
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        });
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            const resultsInfo = document.getElementById('resultsInfo');
+
+            if (!searchTerm) {
+                resultsContainer.innerHTML = '<div class="no-results">Please enter a search term</div>';
+                resultsInfo.style.display = 'none';
+                return;
+            }
+
+            // Show loading
+            resultsContainer.innerHTML = '<div class="loading">Searching...</div>';
+            
+            setTimeout(() => {
+                const results = searchAgreement(searchTerm);
+                displayResults(results, searchTerm);
+            }, 100);
+        }
+
+        function searchAgreement(searchTerm) {
+            const results = [];
+            
+            if (!agreementData.clauses) {
+                return results;
+            }
+
+            agreementData.clauses.forEach(clause => {
+                let clauseMatches = [];
+                let subclauseMatches = [];
+
+                // Search main clause content
+                if (clause.title.toLowerCase().includes(searchTerm) || 
+                    clause.content.toLowerCase().includes(searchTerm)) {
+                    clauseMatches.push({
+                        type: 'main',
+                        text: clause.content,
+                        title: clause.title
+                    });
+                }
+
+                // Search subclauses
+                if (clause.subclauses) {
+                    clause.subclauses.forEach(subclause => {
+                        if (subclause.content.toLowerCase().includes(searchTerm)) {
+                            subclauseMatches.push(subclause);
+                        }
+                    });
+                }
+
+                // If we have matches, add to results
+                if (clauseMatches.length > 0 || subclauseMatches.length > 0) {
+                    results.push({
+                        clause: clause,
+                        mainMatches: clauseMatches,
+                        subMatches: subclauseMatches
+                    });
+                }
+            });
+
+            return results;
+        }
+
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function displayResults(results, searchTerm) {
+            const resultsContainer = document.getElementById('searchResults');
+            const resultsInfo = document.getElementById('resultsInfo');
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        No results found for "${searchTerm}". Try different keywords like:<br><br>
+                        • "PD Days" • "child support" • "custody" • "Amelia" • "Reid" • "Cole" • "medical" • "property" • "RESP" • "Christmas"
+                    </div>
+                `;
+                resultsInfo.style.display = 'none';
+                return;
+            }
+
+            // Show results info
+            resultsInfo.innerHTML = `Found ${results.length} clause(s) containing "${searchTerm}"`;
+            resultsInfo.style.display = 'block';
+
+            let html = '';
+            results.forEach(result => {
+                html += `
+                    <div class="result-item">
+                        <div class="result-header">
+                            <span>${result.clause.title}</span>
+                            <span class="clause-number">Clause ${result.clause.clause_number}</span>
+                        </div>
+                        <div class="result-content">
+                `;
+
+                // Show main clause content if it matches
+                if (result.mainMatches.length > 0) {
+                    result.mainMatches.forEach(match => {
+                        html += `
+                            <div class="result-text">
+                                <strong>Overview:</strong> ${highlightText(match.text, searchTerm)}
+                            </div>
+                        `;
+                    });
+                }
+
+                // Show matching subclauses
+                if (result.subMatches.length > 0) {
+                    html += '<div class="subclauses">';
+                    html += '<strong>Specific Provisions:</strong><br>';
+                    result.subMatches.forEach(subclause => {
+                        html += `
+                            <div class="subclause-item">
+                                <span class="subclause-number">${subclause.clause_number}:</span>
+                                ${highlightText(subclause.content, searchTerm)}
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsContainer.innerHTML = html;
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('resultsInfo').style.display = 'none';
+            document.getElementById('searchInput').focus();
+        }
+    </script>
+</body>
+</html>

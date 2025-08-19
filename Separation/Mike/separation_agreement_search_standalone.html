@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#667eea">
+    <title>Separation Agreement Search</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .clear-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .results-info {
+            background: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .result-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .result-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clause-number {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .result-content {
+            padding: 20px;
+        }
+
+        .result-text {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .subclauses {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .subclause-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .subclause-item:last-child {
+            border-bottom: none;
+        }
+
+        .subclause-number {
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 10px;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-size: 1.2rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #667eea;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .header {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .search-section {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+            
+            #searchInput {
+                padding: 12px;
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+            
+            .search-btn, .clear-btn {
+                padding: 12px 20px;
+                font-size: 16px;
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            .result-header {
+                padding: 12px 15px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .clause-number {
+                font-size: 0.8rem;
+            }
+            
+            .result-content {
+                padding: 15px;
+            }
+            
+            .subclauses {
+                padding: 10px;
+            }
+            
+            .subclause-item {
+                padding: 6px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Touch-friendly buttons */
+        .search-btn, .clear-btn {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Prevent zoom on input focus (iOS) */
+        #searchInput {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Separation Agreement Search Tool</h1>
+            <p>Search through the Michael & Jennifer Kapin Separation Agreement by keyword</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Enter keywords (e.g., 'child support', 'parenting time', 'property', 'Brooks')"
+                    autocomplete="off"
+                />
+                <button class="search-btn" onclick="performSearch()">Search</button>
+                <button class="clear-btn" onclick="clearSearch()">Clear</button>
+            </div>
+            <div id="resultsInfo" class="results-info" style="display: none;"></div>
+        </div>
+
+        <div id="searchResults"></div>
+    </div>
+
+    <script>
+        // Embedded agreement data
+        const agreementData = {
+  "document_title": "Separation Agreement - Michael Joseph Jonathon Kapin and Jennifer Amanda Kapin",
+  "document_date": "April 12, 2021",
+  "clauses": [
+    {
+      "clause_number": "1",
+      "title": "Definitions",
+      "content": "In this Agreement, various terms are defined including equalization payment, Guidelines, matrimonial home, net family property, property, and section 7 expenses.",
+      "subclauses": [
+        {
+          "clause_number": "1(a)(a)",
+          "content": "\"equalization payment\" means the payment referred to in s. 5(1) of the Family Law Act"
+        },
+        {
+          "clause_number": "1(a)(b)",
+          "content": "\"Guidelines\" means the Federal Child Support Guidelines, as defined in s. 2(1) of the Divorce Act"
+        },
+        {
+          "clause_number": "1(a)(c)",
+          "content": "\"matrimonial home\" means the property located at 97 North Street West, Otterville, Ontario, ownership of which was transferred to Michael and Jennifer as joint tenants on August 26, 2014"
+        },
+        {
+          "clause_number": "1(a)(d)",
+          "content": "\"net family property\" means net family property as defined in the Family Law Act"
+        },
+        {
+          "clause_number": "1(a)(e)",
+          "content": "\"property\" means property as defined in the Family Law Act"
+        },
+        {
+          "clause_number": "1(a)(f)",
+          "content": "\"section 7 expenses\" means the special or extraordinary expenses for the child, Brooks, as referred to in s.7 of the Guidelines"
+        },
+        {
+          "clause_number": "1(b)",
+          "content": "Any reference to a statute means the legislation bearing that name at the time the Agreement is signed and includes its regulations and any amending or successor legislation."
+        }
+      ]
+    },
+    {
+      "clause_number": "2",
+      "title": "Background",
+      "content": "Background information about Michael and Jennifer's marriage, separation, and personal details.",
+      "subclauses": [
+        {
+          "clause_number": "2(a)",
+          "content": "Michael and Jennifer were married on October 4, 2014."
+        },
+        {
+          "clause_number": "2(b)",
+          "content": "Michael and Jennifer separated on December 22, 2020. They will continue living separate and apart."
+        },
+        {
+          "clause_number": "2(c)",
+          "content": "Michael was born on March 7, 1977 and is currently 44 years old."
+        },
+        {
+          "clause_number": "2(d)",
+          "content": "Michael's SIN # is 503 347 817."
+        },
+        {
+          "clause_number": "2(e)",
+          "content": "Jennifer was born on September 27, 1980 and is currently 40 years old."
+        },
+        {
+          "clause_number": "2(f)",
+          "content": "Jennifer's SIN # is 127 000 883."
+        },
+        {
+          "clause_number": "2(g)",
+          "content": "Michael and Jennifer have one child, Brooks Morley John Kapin, born April 6, 2018 (\"Brooks\"). The child is currently 3 years old."
+        },
+        {
+          "clause_number": "2(h)",
+          "content": "Employment information - Michael is employed as a Professor at Fanshawe College and is self-employed with Mike's Heating and Home Comfort. Jennifer is employed at Tillsonburg District Memorial Hospital."
+        },
+        {
+          "clause_number": "2(i)",
+          "content": "This Agreement intends to be a settlement of all parenting issues, spousal support, property rights, and all issues arising out of their marriage."
+        },
+        {
+          "clause_number": "2(j)",
+          "content": "The parties agree to be bound by this Agreement which settles all issues between them."
+        },
+        {
+          "clause_number": "2(k)",
+          "content": "Michael and Jennifer recognize that full financial disclosure is essential and each confirms they have made full financial disclosure."
+        },
+        {
+          "clause_number": "2(l)",
+          "content": "This Agreement has been made with the assistance of a mediator, Kelly Edmonds."
+        },
+        {
+          "clause_number": "2(m)",
+          "content": "All background statements of fact form part of this Agreement and are warranted as true by both parties."
+        }
+      ]
+    },
+    {
+      "clause_number": "3",
+      "title": "Parenting",
+      "content": "Comprehensive parenting arrangements for Brooks including decision-making, time schedules, and responsibilities.",
+      "subclauses": [
+        {
+          "clause_number": "3(a)",
+          "content": "The parent with whom Brooks is scheduled to be with will make the day-to-day decisions affecting Brooks during that time."
+        },
+        {
+          "clause_number": "3(b)",
+          "content": "Michael and Jennifer will have joint decision-making responsibility for important decisions about Brooks's welfare including health, education, and extra-curricular activities."
+        },
+        {
+          "clause_number": "3(c)",
+          "content": "If Brooks needs emergency medical care while with one party, that party will promptly notify the other of the emergency."
+        },
+        {
+          "clause_number": "3(d)",
+          "content": "Parenting time allocation follows a repetitive two-week schedule with specific days allocated to each parent."
+        },
+        {
+          "clause_number": "3(e)",
+          "content": "Holiday schedule is in addition to regular parenting time and overrides the regular schedule in case of conflict."
+        },
+        {
+          "clause_number": "3(f)",
+          "content": "Michael and Jennifer agree it is in Brooks' best interests to spend time with the other parent rather than with a third party."
+        },
+        {
+          "clause_number": "3(g)",
+          "content": "Both parties will provide contact information and coordinate care responsibilities."
+        },
+        {
+          "clause_number": "3(h)",
+          "content": "Flexibility Clause: The parties will maintain reasonable and flexible position respecting parenting time and Brooks' best interests will prevail."
+        }
+      ]
+    },
+    {
+      "clause_number": "4",
+      "title": "Child Support",
+      "content": "Child support arrangements including income determination and section 7 expenses.",
+      "subclauses": [
+        {
+          "clause_number": "4(a)",
+          "content": "For child support determination, parties agree their total annual incomes are equal (approximately $65,000), with no Table child support payable."
+        },
+        {
+          "clause_number": "4(b)",
+          "content": "Based on equal incomes and equal parenting time, there shall be no Table child support payable by either party."
+        },
+        {
+          "clause_number": "4(c)",
+          "content": "Section 7 expenses shall be shared 50/50, including daycare costs, health/dental costs, extra-curricular expenses, post-secondary education costs, and other reasonable expenses for Brooks."
+        },
+        {
+          "clause_number": "4(d)",
+          "content": "Parties will exchange all income information annually by May 1st to adjust child support if applicable."
+        },
+        {
+          "clause_number": "4(e)",
+          "content": "Changes to Table Amount and section 7 expenses will commence June 1st of each year following the execution of this Agreement."
+        },
+        {
+          "clause_number": "4(f)",
+          "content": "RESP Account - Michael and Jennifer acknowledge contributing to Brooks' RESP (approximately $10,000) and will continue to hold the account jointly."
+        }
+      ]
+    },
+    {
+      "clause_number": "5",
+      "title": "Spousal Support Release",
+      "content": "Complete release of spousal support obligations between the parties.",
+      "subclauses": [
+        {
+          "clause_number": "5(a)",
+          "content": "As a result of this Agreement and upon completion of the property settlement, Michael and Jennifer are financially independent and release spousal support rights from each other, now and forever."
+        },
+        {
+          "clause_number": "5(b)",
+          "content": "Michael and Jennifer intend this Agreement to be forever final and non-variable."
+        }
+      ]
+    },
+    {
+      "clause_number": "6",
+      "title": "Medical and Dental Benefits",
+      "content": "Health and dental insurance coverage arrangements for Brooks and the parties.",
+      "subclauses": [
+        {
+          "clause_number": "6(a)",
+          "content": "Jennifer will maintain coverage for Brooks under her group health and dental plan for as long as Brooks qualifies."
+        },
+        {
+          "clause_number": "6(b)",
+          "content": "Jennifer will maintain coverage for Michael under her group health and dental plan until divorced, so long as Michael qualifies."
+        },
+        {
+          "clause_number": "6(c)",
+          "content": "If Michael obtains group health and dental plan in the future, he will add Brooks as a dependent for coordinated coverage."
+        },
+        {
+          "clause_number": "6(d)",
+          "content": "If Michael obtains group health and dental plan before divorce, he will add Jennifer as a dependent for coordinated coverage."
+        }
+      ]
+    },
+    {
+      "clause_number": "7",
+      "title": "Life Insurance",
+      "content": "Life insurance obligations for the security of Brooks' future support.",
+      "subclauses": [
+        {
+          "clause_number": "7(a)",
+          "content": "Jennifer will designate Michael as beneficiary of her group life insurance policy to provide security for Brooks' future support."
+        },
+        {
+          "clause_number": "7(b)",
+          "content": "If Michael acquires group life insurance in the future, he will designate Jennifer as beneficiary to provide security for Brooks' future support."
+        },
+        {
+          "clause_number": "7(c)",
+          "content": "This mutual obligation to maintain beneficiary status shall remain in effect until Brooks is no longer financially dependent."
+        },
+        {
+          "clause_number": "7(d)",
+          "content": "Either party may request confirmation of the terms of the other party's policy at any time."
+        }
+      ]
+    },
+    {
+      "clause_number": "8",
+      "title": "Property",
+      "content": "Property settlement including equalization payment and asset transfers.",
+      "subclauses": [
+        {
+          "clause_number": "8(a)",
+          "content": "Schedule K attached is a Net Family Property Statement prepared during mediation, signed by both parties, summarizing the property settlement between Jennifer and Michael."
+        },
+        {
+          "clause_number": "8(a)(a)",
+          "content": "Michael will pay Jennifer an equalization payment of $243,425.28 on or about May 1st, 2021 or as soon as possible thereafter."
+        },
+        {
+          "clause_number": "8(b)",
+          "content": "Upon payment of the equalization payment and completion of property transfers, this settlement represents satisfaction in full of all claims to equalize net family property, except for pensions."
+        }
+      ]
+    },
+    {
+      "clause_number": "9",
+      "title": "Matrimonial Home",
+      "content": "Transfer of matrimonial home ownership and mortgage arrangements.",
+      "subclauses": [
+        {
+          "clause_number": "9(a)",
+          "content": "Jennifer will transfer her interest in the matrimonial home to Michael. He is responsible for preparation and registration costs."
+        },
+        {
+          "clause_number": "9(b)",
+          "content": "Michael will obtain release of Jennifer's obligations to pay the existing TD Canada Trust mortgage by refinancing and discharging the existing mortgage."
+        },
+        {
+          "clause_number": "9(c)",
+          "content": "The transfer is to be completed on the same date as the equalization payment ($243,425.28)."
+        },
+        {
+          "clause_number": "9(d)",
+          "content": "Once the transfer is completed and mortgage obligations are discharged, Jennifer shall release all rights to possession of the matrimonial home under Part II of the Family Law Act."
+        }
+      ]
+    },
+    {
+      "clause_number": "10",
+      "title": "Vehicles",
+      "content": "Vehicle ownership transfers between the parties.",
+      "subclauses": [
+        {
+          "clause_number": "10(a)",
+          "content": "Jennifer has possession of the 2014 Jeep. Michael will transfer his ownership to Jennifer with no sales tax obligations."
+        },
+        {
+          "clause_number": "10(b)",
+          "content": "Michael will own the 2020 F150 Truck, 1973 Dart Swinger, and work trailer free from any claim by Jennifer."
+        },
+        {
+          "clause_number": "10(c)",
+          "content": "Michael will transfer his ownership of the 2007 Travel Trailer to Jennifer with no sales tax obligations."
+        }
+      ]
+    },
+    {
+      "clause_number": "11",
+      "title": "Household Contents",
+      "content": "Division of household contents and storage arrangements.",
+      "subclauses": [
+        {
+          "clause_number": "11(a)",
+          "content": "Michael and Jennifer have divided their household contents as set out in Schedule L attached."
+        },
+        {
+          "clause_number": "11(b)",
+          "content": "Michael agrees to store some of Jennifer's household contents at the matrimonial home until September 30, 2022 at no cost, with storage fees of $50 per month thereafter until March 31, 2023."
+        },
+        {
+          "clause_number": "11(c)",
+          "content": "Jennifer must provide one week's notice to retrieve her items and cannot attend without Michael's knowledge and consent."
+        }
+      ]
+    },
+    {
+      "clause_number": "12",
+      "title": "2020 Tax Refunds",
+      "content": "Equal sharing of 2020 tax refunds when received.",
+      "subclauses": [
+        {
+          "clause_number": "12.1",
+          "content": "Jennifer and Michael will equalize their 2020 tax refunds when received."
+        }
+      ]
+    },
+    {
+      "clause_number": "13",
+      "title": "RRSP's & Bank accounts",
+      "content": "Division of retirement savings and bank accounts.",
+      "subclauses": [
+        {
+          "clause_number": "13.1",
+          "content": "Jennifer will own her RRSP's free from any claim by Michael, and vice versa."
+        },
+        {
+          "clause_number": "13.2",
+          "content": "The joint TD Canada Trust account balance was shared equally. The account will become Michael's for his exclusive use."
+        }
+      ]
+    },
+    {
+      "clause_number": "13",
+      "title": "Pensions",
+      "content": "Pension equalization arrangements under the Family Law Act.",
+      "subclauses": [
+        {
+          "clause_number": "13(a)",
+          "content": "Either party may apply for a division of Canada Pension Plan credits."
+        },
+        {
+          "clause_number": "13(b)",
+          "content": "Michael's CAAT pension and Jennifer's University of Toronto Pension Plan interests are property to be equalized under the Family Law Act."
+        },
+        {
+          "clause_number": "13(c)",
+          "content": "Plan Administrator will provide Statement of Family Law Value (Form 4B) and Transfer Options. An Addendum will be prepared to equalize pension values, with both parties waiving survivor pension rights."
+        }
+      ]
+    },
+    {
+      "clause_number": "14",
+      "title": "Debts",
+      "content": "Individual responsibility for personal debts and liabilities.",
+      "subclauses": [
+        {
+          "clause_number": "14",
+          "content": "Michael and Jennifer will each be solely responsible for payment of their own personal debts and liabilities as set out in the Net Family Property Statement, and will indemnify the other from any expense or liability."
+        }
+      ]
+    },
+    {
+      "clause_number": "15",
+      "title": "General Release",
+      "content": "Full and final settlement releasing all claims between the parties.",
+      "subclauses": [
+        {
+          "clause_number": "15",
+          "content": "This Agreement is a full and final settlement of all issues between Michael and Jennifer, releasing each other from all claims at common law, in equity or by statute, including under the Divorce Act, Family Law Act, and Succession Law Reform Act."
+        }
+      ]
+    },
+    {
+      "clause_number": "16",
+      "title": "General Terms",
+      "content": "Legal framework and enforceability provisions.",
+      "subclauses": [
+        {
+          "clause_number": "16(a)",
+          "content": "This Agreement is a separation agreement under section 54 of the Family Law Act and is a domestic contract that prevails over all matters dealt with in the Family Law Act."
+        },
+        {
+          "clause_number": "16(b)",
+          "content": "There are no other representations, collateral agreements, warranties or conditions affecting this Agreement."
+        },
+        {
+          "clause_number": "16(c)",
+          "content": "If any term is invalid or unenforceable, it does not affect the validity of other terms. Invalid terms will be severed."
+        },
+        {
+          "clause_number": "16(d)",
+          "content": "Section headings are for convenience only and do not affect the meaning or interpretation."
+        },
+        {
+          "clause_number": "16(e)",
+          "content": "This Agreement survives the death of Michael and Jennifer and binds their heirs, executors, administrators, estate trustees, and personal representatives."
+        },
+        {
+          "clause_number": "16(f)",
+          "content": "Michael and Jennifer will sign any documents necessary to give effect to this Agreement."
+        }
+      ]
+    },
+    {
+      "clause_number": "17",
+      "title": "Independent Legal Advice",
+      "content": "Acknowledgment of the right to independent legal advice and waiver thereof.",
+      "subclauses": [
+        {
+          "clause_number": "17(a)",
+          "content": "Both parties are aware they have the right to obtain independent legal advice and acknowledge they have declined it. They will execute attached Waivers of Independent Legal Advice."
+        },
+        {
+          "clause_number": "17(b)",
+          "content": "Michael and Jennifer understand their rights and obligations, acknowledge the Agreement is fair and reasonable, are not under undue influence, and are signing voluntarily."
+        },
+        {
+          "clause_number": "17(c)",
+          "content": "The effective date of this Agreement is the date on which the latter party signs it."
+        }
+      ]
+    }
+  ]
+};
+
+        // Initialize the application
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('Data loaded successfully. Total clauses:', agreementData.clauses.length);
+            
+            // Add enter key support for search
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        });
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            const resultsInfo = document.getElementById('resultsInfo');
+
+            if (!searchTerm) {
+                resultsContainer.innerHTML = '<div class="no-results">Please enter a search term</div>';
+                resultsInfo.style.display = 'none';
+                return;
+            }
+
+            // Show loading
+            resultsContainer.innerHTML = '<div class="loading">Searching...</div>';
+            
+            setTimeout(() => {
+                const results = searchAgreement(searchTerm);
+                displayResults(results, searchTerm);
+            }, 100);
+        }
+
+        function searchAgreement(searchTerm) {
+            const results = [];
+            
+            if (!agreementData.clauses) {
+                return results;
+            }
+
+            agreementData.clauses.forEach(clause => {
+                let clauseMatches = [];
+                let subclauseMatches = [];
+
+                // Search main clause content
+                if (clause.title.toLowerCase().includes(searchTerm) || 
+                    clause.content.toLowerCase().includes(searchTerm)) {
+                    clauseMatches.push({
+                        type: 'main',
+                        text: clause.content,
+                        title: clause.title
+                    });
+                }
+
+                // Search subclauses
+                if (clause.subclauses) {
+                    clause.subclauses.forEach(subclause => {
+                        if (subclause.content.toLowerCase().includes(searchTerm)) {
+                            subclauseMatches.push(subclause);
+                        }
+                    });
+                }
+
+                // If we have matches, add to results
+                if (clauseMatches.length > 0 || subclauseMatches.length > 0) {
+                    results.push({
+                        clause: clause,
+                        mainMatches: clauseMatches,
+                        subMatches: subclauseMatches
+                    });
+                }
+            });
+
+            return results;
+        }
+
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function displayResults(results, searchTerm) {
+            const resultsContainer = document.getElementById('searchResults');
+            const resultsInfo = document.getElementById('resultsInfo');
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        No results found for "${searchTerm}". Try different keywords like:<br><br>
+                        • "child support" • "parenting time" • "Brooks" • "property" • "medical" • "pension" • "vehicle"
+                    </div>
+                `;
+                resultsInfo.style.display = 'none';
+                return;
+            }
+
+            // Show results info
+            resultsInfo.innerHTML = `Found ${results.length} clause(s) containing "${searchTerm}"`;
+            resultsInfo.style.display = 'block';
+
+            let html = '';
+            results.forEach(result => {
+                html += `
+                    <div class="result-item">
+                        <div class="result-header">
+                            <span>${result.clause.title}</span>
+                            <span class="clause-number">Clause ${result.clause.clause_number}</span>
+                        </div>
+                        <div class="result-content">
+                `;
+
+                // Show main clause content if it matches
+                if (result.mainMatches.length > 0) {
+                    result.mainMatches.forEach(match => {
+                        html += `
+                            <div class="result-text">
+                                <strong>Overview:</strong> ${highlightText(match.text, searchTerm)}
+                            </div>
+                        `;
+                    });
+                }
+
+                // Show matching subclauses
+                if (result.subMatches.length > 0) {
+                    html += '<div class="subclauses">';
+                    html += '<strong>Specific Provisions:</strong><br>';
+                    result.subMatches.forEach(subclause => {
+                        html += `
+                            <div class="subclause-item">
+                                <span class="subclause-number">${subclause.clause_number}:</span>
+                                ${highlightText(subclause.content, searchTerm)}
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsContainer.innerHTML = html;
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('resultsInfo').style.display = 'none';
+            document.getElementById('searchInput').focus();
+        }
+    </script>
+</body>
+</html>
