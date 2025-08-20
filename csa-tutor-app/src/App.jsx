@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, BookOpen, AlertTriangle, Lightbulb, User, Bot, Upload, FileText, Search } from 'lucide-react';
+import { Send, BookOpen, AlertTriangle, Lightbulb, User, Bot, Upload, FileText, Search, ToggleLeft, ToggleRight } from 'lucide-react';
 import { moduleInfo, getAIResponse } from './data/index.js';
 import InstallPrompt from './components/InstallPrompt.jsx';
+import CSAGasSearchTool from './components/CSAGasSearchTool.jsx';
 import { registerServiceWorker, isRunningStandalone } from './utils/pwa.js';
 
 const CSAGasTutorApp = () => {
+  const [viewMode, setViewMode] = useState('search'); // 'search' or 'chat'
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -150,6 +152,26 @@ const CSAGasTutorApp = () => {
     return module ? module.title : 'All Modules';
   };
 
+  // If in search mode, render the search tool
+  if (viewMode === 'search') {
+    return (
+      <>
+        <div className="relative">
+          {/* Mode Toggle Button */}
+          <button
+            onClick={() => setViewMode('chat')}
+            className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2 shadow-lg"
+          >
+            <ToggleRight size={20} />
+            Switch to Chat Mode
+          </button>
+          <CSAGasSearchTool />
+        </div>
+        <InstallPrompt />
+      </>
+    );
+  }
+
   return (
     <>
     <div className="flex h-screen bg-gray-50">
@@ -246,9 +268,18 @@ const CSAGasTutorApp = () => {
               </h2>
               <p className="text-sm text-gray-600">Ask questions about gas codes, safety, installation, and more</p>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Lightbulb size={16} />
-              <span>AI Tutor Active</span>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setViewMode('search')}
+                className="bg-green-500 text-white px-3 py-1.5 rounded-lg hover:bg-green-600 transition-colors flex items-center gap-2 text-sm"
+              >
+                <ToggleLeft size={16} />
+                Search Mode
+              </button>
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <Lightbulb size={16} />
+                <span>AI Tutor Active</span>
+              </div>
             </div>
           </div>
         </div>

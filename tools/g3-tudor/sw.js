@@ -1,11 +1,12 @@
 // TSSA G3 Gas Technician Tutor - Service Worker
-const CACHE_NAME = 'g3-tutor-v4.0';
+const CACHE_NAME = 'g3-tutor-v1.0';
 const urlsToCache = [
-  './',
-  './manifest.json',
-  './G3Tudor.png',
-  './assets/main-067b2808.js',
-  './assets/index-9485dc91.css'
+  '/',
+  '/manifest.json',
+  '/G3Tudor.png',
+  '/src/main.jsx',
+  '/src/App.jsx',
+  '/src/index.css'
 ];
 
 // Install Service Worker
@@ -68,8 +69,8 @@ self.addEventListener('sync', (event) => {
 self.addEventListener('push', (event) => {
   const options = {
     body: event.data ? event.data.text() : 'Time to study your G3 modules!',
-    icon: './G3Tudor.png',
-    badge: './G3Tudor.png',
+    icon: '/G3Tudor.png',
+    badge: '/G3Tudor.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
@@ -87,6 +88,6 @@ self.addEventListener('notificationclick', (event) => {
   console.log('Notification click received.');
   event.notification.close();
   event.waitUntil(
-    clients.openWindow('./')
+    clients.openWindow('/')
   );
 });
