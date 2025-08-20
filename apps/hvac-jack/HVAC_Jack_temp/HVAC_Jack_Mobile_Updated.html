@@ -1426,6 +1426,16 @@ function displayClaudeAnalysisResult(analysisResult, mode) {
     // First, display the analysis results
     addMobileMessage('📸 **Rating Plate Analysis Complete!**\n\nClaude has analyzed your equipment photo:', 'ai');
     
+    // Automatically lookup capacitor specifications using explainer AI if equipment details are available
+    if (analysisResult.structuredData && analysisResult.structuredData.equipment) {
+        const equipment = analysisResult.structuredData.equipment;
+        if (equipment.brand || equipment.model) {
+            setTimeout(() => {
+                performAutomaticCapacitorLookup(equipment, analysisResult);
+            }, 1500);
+        }
+    }
+    
     // Check if capacitor data was enhanced via database lookup
     if (analysisResult.capacitorLookup && analysisResult.capacitorLookup.enhanced) {
         const capacitorSource = analysisResult.capacitorLookup.lookupSource;
@@ -1583,6 +1593,133 @@ async function performAutomaticManualSearch(equipment, analysisResult, mode) {
                 model: equipment.model,
                 error: error.message,
                 mode: mode
+            });
+        }
+    }
+}
+
+// NEW: Automatic capacitor specification lookup using explainer AI
+async function performAutomaticCapacitorLookup(equipment, analysisResult) {
+    try {
+        // Show that we're looking up capacitor specifications
+        addMobileMessage('🔋 **Looking up capacitor specifications...**\n\nUsing AI to find exact capacitor requirements for your equipment.', 'ai');
+
+        // Construct the capacitor lookup message for explainer AI
+        const capacitorQuery = `Find the exact capacitor specifications for ${equipment.brand} model ${equipment.model} ${equipment.type || 'HVAC equipment'}. I need:
+
+1. Compressor run capacitor (MFD rating, voltage, type)
+2. Fan motor capacitor (MFD rating, voltage, type)
+3. Any dual run capacitor specifications
+4. Part numbers if available
+
+Equipment Details:
+- Brand: ${equipment.brand}
+- Model: ${equipment.model}
+- Serial: ${equipment.serial || 'N/A'}
+- Type: ${equipment.type || 'Unknown'}
+
+Please provide specific capacitor requirements with MFD ratings, voltage ratings, and any important notes about replacement specifications.`;
+
+        console.log('Performing automatic capacitor lookup:', capacitorQuery);
+        
+        // Use the explainer AI system to get capacitor specifications
+        const requestBody = {
+            message: capacitorQuery,
+            mode: 'technician', // Use technician mode for detailed technical specifications
+            conversationHistory: [],
+            systemContext: {
+                equipmentType: equipment.type || 'hvac equipment',
+                brand: equipment.brand,
+                model: equipment.model,
+                serial: equipment.serial,
+                currentProblem: 'capacitor_specifications_lookup'
+            },
+            photoAnalysisData: analysisResult,
+            sessionId: window.mobileHvacJack ? window.mobileHvacJack.sessionId : 'unknown',
+            explainerMode: 'practical', // Use practical mode for implementation-focused capacitor info
+            requestExplanation: true
+        };
+
+        const response = await fetch('../../../.netlify/functions/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            
+            if (result.response && result.response.trim()) {
+                // Display the capacitor specifications with enhanced formatting
+                const capacitorMessage = `🔋 **Capacitor Specifications Found!**\n\n${result.response}\n\n📋 **Auto-generated using AI analysis of your equipment data**`;
+                addMobileMessage(capacitorMessage, 'ai');
+                
+                // Track successful auto capacitor lookup
+                if (window.mobileHvacJack) {
+                    await window.mobileHvacJack.trackUsage('auto_capacitor_lookup_success', {
+                        brand: equipment.brand,
+                        model: equipment.model,
+                        equipmentType: equipment.type,
+                        explainerMode: 'practical'
+                    });
+                }
+            } else {
+                throw new Error('Empty response from capacitor lookup');
+            }
+        } else {
+            throw new Error(`Capacitor lookup failed: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.error('Automatic capacitor lookup failed:', error);
+        
+        // Fallback to database lookup if AI search fails
+        try {
+            addMobileMessage('🔋 **Searching fallback capacitor database...**', 'ai');
+            
+            const fallbackResponse = await fetch('../../../.netlify/functions/capacitor-database', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    equipmentDetails: equipment,
+                    mode: 'homeowner',
+                    sessionId: window.mobileHvacJack ? window.mobileHvacJack.sessionId : 'unknown'
+                })
+            });
+
+            if (fallbackResponse.ok) {
+                const fallbackResult = await fallbackResponse.json();
+                if (fallbackResult.success && fallbackResult.capacitors.length > 0) {
+                    let capacitorMessage = `🔋 **Capacitor Specifications (Database)**\n\n`;
+                    fallbackResult.capacitors.forEach((cap, index) => {
+                        capacitorMessage += `**${cap.component}**: ${cap.mfd} MFD, ${cap.voltage}V ${cap.type}\n`;
+                        if (cap.notes) {
+                            capacitorMessage += `  _${cap.notes}_\n`;
+                        }
+                    });
+                    capacitorMessage += `\n📊 **Source**: Equipment Database (${fallbackResult.confidence}% confidence)`;
+                    addMobileMessage(capacitorMessage, 'ai');
+                } else {
+                    addMobileMessage(`🔋 **Capacitor Lookup - Manual Check Needed**\n\nI couldn't find specific capacitor specifications for your ${equipment.brand} ${equipment.model}.\n\n**What to do:**\n• Check existing capacitor labels for exact MFD and voltage\n• Refer to your equipment manual\n• Contact manufacturer technical support\n• Consult with an HVAC professional`, 'ai');
+                }
+            } else {
+                throw new Error('Database lookup also failed');
+            }
+        } catch (fallbackError) {
+            console.error('Fallback capacitor lookup failed:', fallbackError);
+            addMobileMessage(`🔋 **Capacitor Lookup - Manual Check Required**\n\nI wasn't able to find specific capacitor specifications automatically.\n\n**Manual Steps:**\n• Check existing capacitor labels for MFD and voltage ratings\n• Look up ${equipment.brand} ${equipment.model} in manufacturer documentation\n• Contact ${equipment.brand} technical support\n• Have an HVAC professional verify specifications`, 'ai');
+        }
+        
+        // Track failure
+        if (window.mobileHvacJack) {
+            await window.mobileHvacJack.trackUsage('auto_capacitor_lookup_failed', {
+                brand: equipment.brand,
+                model: equipment.model,
+                error: error.message
             });
         }
     }
