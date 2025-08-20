@@ -28,12 +28,16 @@ exports.handler = async (event, context) => {
       message, 
       sessionId,
       photoData,
+      photoAnalysisData,
+      conversationHistory = [],
       timestamp
     } = JSON.parse(event.body || '{}');
 
     console.log('🔧 HVAC Jack 4.0 request:', {
       messageLength: message?.length,
       hasPhoto: !!photoData,
+      hasPhotoAnalysis: !!photoAnalysisData,
+      conversationItems: conversationHistory.length,
       sessionId,
       timestamp
     });
@@ -47,8 +51,8 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Build comprehensive explainer prompt
-    const explainerPrompt = buildExplainerPrompt(message, photoData);
+    // Build comprehensive explainer prompt with context
+    const explainerPrompt = buildExplainerPrompt(message, photoData, photoAnalysisData, conversationHistory);
     
     console.log('🎓 Processing with explainer AI...');
     
@@ -84,14 +88,39 @@ exports.handler = async (event, context) => {
   }
 };
 
-function buildExplainerPrompt(message, photoData) {
+function buildExplainerPrompt(message, photoData, photoAnalysisData, conversationHistory) {
+  // Build conversation context
+  let contextSection = '';
+  
+  if (photoAnalysisData) {
+    contextSection += `\n**PREVIOUS PHOTO ANALYSIS AVAILABLE:**
+The user has already performed a photo analysis of their HVAC equipment. Here is the detailed data from that analysis:
+
+${photoAnalysisData}
+
+**IMPORTANT:** Use this equipment data to provide specific answers about capacitor sizes, part numbers, specifications, and other technical details for this exact equipment.`;
+  }
+
+  if (conversationHistory && conversationHistory.length > 0) {
+    contextSection += `\n**CONVERSATION HISTORY:**`;
+    conversationHistory.slice(-6).forEach(item => { // Last 6 items
+      if (item.type === 'user_question') {
+        contextSection += `\nUser: ${item.content}`;
+      } else if (item.type === 'ai_response') {
+        contextSection += `\nAI: ${item.content.substring(0, 200)}...`;
+      }
+    });
+  }
+
   return `You are HVAC Jack 4.0 - The world's most knowledgeable HVAC troubleshooting expert and master technician. You have decades of field experience with every type of HVAC equipment.
 
 **CRITICAL INSTRUCTION: You MUST provide comprehensive, detailed troubleshooting analysis. NO generic responses. NO requests for more information unless absolutely critical.**
 
-**HVAC Issue:** "${message}"
+**Current User Question:** "${message}"
 
-${photoData ? '**EQUIPMENT PHOTO:** Photo provided for visual analysis - examine for model numbers, condition, connections, error displays, etc.' : '**NOTE:** No photo provided, but proceed with comprehensive analysis based on the described symptoms.'}
+${photoData ? '**EQUIPMENT PHOTO:** Photo provided for visual analysis - examine for model numbers, condition, connections, error displays, etc.' : '**NOTE:** No photo provided for current question.'}
+
+${contextSection}
 
 **YOUR RESPONSE MUST INCLUDE ALL OF THE FOLLOWING:**
 

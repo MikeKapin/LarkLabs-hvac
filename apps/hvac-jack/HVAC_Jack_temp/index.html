@@ -648,6 +648,8 @@
         class HVACJack4 {
             constructor() {
                 this.photoData = null;
+                this.photoAnalysisData = null;
+                this.conversationHistory = [];
                 this.isAnalyzing = false;
                 this.sessionId = this.generateSessionId();
                 this.initializeElements();
@@ -766,6 +768,8 @@
 
                 try {
                     const response = await this.callPhotoAnalyzer();
+                    this.photoAnalysisData = response; // Store photo analysis for future use
+                    this.addToConversationHistory('photo_analysis', response);
                     this.displayResponse(response);
                     this.showStatus('Photo analysis complete', 'success');
                 } catch (error) {
@@ -795,6 +799,8 @@
 
                 try {
                     const response = await this.callExplainerAPI(query);
+                    this.addToConversationHistory('user_question', query);
+                    this.addToConversationHistory('ai_response', response);
                     this.displayResponse(response);
                     this.showStatus('Analysis complete', 'success');
                 } catch (error) {
@@ -815,6 +821,8 @@
                     explainerMode: true,
                     requestExplanation: true,
                     photoData: this.photoData,
+                    photoAnalysisData: this.photoAnalysisData,
+                    conversationHistory: this.conversationHistory.slice(-10), // Last 10 exchanges
                     timestamp: new Date().toISOString()
                 };
 
@@ -860,6 +868,19 @@
 
                 const data = await response.json();
                 return data.analysis || data.message || 'No analysis received';
+            }
+
+            addToConversationHistory(type, content) {
+                this.conversationHistory.push({
+                    type: type,
+                    content: content,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Keep only last 20 items to prevent memory bloat
+                if (this.conversationHistory.length > 20) {
+                    this.conversationHistory = this.conversationHistory.slice(-20);
+                }
             }
 
             displayResponse(response) {
