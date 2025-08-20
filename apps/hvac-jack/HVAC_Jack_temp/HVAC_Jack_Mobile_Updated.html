@@ -1324,10 +1324,10 @@
                     throw new Error('No image data available');
                 }
 
-                const mode = window.mobileHvacJack ? window.mobileHvacJack.currentMode : 'homeowner';
+                const mode = 'homeowner'; // Always use homeowner mode for photo analysis - more comprehensive
                 const sessionId = window.mobileHvacJack ? window.mobileHvacJack.sessionId : 'unknown';
 
-                console.log('Sending photo to Claude API for analysis...');
+                console.log('Sending photo to Claude API for analysis (homeowner mode for comprehensive results)...');
                 
                 const analysisResult = await sendPhotoForAnalysis(imageData, mode, sessionId);
                 
@@ -1484,7 +1484,7 @@ function displayClaudeAnalysisResult(analysisResult, mode) {
         // Show that we're searching for manuals
         setTimeout(() => {
             addMobileMessage('🔍 **Searching for official manuals and documentation...**', 'ai');
-            performAutomaticManualSearch(equipment, analysisResult, mode);
+            performAutomaticManualSearch(equipment, analysisResult, 'homeowner'); // Use homeowner mode for comprehensive manual search
         }, 1500);
     } else {
         // If no equipment details, show the standard follow-up
@@ -1918,7 +1918,8 @@ function generateManualSearchFallback(equipment, mode) {
             constructor() {
                 this.diagnosticsRun = 0;
                 this.conversationHistory = [];
-                this.currentMode = 'technician'; // Single mode - always technician
+                this.currentMode = 'technician'; // Text chat mode - professional level
+                // Note: Photo analysis always uses 'homeowner' mode for more comprehensive results
                 this.systemContext = {
                     equipmentType: null,
                     brand: null,
