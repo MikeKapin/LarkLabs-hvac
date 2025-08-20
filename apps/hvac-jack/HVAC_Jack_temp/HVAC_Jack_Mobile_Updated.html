@@ -1163,7 +1163,7 @@
                             📸
                         </button>
                         <input type="file" id="photoUpload" class="photo-upload-input" accept="image/*" capture="environment" onchange="handlePhotoUpload(event)" />
-                        <textarea class="mobile-input-field" id="mobileInput" placeholder="Tell Jack what's wrong..." rows="1" onkeypress="handleMobileKeyPress(event)" oninput="adjustTextareaHeight(this)"></textarea>
+                        <textarea class="mobile-input-field" id="mobileInput" placeholder="Ask me to diagnose or explain any HVAC concept..." rows="1" onkeypress="handleMobileKeyPress(event)" oninput="adjustTextareaHeight(this)"></textarea>
                         <button class="mobile-send-btn" id="mobileSendBtn" onclick="sendMobileMessage()">
                             <span>➤</span>
                         </button>
@@ -1918,7 +1918,7 @@ function generateManualSearchFallback(equipment, mode) {
             constructor() {
                 this.diagnosticsRun = 0;
                 this.conversationHistory = [];
-                this.currentMode = 'homeowner'; // Single mode - always homeowner
+                this.currentMode = 'technician'; // Single mode - always technician
                 this.systemContext = {
                     equipmentType: null,
                     brand: null,
@@ -1945,6 +1945,10 @@ function generateManualSearchFallback(equipment, mode) {
                 this.maxMessagesPerWindow = 10;
                 this.messageTimestamps = [];
                 this.sessionId = this.generateSessionId();
+                
+                // AI Explainer functionality
+                this.explainerMode = null; // 'explain', 'practical', 'safety', 'compare'
+                this.requestExplanation = false;
                 
                 // Equipment detection patterns
                 this.modelPatterns = [
@@ -3060,13 +3064,28 @@ function generateManualSearchFallback(equipment, mode) {
 
             // Robust backend communication with comprehensive error handling
             async sendToBackend(input) {
+                // Detect explainer requests
+                this.detectExplainerRequest(input);
+                
                 const requestBody = {
                     message: input,
                     mode: this.currentMode,
                     conversationHistory: this.conversationHistory.slice(-10),
                     systemContext: this.systemContext,
-                    sessionId: this.sessionId
+                    sessionId: this.sessionId,
+                    explainerMode: this.explainerMode,
+                    requestExplanation: this.requestExplanation
                 };
+                
+                // Reset explainer flags after sending
+                const shouldResetExplainer = this.requestExplanation;
+                if (shouldResetExplainer) {
+                    // Keep the flags for this request, reset after processing
+                    setTimeout(() => {
+                        this.explainerMode = null;
+                        this.requestExplanation = false;
+                    }, 100);
+                }
 
                 console.log('Sending to backend:', this.apiEndpoint);
                 
@@ -3166,6 +3185,71 @@ function generateManualSearchFallback(equipment, mode) {
                 if (input.includes('cycling')) return 'shortCycling';
                 if (input.includes('won\'t start')) return 'wontStart';
                 return 'general';
+            }
+
+            // AI Explainer functionality - detect explanation requests
+            detectExplainerRequest(input) {
+                const inputLower = input.toLowerCase();
+                
+                // Detect explanation mode requests
+                const explainerKeywords = {
+                    'explain': ['explain', 'what is', 'how does', 'why does', 'what does', 'tell me about', 'help me understand', 'definition of', 'meaning of'],
+                    'practical': ['how to', 'step by step', 'walk me through', 'practical', 'implementation', 'procedure', 'process'],
+                    'safety': ['safety', 'safe', 'dangerous', 'hazard', 'risk', 'precaution', 'warning'],
+                    'compare': ['compare', 'difference', 'vs', 'versus', 'better', 'which is', 'pros and cons']
+                };
+                
+                // Check for specific explainer modes
+                for (const [mode, keywords] of Object.entries(explainerKeywords)) {
+                    if (keywords.some(keyword => inputLower.includes(keyword))) {
+                        this.explainerMode = mode;
+                        this.requestExplanation = true;
+                        this.showExplainerNotification(mode);
+                        return true;
+                    }
+                }
+                
+                // General explanation request keywords
+                const generalExplainerKeywords = [
+                    'explain', 'what is', 'how does', 'why does', 'what does', 'how to',
+                    'tell me about', 'help me understand', 'what\'s the difference',
+                    'how it works', 'what causes', 'what makes', 'teach me', 'learn about'
+                ];
+                
+                const hasExplainerRequest = generalExplainerKeywords.some(keyword => inputLower.includes(keyword));
+                if (hasExplainerRequest) {
+                    this.explainerMode = 'explain'; // Default to comprehensive explanation
+                    this.requestExplanation = true;
+                    this.showExplainerNotification('explain');
+                    return true;
+                }
+                
+                return false;
+            }
+
+            // Show visual notification when explainer mode is activated
+            showExplainerNotification(mode) {
+                const modeEmojis = {
+                    'explain': '🎓',
+                    'practical': '🔧', 
+                    'safety': '⚠️',
+                    'compare': '⚖️'
+                };
+                
+                const modeNames = {
+                    'explain': 'Comprehensive Explanation',
+                    'practical': 'Practical Implementation', 
+                    'safety': 'Safety-Focused Analysis',
+                    'compare': 'Comparison Analysis'
+                };
+                
+                const emoji = modeEmojis[mode] || '🎓';
+                const modeName = modeNames[mode] || 'Comprehensive Explanation';
+                
+                // Add a brief notification message
+                setTimeout(() => {
+                    addMobileMessage(`${emoji} **AI Explainer Mode Activated**\n\nMode: ${modeName}\n\nI'll provide an in-depth professional explanation along with diagnostic assistance.`, 'ai');
+                }, 500);
             }
 
             generateFallbackResponse(analysis, input) {
@@ -3521,7 +3605,24 @@ What's your current diagnostic status?`
                 
                 const avatar = document.createElement('div');
                 avatar.className = `mobile-avatar ${sender}`;
-                avatar.textContent = sender === 'user' ? '👤' : '🔧';
+                
+                // Enhanced avatar for explainer mode
+                if (sender === 'ai' && window.mobileHvacJack && window.mobileHvacJack.requestExplanation) {
+                    const modeEmojis = {
+                        'explain': '🎓',
+                        'practical': '🔧', 
+                        'safety': '⚠️',
+                        'compare': '⚖️'
+                    };
+                    const explainerMode = window.mobileHvacJack.explainerMode;
+                    avatar.textContent = modeEmojis[explainerMode] || '🎓';
+                    avatar.title = `HVAC Jack Professional - ${explainerMode?.toUpperCase() || 'EXPLANATION'} Mode`;
+                } else {
+                    avatar.textContent = sender === 'user' ? '👤' : '🔧';
+                    if (sender === 'ai') {
+                        avatar.title = 'HVAC Jack Professional';
+                    }
+                }
                 
                 const messageContent = document.createElement('div');
                 messageContent.className = 'mobile-message-content';

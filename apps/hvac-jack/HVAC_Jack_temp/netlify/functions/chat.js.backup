@@ -1,6 +1,5 @@
 // netlify/functions/chat.js
-// Enhanced HVAC Jack backend with intelligent routing, comprehensive photo integration, and advanced AI explainer system
-// Integrated with Code Compass AI explanation technology for comprehensive HVAC education
+// Enhanced HVAC Jack backend with intelligent routing and comprehensive photo integration
 
 // Use shared storage from analyze-photo.js
 global.usageStore = global.usageStore || {
@@ -40,9 +39,7 @@ exports.handler = async (event, context) => {
         sessionId,
         photoAnalysisData,
         diagnosticPackage,
-        enhancedAnalysisContext,
-        explainerMode,
-        requestExplanation
+        enhancedAnalysisContext
       } = JSON.parse(event.body);
 
       console.log('📨 Enhanced chat request received:', {
@@ -52,9 +49,7 @@ exports.handler = async (event, context) => {
         hasPhotoContext: !!photoAnalysisData,
         hasDiagnosticPackage: !!diagnosticPackage,
         hasEnhancedContext: !!enhancedAnalysisContext,
-        isAutoPhotoSearch: systemContext?.searchType === 'auto_photo_manual_search',
-        explainerMode,
-        requestExplanation: !!requestExplanation
+        isAutoPhotoSearch: systemContext?.searchType === 'auto_photo_manual_search'
       });
 
       // Basic validation
@@ -104,15 +99,13 @@ exports.handler = async (event, context) => {
         };
       }
 
-      // **INTELLIGENT ROUTING SYSTEM WITH AI EXPLAINER INTEGRATION**
+      // **INTELLIGENT ROUTING SYSTEM**
       const routingDecision = analyzeRequestRouting(
         message, 
         systemContext, 
         photoAnalysisData, 
         diagnosticPackage,
-        mode,
-        explainerMode,
-        requestExplanation
+        mode
       );
 
       console.log('🧠 Routing decision:', routingDecision);
@@ -178,31 +171,6 @@ exports.handler = async (event, context) => {
             mode
           );
           responseMetadata.routeUsed = 'homeowner_guided';
-          break;
-
-        case 'AI_EXPLAINER_COMPREHENSIVE':
-          response = await handleAIExplainerComprehensive(
-            message,
-            explainerMode,
-            systemContext,
-            photoAnalysisData,
-            conversationHistory,
-            mode
-          );
-          responseMetadata.routeUsed = 'ai_explainer_comprehensive';
-          break;
-
-        case 'DUAL_DIAGNOSTIC_EDUCATIONAL':
-          response = await handleDualDiagnosticEducational(
-            message,
-            explainerMode,
-            systemContext,
-            photoAnalysisData,
-            diagnosticPackage,
-            conversationHistory,
-            mode
-          );
-          responseMetadata.routeUsed = 'dual_diagnostic_educational';
           break;
 
         default:
@@ -285,8 +253,8 @@ exports.handler = async (event, context) => {
   };
 };
 
-// **INTELLIGENT ROUTING SYSTEM WITH AI EXPLAINER INTEGRATION**
-function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagnosticPackage, mode, explainerMode, requestExplanation) {
+// **INTELLIGENT ROUTING SYSTEM**
+function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagnosticPackage, mode) {
   const routing = {
     route: 'STANDARD_CONVERSATION',
     confidence: 0,
@@ -294,20 +262,6 @@ function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagno
   };
 
   const messageLower = message.toLowerCase();
-
-  // PRIORITY 0: Explicit explanation requests or explainer mode
-  if (requestExplanation || explainerMode || detectExplanationRequest(messageLower)) {
-    if (diagnosticPackage || photoAnalysisData) {
-      routing.route = 'DUAL_DIAGNOSTIC_EDUCATIONAL';
-      routing.confidence = 95;
-      routing.reasons.push('Explanation requested with diagnostic context');
-    } else {
-      routing.route = 'AI_EXPLAINER_COMPREHENSIVE';
-      routing.confidence = 90;
-      routing.reasons.push('Comprehensive explanation requested');
-    }
-    return routing;
-  }
 
   // PRIORITY 1: Safety-critical situations
   if (detectSafetyIssue(messageLower)) {
@@ -364,20 +318,6 @@ function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagno
 }
 
 // Route detection functions
-function detectExplanationRequest(message) {
-  const explanationKeywords = [
-    'explain', 'what is', 'how does', 'why does', 'what does', 'how to',
-    'tell me about', 'help me understand', 'what\'s the difference',
-    'how it works', 'what causes', 'what makes', 'definition of',
-    'meaning of', 'purpose of', 'function of', 'role of',
-    'teach me', 'learn about', 'understand', 'clarify',
-    'elaborate', 'describe', 'detail', 'breakdown',
-    'walk me through', 'step by step explanation'
-  ];
-  
-  return explanationKeywords.some(keyword => message.includes(keyword));
-}
-
 function detectSafetyIssue(message) {
   const safetyKeywords = [
     'gas smell', 'smell gas', 'gas leak', 'carbon monoxide', 'co alarm',
@@ -608,26 +548,6 @@ async function handleHomeownerGuided(message, systemContext, conversationHistory
   return await callClaudeWithEnhancedContext(systemPrompt, claudeMessages);
 }
 
-async function handleAIExplainerComprehensive(message, explainerMode, systemContext, photoAnalysisData, conversationHistory, mode) {
-  const systemPrompt = createAIExplainerSystemPrompt(explainerMode, systemContext, photoAnalysisData);
-  const claudeMessages = buildAIExplainerClaudeMessages(message, conversationHistory, explainerMode, systemContext, photoAnalysisData);
-  
-  const explanation = await callClaudeWithEnhancedContext(systemPrompt, claudeMessages);
-  return formatComprehensiveExplanation(explanation, explainerMode, systemContext, photoAnalysisData);
-}
-
-async function handleDualDiagnosticEducational(message, explainerMode, systemContext, photoAnalysisData, diagnosticPackage, conversationHistory, mode) {
-  // Get both diagnostic response and comprehensive explanation
-  const diagnosticResponse = await handleEnhancedDiagnostic(message, diagnosticPackage, photoAnalysisData, conversationHistory, mode);
-  
-  // Generate comprehensive explanation
-  const explanationSystemPrompt = createAIExplainerSystemPrompt(explainerMode || 'explain', systemContext, photoAnalysisData);
-  const explanationMessages = buildAIExplainerClaudeMessages(message, conversationHistory, explainerMode || 'explain', systemContext, photoAnalysisData);
-  const explanation = await callClaudeWithEnhancedContext(explanationSystemPrompt, explanationMessages);
-  
-  return formatDualResponse(diagnosticResponse, explanation, explainerMode, systemContext, photoAnalysisData);
-}
-
 async function handleStandardConversation(message, conversationHistory, systemContext, photoAnalysisData, mode) {
   const systemPrompt = buildEnhancedSystemPrompt(mode, systemContext, photoAnalysisData);
   const claudeMessages = buildStandardClaudeMessages(message, conversationHistory, mode, photoAnalysisData);
@@ -636,129 +556,6 @@ async function handleStandardConversation(message, conversationHistory, systemCo
 }
 
 // **ENHANCED SYSTEM PROMPTS**
-
-function createAIExplainerSystemPrompt(explainerMode, systemContext, photoAnalysisData) {
-  let basePrompt = `You are HVAC Jack Professional with Advanced AI Explainer capabilities. You combine comprehensive HVAC diagnostic expertise with deep educational explanations for professional technicians.
-
-**CORE IDENTITY:**
-You are a certified master technician and educator specializing in HVAC systems, gas appliances, and related technologies. Your role is to provide both technical solutions AND comprehensive educational explanations for industry professionals.
-
-**EQUIPMENT CONTEXT:**`;
-
-  if (photoAnalysisData?.structuredData) {
-    const eq = photoAnalysisData.structuredData.equipment;
-    basePrompt += `
-**PHOTO ANALYSIS CONTEXT LOADED:**
-- Equipment: ${eq?.type || 'Unknown'} by ${eq?.brand || 'Unknown'}
-- Model: ${eq?.model || 'Unknown'}
-- Serial: ${eq?.serial || 'Unknown'}
-- Complete technical specifications available from recent photo analysis`;
-  }
-
-  if (systemContext) {
-    basePrompt += `
-**CONVERSATION CONTEXT:**
-- System Type: ${systemContext?.equipmentType || 'Unknown'}
-- Brand: ${systemContext?.brand || 'Unknown'}
-- Model: ${systemContext?.model || 'Unknown'}`;
-  }
-
-  const explainerModePrompts = {
-    'explain': `
-
-**EXPLANATION MODE - COMPREHENSIVE UNDERSTANDING:**
-Your role is to provide clear, comprehensive explanations that help users truly understand HVAC concepts, procedures, and systems.
-
-**EXPLANATION PRINCIPLES:**
-1. **Clear Foundation** - Start with basic concepts and build understanding
-2. **Practical Context** - Relate explanations to real-world applications
-3. **Safety Integration** - Emphasize safety throughout explanations
-4. **Visual Descriptions** - Help users visualize components and processes
-5. **Progressive Detail** - Layer information from basic to advanced
-6. **Equipment-Specific** - Use actual equipment context when available
-
-**RESPONSE STRUCTURE:**
-- **Overview**: What this is and why it matters
-- **How It Works**: Step-by-step process explanation
-- **Key Components**: Important parts and their functions
-- **Safety Considerations**: Critical safety aspects
-- **Practical Applications**: Real-world examples and contexts
-- **Common Issues**: What typically goes wrong and why
-- **Professional Insights**: Advanced knowledge and best practices`,
-
-    'practical': `
-
-**PRACTICAL IMPLEMENTATION MODE:**
-Focus on how to actually implement, maintain, or work with HVAC systems and concepts in real-world situations.
-
-**PRACTICAL FOCUS AREAS:**
-1. **Step-by-Step Procedures** - Detailed implementation guidance
-2. **Tools and Materials** - What's needed for the job
-3. **Common Challenges** - Real-world obstacles and solutions
-4. **Field Techniques** - Professional tips and best practices
-5. **Quality Control** - How to ensure proper implementation
-6. **Troubleshooting** - What to do when things don't work as expected
-
-**RESPONSE APPROACH:**
-- Actionable, field-ready guidance
-- Equipment-specific procedures when context available
-- Professional-level detail appropriate to user mode
-- Safety protocols integrated throughout`,
-
-    'safety': `
-
-**SAFETY-FOCUSED EXPLANATION MODE:**
-Emphasize safety implications, hazard prevention, and safe work practices throughout all explanations.
-
-**SAFETY EMPHASIS AREAS:**
-1. **Hazard Identification** - What dangers exist and why
-2. **Prevention Measures** - How to avoid safety issues
-3. **Safety Equipment** - Required PPE and safety tools
-4. **Emergency Procedures** - What to do if things go wrong
-5. **Code Compliance** - Safety requirements and regulations
-6. **Risk Assessment** - Evaluating safety in different scenarios
-
-**SAFETY-FIRST APPROACH:**
-- Always lead with safety considerations
-- Explain the "why" behind safety requirements
-- Equipment-specific safety protocols when available
-- Clear warnings about when to stop and call professionals`,
-
-    'compare': `
-
-**COMPARISON AND ANALYSIS MODE:**
-Help users understand differences between systems, methods, options, and approaches in HVAC applications.
-
-**COMPARISON FOCUSES:**
-1. **System Differences** - How different HVAC systems compare
-2. **Method Variations** - Different approaches to the same goal
-3. **Equipment Options** - Comparing different products or brands
-4. **Efficiency Considerations** - Performance and cost comparisons
-5. **Application Suitability** - What works best in different situations
-6. **Pros and Cons** - Balanced analysis of different options
-
-**ANALYTICAL APPROACH:**
-- Clear comparison criteria
-- Balanced presentation of options
-- Context-specific recommendations
-- Equipment-specific insights when available`
-  };
-
-  basePrompt += explainerModePrompts[explainerMode] || explainerModePrompts['explain'];
-
-  basePrompt += `
-
-**PROFESSIONAL EDUCATIONAL APPROACH:**
-- Provide technical depth appropriate for industry professionals
-- Include specific codes, standards, and industry best practices  
-- Reference manufacturer specifications and procedures
-- Discuss advanced concepts and professional techniques
-- Include diagnostic and troubleshooting insights
-- Maintain professional-level technical accuracy
-- Use equipment-specific context when available for precise guidance`;
-
-  return basePrompt;
-}
 
 function createEnhancedDiagnosticPrompt(diagnosticPackage, photoAnalysisData, mode) {
   let prompt = `You are HVAC Jack Professional in Enhanced Diagnostic Mode. You have complete equipment information and comprehensive diagnostic data available.
@@ -847,66 +644,6 @@ Provide patient, thorough guidance that empowers homeowners while keeping them s
 }
 
 // **ENHANCED MESSAGE BUILDING**
-
-function buildAIExplainerClaudeMessages(message, conversationHistory, explainerMode, systemContext, photoAnalysisData) {
-  const messages = [];
-
-  // Add conversation history for context
-  if (conversationHistory && conversationHistory.length > 0) {
-    const recentHistory = conversationHistory.slice(-6);
-    recentHistory.forEach(msg => {
-      if (msg.role === 'user') {
-        messages.push({ role: 'user', content: msg.content });
-      } else if (msg.role === 'assistant') {
-        messages.push({ role: 'assistant', content: msg.content });
-      }
-    });
-  }
-
-  // Build enhanced explanation request
-  let enhancedMessage = `[COMPREHENSIVE EXPLANATION REQUEST - MODE: ${explainerMode?.toUpperCase() || 'EXPLAIN'}]
-
-USER QUESTION/TOPIC:
-${message}`;
-
-  if (photoAnalysisData?.structuredData) {
-    const eq = photoAnalysisData.structuredData.equipment;
-    enhancedMessage += `
-
-[EQUIPMENT CONTEXT FROM PHOTO ANALYSIS]
-Equipment Type: ${eq?.type || 'Unknown'}
-Brand: ${eq?.brand || 'Unknown'}
-Model: ${eq?.model || 'Unknown'}
-Serial Number: ${eq?.serial || 'Unknown'}
-Technical Specifications: Complete data available for equipment-specific explanation`;
-  }
-
-  if (systemContext) {
-    enhancedMessage += `
-
-[CONVERSATION CONTEXT]
-System Type: ${systemContext?.equipmentType || 'Unknown'}
-Brand: ${systemContext?.brand || 'Unknown'}
-Model: ${systemContext?.model || 'Unknown'}
-Current Context: ${systemContext?.currentProblem || 'General inquiry'}`;
-  }
-
-  enhancedMessage += `
-
-[EXPLANATION REQUEST]
-Please provide a comprehensive ${explainerMode || 'explanation'} that helps the technician truly understand this HVAC concept, system, or procedure. Use the equipment context to provide specific, relevant examples and technical details.
-
-Focus on:
-1. Technical depth appropriate for industry professionals
-2. Practical field applications and real-world context
-3. Safety protocols and professional procedures
-4. Equipment-specific technical details when available
-5. Industry codes, standards, and best practices
-6. Advanced diagnostic and troubleshooting insights`;
-
-  messages.push({ role: 'user', content: enhancedMessage });
-  return messages;
-}
 
 function buildEnhancedClaudeMessages(message, conversationHistory, diagnosticPackage, photoAnalysisData) {
   const messages = [];
@@ -1666,60 +1403,6 @@ async function logBlockedContent(data) {
 }
 
 // **ENHANCED FALLBACK RESPONSES**
-
-// **RESPONSE FORMATTING FUNCTIONS FOR AI EXPLAINER**
-
-function formatComprehensiveExplanation(explanation, explainerMode, systemContext, photoAnalysisData) {
-  const modeEmojis = {
-    'explain': '🎓',
-    'practical': '🔧', 
-    'safety': '⚠️',
-    'compare': '⚖️'
-  };
-
-  const emoji = modeEmojis[explainerMode] || '🎓';
-  const modeTitle = explainerMode?.toUpperCase() || 'COMPREHENSIVE EXPLANATION';
-
-  let response = `${emoji} **${modeTitle} MODE - HVAC JACK PROFESSIONAL**\n\n`;
-  
-  if (photoAnalysisData?.structuredData) {
-    const eq = photoAnalysisData.structuredData.equipment;
-    response += `📸 **Equipment Context:** ${eq?.brand || 'Unknown'} ${eq?.model || 'Unknown'} ${eq?.type || 'Unknown'}\n\n`;
-  }
-  
-  response += explanation;
-  
-  response += `\n\n---\n💡 **Need More Detail?** Ask for:\n`;
-  response += `• "Explain the practical implementation"\n`;
-  response += `• "What are the safety considerations?"\n`;
-  response += `• "Compare this with other methods"\n`;
-  response += `• "Give me the technical details"`;
-  
-  return response;
-}
-
-function formatDualResponse(diagnosticResponse, explanation, explainerMode, systemContext, photoAnalysisData) {
-  const modeEmojis = {
-    'explain': '🎓',
-    'practical': '🔧', 
-    'safety': '⚠️',
-    'compare': '⚖️'
-  };
-
-  const emoji = modeEmojis[explainerMode] || '🎓';
-  let response = `🔧 **DIAGNOSTIC RESPONSE**\n\n${diagnosticResponse}\n\n`;
-  response += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-  response += `${emoji} **COMPREHENSIVE EXPLANATION**\n\n${explanation}\n\n`;
-  
-  if (photoAnalysisData?.structuredData) {
-    const eq = photoAnalysisData.structuredData.equipment;
-    response += `📸 **Equipment Context:** ${eq?.brand || 'Unknown'} ${eq?.model || 'Unknown'} ${eq?.type || 'Unknown'}\n\n`;
-  }
-  
-  response += `💡 **Professional Learning Complete** - You now have both the diagnostic solution AND comprehensive understanding of the underlying concepts.`;
-  
-  return response;
-}
 
 function generateEnhancedFallbackResponse(message, mode, photoAnalysisData) {
   const input = message.toLowerCase();
