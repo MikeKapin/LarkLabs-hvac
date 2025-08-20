@@ -116,6 +116,7 @@ exports.handler = async (event, context) => {
       );
 
       console.log('🧠 Routing decision:', routingDecision);
+      console.log('🔍 Request details:', { message: message.substring(0, 50), explainerMode, requestExplanation });
 
       let response;
       let responseMetadata = {};
@@ -409,12 +410,17 @@ function detectExplanationRequest(message) {
   ];
   
   // Check if message matches technical troubleshooting patterns that need explanation
-  const needsExplanation = technicalTroubleshootingPatterns.some(pattern => 
-    pattern.test(message)
-  );
+  const needsExplanation = technicalTroubleshootingPatterns.some((pattern, index) => {
+    const matches = pattern.test(message);
+    if (matches) {
+      console.log(`🎓 Pattern ${index} matched:`, pattern, 'for message:', message.substring(0, 60));
+    }
+    return matches;
+  });
   
   if (needsExplanation) {
     console.log('🎓 Auto-detected technical issue needing explanation (backend):', message.substring(0, 50));
+    console.log('🎓 Matched patterns for message:', message);
     return true;
   }
   
@@ -652,11 +658,21 @@ async function handleHomeownerGuided(message, systemContext, conversationHistory
 }
 
 async function handleAIExplainerComprehensive(message, explainerMode, systemContext, photoAnalysisData, conversationHistory, mode) {
+  console.log('🎓 EXPLAINER HANDLER CALLED!', { message: message.substring(0, 50), explainerMode, mode });
+  
   const systemPrompt = createAIExplainerSystemPrompt(explainerMode, systemContext, photoAnalysisData);
   const claudeMessages = buildAIExplainerClaudeMessages(message, conversationHistory, explainerMode, systemContext, photoAnalysisData);
   
+  console.log('🎓 System prompt length:', systemPrompt.length);
+  console.log('🎓 Claude messages:', claudeMessages.length);
+  
   const explanation = await callClaudeWithEnhancedContext(systemPrompt, claudeMessages);
-  return formatComprehensiveExplanation(explanation, explainerMode, systemContext, photoAnalysisData);
+  console.log('🎓 Got explanation, length:', explanation?.length || 0);
+  
+  const formatted = formatComprehensiveExplanation(explanation, explainerMode, systemContext, photoAnalysisData);
+  console.log('🎓 Formatted response length:', formatted?.length || 0);
+  
+  return formatted;
 }
 
 async function handleDualDiagnosticEducational(message, explainerMode, systemContext, photoAnalysisData, diagnosticPackage, conversationHistory, mode) {
