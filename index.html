@@ -1437,6 +1437,38 @@
         .content-section.active {
             display: block;
         }
+
+        /* Under Construction Styling */
+        .under-construction {
+            border: 2px dashed #f39c12 !important;
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.05) 0%, rgba(243, 156, 18, 0.1) 100%) !important;
+            position: relative;
+            cursor: not-allowed !important;
+            opacity: 0.85;
+        }
+
+        .under-construction::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(243, 156, 18, 0.1) 10px,
+                rgba(243, 156, 18, 0.1) 20px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .under-construction * {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -1636,15 +1668,16 @@
         <section id="tools" class="section">
             <div class="container main-content-with-header">
                 <h2 class="section-title">Professional HVAC Tools & Calculators for Canadian Technicians</h2>
-                <p style="text-align: center; color: #27ae60; font-size: 1.2rem; margin-bottom: 2rem; font-weight: bold;">🚀 ENHANCED: TSSA G3 AI Tutor - Free Certification Prep Now Available!</p>
+                <p style="text-align: center; color: #f39c12; font-size: 1.2rem; margin-bottom: 2rem; font-weight: bold;">🚧 TSSA G3 AI Tutor - Enhanced Version Coming Soon!</p>
                 
                 <div class="tools-grid">
                     <!-- FEATURED: G3 Tudor AI Tutor -->
-                    <div class="tool-card revolutionary-tool" onclick="window.open('./tools/g3-tudor/', '_blank')">
-                        <div class="new-badge revolutionary-badge">ENHANCED!</div>
-                        <div class="tool-icon revolutionary-icon">🎓</div>
-                        <h3>🚀 TSSA G3 Gas Technician AI Tutor 🚀</h3>
-                        <p>Revolutionary enhanced AI tutor with comprehensive search & analysis! Search through all 9 CSA modules with detailed AI explanations, practical scenarios, safety protocols, and comprehensive study recommendations.</p>
+                    <div class="tool-card revolutionary-tool under-construction">
+                        <div class="new-badge revolutionary-badge" style="background: #f39c12;">COMING SOON!</div>
+                        <div class="tool-icon revolutionary-icon">🚧</div>
+                        <h3>🚧 TSSA G3 Gas Technician AI Tutor 🚧</h3>
+                        <p style="color: #f39c12; font-weight: bold;">🏗️ Under Construction - Enhanced Version In Development</p>
+                        <p>We're working on an even better AI tutor with advanced search capabilities, comprehensive analysis, and enhanced learning features. Coming soon with improved design and functionality!</p>
                         <div style="margin: 1rem 0; text-align: left;">
                             <h4 style="color: #e74c3c; margin-bottom: 0.8rem; font-size: 1rem;">📚 Complete G3 Module Coverage:</h4>
                             <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
@@ -1660,7 +1693,7 @@
                             </ul>
                         </div>
                         <div style="margin: 1rem 0; text-align: left;">
-                            <h4 style="color: #3498db; margin-bottom: 0.8rem; font-size: 1rem;">🤖 Enhanced AI Features:</h4>
+                            <h4 style="color: #f39c12; margin-bottom: 0.8rem; font-size: 1rem;">🚧 Upcoming Enhanced Features:</h4>
                             <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
                                 <li>🔍 Advanced content search across all modules</li>
                                 <li>🧠 Comprehensive AI analysis & explanations</li>
@@ -1677,13 +1710,13 @@
                                 <div class="preview-screen">📚</div>
                                 <div class="preview-screen">🧠</div>
                             </div>
-                            <p style="font-size: 0.9rem; color: #27ae60; font-weight: bold; margin: 1rem 0;">✅ LIVE NOW - Completely FREE!</p>
-                            <p style="font-size: 0.8rem; color: #3498db; margin: 0;">Install as app for offline study sessions. Perfect for G3 exam prep!</p>
+                            <p style="font-size: 0.9rem; color: #f39c12; font-weight: bold; margin: 1rem 0;">🚧 UNDER DEVELOPMENT - Enhanced Version Coming!</p>
+                            <p style="font-size: 0.8rem; color: #95a5a6; margin: 0;">We're improving the design and functionality. Stay tuned for updates!</p>
                         </div>
                         <div style="text-align: center; margin-top: 1.5rem;">
-                            <a href="./tools/g3-tudor/" target="_blank" class="cta-button" onclick="event.stopPropagation();">🎓 Launch G3 AI Tutor</a>
+                            <button class="cta-button" style="background: #95a5a6; cursor: not-allowed;" disabled>🚧 Coming Soon - In Development</button>
                         </div>
-                        <span class="tool-status status-available">🚀 FREE - G3 Certification Prep!</span>
+                        <span class="tool-status" style="background: #f39c12; color: white;">🏗️ Under Construction</span>
                     </div>
                     
                     <div class="tool-card" onclick="window.open('https://codecompassapp.netlify.app/', '_blank')">
@@ -2037,20 +2070,21 @@
         <section id="downloads" class="section">
             <div class="container main-content-with-header">
                 <h2 class="section-title">Free HVAC Downloads for Canadian Technicians</h2>
-                <p style="text-align: center; color: #27ae60; font-size: 1.2rem; margin-bottom: 1rem; font-weight: bold;">🚀 ENHANCED: TSSA G3 AI Tutor - Revolutionary Learning Assistant Available Now!</p>
+                <p style="text-align: center; color: #f39c12; font-size: 1.2rem; margin-bottom: 1rem; font-weight: bold;">🚧 TSSA G3 AI Tutor - Enhanced Version Coming Soon!</p>
                 <p style="text-align: center; margin-bottom: 3rem; color: #bdc3c7; font-size: 1.2rem;">
                     Download our comprehensive HVAC tools and resources for offline use. Most downloads are completely free for Canadian HVAC professionals, students, and educators.
                 </p>
                 
                 <div class="tools-grid">
                     <!-- FEATURED: G3 Tudor AI Tutor -->
-                    <div class="tool-card revolutionary-tool" onclick="window.open('./tools/g3-tudor/', '_blank')">
-                        <div class="new-badge revolutionary-badge">ENHANCED!</div>
-                        <div class="tool-icon revolutionary-icon">🎓</div>
-                        <h3>🚀 TSSA G3 Gas Technician AI Tutor 🚀</h3>
-                        <p>Enhanced AI-powered learning platform with advanced search & comprehensive analysis! Download or access online - featuring deep content search, detailed explanations, practical scenarios, and personalized study recommendations.</p>
+                    <div class="tool-card revolutionary-tool under-construction">
+                        <div class="new-badge revolutionary-badge" style="background: #f39c12;">COMING SOON!</div>
+                        <div class="tool-icon revolutionary-icon">🚧</div>
+                        <h3>🚧 TSSA G3 Gas Technician AI Tutor 🚧</h3>
+                        <p style="color: #f39c12; font-weight: bold;">🏗️ Under Construction - Enhanced Version In Development</p>
+                        <p>We're developing an enhanced AI learning platform with advanced search capabilities, comprehensive analysis, and improved user experience. Stay tuned for the updated version!</p>
                         <div style="margin: 1rem 0; text-align: left;">
-                            <h4 style="color: #e74c3c; margin-bottom: 0.8rem; font-size: 1rem;">🎓 Enhanced Learning Platform:</h4>
+                            <h4 style="color: #f39c12; margin-bottom: 0.8rem; font-size: 1rem;">🚧 Planned Enhanced Features:</h4>
                             <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
                                 <li>🔍 Advanced search through all 9 modules</li>
                                 <li>🧠 AI-powered comprehensive explanations</li>
@@ -2070,11 +2104,11 @@
                                 <li>Piping Systems • Gas Appliance Fundamentals</li>
                             </ul>
                         </div>
-                        <div style="background: rgba(46, 204, 113, 0.1); border: 1px solid #2ecc71; border-radius: 10px; padding: 1rem; margin: 1rem 0;">
-                            <p style="font-size: 0.9rem; color: #27ae60; font-weight: bold; margin: 0;">✅ FREE DOWNLOAD - No registration required!</p>
-                            <p style="font-size: 0.8rem; color: #3498db; margin: 0.5rem 0 0 0;">Access online instantly or install as mobile app for offline study</p>
+                        <div style="background: rgba(243, 156, 18, 0.1); border: 1px solid #f39c12; border-radius: 10px; padding: 1rem; margin: 1rem 0;">
+                            <p style="font-size: 0.9rem; color: #f39c12; font-weight: bold; margin: 0;">🚧 UNDER DEVELOPMENT - Enhanced Version Coming Soon!</p>
+                            <p style="font-size: 0.8rem; color: #95a5a6; margin: 0.5rem 0 0 0;">We're working hard to bring you an improved learning experience</p>
                         </div>
-                        <span class="tool-status status-available">🎓 Free G3 AI Tutor - Download Now!</span>
+                        <span class="tool-status" style="background: #f39c12; color: white;">🏗️ Coming Soon - Under Development</span>
                     </div>
                     
                     <div class="tool-card" onclick="window.open('https://hvacprotools.netlify.app/', '_blank')">
@@ -2162,15 +2196,16 @@
 <section id="resources" class="section">
     <div class="container main-content-with-header">
         <h2 class="section-title">Canadian Gas Codes & HVAC Resources</h2>
-        <p style="text-align: center; color: #27ae60; font-size: 1.2rem; margin-bottom: 2rem; font-weight: bold;">🆕 NEW: G3 AI Tutor - Your 24/7 Certification Learning Assistant!</p>
+        <p style="text-align: center; color: #f39c12; font-size: 1.2rem; margin-bottom: 2rem; font-weight: bold;">🚧 Coming Soon: Enhanced G3 AI Tutor - Under Development!</p>
         
         <div class="tools-grid">
             <!-- FEATURED: G3 Tudor AI Tutor -->
-            <div class="tool-card revolutionary-tool" onclick="window.open('./tools/g3-tudor/', '_blank')">
-                <div class="new-badge revolutionary-badge">NEW!</div>
-                <div class="tool-icon revolutionary-icon">🎓</div>
-                <h3>🚀 TSSA G3 AI Tutor - Learning Resource 🚀</h3>
-                <p>Canada's first AI-powered G3 certification resource! Comprehensive interactive learning assistant covering all CSA modules with expert knowledge and instant answers.</p>
+            <div class="tool-card revolutionary-tool under-construction">
+                <div class="new-badge revolutionary-badge" style="background: #f39c12;">COMING SOON!</div>
+                <div class="tool-icon revolutionary-icon">🚧</div>
+                <h3>🚧 TSSA G3 AI Tutor - Enhanced Version 🚧</h3>
+                <p style="color: #f39c12; font-weight: bold;">🏗️ Under Construction - Enhanced Version In Development</p>
+                <p>We're working on an improved AI-powered G3 certification resource with better design, enhanced features, and improved user experience!</p>
                 <div style="margin: 1rem 0; text-align: left;">
                     <h4 style="color: #e74c3c; margin-bottom: 0.8rem; font-size: 1rem;">📚 Educational Resources:</h4>
                     <ul style="color: #bdc3c7; margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
