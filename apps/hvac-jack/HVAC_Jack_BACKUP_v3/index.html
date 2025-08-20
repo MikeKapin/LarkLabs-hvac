@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HVAC Jack 4.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#E85A4F">
+    <title>HVAC Jack 4.0 - AI HVAC Troubleshooting Assistant</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1A1F2E 0%, #16213E 100%);
+            min-height: 100vh;
+            color: #E2E8F0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #E85A4F;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(232, 90, 79, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #94A3B8;
+            font-weight: 500;
+        }
+
+        .main-interface {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .photo-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .photo-upload {
+            position: relative;
+            border: 2px dashed #E85A4F;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(232, 90, 79, 0.05);
+        }
+
+        .photo-upload:hover {
+            background: rgba(232, 90, 79, 0.1);
+            border-color: #FF6B5B;
+        }
+
+        .photo-upload.drag-over {
+            background: rgba(232, 90, 79, 0.15);
+            border-color: #FF6B5B;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #E85A4F;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            color: #E2E8F0;
+            margin-bottom: 8px;
+        }
+
+        .upload-subtext {
+            font-size: 0.9rem;
+            color: #94A3B8;
+        }
+
+        #photo-input {
+            display: none;
+        }
+
+        .preview-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .photo-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .query-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .query-label {
+            font-size: 1.3rem;
+            color: #E85A4F;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .query-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #E2E8F0;
+            font-size: 1.1rem;
+            resize: vertical;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .query-input:focus {
+            border-color: #E85A4F;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(232, 90, 79, 0.2);
+        }
+
+        .query-input::placeholder {
+            color: #64748B;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 18px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #E85A4F 0%, #FF6B5B 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(232, 90, 79, 0.3);
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(232, 90, 79, 0.4);
+        }
+
+        .analyze-btn:active {
+            transform: translateY(0);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .response-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .response-icon {
+            font-size: 1.5rem;
+            color: #E85A4F;
+        }
+
+        .response-title {
+            font-size: 1.3rem;
+            color: #E85A4F;
+            font-weight: 600;
+        }
+
+        .response-content {
+            color: #E2E8F0;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .response-content h1,
+        .response-content h2,
+        .response-content h3 {
+            color: #E85A4F;
+            margin: 20px 0 10px 0;
+        }
+
+        .response-content ul,
+        .response-content ol {
+            margin: 10px 0 10px 20px;
+        }
+
+        .response-content li {
+            margin-bottom: 5px;
+        }
+
+        .response-content strong {
+            color: #FFF;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #94A3B8;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(232, 90, 79, 0.3);
+            border-top: 2px solid #E85A4F;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .status-connected {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22C55E;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .photo-upload {
+                padding: 30px 15px;
+            }
+            
+            .upload-icon {
+                font-size: 2.5rem;
+            }
+            
+            .query-input {
+                min-height: 100px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status-indicator" id="status-indicator">🟢 Connected</div>
+        
+        <header class="header">
+            <div class="logo">🔧 HVAC Jack 4.0</div>
+            <div class="tagline">AI-Powered HVAC Troubleshooting Assistant</div>
+        </header>
+
+        <main class="main-interface">
+            <section class="photo-section">
+                <div class="photo-upload" id="photo-upload">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">Take or Upload Equipment Photo</div>
+                    <div class="upload-subtext">Optional - helps provide better troubleshooting</div>
+                    <input type="file" id="photo-input" accept="image/*" capture="environment">
+                </div>
+                <div class="preview-container" id="preview-container">
+                    <img id="photo-preview" class="photo-preview" alt="Equipment photo">
+                </div>
+            </section>
+
+            <section class="query-section">
+                <div class="query-label">🔍 Describe Your HVAC Issue</div>
+                <textarea 
+                    class="query-input" 
+                    id="query-input"
+                    placeholder="Describe the problem you're experiencing with your HVAC equipment. Be as detailed as possible - what's not working, any sounds, error codes, symptoms, etc."
+                ></textarea>
+                <button class="analyze-btn" id="analyze-btn">
+                    🎓 Get Expert Analysis & Troubleshooting
+                </button>
+            </section>
+
+            <section class="response-section" id="response-section">
+                <div class="response-header">
+                    <div class="response-icon">🎓</div>
+                    <div class="response-title">Expert Analysis</div>
+                </div>
+                <div class="response-content" id="response-content"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        class HVACJack4 {
+            constructor() {
+                this.photoData = null;
+                this.isAnalyzing = false;
+                this.sessionId = this.generateSessionId();
+                this.initializeElements();
+                this.setupEventListeners();
+                this.checkConnection();
+            }
+
+            generateSessionId() {
+                return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            }
+
+            initializeElements() {
+                this.elements = {
+                    photoUpload: document.getElementById('photo-upload'),
+                    photoInput: document.getElementById('photo-input'),
+                    previewContainer: document.getElementById('preview-container'),
+                    photoPreview: document.getElementById('photo-preview'),
+                    queryInput: document.getElementById('query-input'),
+                    analyzeBtn: document.getElementById('analyze-btn'),
+                    responseSection: document.getElementById('response-section'),
+                    responseContent: document.getElementById('response-content'),
+                    statusIndicator: document.getElementById('status-indicator')
+                };
+            }
+
+            setupEventListeners() {
+                // Photo upload
+                this.elements.photoUpload.addEventListener('click', () => {
+                    this.elements.photoInput.click();
+                });
+
+                this.elements.photoInput.addEventListener('change', (e) => {
+                    this.handlePhotoUpload(e.target.files[0]);
+                });
+
+                // Drag and drop
+                this.elements.photoUpload.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.elements.photoUpload.classList.add('drag-over');
+                });
+
+                this.elements.photoUpload.addEventListener('dragleave', () => {
+                    this.elements.photoUpload.classList.remove('drag-over');
+                });
+
+                this.elements.photoUpload.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.elements.photoUpload.classList.remove('drag-over');
+                    const file = e.dataTransfer.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                        this.handlePhotoUpload(file);
+                    }
+                });
+
+                // Analysis button
+                this.elements.analyzeBtn.addEventListener('click', () => {
+                    this.performAnalysis();
+                });
+
+                // Enter key in textarea
+                this.elements.queryInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && e.ctrlKey) {
+                        this.performAnalysis();
+                    }
+                });
+            }
+
+            async handlePhotoUpload(file) {
+                if (!file) return;
+
+                try {
+                    // Show preview
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.elements.photoPreview.src = e.target.result;
+                        this.elements.previewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+
+                    // Convert to base64 for API
+                    this.photoData = await this.fileToBase64(file);
+                    
+                    console.log('📷 Photo uploaded successfully');
+                } catch (error) {
+                    console.error('Photo upload error:', error);
+                    this.showStatus('Photo upload failed', 'error');
+                }
+            }
+
+            fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+            }
+
+            async performAnalysis() {
+                const query = this.elements.queryInput.value.trim();
+                
+                if (!query) {
+                    this.showStatus('Please describe your HVAC issue', 'error');
+                    return;
+                }
+
+                if (this.isAnalyzing) return;
+
+                this.isAnalyzing = true;
+                this.elements.analyzeBtn.disabled = true;
+                this.elements.analyzeBtn.innerHTML = '<div class="spinner"></div> Analyzing...';
+
+                try {
+                    const response = await this.callExplainerAPI(query);
+                    this.displayResponse(response);
+                    this.showStatus('Analysis complete', 'success');
+                } catch (error) {
+                    console.error('Analysis error:', error);
+                    this.showStatus('Analysis failed - please try again', 'error');
+                    this.displayError(error.message);
+                } finally {
+                    this.isAnalyzing = false;
+                    this.elements.analyzeBtn.disabled = false;
+                    this.elements.analyzeBtn.innerHTML = '🎓 Get Expert Analysis & Troubleshooting';
+                }
+            }
+
+            async callExplainerAPI(query) {
+                const payload = {
+                    message: query,
+                    sessionId: this.sessionId,
+                    explainerMode: true,
+                    requestExplanation: true,
+                    photoData: this.photoData,
+                    timestamp: new Date().toISOString()
+                };
+
+                console.log('🚀 Sending to HVAC Jack 4.0 API:', payload);
+
+                const response = await fetch('/.netlify/functions/hvac-explainer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.response || data.message || 'No response received';
+            }
+
+            displayResponse(response) {
+                this.elements.responseContent.innerHTML = this.formatResponse(response);
+                this.elements.responseSection.style.display = 'block';
+                this.elements.responseSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            displayError(error) {
+                this.elements.responseContent.innerHTML = `
+                    <div style="color: #EF4444; padding: 20px; border-left: 4px solid #EF4444; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                        <strong>⚠️ Analysis Error</strong><br>
+                        ${error}<br><br>
+                        Please check your connection and try again.
+                    </div>
+                `;
+                this.elements.responseSection.style.display = 'block';
+            }
+
+            formatResponse(response) {
+                // Convert markdown-like formatting to HTML
+                return response
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\n/g, '<br>')
+                    .replace(/^/, '<p>')
+                    .replace(/$/, '</p>')
+                    .replace(/####\s*(.*)/g, '<h4>$1</h4>')
+                    .replace(/###\s*(.*)/g, '<h3>$1</h3>')
+                    .replace(/##\s*(.*)/g, '<h2>$1</h2>')
+                    .replace(/#\s*(.*)/g, '<h1>$1</h1>');
+            }
+
+            showStatus(message, type) {
+                this.elements.statusIndicator.textContent = message;
+                this.elements.statusIndicator.className = `status-indicator status-${type}`;
+                
+                setTimeout(() => {
+                    this.elements.statusIndicator.textContent = '🟢 Connected';
+                    this.elements.statusIndicator.className = 'status-indicator status-connected';
+                }, 3000);
+            }
+
+            async checkConnection() {
+                try {
+                    const response = await fetch('/.netlify/functions/hvac-explainer', {
+                        method: 'OPTIONS'
+                    });
+                    
+                    if (response.ok) {
+                        this.showStatus('Connected', 'connected');
+                    } else {
+                        this.showStatus('Connection issue', 'error');
+                    }
+                } catch (error) {
+                    console.log('Connection check:', error);
+                    this.showStatus('Starting up...', 'connected');
+                }
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            window.hvacJack = new HVACJack4();
+            console.log('🔧 HVAC Jack 4.0 initialized');
+        });
+    </script>
+</body>
+</html>
