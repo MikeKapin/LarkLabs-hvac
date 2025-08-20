@@ -3362,6 +3362,43 @@ function generateManualSearchFallback(equipment, mode) {
                     return true;
                 }
                 
+                // Smart detection for technical troubleshooting that would benefit from explanations
+                const technicalTroubleshootingPatterns = [
+                    // Component behavior patterns
+                    'contactor.*not closing', 'contactor.*won\'t close', 'contactor.*stuck',
+                    'relay.*not working', 'relay.*won\'t engage', 
+                    'motor.*not starting', 'motor.*won\'t run', 'motor.*humming',
+                    'compressor.*not running', 'compressor.*won\'t start',
+                    'fan.*not spinning', 'fan.*won\'t turn',
+                    'thermostat.*not working', 'thermostat.*not responding',
+                    
+                    // Electrical patterns
+                    'have power.*but', 'power.*but.*not', 'voltage.*but.*not',
+                    'getting.*volts.*but', 'reading.*amps.*but',
+                    
+                    // System behavior patterns  
+                    'runs.*but.*not', 'starts.*but.*stops', 'cycles.*on.*off',
+                    'makes noise.*but', 'vibrating.*but',
+                    
+                    // Problem description patterns
+                    'not sure why', 'don\'t understand why', 'confused about',
+                    'strange behavior', 'weird issue', 'unusual problem'
+                ];
+                
+                // Check if input matches technical troubleshooting patterns that need explanation
+                const needsExplanation = technicalTroubleshootingPatterns.some(pattern => {
+                    const regex = new RegExp(pattern.replace('.*', '.*?'), 'i');
+                    return regex.test(inputLower);
+                });
+                
+                if (needsExplanation) {
+                    this.explainerMode = 'explain'; // Use comprehensive explanation for technical issues
+                    this.requestExplanation = true;
+                    this.showExplainerNotification('explain');
+                    console.log('🎓 Auto-detected technical issue needing explanation:', inputLower.substring(0, 50));
+                    return true;
+                }
+                
                 return false;
             }
 
@@ -3384,10 +3421,8 @@ function generateManualSearchFallback(equipment, mode) {
                 const emoji = modeEmojis[mode] || '🎓';
                 const modeName = modeNames[mode] || 'Comprehensive Explanation';
                 
-                // Add a brief notification message
-                setTimeout(() => {
-                    addMobileMessage(`${emoji} **AI Explainer Mode Activated**\n\nMode: ${modeName}\n\nI'll provide an in-depth professional explanation along with diagnostic assistance.`, 'ai');
-                }, 500);
+                // Add a brief notification message immediately (no delay)
+                addMobileMessage(`${emoji} **HVAC Jack Professional - AI Explainer Activated**\n\nMode: **${modeName}**\n\nProviding comprehensive technical explanation with diagnostic guidance...`, 'ai');
             }
 
             generateFallbackResponse(analysis, input) {

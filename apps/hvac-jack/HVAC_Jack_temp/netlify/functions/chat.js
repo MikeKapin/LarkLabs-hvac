@@ -296,7 +296,10 @@ function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagno
   const messageLower = message.toLowerCase();
 
   // PRIORITY 0: Explicit explanation requests or explainer mode
-  if (requestExplanation || explainerMode || detectExplanationRequest(messageLower)) {
+  const isExplainerRequest = requestExplanation || explainerMode || detectExplanationRequest(messageLower);
+  console.log('🎓 Explainer check:', { requestExplanation, explainerMode, detectedFromMessage: detectExplanationRequest(messageLower), final: isExplainerRequest });
+  
+  if (isExplainerRequest) {
     if (diagnosticPackage || photoAnalysisData) {
       routing.route = 'DUAL_DIAGNOSTIC_EDUCATIONAL';
       routing.confidence = 95;
@@ -306,6 +309,7 @@ function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagno
       routing.confidence = 90;
       routing.reasons.push('Comprehensive explanation requested');
     }
+    console.log('🎓 EXPLAINER MODE ACTIVATED - Route:', routing.route);
     return routing;
   }
 
@@ -375,7 +379,46 @@ function detectExplanationRequest(message) {
     'walk me through', 'step by step explanation'
   ];
   
-  return explanationKeywords.some(keyword => message.includes(keyword));
+  // Check for explicit explanation keywords
+  const hasExplicitRequest = explanationKeywords.some(keyword => message.includes(keyword));
+  if (hasExplicitRequest) {
+    return true;
+  }
+  
+  // Smart detection for technical troubleshooting that would benefit from explanations
+  const technicalTroubleshootingPatterns = [
+    // Component behavior patterns
+    /contactor.*?not closing/i, /contactor.*?won't close/i, /contactor.*?stuck/i,
+    /relay.*?not working/i, /relay.*?won't engage/i,
+    /motor.*?not starting/i, /motor.*?won't run/i, /motor.*?humming/i,
+    /compressor.*?not running/i, /compressor.*?won't start/i,
+    /fan.*?not spinning/i, /fan.*?won't turn/i,
+    /thermostat.*?not working/i, /thermostat.*?not responding/i,
+    
+    // Electrical patterns
+    /have power.*?but/i, /power.*?but.*?not/i, /voltage.*?but.*?not/i,
+    /getting.*?volts.*?but/i, /reading.*?amps.*?but/i,
+    
+    // System behavior patterns
+    /runs.*?but.*?not/i, /starts.*?but.*?stops/i, /cycles.*?on.*?off/i,
+    /makes noise.*?but/i, /vibrating.*?but/i,
+    
+    // Problem description patterns
+    /not sure why/i, /don't understand why/i, /confused about/i,
+    /strange behavior/i, /weird issue/i, /unusual problem/i
+  ];
+  
+  // Check if message matches technical troubleshooting patterns that need explanation
+  const needsExplanation = technicalTroubleshootingPatterns.some(pattern => 
+    pattern.test(message)
+  );
+  
+  if (needsExplanation) {
+    console.log('🎓 Auto-detected technical issue needing explanation (backend):', message.substring(0, 50));
+    return true;
+  }
+  
+  return false;
 }
 
 function detectSafetyIssue(message) {
