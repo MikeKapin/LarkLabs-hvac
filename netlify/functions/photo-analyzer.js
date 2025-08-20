@@ -84,15 +84,24 @@ async function analyzeRatingPlateWithClaude(imageData, query) {
 
 **CRITICAL INSTRUCTION:** Read every visible number, letter, and specification on the rating plate(s). Provide complete technical documentation.
 
+**IMPORTANT:** Always start with the primary equipment identification section showing Make, Model, and Serial Number prominently at the top.
+
 ## 📋 RATING PLATE DATA EXTRACTION
 
-### 🏭 MANUFACTURER INFORMATION
-- Brand/Manufacturer name
-- Model number (complete)
-- Serial number (if visible)
-- Part number(s)
+### 🏷️ EQUIPMENT IDENTIFICATION (PRIMARY)
+**Make:** [Extract exact brand/manufacturer name]
+**Model:** [Extract complete model number]  
+**Serial Number:** [Extract full serial number if visible]
+**Equipment Type:** [Specify: Air Conditioner, Heat Pump, Furnace, etc.]
+
+### 🏭 DETAILED MANUFACTURER INFORMATION
+- Complete brand/manufacturer name
+- Full model number with all characters/digits
+- Complete serial number
+- Part number(s) and sub-model designations
 - Date of manufacture/manufacture date code
 - Country of origin
+- Manufacturing facility code (if visible)
 
 ### ⚡ ELECTRICAL SPECIFICATIONS
 - Voltage requirements (120V, 240V, etc.)
@@ -104,12 +113,23 @@ async function analyzeRatingPlateWithClaude(imageData, query) {
 - Locked rotor amperage (LRA)
 - Full load amperage (FLA)
 
-### ❄️ REFRIGERATION DATA
+### ❄️ REFRIGERATION DATA (Air Conditioners/Heat Pumps)
 - Refrigerant type (R-410A, R-22, etc.)
 - Refrigerant charge amount (lbs/oz)
 - System pressures (high/low side)
 - Cooling capacity (BTU/hr, tons)
 - Heating capacity (if applicable)
+
+### 🔥 FURNACE DATA (If Furnace Equipment)
+- Input BTU/hr rating
+- Output BTU/hr rating  
+- Temperature rise range (°F)
+- Maximum temperature rise
+- Minimum temperature rise
+- Recommended temperature rise
+- Gas input rating (if gas furnace)
+- Manifold pressure specifications
+- Orifice size specifications
 
 ### 📊 EFFICIENCY RATINGS
 - SEER rating
