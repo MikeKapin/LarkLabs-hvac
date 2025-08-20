@@ -1,5 +1,5 @@
-// netlify/functions/chat.js
-// Clean HVAC Jack backend with working explainer system - FORCE DEPLOYMENT v2.0
+// netlify/functions/chat.js  
+// HVAC Jack Advanced AI Explainer System - PRODUCTION v3.0
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -35,7 +35,7 @@ exports.handler = async (event, context) => {
       requestExplanation
     } = JSON.parse(event.body || '{}');
 
-    console.log('📨 NEW DEPLOYMENT - Clean chat request received:', {
+    console.log('📨 PRODUCTION v3.0 - Chat request received:', {
       messageLength: message?.length,
       mode,
       sessionId,
