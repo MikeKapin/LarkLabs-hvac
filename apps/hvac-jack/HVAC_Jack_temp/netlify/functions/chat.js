@@ -1,5 +1,5 @@
-// netlify/functions/chat-clean.js
-// Clean HVAC Jack backend with working explainer system
+// netlify/functions/chat.js
+// Clean HVAC Jack backend with working explainer system - FORCE DEPLOYMENT v2.0
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -35,7 +35,7 @@ exports.handler = async (event, context) => {
       requestExplanation
     } = JSON.parse(event.body || '{}');
 
-    console.log('📨 Clean chat request received:', {
+    console.log('📨 NEW DEPLOYMENT - Clean chat request received:', {
       messageLength: message?.length,
       mode,
       sessionId,
