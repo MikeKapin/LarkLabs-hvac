@@ -2,8 +2,6 @@
 // Enhanced HVAC Jack photo analysis with OCR preprocessing and comprehensive data retrieval
 
 const { OCRProcessor } = require('./ocr-processor');
-const { ErrorCodeDatabase, EquipmentDatabase } = require('./error-code-database');
-const { ComprehensiveEquipmentDatabase } = require('./equipment-database');
 const { CapacitorDatabase } = require('./capacitor-database');
 
 // Initialize shared storage for tracking photo analyses
