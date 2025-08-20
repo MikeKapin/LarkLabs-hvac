@@ -198,6 +198,32 @@
             transform: none;
         }
 
+        .photo-analyze-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .photo-analyze-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .photo-analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .response-section {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
@@ -341,6 +367,9 @@
                 </div>
                 <div class="preview-container" id="preview-container">
                     <img id="photo-preview" class="photo-preview" alt="Equipment photo">
+                    <button class="photo-analyze-btn" id="photo-analyze-btn">
+                        📋 Analyze Photo Only (Extract Rating Plate Data)
+                    </button>
                 </div>
             </section>
 
@@ -387,6 +416,7 @@
                     photoInput: document.getElementById('photo-input'),
                     previewContainer: document.getElementById('preview-container'),
                     photoPreview: document.getElementById('photo-preview'),
+                    photoAnalyzeBtn: document.getElementById('photo-analyze-btn'),
                     queryInput: document.getElementById('query-input'),
                     analyzeBtn: document.getElementById('analyze-btn'),
                     responseSection: document.getElementById('response-section'),
@@ -422,6 +452,11 @@
                     if (file && file.type.startsWith('image/')) {
                         this.handlePhotoUpload(file);
                     }
+                });
+
+                // Photo analysis button
+                this.elements.photoAnalyzeBtn.addEventListener('click', () => {
+                    this.performPhotoAnalysis();
                 });
 
                 // Analysis button
@@ -466,6 +501,33 @@
                     reader.onload = () => resolve(reader.result);
                     reader.onerror = error => reject(error);
                 });
+            }
+
+            async performPhotoAnalysis() {
+                if (!this.photoData) {
+                    this.showStatus('Please upload a photo first', 'error');
+                    return;
+                }
+
+                if (this.isAnalyzing) return;
+
+                this.isAnalyzing = true;
+                this.elements.photoAnalyzeBtn.disabled = true;
+                this.elements.photoAnalyzeBtn.innerHTML = '<div class="spinner"></div> Analyzing Photo...';
+
+                try {
+                    const response = await this.callPhotoAnalyzer();
+                    this.displayResponse(response);
+                    this.showStatus('Photo analysis complete', 'success');
+                } catch (error) {
+                    console.error('Photo analysis error:', error);
+                    this.showStatus('Photo analysis failed - please try again', 'error');
+                    this.displayError(error.message);
+                } finally {
+                    this.isAnalyzing = false;
+                    this.elements.photoAnalyzeBtn.disabled = false;
+                    this.elements.photoAnalyzeBtn.innerHTML = '📋 Analyze Photo Only (Extract Rating Plate Data)';
+                }
             }
 
             async performAnalysis() {
@@ -523,6 +585,32 @@
 
                 const data = await response.json();
                 return data.response || data.message || 'No response received';
+            }
+
+            async callPhotoAnalyzer() {
+                const payload = {
+                    imageData: this.photoData,
+                    query: 'Extract all technical specifications and rating plate data from this HVAC equipment photo',
+                    sessionId: this.sessionId,
+                    timestamp: new Date().toISOString()
+                };
+
+                console.log('📷 Sending to Photo Analyzer API:', payload);
+
+                const response = await fetch('/.netlify/functions/photo-analyzer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Photo Analyzer API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.analysis || data.message || 'No analysis received';
             }
 
             displayResponse(response) {
