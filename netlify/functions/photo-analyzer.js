@@ -36,21 +36,12 @@ exports.handler = async (event, context) => {
 
     // Analyze photo with Claude Vision for rating plate data
     const photoAnalysis = await analyzeRatingPlateWithClaude(imageData, query);
-    
-    // Extract equipment details for capacitor lookup
-    const equipmentDetails = await extractEquipmentDetails(imageData);
-    
-    // Perform capacitor database lookup if needed
-    const capacitorInfo = await performCapacitorLookup(equipmentDetails);
-    
-    // Combine analysis with capacitor database results
-    const enhancedAnalysis = await enhanceWithCapacitorData(photoAnalysis, capacitorInfo);
 
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        analysis: enhancedAnalysis,
+        analysis: photoAnalysis,
         success: true,
         timestamp: new Date().toISOString()
       })
@@ -160,35 +151,17 @@ async function analyzeRatingPlateWithClaude(imageData, query) {
 - Filter specifications
 - Control system information
 
-### 🔌 CAPACITOR REQUIREMENTS
-Based on the equipment specifications visible:
-- Fan motor capacitor size (μF and voltage rating)
-- Compressor start capacitor requirements
-- Run capacitor specifications
-- Dual capacitor ratings if applicable
-- Hard start kit requirements (if needed)
+### 🔌 CAPACITOR REQUIREMENTS (Estimated)
+- Fan motor capacitor: Estimate based on equipment type
+- Compressor capacitor: Estimate based on tonnage/size
+- Note: Verify exact specifications in service manual
 
 ### 🛡️ WARRANTY INFORMATION
-Based on manufacturer and model data:
-- Standard warranty period for this equipment type
-- Parts warranty coverage
-- Labor warranty (if applicable) 
-- Extended warranty options typically available
-- Warranty registration requirements
-- Age-based warranty status (if manufacture date visible)
+- Standard warranty: 10 years parts (most major brands)
+- Equipment age: Calculate from manufacture date if visible
+- Registration: Required within 90 days for full coverage
 
-### 📅 EQUIPMENT AGE & STATUS
-- Manufacture date analysis
-- Estimated equipment age
-- Expected service life remaining
-- Maintenance schedule recommendations
-- Common issues for this age/model
-
-**FORMAT:** Present data in clear, organized sections. If any specification is partially visible or unclear, note this. Include EXACT text/numbers as they appear on the rating plate.
-
-**CAPACITOR DATABASE LOOKUP:** If specific capacitor information isn't clearly visible on the rating plate, reference the built-in capacitor database for this brand/model combination.
-
-**IMPORTANT:** This is for professional technician reference - include every visible technical detail no matter how small.`;
+**FORMAT:** Present data clearly with exact text/numbers from rating plate. Note if any information is estimated vs. directly visible.`;
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -199,7 +172,7 @@ Based on manufacturer and model data:
     },
     body: JSON.stringify({
       model: 'claude-3-5-sonnet-20241022',
-      max_tokens: 3000,
+      max_tokens: 2000,
       temperature: 0.1,
       messages: [
         {
