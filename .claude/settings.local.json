@@ -24,7 +24,8 @@
       "Bash(npx netlify deploy:*)",
       "Bash(npx netlify:*)",
       "Bash(rm:*)",
-      "WebFetch(domain:spontaneous-halva-198bda.netlify.app)"
+      "WebFetch(domain:spontaneous-halva-198bda.netlify.app)",
+      "Bash(git init:*)"
     ],
     "deny": [],
     "ask": [],

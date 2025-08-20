@@ -1,0 +1,25 @@
+[build]
+  base = "apps/hvac-jack/HVAC_Jack_v4"
+  publish = "."
+  command = "echo 'HVAC Jack 4.0 build'"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[functions]]
+  directory = "netlify/functions/"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
