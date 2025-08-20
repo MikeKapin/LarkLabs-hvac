@@ -1,10 +1,10 @@
 // TSSA G3 Gas Technician Tutor - Service Worker
-const CACHE_NAME = 'g3-tutor-v3.0';
+const CACHE_NAME = 'g3-tutor-v4.0';
 const urlsToCache = [
   './',
   './manifest.json',
   './G3Tudor.png',
-  './assets/main-3dea1e2b.js',
+  './assets/main-067b2808.js',
   './assets/index-9485dc91.css'
 ];
 

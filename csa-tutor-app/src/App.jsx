@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, BookOpen, AlertTriangle, Lightbulb, User, Bot, Upload, FileText, Search, Zap, ShieldCheck, Wrench } from 'lucide-react';
+import { Send, BookOpen, AlertTriangle, Lightbulb, User, Bot, Upload, FileText, Search } from 'lucide-react';
 import { moduleInfo, getAIResponse } from './data/index.js';
 import InstallPrompt from './components/InstallPrompt.jsx';
 import { registerServiceWorker, isRunningStandalone } from './utils/pwa.js';
@@ -9,7 +9,7 @@ const CSAGasTutorApp = () => {
     {
       id: 1,
       type: 'bot',
-      content: "**Hey! I'm G3 Tudor!** 🎓\n\nI'm your AI assistant for TSSA G3 Gas Technician certification. I have complete knowledge of all 9 CSA modules:\n\n🛡️ **Safety** • 🔧 **Tools** • ⛽ **Gas Properties** • 📋 **Codes** • ⚡ **Electricity** • 📐 **Drawings** • 🤝 **Customer Relations** • 🔩 **Piping** • 🏠 **Appliances**\n\n**What do you need help understanding?**",
+      content: "Hello! I'm your TSSA G3 Gas Technician Course AI Tutor. I'm here to help you understand any concepts from Modules 1-9. You can ask me about gas codes, safety procedures, installation techniques, or any specific topics you're struggling with. What would you like to learn about today?",
       timestamp: new Date()
     }
   ]);
@@ -21,14 +21,18 @@ const CSAGasTutorApp = () => {
   const messagesEndRef = useRef(null);
 
   const quickTopics = [
-    "🛡️ PPE Requirements",
-    "📏 Gas Pressure Calculations", 
-    "🔧 Leak Testing Procedures",
-    "⚠️ CO Safety Limits",
-    "📋 CSA B149.1 Requirements",
-    "⚡ Ohm's Law Applications",
-    "🤝 Customer Service Skills",
-    "🔩 Pipe Threading & Sealants"
+    "Gas pressure calculations",
+    "Pipe sizing formulas",
+    "Venting requirements", 
+    "Leak testing procedures",
+    "CO safety limits",
+    "Appliance clearances",
+    "Code violations",
+    "Emergency shutdown",
+    "PPE requirements",
+    "Natural gas vs propane",
+    "Ohm's law applications",
+    "CSA B149.1 requirements"
   ];
 
   const moduleCategories = [
@@ -120,8 +124,7 @@ const CSAGasTutorApp = () => {
   };
 
   const handleQuickTopic = (topic) => {
-    const cleanTopic = topic.replace(/^[\w\s]*\s/, ''); // Remove emoji and clean text
-    setInputMessage(`Explain ${cleanTopic.toLowerCase()}`);
+    setInputMessage(`Explain ${topic}`);
   };
 
   const handleFileUpload = (event) => {
@@ -149,135 +152,185 @@ const CSAGasTutorApp = () => {
 
   return (
     <>
-    <div className="h-screen bg-gray-900 text-gray-100 flex flex-col">
-      {/* Header Bar */}
-      <div className="bg-gray-800 border-b border-gray-700 p-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-            <BookOpen size={20} className="text-white" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">G3 Tudor</h1>
-            <div className="flex items-center gap-2 text-sm text-green-400">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span>TSSA G3 AI Assistant Ready</span>
-            </div>
-          </div>
-        </div>
-        {isPWA && (
-          <span className="text-xs bg-blue-600 text-white px-3 py-1 rounded-full">
-            📱 App Mode
-          </span>
-        )}
-      </div>
-
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-48">
-        {messages.map((message) => (
-          <div key={message.id} className={`flex gap-3 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`flex gap-3 max-w-3xl ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-lg ${
-                message.type === 'user' ? 'bg-blue-600' : 'bg-green-600'
-              }`}>
-                {message.type === 'user' ? '👤' : '🎓'}
-              </div>
-              <div className={`rounded-2xl px-4 py-3 ${
-                message.type === 'user' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-800 border border-gray-700 text-gray-100'
-              }`}>
-                <div className="chat-message text-sm leading-relaxed">{message.content}</div>
-                <div className={`text-xs mt-2 opacity-75 ${
-                  message.type === 'user' ? 'text-blue-200' : 'text-gray-400'
-                }`}>
-                  {message.timestamp.toLocaleTimeString()}
-                  {message.moduleContext && (
-                    <span className="ml-2 px-2 py-1 bg-gray-700 text-gray-300 rounded-full">
-                      {message.moduleContext}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-        
-        {isTyping && (
-          <div className="flex gap-3">
-            <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-lg">
-              🎓
-            </div>
-            <div className="bg-gray-800 border border-gray-700 rounded-2xl px-4 py-3">
-              <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-              </div>
-            </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Fixed Input Container - Like HVAC Jack */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 p-4 shadow-lg">
-        {/* Quick Topics */}
-        <div className="flex flex-wrap gap-2 mb-3">
-          {quickTopics.map((topic, index) => (
-            <button
-              key={index}
-              onClick={() => handleQuickTopic(topic)}
-              className="text-xs bg-gray-700 hover:bg-blue-600 text-gray-300 hover:text-white px-3 py-2 rounded-lg transition-all"
-            >
-              {topic}
-            </button>
-          ))}
+    <div className="flex h-screen bg-gray-50">
+      {/* Sidebar */}
+      <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
+        <div className="p-4 border-b border-gray-200">
+          <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <BookOpen className="text-blue-600" />
+            TSSA G3 Gas Technician Tutor
+          </h1>
+          <p className="text-sm text-gray-600 mt-1">AI-powered learning assistant</p>
+          {isPWA && (
+            <span className="inline-block mt-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+              📱 Installed
+            </span>
+          )}
         </div>
         
-        {/* Input Group */}
-        <div className="flex gap-3 items-end">
+        {/* Module Selection */}
+        <div className="p-4 border-b border-gray-200">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Select Module</label>
+          <select 
+            value={selectedModule} 
+            onChange={(e) => setSelectedModule(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">All Modules</option>
+            {moduleInfo.map(module => (
+              <option key={module.id} value={module.id}>
+                Module {module.id}: {module.title}
+              </option>
+            ))}
+          </select>
+          {selectedModule && (
+            <p className="text-xs text-gray-500 mt-1">
+              {moduleInfo.find(m => m.id.toString() === selectedModule)?.description}
+            </p>
+          )}
+        </div>
+        
+        {/* File Upload */}
+        <div className="p-4 border-b border-gray-200">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Upload Module Materials</label>
           <input
             type="file"
             multiple
             accept=".pdf,.doc,.docx,.txt"
             onChange={handleFileUpload}
-            id="file-upload"
-            className="hidden"
+            className="w-full text-sm text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
-          <label 
-            htmlFor="file-upload"
-            className="w-11 h-11 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center cursor-pointer transition-all"
-            title="Upload files"
-          >
-            📎
-          </label>
-          <div className="flex-1 relative">
+          {uploadedFiles.length > 0 && (
+            <div className="mt-2">
+              <p className="text-xs text-gray-600">{uploadedFiles.length} file(s) uploaded</p>
+            </div>
+          )}
+        </div>
+        
+        {/* Quick Topics */}
+        <div className="p-4 flex-1 overflow-y-auto">
+          <h3 className="text-sm font-medium text-gray-700 mb-3">Quick Topics</h3>
+          <div className="space-y-2">
+            {quickTopics.map((topic, index) => (
+              <button
+                key={index}
+                onClick={() => handleQuickTopic(topic)}
+                className="w-full text-left p-2 text-sm text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
+              >
+                {topic}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        {/* Safety Notice */}
+        <div className="p-4 bg-yellow-50 border-t border-yellow-200">
+          <div className="flex items-start gap-2">
+            <AlertTriangle className="text-yellow-600 mt-1" size={16} />
+            <div>
+              <p className="text-xs font-medium text-yellow-800">Safety Reminder</p>
+              <p className="text-xs text-yellow-700">Always follow current codes and manufacturer instructions. This AI tutor supplements but doesn't replace official training.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Main Chat Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Chat Header */}
+        <div className="bg-white border-b border-gray-200 p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-800">
+                {selectedModule ? `Module ${selectedModule}: ${getModuleTitle(selectedModule)}` : 'TSSA G3 Gas Technician Help'}
+              </h2>
+              <p className="text-sm text-gray-600">Ask questions about gas codes, safety, installation, and more</p>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <Lightbulb size={16} />
+              <span>AI Tutor Active</span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {messages.map((message) => (
+            <div key={message.id} className={`flex gap-3 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div className={`flex gap-3 max-w-3xl ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  message.type === 'user' ? 'bg-blue-500' : 'bg-green-500'
+                }`}>
+                  {message.type === 'user' ? <User size={16} className="text-white" /> : <Bot size={16} className="text-white" />}
+                </div>
+                <div className={`rounded-lg p-3 ${
+                  message.type === 'user' 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-white border border-gray-200 text-gray-800'
+                }`}>
+                  <div className="chat-message whitespace-pre-wrap">{message.content}</div>
+                  <div className={`text-xs mt-1 ${
+                    message.type === 'user' ? 'text-blue-100' : 'text-gray-500'
+                  }`}>
+                    {message.timestamp.toLocaleTimeString()}
+                    {message.moduleContext && (
+                      <span className="ml-2 px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs">
+                        {message.moduleContext}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          
+          {isTyping && (
+            <div className="flex gap-3">
+              <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                <Bot size={16} className="text-white" />
+              </div>
+              <div className="bg-white border border-gray-200 rounded-lg p-3">
+                <div className="flex space-x-1">
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                </div>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+        
+        {/* Message Input */}
+        <div className="bg-white border-t border-gray-200 p-4">
+          <div className="flex gap-2">
             <input
               type="text"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              placeholder="Ask about G3 modules, safety, codes, calculations..."
-              className="w-full px-4 py-3 bg-gray-700 border-2 border-gray-600 text-gray-100 rounded-2xl focus:outline-none focus:border-blue-500 transition-all text-sm"
+              placeholder="Ask about gas codes, installation procedures, safety requirements..."
+              className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+            <button
+              onClick={handleSendMessage}
+              disabled={!inputMessage.trim()}
+              className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+            >
+              <Send size={20} />
+            </button>
           </div>
-          <button
-            onClick={handleSendMessage}
-            disabled={!inputMessage.trim()}
-            className="w-11 h-11 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white rounded-full flex items-center justify-center transition-all disabled:cursor-not-allowed"
-          >
-            ➤
-          </button>
-        </div>
-        
-        {uploadedFiles.length > 0 && (
-          <p className="text-xs text-gray-400 mt-2">{uploadedFiles.length} files uploaded</p>
-        )}
-        
-        {/* Compact Safety Notice */}
-        <div className="flex items-center gap-2 mt-2 text-xs text-amber-400">
-          <AlertTriangle size={12} />
-          <span>Educational use only - Follow official codes and guidelines</span>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {quickTopics.slice(0, 4).map((topic, index) => (
+              <button
+                key={index}
+                onClick={() => handleQuickTopic(topic)}
+                className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded hover:bg-gray-200 transition-colors"
+              >
+                {topic}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
