@@ -3205,6 +3205,13 @@ function generateManualSearchFallback(equipment, mode) {
                 // Detect explainer requests
                 this.detectExplainerRequest(input);
                 
+                // FORCE EXPLAINER MODE FOR DEBUGGING - Test specific phrases
+                if (input.toLowerCase().includes('contactor') && input.toLowerCase().includes('not closing')) {
+                    console.log('🎓 FORCING EXPLAINER MODE FOR CONTACTOR ISSUE');
+                    this.explainerMode = 'explain';
+                    this.requestExplanation = true;
+                }
+                
                 const requestBody = {
                     message: input,
                     mode: this.currentMode,
@@ -3214,6 +3221,12 @@ function generateManualSearchFallback(equipment, mode) {
                     explainerMode: this.explainerMode,
                     requestExplanation: this.requestExplanation
                 };
+                
+                console.log('🎓 Frontend sending request:', {
+                    explainerMode: this.explainerMode,
+                    requestExplanation: this.requestExplanation,
+                    message: input.substring(0, 50)
+                });
                 
                 // Reset explainer flags after sending
                 const shouldResetExplainer = this.requestExplanation;
@@ -3278,6 +3291,14 @@ function generateManualSearchFallback(equipment, mode) {
                     if (!responseText || !responseText.trim()) {
                         throw new Error('Empty response received from backend');
                     }
+                    
+                    console.log('🎓 Backend response details:', {
+                        responseLength: responseText.length,
+                        routeUsed: data.routeUsed,
+                        usingAI: data.usingAI,
+                        containsExplanation: responseText.includes('explanation') || responseText.includes('Explanation'),
+                        startsWithEmoji: /^[🎓🔧⚠️⚖️]/.test(responseText)
+                    });
                     
                     return responseText;
                 } catch (error) {
