@@ -518,6 +518,7 @@ class CapacitorDatabase {
   }
 }
 
+class WebSearchHelper {
   // Perform live web search using available APIs
   async performLiveWebSearch(query) {
     try {
