@@ -39,9 +39,7 @@ exports.handler = async (event, context) => {
         sessionId,
         photoAnalysisData,
         diagnosticPackage,
-        enhancedAnalysisContext,
-        explainerMode,
-        requestExplanation
+        enhancedAnalysisContext
       } = JSON.parse(event.body);
 
       console.log('📨 Enhanced chat request received:', {
@@ -51,55 +49,8 @@ exports.handler = async (event, context) => {
         hasPhotoContext: !!photoAnalysisData,
         hasDiagnosticPackage: !!diagnosticPackage,
         hasEnhancedContext: !!enhancedAnalysisContext,
-        isAutoPhotoSearch: systemContext?.searchType === 'auto_photo_manual_search',
-        explainerMode,
-        requestExplanation: !!requestExplanation
+        isAutoPhotoSearch: systemContext?.searchType === 'auto_photo_manual_search'
       });
-      
-      // Simple explainer mode override
-      if (requestExplanation || (message.toLowerCase().includes('contactor') && message.toLowerCase().includes('not closing'))) {
-        console.log('🎓 EXPLAINER MODE DETECTED - Using comprehensive explanation system');
-        
-        const explainerPrompt = `You are HVAC Jack Professional with Advanced AI Explainer capabilities. You are an expert HVAC technician and educator.
-
-**COMPREHENSIVE EXPLANATION MODE ACTIVATED**
-
-The user has asked: ${message}
-
-${photoAnalysisData ? `**Equipment Context:**
-- Equipment: ${photoAnalysisData.structuredData?.equipment?.type || 'Unknown'}
-- Brand: ${photoAnalysisData.structuredData?.equipment?.brand || 'Unknown'}
-- Model: ${photoAnalysisData.structuredData?.equipment?.model || 'Unknown'}` : ''}
-
-**Your response should:**
-1. **Explain the technical concept thoroughly** - Help the technician understand what's happening and why
-2. **Provide diagnostic steps** - Professional-level troubleshooting procedures
-3. **Include safety considerations** - Important safety protocols and warnings
-4. **Offer practical insights** - Real-world tips and professional experience
-5. **Reference codes and standards** - Industry best practices and compliance requirements
-
-**Format your response as a comprehensive professional explanation with both educational content and diagnostic guidance.**`;
-
-        const explainerMessages = [
-          { role: 'user', content: message }
-        ];
-        
-        const explainerResponse = await callClaudeWithEnhancedContext(explainerPrompt, explainerMessages);
-        
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({
-            response: `🎓 **COMPREHENSIVE TECHNICAL EXPLANATION**\n\n${explainerResponse}\n\n📋 *HVAC Jack Professional - Advanced Explainer System*`,
-            success: true,
-            routeUsed: 'explainer_mode',
-            usingAI: true,
-            responseTime: (Date.now() - startTime) / 1000,
-            sessionId: sessionId,
-            metadata: { explainerMode: explainerMode || 'comprehensive' }
-          })
-        };
-      }
 
       // Basic validation
       if (!message || typeof message !== 'string' || message.trim().length === 0) {
