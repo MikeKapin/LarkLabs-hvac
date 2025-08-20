@@ -1,0 +1,304 @@
+// CSA Unit 4 & 4a - Gas Industry Codes, Acts and Regulations Module Data
+export const module4CodesData = {
+  moduleId: 4,
+  title: "Gas Industry Codes, Acts and Regulations",
+  description: "Gas industry codes, acts, and regulatory requirements",
+  folderPath: "Module 4 Codes and Regs",
+  
+  chapters: {
+    1: {
+      id: 1,
+      title: "Introduction to Gas Codes - Chapter 1",
+      pdfFile: "Unit 4 Chapter 1.pdf",
+      content: {
+        overview: "Introduction to gas industry codes and standards",
+        primaryCodes: [
+          "CSA B149.1 - Natural gas and propane installation code",
+          "CSA B149.2 - Propane storage and handling code",
+          "CSA B149.3 - Propane and natural gas for vehicles",
+          "NFPA 54/ANSI Z223.1 - National Fuel Gas Code (US)",
+          "Local codes and amendments"
+        ],
+        codeHierarchy: [
+          "National codes establish minimum standards",
+          "Provincial regulations may be more restrictive",
+          "Municipal bylaws add local requirements",
+          "Most restrictive code always applies",
+          "Manufacturer requirements must also be met"
+        ],
+        codeUpdates: [
+          "Codes are updated periodically (typically 5-year cycles)",
+          "Stay current with latest editions",
+          "Grandfather clauses for existing installations",
+          "New installations must meet current codes",
+          "Training requirements for code changes"
+        ]
+      }
+    },
+    2: {
+      id: 2,
+      title: "CSA B149.1 Natural Gas Installation Code - Chapter 2",
+      pdfFile: "Unit 4 Chapter 2.pdf",
+      content: {
+        overview: "Detailed requirements for natural gas installations",
+        scopeAndApplication: [
+          "Covers natural gas piping from meter to appliances",
+          "Installation, alteration, and repair requirements",
+          "Appliance installation standards",
+          "Venting system requirements",
+          "Testing and inspection procedures"
+        ],
+        keyRequirements: [
+          "Minimum pipe sizing calculations",
+          "Allowable piping materials and methods",
+          "Shutoff valve locations and requirements",
+          "Appliance clearances and ventilation",
+          "Leak testing procedures and acceptance criteria"
+        ],
+        installationStandards: [
+          "Piping support and protection requirements",
+          "Underground piping specifications",
+          "Indoor installation limitations",
+          "Appliance connection requirements",
+          "System pressure testing protocols"
+        ],
+        safetyRequirements: [
+          "Combustion air requirements",
+          "Venting system design criteria",
+          "Emergency shutdown procedures",
+          "Inspection and maintenance protocols",
+          "Documentation requirements"
+        ]
+      }
+    },
+    3: {
+      id: 3,
+      title: "CSA B149.2 Propane Storage and Handling - Chapter 3",
+      pdfFile: "Unit 4 Chapter 3.pdf",
+      content: {
+        overview: "Requirements for propane storage and handling systems",
+        storageRequirements: [
+          "Container specifications and markings",
+          "Storage location requirements",
+          "Clearance distances from buildings",
+          "Protection from damage and tampering",
+          "Filling and refilling procedures"
+        ],
+        handlingProcedures: [
+          "Safe transportation methods",
+          "Proper lifting and moving techniques",
+          "Connection and disconnection procedures",
+          "Emergency response protocols",
+          "Personal protective equipment requirements"
+        ],
+        systemDesign: [
+          "Piping materials and sizing",
+          "Regulator selection and installation",
+          "Vapor withdrawal vs. liquid service",
+          "Multi-container installations",
+          "Automatic changeover systems"
+        ],
+        inspectionRequirements: [
+          "Container inspection schedules",
+          "System leak testing procedures",
+          "Pressure relief device requirements",
+          "Documentation and record keeping",
+          "Compliance verification methods"
+        ]
+      }
+    },
+    "4a-1": {
+      id: "4a-1",
+      title: "Legal Framework - Unit 4a Chapter 1",
+      pdfFile: "Unit 4a Chapter 1.pdf",
+      content: {
+        overview: "Legal framework governing the gas industry",
+        jurisdictionalAuthority: [
+          "Federal regulations and oversight",
+          "Provincial/territorial jurisdiction",
+          "Municipal authority and bylaws",
+          "First Nations governance considerations",
+          "Interstate/interprovincial agreements"
+        ],
+        regulatoryBodies: [
+          "Technical Safety BC (TSBC)",
+          "Technical Standards and Safety Authority (TSSA) - Ontario",
+          "Alberta Boilers Safety Association (ABSA)",
+          "Other provincial authorities",
+          "Canadian Standards Association (CSA)"
+        ],
+        legalRequirements: [
+          "Licensing and certification requirements",
+          "Permit and inspection processes",
+          "Compliance monitoring and enforcement",
+          "Penalty structures for violations",
+          "Appeal and review processes"
+        ]
+      }
+    },
+    "4a-2": {
+      id: "4a-2",
+      title: "Licensing and Permits - Unit 4a Chapter 2",
+      pdfFile: "Unit 4a Chapter 2.pdf",
+      content: {
+        overview: "Licensing requirements for gas technicians and contractors",
+        technicianLicensing: [
+          "Class licensing system (G1, G2, G3)",
+          "Apprenticeship and training requirements",
+          "Experience and competency verification",
+          "Examination and certification processes",
+          "Continuing education requirements"
+        ],
+        contractorRequirements: [
+          "Business licensing and registration",
+          "Insurance and bonding requirements",
+          "Worker safety program compliance",
+          "Quality management systems",
+          "Subcontractor management"
+        ],
+        permitProcesses: [
+          "Installation permit requirements",
+          "Application procedures and documentation",
+          "Plan review and approval processes",
+          "Inspection scheduling and procedures",
+          "Certificate of compliance issuance"
+        ]
+      }
+    },
+    "4a-3": {
+      id: "4a-3",
+      title: "Enforcement and Compliance - Unit 4a Chapter 3",
+      pdfFile: "Unit 4a Chapter 3.pdf",
+      content: {
+        overview: "Enforcement mechanisms and compliance requirements",
+        inspectionAuthority: [
+          "Inspector powers and responsibilities",
+          "Right of entry and examination",
+          "Stop work order authority",
+          "Equipment and system condemnation",
+          "Evidence collection procedures"
+        ],
+        violationsAndPenalties: [
+          "Administrative penalties",
+          "Criminal code violations",
+          "License suspension or revocation",
+          "Civil liability considerations",
+          "Due process requirements"
+        ],
+        compliancePrograms: [
+          "Self-inspection requirements",
+          "Quality assurance programs",
+          "Incident reporting obligations",
+          "Corrective action procedures",
+          "Continuous improvement processes"
+        ]
+      }
+    },
+    "4a-4": {
+      id: "4a-4",
+      title: "Professional Responsibilities - Unit 4a Chapter 4",
+      pdfFile: "Unit 4a Chapter 4.pdf",
+      content: {
+        overview: "Professional and ethical responsibilities of gas technicians",
+        professionalStandards: [
+          "Competency maintenance requirements",
+          "Scope of practice limitations",
+          "Professional development obligations",
+          "Peer review and mentoring",
+          "Industry best practices adoption"
+        ],
+        ethicalObligations: [
+          "Public safety as primary responsibility",
+          "Honest and accurate reporting",
+          "Conflict of interest management",
+          "Confidentiality requirements",
+          "Professional integrity maintenance"
+        ],
+        liability: [
+          "Professional liability insurance",
+          "Personal responsibility for work quality",
+          "Supervision of apprentices and helpers",
+          "Documentation and record keeping",
+          "Warranty and guarantee obligations"
+        ]
+      }
+    }
+  },
+  
+  commonQuestions: [
+    {
+      question: "What is the difference between CSA B149.1 and B149.2?",
+      answer: "CSA B149.1 covers natural gas installations from the meter to appliances, while CSA B149.2 specifically addresses propane storage, handling, and installation requirements. Both are essential for gas technicians working with different fuel types."
+    },
+    {
+      question: "Who has authority to inspect gas installations?",
+      answer: "Provincial regulatory authorities (like TSSA in Ontario, TSBC in BC) have primary jurisdiction. Authorized inspectors can enter properties, examine installations, issue stop work orders, and ensure code compliance."
+    },
+    {
+      question: "What happens if I work without proper licensing?",
+      answer: "Working without proper licensing can result in stop work orders, fines, legal penalties, liability issues, and potential criminal charges if public safety is compromised. Always ensure current licensing and permits."
+    },
+    {
+      question: "Can local codes be more restrictive than provincial codes?",
+      answer: "Yes, local codes and bylaws can be more restrictive than provincial or national codes, but they cannot be less restrictive. Always check local requirements and apply the most restrictive standard."
+    },
+    {
+      question: "How often do I need to renew my gas technician license?",
+      answer: "License renewal periods vary by province but typically range from 1-5 years. Renewal usually requires continuing education, fees, and demonstration of ongoing competency. Check with your provincial authority for specific requirements."
+    }
+  ],
+  
+  codeReferences: [
+    {
+      code: "CSA B149.1",
+      section: "6.2",
+      topic: "Pipe Sizing",
+      requirement: "Piping systems shall be sized to deliver required gas flow at minimum allowable pressure"
+    },
+    {
+      code: "CSA B149.1",
+      section: "7.4",
+      topic: "Leak Testing",
+      requirement: "All piping systems must be pressure tested and leak tested before being placed in service"
+    },
+    {
+      code: "CSA B149.2",
+      section: "5.3",
+      topic: "Propane Storage",
+      requirement: "Propane containers must be stored with proper clearances and protection from damage"
+    }
+  ],
+  
+  regulatoryBodies: {
+    "British Columbia": "Technical Safety BC (TSBC)",
+    "Alberta": "Alberta Boilers Safety Association (ABSA)",
+    "Ontario": "Technical Standards and Safety Authority (TSSA)",
+    "Quebec": "Régie du bâtiment du Québec (RBQ)",
+    "Maritime": "Various provincial authorities"
+  },
+  
+  licenseClasses: [
+    {
+      class: "G3",
+      description: "Basic gas technician - residential appliances and simple piping",
+      scope: "Single family residential, basic appliances under 400,000 BTU/hr"
+    },
+    {
+      class: "G2",
+      description: "Intermediate gas technician - commercial and complex residential",
+      scope: "Multi-unit residential, commercial applications, complex systems"
+    },
+    {
+      class: "G1",
+      description: "Advanced gas technician - all gas installations",
+      scope: "Industrial, high-pressure systems, unlimited applications"
+    }
+  ],
+  
+  keywords: [
+    "CSA B149.1", "CSA B149.2", "codes", "regulations", "licensing", "permits",
+    "TSSA", "TSBC", "inspection", "compliance", "violations", "enforcement",
+    "natural gas code", "propane code", "installation standards", "safety requirements",
+    "professional responsibility", "legal framework", "jurisdiction", "authority"
+  ]
+};

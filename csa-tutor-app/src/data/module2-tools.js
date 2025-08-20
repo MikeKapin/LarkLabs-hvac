@@ -1,0 +1,259 @@
+// CSA Unit 2 - Fasteners, Tools and Test Equipment Module Data
+export const module2ToolsData = {
+  moduleId: 2,
+  title: "Fasteners, Tools and Test Equipment",
+  description: "Essential tools, fasteners, and testing equipment for gas work",
+  folderPath: "Module 2 Fasteners-tools-test equipment",
+  
+  chapters: {
+    1: {
+      id: 1,
+      title: "Hand Tools and Basic Equipment - Chapter 1",
+      pdfFile: "CSA Unit 2 Chapter 1.pdf",
+      content: {
+        overview: "Basic hand tools and equipment used in gas system work",
+        essentialTools: [
+          "Pipe wrenches (various sizes)",
+          "Adjustable wrenches",
+          "Channel lock pliers",
+          "Screwdrivers (flathead and Phillips)",
+          "Hex key sets (metric and imperial)"
+        ],
+        specializedTools: [
+          "Pipe threading tools",
+          "Tube benders and cutters",
+          "Flaring tools",
+          "Pipe cutting tools",
+          "Deburring tools"
+        ],
+        toolMaintenance: [
+          "Regular cleaning and lubrication",
+          "Proper storage to prevent damage",
+          "Periodic inspection for wear",
+          "Calibration of precision tools",
+          "Replacement criteria"
+        ]
+      }
+    },
+    2: {
+      id: 2,
+      title: "Fasteners and Joining Methods - Chapter 2a & 2b",
+      pdfFiles: ["CSA Unit 2 Chapter 2a.pdf", "CSA Unit 2 Chapter 2b.pdf"],
+      content: {
+        overview: "Types of fasteners and joining methods for gas systems",
+        threadedFasteners: [
+          "NPT (National Pipe Thread) - tapered threads",
+          "BSP (British Standard Pipe) threads",
+          "Metric threads for specific applications",
+          "Thread sealants and compounds",
+          "Torque specifications and requirements"
+        ],
+        mechanicalJoints: [
+          "Flared tube fittings",
+          "Compression fittings",
+          "Union connections",
+          "Flanged connections",
+          "Quick-connect fittings"
+        ],
+        sealingMethods: [
+          "Pipe thread sealant compounds",
+          "PTFE tape (Teflon tape) application",
+          "O-ring seals",
+          "Gasket materials and selection",
+          "Proper torque application"
+        ],
+        jointsToAvoid: [
+          "Soldered joints in gas systems",
+          "Rubber cement or inappropriate sealants",
+          "Over-tightened connections",
+          "Mixed thread types",
+          "Damaged or worn fittings"
+        ]
+      }
+    },
+    3: {
+      id: 3,
+      title: "Measurement and Testing Tools - Chapter 3a & 3b",
+      pdfFiles: ["CSA Unit 2 Chapter 3a.pdf", "CSA Unit 2 Chapter 3b.pdf"],
+      content: {
+        overview: "Precision measurement and testing equipment",
+        measurementTools: [
+          "Rulers and tape measures",
+          "Calipers (digital and dial)",
+          "Micrometers for precision measurement",
+          "Pressure gauges (various ranges)",
+          "Level and plumb tools"
+        ],
+        testingEquipment: [
+          "Manometers for pressure measurement",
+          "Digital multimeters",
+          "Combustible gas detectors",
+          "Leak detection solutions",
+          "Pressure test equipment"
+        ],
+        calibrationRequirements: [
+          "Daily bump tests for gas detectors",
+          "Periodic full calibration",
+          "Certificate tracking",
+          "Calibration gas requirements",
+          "Documentation procedures"
+        ]
+      }
+    },
+    4: {
+      id: 4,
+      title: "Power Tools and Equipment - Chapter 4",
+      pdfFile: "CSA Unit 2 Chapter 4.pdf",
+      content: {
+        overview: "Power tools and specialized equipment for gas work",
+        electricPowerTools: [
+          "Pipe threading machines",
+          "Reciprocating saws",
+          "Drill motors and bits",
+          "Grinders and cutting tools",
+          "Impact wrenches"
+        ],
+        safetyConsiderations: [
+          "GFCI protection requirements",
+          "Proper grounding procedures",
+          "Spark prevention in gas environments",
+          "Tool inspection before use",
+          "Personal protective equipment"
+        ],
+        maintenanceSchedules: [
+          "Regular cleaning and inspection",
+          "Lubrication requirements",
+          "Blade and bit replacement",
+          "Electrical cord inspection",
+          "Storage requirements"
+        ]
+      }
+    },
+    5: {
+      id: 5,
+      title: "Specialized Gas Testing Equipment - Chapter 5",
+      pdfFile: "CSA Unit 2 Chapter 5.pdf",
+      content: {
+        overview: "Specialized testing equipment for gas systems",
+        gasDetectionEquipment: [
+          "Combustible gas indicators (CGI)",
+          "Photoionization detectors (PID)",
+          "Infrared gas detectors",
+          "Ultrasonic leak detectors",
+          "Electronic nose technology"
+        ],
+        pressureTestingEquipment: [
+          "Hydraulic test pumps",
+          "Pneumatic test equipment",
+          "Digital pressure recorders",
+          "Pressure relief devices",
+          "Test medium requirements"
+        ],
+        flowMeasurementTools: [
+          "Gas flow meters",
+          "Orifice plates and calculations",
+          "Pitot tubes",
+          "Thermal mass flow meters",
+          "Ultrasonic flow measurement"
+        ]
+      }
+    },
+    6: {
+      id: 6,
+      title: "Tool Safety and Maintenance - Chapter 6",
+      pdfFile: "CSA Unit 2 Chapter 6.pdf",
+      content: {
+        overview: "Proper tool safety, maintenance, and storage procedures",
+        safetyPrinciples: [
+          "Right tool for the right job",
+          "Proper tool condition inspection",
+          "Safe handling procedures",
+          "Personal protective equipment use",
+          "Environmental considerations"
+        ],
+        maintenanceProcedures: [
+          "Daily inspection routines",
+          "Cleaning and lubrication schedules",
+          "Calibration tracking systems",
+          "Repair and replacement criteria",
+          "Documentation requirements"
+        ],
+        storageRequirements: [
+          "Clean, dry storage conditions",
+          "Organization for easy access",
+          "Protection from damage",
+          "Security considerations",
+          "Inventory management"
+        ]
+      }
+    }
+  },
+  
+  commonQuestions: [
+    {
+      question: "What type of thread sealant should I use on gas connections?",
+      answer: "Use only approved pipe thread sealant compounds specifically designed for gas service. PTFE tape can be used but must be applied correctly (clockwise) and not extend into the pipe bore. Never use liquid sealants that are not gas-rated."
+    },
+    {
+      question: "How often should gas detection equipment be calibrated?",
+      answer: "Gas detectors should receive a bump test daily before use and full calibration monthly or per manufacturer specifications. Always use certified calibration gas and maintain calibration records."
+    },
+    {
+      question: "What's the difference between NPT and BSP threads?",
+      answer: "NPT (National Pipe Thread) is a tapered thread standard common in North America, while BSP (British Standard Pipe) can be parallel or tapered. They are not interchangeable and mixing them will result in leaks."
+    },
+    {
+      question: "When should I use a torque wrench on gas connections?",
+      answer: "Use a torque wrench when manufacturer specifications require it, particularly on critical connections, flanged joints, and when working with soft materials like brass fittings that can be easily damaged by over-tightening."
+    },
+    {
+      question: "Can I use regular tools in potentially explosive atmospheres?",
+      answer: "No, in potentially explosive atmospheres you must use intrinsically safe or explosion-proof tools. Regular tools can create sparks that could ignite gas vapors. Always assess the environment before selecting tools."
+    }
+  ],
+  
+  practicalScenarios: [
+    {
+      title: "Pipe Threading Operation",
+      scenario: "Threading 1-inch steel pipe for gas service",
+      requiredTools: [
+        "Pipe threading machine or manual dies",
+        "Cutting oil or threading compound",
+        "Pipe cutter or hack saw",
+        "Deburring tool",
+        "Thread gauge for verification"
+      ],
+      procedure: [
+        "Cut pipe to required length",
+        "Deburr inside and outside edges",
+        "Apply cutting oil to threading dies",
+        "Thread pipe to proper depth",
+        "Check thread quality with gauge",
+        "Clean threads before assembly"
+      ],
+      safetyNotes: "Ensure adequate ventilation when using cutting oils and wear safety glasses"
+    }
+  ],
+  
+  toolSpecifications: [
+    {
+      tool: "Pipe Wrench",
+      sizes: "10\", 14\", 18\", 24\", 36\"",
+      application: "Gripping and turning threaded pipe and fittings",
+      maintenance: "Keep jaws clean and properly adjusted"
+    },
+    {
+      tool: "Combustible Gas Detector",
+      range: "0-100% LEL (Lower Explosive Limit)",
+      accuracy: "±5% of reading",
+      calibration: "Monthly with certified gas mixture"
+    }
+  ],
+  
+  keywords: [
+    "tools", "fasteners", "NPT threads", "pipe wrench", "gas detector",
+    "calibration", "thread sealant", "PTFE tape", "torque", "pressure test",
+    "leak detection", "measurement", "testing equipment", "maintenance",
+    "tool safety", "threading", "joining methods", "sealants"
+  ]
+};
