@@ -116,7 +116,6 @@ exports.handler = async (event, context) => {
       );
 
       console.log('🧠 Routing decision:', routingDecision);
-      console.log('🔍 Request details:', { message: message.substring(0, 50), explainerMode, requestExplanation });
 
       let response;
       let responseMetadata = {};
@@ -297,10 +296,7 @@ function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagno
   const messageLower = message.toLowerCase();
 
   // PRIORITY 0: Explicit explanation requests or explainer mode
-  const isExplainerRequest = requestExplanation || explainerMode || detectExplanationRequest(messageLower);
-  console.log('🎓 Explainer check:', { requestExplanation, explainerMode, detectedFromMessage: detectExplanationRequest(messageLower), final: isExplainerRequest });
-  
-  if (isExplainerRequest) {
+  if (requestExplanation || explainerMode || detectExplanationRequest(messageLower)) {
     if (diagnosticPackage || photoAnalysisData) {
       routing.route = 'DUAL_DIAGNOSTIC_EDUCATIONAL';
       routing.confidence = 95;
@@ -310,7 +306,6 @@ function analyzeRequestRouting(message, systemContext, photoAnalysisData, diagno
       routing.confidence = 90;
       routing.reasons.push('Comprehensive explanation requested');
     }
-    console.log('🎓 EXPLAINER MODE ACTIVATED - Route:', routing.route);
     return routing;
   }
 
@@ -380,51 +375,7 @@ function detectExplanationRequest(message) {
     'walk me through', 'step by step explanation'
   ];
   
-  // Check for explicit explanation keywords
-  const hasExplicitRequest = explanationKeywords.some(keyword => message.includes(keyword));
-  if (hasExplicitRequest) {
-    return true;
-  }
-  
-  // Smart detection for technical troubleshooting that would benefit from explanations
-  const technicalTroubleshootingPatterns = [
-    // Component behavior patterns
-    /contactor.*?not closing/i, /contactor.*?won't close/i, /contactor.*?stuck/i,
-    /relay.*?not working/i, /relay.*?won't engage/i,
-    /motor.*?not starting/i, /motor.*?won't run/i, /motor.*?humming/i,
-    /compressor.*?not running/i, /compressor.*?won't start/i,
-    /fan.*?not spinning/i, /fan.*?won't turn/i,
-    /thermostat.*?not working/i, /thermostat.*?not responding/i,
-    
-    // Electrical patterns
-    /have power.*?but/i, /power.*?but.*?not/i, /voltage.*?but.*?not/i,
-    /getting.*?volts.*?but/i, /reading.*?amps.*?but/i,
-    
-    // System behavior patterns
-    /runs.*?but.*?not/i, /starts.*?but.*?stops/i, /cycles.*?on.*?off/i,
-    /makes noise.*?but/i, /vibrating.*?but/i,
-    
-    // Problem description patterns
-    /not sure why/i, /don't understand why/i, /confused about/i,
-    /strange behavior/i, /weird issue/i, /unusual problem/i
-  ];
-  
-  // Check if message matches technical troubleshooting patterns that need explanation
-  const needsExplanation = technicalTroubleshootingPatterns.some((pattern, index) => {
-    const matches = pattern.test(message);
-    if (matches) {
-      console.log(`🎓 Pattern ${index} matched:`, pattern, 'for message:', message.substring(0, 60));
-    }
-    return matches;
-  });
-  
-  if (needsExplanation) {
-    console.log('🎓 Auto-detected technical issue needing explanation (backend):', message.substring(0, 50));
-    console.log('🎓 Matched patterns for message:', message);
-    return true;
-  }
-  
-  return false;
+  return explanationKeywords.some(keyword => message.includes(keyword));
 }
 
 function detectSafetyIssue(message) {
@@ -658,21 +609,11 @@ async function handleHomeownerGuided(message, systemContext, conversationHistory
 }
 
 async function handleAIExplainerComprehensive(message, explainerMode, systemContext, photoAnalysisData, conversationHistory, mode) {
-  console.log('🎓 EXPLAINER HANDLER CALLED!', { message: message.substring(0, 50), explainerMode, mode });
-  
   const systemPrompt = createAIExplainerSystemPrompt(explainerMode, systemContext, photoAnalysisData);
   const claudeMessages = buildAIExplainerClaudeMessages(message, conversationHistory, explainerMode, systemContext, photoAnalysisData);
   
-  console.log('🎓 System prompt length:', systemPrompt.length);
-  console.log('🎓 Claude messages:', claudeMessages.length);
-  
   const explanation = await callClaudeWithEnhancedContext(systemPrompt, claudeMessages);
-  console.log('🎓 Got explanation, length:', explanation?.length || 0);
-  
-  const formatted = formatComprehensiveExplanation(explanation, explainerMode, systemContext, photoAnalysisData);
-  console.log('🎓 Formatted response length:', formatted?.length || 0);
-  
-  return formatted;
+  return formatComprehensiveExplanation(explanation, explainerMode, systemContext, photoAnalysisData);
 }
 
 async function handleDualDiagnosticEducational(message, explainerMode, systemContext, photoAnalysisData, diagnosticPackage, conversationHistory, mode) {
@@ -1975,6 +1916,3 @@ Technical diagnostic support ready.${contextNote}
 
 **Current diagnostic status and readings?**`;
 }
-
-// Ensure proper file ending
-module.exports = exports;
