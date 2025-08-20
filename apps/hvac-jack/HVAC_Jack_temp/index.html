@@ -351,6 +351,50 @@
             backdrop-filter: blur(10px);
             margin-top: 20px;
             display: none;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid;
+        }
+
+        .chat-message.photo-analysis {
+            background: rgba(99, 102, 241, 0.1);
+            border-left-color: #6366F1;
+        }
+
+        .chat-message.user-question {
+            background: rgba(232, 90, 79, 0.1);
+            border-left-color: #E85A4F;
+        }
+
+        .chat-message.ai-response {
+            background: rgba(34, 197, 94, 0.1);
+            border-left-color: #22C55E;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .message-timestamp {
+            font-size: 0.8rem;
+            color: #94A3B8;
+            margin-left: auto;
+        }
+
+        .message-content {
+            color: #E2E8F0;
+            line-height: 1.6;
         }
 
         .response-header {
@@ -369,6 +413,23 @@
             font-size: 1.3rem;
             color: #E85A4F;
             font-weight: 600;
+            flex: 1;
+        }
+
+        .clear-chat-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-chat-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: translateY(-1px);
         }
 
         .response-content {
@@ -537,7 +598,8 @@
             <section class="response-section" id="response-section">
                 <div class="response-header">
                     <div class="response-icon">🎓</div>
-                    <div class="response-title">Expert Analysis</div>
+                    <div class="response-title">Expert Analysis Chat</div>
+                    <button class="clear-chat-btn" id="clear-chat-btn" title="Clear Chat History">🗑️ Clear</button>
                 </div>
                 <div class="response-content" id="response-content"></div>
             </section>
@@ -650,6 +712,7 @@
                 this.photoData = null;
                 this.photoAnalysisData = null;
                 this.conversationHistory = [];
+                this.chatMessages = [];
                 this.isAnalyzing = false;
                 this.sessionId = this.generateSessionId();
                 this.initializeElements();
@@ -672,6 +735,7 @@
                     analyzeBtn: document.getElementById('analyze-btn'),
                     responseSection: document.getElementById('response-section'),
                     responseContent: document.getElementById('response-content'),
+                    clearChatBtn: document.getElementById('clear-chat-btn'),
                     statusIndicator: document.getElementById('status-indicator')
                 };
             }
@@ -713,6 +777,11 @@
                 // Analysis button
                 this.elements.analyzeBtn.addEventListener('click', () => {
                     this.performAnalysis();
+                });
+
+                // Clear chat button
+                this.elements.clearChatBtn.addEventListener('click', () => {
+                    this.clearChat();
                 });
 
                 // Enter key in textarea
@@ -770,7 +839,7 @@
                     const response = await this.callPhotoAnalyzer();
                     this.photoAnalysisData = response; // Store photo analysis for future use
                     this.addToConversationHistory('photo_analysis', response);
-                    this.displayResponse(response);
+                    this.addChatMessage('photo-analysis', '📋 Photo Analysis Complete', response);
                     this.showStatus('Photo analysis complete', 'success');
                 } catch (error) {
                     console.error('Photo analysis error:', error);
@@ -798,10 +867,11 @@
                 this.elements.analyzeBtn.innerHTML = '<div class="spinner"></div> Analyzing...';
 
                 try {
+                    this.addChatMessage('user-question', '🔍 User Question', query);
                     const response = await this.callExplainerAPI(query);
                     this.addToConversationHistory('user_question', query);
                     this.addToConversationHistory('ai_response', response);
-                    this.displayResponse(response);
+                    this.addChatMessage('ai-response', '🎓 HVAC Jack Expert Analysis', response);
                     this.showStatus('Analysis complete', 'success');
                 } catch (error) {
                     console.error('Analysis error:', error);
@@ -883,21 +953,68 @@
                 }
             }
 
-            displayResponse(response) {
-                this.elements.responseContent.innerHTML = this.formatResponse(response);
+            addChatMessage(type, title, content) {
+                const timestamp = new Date().toLocaleString();
+                const messageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                
+                const message = {
+                    id: messageId,
+                    type: type,
+                    title: title,
+                    content: content,
+                    timestamp: timestamp
+                };
+                
+                this.chatMessages.push(message);
+                this.renderChatMessages();
+            }
+
+            renderChatMessages() {
+                const chatHtml = this.chatMessages.map(msg => `
+                    <div class="chat-message ${msg.type}">
+                        <div class="message-header">
+                            <span>${msg.title}</span>
+                            <span class="message-timestamp">${msg.timestamp}</span>
+                        </div>
+                        <div class="message-content">
+                            ${this.formatResponse(msg.content)}
+                        </div>
+                    </div>
+                `).join('');
+                
+                this.elements.responseContent.innerHTML = chatHtml;
                 this.elements.responseSection.style.display = 'block';
-                this.elements.responseSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Scroll to bottom of chat
+                setTimeout(() => {
+                    const responseSection = this.elements.responseSection;
+                    responseSection.scrollTop = responseSection.scrollHeight;
+                    responseSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+
+            displayResponse(response) {
+                // This method is kept for compatibility but now uses chat system
+                this.addChatMessage('ai-response', '🎓 Response', response);
             }
 
             displayError(error) {
-                this.elements.responseContent.innerHTML = `
+                const errorMessage = `
                     <div style="color: #EF4444; padding: 20px; border-left: 4px solid #EF4444; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
                         <strong>⚠️ Analysis Error</strong><br>
                         ${error}<br><br>
                         Please check your connection and try again.
                     </div>
                 `;
-                this.elements.responseSection.style.display = 'block';
+                this.addChatMessage('ai-response', '⚠️ Error', errorMessage);
+            }
+
+            clearChat() {
+                this.chatMessages = [];
+                this.conversationHistory = [];
+                this.photoAnalysisData = null;
+                this.elements.responseSection.style.display = 'none';
+                this.showStatus('Chat cleared', 'success');
             }
 
             formatResponse(response) {
