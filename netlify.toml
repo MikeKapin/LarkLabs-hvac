@@ -1,10 +1,11 @@
 [build]
+  base = "apps/hvac-jack/HVAC_Jack_temp"
   functions = "netlify/functions"
   publish = "."
+  command = "echo 'HVAC Jack 4.0 build'"
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["@anthropic-ai/sdk", "node-fetch", "tesseract.js", "cheerio"]
 
 [[redirects]]
   from = "/api/*"
