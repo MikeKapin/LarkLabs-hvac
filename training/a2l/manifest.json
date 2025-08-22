@@ -2,12 +2,12 @@
   "name": "A2L Pro Tools - Enhanced",
   "short_name": "A2L Pro",
   "description": "Professional A2L refrigerant tools with CSA B52 compliance, advanced safety calculations, and installation requirements for Canadian technicians.",
-  "start_url": "/",
+  "start_url": "./A2L_Calculator_App.html",
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#667eea",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "./",
   "categories": ["productivity", "utilities", "business"],
   "lang": "en-US",
   "icons": [
@@ -59,7 +59,7 @@
       "name": "CSA B52 Compliance",
       "short_name": "Compliance",
       "description": "A2L system compliance assessment tool",
-      "url": "/?calc=compliance",
+      "url": "./A2L_Calculator_App.html?calc=compliance",
       "icons": [
         {
           "src": "A2L_Pro_Logo.png",
@@ -71,7 +71,7 @@
       "name": "Advanced Leak Analysis",
       "short_name": "Leak Analysis",
       "description": "Time-based A2L leak concentration analysis",
-      "url": "/?calc=leak-analysis",
+      "url": "./A2L_Calculator_App.html?calc=leak-analysis",
       "icons": [
         {
           "src": "A2L_Pro_Logo.png",
@@ -83,7 +83,7 @@
       "name": "Installation Requirements",
       "short_name": "Install Reqs",
       "description": "A2L installation requirements calculator",
-      "url": "/?calc=installation",
+      "url": "./A2L_Calculator_App.html?calc=installation",
       "icons": [
         {
           "src": "A2L_Pro_Logo.png",
@@ -95,7 +95,7 @@
       "name": "P-T Calculator",
       "short_name": "P-T Calc",
       "description": "Enhanced A2L pressure-temperature calculator",
-      "url": "/?calc=pt-calc",
+      "url": "./A2L_Calculator_App.html?calc=pt-calc",
       "icons": [
         {
           "src": "A2L_Pro_Logo.png",

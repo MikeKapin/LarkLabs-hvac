@@ -5,13 +5,10 @@ const ENHANCED_CACHE = 'a2l-enhanced-v2.0.0';
 
 // Enhanced files to cache for offline functionality
 const STATIC_FILES = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/A2L_Pro_Logo.png',
-  '/chat.js',
-  '/health.js',
-  '/enhanced-a2l-features.js'
+  './',
+  './A2L_Calculator_App.html',
+  './manifest.json',
+  './A2L_Pro_Logo.png'
 ];
 
 // Professional data to cache for A2L compliance
@@ -103,7 +100,7 @@ self.addEventListener('fetch', (event) => {
                 return cachedResponse;
               }
               // Fallback to main page if specific page not cached
-              return caches.match('/index.html') || caches.match('/');
+              return caches.match('./A2L_Calculator_App.html') || caches.match('./');
             });
         })
     );
@@ -166,11 +163,11 @@ self.addEventListener('push', (event) => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/A2L_Pro_Logo.png',  // Updated to use your logo
-      badge: '/A2L_Pro_Logo.png', // Updated to use your logo
+      icon: './A2L_Pro_Logo.png',  // Updated to use your logo
+      badge: './A2L_Pro_Logo.png', // Updated to use your logo
       vibrate: [200, 100, 200],
       data: {
-        url: data.url || '/'
+        url: data.url || './'
       }
     };
 
@@ -185,7 +182,7 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   event.waitUntil(
-    clients.openWindow(event.notification.data.url || '/')
+    clients.openWindow(event.notification.data.url || './')
   );
 });
 
