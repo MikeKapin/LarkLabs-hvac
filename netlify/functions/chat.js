@@ -1486,25 +1486,3 @@ function validateEnhancedContent(message, mode = 'homeowner') {
 }
 
 // Usage logging functions
-async function logBlockedContent(data) {
-  global.usageStore.blockedContent.push({
-    ...data,
-    timestamp: new Date().toISOString()
-  });
-}
-
-// Track user sessions
-function trackSession(sessionId, mode) {
-  if (!global.usageStore.sessions.has(sessionId)) {
-    global.usageStore.sessions.set(sessionId, {
-      startTime: Date.now(),
-      mode: mode,
-      messageCount: 0,
-      lastActivity: Date.now()
-    });
-  }
-  
-  const session = global.usageStore.sessions.get(sessionId);
-  session.messageCount++;
-  session.lastActivity = Date.now();
-}
