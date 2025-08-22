@@ -1463,26 +1463,3 @@ Technical diagnostic support ready.${contextNote}
 **Current diagnostic status and readings?**`;
 }
 
-// Enhanced content validation for HVAC focus
-function validateEnhancedContent(message, mode = 'homeowner') {
-  const words = message.toLowerCase();
-  
-  // Enhanced validation - allowing broader HVAC and professional content
-  const forbiddenExactPhrases = [
-    'illegal activity', 'harm others', 'violence', 'weapons', 'drugs',
-    'explicit content', 'adult content'
-  ];
-  
-  for (const phrase of forbiddenExactPhrases) {
-    if (words.includes(phrase)) {
-      return {
-        isValid: false,
-        reason: `Content contains prohibited phrase: ${phrase}`
-      };
-    }
-  }
-  
-  return { isValid: true };
-}
-
-// Usage logging functions
