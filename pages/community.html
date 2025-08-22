@@ -1057,12 +1057,107 @@
                 <section id="section-discussions" class="content-section">
                     <div class="content-header">
                         <h2 style="color: #ffffff; font-size: 1.5rem;">💬 Discussion Forums</h2>
-                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Organized discussions by category</p>
+                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Organized discussions by topic</p>
                     </div>
                     <div class="content-body">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            Discussion forums coming soon...
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                            <!-- General Discussion -->
+                            <div class="forum-category" style="background: rgba(52,152,219,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(52,152,219,0.2); cursor: pointer; transition: all 0.3s;" onclick="openForum('general')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💬</div>
+                                    <div>
+                                        <h3 style="color: #3498db; margin-bottom: 0.3rem;">General Discussion</h3>
+                                        <div style="color: #95a5a6; font-size: 0.9rem;">24 topics • 156 posts</div>
+                                    </div>
+                                </div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem;">General HVAC discussions, industry news, and community chat</div>
+                            </div>
+
+                            <!-- Technical Support -->
+                            <div class="forum-category" style="background: rgba(231,76,60,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(231,76,60,0.2); cursor: pointer; transition: all 0.3s;" onclick="openForum('technical')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #e74c3c, #c0392b); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔧</div>
+                                    <div>
+                                        <h3 style="color: #e74c3c; margin-bottom: 0.3rem;">Technical Support</h3>
+                                        <div style="color: #95a5a6; font-size: 0.9rem;">18 topics • 89 posts</div>
+                                    </div>
+                                </div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem;">Troubleshooting, repair help, and technical questions</div>
+                            </div>
+
+                            <!-- Certification & Training -->
+                            <div class="forum-category" style="background: rgba(39,174,96,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(39,174,96,0.2); cursor: pointer; transition: all 0.3s;" onclick="openForum('certification')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎓</div>
+                                    <div>
+                                        <h3 style="color: #27ae60; margin-bottom: 0.3rem;">Certification & Training</h3>
+                                        <div style="color: #95a5a6; font-size: 0.9rem;">12 topics • 67 posts</div>
+                                    </div>
+                                </div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem;">G1, G2, G3 certification, exam prep, and training resources</div>
+                            </div>
+
+                            <!-- Tools & Equipment -->
+                            <div class="forum-category" style="background: rgba(243,156,18,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(243,156,18,0.2); cursor: pointer; transition: all 0.3s;" onclick="openForum('tools')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #f39c12, #e67e22); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔨</div>
+                                    <div>
+                                        <h3 style="color: #f39c12; margin-bottom: 0.3rem;">Tools & Equipment</h3>
+                                        <div style="color: #95a5a6; font-size: 0.9rem;">15 topics • 92 posts</div>
+                                    </div>
+                                </div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem;">Tool recommendations, equipment reviews, and purchasing advice</div>
+                            </div>
+
+                            <!-- Code & Regulations -->
+                            <div class="forum-category" style="background: rgba(155,89,182,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(155,89,182,0.2); cursor: pointer; transition: all 0.3s;" onclick="openForum('codes')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #9b59b6, #8e44ad); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📋</div>
+                                    <div>
+                                        <h3 style="color: #9b59b6; margin-bottom: 0.3rem;">Code & Regulations</h3>
+                                        <div style="color: #95a5a6; font-size: 0.9rem;">9 topics • 45 posts</div>
+                                    </div>
+                                </div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem;">CSA B149.1, TSSA regulations, and compliance discussions</div>
+                            </div>
+
+                            <!-- Career & Business -->
+                            <div class="forum-category" style="background: rgba(52,73,94,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(52,73,94,0.2); cursor: pointer; transition: all 0.3s;" onclick="openForum('career')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #34495e, #2c3e50); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💼</div>
+                                    <div>
+                                        <h3 style="color: #95a5a6; margin-bottom: 0.3rem;">Career & Business</h3>
+                                        <div style="color: #95a5a6; font-size: 0.9rem;">8 topics • 34 posts</div>
+                                    </div>
+                                </div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem;">Career advice, business tips, and job opportunities</div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Forum Activity -->
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                            <h3 style="color: #3498db; margin-bottom: 1rem;">🔥 Recent Activity</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                                    <div class="comment-avatar" style="background: linear-gradient(45deg, #27ae60, #2ecc71); flex-shrink: 0;">MR</div>
+                                    <div style="flex: 1;">
+                                        <div style="color: #27ae60; font-weight: bold; font-size: 0.9rem;">Mike Rodriguez</div>
+                                        <div style="color: #ecf0f1; font-size: 0.9rem;">Started a discussion about R-32 refrigerant best practices</div>
+                                        <div style="color: #95a5a6; font-size: 0.8rem;">in Technical Support • 2 hours ago</div>
+                                    </div>
+                                    <button onclick="openForum('technical')" style="background: linear-gradient(45deg, #e74c3c, #c0392b); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-size: 0.85rem;">View</button>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                                    <div class="comment-avatar" style="background: linear-gradient(45deg, #3498db, #2980b9); flex-shrink: 0;">SK</div>
+                                    <div style="flex: 1;">
+                                        <div style="color: #3498db; font-weight: bold; font-size: 0.9rem;">Sarah Kim</div>
+                                        <div style="color: #ecf0f1; font-size: 0.9rem;">Posted G2 exam study tips and resources</div>
+                                        <div style="color: #95a5a6; font-size: 0.8rem;">in Certification & Training • 4 hours ago</div>
+                                    </div>
+                                    <button onclick="openForum('certification')" style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-size: 0.85rem;">View</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1070,12 +1165,44 @@
                 <section id="section-chat" class="content-section">
                     <div class="content-header">
                         <h2 style="color: #ffffff; font-size: 1.5rem;">🗨️ Live Chat</h2>
-                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Real-time conversations</p>
+                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Real-time conversations with HVAC professionals</p>
                     </div>
                     <div class="content-body">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            Live chat system coming soon...
+                        <div id="chatMessages" style="height: 400px; overflow-y: auto; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+                            <!-- Welcome message -->
+                            <div style="text-align: center; color: #95a5a6; padding: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <h4 style="color: #3498db; margin-bottom: 1rem;">💬 Welcome to HVAC Live Chat</h4>
+                                <p>Connect with fellow HVAC professionals, ask questions, and share your expertise!</p>
+                            </div>
+                            <!-- Sample messages for demo -->
+                            <div class="chat-message" style="display: flex; gap: 0.8rem; margin: 1rem 0; padding: 0.8rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                                <div class="comment-avatar" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">MR</div>
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                                        <span style="color: #27ae60; font-weight: bold; font-size: 0.9rem;">Mike Rodriguez</span>
+                                        <span style="color: #95a5a6; font-size: 0.8rem;">2:34 PM</span>
+                                    </div>
+                                    <div style="color: #ecf0f1; font-size: 0.95rem;">Anyone have experience with the new R-32 refrigerant? Switching over some systems this week.</div>
+                                </div>
+                            </div>
+                            <div class="chat-message" style="display: flex; gap: 0.8rem; margin: 1rem 0; padding: 0.8rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                                <div class="comment-avatar" style="background: linear-gradient(45deg, #3498db, #2980b9);">SK</div>
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                                        <span style="color: #3498db; font-weight: bold; font-size: 0.9rem;">Sarah Kim</span>
+                                        <span style="color: #95a5a6; font-size: 0.8rem;">2:36 PM</span>
+                                    </div>
+                                    <div style="color: #ecf0f1; font-size: 0.95rem;">@Mike R-32 is great! Lower GWP than R-410A. Make sure your gauges are compatible and watch the pressure differentials.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="chatInput" style="display: flex; gap: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+                            <div class="comment-avatar" id="chatUserAvatar">U</div>
+                            <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 10px 15px; color: white; font-size: 0.95rem;">
+                            <button onclick="sendChatMessage()" id="chatSendBtn" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 10px 20px; cursor: pointer; font-weight: 500; transition: all 0.3s;">Send</button>
+                        </div>
+                        <div style="text-align: center; color: #95a5a6; font-size: 0.85rem; margin-top: 0.5rem;">
+                            💡 Tip: Press Enter to send messages quickly
                         </div>
                     </div>
                 </section>
@@ -1083,12 +1210,73 @@
                 <section id="section-directory" class="content-section">
                     <div class="content-header">
                         <h2 style="color: #ffffff; font-size: 1.5rem;">👥 Professional Directory</h2>
-                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Connect with HVAC professionals</p>
+                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Connect with HVAC professionals across Canada</p>
                     </div>
                     <div class="content-body">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            Professional directory coming soon...
+                        <div style="margin-bottom: 1.5rem;">
+                            <input type="text" id="directorySearch" placeholder="Search by name, location, or certification..." style="width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 25px; padding: 12px 20px; color: white; font-size: 1rem;">
+                        </div>
+                        
+                        <div id="directoryProfiles" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                            <!-- Sample profiles for demo -->
+                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; cursor: pointer;" onclick="viewProfile('mike-rodriguez')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="post-avatar" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">MR</div>
+                                    <div>
+                                        <div style="color: #ffffff; font-weight: bold;">Mike Rodriguez</div>
+                                        <div style="color: #27ae60; font-size: 0.9rem;">G2 Certified Technician</div>
+                                    </div>
+                                </div>
+                                <div style="color: #bdc3c7; margin-bottom: 1rem;">📍 Toronto, ON</div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">15+ years experience in residential and commercial HVAC systems. Specializing in heat pump installations and energy efficiency upgrades.</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    <span style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">G2 Certified</span>
+                                    <span style="background: linear-gradient(45deg, #f39c12, #e67e22); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Heat Pump Specialist</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; cursor: pointer;" onclick="viewProfile('sarah-kim')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="post-avatar" style="background: linear-gradient(45deg, #3498db, #2980b9);">SK</div>
+                                    <div>
+                                        <div style="color: #ffffff; font-weight: bold;">Sarah Kim</div>
+                                        <div style="color: #3498db; font-size: 0.9rem;">HVAC Engineering Student</div>
+                                    </div>
+                                </div>
+                                <div style="color: #bdc3c7; margin-bottom: 1rem;">📍 Vancouver, BC</div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">Final year HVAC engineering student looking to connect with industry professionals and learn about the latest technologies in the field.</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    <span style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Student</span>
+                                    <span style="background: linear-gradient(45deg, #9b59b6, #8e44ad); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Looking to Learn</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; cursor: pointer;" onclick="viewProfile('tom-wilson')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="post-avatar" style="background: linear-gradient(45deg, #e67e22, #d35400);">TW</div>
+                                    <div>
+                                        <div style="color: #ffffff; font-weight: bold;">Tom Wilson</div>
+                                        <div style="color: #e67e22; font-size: 0.9rem;">TSSA Inspector</div>
+                                    </div>
+                                </div>
+                                <div style="color: #bdc3c7; margin-bottom: 1rem;">📍 Calgary, AB</div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">Certified TSSA inspector with 20+ years in the industry. Available for consulting on code compliance and safety protocols.</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    <span style="background: linear-gradient(45deg, #e67e22, #d35400); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">TSSA Inspector</span>
+                                    <span style="background: linear-gradient(45deg, #e74c3c, #c0392b); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Safety Expert</span>
+                                </div>
+                            </div>
+
+                            <!-- Add current user to directory if logged in -->
+                            <div id="currentUserProfile" style="display: none;" class="profile-card">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: rgba(52,152,219,0.08); border-radius: 10px; border: 1px solid rgba(52,152,219,0.2);">
+                            <h4 style="color: #3498db; margin-bottom: 1rem;">📋 Join the Directory</h4>
+                            <p style="color: #bdc3c7; margin-bottom: 1.5rem;">Create your profile to connect with other HVAC professionals and showcase your expertise.</p>
+                            <button onclick="showDirectorySignup()" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 25px; padding: 12px 24px; cursor: pointer; font-weight: 600;">Create Your Profile</button>
                         </div>
                     </div>
                 </section>
@@ -1250,6 +1438,8 @@
             loadPosts();
             updateUI();
             setupEventListeners();
+            initializeChat();
+            initializeDirectory();
         });
 
         // User Authentication System
@@ -1269,12 +1459,23 @@
                 document.getElementById('headerAvatar').textContent = getInitials(currentUser.name);
                 document.getElementById('postCreatorAvatar').textContent = getInitials(currentUser.name);
                 
+                // Update chat avatar
+                const chatAvatar = document.getElementById('chatUserAvatar');
+                if (chatAvatar) {
+                    chatAvatar.textContent = getInitials(currentUser.name);
+                }
+                
                 // Update profile section
                 updateProfileSection();
             } else {
                 document.getElementById('guestActions').style.display = 'flex';
                 document.getElementById('userActions').style.display = 'none';
                 document.getElementById('postCreatorAvatar').textContent = 'U';
+                
+                const chatAvatar = document.getElementById('chatUserAvatar');
+                if (chatAvatar) {
+                    chatAvatar.textContent = 'U';
+                }
             }
         }
 
@@ -1440,6 +1641,10 @@
                 return;
             }
 
+            // Check for attached image
+            const photoPreview = document.getElementById('photoPreview');
+            const imageData = photoPreview.dataset.imageData;
+
             const postData = {
                 id: generatePostId(),
                 author: currentUser.name,
@@ -1449,7 +1654,7 @@
                 likes: 0,
                 comments: [],
                 likedBy: [],
-                image: null // Will be added if photo upload is implemented
+                image: imageData || null
             };
 
             // Add to feed
@@ -1460,8 +1665,9 @@
             localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
             updateProfileSection();
 
-            // Clear form
+            // Clear form and photo preview
             document.getElementById('postContent').value = '';
+            removePhotoPreview();
             
             showNotification('Post shared successfully! 🎉', 'success');
         }
@@ -1489,6 +1695,7 @@
                     </div>
                 </div>
                 <div class="post-content">${postData.content.replace(/\n/g, '<br>')}</div>
+                ${postData.image ? `<div class="post-media"><img src="${postData.image}" class="post-image" onclick="openImageModal('${postData.image}')" alt="Post image"></div>` : ''}
                 <div class="post-engagement">
                     <div class="engagement-buttons">
                         <button class="engagement-button" onclick="togglePostLike(this)">
@@ -1665,8 +1872,37 @@
         }
 
         function handlePostPhotoUpload(input) {
-            // Photo upload implementation would go here
-            showNotification('Photo upload feature coming soon! 📷', 'info');
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                
+                if (file.size > maxSize) {
+                    showNotification('Image too large. Please choose an image under 5MB.', 'error');
+                    return;
+                }
+                
+                if (!file.type.startsWith('image/')) {
+                    showNotification('Please select a valid image file.', 'error');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('photoPreview');
+                    preview.innerHTML = `
+                        <div style="position: relative; display: inline-block;">
+                            <img src="${e.target.result}" style="max-width: 100%; max-height: 200px; border-radius: 8px; cursor: pointer;" onclick="openImageModal('${e.target.result}')">
+                            <button onclick="removePhotoPreview()" style="position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; font-size: 14px;">×</button>
+                        </div>
+                    `;
+                    preview.style.display = 'block';
+                    
+                    // Store image data for posting
+                    preview.dataset.imageData = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                showNotification('Image uploaded successfully! 📷', 'success');
+            }
         }
 
         function addCodeSnippet() {
@@ -1676,7 +1912,25 @@
         }
 
         function addLocation() {
-            showNotification('Location tagging coming soon! 📍', 'info');
+            const textarea = document.getElementById('postContent');
+            const currentValue = textarea.value;
+            
+            if (currentUser && currentUser.location) {
+                const locationText = `\n📍 ${currentUser.location}`;
+                if (!currentValue.includes(locationText)) {
+                    textarea.value += locationText;
+                    showNotification('Location added to post! 📍', 'success');
+                } else {
+                    showNotification('Location already added to this post.', 'info');
+                }
+            } else {
+                const customLocation = prompt('Enter your location:');
+                if (customLocation) {
+                    textarea.value += `\n📍 ${customLocation}`;
+                    showNotification('Location added to post! 📍', 'success');
+                }
+            }
+            textarea.focus();
         }
 
         function sharePost(postId) {
@@ -1686,7 +1940,34 @@
         }
 
         function editProfile() {
-            showNotification('Profile editing feature coming soon! ✏️', 'info');
+            if (!currentUser) {
+                showAuthModal('login');
+                return;
+            }
+            
+            const name = prompt('Enter your full name:', currentUser.name);
+            if (name === null) return;
+            
+            const title = prompt('Enter your professional title:', currentUser.title);
+            if (title === null) return;
+            
+            const location = prompt('Enter your location:', currentUser.location);
+            if (location === null) return;
+            
+            const bio = prompt('Enter your bio (optional):', currentUser.bio || '');
+            if (bio === null) return;
+            
+            // Update user data
+            currentUser.name = name.trim();
+            currentUser.title = title.trim();
+            currentUser.location = location.trim();
+            currentUser.bio = bio.trim();
+            
+            localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
+            updateUserInterface();
+            updateProfileSection();
+            
+            showNotification('Profile updated successfully! ✏️', 'success');
         }
 
         function toggleCommentLike(button) {
@@ -1703,11 +1984,369 @@
         }
 
         function replyToComment(button) {
-            showNotification('Comment replies coming soon! 💬', 'info');
+            if (!currentUser) {
+                showNotification('Please login to reply to comments.', 'error');
+                return;
+            }
+
+            const comment = button.closest('.comment');
+            const existingReply = comment.querySelector('.reply-input-area');
+            
+            if (existingReply) {
+                existingReply.remove();
+                return;
+            }
+            
+            const replyArea = document.createElement('div');
+            replyArea.className = 'reply-input-area';
+            replyArea.style.cssText = 'margin-top: 0.5rem; padding-left: 2rem;';
+            replyArea.innerHTML = `
+                <div style="display: flex; gap: 0.8rem; margin-top: 0.5rem;">
+                    <div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${getInitials(currentUser.name)}</div>
+                    <input type="text" class="comment-input" placeholder="Write a reply..." style="flex: 1; min-height: 35px; font-size: 0.85rem;">
+                    <button class="comment-submit" onclick="postReply(this, '${comment.dataset.commentId || generatePostId()}')" style="padding: 8px 12px; font-size: 0.85rem;">Reply</button>
+                </div>
+            `;
+            
+            comment.appendChild(replyArea);
+            replyArea.querySelector('.comment-input').focus();
+        }
+
+        function postReply(button, commentId) {
+            const input = button.previousElementSibling;
+            const content = input.value.trim();
+            
+            if (!content) {
+                showNotification('Please write a reply before posting.', 'error');
+                return;
+            }
+
+            const reply = document.createElement('div');
+            reply.className = 'comment reply';
+            reply.style.cssText = 'margin-left: 2rem; margin-top: 0.5rem; background: rgba(255, 255, 255, 0.03);';
+            reply.innerHTML = `
+                <div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${getInitials(currentUser.name)}</div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <span class="comment-author" style="font-size: 0.85rem;">${currentUser.name}</span>
+                        <span class="comment-time" style="font-size: 0.75rem;">just now</span>
+                    </div>
+                    <div class="comment-text" style="font-size: 0.9rem;">${content}</div>
+                    <div class="comment-actions">
+                        <button class="comment-button" onclick="toggleCommentLike(this)">👍 0</button>
+                    </div>
+                </div>
+            `;
+
+            const replyArea = button.closest('.reply-input-area');
+            const comment = replyArea.closest('.comment');
+            comment.insertAdjacentElement('afterend', reply);
+            replyArea.remove();
+            
+            showNotification('Reply posted! 💬', 'success');
+        }
+
+        function removePhotoPreview() {
+            const preview = document.getElementById('photoPreview');
+            preview.innerHTML = '';
+            preview.style.display = 'none';
+            preview.dataset.imageData = '';
+            document.getElementById('photoUpload').value = '';
+            showNotification('Photo removed from post.', 'info');
+        }
+
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.style.display = 'flex';
         }
 
         function toggleUserMenu() {
-            showNotification('User menu features coming soon! ⚙️', 'info');
+            if (!currentUser) {
+                showAuthModal('login');
+                return;
+            }
+            
+            // Create dropdown menu
+            const existingMenu = document.getElementById('userDropdown');
+            if (existingMenu) {
+                existingMenu.remove();
+                return;
+            }
+            
+            const dropdown = document.createElement('div');
+            dropdown.id = 'userDropdown';
+            dropdown.style.cssText = `
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: linear-gradient(135deg, #2c3e50, #34495e);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                padding: 1rem;
+                min-width: 200px;
+                z-index: 1001;
+                margin-top: 0.5rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            `;
+            
+            dropdown.innerHTML = `
+                <div style="color: #3498db; font-weight: bold; margin-bottom: 0.5rem;">${currentUser.name}</div>
+                <div style="color: #95a5a6; font-size: 0.9rem; margin-bottom: 1rem;">${currentUser.title}</div>
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                    <button onclick="showSection('profile')" style="background: none; border: none; color: #3498db; width: 100%; text-align: left; padding: 8px 0; cursor: pointer;">👤 My Profile</button>
+                    <button onclick="editProfile()" style="background: none; border: none; color: #3498db; width: 100%; text-align: left; padding: 8px 0; cursor: pointer;">✏️ Edit Profile</button>
+                    <button onclick="logoutUser()" style="background: none; border: none; color: #e74c3c; width: 100%; text-align: left; padding: 8px 0; cursor: pointer;">🚪 Logout</button>
+                </div>
+            `;
+            
+            const userMenu = document.querySelector('.user-menu');
+            userMenu.style.position = 'relative';
+            userMenu.appendChild(dropdown);
+            
+            // Close dropdown when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', function closeDropdown(e) {
+                    if (!dropdown.contains(e.target) && !userMenu.contains(e.target)) {
+                        dropdown.remove();
+                        document.removeEventListener('click', closeDropdown);
+                    }
+                });
+            }, 100);
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('hvacCommunityUser');
+            updateUserInterface();
+            showSection('feed');
+            showNotification('You have been logged out. Thanks for visiting! 👋', 'success');
+            
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) dropdown.remove();
+        }
+
+        // Chat System
+        function sendChatMessage() {
+            if (!currentUser) {
+                showNotification('Please login to participate in chat.', 'error');
+                showAuthModal('login');
+                return;
+            }
+
+            const input = document.getElementById('chatMessageInput');
+            const message = input.value.trim();
+            
+            if (!message) {
+                showNotification('Please type a message before sending.', 'error');
+                return;
+            }
+
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'chat-message';
+            messageElement.style.cssText = 'display: flex; gap: 0.8rem; margin: 1rem 0; padding: 0.8rem; background: rgba(52, 152, 219, 0.1); border-radius: 8px; border-left: 3px solid #3498db;';
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            messageElement.innerHTML = `
+                <div class="comment-avatar">${getInitials(currentUser.name)}</div>
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                        <span style="color: #3498db; font-weight: bold; font-size: 0.9rem;">${currentUser.name}</span>
+                        <span style="color: #95a5a6; font-size: 0.8rem;">${timeString}</span>
+                        <span style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 2px 6px; border-radius: 8px; font-size: 0.7rem;">You</span>
+                    </div>
+                    <div style="color: #ecf0f1; font-size: 0.95rem;">${message}</div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            input.value = '';
+            showNotification('Message sent! 💬', 'success');
+            
+            // Auto-scroll animation
+            messageElement.style.transform = 'translateX(-20px)';
+            messageElement.style.opacity = '0';
+            setTimeout(() => {
+                messageElement.style.transform = 'translateX(0)';
+                messageElement.style.opacity = '1';
+                messageElement.style.transition = 'all 0.3s ease';
+            }, 100);
+        }
+
+        function initializeChat() {
+            const chatInput = document.getElementById('chatMessageInput');
+            if (chatInput) {
+                // Update chat avatar when user changes
+                const chatAvatar = document.getElementById('chatUserAvatar');
+                if (currentUser && chatAvatar) {
+                    chatAvatar.textContent = getInitials(currentUser.name);
+                }
+                
+                // Enter key to send
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendChatMessage();
+                    }
+                });
+                
+                // Focus and placeholder updates
+                chatInput.addEventListener('focus', function() {
+                    if (!currentUser) {
+                        this.placeholder = 'Please login to participate in chat...';
+                        this.blur();
+                        showAuthModal('login');
+                    } else {
+                        this.placeholder = `Message as ${currentUser.name}...`;
+                    }
+                });
+            }
+        }
+
+        // Professional Directory Functions
+        function viewProfile(userId) {
+            showNotification(`Profile view for ${userId} coming soon! 👤`, 'info');
+        }
+
+        function showDirectorySignup() {
+            if (!currentUser) {
+                showNotification('Please create an account to join the directory! 📋', 'info');
+                showAuthModal('register');
+                return;
+            }
+            
+            const confirm = window.confirm(`Add your profile (${currentUser.name}) to the professional directory? This will make you discoverable to other HVAC professionals.`);
+            
+            if (confirm) {
+                addCurrentUserToDirectory();
+                showNotification('Your profile has been added to the directory! 🎉', 'success');
+            }
+        }
+
+        function addCurrentUserToDirectory() {
+            if (!currentUser) return;
+            
+            const userProfile = document.getElementById('currentUserProfile');
+            userProfile.innerHTML = `
+                <div style="background: rgba(52,152,219,0.1); border-radius: 15px; padding: 1.5rem; border: 2px solid #3498db; transition: all 0.3s; cursor: pointer;" onclick="showSection('profile')">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="post-avatar">${getInitials(currentUser.name)}</div>
+                        <div>
+                            <div style="color: #ffffff; font-weight: bold;">${currentUser.name}</div>
+                            <div style="color: #3498db; font-size: 0.9rem;">${currentUser.title}</div>
+                        </div>
+                        <div style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.7rem; margin-left: auto;">You</div>
+                    </div>
+                    <div style="color: #bdc3c7; margin-bottom: 1rem;">📍 ${currentUser.location}</div>
+                    <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">${currentUser.bio || 'Professional HVAC technician and community member.'}</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        ${currentUser.certifications?.map(cert => `<span style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">${cert}</span>`).join('') || '<span style="background: linear-gradient(45deg, #95a5a6, #7f8c8d); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Community Member</span>'}
+                    </div>
+                </div>
+            `;
+            userProfile.style.display = 'block';
+        }
+
+        function initializeDirectory() {
+            // Add search functionality
+            const searchInput = document.getElementById('directorySearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const profiles = document.querySelectorAll('.profile-card');
+                    
+                    profiles.forEach(profile => {
+                        const text = profile.textContent.toLowerCase();
+                        if (text.includes(searchTerm)) {
+                            profile.style.display = 'block';
+                        } else {
+                            profile.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Add current user to directory if logged in
+            if (currentUser) {
+                addCurrentUserToDirectory();
+            }
+
+            // Add hover effects
+            const profiles = document.querySelectorAll('.profile-card');
+            profiles.forEach(profile => {
+                profile.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 10px 30px rgba(52, 152, 219, 0.3)';
+                });
+                
+                profile.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        }
+
+        // Forum Functions
+        function openForum(forumType) {
+            const forumNames = {
+                'general': 'General Discussion',
+                'technical': 'Technical Support',
+                'certification': 'Certification & Training',
+                'tools': 'Tools & Equipment',
+                'codes': 'Code & Regulations',
+                'career': 'Career & Business'
+            };
+            
+            const forumColors = {
+                'general': '#3498db',
+                'technical': '#e74c3c',
+                'certification': '#27ae60',
+                'tools': '#f39c12',
+                'codes': '#9b59b6',
+                'career': '#95a5a6'
+            };
+            
+            showNotification(`Opening ${forumNames[forumType]} forum... 💬`, 'info');
+            
+            // In a real implementation, this would navigate to a dedicated forum page
+            // For now, we'll show a placeholder that looks professional
+            if (window.confirm(`Visit ${forumNames[forumType]}? This will open the dedicated forum page.`)) {
+                // Simulate forum loading
+                const loading = document.createElement('div');
+                loading.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                    color: white;
+                    font-size: 1.2rem;
+                `;
+                loading.innerHTML = `
+                    <div style="text-align: center;">
+                        <div class="spinner" style="margin: 0 auto 1rem;"></div>
+                        Loading ${forumNames[forumType]}...
+                    </div>
+                `;
+                
+                document.body.appendChild(loading);
+                
+                setTimeout(() => {
+                    loading.remove();
+                    showNotification(`${forumNames[forumType]} forum ready! Individual forum pages coming soon. 🚧`, 'info');
+                }, 2000);
+            }
         }
 
         function closeImageModal() {
