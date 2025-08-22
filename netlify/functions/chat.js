@@ -1508,16 +1508,3 @@ function trackSession(sessionId, mode) {
   session.messageCount++;
   session.lastActivity = Date.now();
 }
-
-  } catch (error) {
-    console.error('Chat handler error:', error);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({
-        error: 'Internal server error',
-        message: error.message
-      })
-    };
-  }
-};
