@@ -912,6 +912,20 @@
                         <span class="nav-icon">👥</span>
                         <span>Professional Directory</span>
                     </a>
+                    <a href="#" class="nav-item" onclick="showSection('friends')" data-section="friends">
+                        <span class="nav-icon">🤝</span>
+                        <span>Friends & Contacts</span>
+                        <span id="friendRequestBadge" style="background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; margin-left: auto; display: none;">0</span>
+                    </a>
+                    <a href="#" class="nav-item" onclick="showSection('messages')" data-section="messages">
+                        <span class="nav-icon">💌</span>
+                        <span>Messages</span>
+                        <span id="messagesBadge" style="background: #3498db; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; margin-left: auto; display: none;">0</span>
+                    </a>
+                    <a href="#" class="nav-item" onclick="showSection('groups')" data-section="groups">
+                        <span class="nav-icon">🌐</span>
+                        <span>Groups</span>
+                    </a>
                     <a href="#" class="nav-item" onclick="showSection('profile')" data-section="profile">
                         <span class="nav-icon">👤</span>
                         <span>My Profile</span>
@@ -1219,51 +1233,63 @@
                         
                         <div id="directoryProfiles" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
                             <!-- Sample profiles for demo -->
-                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; cursor: pointer;" onclick="viewProfile('mike-rodriguez')">
+                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s;">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                                     <div class="post-avatar" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">MR</div>
-                                    <div>
+                                    <div style="flex: 1;">
                                         <div style="color: #ffffff; font-weight: bold;">Mike Rodriguez</div>
                                         <div style="color: #27ae60; font-size: 0.9rem;">G2 Certified Technician</div>
                                     </div>
                                 </div>
                                 <div style="color: #bdc3c7; margin-bottom: 1rem;">📍 Toronto, ON</div>
                                 <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">15+ years experience in residential and commercial HVAC systems. Specializing in heat pump installations and energy efficiency upgrades.</div>
-                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                                     <span style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">G2 Certified</span>
                                     <span style="background: linear-gradient(45deg, #f39c12, #e67e22); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Heat Pump Specialist</span>
                                 </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button onclick="sendFriendRequest('mike-rodriguez')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; flex: 1; font-size: 0.9rem;">Add Friend</button>
+                                    <button onclick="viewProfile('mike-rodriguez')" style="background: rgba(255,255,255,0.1); color: #bdc3c7; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 8px 16px; cursor: pointer; font-size: 0.9rem;">View Profile</button>
+                                </div>
                             </div>
 
-                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; cursor: pointer;" onclick="viewProfile('sarah-kim')">
+                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s;">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                                     <div class="post-avatar" style="background: linear-gradient(45deg, #3498db, #2980b9);">SK</div>
-                                    <div>
+                                    <div style="flex: 1;">
                                         <div style="color: #ffffff; font-weight: bold;">Sarah Kim</div>
                                         <div style="color: #3498db; font-size: 0.9rem;">HVAC Engineering Student</div>
                                     </div>
                                 </div>
                                 <div style="color: #bdc3c7; margin-bottom: 1rem;">📍 Vancouver, BC</div>
                                 <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">Final year HVAC engineering student looking to connect with industry professionals and learn about the latest technologies in the field.</div>
-                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                                     <span style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Student</span>
                                     <span style="background: linear-gradient(45deg, #9b59b6, #8e44ad); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Looking to Learn</span>
                                 </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button onclick="sendFriendRequest('sarah-kim')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; flex: 1; font-size: 0.9rem;">Add Friend</button>
+                                    <button onclick="viewProfile('sarah-kim')" style="background: rgba(255,255,255,0.1); color: #bdc3c7; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 8px 16px; cursor: pointer; font-size: 0.9rem;">View Profile</button>
+                                </div>
                             </div>
 
-                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; cursor: pointer;" onclick="viewProfile('tom-wilson')">
+                            <div class="profile-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s;">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                                     <div class="post-avatar" style="background: linear-gradient(45deg, #e67e22, #d35400);">TW</div>
-                                    <div>
+                                    <div style="flex: 1;">
                                         <div style="color: #ffffff; font-weight: bold;">Tom Wilson</div>
                                         <div style="color: #e67e22; font-size: 0.9rem;">TSSA Inspector</div>
                                     </div>
                                 </div>
                                 <div style="color: #bdc3c7; margin-bottom: 1rem;">📍 Calgary, AB</div>
                                 <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">Certified TSSA inspector with 20+ years in the industry. Available for consulting on code compliance and safety protocols.</div>
-                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                                     <span style="background: linear-gradient(45deg, #e67e22, #d35400); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">TSSA Inspector</span>
                                     <span style="background: linear-gradient(45deg, #e74c3c, #c0392b); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Safety Expert</span>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button onclick="sendFriendRequest('tom-wilson')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; flex: 1; font-size: 0.9rem;">Add Friend</button>
+                                    <button onclick="viewProfile('tom-wilson')" style="background: rgba(255,255,255,0.1); color: #bdc3c7; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 8px 16px; cursor: pointer; font-size: 0.9rem;">View Profile</button>
                                 </div>
                             </div>
 
@@ -1277,6 +1303,189 @@
                             <h4 style="color: #3498db; margin-bottom: 1rem;">📋 Join the Directory</h4>
                             <p style="color: #bdc3c7; margin-bottom: 1.5rem;">Create your profile to connect with other HVAC professionals and showcase your expertise.</p>
                             <button onclick="showDirectorySignup()" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 25px; padding: 12px 24px; cursor: pointer; font-weight: 600;">Create Your Profile</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Friends & Contacts Section -->
+                <section id="section-friends" class="content-section">
+                    <div class="content-header">
+                        <h2 style="color: #ffffff; font-size: 1.5rem;">🤝 Friends & Contacts</h2>
+                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Manage your professional network</p>
+                    </div>
+                    <div class="content-body">
+                        <!-- Friends Navigation Tabs -->
+                        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+                            <button id="friendsTab" class="tab-button active" onclick="showFriendsTab('friends')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; transition: all 0.3s;">My Friends</button>
+                            <button id="requestsTab" class="tab-button" onclick="showFriendsTab('requests')" style="background: rgba(255,255,255,0.1); color: #bdc3c7; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; transition: all 0.3s;">Friend Requests</button>
+                            <button id="suggestionsTab" class="tab-button" onclick="showFriendsTab('suggestions')" style="background: rgba(255,255,255,0.1); color: #bdc3c7; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; transition: all 0.3s;">Suggestions</button>
+                        </div>
+
+                        <!-- My Friends Tab -->
+                        <div id="friends-tab" class="friends-content active">
+                            <div style="margin-bottom: 1rem;">
+                                <input type="text" id="friendsSearch" placeholder="Search your friends..." style="width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 25px; padding: 12px 20px; color: white; font-size: 1rem;">
+                            </div>
+                            <div id="friendsList">
+                                <div style="text-align: center; padding: 3rem; color: #95a5a6;">
+                                    <h3>No friends yet!</h3>
+                                    <p>Start connecting with HVAC professionals by sending friend requests.</p>
+                                    <button onclick="showSection('directory')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 25px; padding: 12px 24px; cursor: pointer; margin-top: 1rem;">Browse Directory</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Friend Requests Tab -->
+                        <div id="requests-tab" class="friends-content" style="display: none;">
+                            <div id="friendRequests">
+                                <div style="text-align: center; padding: 3rem; color: #95a5a6;">
+                                    <h3>No friend requests</h3>
+                                    <p>When someone sends you a friend request, it will appear here.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Suggestions Tab -->
+                        <div id="suggestions-tab" class="friends-content" style="display: none;">
+                            <div id="friendSuggestions">
+                                <!-- Sample suggestions -->
+                                <div class="suggestion-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <div class="post-avatar" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">MR</div>
+                                        <div style="flex: 1;">
+                                            <div style="color: #ffffff; font-weight: bold;">Mike Rodriguez</div>
+                                            <div style="color: #27ae60; font-size: 0.9rem;">G2 Certified Technician • Toronto, ON</div>
+                                            <div style="color: #95a5a6; font-size: 0.8rem;">2 mutual connections</div>
+                                        </div>
+                                        <button onclick="sendFriendRequest('mike-rodriguez')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer;">Add Friend</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Messages Section -->
+                <section id="section-messages" class="content-section">
+                    <div class="content-header">
+                        <h2 style="color: #ffffff; font-size: 1.5rem;">💌 Messages</h2>
+                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Private conversations with your network</p>
+                    </div>
+                    <div class="content-body">
+                        <div style="display: grid; grid-template-columns: 300px 1fr; gap: 1rem; height: 500px;">
+                            <!-- Conversations List -->
+                            <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 1rem; border: 1px solid rgba(255,255,255,0.1); overflow-y: auto;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <h4 style="color: #3498db;">Conversations</h4>
+                                    <button onclick="startNewConversation()" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 0.9rem;">+</button>
+                                </div>
+                                <div id="conversationsList">
+                                    <div style="text-align: center; padding: 2rem; color: #95a5a6;">
+                                        <p>No conversations yet.</p>
+                                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Start chatting with your friends!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Message Area -->
+                            <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 1rem; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column;">
+                                <div id="messageHeader" style="padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem; display: none;">
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <div class="comment-avatar">U</div>
+                                        <div>
+                                            <div style="color: #ffffff; font-weight: bold;">Select a conversation</div>
+                                            <div style="color: #95a5a6; font-size: 0.9rem;">Choose someone to message</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="messagesArea" style="flex: 1; overflow-y: auto; margin-bottom: 1rem;">
+                                    <div style="text-align: center; padding: 3rem; color: #95a5a6;">
+                                        <h3>💌 Welcome to Messages</h3>
+                                        <p>Select a conversation to start chatting, or start a new one with your friends.</p>
+                                    </div>
+                                </div>
+                                
+                                <div id="messageInput" style="display: none;">
+                                    <div style="display: flex; gap: 0.8rem;">
+                                        <input type="text" id="privateMessageInput" placeholder="Type a message..." style="flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 10px 15px; color: white;">
+                                        <button onclick="sendPrivateMessage()" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 10px 20px; cursor: pointer;">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Groups Section -->
+                <section id="section-groups" class="content-section">
+                    <div class="content-header">
+                        <h2 style="color: #ffffff; font-size: 1.5rem;">🌐 Groups</h2>
+                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Join and create professional groups</p>
+                    </div>
+                    <div class="content-body">
+                        <!-- Groups Navigation -->
+                        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+                            <button id="myGroupsTab" class="tab-button active" onclick="showGroupsTab('mygroups')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer;">My Groups</button>
+                            <button id="discoverTab" class="tab-button" onclick="showGroupsTab('discover')" style="background: rgba(255,255,255,0.1); color: #bdc3c7; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer;">Discover</button>
+                            <button onclick="createNewGroup()" style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer;">+ Create Group</button>
+                        </div>
+
+                        <!-- My Groups Tab -->
+                        <div id="mygroups-tab" class="groups-content active">
+                            <div id="myGroupsList">
+                                <div style="text-align: center; padding: 3rem; color: #95a5a6;">
+                                    <h3>No groups yet!</h3>
+                                    <p>Join professional groups to connect with like-minded HVAC professionals.</p>
+                                    <button onclick="showGroupsTab('discover')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 25px; padding: 12px 24px; cursor: pointer; margin-top: 1rem;">Discover Groups</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Discover Groups Tab -->
+                        <div id="discover-tab" class="groups-content" style="display: none;">
+                            <div style="margin-bottom: 1rem;">
+                                <input type="text" id="groupsSearch" placeholder="Search groups..." style="width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 25px; padding: 12px 20px; color: white; font-size: 1rem;">
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                                <!-- Sample Groups -->
+                                <div class="group-card" style="background: rgba(52,152,219,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(52,152,219,0.2); transition: all 0.3s;">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                        <div style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔧</div>
+                                        <div>
+                                            <h4 style="color: #3498db; margin-bottom: 0.3rem;">HVAC Troubleshooting Masters</h4>
+                                            <div style="color: #95a5a6; font-size: 0.9rem;">1,234 members • Public</div>
+                                        </div>
+                                    </div>
+                                    <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">Share troubleshooting tips, complex repair solutions, and learn from experienced technicians.</div>
+                                    <button onclick="joinGroup('hvac-troubleshooting')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; width: 100%;">Join Group</button>
+                                </div>
+
+                                <div class="group-card" style="background: rgba(39,174,96,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(39,174,96,0.2); transition: all 0.3s;">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                        <div style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎓</div>
+                                        <div>
+                                            <h4 style="color: #27ae60; margin-bottom: 0.3rem;">G2 Exam Study Group</h4>
+                                            <div style="color: #95a5a6; font-size: 0.9rem;">456 members • Public</div>
+                                        </div>
+                                    </div>
+                                    <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">Study together, share resources, and support each other through G2 certification.</div>
+                                    <button onclick="joinGroup('g2-study-group')" style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; width: 100%;">Join Group</button>
+                                </div>
+
+                                <div class="group-card" style="background: rgba(243,156,18,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(243,156,18,0.2); transition: all 0.3s;">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                        <div style="background: linear-gradient(45deg, #f39c12, #e67e22); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💼</div>
+                                        <div>
+                                            <h4 style="color: #f39c12; margin-bottom: 0.3rem;">HVAC Business Owners</h4>
+                                            <div style="color: #95a5a6; font-size: 0.9rem;">189 members • Private</div>
+                                        </div>
+                                    </div>
+                                    <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">Network with fellow business owners, share business strategies and industry insights.</div>
+                                    <button onclick="requestGroupAccess('business-owners')" style="background: linear-gradient(45deg, #f39c12, #e67e22); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; width: 100%;">Request Access</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1431,6 +1640,12 @@
         let posts = [];
         let comments = {};
         let authMode = 'register'; // 'login' or 'register'
+        let friendsList = [];
+        let friendRequests = [];
+        let conversations = {};
+        let userGroups = [];
+        let allGroups = [];
+        let currentConversation = null;
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
@@ -1440,6 +1655,7 @@
             setupEventListeners();
             initializeChat();
             initializeDirectory();
+            initializeMessaging();
         });
 
         // User Authentication System
@@ -1448,6 +1664,64 @@
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
                 updateUserInterface();
+            }
+            
+            // Load saved groups
+            const savedGroups = localStorage.getItem('hvacCommunityGroups');
+            if (savedGroups) {
+                allGroups = JSON.parse(savedGroups);
+            }
+            
+            // Initialize default groups if none exist
+            if (!allGroups || allGroups.length === 0) {
+                allGroups = [
+                    {
+                        id: 'hvac-troubleshooting',
+                        name: 'HVAC Troubleshooting Masters',
+                        description: 'Share troubleshooting tips, complex repair solutions, and learn from experienced technicians.',
+                        isPrivate: false,
+                        memberCount: 1234,
+                        members: [],
+                        createdBy: 'system',
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'g2-study-group',
+                        name: 'G2 Exam Study Group',
+                        description: 'Study together, share resources, and support each other through G2 certification.',
+                        isPrivate: false,
+                        memberCount: 456,
+                        members: [],
+                        createdBy: 'system',
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'business-owners',
+                        name: 'HVAC Business Owners',
+                        description: 'Network with fellow business owners, share business strategies and industry insights.',
+                        isPrivate: true,
+                        memberCount: 189,
+                        members: [],
+                        createdBy: 'system',
+                        createdAt: new Date().toISOString()
+                    }
+                ];
+                localStorage.setItem('hvacCommunityGroups', JSON.stringify(allGroups));
+            }
+            
+            // Initialize demo friend requests for testing
+            if (currentUser && friendRequests.length === 0) {
+                // Create a demo friend request to the current user
+                friendRequests.push({
+                    id: 'demo-request-1',
+                    from: 'mike-rodriguez',
+                    fromName: 'Mike Rodriguez',
+                    to: currentUser.id,
+                    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+                    status: 'pending'
+                });
+                
+                updateFriendRequestsBadge();
             }
         }
 
@@ -1467,6 +1741,10 @@
                 
                 // Update profile section
                 updateProfileSection();
+                
+                // Update badges
+                updateFriendRequestsBadge();
+                updateMessagesBadge();
             } else {
                 document.getElementById('guestActions').style.display = 'flex';
                 document.getElementById('userActions').style.display = 'none';
@@ -1476,6 +1754,30 @@
                 if (chatAvatar) {
                     chatAvatar.textContent = 'U';
                 }
+                
+                // Hide badges when logged out
+                document.getElementById('friendRequestBadge').style.display = 'none';
+                document.getElementById('messagesBadge').style.display = 'none';
+            }
+        }
+
+        function updateMessagesBadge() {
+            const badge = document.getElementById('messagesBadge');
+            let unreadCount = 0;
+            
+            // Count unread messages (in real app, this would track read status)
+            // For demo, we'll just count total conversations
+            if (currentUser && Object.keys(conversations).length > 0) {
+                const userConversations = Object.values(conversations)
+                    .filter(conv => conv.participants.includes(currentUser.id));
+                unreadCount = userConversations.length;
+            }
+            
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
             }
         }
 
@@ -2292,6 +2594,19 @@
             });
         }
 
+        function initializeMessaging() {
+            // Add enter key listener for private messages
+            const privateMessageInput = document.getElementById('privateMessageInput');
+            if (privateMessageInput) {
+                privateMessageInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendPrivateMessage();
+                    }
+                });
+            }
+        }
+
         // Forum Functions
         function openForum(forumType) {
             const forumNames = {
@@ -2351,6 +2666,677 @@
 
         function closeImageModal() {
             document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // ============================================
+        // FRIENDS & CONTACTS SYSTEM
+        // ============================================
+
+        function showFriendsTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('#section-friends .tab-button').forEach(btn => {
+                btn.style.background = 'rgba(255,255,255,0.1)';
+                btn.style.color = '#bdc3c7';
+            });
+            
+            document.getElementById(tab + 'Tab').style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
+            document.getElementById(tab + 'Tab').style.color = 'white';
+
+            // Show/hide content
+            document.querySelectorAll('.friends-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            document.getElementById(tab + '-tab').style.display = 'block';
+            
+            // Load specific content
+            if (tab === 'friends') {
+                loadFriendsList();
+            } else if (tab === 'requests') {
+                loadFriendRequests();
+            } else if (tab === 'suggestions') {
+                loadFriendSuggestions();
+            }
+        }
+
+        function sendFriendRequest(userId) {
+            if (!currentUser) {
+                showNotification('Please login to send friend requests.', 'error');
+                showAuthModal('login');
+                return;
+            }
+
+            // Check if already friends or request pending
+            if (friendsList.some(f => f.id === userId)) {
+                showNotification('You are already friends with this person.', 'info');
+                return;
+            }
+
+            if (friendRequests.some(r => r.to === userId && r.from === currentUser.id)) {
+                showNotification('Friend request already sent.', 'info');
+                return;
+            }
+
+            // Add to friend requests (simulate sending)
+            const request = {
+                id: generatePostId(),
+                from: currentUser.id,
+                fromName: currentUser.name,
+                to: userId,
+                timestamp: new Date().toISOString(),
+                status: 'pending'
+            };
+
+            // In a real app, this would be sent to server
+            // For demo, we'll add it to the target user's requests
+            friendRequests.push(request);
+            
+            // Update button
+            const button = event.target;
+            button.textContent = 'Request Sent';
+            button.style.background = 'linear-gradient(45deg, #95a5a6, #7f8c8d)';
+            button.disabled = true;
+
+            showNotification('Friend request sent! 🤝', 'success');
+        }
+
+        function loadFriendsList() {
+            const friendsList = document.getElementById('friendsList');
+            
+            if (currentUser && currentUser.friends && currentUser.friends.length > 0) {
+                // Display friends if user has any
+                friendsList.innerHTML = currentUser.friends.map(friend => `
+                    <div class="friend-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="post-avatar">${getInitials(friend.name)}</div>
+                            <div style="flex: 1;">
+                                <div style="color: #ffffff; font-weight: bold;">${friend.name}</div>
+                                <div style="color: #95a5a6; font-size: 0.9rem;">${friend.title} • ${friend.location}</div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button onclick="startPrivateMessage('${friend.id}')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 12px; cursor: pointer; font-size: 0.8rem;">Message</button>
+                                <button onclick="removeFriend('${friend.id}')" style="background: rgba(231,76,60,0.2); color: #e74c3c; border: 1px solid #e74c3c; border-radius: 20px; padding: 8px 12px; cursor: pointer; font-size: 0.8rem;">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                friendsList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #95a5a6;">
+                        <h3>No friends yet!</h3>
+                        <p>Start connecting with HVAC professionals by sending friend requests.</p>
+                        <button onclick="showSection('directory')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 25px; padding: 12px 24px; cursor: pointer; margin-top: 1rem;">Browse Directory</button>
+                    </div>
+                `;
+            }
+        }
+
+        function loadFriendRequests() {
+            const requestsContainer = document.getElementById('friendRequests');
+            
+            // Filter requests for current user
+            const incomingRequests = friendRequests.filter(r => r.to === currentUser?.id && r.status === 'pending');
+            
+            if (incomingRequests.length > 0) {
+                requestsContainer.innerHTML = incomingRequests.map(request => `
+                    <div class="request-card" style="background: rgba(52,152,219,0.1); border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(52,152,219,0.2);">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="post-avatar">${getInitials(request.fromName)}</div>
+                            <div style="flex: 1;">
+                                <div style="color: #ffffff; font-weight: bold;">${request.fromName}</div>
+                                <div style="color: #95a5a6; font-size: 0.9rem;">wants to be friends</div>
+                                <div style="color: #7f8c8d; font-size: 0.8rem;">${getTimeAgo(request.timestamp)}</div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button onclick="acceptFriendRequest('${request.id}')" style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer;">Accept</button>
+                                <button onclick="declineFriendRequest('${request.id}')" style="background: rgba(231,76,60,0.2); color: #e74c3c; border: 1px solid #e74c3c; border-radius: 20px; padding: 8px 16px; cursor: pointer;">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                requestsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #95a5a6;">
+                        <h3>No friend requests</h3>
+                        <p>When someone sends you a friend request, it will appear here.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function acceptFriendRequest(requestId) {
+            const request = friendRequests.find(r => r.id === requestId);
+            if (!request) return;
+
+            // Add to friends list
+            if (!currentUser.friends) currentUser.friends = [];
+            currentUser.friends.push({
+                id: request.from,
+                name: request.fromName,
+                title: 'HVAC Professional', // Would be loaded from user profile
+                location: 'Ontario, Canada' // Would be loaded from user profile
+            });
+
+            // Update request status
+            request.status = 'accepted';
+
+            // Save to localStorage
+            localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
+
+            showNotification(`You are now friends with ${request.fromName}! 🎉`, 'success');
+            
+            // Refresh the requests view
+            loadFriendRequests();
+            updateFriendRequestsBadge();
+        }
+
+        function declineFriendRequest(requestId) {
+            const request = friendRequests.find(r => r.id === requestId);
+            if (!request) return;
+
+            request.status = 'declined';
+            
+            showNotification('Friend request declined.', 'info');
+            loadFriendRequests();
+            updateFriendRequestsBadge();
+        }
+
+        function removeFriend(friendId) {
+            if (!currentUser.friends) return;
+            
+            const friend = currentUser.friends.find(f => f.id === friendId);
+            if (!friend) return;
+            
+            if (confirm(`Remove ${friend.name} from your friends list?`)) {
+                currentUser.friends = currentUser.friends.filter(f => f.id !== friendId);
+                localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
+                
+                showNotification(`${friend.name} removed from friends.`, 'info');
+                loadFriendsList();
+            }
+        }
+
+        function loadFriendSuggestions() {
+            // This would typically come from server based on mutual connections, location, etc.
+            // For demo, we'll show the existing sample
+        }
+
+        function updateFriendRequestsBadge() {
+            const badge = document.getElementById('friendRequestBadge');
+            const pendingRequests = friendRequests.filter(r => r.to === currentUser?.id && r.status === 'pending').length;
+            
+            if (pendingRequests > 0) {
+                badge.textContent = pendingRequests;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // ============================================
+        // PRIVATE MESSAGING SYSTEM
+        // ============================================
+
+        function startNewConversation() {
+            if (!currentUser) {
+                showNotification('Please login to send messages.', 'error');
+                showAuthModal('login');
+                return;
+            }
+
+            if (!currentUser.friends || currentUser.friends.length === 0) {
+                showNotification('Add some friends first to start conversations! 🤝', 'info');
+                showSection('friends');
+                return;
+            }
+
+            // Show friend selection modal
+            const friendOptions = currentUser.friends.map(friend => 
+                `<option value="${friend.id}">${friend.name}</option>`
+            ).join('');
+
+            const selectedFriend = prompt('Enter the name of the friend you want to message:');
+            if (selectedFriend) {
+                const friend = currentUser.friends.find(f => f.name.toLowerCase().includes(selectedFriend.toLowerCase()));
+                if (friend) {
+                    startPrivateMessage(friend.id);
+                } else {
+                    showNotification('Friend not found. Please check the name and try again.', 'error');
+                }
+            }
+        }
+
+        function startPrivateMessage(friendId) {
+            if (!currentUser) {
+                showNotification('Please login to send messages.', 'error');
+                return;
+            }
+
+            const friend = currentUser.friends?.find(f => f.id === friendId);
+            if (!friend) {
+                showNotification('Friend not found.', 'error');
+                return;
+            }
+
+            // Create or load conversation
+            const conversationId = [currentUser.id, friendId].sort().join('-');
+            if (!conversations[conversationId]) {
+                conversations[conversationId] = {
+                    id: conversationId,
+                    participants: [currentUser.id, friendId],
+                    messages: [],
+                    lastActivity: new Date().toISOString()
+                };
+            }
+
+            currentConversation = conversationId;
+
+            // Update UI
+            showSection('messages');
+            loadConversationsList();
+            loadMessages(conversationId);
+            
+            // Update message header
+            const messageHeader = document.getElementById('messageHeader');
+            messageHeader.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="comment-avatar">${getInitials(friend.name)}</div>
+                    <div>
+                        <div style="color: #ffffff; font-weight: bold;">${friend.name}</div>
+                        <div style="color: #95a5a6; font-size: 0.9rem;">${friend.title}</div>
+                    </div>
+                </div>
+            `;
+            messageHeader.style.display = 'block';
+            document.getElementById('messageInput').style.display = 'block';
+        }
+
+        function loadConversationsList() {
+            const conversationsList = document.getElementById('conversationsList');
+            
+            if (Object.keys(conversations).length > 0) {
+                const userConversations = Object.values(conversations)
+                    .filter(conv => conv.participants.includes(currentUser.id))
+                    .sort((a, b) => new Date(b.lastActivity) - new Date(a.lastActivity));
+
+                conversationsList.innerHTML = userConversations.map(conv => {
+                    const otherId = conv.participants.find(p => p !== currentUser.id);
+                    const otherUser = currentUser.friends?.find(f => f.id === otherId);
+                    const lastMessage = conv.messages[conv.messages.length - 1];
+                    
+                    return `
+                        <div class="conversation-item ${currentConversation === conv.id ? 'active' : ''}" 
+                             onclick="loadMessages('${conv.id}')" 
+                             style="padding: 0.8rem; border-radius: 8px; cursor: pointer; margin-bottom: 0.5rem; ${currentConversation === conv.id ? 'background: rgba(52,152,219,0.2);' : 'background: rgba(255,255,255,0.03);'} transition: all 0.3s;">
+                            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                                <div class="comment-avatar" style="width: 35px; height: 35px; font-size: 0.8rem;">${getInitials(otherUser?.name || 'Unknown')}</div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 0.9rem;">${otherUser?.name || 'Unknown'}</div>
+                                    <div style="color: #95a5a6; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        ${lastMessage ? lastMessage.content : 'No messages yet'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                conversationsList.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #95a5a6;">
+                        <p>No conversations yet.</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Start chatting with your friends!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function loadMessages(conversationId) {
+            currentConversation = conversationId;
+            const conversation = conversations[conversationId];
+            if (!conversation) return;
+
+            const messagesArea = document.getElementById('messagesArea');
+            
+            if (conversation.messages.length > 0) {
+                messagesArea.innerHTML = conversation.messages.map(message => `
+                    <div style="display: flex; gap: 0.8rem; margin: 1rem 0; ${message.senderId === currentUser.id ? 'justify-content: flex-end;' : ''}">
+                        ${message.senderId !== currentUser.id ? `<div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${getInitials(message.senderName)}</div>` : ''}
+                        <div style="max-width: 70%; padding: 0.8rem; border-radius: 15px; ${message.senderId === currentUser.id ? 'background: linear-gradient(45deg, #3498db, #2980b9); color: white;' : 'background: rgba(255,255,255,0.1); color: #ecf0f1;'}">
+                            <div style="font-size: 0.95rem; margin-bottom: 0.3rem;">${message.content}</div>
+                            <div style="font-size: 0.75rem; opacity: 0.8;">${getTimeAgo(message.timestamp)}</div>
+                        </div>
+                        ${message.senderId === currentUser.id ? `<div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${getInitials(currentUser.name)}</div>` : ''}
+                    </div>
+                `).join('');
+            } else {
+                messagesArea.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #95a5a6;">
+                        <h3>Start your conversation!</h3>
+                        <p>Send your first message below.</p>
+                    </div>
+                `;
+            }
+
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+            
+            // Update conversations list to show active conversation
+            loadConversationsList();
+        }
+
+        function sendPrivateMessage() {
+            if (!currentConversation || !currentUser) return;
+
+            const input = document.getElementById('privateMessageInput');
+            const content = input.value.trim();
+            
+            if (!content) {
+                showNotification('Please type a message.', 'error');
+                return;
+            }
+
+            const message = {
+                id: generatePostId(),
+                senderId: currentUser.id,
+                senderName: currentUser.name,
+                content: content,
+                timestamp: new Date().toISOString()
+            };
+
+            conversations[currentConversation].messages.push(message);
+            conversations[currentConversation].lastActivity = new Date().toISOString();
+
+            input.value = '';
+            loadMessages(currentConversation);
+            loadConversationsList();
+
+            showNotification('Message sent! 💌', 'success');
+        }
+
+        // ============================================
+        // GROUPS SYSTEM
+        // ============================================
+
+        function showGroupsTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('#section-groups .tab-button').forEach(btn => {
+                if (!btn.onclick.toString().includes('createNewGroup')) {
+                    btn.style.background = 'rgba(255,255,255,0.1)';
+                    btn.style.color = '#bdc3c7';
+                }
+            });
+            
+            if (tab === 'mygroups') {
+                document.getElementById('myGroupsTab').style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
+                document.getElementById('myGroupsTab').style.color = 'white';
+            } else if (tab === 'discover') {
+                document.getElementById('discoverTab').style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
+                document.getElementById('discoverTab').style.color = 'white';
+            }
+
+            // Show/hide content
+            document.querySelectorAll('.groups-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            document.getElementById(tab + '-tab').style.display = 'block';
+            
+            // Load specific content
+            if (tab === 'mygroups') {
+                loadMyGroups();
+            } else if (tab === 'discover') {
+                loadDiscoverGroups();
+            }
+        }
+
+        function createNewGroup() {
+            if (!currentUser) {
+                showNotification('Please login to create groups.', 'error');
+                showAuthModal('login');
+                return;
+            }
+
+            const groupName = prompt('Enter group name:');
+            if (!groupName) return;
+
+            const groupDescription = prompt('Enter group description:');
+            if (!groupDescription) return;
+
+            const isPrivate = confirm('Make this group private? (Click Cancel for public)');
+
+            const newGroup = {
+                id: generatePostId(),
+                name: groupName.trim(),
+                description: groupDescription.trim(),
+                isPrivate: isPrivate,
+                createdBy: currentUser.id,
+                createdByName: currentUser.name,
+                members: [currentUser.id],
+                memberCount: 1,
+                createdAt: new Date().toISOString(),
+                posts: []
+            };
+
+            // Add to user's groups
+            if (!currentUser.groups) currentUser.groups = [];
+            currentUser.groups.push(newGroup.id);
+
+            // Add to all groups (in real app, this would be server-side)
+            if (!allGroups) allGroups = [];
+            allGroups.push(newGroup);
+
+            // Save to localStorage
+            localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
+            localStorage.setItem('hvacCommunityGroups', JSON.stringify(allGroups));
+
+            showNotification(`Group "${groupName}" created successfully! 🌐`, 'success');
+            loadMyGroups();
+            showGroupsTab('mygroups');
+        }
+
+        function joinGroup(groupId) {
+            if (!currentUser) {
+                showNotification('Please login to join groups.', 'error');
+                showAuthModal('login');
+                return;
+            }
+
+            // Check if already a member
+            if (currentUser.groups && currentUser.groups.includes(groupId)) {
+                showNotification('You are already a member of this group.', 'info');
+                return;
+            }
+
+            // Add to user's groups
+            if (!currentUser.groups) currentUser.groups = [];
+            currentUser.groups.push(groupId);
+
+            // Find the group and increment member count (simulate server update)
+            const group = allGroups.find(g => g.id === groupId);
+            if (group) {
+                group.members.push(currentUser.id);
+                group.memberCount++;
+                
+                localStorage.setItem('hvacCommunityGroups', JSON.stringify(allGroups));
+            }
+
+            localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
+
+            // Update button
+            const button = event.target;
+            button.textContent = 'Joined!';
+            button.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
+            button.disabled = true;
+
+            showNotification(`Successfully joined the group! 🎉`, 'success');
+        }
+
+        function requestGroupAccess(groupId) {
+            if (!currentUser) {
+                showNotification('Please login to request group access.', 'error');
+                showAuthModal('login');
+                return;
+            }
+
+            // Update button
+            const button = event.target;
+            button.textContent = 'Request Sent';
+            button.style.background = 'linear-gradient(45deg, #95a5a6, #7f8c8d)';
+            button.disabled = true;
+
+            showNotification('Access request sent to group administrators. 📨', 'info');
+        }
+
+        function loadMyGroups() {
+            const myGroupsList = document.getElementById('myGroupsList');
+            
+            if (currentUser && currentUser.groups && currentUser.groups.length > 0) {
+                // Filter user's groups from all groups
+                const userGroups = allGroups.filter(group => 
+                    currentUser.groups.includes(group.id)
+                );
+
+                myGroupsList.innerHTML = userGroups.map(group => `
+                    <div class="group-card" style="background: rgba(52,152,219,0.1); border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(52,152,219,0.2); transition: all 0.3s;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🌐</div>
+                            <div style="flex: 1;">
+                                <h4 style="color: #3498db; margin-bottom: 0.3rem;">${group.name}</h4>
+                                <div style="color: #95a5a6; font-size: 0.9rem;">${group.memberCount} members • ${group.isPrivate ? 'Private' : 'Public'}</div>
+                                ${group.createdBy === currentUser.id ? '<div style="color: #f39c12; font-size: 0.8rem;">👑 Owner</div>' : ''}
+                            </div>
+                        </div>
+                        <div style="color: #ecf0f1; font-size: 0.9rem; margin-bottom: 1rem;">${group.description}</div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="openGroupChat('${group.id}')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; flex: 1;">Open Group</button>
+                            ${group.createdBy === currentUser.id ? 
+                                `<button onclick="manageGroup('${group.id}')" style="background: linear-gradient(45deg, #f39c12, #e67e22); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer;">Manage</button>` : 
+                                `<button onclick="leaveGroup('${group.id}')" style="background: rgba(231,76,60,0.2); color: #e74c3c; border: 1px solid #e74c3c; border-radius: 20px; padding: 8px 16px; cursor: pointer;">Leave</button>`
+                            }
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                myGroupsList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #95a5a6;">
+                        <h3>No groups yet!</h3>
+                        <p>Join professional groups to connect with like-minded HVAC professionals.</p>
+                        <button onclick="showGroupsTab('discover')" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 25px; padding: 12px 24px; cursor: pointer; margin-top: 1rem;">Discover Groups</button>
+                    </div>
+                `;
+            }
+        }
+
+        function loadDiscoverGroups() {
+            // Groups are already in the HTML, but we can add dynamic filtering here
+            const searchInput = document.getElementById('groupsSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const groupCards = document.querySelectorAll('#discover-tab .group-card');
+                    
+                    groupCards.forEach(card => {
+                        const text = card.textContent.toLowerCase();
+                        if (text.includes(searchTerm)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        }
+
+        function openGroupChat(groupId) {
+            showNotification('Group chat opening... Individual group pages coming soon! 🚧', 'info');
+        }
+
+        function manageGroup(groupId) {
+            const group = allGroups.find(g => g.id === groupId);
+            if (!group || group.createdBy !== currentUser.id) {
+                showNotification('You can only manage groups you created.', 'error');
+                return;
+            }
+
+            const action = prompt('Group Management:\n1. Edit group\n2. View members\n3. Delete group\n\nEnter 1, 2, or 3:');
+            
+            switch(action) {
+                case '1':
+                    editGroup(groupId);
+                    break;
+                case '2':
+                    viewGroupMembers(groupId);
+                    break;
+                case '3':
+                    deleteGroup(groupId);
+                    break;
+                default:
+                    showNotification('Invalid option selected.', 'error');
+            }
+        }
+
+        function editGroup(groupId) {
+            const group = allGroups.find(g => g.id === groupId);
+            if (!group) return;
+
+            const newName = prompt('Edit group name:', group.name);
+            if (newName && newName !== group.name) {
+                group.name = newName.trim();
+            }
+
+            const newDescription = prompt('Edit group description:', group.description);
+            if (newDescription && newDescription !== group.description) {
+                group.description = newDescription.trim();
+            }
+
+            localStorage.setItem('hvacCommunityGroups', JSON.stringify(allGroups));
+            showNotification('Group updated successfully! ✏️', 'success');
+            loadMyGroups();
+        }
+
+        function viewGroupMembers(groupId) {
+            const group = allGroups.find(g => g.id === groupId);
+            if (!group) return;
+
+            showNotification(`${group.name} has ${group.memberCount} members. Member management coming soon!`, 'info');
+        }
+
+        function deleteGroup(groupId) {
+            const group = allGroups.find(g => g.id === groupId);
+            if (!group) return;
+
+            if (confirm(`Are you sure you want to delete "${group.name}"? This action cannot be undone.`)) {
+                // Remove from all groups
+                allGroups = allGroups.filter(g => g.id !== groupId);
+                
+                // Remove from user's groups
+                currentUser.groups = currentUser.groups.filter(id => id !== groupId);
+
+                localStorage.setItem('hvacCommunityGroups', JSON.stringify(allGroups));
+                localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
+
+                showNotification('Group deleted successfully.', 'info');
+                loadMyGroups();
+            }
+        }
+
+        function leaveGroup(groupId) {
+            const group = allGroups.find(g => g.id === groupId);
+            if (!group) return;
+
+            if (confirm(`Are you sure you want to leave "${group.name}"?`)) {
+                // Remove from user's groups
+                currentUser.groups = currentUser.groups.filter(id => id !== groupId);
+                
+                // Remove from group members
+                group.members = group.members.filter(id => id !== currentUser.id);
+                group.memberCount--;
+
+                localStorage.setItem('hvacCommunityGroups', JSON.stringify(allGroups));
+                localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
+
+                showNotification(`Left "${group.name}" successfully.`, 'info');
+                loadMyGroups();
+            }
         }
 
         // Notification System
