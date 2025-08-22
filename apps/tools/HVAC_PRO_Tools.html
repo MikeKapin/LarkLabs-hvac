@@ -656,10 +656,617 @@
     <script src="chart.js"></script>
     <script src="health.js"></script>
     <script>
-        // Include all the existing JavaScript from your original file here
-        // [The entire JavaScript code from your original paste.txt file goes here]
-        // This includes all the PWA functionality, tool content, calculations, etc.
-        // I'm not repeating it here to save space, but it should be identical to your original
+        // Main app functionality
+        function showMainApp() {
+            document.getElementById('main-app').style.display = 'block';
+            
+            // Hide all app content sections
+            const appContents = document.querySelectorAll('.app-content');
+            appContents.forEach(content => {
+                content.style.display = 'none';
+            });
+        }
+
+        function openTool(toolName) {
+            // Hide main app
+            document.getElementById('main-app').style.display = 'none';
+            
+            // Hide all app content sections first
+            const appContents = document.querySelectorAll('.app-content');
+            appContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Show the selected tool
+            const selectedTool = document.getElementById(toolName);
+            if (selectedTool) {
+                selectedTool.style.display = 'block';
+                
+                // Load content for specific tools
+                if (toolName === 'unit-converter') {
+                    loadUnitConverter();
+                }
+                // Add other tool loaders as needed
+            }
+        }
+
+        function loadUnitConverter() {
+            const content = document.getElementById('unit-converter-content');
+            content.innerHTML = `
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0; color: #333;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #2c3e50; font-size: 2.5rem; margin-bottom: 10px; font-weight: 300;">Universal Unit Converter</h1>
+                        <p style="color: #555; font-size: 1.1rem;">Convert between Imperial, Metric, Temperature, Pressure, Energy & Power units</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+                        <!-- Length Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                                <span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>
+                                Length Conversion
+                            </h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Feet</label>
+                                    <input type="number" id="length1" step="any" placeholder="Enter feet" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapLength()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Meters</label>
+                                    <input type="number" id="length2" step="any" placeholder="Enter meters" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Inches</label>
+                                    <input type="number" id="length3" step="any" placeholder="Enter inches" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapLengthInchCm()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Centimeters</label>
+                                    <input type="number" id="length4" step="any" placeholder="Enter cm" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearLength()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+
+                        <!-- Weight Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                                <span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>
+                                Weight Conversion
+                            </h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Pounds</label>
+                                    <input type="number" id="weight1" step="any" placeholder="Enter pounds" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapWeight()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Kilograms</label>
+                                    <input type="number" id="weight2" step="any" placeholder="Enter kg" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Ounces</label>
+                                    <input type="number" id="weight3" step="any" placeholder="Enter ounces" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapWeightOzGram()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Grams</label>
+                                    <input type="number" id="weight4" step="any" placeholder="Enter grams" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearWeight()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+
+                        <!-- Temperature Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                                <span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>
+                                Temperature Conversion
+                            </h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Celsius</label>
+                                    <input type="number" id="temp1" step="any" placeholder="Enter °C" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapTemperature()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Fahrenheit</label>
+                                    <input type="number" id="temp2" step="any" placeholder="Enter °F" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Kelvin</label>
+                                    <input type="number" id="temp3" step="any" placeholder="Enter K" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearTemperature()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                            <div id="tempResult" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 8px; padding: 15px; margin-top: 15px; border-left: 4px solid #28a745; font-family: 'Courier New', monospace; font-size: 0.95rem;"></div>
+                        </div>
+
+                        <!-- Pressure Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                                <span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>
+                                Pressure Conversion
+                            </h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">PSI</label>
+                                    <input type="number" id="pressure1" step="any" placeholder="Enter PSI" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapPressurePsiBar()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Bar</label>
+                                    <input type="number" id="pressure2" step="any" placeholder="Enter bar" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">kPa</label>
+                                    <input type="number" id="pressure3" step="any" placeholder="Enter kPa" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapPressureKpaPa()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Pascal</label>
+                                    <input type="number" id="pressure4" step="any" placeholder="Enter Pa" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearPressure()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+
+                        <!-- Energy Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                                <span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>
+                                Energy Conversion
+                            </h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">BTU</label>
+                                    <input type="number" id="energy1" step="any" placeholder="Enter BTU" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapEnergyBtuJoule()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Joules</label>
+                                    <input type="number" id="energy2" step="any" placeholder="Enter J" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">kWh</label>
+                                    <input type="number" id="energy3" step="any" placeholder="Enter kWh" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapEnergyKwhCal()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Calories</label>
+                                    <input type="number" id="energy4" step="any" placeholder="Enter cal" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearEnergy()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+
+                        <!-- Power Converter -->
+                        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 1px solid #e1e8ed;">
+                            <h3 style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                                <span style="width: 4px; height: 25px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 2px;"></span>
+                                Power Conversion
+                            </h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">BTU/h</label>
+                                    <input type="number" id="power1" step="any" placeholder="Enter BTU/h" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapPowerBtuKw()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Kilowatts</label>
+                                    <input type="number" id="power2" step="any" placeholder="Enter kW" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Horsepower</label>
+                                    <input type="number" id="power3" step="any" placeholder="Enter HP" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                                <button onclick="swapPowerHpWatt()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; flex-shrink: 0;">⇄</button>
+                                <div style="flex: 1; min-width: 120px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9rem;">Watts</label>
+                                    <input type="number" id="power4" step="any" placeholder="Enter W" style="width: 100%; padding: 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; background: #f8f9fa;">
+                                </div>
+                            </div>
+                            <button onclick="clearPower()" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Clear All</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Initialize event listeners for the unit converter
+            initializeUnitConverter();
+        }
+
+        function initializeUnitConverter() {
+            // Length Conversions
+            document.getElementById('length1').addEventListener('input', function() {
+                const feet = parseFloat(this.value);
+                if (!isNaN(feet)) {
+                    document.getElementById('length2').value = (feet * 0.3048).toFixed(6);
+                }
+            });
+
+            document.getElementById('length2').addEventListener('input', function() {
+                const meters = parseFloat(this.value);
+                if (!isNaN(meters)) {
+                    document.getElementById('length1').value = (meters / 0.3048).toFixed(6);
+                }
+            });
+
+            document.getElementById('length3').addEventListener('input', function() {
+                const inches = parseFloat(this.value);
+                if (!isNaN(inches)) {
+                    document.getElementById('length4').value = (inches * 2.54).toFixed(6);
+                }
+            });
+
+            document.getElementById('length4').addEventListener('input', function() {
+                const cm = parseFloat(this.value);
+                if (!isNaN(cm)) {
+                    document.getElementById('length3').value = (cm / 2.54).toFixed(6);
+                }
+            });
+
+            // Weight Conversions
+            document.getElementById('weight1').addEventListener('input', function() {
+                const pounds = parseFloat(this.value);
+                if (!isNaN(pounds)) {
+                    document.getElementById('weight2').value = (pounds * 0.453592).toFixed(6);
+                }
+            });
+
+            document.getElementById('weight2').addEventListener('input', function() {
+                const kg = parseFloat(this.value);
+                if (!isNaN(kg)) {
+                    document.getElementById('weight1').value = (kg / 0.453592).toFixed(6);
+                }
+            });
+
+            document.getElementById('weight3').addEventListener('input', function() {
+                const ounces = parseFloat(this.value);
+                if (!isNaN(ounces)) {
+                    document.getElementById('weight4').value = (ounces * 28.3495).toFixed(6);
+                }
+            });
+
+            document.getElementById('weight4').addEventListener('input', function() {
+                const grams = parseFloat(this.value);
+                if (!isNaN(grams)) {
+                    document.getElementById('weight3').value = (grams / 28.3495).toFixed(6);
+                }
+            });
+
+            // Temperature Conversions
+            document.getElementById('temp1').addEventListener('input', updateTemperature);
+            document.getElementById('temp2').addEventListener('input', updateTemperature);
+            document.getElementById('temp3').addEventListener('input', updateTemperature);
+
+            // Pressure Conversions
+            document.getElementById('pressure1').addEventListener('input', function() {
+                const psi = parseFloat(this.value);
+                if (!isNaN(psi)) {
+                    document.getElementById('pressure2').value = (psi * 0.0689476).toFixed(6);
+                    document.getElementById('pressure3').value = (psi * 6.89476).toFixed(6);
+                    document.getElementById('pressure4').value = (psi * 6894.76).toFixed(2);
+                }
+            });
+
+            document.getElementById('pressure2').addEventListener('input', function() {
+                const bar = parseFloat(this.value);
+                if (!isNaN(bar)) {
+                    document.getElementById('pressure1').value = (bar / 0.0689476).toFixed(6);
+                    document.getElementById('pressure3').value = (bar * 100).toFixed(6);
+                    document.getElementById('pressure4').value = (bar * 100000).toFixed(2);
+                }
+            });
+
+            document.getElementById('pressure3').addEventListener('input', function() {
+                const kpa = parseFloat(this.value);
+                if (!isNaN(kpa)) {
+                    document.getElementById('pressure1').value = (kpa / 6.89476).toFixed(6);
+                    document.getElementById('pressure2').value = (kpa / 100).toFixed(6);
+                    document.getElementById('pressure4').value = (kpa * 1000).toFixed(2);
+                }
+            });
+
+            document.getElementById('pressure4').addEventListener('input', function() {
+                const pa = parseFloat(this.value);
+                if (!isNaN(pa)) {
+                    document.getElementById('pressure1').value = (pa / 6894.76).toFixed(6);
+                    document.getElementById('pressure2').value = (pa / 100000).toFixed(6);
+                    document.getElementById('pressure3').value = (pa / 1000).toFixed(6);
+                }
+            });
+
+            // Energy Conversions
+            document.getElementById('energy1').addEventListener('input', function() {
+                const btu = parseFloat(this.value);
+                if (!isNaN(btu)) {
+                    document.getElementById('energy2').value = (btu * 1055.06).toFixed(2);
+                    document.getElementById('energy3').value = (btu * 0.000293071).toFixed(8);
+                    document.getElementById('energy4').value = (btu * 252.164).toFixed(2);
+                }
+            });
+
+            document.getElementById('energy2').addEventListener('input', function() {
+                const joules = parseFloat(this.value);
+                if (!isNaN(joules)) {
+                    document.getElementById('energy1').value = (joules / 1055.06).toFixed(8);
+                    document.getElementById('energy3').value = (joules / 3600000).toFixed(8);
+                    document.getElementById('energy4').value = (joules / 4.184).toFixed(2);
+                }
+            });
+
+            document.getElementById('energy3').addEventListener('input', function() {
+                const kwh = parseFloat(this.value);
+                if (!isNaN(kwh)) {
+                    document.getElementById('energy1').value = (kwh / 0.000293071).toFixed(2);
+                    document.getElementById('energy2').value = (kwh * 3600000).toFixed(2);
+                    document.getElementById('energy4').value = (kwh * 860421).toFixed(2);
+                }
+            });
+
+            document.getElementById('energy4').addEventListener('input', function() {
+                const cal = parseFloat(this.value);
+                if (!isNaN(cal)) {
+                    document.getElementById('energy1').value = (cal / 252.164).toFixed(6);
+                    document.getElementById('energy2').value = (cal * 4.184).toFixed(2);
+                    document.getElementById('energy3').value = (cal / 860421).toFixed(8);
+                }
+            });
+
+            // Power Conversions
+            document.getElementById('power1').addEventListener('input', function() {
+                const btuh = parseFloat(this.value);
+                if (!isNaN(btuh)) {
+                    document.getElementById('power2').value = (btuh * 0.000293071).toFixed(6);
+                    document.getElementById('power3').value = (btuh * 0.000393014).toFixed(6);
+                    document.getElementById('power4').value = (btuh * 0.293071).toFixed(3);
+                }
+            });
+
+            document.getElementById('power2').addEventListener('input', function() {
+                const kw = parseFloat(this.value);
+                if (!isNaN(kw)) {
+                    document.getElementById('power1').value = (kw / 0.000293071).toFixed(2);
+                    document.getElementById('power3').value = (kw * 1.34102).toFixed(6);
+                    document.getElementById('power4').value = (kw * 1000).toFixed(3);
+                }
+            });
+
+            document.getElementById('power3').addEventListener('input', function() {
+                const hp = parseFloat(this.value);
+                if (!isNaN(hp)) {
+                    document.getElementById('power1').value = (hp / 0.000393014).toFixed(2);
+                    document.getElementById('power2').value = (hp * 0.745699).toFixed(6);
+                    document.getElementById('power4').value = (hp * 745.699).toFixed(3);
+                }
+            });
+
+            document.getElementById('power4').addEventListener('input', function() {
+                const watts = parseFloat(this.value);
+                if (!isNaN(watts)) {
+                    document.getElementById('power1').value = (watts / 0.293071).toFixed(2);
+                    document.getElementById('power2').value = (watts / 1000).toFixed(6);
+                    document.getElementById('power3').value = (watts / 745.699).toFixed(6);
+                }
+            });
+        }
+
+        // Unit converter utility functions
+        function swapLength() {
+            const val1 = document.getElementById('length1').value;
+            const val2 = document.getElementById('length2').value;
+            document.getElementById('length1').value = val2;
+            document.getElementById('length2').value = val1;
+        }
+
+        function swapLengthInchCm() {
+            const val3 = document.getElementById('length3').value;
+            const val4 = document.getElementById('length4').value;
+            document.getElementById('length3').value = val4;
+            document.getElementById('length4').value = val3;
+        }
+
+        function clearLength() {
+            document.getElementById('length1').value = '';
+            document.getElementById('length2').value = '';
+            document.getElementById('length3').value = '';
+            document.getElementById('length4').value = '';
+        }
+
+        function swapWeight() {
+            const val1 = document.getElementById('weight1').value;
+            const val2 = document.getElementById('weight2').value;
+            document.getElementById('weight1').value = val2;
+            document.getElementById('weight2').value = val1;
+        }
+
+        function swapWeightOzGram() {
+            const val3 = document.getElementById('weight3').value;
+            const val4 = document.getElementById('weight4').value;
+            document.getElementById('weight3').value = val4;
+            document.getElementById('weight4').value = val3;
+        }
+
+        function clearWeight() {
+            document.getElementById('weight1').value = '';
+            document.getElementById('weight2').value = '';
+            document.getElementById('weight3').value = '';
+            document.getElementById('weight4').value = '';
+        }
+
+        function updateTemperature() {
+            const resultDiv = document.getElementById('tempResult');
+            const celsius = parseFloat(document.getElementById('temp1').value);
+            const fahrenheit = parseFloat(document.getElementById('temp2').value);
+            const kelvin = parseFloat(document.getElementById('temp3').value);
+
+            let results = [];
+            
+            if (!isNaN(celsius)) {
+                const f = (celsius * 9/5) + 32;
+                const k = celsius + 273.15;
+                document.getElementById('temp2').value = f.toFixed(2);
+                document.getElementById('temp3').value = k.toFixed(2);
+                results.push(`${celsius}°C = ${f.toFixed(2)}°F = ${k.toFixed(2)}K`);
+            } else if (!isNaN(fahrenheit)) {
+                const c = (fahrenheit - 32) * 5/9;
+                const k = c + 273.15;
+                document.getElementById('temp1').value = c.toFixed(2);
+                document.getElementById('temp3').value = k.toFixed(2);
+                results.push(`${fahrenheit}°F = ${c.toFixed(2)}°C = ${k.toFixed(2)}K`);
+            } else if (!isNaN(kelvin)) {
+                const c = kelvin - 273.15;
+                const f = (c * 9/5) + 32;
+                document.getElementById('temp1').value = c.toFixed(2);
+                document.getElementById('temp2').value = f.toFixed(2);
+                results.push(`${kelvin}K = ${c.toFixed(2)}°C = ${f.toFixed(2)}°F`);
+            }
+
+            resultDiv.innerHTML = results.join('<br>');
+        }
+
+        function swapTemperature() {
+            const val1 = document.getElementById('temp1').value;
+            const val2 = document.getElementById('temp2').value;
+            document.getElementById('temp1').value = val2;
+            document.getElementById('temp2').value = val1;
+            updateTemperature();
+        }
+
+        function clearTemperature() {
+            document.getElementById('temp1').value = '';
+            document.getElementById('temp2').value = '';
+            document.getElementById('temp3').value = '';
+            document.getElementById('tempResult').innerHTML = '';
+        }
+
+        function swapPressurePsiBar() {
+            const val1 = document.getElementById('pressure1').value;
+            const val2 = document.getElementById('pressure2').value;
+            document.getElementById('pressure1').value = val2;
+            document.getElementById('pressure2').value = val1;
+        }
+
+        function swapPressureKpaPa() {
+            const val3 = document.getElementById('pressure3').value;
+            const val4 = document.getElementById('pressure4').value;
+            document.getElementById('pressure3').value = val4;
+            document.getElementById('pressure4').value = val3;
+        }
+
+        function clearPressure() {
+            document.getElementById('pressure1').value = '';
+            document.getElementById('pressure2').value = '';
+            document.getElementById('pressure3').value = '';
+            document.getElementById('pressure4').value = '';
+        }
+
+        function swapEnergyBtuJoule() {
+            const val1 = document.getElementById('energy1').value;
+            const val2 = document.getElementById('energy2').value;
+            document.getElementById('energy1').value = val2;
+            document.getElementById('energy2').value = val1;
+        }
+
+        function swapEnergyKwhCal() {
+            const val3 = document.getElementById('energy3').value;
+            const val4 = document.getElementById('energy4').value;
+            document.getElementById('energy3').value = val4;
+            document.getElementById('energy4').value = val3;
+        }
+
+        function clearEnergy() {
+            document.getElementById('energy1').value = '';
+            document.getElementById('energy2').value = '';
+            document.getElementById('energy3').value = '';
+            document.getElementById('energy4').value = '';
+        }
+
+        function swapPowerBtuKw() {
+            const val1 = document.getElementById('power1').value;
+            const val2 = document.getElementById('power2').value;
+            document.getElementById('power1').value = val2;
+            document.getElementById('power2').value = val1;
+        }
+
+        function swapPowerHpWatt() {
+            const val3 = document.getElementById('power3').value;
+            const val4 = document.getElementById('power4').value;
+            document.getElementById('power3').value = val4;
+            document.getElementById('power4').value = val3;
+        }
+
+        function clearPower() {
+            document.getElementById('power1').value = '';
+            document.getElementById('power2').value = '';
+            document.getElementById('power3').value = '';
+            document.getElementById('power4').value = '';
+        }
+
+        // Modal functions
+        function closeModal() {
+            document.getElementById('installModal').style.display = 'none';
+            document.getElementById('comingSoonModal').style.display = 'none';
+        }
+
+        function showComingSoon(toolName) {
+            document.getElementById('comingSoonText').textContent = toolName;
+            document.getElementById('comingSoonModal').style.display = 'block';
+        }
+
+        // PWA functions
+        let deferredPrompt;
+        
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                document.getElementById('installModal').style.display = 'block';
+            }
+        }
+
+        function dismissPrompt() {
+            document.getElementById('pwaPrompt').style.display = 'none';
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('pwaPrompt').style.display = 'block';
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            const installModal = document.getElementById('installModal');
+            const comingSoonModal = document.getElementById('comingSoonModal');
+            
+            if (event.target === installModal) {
+                installModal.style.display = 'none';
+            }
+            if (event.target === comingSoonModal) {
+                comingSoonModal.style.display = 'none';
+            }
+        });
     </script>
     
     <!-- Service Worker Registration -->
