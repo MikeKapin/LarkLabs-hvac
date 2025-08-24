@@ -285,6 +285,67 @@
             color: #3498db;
         }
 
+        .nav-badge-new {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 6px;
+            animation: pulse-new 2s infinite;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+        }
+
+        @keyframes pulse-new {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Community Highlight Styles */
+        .community-highlight {
+            border: 2px solid #3498db !important;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(52, 152, 219, 0.05)) !important;
+            animation: glow-pulse 3s infinite;
+        }
+
+        .community-highlight:hover {
+            transform: translateY(-8px) !important;
+            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.4) !important;
+        }
+
+        .tool-badge-new {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+            animation: pulse-new 2s infinite;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+        }
+
+        .status-featured {
+            background: linear-gradient(45deg, #f1c40f, #f39c12) !important;
+            color: #2c3e50 !important;
+            font-weight: bold !important;
+            animation: featured-pulse 2s infinite;
+        }
+
+        @keyframes glow-pulse {
+            0% { box-shadow: 0 5px 20px rgba(52, 152, 219, 0.2); }
+            50% { box-shadow: 0 8px 30px rgba(52, 152, 219, 0.4); }
+            100% { box-shadow: 0 5px 20px rgba(52, 152, 219, 0.2); }
+        }
+
+        @keyframes featured-pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+
         /* Mobile menu toggle button - hidden by default */
         .mobile-menu-toggle {
             display: none;
@@ -1490,7 +1551,7 @@
                 <li><a onclick="showSection('training'); closeMobileMenu();">Training</a></li>
                 <li><a onclick="showSection('downloads'); closeMobileMenu();">Downloads</a></li>
                 <li><a href="apps/hvac-tool-vault/index.html" target="_blank">🏦 Tool Vault</a></li>
-                <li><a href="pages/community.html">Community</a></li>
+                <li><a href="pages/community.html">Community <span class="nav-badge-new">NEW</span></a></li>
                 <li><a onclick="showSection('resources'); closeMobileMenu();">Resources</a></li>
                 <li><a onclick="showSection('about'); closeMobileMenu();">About</a></li>
             </ul>
@@ -1604,11 +1665,11 @@
                         <p>Complete exam simulators to help you pass your Canadian Gas Technician certification</p>
                         <span class="tool-status status-available">Available Now</span>
                     </div>
-                    <div class="tool-card" onclick="window.location.href='pages/community.html'" role="button" tabindex="0" aria-label="Join Canadian HVAC Community">
+                    <div class="tool-card community-highlight" onclick="window.location.href='pages/community.html'" role="button" tabindex="0" aria-label="Join Canadian HVAC Community with new Blog">
                         <div class="tool-icon" aria-hidden="true">💬</div>
-                        <h3>Canadian HVAC Community</h3>
-                        <p>Connect with other Canadian technicians and students to share knowledge and experience</p>
-                        <span class="tool-status status-available">Available Now</span>
+                        <h3>Canadian HVAC Community <span class="tool-badge-new">NEW BLOG</span></h3>
+                        <p>Connect with technicians, share knowledge, and stay updated with industry news & promotions</p>
+                        <span class="tool-status status-featured">Featured - Industry Updates</span>
                     </div>
                     <div class="tool-card" onclick="showSection('resources')" role="button" tabindex="0" aria-label="Search CSA B149.1 Code">
                         <div class="tool-icon" aria-hidden="true">📚</div>

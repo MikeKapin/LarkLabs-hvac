@@ -165,6 +165,34 @@
             text-align: center;
         }
 
+        .nav-badge {
+            background: #e74c3c;
+            color: white;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            margin-left: auto;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Blog Post Styles */
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.2);
+            background: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        .blog-featured:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(52, 152, 219, 0.3);
+        }
+
         /* Main Content */
         .main-content {
             background: rgba(255, 255, 255, 0.05);
@@ -896,7 +924,12 @@
             <aside class="sidebar">
                 <h3>🏠 Navigation</h3>
                 <nav>
-                    <a href="#" class="nav-item active" onclick="showSection('feed')" data-section="feed">
+                    <a href="#" class="nav-item active" onclick="showSection('blog')" data-section="blog">
+                        <span class="nav-icon">📰</span>
+                        <span>Industry News & Updates</span>
+                        <span class="nav-badge">NEW</span>
+                    </a>
+                    <a href="#" class="nav-item" onclick="showSection('feed')" data-section="feed">
                         <span class="nav-icon">📱</span>
                         <span>Community Feed</span>
                     </a>
@@ -944,8 +977,133 @@
 
             <!-- Main Content Area -->
             <main class="main-content">
+                <!-- Industry News & Updates Blog Section -->
+                <section id="section-blog" class="content-section active">
+                    <div class="content-header">
+                        <h2 style="color: #ffffff; font-size: 1.5rem;">📰 Industry News & Updates</h2>
+                        <p style="color: #bdc3c7; margin-top: 0.5rem;">Latest HVAC industry updates, promotions, and important announcements</p>
+                    </div>
+                    <div class="content-body">
+                        <!-- Featured Blog Post -->
+                        <div class="blog-featured" style="background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 1rem; right: 1rem; background: #e74c3c; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">FEATURED</div>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div style="background: rgba(255,255,255,0.2); border-radius: 50%; padding: 1rem; font-size: 2rem;">🚀</div>
+                                <div>
+                                    <h3 style="color: #ffffff; font-size: 1.4rem; margin-bottom: 0.5rem;">New A2L Refrigerant Training Course Now Available!</h3>
+                                    <div style="color: #ecf0f1; font-size: 0.9rem; opacity: 0.9;">Published 2 hours ago • by LARK Labs Team</div>
+                                </div>
+                            </div>
+                            <p style="color: #ecf0f1; font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                                Get certified in the latest A2L refrigerant handling and safety protocols. Our comprehensive course covers installation, maintenance, and safety requirements for the new generation of eco-friendly refrigerants. Early bird pricing available until month-end!
+                            </p>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <button onclick="window.open('../training/a2l/A2L_Safety_Course_Enhanced.html', '_blank')" style="background: #ffffff; color: #3498db; padding: 0.8rem 1.5rem; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                    Start Course →
+                                </button>
+                                <div style="color: #ecf0f1; font-size: 0.9rem;">
+                                    💰 <span style="text-decoration: line-through; opacity: 0.7;">$299</span> <strong>$199</strong> - Limited Time
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Blog Posts Grid -->
+                        <div class="blog-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                            
+                            <!-- Blog Post 1 -->
+                            <div class="blog-post" style="background: rgba(255, 255, 255, 0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s; cursor: pointer;" onclick="openBlogPost('tssa-updates-2025')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #e74c3c, #c0392b); border-radius: 50%; padding: 0.8rem; font-size: 1.2rem;">⚡</div>
+                                    <div>
+                                        <div style="color: #e74c3c; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem;">REGULATION UPDATE</div>
+                                        <h4 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 0.3rem;">TSSA 2025 Code Changes</h4>
+                                        <div style="color: #95a5a6; font-size: 0.8rem;">Published 1 day ago</div>
+                                    </div>
+                                </div>
+                                <p style="color: #bdc3c7; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+                                    Important updates to CSA B149.1-25 affecting gas appliance installations. New clearance requirements and safety protocols now in effect...
+                                </p>
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="color: #3498db; font-size: 0.8rem; font-weight: 500;">Read More →</div>
+                                    <div style="color: #95a5a6; font-size: 0.8rem;">📖 5 min read</div>
+                                </div>
+                            </div>
+
+                            <!-- Blog Post 2 -->
+                            <div class="blog-post" style="background: rgba(255, 255, 255, 0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s; cursor: pointer;" onclick="openBlogPost('g3-exam-updates')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #27ae60, #2ecc71); border-radius: 50%; padding: 0.8rem; font-size: 1.2rem;">🎓</div>
+                                    <div>
+                                        <div style="color: #27ae60; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem;">TRAINING NEWS</div>
+                                        <h4 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 0.3rem;">G3 Exam Format Updates</h4>
+                                        <div style="color: #95a5a6; font-size: 0.8rem;">Published 3 days ago</div>
+                                    </div>
+                                </div>
+                                <p style="color: #bdc3c7; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+                                    TSSA has announced changes to the G3 certification exam format. New practical assessment components and updated study materials available...
+                                </p>
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="color: #3498db; font-size: 0.8rem; font-weight: 500;">Read More →</div>
+                                    <div style="color: #95a5a6; font-size: 0.8rem;">📖 3 min read</div>
+                                </div>
+                            </div>
+
+                            <!-- Blog Post 3 -->
+                            <div class="blog-post" style="background: rgba(255, 255, 255, 0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s; cursor: pointer;" onclick="openBlogPost('tool-promotion')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #f39c12, #e67e22); border-radius: 50%; padding: 0.8rem; font-size: 1.2rem;">🛠️</div>
+                                    <div>
+                                        <div style="color: #f39c12; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem;">PROMOTION</div>
+                                        <h4 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 0.3rem;">Free HVAC Pro Tools Access</h4>
+                                        <div style="color: #95a5a6; font-size: 0.8rem;">Published 5 days ago</div>
+                                    </div>
+                                </div>
+                                <p style="color: #bdc3c7; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+                                    Limited-time offer: Get free access to our premium HVAC calculation tools and unit converters. Perfect for field work and project planning...
+                                </p>
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="color: #3498db; font-size: 0.8rem; font-weight: 500;">Claim Offer →</div>
+                                    <div style="color: #95a5a6; font-size: 0.8rem;">🎁 FREE</div>
+                                </div>
+                            </div>
+
+                            <!-- Blog Post 4 -->
+                            <div class="blog-post" style="background: rgba(255, 255, 255, 0.08); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s; cursor: pointer;" onclick="openBlogPost('industry-trends')">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="background: linear-gradient(45deg, #9b59b6, #8e44ad); border-radius: 50%; padding: 0.8rem; font-size: 1.2rem;">📊</div>
+                                    <div>
+                                        <div style="color: #9b59b6; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem;">INDUSTRY INSIGHTS</div>
+                                        <h4 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 0.3rem;">2025 HVAC Market Trends</h4>
+                                        <div style="color: #95a5a6; font-size: 0.8rem;">Published 1 week ago</div>
+                                    </div>
+                                </div>
+                                <p style="color: #bdc3c7; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+                                    Explore the latest trends shaping the HVAC industry in 2025. From smart technology integration to sustainable practices and workforce development...
+                                </p>
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="color: #3498db; font-size: 0.8rem; font-weight: 500;">Read More →</div>
+                                    <div style="color: #95a5a6; font-size: 0.8rem;">📖 8 min read</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Newsletter Signup -->
+                        <div class="newsletter-signup" style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 2rem; text-align: center; border: 2px dashed rgba(255, 255, 255, 0.1);">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">📧</div>
+                            <h3 style="color: #ffffff; margin-bottom: 0.5rem;">Stay Updated</h3>
+                            <p style="color: #bdc3c7; margin-bottom: 1.5rem;">Subscribe to our newsletter for the latest HVAC industry news, training updates, and exclusive promotions.</p>
+                            <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+                                <input type="email" placeholder="Enter your email address" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 25px; padding: 0.8rem 1.2rem; color: #ffffff; min-width: 250px; outline: none;" id="newsletterEmail">
+                                <button onclick="subscribeNewsletter()" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                    Subscribe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Community Feed Section -->
-                <section id="section-feed" class="content-section active">
+                <section id="section-feed" class="content-section">
                     <div class="content-header">
                         <h2 style="color: #ffffff; font-size: 1.5rem;">📱 Community Feed</h2>
                         <p style="color: #bdc3c7; margin-top: 0.5rem;">Share knowledge, ask questions, and connect with HVAC professionals</p>
@@ -3357,6 +3515,62 @@
                     }
                 }, 300);
             }, 3000);
+        }
+
+        // Blog Functions
+        function openBlogPost(postId) {
+            const blogPosts = {
+                'tssa-updates-2025': {
+                    title: 'TSSA 2025 Code Changes',
+                    url: '../pages/blog/tssa-g2-exam-guide.html',
+                    content: 'Important updates to CSA B149.1-25 affecting gas appliance installations...'
+                },
+                'g3-exam-updates': {
+                    title: 'G3 Exam Format Updates',
+                    url: '../pages/blog/tssa-g3-exam-guide.html',
+                    content: 'TSSA has announced changes to the G3 certification exam format...'
+                },
+                'tool-promotion': {
+                    title: 'Free HVAC Pro Tools Access',
+                    url: '../apps/tools/HVAC_PRO_Tools.html',
+                    content: 'Limited-time offer: Get free access to our premium HVAC calculation tools...'
+                },
+                'industry-trends': {
+                    title: '2025 HVAC Market Trends',
+                    url: '#',
+                    content: 'Explore the latest trends shaping the HVAC industry in 2025...'
+                }
+            };
+
+            const post = blogPosts[postId];
+            if (post && post.url !== '#') {
+                window.open(post.url, '_blank');
+            } else {
+                showNotification('Blog post coming soon! Stay tuned for updates.', 'info');
+            }
+        }
+
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value;
+            
+            if (!email) {
+                showNotification('Please enter your email address.', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNotification('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            // In real app, this would send to backend
+            showNotification('Successfully subscribed to our newsletter! 📧', 'success');
+            document.getElementById('newsletterEmail').value = '';
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
         }
 
         // Auto-update online count simulation
