@@ -148,6 +148,41 @@
             color: #A5B4FC;
         }
 
+        .beta-request {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .beta-request p {
+            color: #94A3B8;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .beta-request-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(34, 197, 94, 0.3);
+        }
+
+        .beta-request-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(34, 197, 94, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+
         .container {
             max-width: 100%;
             margin: 0 auto;
@@ -555,6 +590,13 @@
             <div class="beta-info">
                 <strong>Beta Version 4.0</strong><br>
                 This is a testing version with advanced AI troubleshooting and rating plate analysis capabilities.
+            </div>
+            
+            <div class="beta-request">
+                <p>Don't have beta access?</p>
+                <a href="mailto:lark_labs@outlook.com?subject=HVAC%20Jack%20Beta%20Access%20Request&body=Hello,%0A%0AI%20would%20like%20to%20request%20beta%20access%20to%20HVAC%20Jack%204.0.%0A%0AThank%20you!" class="beta-request-link">
+                    📧 Request Beta Access
+                </a>
             </div>
         </div>
     </div>
