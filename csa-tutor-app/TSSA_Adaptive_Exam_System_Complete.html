@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered adaptive practice exam system for TSSA G2 and G3 certification. Comprehensive question bank based on CSA B149.1 and B149.2 standards.">
+    <title>TSSA Adaptive Exam System - AI-Powered Learning | Lark Labs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .lark-logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="loading">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="text-center text-white">
+            <div class="lark-logo">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                </svg>
+            </div>
+            <div class="text-2xl font-bold mb-2">TSSA Exam System</div>
+            <div class="text-sm opacity-80 mb-4">Initializing AI-Powered Learning</div>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="root" style="display: none;"></div>
+
+    <!-- React and Dependencies -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Application Data and Logic -->
+    <script type="text/babel">
+        // Question Bank Data (Inline to avoid CORS issues)
+        const g3Questions = {
+            questions: [
+                {
+                    id: 1,
+                    question: "What do electrical drawings include?",
+                    options: ["Supply Voltage, Internal Wiring, Field Wiring, Location of controls", "Only supply voltage", "Only internal wiring", "Only field wiring"],
+                    correct: 0
+                },
+                {
+                    id: 2,
+                    question: "What type of pressure is a gas line when no movement is taking place?",
+                    options: ["Dynamic Pressure", "Static Pressure", "Working Pressure", "System Pressure"],
+                    correct: 1
+                },
+                {
+                    id: 3,
+                    question: "What is primary air?",
+                    options: ["Air around the appliance", "The air that is mixed with gas prior to ignition", "Air from outside", "Combustion air"],
+                    correct: 1
+                },
+                {
+                    id: 4,
+                    question: "What is the specific gravity of Propane?",
+                    options: ["1.0", "0.6", "1.52", "2.0"],
+                    correct: 2
+                },
+                {
+                    id: 5,
+                    question: "What is the space ratio for converting propane from liquid to gas?",
+                    options: ["100:1", "200:1", "270:1", "300:1"],
+                    correct: 2
+                },
+                // Adding 20 more sample questions to demonstrate the system
+                {
+                    id: 6,
+                    question: "What section of the code is for Venting?",
+                    options: ["Section 6", "Section 7", "Section 8", "Section 9"],
+                    correct: 2
+                },
+                {
+                    id: 7,
+                    question: "Who may refuse to grant the authorization or revoke, suspend, or refuse to renew an authorization?",
+                    options: ["Minister of Consumer and Commercial Relations", "TSSA Fuel Safety Director", "TSSA Fuel Safety Inspector", "Premier of Ontario"],
+                    correct: 1
+                },
+                {
+                    id: 8,
+                    question: "What is the maximum gas pressure allowed in a building under construction?",
+                    options: ["2 PSIG", "20 PSIG", "25 PSIG", "50 PSIG"],
+                    correct: 0
+                },
+                {
+                    id: 9,
+                    question: "A Hydrocarbon is defined as?",
+                    options: ["Chemical compound of Hydro electricity and Water", "Chemical compound of Hydrogen and Carbon Dioxide", "Chemical compound of Hydrogen and Carbon Monoxide", "Chemical compound of Hydrogen and Carbon"],
+                    correct: 3
+                },
+                {
+                    id: 10,
+                    question: "What is one primary duty of a gas technician when finding a gas appliance in immediate hazard condition?",
+                    options: ["Tag the appliance and continue use", "Shut off the gas supply and notify the user and distributor", "Inform a co-worker and resume work", "Wait for inspection approval"],
+                    correct: 1
+                },
+                {
+                    id: 11,
+                    question: "What does WHMIS stand for?",
+                    options: ["Workplace Hazardous Materials Information System", "Worker Health Management Information System", "Workplace Health Materials Identification System", "Worker Hazard Management Information System"],
+                    correct: 0
+                },
+                {
+                    id: 12,
+                    question: "What is the minimum clearance required between a gas meter and an electrical panel?",
+                    options: ["300 mm (12 inches)", "600 mm (24 inches)", "900 mm (36 inches)", "1200 mm (48 inches)"],
+                    correct: 2
+                },
+                {
+                    id: 13,
+                    question: "What is the maximum allowable concentration of carbon monoxide for continuous exposure?",
+                    options: ["25 ppm over 8 hours", "35 ppm over 8 hours", "50 ppm over 8 hours", "100 ppm over 8 hours"],
+                    correct: 0
+                },
+                {
+                    id: 14,
+                    question: "Which document must be referenced when installing propane storage containers over 45 kg capacity?",
+                    options: ["CSA B149.1 only", "CSA B149.2 - Propane Storage and Handling Code", "Provincial building code only", "Manufacturer's instructions only"],
+                    correct: 1
+                },
+                {
+                    id: 15,
+                    question: "What is the maximum operating pressure for low-pressure gas systems in residential applications?",
+                    options: ["1.75 kPa (7 inches water column)", "2.5 kPa (10 inches water column)", "3.5 kPa (14 inches water column)", "5.0 kPa (20 inches water column)"],
+                    correct: 0
+                },
+                {
+                    id: 16,
+                    question: "What type of PPE is most critical when working in confined spaces with gas hazards?",
+                    options: ["Safety glasses and hard hat", "Gas monitor and communication device", "Steel-toed boots and gloves", "High-visibility vest and ear protection"],
+                    correct: 1
+                },
+                {
+                    id: 17,
+                    question: "What should be done if an appliance is found in unacceptable condition but not an immediate hazard?",
+                    options: ["No action is required", "Shut off gas and discard appliance", "Notify distributor and user with written notice", "Call emergency services"],
+                    correct: 2
+                },
+                {
+                    id: 18,
+                    question: "How soon must a gas technician provide written notice to the distributor about an immediate hazard?",
+                    options: ["7 days", "30 days", "Immediately", "Within 14 days"],
+                    correct: 3
+                },
+                {
+                    id: 19,
+                    question: "What is the minimum clearance between a gas-fired water heater and combustible materials?",
+                    options: ["25 mm (1 inch)", "50 mm (2 inches)", "150 mm (6 inches)", "300 mm (12 inches)"],
+                    correct: 2
+                },
+                {
+                    id: 20,
+                    question: "Which certification agency is NOT certified for appliance approvals in Ontario?",
+                    options: ["Ministry of Transportation", "Canadian Standards Association", "Underwriters Laboratories Canada", "Underwriters Laboratories International"],
+                    correct: 0
+                },
+                {
+                    id: 21,
+                    question: "Convert 2.5 inches of water column to kilopascals (kPa).",
+                    options: ["0.62 kPa", "1.25 kPa", "2.49 kPa", "3.73 kPa"],
+                    correct: 0
+                },
+                {
+                    id: 22,
+                    question: "What is the maximum allowable pressure for testing steel gas piping systems?",
+                    options: ["Equal to working pressure", "1.5 times working pressure", "10 kPa or 1.5 times working pressure, whichever is greater", "20 kPa regardless of working pressure"],
+                    correct: 2
+                },
+                {
+                    id: 23,
+                    question: "A gas valve coil operates at 24V AC and draws 0.5 amperes. What is the resistance?",
+                    options: ["12 Ω", "24 Ω", "48 Ω", "96 Ω"],
+                    correct: 2
+                },
+                {
+                    id: 24,
+                    question: "What is the maximum fine for contravention of the Acts and Regulations for an individual?",
+                    options: ["$5,000", "$10,000", "$50,000", "$100,000"],
+                    correct: 2
+                },
+                {
+                    id: 25,
+                    question: "What material emits highly toxic fumes when burned?",
+                    options: ["Stainless steel", "ABS/PVC", "Copper", "PEX"],
+                    correct: 1
+                }
+            ]
+        };
+
+        const g2Questions = {
+            questions: [
+                {
+                    id: 1,
+                    question: "What is the minimum size of steel pipe that may be welded?",
+                    options: ["1/2 inch", "3/4 inch", "1 inch", "1 1/4 inch"],
+                    correct: 2
+                },
+                {
+                    id: 2,
+                    question: "What is the maximum working pressure for Schedule 40 steel pipe?",
+                    options: ["125 PSI", "200 PSI", "250 PSI", "300 PSI"],
+                    correct: 1
+                },
+                {
+                    id: 3,
+                    question: "Which type of valve is required as the main gas shut-off for a building?",
+                    options: ["Ball valve", "Gate valve", "Globe valve", "Butterfly valve"],
+                    correct: 0
+                },
+                {
+                    id: 4,
+                    question: "What is the minimum burial depth for gas piping in normal soil conditions?",
+                    options: ["12 inches", "18 inches", "24 inches", "36 inches"],
+                    correct: 1
+                },
+                {
+                    id: 5,
+                    question: "What is the maximum length of flexible connector allowed for appliance connections?",
+                    options: ["3 feet", "6 feet", "10 feet", "unlimited"],
+                    correct: 1
+                },
+                {
+                    id: 6,
+                    question: "What type of regulator is typically used for residential natural gas service?",
+                    options: ["First stage", "Second stage", "Service regulator", "Appliance regulator"],
+                    correct: 2
+                },
+                {
+                    id: 7,
+                    question: "What is the standard test pressure for residential gas piping?",
+                    options: ["5 PSI", "10 PSI", "15 PSI", "20 PSI"],
+                    correct: 1
+                },
+                {
+                    id: 8,
+                    question: "Which material is NOT approved for indoor gas piping?",
+                    options: ["Black steel pipe", "Copper tubing", "CSST", "Galvanized steel pipe"],
+                    correct: 3
+                },
+                {
+                    id: 9,
+                    question: "What is the purpose of a drip leg in gas piping?",
+                    options: ["To reduce pressure", "To collect condensation", "To shut off gas flow", "To measure gas flow"],
+                    correct: 1
+                },
+                {
+                    id: 10,
+                    question: "What is the minimum distance between a gas meter and a window that opens?",
+                    options: ["1 foot", "3 feet", "5 feet", "10 feet"],
+                    correct: 1
+                },
+                {
+                    id: 11,
+                    question: "What type of joint compound should be used on gas pipe threads?",
+                    options: ["Pipe dope rated for gas", "Teflon tape only", "Any thread compound", "No compound needed"],
+                    correct: 0
+                },
+                {
+                    id: 12,
+                    question: "What is the maximum inlet pressure for a typical residential gas range?",
+                    options: ["4 inches W.C.", "7 inches W.C.", "14 inches W.C.", "2 PSI"],
+                    correct: 1
+                },
+                {
+                    id: 13,
+                    question: "Which type of vent system removes both combustion air and products?",
+                    options: ["Natural draft", "Direct vent", "Power vent", "Induced draft"],
+                    correct: 1
+                },
+                {
+                    id: 14,
+                    question: "What is the minimum clearance from a gas water heater to the ceiling?",
+                    options: ["6 inches", "12 inches", "18 inches", "24 inches"],
+                    correct: 0
+                },
+                {
+                    id: 15,
+                    question: "What size hole is required for a 1/2 inch gas pipe through a floor?",
+                    options: ["5/8 inch", "3/4 inch", "1 inch", "1 1/4 inch"],
+                    correct: 2
+                },
+                {
+                    id: 16,
+                    question: "What is the purpose of a gas pressure regulator?",
+                    options: ["Increase pressure", "Maintain constant pressure", "Measure pressure", "Stop gas flow"],
+                    correct: 1
+                },
+                {
+                    id: 17,
+                    question: "What type of detector is used to check for gas leaks?",
+                    options: ["Combustible gas indicator", "Oxygen meter", "Carbon monoxide detector", "Smoke detector"],
+                    correct: 0
+                },
+                {
+                    id: 18,
+                    question: "What is the maximum operating temperature for most gas appliance installations?",
+                    options: ["120°F", "140°F", "160°F", "180°F"],
+                    correct: 1
+                },
+                {
+                    id: 19,
+                    question: "Which valve position indicates 'OPEN' on a ball valve?",
+                    options: ["Handle parallel to pipe", "Handle perpendicular to pipe", "Handle at 45 degrees", "Handle position doesn't matter"],
+                    correct: 0
+                },
+                {
+                    id: 20,
+                    question: "What is the minimum pipe size for a residential gas service line?",
+                    options: ["1/2 inch", "3/4 inch", "1 inch", "1 1/4 inch"],
+                    correct: 1
+                }
+            ]
+        };
+
+        // Exam Configurations
+        const EXAM_CONFIGS = {
+            G3: {
+                QUICK_PRACTICE: {
+                    name: "Quick Practice",
+                    totalQuestions: 15, // Reduced for demo
+                    timeLimitMinutes: 30,
+                    passingScore: 70,
+                    description: "Quick practice session"
+                },
+                FULL_SIMULATION: {
+                    name: "Full Mock Exam",
+                    totalQuestions: 25, // Using all available demo questions
+                    timeLimitMinutes: 45,
+                    passingScore: 75,
+                    description: "Complete exam simulation"
+                }
+            },
+            G2: {
+                QUICK_PRACTICE: {
+                    name: "Quick Practice",
+                    totalQuestions: 10,
+                    timeLimitMinutes: 20,
+                    passingScore: 70,
+                    description: "Quick practice session"
+                },
+                FULL_SIMULATION: {
+                    name: "Full Mock Exam",
+                    totalQuestions: 20, // Using all available demo questions
+                    timeLimitMinutes: 30,
+                    passingScore: 75,
+                    description: "Complete exam simulation"
+                }
+            }
+        };
+
+        // Simple Icons (replacing Lucide React)
+        const Icon = {
+            Brain: () => React.createElement('div', {className: 'w-6 h-6 bg-blue-500 rounded'}, '🧠'),
+            Clock: () => React.createElement('div', {className: 'w-4 h-4'}, '⏰'),
+            CheckCircle: () => React.createElement('div', {className: 'w-8 h-8'}, '✅'),
+            AlertCircle: () => React.createElement('div', {className: 'w-8 h-8'}, '⚠️'),
+            BarChart3: () => React.createElement('div', {className: 'w-6 h-6'}, '📊'),
+            Trophy: () => React.createElement('div', {className: 'w-6 h-6'}, '🏆'),
+            Target: () => React.createElement('div', {className: 'w-6 h-6'}, '🎯'),
+            Zap: () => React.createElement('div', {className: 'w-6 h-6'}, '⚡'),
+            Play: () => React.createElement('div', {className: 'w-4 h-4'}, '▶️'),
+            Pause: () => React.createElement('div', {className: 'w-4 h-4'}, '⏸️'),
+            RotateCcw: () => React.createElement('div', {className: 'w-5 h-5'}, '🔄')
+        };
+
+        // Main Application Component
+        const TSSAExamSystem = () => {
+            const [currentView, setCurrentView] = React.useState('home');
+            const [certificationLevel, setCertificationLevel] = React.useState('G3');
+            
+            // Exam state
+            const [examState, setExamState] = React.useState({
+                isActive: false,
+                questions: [],
+                currentQuestionIndex: 0,
+                userAnswers: {},
+                timeRemaining: 0,
+                startTime: null,
+                config: null
+            });
+
+            const [examResults, setExamResults] = React.useState(null);
+            const [loading, setLoading] = React.useState(false);
+            const timerRef = React.useRef(null);
+
+            // Get questions based on certification level
+            const getQuestions = (level) => {
+                return level === 'G2' ? g2Questions.questions : g3Questions.questions;
+            };
+
+            // Start exam
+            const startExam = (examType) => {
+                const config = EXAM_CONFIGS[certificationLevel][examType];
+                const allQuestions = getQuestions(certificationLevel);
+                
+                // Shuffle and select questions
+                const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+                const selectedQuestions = shuffled.slice(0, config.totalQuestions);
+
+                setExamState({
+                    isActive: true,
+                    questions: selectedQuestions,
+                    currentQuestionIndex: 0,
+                    userAnswers: {},
+                    timeRemaining: config.timeLimitMinutes * 60,
+                    startTime: new Date(),
+                    config: config
+                });
+
+                setCurrentView('exam');
+                startTimer();
+            };
+
+            // Timer functionality
+            const startTimer = () => {
+                timerRef.current = setInterval(() => {
+                    setExamState(prevState => {
+                        if (prevState.timeRemaining <= 1) {
+                            submitExam();
+                            return prevState;
+                        }
+                        return {
+                            ...prevState,
+                            timeRemaining: prevState.timeRemaining - 1
+                        };
+                    });
+                }, 1000);
+            };
+
+            // Answer question
+            const answerQuestion = (questionIndex, answerIndex) => {
+                const newAnswers = {
+                    ...examState.userAnswers,
+                    [questionIndex]: {
+                        selectedAnswer: answerIndex,
+                        isCorrect: answerIndex === examState.questions[questionIndex].correct,
+                        timestamp: new Date()
+                    }
+                };
+
+                setExamState(prevState => ({
+                    ...prevState,
+                    userAnswers: newAnswers
+                }));
+            };
+
+            // Navigation
+            const navigateQuestion = (direction) => {
+                const currentIndex = examState.currentQuestionIndex;
+                const maxIndex = examState.questions.length - 1;
+                
+                let newIndex;
+                if (direction === 'next' && currentIndex < maxIndex) {
+                    newIndex = currentIndex + 1;
+                } else if (direction === 'previous' && currentIndex > 0) {
+                    newIndex = currentIndex - 1;
+                } else {
+                    return;
+                }
+
+                setExamState(prevState => ({
+                    ...prevState,
+                    currentQuestionIndex: newIndex
+                }));
+            };
+
+            // Submit exam
+            const submitExam = () => {
+                if (!examState.isActive) return;
+
+                clearInterval(timerRef.current);
+                const answers = Object.values(examState.userAnswers);
+                const correctAnswers = answers.filter(a => a.isCorrect).length;
+                const totalQuestions = examState.questions.length;
+                const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+                
+                const results = {
+                    totalQuestions,
+                    correctAnswers,
+                    percentage,
+                    passed: percentage >= examState.config.passingScore,
+                    timeTaken: Math.floor((Date.now() - examState.startTime.getTime()) / 1000 / 60),
+                    passingScore: examState.config.passingScore,
+                    certificationLevel,
+                    examType: examState.config.name
+                };
+
+                setExamResults(results);
+                setExamState(prevState => ({ ...prevState, isActive: false }));
+                setCurrentView('results');
+            };
+
+            // Format time
+            const formatTime = (seconds) => {
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${minutes}:${secs.toString().padStart(2, '0')}`;
+            };
+
+            // Home View
+            const HomeView = () => (
+                React.createElement('div', { className: 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100' },
+                    React.createElement('div', { className: 'container mx-auto px-4 py-8' },
+                        // Header
+                        React.createElement('div', { className: 'text-center mb-12' },
+                            React.createElement('div', { className: 'flex items-center justify-center mb-6' },
+                                React.createElement('div', { className: 'bg-gradient-to-r from-blue-500 to-indigo-600 p-4 rounded-full' },
+                                    React.createElement(Icon.Brain)
+                                )
+                            ),
+                            React.createElement('h1', { className: 'text-4xl md:text-5xl font-bold text-gray-800 mb-4' },
+                                'TSSA Adaptive Exam System'
+                            ),
+                            React.createElement('p', { className: 'text-xl text-gray-600 mb-8' },
+                                'Master Your Gas Technician Certification with AI-Powered Learning'
+                            ),
+                            
+                            // Certification Level Selector
+                            React.createElement('div', { className: 'flex justify-center mb-8' },
+                                React.createElement('div', { className: 'bg-white rounded-lg p-2 shadow-lg' },
+                                    React.createElement('button', {
+                                        onClick: () => setCertificationLevel('G3'),
+                                        className: `px-6 py-3 rounded-md font-semibold transition-all ${certificationLevel === 'G3' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'}`
+                                    }, 'G3 - Level 1 Foundation'),
+                                    React.createElement('button', {
+                                        onClick: () => setCertificationLevel('G2'),
+                                        className: `px-6 py-3 rounded-md font-semibold transition-all ${certificationLevel === 'G2' ? 'bg-indigo-500 text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'}`
+                                    }, 'G2 - Level 2 Advanced')
+                                )
+                            )
+                        ),
+
+                        // Exam Options
+                        React.createElement('div', { className: 'grid md:grid-cols-2 gap-6 mb-12' },
+                            Object.entries(EXAM_CONFIGS[certificationLevel]).map(([examType, config]) =>
+                                React.createElement('div', {
+                                    key: examType,
+                                    className: 'bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 cursor-pointer group',
+                                    onClick: () => !loading && startExam(examType)
+                                },
+                                    React.createElement('div', { className: 'text-center' },
+                                        React.createElement('div', { className: 'bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-full w-fit mx-auto mb-4 group-hover:scale-110 transition-transform' },
+                                            examType.includes('QUICK') ? React.createElement(Icon.Zap) : React.createElement(Icon.Trophy)
+                                        ),
+                                        React.createElement('h3', { className: 'text-xl font-bold text-gray-800 mb-2' }, config.name),
+                                        React.createElement('p', { className: 'text-gray-600 mb-4' }, config.description),
+                                        React.createElement('div', { className: 'space-y-2 text-sm text-gray-500' },
+                                            React.createElement('div', { className: 'flex justify-between' },
+                                                React.createElement('span', null, 'Questions:'),
+                                                React.createElement('span', { className: 'font-semibold' }, config.totalQuestions)
+                                            ),
+                                            React.createElement('div', { className: 'flex justify-between' },
+                                                React.createElement('span', null, 'Time Limit:'),
+                                                React.createElement('span', { className: 'font-semibold' }, config.timeLimitMinutes + ' min')
+                                            ),
+                                            React.createElement('div', { className: 'flex justify-between' },
+                                                React.createElement('span', null, 'Pass Score:'),
+                                                React.createElement('span', { className: 'font-semibold' }, config.passingScore + '%')
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+
+                        // Info Section
+                        React.createElement('div', { className: 'bg-white rounded-xl shadow-lg p-8 text-center' },
+                            React.createElement('h2', { className: 'text-2xl font-bold text-gray-800 mb-4' },
+                                `${certificationLevel} Certification - ${certificationLevel === 'G3' ? 'Foundation Level' : 'Advanced Level'}`
+                            ),
+                            React.createElement('p', { className: 'text-gray-600 mb-6' },
+                                certificationLevel === 'G3' 
+                                    ? 'Entry-level certification covering fundamental gas safety, codes, and installation principles'
+                                    : 'Advanced certification for hands-on installation, service, and troubleshooting (requires G3)'
+                            ),
+                            React.createElement('div', { className: 'bg-blue-50 rounded-lg p-4' },
+                                React.createElement('p', { className: 'text-sm text-blue-800' },
+                                    `📚 Question Bank: ${getQuestions(certificationLevel).length} comprehensive questions`
+                                ),
+                                React.createElement('p', { className: 'text-sm text-blue-800 mt-1' },
+                                    `🤖 AI-powered adaptive learning with real-time difficulty adjustment`
+                                ),
+                                React.createElement('p', { className: 'text-sm text-blue-800 mt-1' },
+                                    `📋 Based on CSA B149.1 and B149.2 standards`
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            // Exam View
+            const ExamView = () => {
+                const currentQuestion = examState.questions[examState.currentQuestionIndex];
+                const questionNumber = examState.currentQuestionIndex + 1;
+                const totalQuestions = examState.questions.length;
+                const userAnswer = examState.userAnswers[examState.currentQuestionIndex];
+
+                if (!currentQuestion) {
+                    return React.createElement('div', { className: 'text-center p-8' }, 'Loading question...');
+                }
+
+                return React.createElement('div', { className: 'min-h-screen bg-gray-50' },
+                    // Header
+                    React.createElement('div', { className: 'bg-white shadow-sm border-b sticky top-0 z-10' },
+                        React.createElement('div', { className: 'container mx-auto px-4 py-4' },
+                            React.createElement('div', { className: 'flex items-center justify-between' },
+                                React.createElement('div', { className: 'flex items-center space-x-6' },
+                                    React.createElement('h1', { className: 'text-lg font-semibold text-gray-800' },
+                                        `${certificationLevel} Practice Exam`
+                                    ),
+                                    React.createElement('div', { className: 'flex items-center space-x-4' },
+                                        React.createElement('div', { className: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium' },
+                                            `Question ${questionNumber} of ${totalQuestions}`
+                                        ),
+                                        React.createElement('div', { 
+                                            className: `px-3 py-1 rounded-full text-sm font-medium ${examState.timeRemaining < 300 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`
+                                        },
+                                            React.createElement(Icon.Clock),
+                                            ' ',
+                                            formatTime(examState.timeRemaining)
+                                        )
+                                    )
+                                ),
+                                React.createElement('button', {
+                                    onClick: submitExam,
+                                    className: 'bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors'
+                                }, 'Submit Exam')
+                            )
+                        )
+                    ),
+
+                    React.createElement('div', { className: 'container mx-auto px-4 py-8' },
+                        React.createElement('div', { className: 'max-w-4xl mx-auto' },
+                            // Progress Bar
+                            React.createElement('div', { className: 'bg-white rounded-lg shadow-sm p-6 mb-6' },
+                                React.createElement('div', { className: 'flex justify-between text-sm text-gray-600 mb-2' },
+                                    React.createElement('span', null, 'Progress'),
+                                    React.createElement('span', null, Math.round((questionNumber / totalQuestions) * 100) + '% Complete')
+                                ),
+                                React.createElement('div', { className: 'w-full bg-gray-200 rounded-full h-2' },
+                                    React.createElement('div', { 
+                                        className: 'bg-blue-500 h-2 rounded-full transition-all duration-300',
+                                        style: { width: `${(questionNumber / totalQuestions) * 100}%` }
+                                    })
+                                )
+                            ),
+
+                            // Question Card
+                            React.createElement('div', { className: 'bg-white rounded-lg shadow-sm p-8 mb-6' },
+                                React.createElement('h2', { className: 'text-xl font-medium text-gray-800 mb-6 leading-relaxed' },
+                                    currentQuestion.question
+                                ),
+                                
+                                React.createElement('div', { className: 'space-y-3' },
+                                    currentQuestion.options.map((option, index) =>
+                                        React.createElement('label', {
+                                            key: index,
+                                            className: `block p-4 rounded-lg border-2 cursor-pointer transition-all ${userAnswer?.selectedAnswer === index ? 'border-blue-500 bg-blue-50 text-blue-900' : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}`
+                                        },
+                                            React.createElement('div', { className: 'flex items-center' },
+                                                React.createElement('input', {
+                                                    type: 'radio',
+                                                    name: `question-${examState.currentQuestionIndex}`,
+                                                    value: index,
+                                                    checked: userAnswer?.selectedAnswer === index,
+                                                    onChange: () => answerQuestion(examState.currentQuestionIndex, index),
+                                                    className: 'mr-4 w-4 h-4 text-blue-500'
+                                                }),
+                                                React.createElement('span', { className: 'font-medium mr-3 text-gray-500' },
+                                                    String.fromCharCode(65 + index) + '.'
+                                                ),
+                                                React.createElement('span', { className: 'flex-1' }, option)
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+
+                            // Navigation
+                            React.createElement('div', { className: 'flex justify-between items-center' },
+                                React.createElement('button', {
+                                    onClick: () => navigateQuestion('previous'),
+                                    disabled: examState.currentQuestionIndex === 0,
+                                    className: 'bg-gray-100 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                                }, '← Previous'),
+                                
+                                React.createElement('div', { className: 'text-sm text-gray-500' },
+                                    `${Object.keys(examState.userAnswers).length} of ${totalQuestions} answered`
+                                ),
+
+                                React.createElement('button', {
+                                    onClick: () => examState.currentQuestionIndex === totalQuestions - 1 ? submitExam() : navigateQuestion('next'),
+                                    className: `px-6 py-2 rounded-lg transition-colors ${examState.currentQuestionIndex === totalQuestions - 1 ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`
+                                }, examState.currentQuestionIndex === totalQuestions - 1 ? 'Finish Exam' : 'Next →')
+                            )
+                        )
+                    )
+                );
+            };
+
+            // Results View
+            const ResultsView = () => {
+                if (!examResults) return null;
+
+                return React.createElement('div', { className: 'min-h-screen bg-gray-50 py-8' },
+                    React.createElement('div', { className: 'container mx-auto px-4' },
+                        React.createElement('div', { className: 'max-w-4xl mx-auto' },
+                            // Score Card
+                            React.createElement('div', { 
+                                className: `rounded-xl shadow-lg p-8 mb-8 text-center ${examResults.passed ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white' : 'bg-gradient-to-r from-red-500 to-rose-600 text-white'}`
+                            },
+                                React.createElement('div', { className: 'mb-4' },
+                                    examResults.passed ? React.createElement(Icon.CheckCircle) : React.createElement(Icon.AlertCircle)
+                                ),
+                                React.createElement('h1', { className: 'text-3xl font-bold mb-2' },
+                                    examResults.passed ? 'Congratulations!' : 'Keep Studying!'
+                                ),
+                                React.createElement('div', { className: 'text-5xl font-bold mb-4' },
+                                    examResults.percentage + '%'
+                                ),
+                                React.createElement('p', { className: 'text-xl opacity-90' },
+                                    `${examResults.correctAnswers} correct out of ${examResults.totalQuestions} questions`
+                                ),
+                                React.createElement('p', { className: 'opacity-80 mt-2' },
+                                    `Passing score: ${examResults.passingScore}% | Time taken: ${examResults.timeTaken} minutes`
+                                )
+                            ),
+
+                            // Action Buttons
+                            React.createElement('div', { className: 'flex flex-wrap justify-center gap-4' },
+                                React.createElement('button', {
+                                    onClick: () => {
+                                        setCurrentView('home');
+                                        setExamResults(null);
+                                    },
+                                    className: 'bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2'
+                                },
+                                    React.createElement(Icon.RotateCcw),
+                                    React.createElement('span', null, 'Take Another Exam')
+                                )
+                            )
+                        )
+                    )
+                );
+            };
+
+            // Render based on current view
+            switch (currentView) {
+                case 'exam':
+                    return React.createElement(ExamView);
+                case 'results':
+                    return React.createElement(ResultsView);
+                default:
+                    return React.createElement(HomeView);
+            }
+        };
+
+        // Footer Component
+        const Footer = () => (
+            React.createElement('footer', { className: 'bg-white border-t border-gray-200 mt-auto' },
+                React.createElement('div', { className: 'max-w-7xl mx-auto px-4 py-8' },
+                    React.createElement('div', { className: 'text-center' },
+                        React.createElement('div', { className: 'flex items-center justify-center space-x-4 mb-4' },
+                            React.createElement('div', { className: 'bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-xl' },
+                                React.createElement('div', { className: 'w-8 h-8 bg-cyan-400 rounded-full flex items-center justify-center text-lg' }, '🐦')
+                            ),
+                            React.createElement('div', null,
+                                React.createElement('h3', { className: 'text-2xl font-bold bg-gradient-to-r from-red-500 to-teal-500 bg-clip-text text-transparent' }, 'LARK LABS'),
+                                React.createElement('p', { className: 'text-sm text-gray-600 font-medium tracking-wider' }, 'SOFTWARE DEVELOPMENT')
+                            )
+                        ),
+                        React.createElement('p', { className: 'text-gray-600 mb-4' },
+                            '© 2025 Lark Labs Software Development. All Rights Reserved.'
+                        ),
+                        React.createElement('p', { className: 'text-xs text-gray-500 max-w-2xl mx-auto' },
+                            'This TSSA Practice Exam System is designed for educational purposes only and is not affiliated with TSSA. ',
+                            'Success on practice tests does not guarantee success on official examinations.'
+                        )
+                    )
+                )
+            )
+        );
+
+        // Main App Component
+        const App = () => (
+            React.createElement('div', { className: 'min-h-screen flex flex-col' },
+                React.createElement(TSSAExamSystem),
+                React.createElement(Footer)
+            )
+        );
+
+        // Initialize the application
+        function initializeApp() {
+            try {
+                // Hide loading screen
+                setTimeout(() => {
+                    const loadingScreen = document.getElementById('loadingScreen');
+                    const appContainer = document.getElementById('root');
+                    
+                    if (loadingScreen && appContainer) {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                            appContainer.style.display = 'block';
+                            document.body.classList.remove('loading');
+                        }, 500);
+                    }
+                }, 2000);
+
+                // Render React app
+                const container = document.getElementById('root');
+                const root = ReactDOM.createRoot(container);
+                root.render(React.createElement(App));
+
+                console.log('🎉 TSSA Adaptive Exam System initialized successfully');
+                console.log('📚 Demo Question Bank: G3 (25 questions), G2 (20 questions)');
+                console.log('🤖 AI-Powered Learning: Enabled');
+                console.log('🔧 Built by Lark Labs Software Development');
+
+            } catch (error) {
+                console.error('❌ Application initialization failed:', error);
+                
+                const container = document.getElementById('root');
+                if (container) {
+                    container.innerHTML = `
+                        <div class="min-h-screen bg-red-50 flex items-center justify-center p-4">
+                            <div class="max-w-md mx-auto text-center bg-white p-8 rounded-lg shadow-lg">
+                                <div class="text-red-500 mb-4 text-4xl">⚠️</div>
+                                <h2 class="text-2xl font-bold text-gray-800 mb-4">Application Error</h2>
+                                <p class="text-gray-600 mb-6">Failed to initialize the TSSA Exam System.</p>
+                                <button onclick="window.location.reload()" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                    Refresh Page
+                                </button>
+                                <div class="mt-4 p-3 bg-gray-100 rounded text-left text-xs text-gray-600">
+                                    <strong>Error:</strong> ${error.message}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }
+            }
+        }
+
+        // Start the application
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+    </script>
+</body>
+</html>

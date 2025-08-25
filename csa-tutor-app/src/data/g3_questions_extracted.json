@@ -1,0 +1,3639 @@
+{
+  "metadata": {
+    "title": "TSSA G3 Exam Questions",
+    "source": "TSSA_G3_Exam_SimulatorV3.html",
+    "extractionDate": "2025-08-23T01:35:20.625Z",
+    "totalQuestions": 313,
+    "description": "Complete question bank extracted from TSSA G3 Exam Simulator V3"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "What do electrical drawings include?",
+      "options": [
+        "Supply Voltage, Internal Wiring, Field Wiring, Location of controls",
+        "Only supply voltage",
+        "Only internal wiring",
+        "Only field wiring"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Supply Voltage, Internal Wiring, Field Wiring, Location of controls"
+    },
+    {
+      "id": 2,
+      "question": "What type of pressure is a gas line when no movement is taking place?",
+      "options": [
+        "Dynamic Pressure",
+        "Static Pressure",
+        "Working Pressure",
+        "System Pressure"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Static Pressure"
+    },
+    {
+      "id": 3,
+      "question": "What is primary air?",
+      "options": [
+        "Air around the appliance",
+        "The air that is mixed with gas prior to ignition",
+        "Air from outside",
+        "Combustion air"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "The air that is mixed with gas prior to ignition"
+    },
+    {
+      "id": 4,
+      "question": "What is the specific gravity of Propane?",
+      "options": [
+        "1.0",
+        "0.6",
+        "1.52",
+        "2.0"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "1.52"
+    },
+    {
+      "id": 5,
+      "question": "What is the space ratio for converting propane from liquid to gas?",
+      "options": [
+        "100:1",
+        "200:1",
+        "270:1",
+        "300:1"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "270:1"
+    },
+    {
+      "id": 6,
+      "question": "What section of the code is for Venting?",
+      "options": [
+        "Section 6",
+        "Section 7",
+        "Section 8",
+        "Section 9"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Section 8"
+    },
+    {
+      "id": 7,
+      "question": "Who may refuse to grant the authorization or revoke, suspend, or refuse to renew an authorization, if the authorization holder is in contravention of this Act?",
+      "options": [
+        "Minister of Consumer and Commercial Relations",
+        "TSSA Fuel Safety Director",
+        "TSSA Fuel Safety Inspector",
+        "Premier of Ontario"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "TSSA Fuel Safety Director"
+    },
+    {
+      "id": 8,
+      "question": "Who may only use force to enter and inspect a place where there is an immediate threat to public safety and only such force that is reasonably necessary in the circumstances?",
+      "options": [
+        "Gas Technician 2",
+        "TSSA Director",
+        "TSSA Inspector",
+        "Ministry of Labour Inspector"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "TSSA Inspector"
+    },
+    {
+      "id": 9,
+      "question": "Who shall order such investigation as he or she considers necessary on being notified of an accident or incident?",
+      "options": [
+        "Employer of Gas Technician",
+        "TSSA Director",
+        "TSSA Inspector",
+        "Ministry of Labour Inspector"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "TSSA Director"
+    },
+    {
+      "id": 10,
+      "question": "Every _______ shall take all reasonable precautions to ensure that they and their agents and employees comply with this Act, the regulations or a Ministers order",
+      "options": [
+        "TSSA Director",
+        "TSSA Inspector",
+        "Employer",
+        "Supervisor"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Employer"
+    },
+    {
+      "id": 11,
+      "question": "Who is the 'authority having jurisdiction' referenced in the Code for Ontario",
+      "options": [
+        "Ministry of Training, Colleges, Universities",
+        "TSSA",
+        "Ministry of Labour",
+        "Ministry of the Environment"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "TSSA"
+    },
+    {
+      "id": 12,
+      "question": "An automatically controlled forced air furnace shall be equipped with a high temperature limit control, the maximum setting of the control shall be?",
+      "options": [
+        "200 degrees F",
+        "250 degrees F",
+        "300 degrees F",
+        "350 degrees F"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "300 degrees F"
+    },
+    {
+      "id": 13,
+      "question": "What is the maximum gas pressure allowed in a building under construction (construction heater application)?",
+      "options": [
+        "2 PSIG",
+        "20 PSIG",
+        "25 PSIG",
+        "50 PSIG"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "2 PSIG"
+    },
+    {
+      "id": 14,
+      "question": "A Notice of Proposal is not required to be provided by TSSA when?",
+      "options": [
+        "When certification is being suspended due to negligence",
+        "When revoking a certification",
+        "When suspending a certification due to failure to pay certification fees",
+        "When certification is not granted"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "When suspending a certification due to failure to pay certification fees"
+    },
+    {
+      "id": 15,
+      "question": "Which certification agency listed is not certified for appliance approvals in Ontario?",
+      "options": [
+        "Ministry of Transportation",
+        "Canadian Standards Association",
+        "Underwriters Laboratories Canada",
+        "Underwriters Laboratories International"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Ministry of Transportation"
+    },
+    {
+      "id": 16,
+      "question": "Welded gas piping must comply with?",
+      "options": [
+        "Transport of Dangerous Goods Regulations",
+        "Hydrocarbon and Gasoline Pipeline Act",
+        "TIG and MIG Welding Act",
+        "Technical Standards and Safety Act"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Technical Standards and Safety Act"
+    },
+    {
+      "id": 17,
+      "question": "A Technician not agreeing with a Directors ruling may?",
+      "options": [
+        "Continue performing duties as a Gas Technician",
+        "Appeal to the Director of Fuels Safety at TSSA",
+        "Appeal to the Director of TSSA",
+        "Appeal to the Ontario Divisional Court"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Appeal to the Ontario Divisional Court"
+    },
+    {
+      "id": 18,
+      "question": "A person might be refused authorization where?",
+      "options": [
+        "The person is not qualified",
+        "The person resides in another Province or Territory",
+        "The person resides in another country",
+        "The person is qualified in another Province or Territory"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "The person is not qualified"
+    },
+    {
+      "id": 19,
+      "question": "A Safety Order can be given?",
+      "options": [
+        "In writing only",
+        "Orally or in Writing",
+        "Only after a hearing has taken place",
+        "Only after prior notice has been given"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Orally or in Writing"
+    },
+    {
+      "id": 20,
+      "question": "No person shall remove a seal affixed by an Inspector:",
+      "options": [
+        "Without consent from the Director of Fuel Safety TSSA",
+        "Without the consent of the Distributor",
+        "Without the consent of the TSSA Fuel Safety Inspector who affixed the seal",
+        "Without consent from your Employer"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Without the consent of the TSSA Fuel Safety Inspector who affixed the seal"
+    },
+    {
+      "id": 21,
+      "question": "The maximum fine for contravention of the Acts and Regulations for an individual is?",
+      "options": [
+        "$5000",
+        "$10,000",
+        "$50,000",
+        "$100,000"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "$50,000"
+    },
+    {
+      "id": 22,
+      "question": "A Hydrocarbon is defined as?",
+      "options": [
+        "Chemical compound of Hydro electricity and Water",
+        "Chemical compound of Hydrogen and Carbon Dioxide",
+        "Chemical compound of Hydrogen and Carbon Monoxide",
+        "Chemical compound of Hydrogen and Carbon"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Chemical compound of Hydrogen and Carbon"
+    },
+    {
+      "id": 23,
+      "question": "Who has the responsibility under the Act of Inspecting and Accepting an Installation before supplying gas for the first time?",
+      "options": [
+        "TSSA Fuel Safety Inspector",
+        "Municipality Plumbing Inspector",
+        "The Distributor",
+        "Ministry of Labour Inspector"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "The Distributor"
+    },
+    {
+      "id": 24,
+      "question": "No person shall operate a container refill center unless?",
+      "options": [
+        "The operator of the refill center posts a personal bond of $500,000",
+        "The refill center is licensed",
+        "The refill center is located more than 0.5 kilometres from a residential area",
+        "The refill center is insured for $2,000,000 liability"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "The refill center is licensed"
+    },
+    {
+      "id": 25,
+      "question": "An 'indirect fired appliance' is defined as?",
+      "options": [
+        "An appliance in which the flue gases are not mixed with the medium being heated",
+        "An appliance in which the flue gases are intermixed with the medium being heated",
+        "An appliance with all combustion air supplied directly from, and all combustion products directly vented to the outdoors by independent enclosed passageways connected directly to the appliance",
+        "An appliance with storage capability only, and where heat is transferred from one heating medium to another"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "An appliance in which the flue gases are not mixed with the medium being heated"
+    },
+    {
+      "id": 26,
+      "question": "What is a directive in the context of workplace safety legislation?",
+      "options": [
+        "Gas Technician Certification Guide",
+        "Fuel Safety Manual",
+        "Directive focusing on specific safety areas under an act",
+        "Employee handbook"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Directive focusing on specific safety areas under an act"
+    },
+    {
+      "id": 27,
+      "question": "What is one primary duty of a gas technician when finding a gas appliance in immediate hazard condition?",
+      "options": [
+        "Tag the appliance and continue use",
+        "Shut off the gas supply and notify the user and distributor",
+        "Inform a co-worker and resume work",
+        "Wait for inspection approval"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Shut off the gas supply and notify the user and distributor"
+    },
+    {
+      "id": 28,
+      "question": "How soon must a gas technician provide written notice to the distributor about an immediate hazard?",
+      "options": [
+        "7 days",
+        "30 days",
+        "Immediately",
+        "Within 14 days"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Within 14 days"
+    },
+    {
+      "id": 29,
+      "question": "What should be done if an appliance is found in unacceptable condition but not an immediate hazard?",
+      "options": [
+        "No action is required",
+        "Shut off gas and discard appliance",
+        "Notify distributor and user with written notice",
+        "Call emergency services"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Notify distributor and user with written notice"
+    },
+    {
+      "id": 30,
+      "question": "Why is it important to study local OH&S acts and regulations?",
+      "options": [
+        "To fulfill exam requirements",
+        "To negotiate wages",
+        "To understand and comply with specific workplace safety requirements",
+        "To avoid doing hands-on work"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "To understand and comply with specific workplace safety requirements"
+    },
+    {
+      "id": 31,
+      "question": "Which of the following is NOT typically found in OH&S acts?",
+      "options": [
+        "Penalties for non-compliance",
+        "Company marketing plans",
+        "Worker rights",
+        "Duties of employers"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Company marketing plans"
+    },
+    {
+      "id": 32,
+      "question": "What is one key component of hazard reporting procedures?",
+      "options": [
+        "Ignore minor hazards",
+        "Only report to coworkers",
+        "Report hazards within a specific time frame",
+        "Keep a personal record for yourself"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Report hazards within a specific time frame"
+    },
+    {
+      "id": 33,
+      "question": "If unsure about reporting requirements, a worker should:",
+      "options": [
+        "Do nothing",
+        "Call a family member",
+        "Ask the supervisor or consult the WCB",
+        "Research on social media"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Ask the supervisor or consult the WCB"
+    },
+    {
+      "id": 34,
+      "question": "What does WCB stand for?",
+      "options": [
+        "Workers' Clean Bureau",
+        "Workstation Control Board",
+        "Workers' Compensation Board",
+        "Workplace Cleanliness Booklet"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Workers' Compensation Board"
+    },
+    {
+      "id": 35,
+      "question": "Which document must be filed when a worker is injured and misses work?",
+      "options": [
+        "Payroll deduction form",
+        "Workers Compensation Board (WCB) report",
+        "Income tax return",
+        "Time-off request"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Workers Compensation Board (WCB) report"
+    },
+    {
+      "id": 36,
+      "question": "Who fills out the WCB report form?",
+      "options": [
+        "The worker's union",
+        "The employer",
+        "The government",
+        "The coworker"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "The employer"
+    },
+    {
+      "id": 37,
+      "question": "How does an act differ from a regulation?",
+      "options": [
+        "Acts are informal rules",
+        "Acts are legal frameworks; regulations are specific directives under acts",
+        "Regulations are suggestions",
+        "Acts have no legal standing"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Acts are legal frameworks; regulations are specific directives under acts"
+    },
+    {
+      "id": 38,
+      "question": "If a gas technician gives oral notice about a hazard, they must also:",
+      "options": [
+        "Wait for a written confirmation",
+        "Write a notice to the user and distributor",
+        "Contact the insurance company",
+        "Inform the media"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Write a notice to the user and distributor"
+    },
+    {
+      "id": 39,
+      "question": "What does the CSA encourage workers to do with their province's OH&S acts?",
+      "options": [
+        "Memorize and recite",
+        "Modify them for better clarity",
+        "Obtain and study them",
+        "Ignore irrelevant sections"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Obtain and study them"
+    },
+    {
+      "id": 40,
+      "question": "What is one way to keep up to date with regulations?",
+      "options": [
+        "Talk to clients",
+        "Check with regulators periodically",
+        "Rely solely on past training",
+        "Avoid complex documentation"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Check with regulators periodically"
+    },
+    {
+      "id": 41,
+      "question": "What kind of condition requires immediate gas shutoff and notice?",
+      "options": [
+        "Acceptable but old installation",
+        "Routine maintenance",
+        "Immediate hazard condition",
+        "New equipment check"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Immediate hazard condition"
+    },
+    {
+      "id": 42,
+      "question": "When must a gas technician notify the user about a hazardous condition?",
+      "options": [
+        "At the next scheduled visit",
+        "Within 7 days",
+        "Immediately, in writing",
+        "Only if instructed by employer"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Immediately, in writing"
+    },
+    {
+      "id": 43,
+      "question": "Which of the following are typical sections in a provincial OH&S act?",
+      "options": [
+        "Political representation",
+        "Job interview guidelines",
+        "Duties of workers and employers, toxic substances, penalties",
+        "Grocery reimbursement policies"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Duties of workers and employers, toxic substances, penalties"
+    },
+    {
+      "id": 44,
+      "question": "The role of safety regulations under energy or fuel acts includes:",
+      "options": [
+        "Advertising fuel products",
+        "Tracking sales",
+        "Ensuring safe installation and operation of gas equipment",
+        "Promoting energy drink use"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Ensuring safe installation and operation of gas equipment"
+    },
+    {
+      "id": 45,
+      "question": "What system provides vital information about hazardous materials in the workplace?",
+      "options": [
+        "WHMIS",
+        "MSDS",
+        "OHSA",
+        "GHS"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "WHMIS"
+    },
+    {
+      "id": 46,
+      "question": "WHMIS 2015 aligns with which international system?",
+      "options": [
+        "ILO Safety Standard",
+        "Globally Harmonized System (GHS)",
+        "ISO 45001",
+        "United Nations Environmental Treaty"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Globally Harmonized System (GHS)"
+    },
+    {
+      "id": 47,
+      "question": "What document replaced MSDS under WHMIS 2015?",
+      "options": [
+        "Hazard Form",
+        "Product Information Sheet",
+        "Safety Data Sheet (SDS)",
+        "GHS Label Sheet"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Safety Data Sheet (SDS)"
+    },
+    {
+      "id": 48,
+      "question": "Under WHMIS 2015, what does the signal word \"Danger\" indicate?",
+      "options": [
+        "A mild hazard",
+        "A cosmetic issue",
+        "A more severe hazard",
+        "A warning for environmental concerns"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "A more severe hazard"
+    },
+    {
+      "id": 49,
+      "question": "What are the two main hazard groups under GHS?",
+      "options": [
+        "Physical and Health",
+        "Mechanical and Electrical",
+        "Chemical and Biological",
+        "Flammable and Reactive"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Physical and Health"
+    },
+    {
+      "id": 50,
+      "question": "What symbol indicates acute toxicity or a serious health hazard?",
+      "options": [
+        "Flame",
+        "Exclamation mark",
+        "Skull and crossbones",
+        "Gas cylinder"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Skull and crossbones"
+    },
+    {
+      "id": 51,
+      "question": "Who is responsible for ensuring SDS are accessible at the workplace?",
+      "options": [
+        "Workers",
+        "Manufacturer",
+        "Employer",
+        "Union representative"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Employer"
+    },
+    {
+      "id": 52,
+      "question": "A workplace label is required when:",
+      "options": [
+        "Product is shipped directly from supplier",
+        "Product is diluted",
+        "Product is transferred to another container",
+        "Product is labeled in another language"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Product is transferred to another container"
+    },
+    {
+      "id": 53,
+      "question": "What does SDS Section 1 provide?",
+      "options": [
+        "Toxicity information",
+        "Physical appearance",
+        "Identification (product name, supplier, emergency number)",
+        "Environmental hazard"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Identification (product name, supplier, emergency number)"
+    },
+    {
+      "id": 54,
+      "question": "Which of the following is not a route of entry for solvents?",
+      "options": [
+        "Inhalation",
+        "Skin contact",
+        "Subliminal exposure",
+        "Ingestion"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Subliminal exposure"
+    },
+    {
+      "id": 55,
+      "question": "How should solvent spills be cleaned?",
+      "options": [
+        "Absorbed with sawdust and left out",
+        "Immediately cleaned and rags stored properly",
+        "Ignored unless large",
+        "With gasoline"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Immediately cleaned and rags stored properly"
+    },
+    {
+      "id": 56,
+      "question": "What is the purpose of grounding drums with flammable liquids?",
+      "options": [
+        "Prevent leaks",
+        "Track usage",
+        "Prevent static sparks",
+        "Reduce evaporation"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Prevent static sparks"
+    },
+    {
+      "id": 57,
+      "question": "What is a proper precaution when using solvents?",
+      "options": [
+        "Use in unventilated areas",
+        "Avoid eye and skin contact",
+        "Store near heat",
+        "Use gasoline to clean up"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Avoid eye and skin contact"
+    },
+    {
+      "id": 58,
+      "question": "What PPE is recommended for inhalation hazards?",
+      "options": [
+        "Safety boots",
+        "Hearing protection",
+        "Respirators",
+        "Safety vest"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Respirators"
+    },
+    {
+      "id": 59,
+      "question": "What material emits highly toxic fumes when burned?",
+      "options": [
+        "Stainless steel",
+        "ABS/PVC",
+        "Copper",
+        "PEX"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "ABS/PVC"
+    },
+    {
+      "id": 60,
+      "question": "Which form of chlorine is heavier than air and collects near the ground?",
+      "options": [
+        "Liquid chlorine",
+        "Solid chlorine",
+        "Gaseous chlorine",
+        "Ozone"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Gaseous chlorine"
+    },
+    {
+      "id": 61,
+      "question": "What is the first step if a chlorine leak is suspected?",
+      "options": [
+        "Use fans",
+        "Evacuate area",
+        "Light a flare",
+        "Seal container"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Evacuate area"
+    },
+    {
+      "id": 62,
+      "question": "What hazard is associated with cutting galvanized pipes?",
+      "options": [
+        "Heat stroke",
+        "Toxic zinc or cadmium fumes",
+        "Slips and trips",
+        "Electric shock"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Toxic zinc or cadmium fumes"
+    },
+    {
+      "id": 63,
+      "question": "What gas is heavier than air and collects at low points?",
+      "options": [
+        "Natural gas",
+        "Oxygen",
+        "Propane",
+        "Helium"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Propane"
+    },
+    {
+      "id": 64,
+      "question": "What colour is gaseous chlorine?",
+      "options": [
+        "Blue",
+        "Greenish-yellow",
+        "Brown",
+        "Colourless"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Greenish-yellow"
+    },
+    {
+      "id": 65,
+      "question": "What should you do if a container label becomes unreadable?",
+      "options": [
+        "Discard the container",
+        "Ignore it",
+        "Apply a workplace label",
+        "Pour it into a clear bottle"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Apply a workplace label"
+    },
+    {
+      "id": 66,
+      "question": "What toxic material is found in plastic venting glues?",
+      "options": [
+        "Asbestos",
+        "Chlorine",
+        "Solvents",
+        "Sulphur"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Solvents"
+    },
+    {
+      "id": 67,
+      "question": "What is the recommended method for transporting propane cylinders?",
+      "options": [
+        "Horizontally",
+        "Upright and secured",
+        "In the passenger seat",
+        "With gasoline"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Upright and secured"
+    },
+    {
+      "id": 68,
+      "question": "What does the biohazard pictogram represent?",
+      "options": [
+        "Fire",
+        "Electrical shock",
+        "Infectious materials",
+        "Radiation"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Infectious materials"
+    },
+    {
+      "id": 69,
+      "question": "What gases are typically found in sewer gas?",
+      "options": [
+        "CO₂ and helium",
+        "Ozone and radon",
+        "Hydrogen sulfide, methane, ammonia",
+        "Argon and krypton"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Hydrogen sulfide, methane, ammonia"
+    },
+    {
+      "id": 70,
+      "question": "What is the safe response to suspected sewer gas in a manhole?",
+      "options": [
+        "Enter and hold breath",
+        "Call a plumber",
+        "Test, ventilate, and wear PPE",
+        "Light a match"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Test, ventilate, and wear PPE"
+    },
+    {
+      "id": 71,
+      "question": "What should be clearly labeled on solvent containers?",
+      "options": [
+        "Color of liquid",
+        "Supervisor's name",
+        "Contents and emergency precautions",
+        "Expiry date"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Contents and emergency precautions"
+    },
+    {
+      "id": 72,
+      "question": "Asbestos must be:",
+      "options": [
+        "Vacuumed away",
+        "Sprayed with water and bagged",
+        "Handled only after certified training and permission",
+        "Ignored if not airborne"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Handled only after certified training and permission"
+    },
+    {
+      "id": 73,
+      "question": "What is the flammable range of gasoline vapours?",
+      "options": [
+        "1–16%",
+        "2–10%",
+        "5–12%",
+        "0.5–5%"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "1–16%"
+    },
+    {
+      "id": 74,
+      "question": "Why is an odourant added to natural gas and propane?",
+      "options": [
+        "To make it flammable",
+        "To help detect leaks",
+        "For colour coding",
+        "To meet taste regulations"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "To help detect leaks"
+    },
+    {
+      "id": 75,
+      "question": "What is the most common fire hazard in HVAC work?",
+      "options": [
+        "Electrical wiring",
+        "Water leaks",
+        "Broken thermostats",
+        "Dirty filters"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Electrical wiring"
+    },
+    {
+      "id": 76,
+      "question": "Which class of fire extinguisher is used for electrical fires?",
+      "options": [
+        "Class A",
+        "Class B",
+        "Class C",
+        "Class D"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Class C"
+    },
+    {
+      "id": 77,
+      "question": "Before working on an HVAC system, what should always be done first?",
+      "options": [
+        "Turn on the fan",
+        "Check airflow",
+        "Lockout/tagout the power supply",
+        "Open all vents"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Lockout/tagout the power supply"
+    },
+    {
+      "id": 78,
+      "question": "What is the fire triangle composed of?",
+      "options": [
+        "Heat, fuel, pressure",
+        "Fuel, oxygen, ignition source",
+        "Gas, air, refrigerant",
+        "Pressure, flame, carbon"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Fuel, oxygen, ignition source"
+    },
+    {
+      "id": 79,
+      "question": "What is the primary fire risk when handling refrigerants?",
+      "options": [
+        "Toxic gas inhalation",
+        "Static discharge",
+        "Overheating compressor",
+        "Refrigerant combustion or explosion in confined space"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Refrigerant combustion or explosion in confined space"
+    },
+    {
+      "id": 80,
+      "question": "What type of PPE is critical when soldering or brazing near flammable materials?",
+      "options": [
+        "Hard hat",
+        "Safety sandals",
+        "Fire-resistant gloves and eye protection",
+        "Ear plugs"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Fire-resistant gloves and eye protection"
+    },
+    {
+      "id": 81,
+      "question": "How should flammable solvents be stored?",
+      "options": [
+        "In plastic containers near heat",
+        "On open shelving",
+        "In sealed, approved safety containers away from ignition sources",
+        "In cardboard boxes"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "In sealed, approved safety containers away from ignition sources"
+    },
+    {
+      "id": 82,
+      "question": "What should be used to test for gas leaks in a line?",
+      "options": [
+        "Matchstick",
+        "Soapy water or approved gas detector",
+        "Open flame",
+        "Lighter"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Soapy water or approved gas detector"
+    },
+    {
+      "id": 83,
+      "question": "What is the minimum fire extinguisher rating recommended on an HVAC service truck?",
+      "options": [
+        "1A",
+        "2A10BC",
+        "5A",
+        "10C"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "2A10BC"
+    },
+    {
+      "id": 84,
+      "question": "Which HVAC process presents the greatest risk of igniting flammable vapors?",
+      "options": [
+        "Vacuum testing",
+        "Charging refrigerant",
+        "Brazing or soldering",
+        "Checking thermostat"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Brazing or soldering"
+    },
+    {
+      "id": 85,
+      "question": "Why should gas-fired equipment be properly vented?",
+      "options": [
+        "To reduce fuel consumption",
+        "To enhance air conditioning",
+        "To remove combustion by-products and reduce fire risk",
+        "To improve humidity control"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "To remove combustion by-products and reduce fire risk"
+    },
+    {
+      "id": 86,
+      "question": "If a fire starts in a ceiling space, what is the first thing an HVAC technician should do?",
+      "options": [
+        "Open all doors",
+        "Run to the roof",
+        "Activate the nearest fire alarm and evacuate",
+        "Use water to extinguish it"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Activate the nearest fire alarm and evacuate"
+    },
+    {
+      "id": 87,
+      "question": "What is a key responsibility of an HVAC tech when working in areas with combustible dust?",
+      "options": [
+        "Blow it into a corner",
+        "Spray it with water",
+        "Eliminate ignition sources and use spark-proof tools",
+        "Use a leaf blower to remove it"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Eliminate ignition sources and use spark-proof tools"
+    },
+    {
+      "id": 88,
+      "question": "What is the purpose of a fire damper in HVAC ductwork?",
+      "options": [
+        "Increase airflow",
+        "Reduce noise",
+        "Stop the spread of fire and smoke",
+        "Filter dust"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Stop the spread of fire and smoke"
+    },
+    {
+      "id": 89,
+      "question": "When using torches, what safety check should be done first?",
+      "options": [
+        "Temperature setting",
+        "Check refrigerant pressure",
+        "Inspect hoses and connections for leaks",
+        "Weigh the cylinder"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Inspect hoses and connections for leaks"
+    },
+    {
+      "id": 90,
+      "question": "Which standard outlines fire safety procedures for HVAC installations in Canada?",
+      "options": [
+        "CSA B52",
+        "ASME 14.3",
+        "UL 508",
+        "IEEE 802"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "CSA B52"
+    },
+    {
+      "id": 91,
+      "question": "Combustible materials should be kept at least how far from ignition sources?",
+      "options": [
+        "30 cm",
+        "1 meter",
+        "3 meters",
+        "5 meters"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "1 meter"
+    },
+    {
+      "id": 92,
+      "question": "What should be done with oily rags after use?",
+      "options": [
+        "Discard in open trash",
+        "Store in regular toolbox",
+        "Store in a metal container with a self-closing lid",
+        "Hang to dry"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Store in a metal container with a self-closing lid"
+    },
+    {
+      "id": 93,
+      "question": "What condition can create a backdraft when opening a furnace room door during a fire?",
+      "options": [
+        "Cold air",
+        "Loss of gas pressure",
+        "Oxygen rushing into an oxygen-deprived fire",
+        "Noise pressure"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Oxygen rushing into an oxygen-deprived fire"
+    },
+    {
+      "id": 94,
+      "question": "After extinguishing a small HVAC-related fire, what should the technician do next?",
+      "options": [
+        "Leave the area",
+        "Report the incident and inspect for hidden fires",
+        "Continue work",
+        "Reset the thermostat"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Report the incident and inspect for hidden fires"
+    },
+    {
+      "id": 95,
+      "question": "What is the total resistance of a 3 resistors in parallel, one 20 ohm, one 30 ohm, one 40 ohm?",
+      "options": [
+        "3.66 ohms",
+        "5.45 ohms",
+        "9.23 ohms",
+        "90 ohms"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "9.23 ohms"
+    },
+    {
+      "id": 96,
+      "question": "What is the total resistance of a 3 resistors in series, one 10 ohm, one 15 ohm, one 20 ohm?",
+      "options": [
+        "3.66 ohms",
+        "5.45 ohms",
+        "45 ohms",
+        "4.61 ohms"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "45 ohms"
+    },
+    {
+      "id": 97,
+      "question": "If voltage remains constant and resistance doubles, what happens to the amperage?",
+      "options": [
+        "Amperage goes down",
+        "Amperage goes up",
+        "Amperage remains the same",
+        "Amperage drops to zero"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Amperage goes down"
+    },
+    {
+      "id": 98,
+      "question": "If amperage remains constant and resistance doubles, what happens to the voltage?",
+      "options": [
+        "voltage goes down",
+        "voltage goes up",
+        "voltage remains the same",
+        "voltage drops to zero"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "voltage goes up"
+    },
+    {
+      "id": 99,
+      "question": "If resistance remains constant and voltage doubles, what happens to the amperage?",
+      "options": [
+        "Amperage goes down",
+        "Amperage goes up",
+        "Amperage remains the same",
+        "Amperage drops to zero"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Amperage goes up"
+    },
+    {
+      "id": 100,
+      "question": "When the gauge number of the wire increases the resistance?",
+      "options": [
+        "Increases",
+        "Decreases",
+        "Stays the same",
+        "Resistance drops to zero"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Increases"
+    },
+    {
+      "id": 101,
+      "question": "The highest amperage would flow through a",
+      "options": [
+        "3 ohm resistor",
+        "8 ohm resistor",
+        "20 ohm resistor",
+        "50 ohm resistor"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "3 ohm resistor"
+    },
+    {
+      "id": 102,
+      "question": "Who may remove a lock used to lockout a piece of equipment?",
+      "options": [
+        "Anyone",
+        "A co-worker",
+        "The technician that placed the lock or supervisor",
+        "Management"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "The technician that placed the lock or supervisor"
+    },
+    {
+      "id": 103,
+      "question": "Of what three particles are atoms made?",
+      "options": [
+        "Protons, electrons, ions",
+        "Neutrons, electron and protons",
+        "Nucleus, electrons and protons",
+        "Orbit, ions and neutrons"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Neutrons, electron and protons"
+    },
+    {
+      "id": 104,
+      "question": "What are the laws of electric charge?",
+      "options": [
+        "Unlike charges repel and like charges attract",
+        "Like charges attract and unlike charges attract",
+        "Like charges repel and unlike charges attract",
+        "Unlike charges repel and like charges repel"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Like charges repel and unlike charges attract"
+    },
+    {
+      "id": 105,
+      "question": "Which of the following is not a good conductor?",
+      "options": [
+        "Copper",
+        "Aluminum",
+        "Plastic",
+        "Metal"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Plastic"
+    },
+    {
+      "id": 106,
+      "question": "What makes a good insulator?",
+      "options": [
+        "materials that have the ability to allow current flow easily",
+        "materials that have the ability to resist current flow",
+        "rubber",
+        "plastic"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "materials that have the ability to resist current flow"
+    },
+    {
+      "id": 107,
+      "question": "When is an atom considered to be electrically neutral?",
+      "options": [
+        "when the number of electrons is equal to the number of protons",
+        "when the number of electrons is equal to the number of neutrons",
+        "when there are more electrons than protons",
+        "when there are more protons than electrons"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "when the number of electrons is equal to the number of protons"
+    },
+    {
+      "id": 108,
+      "question": "When is an atom considered to be positively charged?",
+      "options": [
+        "when the number of electrons is equal to the number of protons",
+        "when the number of electrons is equal to the number of neutrons",
+        "when there are more electrons than protons",
+        "when there are more protons than electrons"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "when there are more protons than electrons"
+    },
+    {
+      "id": 109,
+      "question": "When is an atom considered to be negatively charged?",
+      "options": [
+        "when the number of electrons is equal to the number of protons",
+        "when the number of electrons is equal to the number of neutrons",
+        "when there are more electrons than protons",
+        "when there are more protons than electrons"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "when there are more electrons than protons"
+    },
+    {
+      "id": 110,
+      "question": "In a series circuit which of the following remains constant?",
+      "options": [
+        "Volts",
+        "Amps",
+        "Ohms",
+        "Capacitance"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Amps"
+    },
+    {
+      "id": 111,
+      "question": "In a parallel circuit which of the following remains constant?",
+      "options": [
+        "Volts",
+        "Amps",
+        "Ohms",
+        "Capacitance"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Volts"
+    },
+    {
+      "id": 112,
+      "question": "What are the two types of current?",
+      "options": [
+        "Alternating and electromotive",
+        "Alternating and direct",
+        "Resistive and conductive",
+        "All of the above"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Alternating and direct"
+    },
+    {
+      "id": 113,
+      "question": "What is the proper test pressure and duration for a gas piping system with 150' longest measured run with a system supply pressure of 7\" water column?",
+      "options": [
+        "15 psi for 60 minutes",
+        "20 psi for 30 minutes",
+        "15 psi for 15 minutes",
+        "50 psi for 60 minutes"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "15 psi for 15 minutes"
+    },
+    {
+      "id": 114,
+      "question": "When an appliance is converted from one gas to another what must the installer do?",
+      "options": [
+        "Call Ministry of Appliance Conversions",
+        "Mark the new type of gas being used on the rating plate",
+        "Notify the utility",
+        "Notify the appliance manufacturer"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Mark the new type of gas being used on the rating plate"
+    },
+    {
+      "id": 115,
+      "question": "Plastic piping and tubing may currently only be used for?",
+      "options": [
+        "Low pressure propane lines",
+        "Gas supply piping inside a residence only",
+        "Outdoor, underground use",
+        "Supply piping to pool heaters"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Outdoor, underground use"
+    },
+    {
+      "id": 116,
+      "question": "Which of the following appliances must have a dirt pocket installed on them?",
+      "options": [
+        "Gas log",
+        "Range",
+        "Clothes dryer",
+        "Water heater"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Water heater"
+    },
+    {
+      "id": 117,
+      "question": "Piping installed underground cannot be less than ____\" in diameter",
+      "options": [
+        "3/8\"",
+        "½\"",
+        "¾\"",
+        "¼\""
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "½\""
+    },
+    {
+      "id": 118,
+      "question": "Which of the following fittings cannot be used on a gas piping system?",
+      "options": [
+        "street elbow",
+        "reducing coupling",
+        "bushing",
+        "reducing elbow"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "reducing elbow"
+    },
+    {
+      "id": 119,
+      "question": "The B149.1 Natural Gas and Propane Installation Code does not apply to:",
+      "options": [
+        "Industrial gas piping installations",
+        "Appliances installed in a commercial building",
+        "Propane supply piping from the distributors tank to the second stage regulator",
+        "Utility pipeline distribution or transmission lines"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Utility pipeline distribution or transmission lines"
+    },
+    {
+      "id": 120,
+      "question": "When installing gas burning appliances in a mobile home what Code applies?",
+      "options": [
+        "CAN/CSA B149.1",
+        "CGA F566",
+        "CSA B837",
+        "CAN/CSA Z240.4.1"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "CAN/CSA Z240.4.1"
+    },
+    {
+      "id": 121,
+      "question": "A Category 4 appliance is:",
+      "options": [
+        "An appliance that operates with a positive vent static pressure, and with a flue loss less than 17%",
+        "An appliance that operates with a non-positive vent static pressure, and with a flue loss not less than 17%",
+        "An appliance that operates with a non-positive vent static pressure and with a flue loss less than 17%",
+        "An appliance that operates with a positive vent static pressure and with a flue loss not less than 17%"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "An appliance that operates with a positive vent static pressure, and with a flue loss less than 17%"
+    },
+    {
+      "id": 122,
+      "question": "Which type of draft is produced by a device upstream of the appliance combustion zone?",
+      "options": [
+        "Forced draft",
+        "Induced draft",
+        "Atmospheric draft",
+        "Gravity draft"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Forced draft"
+    },
+    {
+      "id": 123,
+      "question": "A 'quick disconnect' device is?",
+      "options": [
+        "An emergency shut off to control all gas supplied to the building",
+        "A solenoid that is fast closing",
+        "A flare nut type fitting on a gas line",
+        "A hand operated device providing connection and disconnection means for an appliance to the gas supply"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "A hand operated device providing connection and disconnection means for an appliance to the gas supply"
+    },
+    {
+      "id": 124,
+      "question": "Where is the fan located in the 'forced draft burner' appliance?",
+      "options": [
+        "Upstream of the combustion zone",
+        "Downstream of the combustion zone",
+        "In the heat exchanger",
+        "In the pulse combustion burner"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Upstream of the combustion zone"
+    },
+    {
+      "id": 125,
+      "question": "Where is the fan located in the 'induced draft burner' appliance?",
+      "options": [
+        "Upstream of the combustion zone",
+        "Downstream of the combustion zone",
+        "In the heat exchanger",
+        "In the pulse combustion burner"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Downstream of the combustion zone"
+    },
+    {
+      "id": 126,
+      "question": "The statement that best describes a continuous pilot is?",
+      "options": [
+        "The pilot is lit each time there is a call for heat, and remains lit during the entire call for heat.",
+        "The pilot is lit each time there is a call for heat, and cuts off at the end of the main burner proving period.",
+        "The pilot is on all the time, on a call for heat the pilot expands in size to reliably light burner",
+        "The pilot is on all the time, and remains the same size"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "The pilot is on all the time, and remains the same size"
+    },
+    {
+      "id": 127,
+      "question": "The statement that best describes an intermittent pilot is?",
+      "options": [
+        "The pilot is lit each time there is a call for heat, and remains lit during the entire call for heat.",
+        "The pilot is lit each time there is a call for heat, and cuts off at the end of the main burner proving period.",
+        "The pilot is on all the time, on a call for heat the pilot expands in size to reliably light the burner.",
+        "The pilot is on all the time and remains the same size."
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "The pilot is lit each time there is a call for heat, and remains lit during the entire call for heat."
+    },
+    {
+      "id": 128,
+      "question": "The statement that best describes an interrupted pilot is?",
+      "options": [
+        "The pilot is lit each time there is a call for heat, and remains lit during the entire call for heat.",
+        "The pilot is lit each time there is a call for heat, and cuts off at the end of the main burner proving period.",
+        "The pilot is on all the time, on a call for heat the pilot expands in size to reliably light the burner.",
+        "The pilot is on all the time and remains the same size"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "The pilot is lit each time there is a call for heat, and cuts off at the end of the main burner proving period."
+    },
+    {
+      "id": 129,
+      "question": "Air supply for central furnaces 400,000 Btu/hr and below shall be provided in accordance with?",
+      "options": [
+        "Clause 8.2, 8.3 of the B149.1 Code",
+        "Clause 8.4 of the B149.1 Code",
+        "Clause 8.13 of the B149.1 Code",
+        "Annex F of the B149.1 Code"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Clause 8.2, 8.3 of the B149.1 Code"
+    },
+    {
+      "id": 130,
+      "question": "What must be done if a defective heat exchanger is found in a dwelling unit?",
+      "options": [
+        "It may be welded, if welder is certified",
+        "It shall be replaced",
+        "If defects do not affect the flame, nothing has to be done",
+        "If carbon monoxide is not present nothing has to be done"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "It shall be replaced"
+    },
+    {
+      "id": 131,
+      "question": "What is the maximum gas pressure allowed in a commercial building's central boiler room?",
+      "options": [
+        "66 psi",
+        "5 psi",
+        "20 psi",
+        "25 psi"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "20 psi"
+    },
+    {
+      "id": 132,
+      "question": "What type of vent is to be used on a wall furnace when the vent is concealed?",
+      "options": [
+        "Type BW",
+        "Type B",
+        "Type L",
+        "Special venting system"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Type BW"
+    },
+    {
+      "id": 133,
+      "question": "When a unit heater is installed in a garage the minimum clearance of ____' shall be maintained between the base of the heater and the floor (when the heater has no guard)",
+      "options": [
+        "4'",
+        "6'",
+        "10'",
+        "8'"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "8'"
+    },
+    {
+      "id": 134,
+      "question": "If a furnace is installed in a repair garage, any component capable of igniting flammable vapour must be located _____\" above the floor",
+      "options": [
+        "12\"",
+        "18\"",
+        "24\"",
+        "54\""
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "54\""
+    },
+    {
+      "id": 135,
+      "question": "What is the maximum gas pressure allowed inside a one family dwelling?",
+      "options": [
+        "2 psi",
+        "5 psi",
+        "1 psi",
+        "½ psi"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "2 psi"
+    },
+    {
+      "id": 136,
+      "question": "Tubing installed in hollow walls or partitions must be protected from physical damage with # ____ GSG plates or sleeves",
+      "options": [
+        "14",
+        "10",
+        "28",
+        "16"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "16"
+    },
+    {
+      "id": 137,
+      "question": "A water heater installed in a bathroom shall be?",
+      "options": [
+        "Direct vent type",
+        "Power vent type",
+        "Power burner type",
+        "Conventional vent type"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Direct vent type"
+    },
+    {
+      "id": 138,
+      "question": "A chimney shall not extend less than ____' above the highest point where it passes through the roof of a building",
+      "options": [
+        "2'",
+        "4'",
+        "5'",
+        "3'"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "3'"
+    },
+    {
+      "id": 139,
+      "question": "A moisture exhaust duct must terminate at least ____ feet from a service regulator",
+      "options": [
+        "6'",
+        "3'",
+        "10'",
+        "1'"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "3'"
+    },
+    {
+      "id": 140,
+      "question": "A room heater installed in a bathroom shall be?",
+      "options": [
+        "Direct vent type",
+        "Power vent type",
+        "Power burner type",
+        "Conventional vent type"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Direct vent type"
+    },
+    {
+      "id": 141,
+      "question": "An air supply inlet to a building must be located at least ____\" above outside grade level",
+      "options": [
+        "18\"",
+        "6\"",
+        "14\"",
+        "12\""
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "12\""
+    },
+    {
+      "id": 142,
+      "question": "A vent connector serving an appliance without flue gas dilution air must be made of # _____ GSG galvanized steel.",
+      "options": [
+        "24",
+        "20",
+        "28",
+        "26"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "24"
+    },
+    {
+      "id": 143,
+      "question": "When a common gas vent is used it shall be?",
+      "options": [
+        "Type C vent",
+        "Type BW vent",
+        "Type B or L vent",
+        "Type BH vent"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Type B or L vent"
+    },
+    {
+      "id": 144,
+      "question": "A pool heating appliance installed outdoors at grade level shall be placed on a base of poured concrete or reinforced concrete slab, extending at least?",
+      "options": [
+        "6\" beyond all sides of the appliance",
+        "3\" beyond all sides of the appliance",
+        "1\" beyond all sides of the appliance",
+        "12\" beyond all sides of the appliance"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "6\" beyond all sides of the appliance"
+    },
+    {
+      "id": 145,
+      "question": "What is the minimum clearance to combustibles on a commercial type clothes dryer?",
+      "options": [
+        "18\" above, 18\" back and sides, 18\" front",
+        "24\" above, 18\" back and sides, 36\" front",
+        "30\" above, 18\" back and sides, 24\" front",
+        "6\" above, 6\" back and sides, 24\" front"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "18\" above, 18\" back and sides, 18\" front"
+    },
+    {
+      "id": 146,
+      "question": "A light used for searching for gas leakage shall be:",
+      "options": [
+        "Class 1, group C",
+        "Class 2, group C",
+        "Class 1, group A",
+        "Class 1, group D"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Class 1, group D"
+    },
+    {
+      "id": 147,
+      "question": "When using a gauge to perform pressure testing of a gas piping system, the gauge shall be:",
+      "options": [
+        "2\" in diameter, maximum range of shall exceed the test pressure by at least 15% but not more than 300%.",
+        "3\" in diameter, maximum range of shall exceed the test pressure by at least 15% but not more than 300%",
+        "3\" in diameter, maximum range of test pressure shall not exceed the test pressure by at least 15% but not more than 200%",
+        "3\" in diameter, reading in 1 PSI increments."
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "3\" in diameter, maximum range of shall exceed the test pressure by at least 15% but not more than 300%"
+    },
+    {
+      "id": 148,
+      "question": "What table would be used to calculate combustion air sizing for appliances having draft control devices, when the combined input is up to and including 400,000 Btu, and the structure does not comply with clause 8.2.1 (a) or (b).",
+      "options": [
+        "Table 8.1",
+        "Table 8.2",
+        "Table 8.3",
+        "Table 8.4"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Table 8.3"
+    },
+    {
+      "id": 149,
+      "question": "When a vent connector from a category 1 appliance passes through an unheated space, what must be done to the vent connector?",
+      "options": [
+        "It must be insulated",
+        "The connector must be Type C \"heavy wall\"",
+        "The connector must be Type B",
+        "The connector must be type BW"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "It must be insulated"
+    },
+    {
+      "id": 150,
+      "question": "What must be provided when a hose is used to transfer liquid propane from one container to another?",
+      "options": [
+        "Shut off valve",
+        "Hydrostatic relief valve",
+        "Vapourizer",
+        "Excess flow valve"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Hydrostatic relief valve"
+    },
+    {
+      "id": 151,
+      "question": "Meter and service regulator installations shall be made in accordance with:",
+      "options": [
+        "CSA standard Z662-99",
+        "CSA standard Z240.4.1",
+        "TSSA standard 5.77.5",
+        "CEC standard 3.6.7"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "CSA standard Z662-99"
+    },
+    {
+      "id": 152,
+      "question": "What is the minimum distance a gas service regulator outlet must terminate from an appliance vent?",
+      "options": [
+        "10'",
+        "6'",
+        "1'",
+        "3'"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "3'"
+    },
+    {
+      "id": 153,
+      "question": "How much pressure drop is allowed for a natural gas tubing system (using copper), when using 5 PSI supply pressure?",
+      "options": [
+        "1 PSI",
+        "1.5 PSI",
+        "2 PSI",
+        "2.5PSI"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "1 PSI"
+    },
+    {
+      "id": 154,
+      "question": "An intermittent pilot is:",
+      "options": [
+        "A pilot that is lit each time there is a call for heat and that burns during the entire period the main burner is firing",
+        "A pilot that is lit each time there is a call for heat and that is cut off automatically at the end of the trial for ignition period of the main burner.",
+        "A pilot that burns without turndown throughout the entire time the burner is in service, whether the main burner is firing or not",
+        "A pilot flame supervised by a primary safety control that senses the presence of the pilot prior to gas being admitted to the main burner"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "A pilot that is lit each time there is a call for heat and that burns during the entire period the main burner is firing"
+    },
+    {
+      "id": 155,
+      "question": "Who is responsible for ensuring that the manufacturers installation instructions are left with the end user?",
+      "options": [
+        "The appliance manufacturer",
+        "The distributor",
+        "The TSSA inspector",
+        "The installer"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "The installer"
+    },
+    {
+      "id": 156,
+      "question": "What is the ignition temperature of propane?",
+      "options": [
+        "800-900°F",
+        "920-1020°F / 493-549°C",
+        "1100-1200°F",
+        "1300-1400°F"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "920-1020°F / 493-549°C"
+    },
+    {
+      "id": 157,
+      "question": "What is secondary air?",
+      "options": [
+        "Air mixed before ignition",
+        "Air that is mixed and added at the point of combustion and surrounds the flame",
+        "Air from outside",
+        "Dilution air"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Air that is mixed and added at the point of combustion and surrounds the flame"
+    },
+    {
+      "id": 158,
+      "question": "What is the flame temperature of natural gas?",
+      "options": [
+        "3200°F",
+        "3400°F",
+        "3600°F / 1927°C",
+        "3800°F"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "3600°F / 1927°C"
+    },
+    {
+      "id": 159,
+      "question": "What is the lower explosive limit (LEL) of natural gas?",
+      "options": [
+        "2%",
+        "4%",
+        "6%",
+        "8%"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "4%"
+    },
+    {
+      "id": 160,
+      "question": "What is the composition of air?",
+      "options": [
+        "21% oxygen, 79% nitrogen",
+        "20% oxygen, 80% nitrogen",
+        "18% oxygen, 82% nitrogen",
+        "22% oxygen, 78% nitrogen"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "21% oxygen, 79% nitrogen"
+    },
+    {
+      "id": 161,
+      "question": "What are the symptoms of Carbon Monoxide Poisoning?",
+      "options": [
+        "Fever and chills",
+        "Headache, dizziness, fatigue, nausea and death",
+        "Skin rash and itching",
+        "Blurred vision"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Headache, dizziness, fatigue, nausea and death"
+    },
+    {
+      "id": 162,
+      "question": "How many PPM does it take to start noticing symptoms of carbon monoxide?",
+      "options": [
+        "100 ppm",
+        "200 ppm in a couple hours",
+        "300 ppm",
+        "400 ppm"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "200 ppm in a couple hours"
+    },
+    {
+      "id": 163,
+      "question": "Natural gas has what % of methane?",
+      "options": [
+        "75% - 80%",
+        "80% - 85%",
+        "85% - 90%",
+        "90% - 95%"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "85% - 90%"
+    },
+    {
+      "id": 164,
+      "question": "What is the barometric pressure at sea level?",
+      "options": [
+        "14.7 psia",
+        "14.73 psia",
+        "15.0 psia",
+        "15.5 psia"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "14.73 psia"
+    },
+    {
+      "id": 165,
+      "question": "What is the chemical structure of propane?",
+      "options": [
+        "C2H6",
+        "C3H8",
+        "C4H10",
+        "CH4"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "C3H8"
+    },
+    {
+      "id": 166,
+      "question": "The rating of Gas appliances is in what units?",
+      "options": [
+        "Watts",
+        "Btu's",
+        "Calories",
+        "Joules"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Btu's"
+    },
+    {
+      "id": 167,
+      "question": "Most natural gas burners produce CO in what range?",
+      "options": [
+        "0 -- 50 ppm",
+        "50 -- 100 ppm",
+        "100 -- 150 ppm",
+        "150 -- 200 ppm"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "0 -- 50 ppm"
+    },
+    {
+      "id": 168,
+      "question": "What is the specific gravity of natural gas?",
+      "options": [
+        "0.4",
+        "0.6",
+        "0.8",
+        "1.0"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "0.6"
+    },
+    {
+      "id": 169,
+      "question": "When measuring pipe/piping you go by what?",
+      "options": [
+        "O.D. Outer Diameter",
+        "I.D. Inner Diameter",
+        "Wall thickness",
+        "Total diameter"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "I.D. Inner Diameter"
+    },
+    {
+      "id": 170,
+      "question": "When measuring tube/tubing you go by?",
+      "options": [
+        "I.D. Inner Diameter",
+        "O.D. Outer Diameter",
+        "Wall thickness",
+        "Total diameter"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "O.D. Outer Diameter"
+    },
+    {
+      "id": 171,
+      "question": "When temperature of any substance increases, its pressure will?",
+      "options": [
+        "Increase",
+        "Decrease",
+        "Stay the same",
+        "Become unstable"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Increase"
+    },
+    {
+      "id": 172,
+      "question": "Convert 35 degree Celsius to Fahrenheit:",
+      "options": [
+        "90 degrees F",
+        "95 degrees F",
+        "100 degrees F",
+        "105 degrees F"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "95 degrees F"
+    },
+    {
+      "id": 173,
+      "question": "Which of the following methods is used to project a professional attitude?",
+      "options": [
+        "Drive a clean vehicle",
+        "Give easily understood explanations of problems",
+        "Always carry a toolbox"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Give easily understood explanations of problems"
+    },
+    {
+      "id": 174,
+      "question": "Why is a neat, well-groomed appearance important when dealing with a customer?",
+      "options": [
+        "It indicates to a customer that your work will reflect the same care and consideration",
+        "It indicates to a customer that you are a supervisor",
+        "It represents the values of the company to the customer"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "It indicates to a customer that your work will reflect the same care and consideration"
+    },
+    {
+      "id": 175,
+      "question": "What should be done before using water, power etc., in a customer's home?",
+      "options": [
+        "Ask permission",
+        "Check the source for any safety issues and report",
+        "Advise the customer you cannot complete the work unless you have access to the utilities"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Ask permission"
+    },
+    {
+      "id": 176,
+      "question": "What should be done after hearing the customer's explanation of a problem or request?",
+      "options": [
+        "Tell the customer you are the expert and you will figure it out for yourself",
+        "Advise the customer they should learn how to operate the equipment properly",
+        "Clarify by recapping or paraphrasing the customer's explanation to assure them that they have communicated it accurately to you"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Clarify by recapping or paraphrasing the customer's explanation to assure them that they have communicated it accurately to you"
+    },
+    {
+      "id": 177,
+      "question": "Why is asking the right question in the right way important when dealing with customer concerns?",
+      "options": [
+        "It can shorten the time it takes to analyze the problem and will save them money",
+        "It can not only help to isolate the problem, but it can also make the customer feel he/she is part of the process",
+        "It can prevent you from having to go back to the vehicle to get extra tools"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "It can not only help to isolate the problem, but it can also make the customer feel he/she is part of the process"
+    },
+    {
+      "id": 178,
+      "question": "After solving a service problem, what should be done to allay further concerns of the customer?",
+      "options": [
+        "The customer should be advised how the last person who worked on the system was incompetent",
+        "The customer should be advised to read the instructions that came with the appliance and try and fix it first before calling",
+        "A brief explanation of the problem and its solution should be given to the customer"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "A brief explanation of the problem and its solution should be given to the customer"
+    },
+    {
+      "id": 179,
+      "question": "What is a good way to ensure your footwear is clean and dry when entering a customer's home?",
+      "options": [
+        "Bring an extra pair of shoes for inside",
+        "Wear overshoes",
+        "Wipe your shoes on the customers doormat"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Wear overshoes"
+    },
+    {
+      "id": 180,
+      "question": "Where should you park your service vehicle when arriving at a customer's location?",
+      "options": [
+        "On the street",
+        "Customers driveway",
+        "Both the street and driveway are acceptable"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Both the street and driveway are acceptable"
+    },
+    {
+      "id": 181,
+      "question": "What electrical appliance(s) should never be unplugged in order to obtain power?",
+      "options": [
+        "Television",
+        "Washer or Dryer",
+        "Any appliance connected with an extension cord",
+        "Refrigerator or freezer"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Refrigerator or freezer"
+    },
+    {
+      "id": 182,
+      "question": "What should be done before moving an appliance into a customer's home?",
+      "options": [
+        "Take measurements to ensure it can fit in the space provided",
+        "Ask the customer to leave and they will see the appliance after it is installed",
+        "Ask the customer if they know if the appliance will fit in the space provided"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Take measurements to ensure it can fit in the space provided"
+    },
+    {
+      "id": 183,
+      "question": "What should be done if a customer's property is damaged?",
+      "options": [
+        "Assess the damage and touch up any small marks before the customer has an opportunity to see it",
+        "Immediately report all damage to the customer and your supervisor",
+        "Advise the customer the damage was there before you started"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Immediately report all damage to the customer and your supervisor"
+    },
+    {
+      "id": 184,
+      "question": "What should be done after a customer's problem has been solved and the work is complete?",
+      "options": [
+        "Nothing",
+        "Produce an invoice for the work and demand payment",
+        "Perform a follow-up to ensure the customer is still satisfied"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Perform a follow-up to ensure the customer is still satisfied"
+    },
+    {
+      "id": 185,
+      "question": "Which of the following is a better choice of words than, \"I know how you feel,\" when responding to a customer's complaint?",
+      "options": [
+        "You are overreacting",
+        "I can understand why you feel that way",
+        "It's not that bad"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "I can understand why you feel that way"
+    },
+    {
+      "id": 186,
+      "question": "Which is the better choice of words than, \"You are not making any sense\" when responding to a customer's concerns?",
+      "options": [
+        "That is definitely wrong",
+        "Maybe I am not understanding you correctly",
+        "You're way off base",
+        "Did you really say...."
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Maybe I am not understanding you correctly"
+    },
+    {
+      "id": 187,
+      "question": "What is the best policy regarding arguments with a customer?",
+      "options": [
+        "Listen, but make sure the customer agrees with you by the end",
+        "Advise the customer you are the expert",
+        "Avoiding arguments is the best policy"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Avoiding arguments is the best policy"
+    },
+    {
+      "id": 188,
+      "question": "Which of the following non-verbal communication techniques can be used to diffuse a customer's anger?",
+      "options": [
+        "Facial expression (calm, sincere, concerned, interested expression)",
+        "Turn your back to the customer",
+        "Say nothing and leave without fixing the problem"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Facial expression (calm, sincere, concerned, interested expression)"
+    },
+    {
+      "id": 189,
+      "question": "What is an appropriate response to a customer who is demanding something unreasonable or impossible?",
+      "options": [
+        "Calmly leave the location and mark it on the work order",
+        "Calmly and patiently tell them what you are able to do, not what you cannot do",
+        "Calmly leave without saying anything"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Calmly and patiently tell them what you are able to do, not what you cannot do"
+    },
+    {
+      "id": 190,
+      "question": "What is a poor response when dealing with a rude customer?",
+      "options": [
+        "Do you want this fixed or not?",
+        "What would you like me to do to solve the problem you are having?",
+        "I am not meeting your expectations. What can I do?"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Do you want this fixed or not?"
+    },
+    {
+      "id": 191,
+      "question": "What is a good response to an abusive customer?",
+      "options": [
+        "You are rude, and I do not have to take this abuse, I am leaving",
+        "Say nothing, turn around and leave",
+        "I am sorry, but if you cannot speak to me on a professional basis, I will have to leave"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "I am sorry, but if you cannot speak to me on a professional basis, I will have to leave"
+    },
+    {
+      "id": 192,
+      "question": "What should you do when a customer becomes unruly or threatening?",
+      "options": [
+        "Seek assistance. If violence is threatened, call the police",
+        "Shut off the fuel supply and mark the work order that the system has been tagged",
+        "Lock the meter or shut off the fuel supply and lock it"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Seek assistance. If violence is threatened, call the police"
+    },
+    {
+      "id": 193,
+      "question": "Which is the better way of communicating with a person who speaks little English?",
+      "options": [
+        "Speaking slower",
+        "Speaking louder",
+        "Speaking louder and slower"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Speaking slower"
+    },
+    {
+      "id": 194,
+      "question": "What is a possible alternative to speaking when you are trying to communicate with a customer who has heavily accented English?",
+      "options": [
+        "Advise the customer someone else will attend",
+        "Have the customer try to write his/her request",
+        "Point and speak loudly"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Have the customer try to write his/her request"
+    },
+    {
+      "id": 195,
+      "question": "How may cultural differences affect work schedules?",
+      "options": [
+        "Someone who is of the same background would have to attend",
+        "Cultural differences don't affect work schedules",
+        "Work may have to be scheduled around religious or cultural practices"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Work may have to be scheduled around religious or cultural practices"
+    },
+    {
+      "id": 196,
+      "question": "Cement can have an adverse effect on gas piping and tubing.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "True"
+    },
+    {
+      "id": 197,
+      "question": "What is necessary for corrosion to occur?",
+      "options": [
+        "Cathode, Anode",
+        "Anode, Cathode, Conductive path",
+        "Anode, Cathode, Electrolyte, Conductive path",
+        "Electrolyte, Anode, Conductive path"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Anode, Cathode, Electrolyte, Conductive path"
+    },
+    {
+      "id": 198,
+      "question": "What is an example of the benefit of electrochemical action?",
+      "options": [
+        "The light bulb",
+        "The dry cell battery",
+        "Corrosion"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "The dry cell battery"
+    },
+    {
+      "id": 199,
+      "question": "Which is a better electrolyte?",
+      "options": [
+        "Dry sandy soil",
+        "Moist loamy soil"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Moist loamy soil"
+    },
+    {
+      "id": 200,
+      "question": "In which direction will the electrical current flow if an electrolyte is placed between two metals of differing potential?",
+      "options": [
+        "From the higher potential metal to a lower potential metal",
+        "From the lower potential metal to a higher potential metal"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "From the higher potential metal to a lower potential metal"
+    },
+    {
+      "id": 201,
+      "question": "When installed underground, which type of copper tubing does not require a protective coating?",
+      "options": [
+        "Type G",
+        "Type K",
+        "Type GP"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Type K"
+    },
+    {
+      "id": 202,
+      "question": "How is an underground steel piping system isolated from the above-ground piping to which it is connected?",
+      "options": [
+        "By the use of dielectric fittings",
+        "By unions",
+        "By plastic connectors",
+        "By brass connectors"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "By the use of dielectric fittings"
+    },
+    {
+      "id": 203,
+      "question": "What are the three most common materials used for water distribution piping?",
+      "options": [
+        "Cast iron, copper, plastic",
+        "Copper, galvanized steel, asbestos cement pipe",
+        "Galvanized steel, plastic, cast iron",
+        "Copper, galvanized steel, plastic"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "Copper, galvanized steel, plastic"
+    },
+    {
+      "id": 204,
+      "question": "What is the colour code for Type K copper?",
+      "options": [
+        "Blue",
+        "Green",
+        "Yellow"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Green"
+    },
+    {
+      "id": 205,
+      "question": "May polybutylene be used on both hot and cold-water distribution lines?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Yes"
+    },
+    {
+      "id": 206,
+      "question": "What is the melting temperature of hard solders?",
+      "options": [
+        "Above 1000°F",
+        "Above 750°F",
+        "Above 500°F",
+        "Above 250°F"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Above 1000°F"
+    },
+    {
+      "id": 207,
+      "question": "Can the solvent cement specified for use with one type of plastic pipe be used with another type of plastic pipe?",
+      "options": [
+        "Yes",
+        "Yes, as long as it has a complete bead",
+        "No"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 208,
+      "question": "One method of measuring pipe length is to measure the pipe from end to centre.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "True"
+    },
+    {
+      "id": 209,
+      "question": "Are fitting allowances for a specific diameter and type of fitting the same for all manufacturers?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 210,
+      "question": "Which of the following piping materials cannot be used in gas piping systems?",
+      "options": [
+        "Steel",
+        "Copper",
+        "Lead",
+        "Plastic"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Lead"
+    },
+    {
+      "id": 211,
+      "question": "Steel or malleable iron fittings may be used with steel pipe.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "True"
+    },
+    {
+      "id": 212,
+      "question": "You cannot use type ________ copper tubing in gas systems, as its wall thickness is slightly less than that of type G tubing.",
+      "options": [
+        "K",
+        "L",
+        "M"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "M"
+    },
+    {
+      "id": 213,
+      "question": "How shall piping be sized?",
+      "options": [
+        "To meet the volume and pressure requirements at the point of use",
+        "To meet the pressure requirements at the point of use",
+        "To meet the volume requirements at the point of use",
+        "According to the appliance manufacturers installation manual"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "To meet the volume and pressure requirements at the point of use"
+    },
+    {
+      "id": 214,
+      "question": "What is the maximum allowable pressure drop on a piping system that has a natural gas supply pressure of 7 in w.c. to 14 in w.c.?",
+      "options": [
+        "0.5 Inch w.c.",
+        "1 inch w.c.",
+        "50%"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "1 inch w.c."
+    },
+    {
+      "id": 215,
+      "question": "How shall the gas pressure requirements for an appliance be determined?",
+      "options": [
+        "Pipe sizing tables",
+        "Provincial regulations",
+        "Appliance rating plate or from the appliance manufacturer"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Appliance rating plate or from the appliance manufacturer"
+    },
+    {
+      "id": 216,
+      "question": "How shall an extension of an existing piping or tubing system be sized?",
+      "options": [
+        "Sized to meet the load demand of the extended piping system",
+        "Sized to meet the requirements of Clause 6.3 of CSA B149.1",
+        "Sized to meet the requirements of Clause 5.2 of CSA Z662"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Sized to meet the requirements of Clause 6.3 of CSA B149.1"
+    },
+    {
+      "id": 217,
+      "question": "What is the maximum pressure drop allowed on a piping system that has a natural gas supply pressure less than 7 in w.c.?",
+      "options": [
+        "1 inch w.c.",
+        "0.5 inch w.c.",
+        "1.5 inches w.c",
+        "2 inches w.c"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "0.5 inch w.c."
+    },
+    {
+      "id": 218,
+      "question": "How shall the volume of gas to an appliance be determined?",
+      "options": [
+        "From either the rating plate or the appliance manufacturer",
+        "By the size of the piping system the appliance is connected to",
+        "According to provincial regulations"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "From either the rating plate or the appliance manufacturer"
+    },
+    {
+      "id": 219,
+      "question": "Must the ends of all piping be reamed?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Yes"
+    },
+    {
+      "id": 220,
+      "question": "What is the maximum spacing of supports for 1 in horizontal piping?",
+      "options": [
+        "12 ft",
+        "6 ft",
+        "8 ft",
+        "16 ft"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "8 ft"
+    },
+    {
+      "id": 221,
+      "question": "What diameters of piping require welded joints?",
+      "options": [
+        "Diameters NPS 2-1/2 and larger",
+        "Diameters NPS 4 and larger",
+        "Diameters NPS 2-1/4 and larger",
+        "Diameters NPS 4-1/2 and larger"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Diameters NPS 2-1/2 and larger"
+    },
+    {
+      "id": 222,
+      "question": "May a copper joint be made with brazing material that has a melting temperature exceeding 1000°F (537 °C)?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Yes"
+    },
+    {
+      "id": 223,
+      "question": "During a period when a piping outlet to an appliance is not connected to the appliance, how shall it be made tight?",
+      "options": [
+        "A piping outlet must always be connected to an appliance",
+        "By means of a plugged valve or either a cap or plug made of a material compatible with the piping or tubing system"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "By means of a plugged valve or either a cap or plug made of a material compatible with the piping or tubing system"
+    },
+    {
+      "id": 224,
+      "question": "A ________ is an area in a piping system that collects condensate and from which you can remove the condensate.",
+      "options": [
+        "Drip pocket",
+        "Dirt pocket",
+        "Collection pocket"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Drip pocket"
+    },
+    {
+      "id": 225,
+      "question": "What is the minimum diameter of piping that can be installed underground?",
+      "options": [
+        "NPS 3/4",
+        "NPS 3/8",
+        "NPS 1/2"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "NPS 1/2"
+    },
+    {
+      "id": 226,
+      "question": "How shall the gas supply to an underground plastic pipe or tubing be controlled?",
+      "options": [
+        "By a shut-off valve situated above ground",
+        "By a regulator"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "By a shut-off valve situated above ground"
+    },
+    {
+      "id": 227,
+      "question": "May a vented appliance be connected with a hose?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 228,
+      "question": "May a connector be used to connect a mobile home?",
+      "options": [
+        "Yes, where the mobile home is not on a permanent foundation",
+        "No"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Yes, where the mobile home is not on a permanent foundation"
+    },
+    {
+      "id": 229,
+      "question": "What are the pressure test requirements for a 250 ft (76 m) natural gas piping system with a working pressure of 2 psig?",
+      "options": [
+        "15 psig for 30 minutes",
+        "15 psig for 60 minutes",
+        "60 psig for 15 minutes"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "15 psig for 60 minutes"
+    },
+    {
+      "id": 230,
+      "question": "What are the minimum test requirements for all wrapped or factory-coated piping?",
+      "options": [
+        "100 psig and 15 minutes",
+        "100 psig and 60 minutes",
+        "100 psig and within the time duration required of Table 6.3, Note 2"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "100 psig and within the time duration required of Table 6.3, Note 2"
+    },
+    {
+      "id": 231,
+      "question": "May rooftop piping be supported with treated wood blocks?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 232,
+      "question": "May plastic pipe be used on liquid propane system?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 233,
+      "question": "When may piping less than NPS 1/2 be used indoors?",
+      "options": [
+        "On a propane branch line not exceeding 15 ft in length",
+        "On a propane branch line not exceeding 25 ft in length",
+        "Piping less than NPS 1/2 cannot be used indoors"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "On a propane branch line not exceeding 25 ft in length"
+    },
+    {
+      "id": 234,
+      "question": "May propane piping or tubing be supported by other piping or tubing?",
+      "options": [
+        "Yes, providing the piping is less than NPS ¾",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 235,
+      "question": "What is the required diameter of a dirt pocket used on propane systems?",
+      "options": [
+        "The diameter shall be NPS 2 or equal to the diameter it serves whichever is the lesser",
+        "The diameter shall be NPS 2 or equal to the diameter it serves whichever is the greater"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "The diameter shall be NPS 2 or equal to the diameter it serves whichever is the lesser"
+    },
+    {
+      "id": 236,
+      "question": "May a close nipple be used on a propane piping system?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 237,
+      "question": "When tubing runs horizontally across studs notched to accommodate the tubing, it must be protected where it crosses each stud by a ________.",
+      "options": [
+        "12-gauge (USG) steel plate",
+        "16-gauge (USG) steel plate",
+        "14-gauge (USG) steel plate",
+        "18-gauge (USG) steel plate"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "16-gauge (USG) steel plate"
+    },
+    {
+      "id": 238,
+      "question": "What is the maximum interval that propane tubing can be run inside a residential occupancy without identification?",
+      "options": [
+        "6 ft",
+        "12 ft",
+        "3 ft",
+        "24 ft"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "3 ft"
+    },
+    {
+      "id": 239,
+      "question": "Where must the shut-off valves be placed if propane piping or tubing is extended from one building to another?",
+      "options": [
+        "At the exit of the first building",
+        "At the point of entry to the second building",
+        "One at the exit of the first building and another at the point of entry to the second building"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "One at the exit of the first building and another at the point of entry to the second building"
+    },
+    {
+      "id": 240,
+      "question": "What is the required test pressure of a propane piping system 50 ft long with a working pressure of 10 psig?",
+      "options": [
+        "50 psig for 60 minutes",
+        "50 psig for 180 minutes",
+        "15 psig for 180 minutes"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "50 psig for 60 minutes"
+    },
+    {
+      "id": 241,
+      "question": "Is an individual shut-off valve required for all propane appliances on a recreational vehicle?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 242,
+      "question": "When during a piping installation should pressure testing be carried out?",
+      "options": [
+        "After all of the appliances have been installed and connected",
+        "Before any appliance is installed. A leak test is required after the appliance is installed",
+        "Before any appliances are installed"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Before any appliance is installed. A leak test is required after the appliance is installed"
+    },
+    {
+      "id": 243,
+      "question": "What is the minimum diameter gauge that can be used for pressure testing?",
+      "options": [
+        "3 inches (75 mm)",
+        "2 inches (50 mm)",
+        "4 inches (100 mm)"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "3 inches (75 mm)"
+    },
+    {
+      "id": 244,
+      "question": "What two inert gases may be used to pressure-test gas piping systems?",
+      "options": [
+        "Nitrogen and Hydrogen",
+        "Argon and Carbon dioxide",
+        "Carbon dioxide and Nitrogen",
+        "Hydrogen and Argon"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Carbon dioxide and Nitrogen"
+    },
+    {
+      "id": 245,
+      "question": "What should be done immediately after opening the gas valve at the gas meter?",
+      "options": [
+        "Listen for the gas flow to stop and monitor the gas meter test dial",
+        "Test fire the gas appliance and check the input",
+        "Ventilate by opening a window allowing any gas to escape during the purging process"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Listen for the gas flow to stop and monitor the gas meter test dial"
+    },
+    {
+      "id": 246,
+      "question": "How can a leak be located?",
+      "options": [
+        "By providing a lit taper at each joint and looking for a small flame",
+        "By watching the meter for movement",
+        "By wiping each joint in the system with a leak detecting solution (i.e., soap and water)"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "By wiping each joint in the system with a leak detecting solution (i.e., soap and water)"
+    },
+    {
+      "id": 247,
+      "question": "What personal information must the gas technician/fitter place on the test tag after testing is complete?",
+      "options": [
+        "Name, certification number, and classification",
+        "Contractors registration and company name",
+        "Name, address and phone number of gas technician"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Name, certification number, and classification"
+    },
+    {
+      "id": 248,
+      "question": "Which appliance piping should be purged first?",
+      "options": [
+        "The one with the largest input",
+        "The one farthest from the point of supply",
+        "The one with the smallest input"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "The one farthest from the point of supply"
+    },
+    {
+      "id": 249,
+      "question": "What type of gas cock must be placed within 5 ft of the purge point?",
+      "options": [
+        "One with ¼ turn lever handle",
+        "One with a 'dead man' valve",
+        "A lubricated 1/4 turn valve"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "One with ¼ turn lever handle"
+    },
+    {
+      "id": 250,
+      "question": "What substance is used to purge the air out of a gas piping system that is 4 in diameter or larger?",
+      "options": [
+        "An inert gas (carbon dioxide or nitrogen)",
+        "Compressed Air",
+        "Gas (Propane or natural gas)"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "An inert gas (carbon dioxide or nitrogen)"
+    },
+    {
+      "id": 251,
+      "question": "What is the maximum input of a propane appliance that may be purged at the pilot outlet of the appliance control valve?",
+      "options": [
+        "125,000 Btu/h",
+        "45,000 Btu/h",
+        "400,000 Btu/h"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "45,000 Btu/h"
+    },
+    {
+      "id": 252,
+      "question": "What characteristics of propane differentiate propane purging from natural gas purging?",
+      "options": [
+        "Smell, calorific value",
+        "Specific gravity, explosive limits"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Specific gravity, explosive limits"
+    },
+    {
+      "id": 253,
+      "question": "The approximate explosive range of natural gas is ________ to ________ natural gas in air.",
+      "options": [
+        "5% to 15%",
+        "10% to 20%",
+        "4% to 15%",
+        "15% to 20%"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "4% to 15%"
+    },
+    {
+      "id": 254,
+      "question": "The approximate explosive limits of propane gas range from ________ to ________ propane in air.",
+      "options": [
+        "5% to 15%",
+        "2% to 10%",
+        "7% to 10%",
+        "2% to 15%"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "2% to 10%"
+    },
+    {
+      "id": 255,
+      "question": "Natural gas is heavier than air.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "False"
+    },
+    {
+      "id": 256,
+      "question": "Air is lighter than propane.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "True"
+    },
+    {
+      "id": 257,
+      "question": "What is acceptable to the authority having jurisdiction?",
+      "options": [
+        "Approved",
+        "Certified",
+        "Endorsed",
+        "Validated"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Approved"
+    },
+    {
+      "id": 258,
+      "question": "What is a primarily vertical shaft that encloses at least one flue for conducting flue gases outdoors?",
+      "options": [
+        "Vent",
+        "Chimney",
+        "Stack",
+        "Flue"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Chimney"
+    },
+    {
+      "id": 259,
+      "question": "What is an appliance constructed so that all the combustion air is supplied directly from, and the products of combustion are vented directly to, the outdoors by independent enclosed passageways connected directly to the appliance?",
+      "options": [
+        "Natural-vent appliance",
+        "Direct-vent appliance",
+        "Power-vent appliance",
+        "Sealed combustion appliance"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Direct-vent appliance"
+    },
+    {
+      "id": 260,
+      "question": "What is a device, either adjustable or non-adjustable, for controlling and maintaining, within acceptable limits, a uniform outlet pressure?",
+      "options": [
+        "Flow regulator",
+        "Pressure regulator",
+        "Gas valve",
+        "Control valve"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Pressure regulator"
+    },
+    {
+      "id": 261,
+      "question": "True or False: A venting system removes flue gases to the outdoors by means of a chimney, vent connector vent, or a natural or mechanical exhaust system.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "True"
+    },
+    {
+      "id": 262,
+      "question": "Which of the following describes a continuous pilot?",
+      "options": [
+        "A pilot that is automatically lighted each time there is a call for heat, and that is cut off automatically at the end of the trial-for-ignition period of the main burner",
+        "A pilot that burns without turndown throughout the entire time the burner is in service, whether the main burner is firing or not",
+        "A pilot that is automatically lighted each time there is a call for heat, and that burns during the entire period that the main burner is firing"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "A pilot that burns without turndown throughout the entire time the burner is in service, whether the main burner is firing or not"
+    },
+    {
+      "id": 263,
+      "question": "True or False: An enclosed structure is the entire building in which an appliance is installed.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "False"
+    },
+    {
+      "id": 264,
+      "question": "What type of burner is not equipped with a mechanical device for supplying combustion air?",
+      "options": [
+        "Forced-draft burner",
+        "Fan-assisted burner",
+        "Natural-draft burner"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Natural-draft burner"
+    },
+    {
+      "id": 265,
+      "question": "What is the maximum gas pressure permitted inside one- and two-family dwellings and row housing?",
+      "options": [
+        "1 psi (7 kPa)",
+        "2 psi (14 kPa)",
+        "5 psi (35 kPa)",
+        "10 psi (70 kPa)"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "2 psi (14 kPa)"
+    },
+    {
+      "id": 266,
+      "question": "What is the maximum gas pressure permitted inside commercial buildings?",
+      "options": [
+        "5 psig (35 kPa)",
+        "10 psig (70 kPa)",
+        "20 psig (140 kPa)",
+        "66 psig (450 kPa)"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "20 psig (140 kPa)"
+    },
+    {
+      "id": 267,
+      "question": "Where can you determine the volume of gas to be used for sizing pipe systems to an appliance?",
+      "options": [
+        "The appliance rating plate or the appliance manufacturer",
+        "The back of the Codebook",
+        "In the Regulation"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "The appliance rating plate or the appliance manufacturer"
+    },
+    {
+      "id": 268,
+      "question": "According to Table 6.1, what is the maximum allowable pressure drop when a natural gas piping and tubing system supply pressure is less than 7 inches w.c.?",
+      "options": [
+        "1 inch w.c. (0.250 kPa)",
+        "There is no maximum allowable pressure drop",
+        "0.5 inches w.c. (0.125 kPa)"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "0.5 inches w.c. (0.125 kPa)"
+    },
+    {
+      "id": 269,
+      "question": "Can a gas pipe be supported by another gas pipe?",
+      "options": [
+        "Yes, if it is a smaller diameter",
+        "Yes, if it is a larger diameter",
+        "No"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 270,
+      "question": "What is the minimum depth of cover required on an underground gas line for residential installations?",
+      "options": [
+        "12 inches (300 mm)",
+        "15 inches (400 mm)",
+        "18 inches (450 mm)",
+        "24 inches (610 mm)"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "15 inches (400 mm)"
+    },
+    {
+      "id": 271,
+      "question": "What is the minimum depth of cover required on an underground gas line for commercial driveways?",
+      "options": [
+        "15 inches (400 mm)",
+        "18 inches (450 mm)",
+        "24 inches (610 mm)",
+        "30 inches (760 mm)"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "24 inches (610 mm)"
+    },
+    {
+      "id": 272,
+      "question": "Can gas piping be passed under a building?",
+      "options": [
+        "Yes, if it is at least 24 inches (610 mm) below the footings",
+        "Yes, if it is at least 15 inches (400 mm) below the footings",
+        "No"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 273,
+      "question": "When piping is extended from one building to another, where must the shut-off valves be located?",
+      "options": [
+        "At the point of exit of the first building and the point of entry of the second building",
+        "At the appliance",
+        "At the meter"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "At the point of exit of the first building and the point of entry of the second building"
+    },
+    {
+      "id": 274,
+      "question": "What is the minimum clearance required for each side of a commercial clothes dryer and the combustible material?",
+      "options": [
+        "12 inches (300 mm)",
+        "18 inches (450 mm)",
+        "24 inches (610 mm)",
+        "48 inches (1200 mm)"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "18 inches (450 mm)"
+    },
+    {
+      "id": 275,
+      "question": "What is the minimum clearance required above a central furnace?",
+      "options": [
+        "1 inch (25 mm)",
+        "6 inches (150 mm)",
+        "12 inches (300 mm)",
+        "24 inches (600 mm)"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "1 inch (25 mm)"
+    },
+    {
+      "id": 276,
+      "question": "What is the minimum clearance required at the front of a central furnace?",
+      "options": [
+        "6 inches (150 mm)",
+        "12 inches (300 mm)",
+        "18 inches (450 mm)",
+        "24 inches (600 mm)"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "24 inches (600 mm)"
+    },
+    {
+      "id": 277,
+      "question": "What type of room heater is allowed in a bathroom?",
+      "options": [
+        "Direct-vent type",
+        "Ventless",
+        "Electric only"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Direct-vent type"
+    },
+    {
+      "id": 278,
+      "question": "What is the minimum clearance required at the front of a swimming pool heater?",
+      "options": [
+        "18 inches (450 mm)",
+        "24 inches (610 mm)",
+        "36 inches (900 mm)",
+        "48 inches (1200 mm)"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "48 inches (1200 mm)"
+    },
+    {
+      "id": 279,
+      "question": "How far from a property line must a natural gas cylinder be stored if the aggregate capacity of the expanded gas exceeds 18,000 cubic feet (500,000 L)?",
+      "options": [
+        "50 ft (7.5 m)",
+        "75 ft (11.25 m)",
+        "100 ft (15 m)",
+        "150 ft (22.5 m)"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "100 ft (15 m)"
+    },
+    {
+      "id": 280,
+      "question": "May a vehicle that is being refuelled with natural gas have its engine running?",
+      "options": [
+        "Yes, provided it is 25 feet from a building",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 281,
+      "question": "Who may transfer propane from one container to another?",
+      "options": [
+        "Anyone as long as they stay in attendance at the transfer point",
+        "The holder of a certificate recognized by the authority having jurisdiction",
+        "A person trained by the employer on the operation of the equipment"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "The holder of a certificate recognized by the authority having jurisdiction"
+    },
+    {
+      "id": 282,
+      "question": "What is the maximum permitted filling density of a propane cylinder?",
+      "options": [
+        "65%",
+        "80%",
+        "90%",
+        "100%"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "80%"
+    },
+    {
+      "id": 283,
+      "question": "In which tables of the Propane Storage and Handling Code can the maximum filling density of a propane tank be found?",
+      "options": [
+        "Tables C2 and C3",
+        "Tables 7.1 and 7.2",
+        "Tables 7.3 and 7.4"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Tables 7.1 and 7.2"
+    },
+    {
+      "id": 284,
+      "question": "May a building that has a propane vaporizer be permitted to have a drain to a sewer or a sump pit?",
+      "options": [
+        "Yes, provided it has a removable cap",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 285,
+      "question": "Propane-burning appliances installed in a mobile home must comply with which standard?",
+      "options": [
+        "CSA Z240.4.1-09 (R2014)",
+        "CSA B149.2",
+        "CSA B149.3"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "CSA Z240.4.1-09 (R2014)"
+    },
+    {
+      "id": 286,
+      "question": "What are the installer's responsibilities towards the user before he or she leaves an installation?",
+      "options": [
+        "Shall instruct the user in the safe and correct operation of all appliances or equipment installed",
+        "Shall advise the user the instructions have been left with the appliance",
+        "Shall instruct the user to read the manufacturers literature while the installation is being completed"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Shall instruct the user in the safe and correct operation of all appliances or equipment installed"
+    },
+    {
+      "id": 287,
+      "question": "What Standard must meter and service regulator installations be in accordance with?",
+      "options": [
+        "CSA Z662",
+        "CSA B149.1",
+        "CSA B149.2",
+        "CSA B149.3"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "CSA Z662"
+    },
+    {
+      "id": 288,
+      "question": "Suppose an appliance requires a clearance of 24 inches. By how much can the clearance above the appliance be reduced if the surrounding surface is covered with 28 gauge sheet metal, spaced out 1 inch?",
+      "options": [
+        "3 inches",
+        "6 inches",
+        "9 inches",
+        "12 inches"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "9 inches"
+    },
+    {
+      "id": 289,
+      "question": "Suppose an appliance requires a clearance of 24 inches. By how much can the clearance at the sides and rear of the appliance be reduced if the surrounding surface is covered with 28 gauge sheet metal, spaced out 1 inch?",
+      "options": [
+        "3 inches",
+        "6 inches",
+        "9 inches",
+        "12 inches"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "12 inches"
+    },
+    {
+      "id": 290,
+      "question": "In general, what is the minimum service clearance surrounding an appliance?",
+      "options": [
+        "12 inches",
+        "18 inches",
+        "24 inches",
+        "36 inches"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "24 inches"
+    },
+    {
+      "id": 291,
+      "question": "True or False: A furnace or water heater needs to be certified specifically for use within a mobile home if the home has been placed in a permanent location.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "False"
+    },
+    {
+      "id": 292,
+      "question": "Who is responsible for inspecting and determining whether a used appliance is suitable for continued use?",
+      "options": [
+        "The installer",
+        "The homeowner",
+        "The manufacturer",
+        "The fuel supplier"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "The installer"
+    },
+    {
+      "id": 293,
+      "question": "If there is a conflict between the manufacturer's certified installation instructions and the Codebook, which requirements are to be followed?",
+      "options": [
+        "The Code",
+        "The manufacturer's instructions",
+        "Either requirement can be followed"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "The Code"
+    },
+    {
+      "id": 294,
+      "question": "What are the minimum dimensions of an access opening to a space containing a gas appliance?",
+      "options": [
+        "18 x 18 in (450 x 450 mm)",
+        "24 x 24 in (610 x 610 mm)",
+        "24 × 30 in (610 × 760 mm)",
+        "30 x 30 in (760 x 760 mm)"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "24 × 30 in (610 × 760 mm)"
+    },
+    {
+      "id": 295,
+      "question": "What is the minimum distance an appliance burner may be located from the floor of a repair garage?",
+      "options": [
+        "18 inches (450 mm)",
+        "24 inches (610 mm)",
+        "36 inches (900 mm)",
+        "4.5 ft (1400 mm)"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "4.5 ft (1400 mm)"
+    },
+    {
+      "id": 296,
+      "question": "What must be done with a defective heat exchanger of a furnace?",
+      "options": [
+        "It shall be replaced",
+        "It should be patched",
+        "It should be welded"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "It shall be replaced"
+    },
+    {
+      "id": 297,
+      "question": "True or False: If in compliance with procedures acceptable to the authority having jurisdiction, a defective heat exchanger of a commercial or industrial appliance can be repaired?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "True"
+    },
+    {
+      "id": 298,
+      "question": "What are the controls necessary for two or more appliances with self-energizing pilots?",
+      "options": [
+        "Each installed separately with separate thermostats",
+        "Installed with one thermostat to control all of the appliances"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Each installed separately with separate thermostats"
+    },
+    {
+      "id": 299,
+      "question": "Where would you find requirements governing the construction of chimneys?",
+      "options": [
+        "Applicable UL Canada Standard",
+        "Applicable CSA Group Standard",
+        "National Energy Code of Canada for Buildings (NECB)",
+        "National Building Code of Canada (NBCC)"
+      ],
+      "correctAnswer": 3,
+      "correctAnswerText": "National Building Code of Canada (NBCC)"
+    },
+    {
+      "id": 300,
+      "question": "What Code would you refer to for information on the electrical circuits of gas-fired equipment?",
+      "options": [
+        "CSA B149.1",
+        "Canadian Electrical Code, Part I",
+        "CSA B149.3",
+        "National Energy Code of Canada for Buildings (NECB)"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Canadian Electrical Code, Part I"
+    },
+    {
+      "id": 301,
+      "question": "Which regulation describes the legal requirements of employers and suppliers of hazardous materials?",
+      "options": [
+        "Occupational Health and Safety Act",
+        "Occupational Health and Safety Code",
+        "WHMIS 2015",
+        "Provincial Safety Authority"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "WHMIS 2015"
+    },
+    {
+      "id": 302,
+      "question": "Who publishes the standard Installation Requirements for Gas-burning Appliances in Manufactured Homes?",
+      "options": [
+        "CSA Group",
+        "Provincial Safety Authority",
+        "UL Canada",
+        "Standards Council of Canada (SCC)"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "CSA Group"
+    },
+    {
+      "id": 303,
+      "question": "What do the letters 'TSSA' stand for?",
+      "options": [
+        "Technical Safety and Standards Authority",
+        "Technical Standards and Safety Association",
+        "Technical Standards and Safety Authority",
+        "Technical Safety and Standards Association"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Technical Standards and Safety Authority"
+    },
+    {
+      "id": 304,
+      "question": "What is the title of the Code that deals with propane storage and handling that is currently accepted into law in Ontario?",
+      "options": [
+        "CSA B149.2-15 Propane Storage and Handling Code",
+        "CSA B149.1-15 Natural Gas and Propane Installation Code",
+        "CAN/CSA-B149.3-15 Code for the Field Approval of Fuel-Related Components on Appliances and Equipment"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "CSA B149.2-15 Propane Storage and Handling Code"
+    },
+    {
+      "id": 305,
+      "question": "What legal document is the least specific but contains the most powerful set of rules?",
+      "options": [
+        "A Regulation",
+        "An Act",
+        "A Code"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "An Act"
+    },
+    {
+      "id": 306,
+      "question": "What regulates Manufacturer's instructions?",
+      "options": [
+        "The Act",
+        "Standards",
+        "Regulations",
+        "Codes"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "Standards"
+    },
+    {
+      "id": 307,
+      "question": "What do Codes provide?",
+      "options": [
+        "General principles, duties, and responsibilities, as well as define the administrative powers for monitoring, enforcing, and creating regulations",
+        "Specific information on materials or components that you can use and how you are to use and test them",
+        "General requirements and directions on what can be used and how to use it"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "General requirements and directions on what can be used and how to use it"
+    },
+    {
+      "id": 308,
+      "question": "Does TSSA have regulatory authority over the safety of both natural gas and propane?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Yes"
+    },
+    {
+      "id": 309,
+      "question": "Are the appliance manufacturer's installation instructions legal documents?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Yes"
+    },
+    {
+      "id": 310,
+      "question": "Is TSSA a part of the government?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correctAnswer": 1,
+      "correctAnswerText": "No"
+    },
+    {
+      "id": 311,
+      "question": "What allows TSSA to accept and amend codes and standards without a regulatory change?",
+      "options": [
+        "Technical Standards and Safety Act",
+        "Regulation 215/01 Fuel Industry Certificates",
+        "Regulation 223/01 Codes and Standards Adopted by Reference",
+        "Regulation 211/01 Propane Storage and Handling"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Regulation 223/01 Codes and Standards Adopted by Reference"
+    },
+    {
+      "id": 312,
+      "question": "Who does TSSA report to?",
+      "options": [
+        "Ministry of Government and Consumer Services (MGCS)",
+        "Ministry of Energy (ME)",
+        "The Attorney General",
+        "Their shareholders"
+      ],
+      "correctAnswer": 0,
+      "correctAnswerText": "Ministry of Government and Consumer Services (MGCS)"
+    },
+    {
+      "id": 313,
+      "question": "Which of the following best describes due diligence?",
+      "options": [
+        "Knowing and Understanding all of the Regulations before working in the industry",
+        "Knowing who the local TSSA Inspector is and advising him/her of ongoing work",
+        "Actions that are reasonable in the circumstances expected from a reasonable person"
+      ],
+      "correctAnswer": 2,
+      "correctAnswerText": "Actions that are reasonable in the circumstances expected from a reasonable person"
+    }
+  ]
+}

@@ -1,0 +1,704 @@
+[
+  {
+    "id": 1,
+    "question": "Only plastic pipe can be used for liquid propane.",
+    "options": ["True", "False", "Only if coated with oxide", "PVC pipe only"],
+    "correct": 1
+  },
+  {
+    "id": 2,
+    "question": "What is the equivalent length in feet and inches of a four inch forged tee?",
+    "options": ["Two feet and one inch", "Five feet and four inches", "Fifteen feet one inch", "Fifteen feet"],
+    "correct": 2
+  },
+  {
+    "id": 3,
+    "question": "Schedule 80 piping is required on a C3H8 system?",
+    "options": ["For propane vapour under 125PSIG working pressure", "Whenever two different types of material are to be connected together", "When installed below grade", "For propane vapour over 125 PSIG working pressure"],
+    "correct": 3
+  },
+  {
+    "id": 4,
+    "question": "When sizing a branch line what is the maximum size of a job fabricated welded fitting that can be used on a ten inch supply header?",
+    "options": ["5\" NPT", "½ \"NPT", "¾ NPT", "Any size can be used"],
+    "correct": 0
+  },
+  {
+    "id": 5,
+    "question": "When is it necessary to purge a gas line?",
+    "options": ["Is it not necessary", "Always", "Only if the branch line is over 4\"NPT", "Only if the working pressure is 7\"wc"],
+    "correct": 1
+  },
+  {
+    "id": 6,
+    "question": "What is a method of testing gas pipe?",
+    "options": ["A pressure test using air or inert gas", "Radiographic", "Liquid dye", "A, B & C"],
+    "correct": 3
+  },
+  {
+    "id": 7,
+    "question": "What are two gases used by a welder for cutting steel pipe?",
+    "options": ["Oxygen & Acetylene", "Oxygen & Nitrogen", "Propane & Nitrogen", "Oxygen & Propane"],
+    "correct": 0
+  },
+  {
+    "id": 8,
+    "question": "What type of valve is used on the Oxy-acetylene hoses to ensure the gas does not mix?",
+    "options": ["Ball Valves", "Reverse single flow check valves", "Reverse flow check valves", "Forward flow check valves"],
+    "correct": 2
+  },
+  {
+    "id": 9,
+    "question": "When welding a fitting to a pipe, what is the first weld called?",
+    "options": ["First pass", "Primary pass", "Root pass", "Preliminary pass"],
+    "correct": 2
+  },
+  {
+    "id": 10,
+    "question": "The electrical service supplied to a building is measured in what units?",
+    "options": ["Amps", "Volts", "Load requirements", "Watts"],
+    "correct": 0
+  },
+  {
+    "id": 11,
+    "question": "Which of the following is not part of an electrical distribution system?",
+    "options": ["A distribution panel", "Wire conductors", "An electric meter", "Fuses or circuit breakers", "Control relays"],
+    "correct": 4
+  },
+  {
+    "id": 12,
+    "question": "What effect would an increase in current flow through a conductor have on the magnetic field around a conductor?",
+    "options": ["No effect", "The magnetic field decreases", "The magnetic field increases"],
+    "correct": 2
+  },
+  {
+    "id": 13,
+    "question": "Of the following, which wire would have the smallest diameter?",
+    "options": ["AWG 10", "AWG 12", "AWG 18", "AWG 14"],
+    "correct": 2
+  },
+  {
+    "id": 14,
+    "question": "Of the following, which wire would be rated to carry the most current?",
+    "options": ["AWG 10", "AWG 12", "AWG 18", "AWG 14"],
+    "correct": 0
+  },
+  {
+    "id": 15,
+    "question": "Which of the following wires is rated for use on a 15 amp circuit?",
+    "options": ["AWG 16", "AWG 18", "AWG 14", "AWG 35"],
+    "correct": 2
+  },
+  {
+    "id": 16,
+    "question": "What is the unit of measurement for resistance?",
+    "options": ["The unit of measurement is the Ampere (A)", "The unit of measurement is the Volt (V)", "The unit of measurement is the Ohm (Ω)"],
+    "correct": 2
+  },
+  {
+    "id": 17,
+    "question": "If you have appliances with draft control devices and appliances without draft control devices in a structure or enclosure that is not air tight (neither constructed as described in Clause 8.2.1 (a) nor complies with 8.2.1 (b) what tables are used to size air supply openings to the outdoors?",
+    "options": ["8.1 using total input of only appliances having draft control or 8.2 using total input of all appliances", "8.3 using total input of only appliances having draft control or 8.4 using total input of all appliances", "Any of the above", "None of the above"],
+    "correct": 1
+  },
+  {
+    "id": 18,
+    "question": "Where an appliance is located in an enclosure such as a furnace room with a door and is able to communicate through openings to a structure that is not air tight (neither constructed as described in Clause 8.2.1 (a) nor complies with 8.2.1 (b) what clause is used to size the openings?",
+    "options": ["8.2.6 (a) (b)", "8.31", "8.15", "None of the above"],
+    "correct": 0
+  },
+  {
+    "id": 19,
+    "question": "According to Clause 8.2.6, where an appliance is located in an enclosure such as a furnace room with a door and is able to communicate through openings to a structure that is not air tight (neither constructed as described in Clause 8.2.1 (a) nor complies with 8.2.1 (b) what size do the openings need to be?",
+    "options": ["1 sq in per 1000 Btuh of the total input of all appliances", "10 sq in per 1000 Btuh of the total input of all appliances", "1 sq in per 14,000 Btuh of the total input of all appliances", "1 sq in per 7000 Btuh of the total input of all appliances"],
+    "correct": 0
+  },
+  {
+    "id": 20,
+    "question": "According to clause 8.2.1 what would be considered the maximum negative building pressure that a draft hood equipped appliance could be subjected to?",
+    "options": ["-10 Pa", "-15 Pa", "-20 Pa", "-4 Pa"],
+    "correct": 0
+  },
+  {
+    "id": 21,
+    "question": "What would be the required size of air supply opening for a single 50,000 Btu/h water heater where there are no other appliances requiring an air supply?",
+    "options": ["7", "0", "4", "40"],
+    "correct": 1
+  },
+  {
+    "id": 22,
+    "question": "A single wall vent connector may?",
+    "options": ["Pass through a ceiling", "Pass through a ceiling with a ventilated thimble", "Pass through a roof with a ventilated thimble", "Pass through a partition with a ventilated thimble"],
+    "correct": 3
+  },
+  {
+    "id": 23,
+    "question": "A draft hood installed on an atmospheric furnace is designed to:",
+    "options": ["Neutralize a negative pressure in the structure", "Maintain a neutral over fire draft condition in the combustion chamber", "Reverse a down draft condition in the common vent", "Re-ignite the main flame when a down draft blows it out"],
+    "correct": 1
+  },
+  {
+    "id": 24,
+    "question": "When may a single wall vent connector be installed in an unheated space?",
+    "options": ["Never", "Only if the horizontal run is less than 6 ft", "Only if the common vent updraft is greater than 0.02\" wc", "Is required on all Installation"],
+    "correct": 0
+  },
+  {
+    "id": 25,
+    "question": "How is an appliance vent connector attached to the appliance draft hood or flue collar?",
+    "options": ["By using sheet metal screws", "By using baling wire", "By using high temperature duct tape", "By soldering"],
+    "correct": 0
+  },
+  {
+    "id": 26,
+    "question": "A combination oil/gas fired appliance must be vented using:",
+    "options": ["Single wall vent connectors", "Type B vent", "Type BH vent", "Type L vent"],
+    "correct": 3
+  },
+  {
+    "id": 27,
+    "question": "A manually operated flue damper in a residential dwelling:",
+    "options": ["Requires a proof of closure switch", "Must be interlocked with the main gas valve", "Requires an alarm circuit in the event of accidental closure", "Cannot be used"],
+    "correct": 3
+  },
+  {
+    "id": 28,
+    "question": "What function does a fire stop have when installed with a B vent system used as a common vent?",
+    "options": ["To prevent the starting of a fire in a dwelling", "To prevent the movement of air between floors during a fire", "To extinguish a small fire before it spreads", "To set off smoke alarms in the building"],
+    "correct": 1
+  },
+  {
+    "id": 29,
+    "question": "What type of vent is required when a recessed wall furnace is installed in a partition?",
+    "options": ["Type B vent", "Type BH vent", "Type BW vent", "Type L vent"],
+    "correct": 2
+  },
+  {
+    "id": 30,
+    "question": "If type B vent is unavailable for the required installation it may be replaced by:",
+    "options": ["Single wall vent", "Type BH vent", "Type BW vent", "Type L vent"],
+    "correct": 3
+  },
+  {
+    "id": 31,
+    "question": "A gas fired appliance and a liquid-fuelled fired appliance may be vented into a common chimney:",
+    "options": ["At the same level", "Using a shop fabricated branch fitting", "With the liquid fuel appliance vented above the gas vent", "Cannot be vented into a common chimney"],
+    "correct": 3
+  },
+  {
+    "id": 32,
+    "question": "What fitting is required when a vent connector enters a lined masonry chimney?",
+    "options": ["A sleeve", "A galvanized steel plate", "A fire stop spacer", "A thimble"],
+    "correct": 0
+  },
+  {
+    "id": 33,
+    "question": "Type B vent may be used on furnaces:",
+    "options": ["Equipped with a barometric draft regulator", "Equipped with a draft hood", "Equipped for side wall venting", "Equipped to have a vent outlet temperature above 485 deg F"],
+    "correct": 1
+  },
+  {
+    "id": 34,
+    "question": "A fast closing valve is?",
+    "options": ["A pressure relief valve installed in a liquid propane line", "A valve that is normally closed and allows flow in only one direction", "An automatic valve that has a closing time of less than 5 seconds upon energizing", "An automatic valve that has a closing time of less than 5 seconds upon being de-energized"],
+    "correct": 3
+  },
+  {
+    "id": 35,
+    "question": "A pressure regulator provided in a gas supply line shall not be installed",
+    "options": ["Outdoors", "Indoors", "Under a deck", "In a concealed location"],
+    "correct": 3
+  },
+  {
+    "id": 36,
+    "question": "The pressure relief device on a boiler 400,000 Btu/hr or less shall have a discharge pipe of a size at least?",
+    "options": ["½\" in diameter", "¾\" in diameter", "1\" in diameter", "At least the nominal size of the device outlet"],
+    "correct": 3
+  },
+  {
+    "id": 37,
+    "question": "A line pressure regulator shall have?",
+    "options": ["A screen installed in the over pressure protection device", "A manual shut off valve located upstream of the regulator", "A manual shut off valve located downstream of the regulator", "A leak limiting valve installed immediately downstream of the regulator"],
+    "correct": 1
+  },
+  {
+    "id": 38,
+    "question": "The maximum gas pressure allowed in a commercial building's central boiler room?",
+    "options": ["66 psi", "5 psi", "20 psi", "25 psi"],
+    "correct": 2
+  },
+  {
+    "id": 39,
+    "question": "The maximum gas pressure allowed inside a one family dwelling?",
+    "options": ["2 psi", "5 psi", "1 psi", "½ psi"],
+    "correct": 0
+  },
+  {
+    "id": 40,
+    "question": "The maximum gas pressure allowed in an assembly building is:",
+    "options": ["2 psig", "5psig", "20 psig", "66psig"],
+    "correct": 1
+  },
+  {
+    "id": 41,
+    "question": "In a residential application, propane vapour pressure in either a piping or tubing system between the first-stage and second-stage regulator shall not be higher than what pressure?",
+    "options": ["2 psig (14 kpa)", "10 psig (70 kpa)", "5 psig (35 kpa)", "20 psig (140 kpa)"],
+    "correct": 1
+  },
+  {
+    "id": 42,
+    "question": "When may a system regulator be by-passed?",
+    "options": ["Only when downstream pressure is excessive", "Only for regulator replacement or repair", "Only for meter replacement or repair", "It is not permitted by Code"],
+    "correct": 3
+  },
+  {
+    "id": 43,
+    "question": "The minimum clearances from combustible material for a forced air furnace converted to gas shall be?",
+    "options": ["Top (casing, bonnet or plenum) 1\", jacket sides and rear 6\", front 24\"", "Top (casing, bonnet or plenum) 3\", jacket sides and rear 6\", front 30\"", "Top (casing, bonnet or plenum) 2\", jacket sides and rear 4\", front 24\"", "Top (casing, bonnet or plenum) 3\", jacket sides and rear 3\", front 30\""],
+    "correct": 0
+  },
+  {
+    "id": 44,
+    "question": "When a pool heater is installed, it shall be the responsibility of the owner of the heater to provide maintenance for the heater in accordance with the manufacturer's instructions, but in no case less than _______ annually",
+    "options": ["Once", "Twice", "Bi-annually", "Only when heater requires service"],
+    "correct": 0
+  },
+  {
+    "id": 45,
+    "question": "An appliance installed in a dwelling unit shall not be connected to a flue serving?",
+    "options": ["A liquid fueled appliance", "Another gas fuelled appliance", "A solid fueled appliance", "Appliances are not allowed to be vented into a flue"],
+    "correct": 2
+  },
+  {
+    "id": 46,
+    "question": "A draft hood shall not be used on an appliance with _______ draft",
+    "options": ["Exhaust", "Negative over fire", "Neutral over fire", "Positive over fire"],
+    "correct": 3
+  },
+  {
+    "id": 47,
+    "question": "When an existing indoor swimming gas fired pool heater is being replaced with a new gas heater, the new finned tube heater shall be?",
+    "options": ["Of the direct vent type", "Of the natural draft type", "Of the power vented type", "New finned tube pool heaters are not allowed to be installed indoors"],
+    "correct": 3
+  },
+  {
+    "id": 48,
+    "question": "The gas supply to underground plastic piping or tubing shall be controlled by?",
+    "options": ["A solenoid valve controlled by the gas utility", "A control valve energized by the furnace", "A shut off valve situated below grade", "A shut off valve situated above ground"],
+    "correct": 3
+  },
+  {
+    "id": 49,
+    "question": "What is ventilation air?",
+    "options": ["The air required for satisfactory combustion of gas including excess air", "The ambient air that is admitted to the venting system at the draft hood, draft diverter, or draft regulator", "The portion of the combustion air that is supplied for the initial stages of the combustion process and is supplied upstream from the point of ignition", "Air that is admitted to a space containing an appliance to replace air exhausted through a ventilation opening or by means of exfiltration"],
+    "correct": 3
+  },
+  {
+    "id": 50,
+    "question": "The minimum clearance between an appliance installed on a roof and the edge of the roof shall be?",
+    "options": ["3 feet", "6 feet", "10 feet", "15 feet"],
+    "correct": 1
+  },
+  {
+    "id": 51,
+    "question": "When using a vertical piping chase around gas piping, the chase shall have an opening at the top and bottom, the opening shall have a minimum area equivalent to a round opening of _______ inch in diameter",
+    "options": ["1\"", "1 ½\"", "2\"", "3\""],
+    "correct": 2
+  },
+  {
+    "id": 52,
+    "question": "A free standing radiant type of room heater shall have what minimum clearance to combustible material (above)",
+    "options": ["24 inches", "30 inches", "36 inches", "48 inches"],
+    "correct": 2
+  },
+  {
+    "id": 53,
+    "question": "A manually operated flue damper shall not be used with?",
+    "options": ["A residential appliance", "A commercial appliance", "An Industrial appliance", "A power vented appliance"],
+    "correct": 0
+  },
+  {
+    "id": 54,
+    "question": "When an induced or forced draft device is used, provision shall be made to prevent?",
+    "options": ["Backdrafting into the dwelling", "The flow of water through the water heater", "Flow of gas to the burner on failure of the device", "Exhaust all products of combustion into a canopy"],
+    "correct": 2
+  },
+  {
+    "id": 55,
+    "question": "A Category 4 appliance is:",
+    "options": ["An appliance that operates with a positive vent static pressure, and with a flue loss less than 17%", "An appliance that operates with a non-positive vent static pressure, and with a flue loss not less than 17%", "An appliance that operates with a non-positive vent static pressure and with a flue loss less than 17%", "An appliance that operates with a positive vent static pressure and with a flue loss not less than 17%"],
+    "correct": 0
+  },
+  {
+    "id": 56,
+    "question": "Which type of draft is produced by a device upstream of the appliance combustion zone?",
+    "options": ["Forced draft", "Induced draft", "Atmospheric draft", "Gravity draft"],
+    "correct": 0
+  },
+  {
+    "id": 57,
+    "question": "A 'quick disconnect' device is?",
+    "options": ["An emergency shut off to control all gas supplied to the building", "A solenoid that is fast closing", "A flare nut type fitting on a gas line", "A hand operated device providing connection and disconnection means for an appliance to the gas supply"],
+    "correct": 3
+  },
+  {
+    "id": 58,
+    "question": "Where is the fan located in the 'forced draft burner' appliance?",
+    "options": ["Upstream of the combustion zone", "Downstream of the combustion zone", "In the heat exchanger", "In the pulse combustion burner"],
+    "correct": 0
+  },
+  {
+    "id": 59,
+    "question": "Where is the fan located in the 'induced draft burner' appliance?",
+    "options": ["Upstream of the combustion zone", "Downstream of the combustion zone", "In the heat exchanger", "In the pulse combustion burner"],
+    "correct": 1
+  },
+  {
+    "id": 60,
+    "question": "The statement that best describes a continuous pilot is?",
+    "options": ["The pilot is lit each time there is a call for heat, and remains lit during the entire call for heat.", "The pilot is lit each time there is a call for heat, and cuts off at the end of the main burner proving period.", "The pilot is on all the time, on a call for heat the pilot expands in size to reliably light burner", "The pilot is on all the time, and remains the same size"],
+    "correct": 3
+  },
+  {
+    "id": 61,
+    "question": "The statement that best describes an intermittent pilot is?",
+    "options": ["The pilot is lit each time there is a call for heat, and remains lit during the entire call for heat.", "The pilot is lit each time there is a call for heat, and cuts off at the end of the main burner proving period.", "The pilot is on all the time, on a call for heat the pilot expands in size to reliably light the burner.", "The pilot is on all the time and remains the same size."],
+    "correct": 0
+  },
+  {
+    "id": 62,
+    "question": "The statement that best describes an interrupted pilot is?",
+    "options": ["The pilot is lit each time there is a call for heat, and remains lit during the entire call for heat.", "The pilot is lit each time there is a call for heat, and cuts off at the end of the main burner proving period.", "The pilot is on all the time, on a call for heat the pilot expands in size to reliably light the burner.", "The pilot is on all the time and remains the same size"],
+    "correct": 1
+  },
+  {
+    "id": 63,
+    "question": "What must be done if a defective heat exchanger is found in a dwelling unit?",
+    "options": ["It may be welded, if welder is certified", "It shall be replaced", "If defects do not affect the flame, nothing has to be done", "If carbon monoxide is not present nothing has to be done"],
+    "correct": 1
+  },
+  {
+    "id": 64,
+    "question": "What is the proper test pressure and duration for a gas piping system with 150' longest measured run with a system supply pressure of 7\" water column?",
+    "options": ["15 psi for 60 minutes", "20 psi for 30 minutes", "15 psi for 15 minutes", "50 psi for 60 minutes"],
+    "correct": 2
+  },
+  {
+    "id": 65,
+    "question": "When an appliance is converted from one gas to another what must the installer do?",
+    "options": ["Call Ministry of Appliance Conversions", "Mark the new type of gas being used on the rating plate", "Notify the utility", "Notify the appliance manufacturer"],
+    "correct": 1
+  },
+  {
+    "id": 66,
+    "question": "Plastic piping and tubing may currently only be used for?",
+    "options": ["Low pressure propane lines", "Gas supply piping inside a residence only", "Outdoor, underground use", "Supply piping to pool heaters"],
+    "correct": 2
+  },
+  {
+    "id": 67,
+    "question": "Which of the following appliances must have a dirt pocket installed on them?",
+    "options": ["Gas log", "Range", "Clothes dryer", "Water heater"],
+    "correct": 3
+  },
+  {
+    "id": 68,
+    "question": "Piping installed underground cannot be less than ____\" in diameter",
+    "options": ["3/8\"", "½\"", "¾\"", "¼\""],
+    "correct": 1
+  },
+  {
+    "id": 69,
+    "question": "Which of the following fittings cannot be used on a gas piping system?",
+    "options": ["street elbow", "reducing coupling", "bushing", "reducing elbow"],
+    "correct": 3
+  },
+  {
+    "id": 70,
+    "question": "The B149.1 Natural Gas and Propane Installation Code does not apply to:",
+    "options": ["Industrial gas piping installations", "Appliances installed in a commercial building", "Propane supply piping from the distributors tank to the second stage regulator", "Utility pipeline distribution or transmission lines"],
+    "correct": 3
+  },
+  {
+    "id": 71,
+    "question": "When installing gas burning appliances in a mobile home what Code applies?",
+    "options": ["CAN/CSA B149.1", "CGA F566", "CSA B837", "CAN/CSA Z240.4.1"],
+    "correct": 3
+  },
+  {
+    "id": 72,
+    "question": "Tubing installed in hollow walls or partitions must be protected from physical damage with # ____ GSG plates or sleeves",
+    "options": ["14", "10", "28", "16"],
+    "correct": 3
+  },
+  {
+    "id": 73,
+    "question": "A light used for searching for gas leakage shall be:",
+    "options": ["Class 1, group C", "Class 2, group C", "Class 1, group A", "Class 1, group D"],
+    "correct": 3
+  },
+  {
+    "id": 74,
+    "question": "When using a gauge to perform pressure testing of a gas piping system, the gauge shall be:",
+    "options": ["2\" in diameter, maximum range of shall exceed the test pressure by at least 15% but not more than 300%.", "3\" in diameter, maximum range of shall exceed the test pressure by at least 15% but not more than 300%", "3\" in diameter, maximum range of test pressure shall not exceed the test pressure by at least 15% but not more than 200%", "3\" in diameter, reading in 1 PSI increments."],
+    "correct": 1
+  },
+  {
+    "id": 75,
+    "question": "What table would be used to calculate combustion air sizing for appliances having draft control devices, when the combined input is up to and including 400,000 Btu, and the structure does not comply with clause 8.2.1 (a) or (b).",
+    "options": ["Table 8.1", "Table 8.2", "Table 8.3", "Table 8.4"],
+    "correct": 2
+  },
+  {
+    "id": 76,
+    "question": "When a vent connector from a category 1 appliance passes through an unheated space, what must be done to the vent connector?",
+    "options": ["It must be insulated", "The connector must be Type C \"heavy wall\"", "The connector must be Type B", "The connector must be type BW"],
+    "correct": 0
+  },
+  {
+    "id": 77,
+    "question": "What must be provided when a hose is used to transfer liquid propane from one container to another?",
+    "options": ["Shut off valve", "Hydrostatic relief valve", "Vapourizer", "Excess flow valve"],
+    "correct": 1
+  },
+  {
+    "id": 78,
+    "question": "Meter and service regulator installations shall be made in accordance with:",
+    "options": ["CSA standard Z662-99", "CSA standard Z240.4.1", "TSSA standard 5.77.5", "CEC standard 3.6.7"],
+    "correct": 0
+  },
+  {
+    "id": 79,
+    "question": "What is the minimum distance a gas service regulator outlet must terminate from an appliance vent?",
+    "options": ["10'", "6'", "1'", "3'"],
+    "correct": 3
+  },
+  {
+    "id": 80,
+    "question": "How much pressure drop is allowed for a natural gas tubing system (using copper), when using 5 PSI supply pressure?",
+    "options": ["1 PSI", "1.5 PSI", "2 PSI", "2.5PSI"],
+    "correct": 0
+  },
+  {
+    "id": 81,
+    "question": "An intermittent pilot is:",
+    "options": ["A pilot that is lit each time there is a call for heat and that burns during the entire period the main burner is firing", "A pilot that is lit each time there is a call for heat and that is cut off automatically at the end of the trial for ignition period of the main burner.", "A pilot that burns without turndown throughout the entire time the burner is in service, whether the main burner is firing or not", "A pilot flame supervised by a primary safety control that senses the presence of the pilot prior to gas being admitted to the main burner"],
+    "correct": 0
+  },
+  {
+    "id": 82,
+    "question": "Who is responsible for ensuring that the manufacturers installation instructions are left with the end user?",
+    "options": ["The appliance manufacturer", "The distributor", "The TSSA inspector", "The installer"],
+    "correct": 3
+  },
+  {
+    "id": 83,
+    "question": "A water heater installed in a bathroom shall be?",
+    "options": ["Direct vent type", "Power vent type", "Power burner type", "Conventional vent type"],
+    "correct": 0
+  },
+  {
+    "id": 84,
+    "question": "A room heater installed in a bathroom shall be?",
+    "options": ["Direct vent type", "Power vent type", "Power burner type", "Conventional vent type"],
+    "correct": 0
+  },
+  {
+    "id": 85,
+    "question": "What is the temperature relief valve setting on a residential water heater?",
+    "options": ["60 deg. F", "200 deg. F", "210 deg. F", "180 deg. F"],
+    "correct": 2
+  },
+  {
+    "id": 86,
+    "question": "What is the pressure relief valve setting on a residential water heater?",
+    "options": ["100 PSIG", "125 PSIG", "30 PSIG", "150 PSIG"],
+    "correct": 3
+  },
+  {
+    "id": 87,
+    "question": "Can a water heater be used only for space heating purposes?",
+    "options": ["Yes", "No"],
+    "correct": 1
+  },
+  {
+    "id": 88,
+    "question": "What is the function of the dip tube?",
+    "options": ["To deliver incoming cold water to the bottom of the storage tank as hot water is being used.", "To deliver hot water to the system as required.", "To deliver incoming cold water to the top of the storage tank as hot water is being used.", "To deliver cold water to be mixed with the hot water in the storage tank."],
+    "correct": 0
+  },
+  {
+    "id": 89,
+    "question": "What is the maximum distance from the floor that the discharge line from a T&P valve on a water heater must terminate?",
+    "options": ["6 inches.", "12 inches.", "18 inches.", "24 inches."],
+    "correct": 1
+  },
+  {
+    "id": 90,
+    "question": "Water heater gas controls are generally set to which of the following operating temperatures?",
+    "options": ["110 deg F", "120 deg F", "130 deg F", "200 deg F"],
+    "correct": 2
+  },
+  {
+    "id": 91,
+    "question": "To prevent thermo siphoning in the heating loop of a combo system, which of the following is required?",
+    "options": ["T&P valve", "Check valve", "Dip tube", "Mixing valve"],
+    "correct": 1
+  },
+  {
+    "id": 92,
+    "question": "What is the purpose of a pressure relief valve on a boiler, pool heater or boiler?",
+    "options": ["To prevent damage to these systems in the event of over pressurization", "To prevent damage to these systems in the event of over temperature", "To bypass the appliance if return water is too cold", "To bypass the appliance if return water is too cold"],
+    "correct": 0
+  },
+  {
+    "id": 93,
+    "question": "Name the device that reduces the city main water pressure to a safe working pressure?",
+    "options": ["Circulating pump", "Temperature and pressure relief valve", "Pressure reducing valve", "Pressuretrol"],
+    "correct": 2
+  },
+  {
+    "id": 94,
+    "question": "Name the device that response to changes in water temperature?",
+    "options": ["Pressuretrol", "Aquastat", "Thermistor", "Thermostat"],
+    "correct": 1
+  },
+  {
+    "id": 95,
+    "question": "Name the device that response to changes in boiler pressure?",
+    "options": ["Pressuretrol", "Aquastat", "Thermistor", "Thermostat"],
+    "correct": 0
+  },
+  {
+    "id": 96,
+    "question": "The minimum top clearance from combustibles for a domestic gas range is?",
+    "options": ["24 inches", "30 inches", "36 inches", "48 inches"],
+    "correct": 1
+  },
+  {
+    "id": 97,
+    "question": "The maximum length of a corrugated metal connector for a gas range is:",
+    "options": ["5 feet", "8 feet", "6 feet", "24 inches"],
+    "correct": 2
+  },
+  {
+    "id": 98,
+    "question": "A range burner with a control valve located at the rear of the range shall not be installed unless:",
+    "options": ["The valve is readily accessible", "The valve is readily inaccessible", "The valve is rated for excessive temperatures", "The valve is of the lubricated plug type"],
+    "correct": 0
+  },
+  {
+    "id": 99,
+    "question": "When a flexible metal connector is used to connect the domestic appliance to rigid piping, where shall a shutoff valve be installed in the piping system?",
+    "options": ["Immediately upstream of the flexible connector", "Immediately downstream of the flexible connector", "Immediately downstream of the appliance regulator", "A shut off valve s not required when using a flexible connector"],
+    "correct": 0
+  },
+  {
+    "id": 100,
+    "question": "A domestic gas dryer exhaust duct must be?",
+    "options": ["Made of non combustible material", "Located 6'from a regulator vent", "Located 10' from a regulator vent", "Made secure using three sheet metal screws"],
+    "correct": 0
+  },
+  {
+    "id": 101,
+    "question": "Gas dryers are required to be vented:",
+    "options": ["Through a hepa filter", "To the outdoors", "To a filtered container outdoors", "To a heat recovery ventilation unit"],
+    "correct": 1
+  },
+  {
+    "id": 102,
+    "question": "Dryer exhaust ducts must not be screwed together.",
+    "options": ["True", "False"],
+    "correct": 0
+  },
+  {
+    "id": 103,
+    "question": "Sections of moisture exhaust duct on a dryer are held together using:",
+    "options": ["Locking bands", "Duct tape.", "Metal screws.", "Wire mesh."],
+    "correct": 1
+  },
+  {
+    "id": 104,
+    "question": "A moisture exhaust duct on a residential dryer and a service regulator must be a minimum distance of:",
+    "options": ["36 inches apart", "12 inches apart", "48 inches apart", "24 inches apart"],
+    "correct": 0
+  },
+  {
+    "id": 105,
+    "question": "A chimney shall not extend less than ____' above the highest point where it passes through the roof of a building",
+    "options": ["2'", "4'", "5'", "3'"],
+    "correct": 3
+  },
+  {
+    "id": 106,
+    "question": "An air supply inlet to a building must be located at least ____\" above outside grade level",
+    "options": ["18\"", "6\"", "14\"", "12\""],
+    "correct": 3
+  },
+  {
+    "id": 107,
+    "question": "A vent connector serving an appliance without flue gas dilution air must be made of # _____ GSG galvanized steel.",
+    "options": ["24", "20", "28", "26"],
+    "correct": 0
+  },
+  {
+    "id": 108,
+    "question": "When a common gas vent is used it shall be?",
+    "options": ["Type C vent", "Type BW vent", "Type B or L vent", "Type BH vent"],
+    "correct": 2
+  },
+  {
+    "id": 109,
+    "question": "A pool heating appliance installed outdoors at grade level shall be placed on a base of poured concrete or reinforced concrete slab, extending at least?",
+    "options": ["6\" beyond all sides of the appliance", "3\" beyond all sides of the appliance", "1\" beyond all sides of the appliance", "12\" beyond all sides of the appliance"],
+    "correct": 0
+  },
+  {
+    "id": 110,
+    "question": "What is the minimum clearance to combustibles on a commercial type clothes dryer?",
+    "options": ["18\" above, 18\" back and sides, 18\" front", "24\" above, 18\" back and sides, 36\" front", "30\" above, 18\" back and sides, 24\" front", "6\" above, 6\" back and sides, 24\" front"],
+    "correct": 0
+  },
+  {
+    "id": 111,
+    "question": "A moisture exhaust duct must terminate at least ____ feet from a service regulator",
+    "options": ["6'", "3'", "10'", "1'"],
+    "correct": 1
+  },
+  {
+    "id": 112,
+    "question": "What is the minimum distance above a flat roof that a vent must terminate?",
+    "options": ["18\"", "24\"", "36\"", "48\""],
+    "correct": 1
+  },
+  {
+    "id": 113,
+    "question": "What is the minimum distance that a service regulator vent must be from a domestic dryer exhaust duct?",
+    "options": ["3ft", "6ft", "8 ft", "10ft"],
+    "correct": 0
+  },
+  {
+    "id": 114,
+    "question": "Propane is a?",
+    "options": ["Manufactured gas", "Hydrocarbon", "Naptha fuel", "Distillate fuel"],
+    "correct": 1
+  },
+  {
+    "id": 115,
+    "question": "Calculate the air velocity for a velocity pressure reading of 0.04 inches of w.c.",
+    "options": ["566 ft/min", "801 ft/min", "1132 ft/min", "1602 ft/min"],
+    "correct": 1
+  },
+  {
+    "id": 116,
+    "question": "True or False: A pressure test is performed after the appliance is installed.",
+    "options": ["True", "False"],
+    "correct": 1
+  },
+  {
+    "id": 117,
+    "question": "Before the appliances are connected, the system shall be pressure tested using:",
+    "options": ["Air or inert gas", "Air or soap solution", "Inert gas or soap solution"],
+    "correct": 0
+  }
+]

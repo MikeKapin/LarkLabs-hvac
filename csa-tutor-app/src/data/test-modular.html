@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modular System</title>
+</head>
+<body>
+    <h1>Testing Modular G3 System</h1>
+    <div id="results"></div>
+    <button onclick="testModule7()">Test Module 7 Loading</button>
+
+    <script type="module">
+        window.testModule7 = async function() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<p>Loading Module 7...</p>';
+            
+            try {
+                // Test loading module 7 data
+                const response = await fetch('./module7-customer-relations.js');
+                if (!response.ok) {
+                    throw new Error(`Failed to load: ${response.statusText}`);
+                }
+                
+                const moduleCode = await response.text();
+                console.log('Module code loaded:', moduleCode.substring(0, 200) + '...');
+                
+                // Create script to execute module
+                const script = document.createElement('script');
+                script.type = 'module';
+                script.textContent = moduleCode + '; window.testData = module7CustomerRelationsData;';
+                document.head.appendChild(script);
+                
+                // Wait for execution
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                const moduleData = window.testData;
+                delete window.testData;
+                document.head.removeChild(script);
+
+                if (moduleData) {
+                    results.innerHTML = `
+                        <h2>✅ Module 7 Loaded Successfully!</h2>
+                        <p><strong>Title:</strong> ${moduleData.title}</p>
+                        <p><strong>Description:</strong> ${moduleData.description}</p>
+                        <p><strong>Chapters:</strong> ${Object.keys(moduleData.chapters).length}</p>
+                        <h3>Chapters:</h3>
+                    `;
+                    
+                    Object.entries(moduleData.chapters).forEach(([id, chapter]) => {
+                        results.innerHTML += `<p>Chapter ${id}: ${chapter.title}</p>`;
+                    });
+                    
+                    // Test chapter 3 content
+                    if (moduleData.chapters['3']) {
+                        const chapter3 = moduleData.chapters['3'];
+                        results.innerHTML += `
+                            <h3>Chapter 3 Sample Content:</h3>
+                            <p><strong>Overview:</strong> ${chapter3.content.overview}</p>
+                            <p><strong>Conflict Types:</strong> ${chapter3.content.conflictTypes.length} items</p>
+                        `;
+                    }
+                    
+                } else {
+                    results.innerHTML = '<h2>❌ Failed to extract module data</h2>';
+                }
+
+            } catch (error) {
+                results.innerHTML = `<h2>❌ Error: ${error.message}</h2>`;
+                console.error('Test error:', error);
+            }
+        };
+    </script>
+</body>
+</html>

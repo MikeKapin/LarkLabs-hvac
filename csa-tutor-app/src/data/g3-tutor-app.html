@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSSA G3 AI Tutor - CSA Gas Technician Modules 1-9</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .module-selector {
+            margin-bottom: 20px;
+        }
+
+        .module-selector label {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .module-select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .module-select option {
+            background: #333;
+            color: #fff;
+        }
+
+        .quick-topics {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .quick-topics h3 {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .topic-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.98);
+            font-size: 13px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .topic-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(5px);
+            color: #fff;
+        }
+
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .chat-header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-header h2 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message.ai {
+            text-align: left;
+        }
+
+        .message-bubble {
+            display: inline-block;
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-left: 20%;
+        }
+
+        .message.ai .message-bubble {
+            background: #fff;
+            color: #333;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-right: 20%;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #495057;
+            margin-top: 5px;
+        }
+
+        .typing-indicator {
+            display: none;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .typing-indicator .message-bubble {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            padding: 15px 20px;
+            margin-right: 20%;
+        }
+
+        .typing-dots {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #495057;
+            animation: typing 1.4s infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            border-top: 1px solid #e9ecef;
+            background: #fff;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            resize: none;
+            max-height: 120px;
+            min-height: 50px;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #495057;
+        }
+
+        .welcome-message h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .welcome-message p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .example-questions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .example-btn {
+            padding: 15px 20px;
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .example-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 5px;
+                border-radius: 15px;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                overflow-y: auto;
+                padding: 15px;
+            }
+
+            .chat-area {
+                height: calc(100vh - 220px);
+            }
+
+            .message-bubble {
+                max-width: 90%;
+            }
+
+            .example-questions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1>G3 AI Tutor</h1>
+                <p>CSA Gas Technician Modules 1-9</p>
+            </div>
+
+            <div class="module-selector">
+                <label for="moduleSelect">Select Module:</label>
+                <select id="moduleSelect" class="module-select">
+                    <option value="">All Modules</option>
+                    <option value="1">Module 1: Safety</option>
+                    <option value="2">Module 2: Fasteners, Tools and Test Equipment</option>
+                    <option value="3">Module 3: Properties and Safe Handling of Fuel Gases</option>
+                    <option value="4">Module 4: Gas Industry Codes, Acts and Regulations</option>
+                    <option value="5">Module 5: Basic Electricity</option>
+                    <option value="6">Module 6: Technical Drawings, Manuals and Graphs</option>
+                    <option value="7">Module 7: Customer Relations</option>
+                    <option value="8">Module 8: Introduction to Piping and Tubing Systems</option>
+                    <option value="9">Module 9: Introduction to Gas Appliances</option>
+                </select>
+            </div>
+
+            <div class="quick-topics">
+                <h3>Quick Topics</h3>
+                <div id="topicButtons">
+                    <button class="topic-btn" onclick="askQuestion('What are the essential PPE requirements for gas technicians?')">PPE Requirements</button>
+                    <button class="topic-btn" onclick="askQuestion('How do I perform a proper leak test?')">Leak Testing</button>
+                    <button class="topic-btn" onclick="askQuestion('Explain gas pressure calculations')">Pressure Calculations</button>
+                    <button class="topic-btn" onclick="askQuestion('What are gas regulator functions?')">Gas Regulators</button>
+                    <button class="topic-btn" onclick="askQuestion('Describe furnace ignition sequence')">Ignition Sequence</button>
+                    <button class="topic-btn" onclick="askQuestion('What are venting requirements?')">Venting Systems</button>
+                    <button class="topic-btn" onclick="askQuestion('Explain carbon monoxide safety')">CO Safety</button>
+                    <button class="topic-btn" onclick="askQuestion('What are appliance clearances?')">Clearances</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area">
+            <div class="chat-header">
+                <h2>AI Tutor Chat</h2>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    <h3>Welcome to your G3 AI Tutor! 🔧</h3>
+                    <p>I'm here to help you master CSA Gas Technician Modules 1-9 for your TSSA G3 certification.</p>
+                    <p>Ask me about safety procedures, tools, gas properties, codes, electricity, and more!</p>
+                    
+                    <div class="example-questions">
+                        <div class="example-btn" onclick="askQuestion('What safety precautions should I take when working with gas?')">
+                            <strong>Safety First</strong><br>
+                            What safety precautions should I take when working with gas?
+                        </div>
+                        <div class="example-btn" onclick="askQuestion('How do I size gas piping for an appliance?')">
+                            <strong>Technical Skills</strong><br>
+                            How do I size gas piping for an appliance?
+                        </div>
+                        <div class="example-btn" onclick="askQuestion('What are the key CSA B149.1 requirements?')">
+                            <strong>Code Knowledge</strong><br>
+                            What are the key CSA B149.1 requirements?
+                        </div>
+                        <div class="example-btn" onclick="askQuestion('Explain natural gas vs propane properties')">
+                            <strong>Gas Properties</strong><br>
+                            Explain natural gas vs propane properties
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="message-bubble">
+                    <div class="typing-dots">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span style="margin-left: 10px; color: #495057;">AI Tutor is thinking...</span>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <div class="input-group">
+                    <textarea 
+                        id="chatInput" 
+                        class="chat-input" 
+                        placeholder="Ask me anything about CSA Gas Technician modules..."
+                        rows="1"
+                    ></textarea>
+                    <button id="sendBtn" class="send-btn" onclick="sendMessage()">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Comprehensive CSA Module Data based on actual course content
+        const moduleData = {
+            1: {
+                title: "Safety",
+                keywords: ["safety", "ppe", "hazards", "emergency", "procedures", "lockout", "tagout", "gas detection", "confined spaces"],
+                description: "Fundamental safety principles and procedures for gas technicians",
+                keyTopics: [
+                    "Personal Protective Equipment (PPE)",
+                    "Hazard identification and assessment", 
+                    "Emergency procedures and protocols",
+                    "Gas safety hazards and risks",
+                    "Workplace safety culture",
+                    "Lock-out/tag-out procedures",
+                    "Combustible gas detection",
+                    "Confined space safety"
+                ],
+                commonQuestions: [
+                    {
+                        question: "What PPE is required for gas technicians?",
+                        answer: "Essential PPE includes ANSI-approved safety glasses, CSA-approved safety footwear, cut-resistant work gloves, high-visibility clothing when required, and combustible gas detectors. Hard hats are required in construction environments."
+                    },
+                    {
+                        question: "What are the primary hazards in gas work?",
+                        answer: "Primary hazards include combustible gas accumulation, asphyxiation from oxygen displacement, fire and explosion risks, toxic gas exposure, and electrical hazards in gas environments."
+                    }
+                ]
+            },
+            2: {
+                title: "Fasteners, Tools and Test Equipment",
+                keywords: ["tools", "fasteners", "test equipment", "measurements", "calibration", "pipe threading", "NPT", "torque"],
+                description: "Essential tools, fasteners, and testing equipment for gas work",
+                keyTopics: [
+                    "Hand tools and basic equipment",
+                    "Pipe threading tools and techniques",
+                    "NPT and BSP thread systems",
+                    "Testing and measurement equipment",
+                    "Tool calibration and maintenance",
+                    "Fastener types and applications",
+                    "Thread sealants and compounds",
+                    "Torque specifications"
+                ],
+                commonQuestions: [
+                    {
+                        question: "What's the difference between NPT and BSP threads?",
+                        answer: "NPT (National Pipe Thread) are tapered threads commonly used in North America, while BSP (British Standard Pipe) threads can be parallel or tapered and are used in other countries. NPT threads seal by wedging action, while BSP parallel threads require gaskets."
+                    },
+                    {
+                        question: "How often should gas detectors be calibrated?",
+                        answer: "Gas detectors should be calibrated according to manufacturer specifications, typically daily before use or at least monthly for continuous monitors. Always use certified calibration gas and maintain calibration records."
+                    }
+                ]
+            },
+            3: {
+                title: "Properties and Safe Handling of Fuel Gases",
+                keywords: ["natural gas", "propane", "BTU", "specific gravity", "combustion", "heating value", "flammable limits", "methane"],
+                description: "Understanding fuel gas properties and safe handling procedures",
+                keyTopics: [
+                    "Natural gas properties and composition",
+                    "Propane characteristics and handling",
+                    "Heating values and BTU calculations",
+                    "Specific gravity and gas flow",
+                    "Flammable limits and ignition temperatures",
+                    "Gas storage and transportation",
+                    "Combustion principles",
+                    "Gas odorization and detection"
+                ],
+                commonQuestions: [
+                    {
+                        question: "What's the heating value of natural gas vs propane?",
+                        answer: "Natural gas has approximately 1,000 BTU per cubic foot, while propane has about 2,500 BTU per cubic foot. This means propane provides 2.5 times more energy per unit volume than natural gas."
+                    },
+                    {
+                        question: "What are the flammable limits for natural gas?",
+                        answer: "Natural gas has flammable limits of 5-15% by volume in air. Below 5% there's insufficient fuel to burn, above 15% there's insufficient oxygen for combustion."
+                    }
+                ]
+            },
+            4: {
+                title: "Gas Industry Codes, Acts and Regulations",
+                keywords: ["CSA B149.1", "CSA B149.2", "codes", "regulations", "standards", "compliance", "TSSA", "permits", "inspection"],
+                description: "Gas industry codes, acts, and regulatory requirements",
+                keyTopics: [
+                    "CSA B149.1 Natural Gas Installation Code",
+                    "CSA B149.2 Propane Storage and Handling",
+                    "TSSA regulations and enforcement",
+                    "Permit requirements and procedures",
+                    "Code hierarchy and amendments",
+                    "Installation standards",
+                    "Inspection requirements",
+                    "Legal responsibilities"
+                ],
+                commonQuestions: [
+                    {
+                        question: "What is CSA B149.1?",
+                        answer: "CSA B149.1 is the Natural Gas and Propane Installation Code that governs the design, construction, installation, and maintenance of natural gas piping systems and appliances in Canada."
+                    },
+                    {
+                        question: "When is a permit required for gas work?",
+                        answer: "Permits are typically required for new installations, relocating appliances, changing fuel types, or major modifications to existing systems. Check with local authorities as requirements vary by jurisdiction."
+                    }
+                ]
+            },
+            5: {
+                title: "Basic Electricity",
+                keywords: ["voltage", "current", "ohms law", "circuits", "electrical safety", "multimeter", "AC", "DC", "grounding"],
+                description: "Basic electrical principles for gas appliance technicians",
+                keyTopics: [
+                    "Electrical fundamentals and Ohm's Law",
+                    "AC and DC circuits",
+                    "Electrical safety procedures",
+                    "Multimeter usage and testing",
+                    "Grounding and bonding",
+                    "Control circuits in gas appliances",
+                    "Electrical codes and standards",
+                    "Troubleshooting electrical components"
+                ],
+                commonQuestions: [
+                    {
+                        question: "What is Ohm's Law?",
+                        answer: "Ohm's Law states that Voltage = Current × Resistance (V = I × R). This fundamental relationship helps calculate electrical values in circuits and troubleshoot electrical problems in gas appliances."
+                    },
+                    {
+                        question: "Why is electrical grounding important in gas appliances?",
+                        answer: "Proper grounding provides safety by creating a path for fault currents, prevents electrical shock, reduces fire risk, and ensures proper operation of safety controls and electronic ignition systems."
+                    }
+                ]
+            },
+            6: {
+                title: "Technical Drawings, Manuals and Graphs",
+                keywords: ["technical drawings", "specifications", "manuals", "schematics", "blueprints", "symbols", "piping diagrams"],
+                description: "Reading and interpreting technical documentation and drawings",
+                keyTopics: [
+                    "Technical drawing interpretation",
+                    "Gas system schematics",
+                    "Piping and instrumentation diagrams",
+                    "Equipment manuals and specifications",
+                    "Standard symbols and conventions",
+                    "Scale and measurement",
+                    "Installation drawings",
+                    "As-built documentation"
+                ],
+                commonQuestions: [
+                    {
+                        question: "How do you read gas piping schematics?",
+                        answer: "Gas piping schematics use standard symbols to show pipe sizes, fittings, valves, regulators, and appliances. Lines represent pipes, with thickness indicating size. Symbols show components like shutoff valves (square), regulators (triangle), and meters."
+                    },
+                    {
+                        question: "What information is found on appliance nameplates?",
+                        answer: "Appliance nameplates show model numbers, input ratings (BTU/hr), gas type, electrical requirements, clearances, venting category, and installation requirements. This information is essential for proper sizing and installation."
+                    }
+                ]
+            },
+            7: {
+                title: "Customer Relations",
+                keywords: ["customer service", "communication", "professionalism", "ethics", "conflict resolution", "documentation"],
+                description: "Professional customer relations and communication skills",
+                keyTopics: [
+                    "Professional communication skills",
+                    "Customer education and safety",
+                    "Conflict resolution techniques",
+                    "Service documentation",
+                    "Ethical business practices",
+                    "Building customer trust",
+                    "Explaining technical concepts",
+                    "Emergency communication"
+                ],
+                commonQuestions: [
+                    {
+                        question: "How do you explain gas safety to customers?",
+                        answer: "Use simple, non-technical language. Focus on what they can see, smell, or hear (hissing sounds, gas odor). Explain the importance of not ignoring warning signs and when to call professionals. Provide written safety information."
+                    },
+                    {
+                        question: "What should you document during service calls?",
+                        answer: "Document work performed, parts used, test results, safety issues found, customer concerns addressed, and any recommendations. Include dates, times, and signatures. This protects both you and the customer."
+                    }
+                ]
+            },
+            8: {
+                title: "Introduction to Piping and Tubing Systems",
+                keywords: ["piping", "tubing", "pipe sizing", "materials", "installation", "joints", "fittings", "pressure drop"],
+                description: "Fundamentals of gas piping and tubing systems",
+                keyTopics: [
+                    "Piping materials and selection",
+                    "Pipe sizing calculations",
+                    "Installation techniques",
+                    "Joint types and methods",
+                    "Fitting selection and use",
+                    "Pressure drop considerations",
+                    "Support and protection",
+                    "Testing and commissioning"
+                ],
+                commonQuestions: [
+                    {
+                        question: "How do you size gas piping?",
+                        answer: "Pipe sizing depends on gas demand (BTU/hr), pipe length, number of fittings, and allowable pressure drop. Use sizing tables in CSA B149.1, calculating total demand and longest run to determine minimum pipe size."
+                    },
+                    {
+                        question: "What materials are approved for gas piping?",
+                        answer: "Approved materials include black steel pipe, corrugated stainless steel tubing (CSST), polyethylene (underground), copper (in some applications), and flexible connectors for appliances. Materials must meet CSA or ANSI standards."
+                    }
+                ]
+            },
+            9: {
+                title: "Introduction to Gas Appliances",
+                keywords: ["appliances", "burners", "controls", "venting", "operation", "furnaces", "water heaters", "installation"],
+                description: "Overview of gas appliances and their operation",
+                keyTopics: [
+                    "Gas appliance types and classifications",
+                    "Combustion principles and burners",
+                    "Control systems and safety devices",
+                    "Venting systems and categories",
+                    "Installation requirements",
+                    "Operating sequences",
+                    "Efficiency ratings (AFUE)",
+                    "Maintenance procedures"
+                ],
+                commonQuestions: [
+                    {
+                        question: "What are the different venting categories?",
+                        answer: "Category I: Natural draft, non-condensing (80% AFUE). Category III: Fan-assisted, non-condensing. Category IV: Condensing (90%+ AFUE). Each has specific venting material and installation requirements."
+                    },
+                    {
+                        question: "How does a gas furnace ignition sequence work?",
+                        answer: "Thermostat calls for heat → safety checks → inducer fan starts → igniter heats → gas valve opens → gas ignites → flame sensor verifies → normal operation begins. If any step fails, the system shuts down safely."
+                    }
+                ]
+            }
+        };
+
+        // Enhanced system prompt for Claude
+        const systemPrompt = `You are an expert HVAC tutor for TSSA G3 certification, specializing in CSA Gas Technician Modules 1–9. 
+
+        **Your Role:**
+        - Act as a supportive, knowledgeable tutor
+        - Explain complex concepts in plain English with practical examples
+        - Use analogies and step-by-step reasoning
+        - Always assume the user is learning unless told otherwise
+        - Be encouraging and patient
+
+        **Response Guidelines:**
+        1. Search the provided module data for relevant information first
+        2. If information isn't in the dataset, clearly state this
+        3. Use practical scenarios and real-world examples
+        4. Break down complex topics into digestible steps
+        5. Include safety reminders when relevant
+        6. End with a follow-up question to encourage learning
+
+        **Response Structure:**
+        - Start with a clear, direct answer
+        - Provide step-by-step explanations when needed  
+        - Include practical examples or analogies
+        - Add safety notes for safety-related topics
+        - Suggest related topics they might want to explore
+
+        **Topics You Cover:**
+        Module 1: Safety procedures, PPE, hazard identification, emergency response
+        Module 2: Tools, fasteners, testing equipment, calibration, maintenance  
+        Module 3: Gas properties, BTU values, specific gravity, combustion principles
+        Module 4: CSA B149.1/B149.2 codes, regulations, compliance requirements
+        Module 5: Basic electricity, Ohm's law, circuits, electrical safety for gas work
+        Module 6: Technical drawings, manuals, specifications, symbols
+        Module 7: Customer service, communication, professionalism
+        Module 8: Piping systems, materials, sizing, installation methods
+        Module 9: Gas appliances, burners, controls, venting, operation principles
+
+        If you don't know something, say: "That topic isn't covered in the current modules. Please ask about another topic from Modules 1–9."`;
+
+        // Chat functionality
+        let chatHistory = [];
+
+        window.askQuestion = function(question) {
+            document.getElementById('chatInput').value = question;
+            sendMessage();
+        }
+
+        window.sendMessage = async function() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage('user', message);
+            input.value = '';
+            showTypingIndicator();
+            
+            try {
+                // Get AI response
+                const response = await getAIResponse(message);
+                hideTypingIndicator();
+                addMessage('ai', response);
+            } catch (error) {
+                hideTypingIndicator();
+                addMessage('ai', "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.");
+                console.error('Error:', error);
+            }
+        }
+
+        async function getAIResponse(userMessage) {
+            // Get selected module
+            const selectedModule = document.getElementById('moduleSelect').value;
+            let contextInfo = '';
+            
+            if (selectedModule && moduleData[selectedModule]) {
+                const module = moduleData[selectedModule];
+                contextInfo = `Context - ${module.title}: ${module.description}\nKeywords: ${module.keywords.join(', ')}\n\n`;
+                
+                // Check for exact matches in common questions first
+                const lowerMessage = userMessage.toLowerCase();
+                if (module.commonQuestions) {
+                    const matchingQA = module.commonQuestions.find(qa => 
+                        lowerMessage.includes(qa.question.toLowerCase()) ||
+                        qa.question.toLowerCase().includes(lowerMessage) ||
+                        qa.answer.toLowerCase().includes(lowerMessage)
+                    );
+                    
+                    if (matchingQA) {
+                        return `**${module.title} - ${matchingQA.question}**\n\n${matchingQA.answer}\n\n💡 **Study Tip:** This is a key concept for G3 certification! Make sure you understand it thoroughly.\n\nWhat else would you like to know about ${module.title.toLowerCase()}?`;
+                    }
+                }
+                
+                // Check for keyword matches in key topics
+                if (module.keyTopics) {
+                    const matchingTopic = module.keyTopics.find(topic =>
+                        lowerMessage.includes(topic.toLowerCase()) ||
+                        topic.toLowerCase().includes(lowerMessage.split(' ')[0])
+                    );
+                    
+                    if (matchingTopic) {
+                        return `**${module.title} - ${matchingTopic}**\n\nThis is an important topic covered in ${module.title}.\n\n**Key areas to understand:**\n${module.keyTopics.filter(t => t !== matchingTopic).slice(0, 4).map(t => `• ${t}`).join('\n')}\n\n📚 **Study Focus:** Understanding ${matchingTopic.toLowerCase()} is essential for G3 certification.\n\nWould you like me to explain any specific aspect of ${matchingTopic.toLowerCase()}?`;
+                    }
+                }
+            }
+            
+            // For demo purposes, we'll simulate Claude API responses
+            // Replace this with actual Claude API integration
+            return await simulateClaudeResponse(userMessage, selectedModule, contextInfo);
+        }
+
+        // Simulated Claude response - Replace with actual API call
+        async function simulateClaudeResponse(message, moduleId, context) {
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            const lowerMessage = message.toLowerCase();
+            
+            // Pattern matching for common topics
+            if (lowerMessage.includes('ppe') || lowerMessage.includes('personal protective')) {
+                return `**Personal Protective Equipment (PPE) for Gas Technicians:**
+
+**Essential PPE includes:**
+• Safety glasses and appropriate footwear
+• Cut-resistant gloves when handling sharp materials
+• Calibrated gas detector for leak detection
+• High-visibility clothing when working in traffic areas
+
+**Think of PPE like a toolbox** - you need the right tool for each job. For example, just like you wouldn't use a hammer to turn a screw, you wouldn't use regular work gloves when handling sharp pipe edges.
+
+**Safety Reminder:** Always inspect your PPE before each use. A damaged gas detector could put you and others at risk.
+
+What specific PPE situation would you like me to explain further?`;
+            }
+            
+            if (lowerMessage.includes('leak test') || lowerMessage.includes('leak detection')) {
+                return `**Gas Leak Testing - Step by Step:**
+
+**1. Preparation:**
+- Turn off gas supply and wait for pressure to drop
+- Connect your test gauge
+- Use only approved testing methods
+
+**2. Testing Methods:**
+- **Soap solution:** Like blowing bubbles - gas leaks create bubbles at the leak point
+- **Electronic detectors:** More sensitive, good for hard-to-reach areas
+- **Pressure testing:** Hold system pressure for 10-15 minutes minimum
+
+**3. Safety Rules:**
+- NEVER use open flame for leak detection
+- Always have proper ventilation
+- Use calibrated equipment only
+
+**Think of it like testing a bicycle tire** - you pump it up and see if it holds air. Same principle, but much more critical for safety!
+
+Which testing method would you like me to explain in more detail?`;
+            }
+            
+            if (lowerMessage.includes('pressure') && lowerMessage.includes('calculation')) {
+                return `**Gas Pressure Calculations Made Simple:**
+
+**Key Concepts:**
+• **Working Pressure:** Normal operating pressure (7" w.c. for natural gas)
+• **Pressure Drop:** Loss through piping (like water pressure dropping through a garden hose)
+
+**Basic Formula:**
+Pressure Drop = (Flow Rate² × Length × Factor) / (Pipe Diameter⁵)
+
+**Practical Example:**
+If you have a 100,000 BTU appliance:
+- Flow needed = 100,000 ÷ 1000 = 100 cubic feet per hour
+- Larger pipes = less pressure drop (like a highway vs. a narrow road)
+
+**Think of it like water flowing through pipes** - the longer and narrower the pipe, the more pressure you lose along the way.
+
+**Safety Note:** Always ensure adequate pressure reaches the appliance for proper operation.
+
+Would you like me to walk through a specific calculation example?`;
+            }
+            
+            if (lowerMessage.includes('regulator')) {
+                return `**Gas Regulators - The Pressure Controllers:**
+
+**What they do:**
+A gas regulator controls the pressure of gas entering an appliance - **think of it like a faucet for gas.** Too much pressure can be dangerous, too little won't work properly.
+
+**How they work:**
+1. High pressure gas enters from the supply line
+2. The regulator "steps down" the pressure to what the appliance needs
+3. Spring and diaphragm maintain steady pressure despite varying demand
+
+**Real-world example:** Like your shower - city water pressure might be 60 PSI, but your showerhead needs much less. A pressure regulator keeps it comfortable and safe.
+
+**Types you'll see:**
+• Service regulators (at the meter)
+• Appliance regulators (at individual appliances)
+• Line regulators (for distribution systems)
+
+**Safety reminder:** Never adjust regulators without proper gauges and procedures!
+
+What specific aspect of regulators would you like to explore?`;
+            }
+            
+            if (lowerMessage.includes('ignition') && lowerMessage.includes('sequence')) {
+                return `**Gas Furnace Ignition Sequence - Step by Step:**
+
+**The sequence works like a careful safety checklist:**
+
+1. **Thermostat calls for heat** (like turning the key in your car)
+2. **System safety check** - verifies all safety controls are good
+3. **Inducer fan starts** - clears out any leftover gases (like opening windows before lighting a fireplace)
+4. **Igniter heats up** - gets ready to light the gas
+5. **Gas valve opens** - allows gas to flow to the burner
+6. **Igniter lights the gas** - creates the flame
+7. **Flame sensor verifies safe operation** - like a watchdog making sure everything's working properly
+
+**If ANY step fails, the system shuts down for safety.** This is like having multiple safety nets - if one fails, others are there to protect you.
+
+**Safety Note:** Never bypass safety controls - they're there to prevent dangerous situations like gas accumulation or carbon monoxide production.
+
+Which part of the ignition sequence would you like me to explain in more detail?`;
+            }
+            
+            // Default response
+            return `I understand you're asking about "${message}". 
+
+Let me help you with that! Based on the CSA Gas Technician modules, I can provide detailed explanations about:
+
+**Common Topics:**
+• Safety procedures and PPE requirements
+• Gas leak testing methods  
+• Pressure calculations and pipe sizing
+• Gas appliance operation
+• Code requirements and compliance
+• Tool selection and usage
+
+${context ? `**Current Module Context:** ${context.split(':')[0]}` : '**Tip:** Try selecting a specific module from the sidebar for more targeted help!'}
+
+Could you be more specific about what aspect you'd like to learn? For example:
+- "How do I..." (for procedures)
+- "What is..." (for definitions) 
+- "Why does..." (for explanations)`;
+        }
+
+        function addMessage(sender, content) {
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            // Hide welcome message if it exists
+            const welcomeMessage = messagesContainer.querySelector('.welcome-message');
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            messageDiv.innerHTML = `
+                <div class="message-bubble">
+                    ${content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+                </div>
+                <div class="message-time">${time}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'block';
+            document.getElementById('sendBtn').disabled = true;
+            
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+            document.getElementById('sendBtn').disabled = false;
+        }
+
+        // Enter key to send message
+        document.getElementById('chatInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Auto-resize textarea
+        document.getElementById('chatInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Update quick topics based on selected module
+        function updateQuickTopics(moduleId) {
+            const topicContainer = document.getElementById('topicButtons');
+            
+            if (!moduleId) {
+                // Default general topics
+                topicContainer.innerHTML = `
+                    <button class="topic-btn" onclick="askQuestion('What are the essential PPE requirements for gas technicians?')">PPE Requirements</button>
+                    <button class="topic-btn" onclick="askQuestion('How do I perform a proper leak test?')">Leak Testing</button>
+                    <button class="topic-btn" onclick="askQuestion('Explain gas pressure calculations')">Pressure Calculations</button>
+                    <button class="topic-btn" onclick="askQuestion('What are gas regulator functions?')">Gas Regulators</button>
+                    <button class="topic-btn" onclick="askQuestion('Describe furnace ignition sequence')">Ignition Sequence</button>
+                    <button class="topic-btn" onclick="askQuestion('What are venting requirements?')">Venting Systems</button>
+                    <button class="topic-btn" onclick="askQuestion('Explain carbon monoxide safety')">CO Safety</button>
+                    <button class="topic-btn" onclick="askQuestion('What are appliance clearances?')">Clearances</button>
+                `;
+                return;
+            }
+            
+            const module = moduleData[moduleId];
+            if (!module || !module.keyTopics) return;
+            
+            // Generate module-specific topics
+            let topicsHtml = '';
+            module.keyTopics.slice(0, 8).forEach(topic => {
+                const shortName = topic.split(' ').slice(0, 2).join(' ');
+                topicsHtml += `<button class="topic-btn" onclick="askQuestion('Explain ${topic.toLowerCase()}')">${shortName}</button>`;
+            });
+            
+            // Add common questions if available
+            if (module.commonQuestions) {
+                module.commonQuestions.forEach(qa => {
+                    const shortQuestion = qa.question.length > 30 ? qa.question.substring(0, 30) + '...' : qa.question;
+                    topicsHtml += `<button class="topic-btn" onclick="askQuestion('${qa.question}')">${shortQuestion}</button>`;
+                });
+            }
+            
+            topicContainer.innerHTML = topicsHtml;
+        }
+
+        // Module selection change
+        document.getElementById('moduleSelect').addEventListener('change', function() {
+            const selectedValue = this.value;
+            const chatHeader = document.querySelector('.chat-header h2');
+            
+            if (selectedValue) {
+                const module = moduleData[selectedValue];
+                chatHeader.textContent = `AI Tutor - ${module.title}`;
+                updateQuickTopics(selectedValue);
+            } else {
+                chatHeader.textContent = 'AI Tutor Chat';
+                updateQuickTopics(null);
+            }
+        });
+
+        console.log('G3 AI Tutor initialized successfully!');
+    </script>
+</body>
+</html>

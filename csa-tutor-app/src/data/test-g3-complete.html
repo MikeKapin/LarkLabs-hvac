@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test G3 Complete</title>
+</head>
+<body>
+    <h1>Testing G3 Complete Implementation</h1>
+    <div id="results"></div>
+
+    <script>
+        // Load and test the g3-tutor-complete.html data
+        fetch('./g3-tutor-complete.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Extract the completeModuleData from the script
+                const scriptContent = html.match(/const completeModuleData = \{[\s\S]*?\};/);
+                if (scriptContent) {
+                    try {
+                        // Evaluate the module data
+                        eval(scriptContent[0]);
+                        
+                        // Test the data
+                        const moduleCount = Object.keys(completeModuleData).length;
+                        const results = document.getElementById('results');
+                        
+                        results.innerHTML = `
+                            <h2>Test Results:</h2>
+                            <p>✅ Modules loaded: ${moduleCount}</p>
+                            <p>✅ No JavaScript syntax errors</p>
+                            <h3>Module Details:</h3>
+                        `;
+                        
+                        // List all modules
+                        Object.values(completeModuleData).forEach(module => {
+                            const chapterCount = Object.keys(module.chapters).length;
+                            results.innerHTML += `<p>Module ${module.moduleId}: ${module.title} (${chapterCount} chapters)</p>`;
+                        });
+                        
+                    } catch (error) {
+                        document.getElementById('results').innerHTML = `<p>❌ Error: ${error.message}</p>`;
+                    }
+                } else {
+                    document.getElementById('results').innerHTML = '<p>❌ Could not find completeModuleData</p>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('results').innerHTML = `<p>❌ Failed to load file: ${error.message}</p>`;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G3 Modular Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .demo-box { border: 1px solid #ccc; padding: 15px; margin: 10px 0; }
+        .success { background: #e8f5e8; border-color: #4caf50; }
+        .error { background: #ffe8e8; border-color: #f44336; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔥 G3 AI Tutor - Modular System Demo</h1>
+    
+    <div class="demo-box">
+        <h2>How the Modular System Works:</h2>
+        <ul>
+            <li><strong>Lightweight main file</strong> - Only contains the app UI and logic</li>
+            <li><strong>Separate data files</strong> - Each module loads only when needed</li>
+            <li><strong>Dynamic loading</strong> - Fetches and executes module JavaScript files</li>
+            <li><strong>Better performance</strong> - Only loads what the user needs</li>
+            <li><strong>Maintainable</strong> - Easy to update individual modules</li>
+        </ul>
+    </div>
+
+    <div class="demo-box">
+        <h2>Test Module Loading:</h2>
+        <button onclick="testModuleLoading()">Load Module 7: Customer Relations</button>
+        <div id="loadingResult"></div>
+    </div>
+
+    <div class="demo-box">
+        <h2>Test Chapter Display:</h2>
+        <button onclick="testChapterDisplay()" id="chapterBtn" disabled>Display Chapter 3: Conflict Resolution</button>
+        <div id="chapterResult"></div>
+    </div>
+
+    <div class="demo-box">
+        <h2>File Size Comparison:</h2>
+        <div id="sizeComparison">
+            <p><strong>Old monolithic approach:</strong> 121KB (all data embedded)</p>
+            <p><strong>New modular approach:</strong></p>
+            <ul>
+                <li>Main app file: ~15KB</li>
+                <li>Each module file: ~8-12KB</li>
+                <li>Total loaded for Module 7 only: ~23KB (80% smaller!)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        let loadedModuleData = null;
+
+        window.testModuleLoading = async function() {
+            const resultDiv = document.getElementById('loadingResult');
+            resultDiv.innerHTML = '<p>⏳ Loading Module 7...</p>';
+            
+            try {
+                // Simulate the modular loading process
+                const response = await fetch('./module7-customer-relations.js');
+                if (!response.ok) {
+                    throw new Error(`Failed to load: ${response.statusText}`);
+                }
+                
+                const moduleCode = await response.text();
+                
+                // Execute the module code
+                const script = document.createElement('script');
+                script.type = 'module';
+                script.textContent = moduleCode + '; window.tempModule7 = module7CustomerRelationsData;';
+                document.head.appendChild(script);
+                
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                loadedModuleData = window.tempModule7;
+                delete window.tempModule7;
+                document.head.removeChild(script);
+
+                if (loadedModuleData) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>✅ Module 7 Loaded Successfully!</h3>
+                            <p><strong>Title:</strong> ${loadedModuleData.title}</p>
+                            <p><strong>Description:</strong> ${loadedModuleData.description}</p>
+                            <p><strong>Chapters Available:</strong> ${Object.keys(loadedModuleData.chapters).length}</p>
+                            <p><strong>Common Questions:</strong> ${loadedModuleData.commonQuestions?.length || 0}</p>
+                            
+                            <h4>Chapter List:</h4>
+                            <ul>
+                                ${Object.entries(loadedModuleData.chapters).map(([id, chapter]) => 
+                                    `<li>Chapter ${id}: ${chapter.title}</li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                    `;
+                    
+                    document.getElementById('chapterBtn').disabled = false;
+                } else {
+                    throw new Error('Module data not found');
+                }
+
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h3>❌ Loading Failed</h3>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        };
+
+        window.testChapterDisplay = function() {
+            const resultDiv = document.getElementById('chapterResult');
+            
+            if (!loadedModuleData) {
+                resultDiv.innerHTML = '<div class="error">Please load Module 7 first!</div>';
+                return;
+            }
+
+            const chapter3 = loadedModuleData.chapters['3'];
+            if (!chapter3) {
+                resultDiv.innerHTML = '<div class="error">Chapter 3 not found!</div>';
+                return;
+            }
+
+            // Simulate how the app would display chapter content
+            let content = `<div class="success">
+                <h3>📖 Chapter 3: ${chapter3.title}</h3>
+                <p><strong>Overview:</strong> ${chapter3.content.overview}</p>
+                
+                <h4>Conflict Types (${chapter3.content.conflictTypes.length} items):</h4>
+                <ul>
+                    ${chapter3.content.conflictTypes.map(type => `<li>${type}</li>`).join('')}
+                </ul>
+                
+                <h4>Deescalation Techniques:</h4>
+                <ul>
+                    ${chapter3.content.deescalationTechniques.map(technique => `<li>${technique}</li>`).join('')}
+                </ul>
+                
+                <p><em>💡 In the real app, users can now ask questions like "elaborate on deescalation techniques" and get detailed, practical explanations!</em></p>
+            </div>`;
+            
+            resultDiv.innerHTML = content;
+        };
+
+        // Show file sizes on load
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Get actual file sizes
+                const mainResponse = await fetch('./g3-tutor-app-modular.html');
+                const moduleResponse = await fetch('./module7-customer-relations.js');
+                
+                const mainSize = (await mainResponse.blob()).size;
+                const moduleSize = (await moduleResponse.blob()).size;
+                
+                document.getElementById('sizeComparison').innerHTML = `
+                    <p><strong>Old monolithic approach:</strong> 121KB (all 9 modules embedded)</p>
+                    <p><strong>New modular approach:</strong></p>
+                    <ul>
+                        <li>Main app file: ${Math.round(mainSize/1024)}KB</li>
+                        <li>Module 7 file: ${Math.round(moduleSize/1024)}KB</li>
+                        <li>Total loaded for Module 7: ${Math.round((mainSize + moduleSize)/1024)}KB</li>
+                        <li><strong>Savings: ${Math.round((1 - (mainSize + moduleSize)/124000) * 100)}% smaller!</strong></li>
+                    </ul>
+                `;
+            } catch (error) {
+                console.log('Could not fetch file sizes:', error);
+            }
+        });
+    </script>
+</body>
+</html>
