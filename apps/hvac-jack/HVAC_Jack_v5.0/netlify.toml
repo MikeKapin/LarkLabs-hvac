@@ -1,0 +1,42 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+  
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions]
+  node_bundler = "esbuild"
+
+[dev]
+  functions = "netlify/functions"
+  port = 8888
+
+[[redirects]]
+  from = "/api/v5/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/HVAC_Jack_v5.html"
+  status = 200
+
+# Environment variables needed:
+# OPENAI_API_KEY - Your OpenAI API key for GPT-4 access
+# PYTHON_BACKEND_URL - URL where your Python FastAPI backend is hosted
+# PYTHON_API_KEY - API key for securing Python backend access (optional but recommended)
+
+[functions."hvac-jack-v5"]
+  external_node_modules = ["axios"]
+
+[functions."photo-analyzer-v5"]
+  external_node_modules = ["axios", "form-data"]
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-XSS-Protection = "1; mode=block"

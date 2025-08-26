@@ -1,0 +1,79 @@
+{
+  "name": "hvac-jack-v5",
+  "version": "5.0.0",
+  "description": "HVAC Jack 5.0 - Advanced AI-powered HVAC assistant with FastAPI Python backend integration",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required'",
+    "test": "echo 'No tests specified'",
+    "start": "netlify dev",
+    "deploy": "netlify deploy --prod",
+    "python-dev": "cd python-backend && uvicorn main:app --reload --host 0.0.0.0 --port 8000",
+    "python-install": "cd python-backend && pip install -r requirements.txt"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.3",
+    "node-fetch": "^3.3.2",
+    "cheerio": "^1.0.0-rc.12",
+    "axios": "^1.5.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/hvac-jack.git"
+  },
+  "keywords": [
+    "hvac",
+    "ai",
+    "assistant",
+    "photo-analysis",
+    "rating-plate",
+    "claude",
+    "openai",
+    "fastapi",
+    "python",
+    "netlify",
+    "vision-ai",
+    "equipment-analysis",
+    "professional-diagnostics",
+    "advanced-troubleshooting"
+  ],
+  "author": "LARK Labs",
+  "license": "MIT",
+  "netlify": {
+    "functions": {
+      "directory": "netlify/functions",
+      "node_bundler": "esbuild"
+    }
+  },
+  "features": {
+    "advancedAI": "OpenAI GPT-4 powered professional diagnostics",
+    "structuredAnalysis": "Comprehensive professional troubleshooting framework",
+    "safetyAssessment": "Advanced safety warning and urgency level detection",
+    "professionalGuidance": "Expert-level technical guidance for certified technicians",
+    "equipmentSpecific": "Model-specific troubleshooting with manufacturer integration",
+    "photoAnalysis": "Enhanced rating plate analysis with structured data extraction",
+    "conversationMemory": "Context-aware conversation history management",
+    "diagnosticWorkflow": "Structured diagnostic question and action framework",
+    "partsPrediction": "Intelligent parts recommendation system",
+    "urgencyClassification": "Emergency, urgent, moderate, and routine classification",
+    "technicalSpecs": "Professional-grade specifications and measurements",
+    "hybridArchitecture": "Python FastAPI backend with Netlify Functions frontend"
+  },
+  "supportedFormats": {
+    "images": ["image/jpeg", "image/png", "image/webp"],
+    "maxFileSize": "10MB",
+    "analysisTime": "15-25 seconds (optimized with structured analysis)"
+  },
+  "architecture": {
+    "frontend": "HTML/CSS/JavaScript with Netlify Functions",
+    "backend": "Python FastAPI with OpenAI GPT-4 integration",
+    "deployment": "Hybrid Netlify + Python service deployment"
+  }
+}

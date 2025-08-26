@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HVAC Jack 5.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#E85A4F">
+    <title>HVAC Jack 5.0 - Advanced Professional AI Assistant</title>
+    <link rel="apple-touch-icon" href="logo_2.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo_2.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="logo_2.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input, textarea {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1A1F2E 0%, #2D3748 100%);
+            min-height: 100vh;
+            color: #E2E8F0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Enhanced Header Styles for v5.0 */
+        .header {
+            background: linear-gradient(90deg, #E85A4F 0%, #D53F34 100%);
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(232, 90, 79, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-image: url('logo_2.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .version-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-indicators {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ADE80;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Welcome Section Enhanced for v5.0 */
+        .welcome-section {
+            background: linear-gradient(135deg, rgba(232, 90, 79, 0.1), rgba(45, 55, 72, 0.3));
+            border: 2px solid rgba(232, 90, 79, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(232, 90, 79, 0.2);
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #E85A4F;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: #A0AEC0;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(45, 55, 72, 0.6);
+            border: 1px solid rgba(232, 90, 79, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #E85A4F;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: #A0AEC0;
+            line-height: 1.4;
+        }
+
+        /* Enhanced Chat Interface */
+        .chat-section {
+            background: rgba(45, 55, 72, 0.8);
+            border: 2px solid rgba(232, 90, 79, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #E85A4F;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Enhanced Input Controls */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            color: #E2E8F0;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-field, .textarea-field, .select-field {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(26, 31, 46, 0.8);
+            border: 2px solid rgba(232, 90, 79, 0.3);
+            border-radius: 12px;
+            color: #E2E8F0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .input-field:focus, .textarea-field:focus, .select-field:focus {
+            outline: none;
+            border-color: #E85A4F;
+            box-shadow: 0 0 0 3px rgba(232, 90, 79, 0.1);
+        }
+
+        .textarea-field {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Enhanced Button Styles */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #E85A4F, #D53F34);
+            color: white;
+            box-shadow: 0 4px 15px rgba(232, 90, 79, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 90, 79, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(45, 55, 72, 0.8);
+            color: #E2E8F0;
+            border: 2px solid rgba(232, 90, 79, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: #E85A4F;
+            background: rgba(232, 90, 79, 0.1);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Enhanced Response Display */
+        .response-section {
+            background: linear-gradient(135deg, rgba(45, 55, 72, 0.9), rgba(26, 31, 46, 0.9));
+            border: 2px solid rgba(232, 90, 79, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(232, 90, 79, 0.3);
+        }
+
+        .response-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #E85A4F;
+        }
+
+        .urgency-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .urgency-emergency { background: #DC2626; color: white; }
+        .urgency-urgent { background: #EA580C; color: white; }
+        .urgency-moderate { background: #CA8A04; color: white; }
+        .urgency-routine { background: #059669; color: white; }
+
+        .response-content {
+            color: #E2E8F0;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Enhanced Structured Data Display */
+        .structured-data {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .data-card {
+            background: rgba(26, 31, 46, 0.6);
+            border: 1px solid rgba(232, 90, 79, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .data-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #E85A4F;
+            margin-bottom: 1rem;
+        }
+
+        .data-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .data-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: rgba(45, 55, 72, 0.4);
+            border-radius: 8px;
+            border-left: 3px solid #E85A4F;
+            color: #E2E8F0;
+        }
+
+        /* Photo Upload Enhanced */
+        .photo-section {
+            background: rgba(45, 55, 72, 0.8);
+            border: 2px dashed rgba(232, 90, 79, 0.5);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .photo-section:hover {
+            border-color: #E85A4F;
+            background: rgba(232, 90, 79, 0.1);
+        }
+
+        .photo-upload-area {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .photo-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .photo-placeholder {
+            font-size: 3rem;
+            color: rgba(232, 90, 79, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .photo-text {
+            color: #A0AEC0;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Loading Animation Enhanced */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(232, 90, 79, 0.3);
+            border-top: 4px solid #E85A4F;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #A0AEC0;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .status-indicators {
+                justify-content: center;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden { display: none; }
+        .text-center { text-align: center; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Header for HVAC Jack 5.0 -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo"></div>
+                <div>
+                    <div class="app-title">HVAC Jack 5.0</div>
+                    <div class="version-badge">Advanced AI Professional</div>
+                </div>
+            </div>
+            
+            <div class="status-indicators">
+                <div class="status-indicator">
+                    <div class="status-dot" id="aiStatus"></div>
+                    <span id="aiStatusText">AI Online</span>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot" id="backendStatus"></div>
+                    <span id="backendStatusText">Enhanced Backend</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Section Enhanced -->
+        <section class="welcome-section">
+            <h1 class="welcome-title">🔧 HVAC Jack 5.0</h1>
+            <p class="welcome-subtitle">
+                Advanced Professional AI Assistant powered by GPT-4<br>
+                Designed exclusively for certified HVAC technicians and gas professionals
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <div class="feature-title">Advanced AI Diagnostics</div>
+                    <div class="feature-desc">GPT-4 powered professional troubleshooting with structured analysis framework</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <div class="feature-title">Safety Assessment</div>
+                    <div class="feature-desc">Automatic safety warning detection and urgency level classification</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📷</div>
+                    <div class="feature-title">Enhanced Photo Analysis</div>
+                    <div class="feature-desc">Professional-grade rating plate analysis with structured data extraction</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Equipment-Specific Guidance</div>
+                    <div class="feature-desc">Manufacturer-specific troubleshooting with model-based recommendations</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Analysis Section -->
+        <section class="photo-section" id="photoSection">
+            <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                <input type="file" id="photoInput" class="photo-input" accept="image/*" onchange="handlePhotoUpload(event)">
+                <div class="photo-placeholder">📷</div>
+                <div class="photo-text">
+                    <strong>Analyze Rating Plate or Equipment Photo</strong><br>
+                    Enhanced with professional-grade data extraction
+                </div>
+                <button class="btn btn-secondary">Choose Photo</button>
+            </div>
+        </section>
+
+        <!-- Main Chat Interface -->
+        <section class="chat-section">
+            <h2 class="section-title">
+                💬 Professional Diagnostic Assistant
+            </h2>
+
+            <div class="input-group">
+                <label class="input-label">System Type</label>
+                <select id="systemType" class="select-field">
+                    <option value="">Select system type...</option>
+                    <option value="residential_split">Residential Split System</option>
+                    <option value="package_unit">Package Unit</option>
+                    <option value="heat_pump">Heat Pump</option>
+                    <option value="commercial_rooftop">Commercial Rooftop</option>
+                    <option value="gas_furnace">Gas Furnace</option>
+                    <option value="boiler">Boiler</option>
+                    <option value="dual_fuel">Dual Fuel</option>
+                    <option value="vrf_vrv">VRF/VRV</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Issue Category</label>
+                <select id="issueCategory" class="select-field">
+                    <option value="">Select issue category...</option>
+                    <option value="heating">Heating</option>
+                    <option value="cooling">Cooling</option>
+                    <option value="airflow">Airflow</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="gas_combustion">Gas & Combustion</option>
+                    <option value="controls">Controls</option>
+                    <option value="refrigerant">Refrigerant</option>
+                    <option value="ventilation">Ventilation</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">System Symptoms & Details</label>
+                <textarea 
+                    id="messageInput" 
+                    class="textarea-field" 
+                    placeholder="Describe the system symptoms, measurements taken, and any relevant technical details...
+
+Examples:
+• Furnace not igniting - gas valve clicks but no flame, manifold pressure 3.5 WC
+• Heat pump short cycling - 5 minute cycles, suction line warm, 15° superheat
+• No cooling - compressor running, evap coil icing, low airflow measured at 200 CFM per ton
+
+Be specific with measurements, observations, and actions already taken."
+                    rows="6"></textarea>
+            </div>
+
+            <button id="submitBtn" class="btn btn-primary" onclick="submitDiagnosis()">
+                <span id="submitBtnText">🔍 Get Professional Diagnosis</span>
+            </button>
+        </section>
+
+        <!-- Response Section -->
+        <section id="responseSection" class="response-section hidden">
+            <div class="response-header">
+                <div class="response-title">
+                    <span>🤖</span>
+                    <span>HVAC Jack 5.0 Analysis</span>
+                </div>
+                <div id="urgencyBadge" class="urgency-badge urgency-routine">Routine</div>
+            </div>
+
+            <div id="responseContent" class="response-content"></div>
+
+            <div id="structuredData" class="structured-data hidden">
+                <!-- Structured data cards will be populated here -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // HVAC Jack 5.0 Enhanced JavaScript
+        let sessionId = generateSessionId();
+        let conversationHistory = [];
+        let currentPhotoAnalysis = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 HVAC Jack 5.0 initialized');
+            checkSystemStatus();
+        });
+
+        function generateSessionId() {
+            return 'hvac-5-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now();
+        }
+
+        async function checkSystemStatus() {
+            try {
+                // Check if enhanced backend is available
+                const healthCheck = await fetch('/.netlify/functions/hvac-jack-v5', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: 'health-check',
+                        sessionId: sessionId 
+                    })
+                });
+
+                if (healthCheck.ok) {
+                    updateStatus('aiStatus', 'aiStatusText', true, 'Enhanced AI Online');
+                    updateStatus('backendStatus', 'backendStatusText', true, 'Python Backend Active');
+                } else {
+                    updateStatus('aiStatus', 'aiStatusText', true, 'AI Online (Fallback)');
+                    updateStatus('backendStatus', 'backendStatusText', false, 'Fallback Mode');
+                }
+            } catch (error) {
+                console.warn('System status check failed:', error);
+                updateStatus('aiStatus', 'aiStatusText', true, 'AI Online (Limited)');
+                updateStatus('backendStatus', 'backendStatusText', false, 'Limited Mode');
+            }
+        }
+
+        function updateStatus(dotId, textId, isOnline, text) {
+            const dot = document.getElementById(dotId);
+            const textEl = document.getElementById(textId);
+            
+            if (isOnline) {
+                dot.style.background = '#4ADE80';
+                textEl.style.color = 'rgba(255,255,255,0.9)';
+            } else {
+                dot.style.background = '#FFA500';
+                textEl.style.color = 'rgba(255,255,255,0.7)';
+            }
+            
+            textEl.textContent = text;
+        }
+
+        async function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const photoSection = document.getElementById('photoSection');
+            photoSection.innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Analyzing photo with HVAC Jack 5.0 enhanced AI...</div>
+                </div>
+            `;
+
+            try {
+                const base64 = await convertToBase64(file);
+                
+                const response = await fetch('/.netlify/functions/photo-analyzer-v5', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        imageData: base64,
+                        query: 'Professional rating plate analysis for HVAC diagnosis'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    currentPhotoAnalysis = result.structuredData || result.analysis;
+                    displayPhotoAnalysis(result);
+                } else {
+                    throw new Error(result.message || 'Photo analysis failed');
+                }
+
+            } catch (error) {
+                console.error('Photo analysis error:', error);
+                resetPhotoSection();
+                alert('Photo analysis failed. Please ensure the image is clear and try again.');
+            }
+        }
+
+        function displayPhotoAnalysis(result) {
+            const photoSection = document.getElementById('photoSection');
+            const confidence = result.confidence || 85;
+            const isEnhanced = result.version === '5.0';
+            
+            photoSection.innerHTML = `
+                <div class="data-card">
+                    <div class="data-card-header">
+                        📷 Photo Analysis Complete ${isEnhanced ? '(Enhanced)' : '(Fallback)'}
+                        <span style="margin-left: auto; font-size: 0.9rem; color: #4ADE80;">
+                            ${confidence}% Confidence
+                        </span>
+                    </div>
+                    <div class="response-content" style="max-height: 300px; overflow-y: auto;">
+                        ${formatAnalysisText(result.analysis)}
+                    </div>
+                    <button class="btn btn-secondary mt-2" onclick="resetPhotoSection()">
+                        📷 Analyze Another Photo
+                    </button>
+                </div>
+            `;
+        }
+
+        function resetPhotoSection() {
+            currentPhotoAnalysis = null;
+            const photoSection = document.getElementById('photoSection');
+            photoSection.innerHTML = `
+                <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                    <input type="file" id="photoInput" class="photo-input" accept="image/*" onchange="handlePhotoUpload(event)">
+                    <div class="photo-placeholder">📷</div>
+                    <div class="photo-text">
+                        <strong>Analyze Rating Plate or Equipment Photo</strong><br>
+                        Enhanced with professional-grade data extraction
+                    </div>
+                    <button class="btn btn-secondary">Choose Photo</button>
+                </div>
+            `;
+        }
+
+        async function submitDiagnosis() {
+            const message = document.getElementById('messageInput').value.trim();
+            const systemType = document.getElementById('systemType').value;
+            const issueCategory = document.getElementById('issueCategory').value;
+
+            if (!message) {
+                alert('Please describe the system symptoms and details.');
+                return;
+            }
+
+            // Update UI to show processing
+            const submitBtn = document.getElementById('submitBtn');
+            const submitBtnText = document.getElementById('submitBtnText');
+            
+            submitBtn.disabled = true;
+            submitBtnText.innerHTML = '🔄 Analyzing with HVAC Jack 5.0...';
+
+            const responseSection = document.getElementById('responseSection');
+            responseSection.classList.remove('hidden');
+            responseSection.innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">
+                        HVAC Jack 5.0 is analyzing your diagnostic request...<br>
+                        <small>Using advanced AI for professional-grade analysis</small>
+                    </div>
+                </div>
+            `;
+
+            try {
+                const requestData = {
+                    message: message,
+                    sessionId: sessionId,
+                    conversationHistory: conversationHistory,
+                    timestamp: new Date().toISOString(),
+                    systemType: systemType || undefined,
+                    issueCategory: issueCategory || undefined,
+                    photoAnalysisData: currentPhotoAnalysis
+                };
+
+                const response = await fetch('/.netlify/functions/hvac-jack-v5', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    displayResponse(result);
+                    
+                    // Update conversation history
+                    conversationHistory.push({
+                        type: 'user_question',
+                        content: message,
+                        timestamp: new Date().toISOString()
+                    });
+                    conversationHistory.push({
+                        type: 'ai_response',
+                        content: result.response,
+                        timestamp: result.timestamp
+                    });
+
+                    // Clear input
+                    document.getElementById('messageInput').value = '';
+
+                } else {
+                    throw new Error(result.message || 'Analysis failed');
+                }
+
+            } catch (error) {
+                console.error('Diagnosis error:', error);
+                displayError(error.message);
+            } finally {
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtnText.innerHTML = '🔍 Get Professional Diagnosis';
+            }
+        }
+
+        function displayResponse(result) {
+            const responseSection = document.getElementById('responseSection');
+            const urgencyBadge = document.getElementById('urgencyBadge');
+            
+            // Update urgency badge
+            if (result.structuredData && result.structuredData.urgencyLevel) {
+                const urgency = result.structuredData.urgencyLevel;
+                urgencyBadge.className = `urgency-badge urgency-${urgency}`;
+                urgencyBadge.textContent = urgency.toUpperCase();
+            }
+
+            responseSection.innerHTML = `
+                <div class="response-header">
+                    <div class="response-title">
+                        <span>🤖</span>
+                        <span>HVAC Jack 5.0 Analysis</span>
+                        ${result.version === '5.0' ? '<span style="color: #4ADE80; font-size: 0.8rem; margin-left: 1rem;">Enhanced AI</span>' : ''}
+                        ${result.fallback ? '<span style="color: #FFA500; font-size: 0.8rem; margin-left: 1rem;">Fallback Mode</span>' : ''}
+                    </div>
+                    <div class="urgency-badge urgency-${result.structuredData?.urgencyLevel || 'routine'}">
+                        ${(result.structuredData?.urgencyLevel || 'routine').toUpperCase()}
+                    </div>
+                </div>
+
+                <div class="response-content">
+                    ${formatAnalysisText(result.response)}
+                </div>
+
+                ${result.structuredData ? generateStructuredDataDisplay(result.structuredData) : ''}
+
+                <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(232, 90, 79, 0.3); font-size: 0.9rem; color: #A0AEC0; text-align: center;">
+                    Response ID: ${result.metadata?.responseId || 'Unknown'} | 
+                    Processing Time: ${result.processingTime?.toFixed(2) || 'N/A'}s |
+                    Version: ${result.version || '5.0'}
+                </div>
+            `;
+        }
+
+        function generateStructuredDataDisplay(data) {
+            let html = '<div class="structured-data">';
+
+            // Safety Warnings
+            if (data.safetyWarnings && data.safetyWarnings.length > 0) {
+                html += `
+                    <div class="data-card" style="border-color: #DC2626; background: rgba(220, 38, 38, 0.1);">
+                        <div class="data-card-header" style="color: #FCA5A5;">
+                            ⚠️ Critical Safety Warnings
+                        </div>
+                        <ul class="data-list">
+                            ${data.safetyWarnings.map(warning => `<li class="data-item" style="border-left-color: #DC2626;">${warning}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Immediate Actions
+            if (data.immediateActions && data.immediateActions.length > 0) {
+                html += `
+                    <div class="data-card">
+                        <div class="data-card-header">
+                            🔧 Immediate Actions Required
+                        </div>
+                        <ul class="data-list">
+                            ${data.immediateActions.map((action, index) => `<li class="data-item">${index + 1}. ${action}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Likely Causes
+            if (data.likelyCauses && data.likelyCauses.length > 0) {
+                html += `
+                    <div class="data-card">
+                        <div class="data-card-header">
+                            🎯 Most Likely Causes
+                        </div>
+                        <ul class="data-list">
+                            ${data.likelyCauses.map(cause => {
+                                const probabilityColor = {
+                                    high: '#DC2626',
+                                    medium: '#EA580C',
+                                    low: '#059669'
+                                };
+                                return `<li class="data-item" style="border-left-color: ${probabilityColor[cause.probability] || '#EA580C'};">
+                                    <strong>${cause.cause}</strong> (${cause.probability || 'medium'} probability)
+                                    ${cause.indicators ? `<br><small>Indicators: ${cause.indicators.join(', ')}</small>` : ''}
+                                </li>`;
+                            }).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Diagnostic Questions
+            if (data.diagnosticQuestions && data.diagnosticQuestions.length > 0) {
+                html += `
+                    <div class="data-card">
+                        <div class="data-card-header">
+                            ❓ Additional Diagnostic Questions
+                        </div>
+                        <ul class="data-list">
+                            ${data.diagnosticQuestions.map(question => `<li class="data-item">${question}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Parts Needed
+            if (data.partsNeeded && data.partsNeeded.length > 0) {
+                html += `
+                    <div class="data-card">
+                        <div class="data-card-header">
+                            🔧 Parts Potentially Needed
+                        </div>
+                        <ul class="data-list">
+                            ${data.partsNeeded.map(part => `<li class="data-item">${part}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+            return html;
+        }
+
+        function displayError(errorMessage) {
+            const responseSection = document.getElementById('responseSection');
+            responseSection.innerHTML = `
+                <div class="response-header">
+                    <div class="response-title">
+                        <span>⚠️</span>
+                        <span>Error</span>
+                    </div>
+                </div>
+                <div class="response-content">
+                    <p>Sorry, HVAC Jack 5.0 encountered an error: ${errorMessage}</p>
+                    <p>Please try again in a few moments. If the problem persists, the system may be undergoing maintenance.</p>
+                </div>
+            `;
+        }
+
+        function formatAnalysisText(text) {
+            // Convert markdown-style formatting to HTML
+            return text
+                .replace(/^# (.*$)/gim, '<h1 style="color: #E85A4F; font-size: 1.5rem; margin: 1rem 0;">$1</h1>')
+                .replace(/^## (.*$)/gim, '<h2 style="color: #E85A4F; font-size: 1.3rem; margin: 1rem 0;">$1</h2>')
+                .replace(/^### (.*$)/gim, '<h3 style="color: #E85A4F; font-size: 1.1rem; margin: 1rem 0;">$1</h3>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong style="color: #E85A4F;">$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/^- (.*$)/gim, '<li style="margin: 0.5rem 0;">$1</li>')
+                .replace(/(<li.*?>.*<\/li>)/gim, '<ul style="margin: 1rem 0; padding-left: 1.5rem;">$1</ul>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function convertToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+    </script>
+</body>
+</html>

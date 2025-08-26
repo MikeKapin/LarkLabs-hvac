@@ -1,0 +1,144 @@
+# HVAC Jack 5.0 Docker Compose Configuration
+version: '3.8'
+
+services:
+  # Python FastAPI Backend
+  hvac-jack-backend:
+    build: 
+      context: ./python-backend
+      dockerfile: Dockerfile
+    container_name: hvac-jack-v5-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-hvac-jack-5-default-secret-change-in-production}
+      - CORS_ORIGINS=["http://localhost:8888", "https://*.netlify.app"]
+      - DEBUG=${DEBUG:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - hvac-jack-network
+
+  # Redis for caching and session management
+  redis:
+    image: redis:7-alpine
+    container_name: hvac-jack-v5-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - hvac-jack-network
+
+  # Nginx reverse proxy (optional for production)
+  nginx:
+    image: nginx:alpine
+    container_name: hvac-jack-v5-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/ssl:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - hvac-jack-backend
+    restart: unless-stopped
+    networks:
+      - hvac-jack-network
+
+  # Optional: PostgreSQL database for future features
+  postgres:
+    image: postgres:15-alpine
+    container_name: hvac-jack-v5-postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-hvacjack5}
+      - POSTGRES_USER=${POSTGRES_USER:-hvacjack}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-hvacjack123}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hvacjack} -d ${POSTGRES_DB:-hvacjack5}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - hvac-jack-network
+    profiles:
+      - database
+
+  # Optional: Monitoring with Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: hvac-jack-v5-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - hvac-jack-network
+    profiles:
+      - monitoring
+
+  # Optional: Grafana for dashboard
+  grafana:
+    image: grafana/grafana:latest
+    container_name: hvac-jack-v5-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin123}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - hvac-jack-network
+    profiles:
+      - monitoring
+
+volumes:
+  redis_data:
+    driver: local
+  postgres_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  hvac-jack-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
