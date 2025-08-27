@@ -542,60 +542,7 @@ class PhotoAnalysisService:
                         "content": [
                             {
                                 "type": "text",
-                                "text": """You are HVAC Jack 5.0, a professional HVAC technician analyzer. Examine this rating plate/equipment photo and extract ALL visible technical information with confidence.
-
-**CRITICAL INSTRUCTIONS:**
-- READ every number, letter, and specification visible on the rating plate
-- Extract exact values as printed - do not say "Unclear" for visible text
-- Look carefully at all text on labels, plates, and stickers
-- Provide detailed professional analysis like an experienced HVAC technician would
-
-## 🔍 EQUIPMENT IDENTIFICATION
-Look for and extract the exact text for:
-- Model Number (usually starts with letters/numbers like "4TWR", "RTU", etc.)
-- Serial Number (long alphanumeric sequence)
-- Manufacturer/Brand (Trane, Carrier, Goodman, etc.)
-- Manufacturing Date (month/year format)
-- Equipment Type (air conditioner, heat pump, furnace, RTU, etc.)
-
-## ⚡ ELECTRICAL & CAPACITY SPECIFICATIONS
-Extract visible electrical data:
-- BTU/h Cooling Capacity (often listed as "BTUH", "Cooling Cap", etc.)
-- BTU/h Heating Capacity (if heat pump)
-- Voltage (208/230V, 460V, etc.)
-- Amperage ratings (RLA, LRA, FLA, MCA, etc.)
-- Phase (1 or 3)
-- Frequency (60Hz)
-- Watts or Kilowatts
-- Compressor specifications (RLA, LRA values)
-- Fan motor specs (HP, RPM, capacitor μF ratings)
-
-## 🌡️ REFRIGERANT DATA
-Look for refrigerant information:
-- Refrigerant Type (R-410A, R-22, R-32, etc.)
-- Factory Charge (lbs, oz, kg)
-- Operating Pressures (PSI high/low side)
-- Refrigerant line sizes (liquid/suction line diameters)
-
-## 📊 EFFICIENCY & PERFORMANCE
-Find efficiency ratings:
-- SEER rating (cooling efficiency)
-- EER rating
-- HSPF (heat pump heating efficiency)
-- AFUE (furnace efficiency)
-- Sound levels (dB)
-- Weight specifications
-
-## 🔧 PROFESSIONAL ASSESSMENT
-Provide detailed analysis of:
-- Physical condition visible in photo
-- Any corrosion, damage, or wear
-- Installation quality observations
-- Safety certifications (UL, ETL, etc.)
-- Code compliance observations
-- Maintenance recommendations based on what you see
-
-**Be thorough and confident - extract every visible detail like a professional technician would during equipment inspection.**"""
+                                "text": "Analyze this HVAC equipment nameplate/rating plate image and provide complete appliance data and specifications."
                             },
                             {
                                 "type": "image_url",
@@ -610,220 +557,21 @@ Provide detailed analysis of:
                 temperature=0.15  # Low temperature for accurate but comprehensive analysis
             )
             
+            # Get the raw GPT-4o analysis - that's it!
             extracted_data = response.choices[0].message.content
-            logger.info(f"Raw GPT-4o analysis response: {extracted_data}")
+            logger.info(f"GPT-4o analysis complete - returning direct result")
             
-            # Return simple structure with full analysis (like 4.0 does)
+            # Return the raw analysis exactly like Claude does
             data = RatingPlateData()
-            data.raw_analysis = extracted_data  # Full GPT-4o analysis
+            data.raw_analysis = extracted_data
             
-            # Basic parsing for key fields only
-            import re
-            lines = extracted_data.lower()
-            
-            # Extract just the most obvious data points
-            model_match = re.search(r'model[:\s-]+([^\n\r]+)', lines)
-            if model_match:
-                data.model_number = model_match.group(1).strip()
-                
-            serial_match = re.search(r'serial[:\s-]+([^\n\r]+)', lines) 
-            if serial_match:
-                data.serial_number = serial_match.group(1).strip()
-                
-            manufacturer_match = re.search(r'(?:manufacturer|brand|make)[:\s-]+([^\n\r]+)', lines)
-            if manufacturer_match:
-                data.manufacturer = manufacturer_match.group(1).strip()
-                
-            ref_match = re.search(r'(r-?\d+[a-z]*)', lines)
-            if ref_match:
-                data.refrigerant_type = ref_match.group(1).upper()
-            
-            # If we have model/manufacturer info, enhance with database lookup
-            if data.model_number and data.manufacturer:
-                logger.info(f"Enhancing analysis with model lookup for {data.manufacturer} {data.model_number}")
-                enhanced_specs = self._lookup_missing_specifications(data.manufacturer, data.model_number, extracted_data)
-                
-                # Combine original analysis with enhanced specs
-                if enhanced_specs:
-                    data.raw_analysis = f"{extracted_data}\n\n{enhanced_specs}"
-                    logger.info("Successfully enhanced analysis with model specifications")
-            
-            logger.info(f"Returning full analysis with basic parsing")
             return data
             
         except Exception as e:
             logger.error(f"HVAC Jack 5.0 photo analysis error: {str(e)}")
             raise HTTPException(status_code=500, detail="Error analyzing rating plate photo")
     
-    def _lookup_missing_specifications(self, manufacturer: str, model_number: str, original_analysis: str) -> str:
-        """Enhanced specification lookup using OpenAI's knowledge base"""
-        try:
-            lookup_prompt = f"""You are an HVAC equipment specification database expert. Using your knowledge of HVAC equipment specifications, provide the missing technical data for this equipment:
-
-**Equipment Identified:**
-- Manufacturer: {manufacturer}
-- Model Number: {model_number}
-
-**Original Analysis Extracted:**
-{original_analysis}
-
-**PROVIDE MISSING SPECIFICATIONS:**
-Based on your knowledge of this specific model and manufacturer, fill in any missing data that wasn't visible in the photo but is standard for this equipment model:
-
-## 📊 ENHANCED SPECIFICATIONS LOOKUP
-**SEER Rating:** [Look up SEER rating for this model]
-**EER Rating:** [Look up EER rating if available]
-**HSPF Rating:** [If heat pump, provide HSPF]
-**Sound Level:** [Typical sound rating in dB for this model]
-**BTU Capacity:** [If not clear from photo, provide cooling/heating capacity]
-**Weight:** [Equipment weight specifications]
-**Dimensions:** [Physical dimensions if known]
-**Recommended Applications:** [Residential, commercial, etc.]
-**Energy Star Status:** [Yes/No if Energy Star qualified]
-**Typical Installation Requirements:** [Electrical, clearances, etc.]
-**Common Service Parts:** [Filters, capacitors, etc. for this model]
-**Warranty Information:** [Standard warranty terms]
-**Year of Manufacture Range:** [When this model was typically produced]
-
-**PROFESSIONAL INSIGHTS:**
-- Known common issues or service points for this model
-- Recommended maintenance intervals
-- Parts availability status
-- Replacement recommendations if unit is discontinued
-
-Only provide information you are confident about based on your training data. If you don't have specific data for this exact model, indicate "Not available in database" for that specification."""
-
-            response = self.client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": lookup_prompt
-                    }
-                ],
-                max_tokens=1500,
-                temperature=0.1  # Very low temperature for factual accuracy
-            )
-            
-            enhanced_specs = response.choices[0].message.content
-            logger.info("Successfully retrieved enhanced specifications from OpenAI knowledge base")
-            
-            return f"""
----
-# 🔍 ENHANCED SPECIFICATIONS DATABASE LOOKUP
-*Additional specifications retrieved from HVAC Jack 5.0 professional database*
-
-{enhanced_specs}
-
----
-*Combined analysis: Photo extraction + Professional database lookup*
-"""
-
-        except Exception as e:
-            logger.warning(f"Specification lookup failed: {str(e)}")
-            return None
     
-    def _parse_rating_plate_data(self, extracted_text: str) -> RatingPlateData:
-        """Enhanced parsing for HVAC Jack 5.0 with comprehensive data extraction"""
-        import re
-        
-        data = RatingPlateData()
-        data.raw_analysis = extracted_text  # Preserve full analysis
-        
-        lines = extracted_text.split('\n')
-        data.electrical_specs = {}
-        data.capacitor_specs = {}
-        data.compressor_specs = {}
-        data.fan_motor_specs = {}
-        data.efficiency_ratings = {}
-        data.operating_pressures = {}
-        data.additional_specs = {}
-        
-        for line in lines:
-            line_lower = line.lower().strip()
-            
-            # Basic identification - more flexible matching
-            if ('model' in line_lower or 'model#' in line_lower or 'model number' in line_lower) and (':' in line or '-' in line):
-                separator = ':' if ':' in line else '-'
-                parts = line.split(separator, 1)
-                if len(parts) > 1:
-                    data.model_number = parts[1].strip()
-            elif ('serial' in line_lower or 'serial#' in line_lower or 'serial number' in line_lower) and (':' in line or '-' in line):
-                separator = ':' if ':' in line else '-'
-                parts = line.split(separator, 1)
-                if len(parts) > 1:
-                    data.serial_number = parts[1].strip()
-            elif any(word in line_lower for word in ['manufacturer', 'brand', 'make']) and (':' in line or '-' in line):
-                separator = ':' if ':' in line else '-'
-                parts = line.split(separator, 1)
-                if len(parts) > 1:
-                    data.manufacturer = parts[1].strip()
-            elif ('equipment type' in line_lower or 'type:' in line_lower or 'unit type' in line_lower):
-                if ':' in line or '-' in line:
-                    separator = ':' if ':' in line else '-'
-                    parts = line.split(separator, 1)
-                    if len(parts) > 1:
-                        data.equipment_type = parts[1].strip()
-                
-            # Capacity and refrigerant
-            elif 'capacity' in line_lower and 'btu' in line_lower:
-                btu_match = re.search(r'(\d+,?\d*)\s*btu', line_lower)
-                if btu_match:
-                    data.capacity_btuh = int(btu_match.group(1).replace(',', ''))
-            elif ('refrigerant' in line_lower and ('r-' in line_lower or 'r410' in line_lower or 'r22' in line_lower or 'r32' in line_lower)):
-                # Extract refrigerant type from the line
-                ref_match = re.search(r'(r-?\d+[a-z]*)', line_lower)
-                if ref_match:
-                    data.refrigerant_type = ref_match.group(1).upper()
-                elif ':' in line:
-                    data.refrigerant_type = line.split(':', 1)[1].strip()
-            elif 'charge' in line_lower and ('oz' in line_lower or 'lb' in line_lower or 'kg' in line_lower):
-                data.refrigerant_charge = line.split(':', 1)[1].strip() if ':' in line else line.strip()
-                
-            # Electrical specifications
-            elif any(word in line_lower for word in ['voltage', 'volts', 'amperage', 'amps', 'watts', 'phase', 'frequency']) and ':' in line:
-                key = line.split(':')[0].strip()
-                value = line.split(':', 1)[1].strip()
-                data.electrical_specs[key] = value
-                
-            # Capacitor specifications  
-            elif 'capacitor' in line_lower and ('μf' in line_lower or 'uf' in line_lower or 'mfd' in line_lower):
-                key = line.split(':')[0].strip() if ':' in line else 'Capacitor'
-                value = line.split(':', 1)[1].strip() if ':' in line else line.strip()
-                data.capacitor_specs[key] = value
-                
-            # Compressor specs
-            elif any(word in line_lower for word in ['rla', 'lra', 'compressor']) and ':' in line:
-                key = line.split(':')[0].strip()
-                value = line.split(':', 1)[1].strip()
-                data.compressor_specs[key] = value
-                
-            # Efficiency ratings
-            elif any(word in line_lower for word in ['seer', 'afue', 'hspf', 'eer', 'cop']) and ':' in line:
-                key = line.split(':')[0].strip()
-                value = line.split(':', 1)[1].strip()
-                data.efficiency_ratings[key] = value
-                
-            # Operating pressures
-            elif 'pressure' in line_lower and ':' in line:
-                key = line.split(':')[0].strip()
-                value = line.split(':', 1)[1].strip()
-                data.operating_pressures[key] = value
-                
-            # Year
-            elif 'year' in line_lower or 'date' in line_lower:
-                year_match = re.search(r'(20\d{2}|19\d{2})', line)
-                if year_match:
-                    data.year_manufactured = int(year_match.group(1))
-                    
-            # Catch additional specifications
-            elif ':' in line and line.strip():
-                key = line.split(':')[0].strip()
-                value = line.split(':', 1)[1].strip()
-                if value and not any(d and key in d for d in [data.electrical_specs, data.capacitor_specs, data.compressor_specs, data.efficiency_ratings]):
-                    data.additional_specs[key] = value
-        
-        return data
 
 photo_service = PhotoAnalysisService(openai_api_key=os.getenv("OPENAI_API_KEY"))
 
