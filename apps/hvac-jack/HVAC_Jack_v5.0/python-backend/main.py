@@ -526,7 +526,7 @@ class PhotoAnalysisService:
             base64_image = base64.b64encode(image_data).decode('utf-8')
             
             response = await self.client.chat.completions.create(
-                model="gpt-4-vision-preview",
+                model="gpt-4o",
                 messages=[
                     {
                         "role": "user",
