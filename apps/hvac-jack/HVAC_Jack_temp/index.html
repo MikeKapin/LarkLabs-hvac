@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#E85A4F">
     <title>HVAC Jack 4.0 - AI HVAC Troubleshooting Assistant</title>
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="hvac-jack-icon.png">
     <link rel="manifest" href="manifest.json">
     <style>
         * {
@@ -966,7 +966,7 @@
 
                 console.log('📷 Sending to Photo Analyzer API:', payload);
 
-                const response = await fetch('/.netlify/functions/analyze-photo', {
+                const response = await fetch('/.netlify/functions/photo-analyzer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

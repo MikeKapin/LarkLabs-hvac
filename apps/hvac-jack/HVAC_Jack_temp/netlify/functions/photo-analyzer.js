@@ -1,7 +1,7 @@
 // netlify/functions/photo-analyzer.js  
 // HVAC Jack 4.0 - Photo Analysis with Explainer Integration
 
-const fetch = require('node-fetch');
+// Using built-in fetch (Node 18+ native support)
 
 exports.handler = async (event, context) => {
   const headers = {
