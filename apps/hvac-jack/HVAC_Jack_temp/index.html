@@ -878,6 +878,8 @@
                 this.elements.photoAnalyzeBtn.innerHTML = '<div class="spinner"></div> Analyzing Photo...';
 
                 try {
+                    // Add progress tracking for retry attempts
+                    this.showStatus('Analyzing photo...', 'info');
                     const response = await this.callPhotoAnalyzer();
                     this.photoAnalysisData = response; // Store photo analysis for future use
                     this.addToConversationHistory('photo_analysis', response);
@@ -885,11 +887,23 @@
                     this.showStatus('Photo analysis complete', 'success');
                     
                     // Automatically generate comprehensive troubleshooting guide
+                    this.showStatus('Generating troubleshooting guide...', 'info');
                     await this.generateTroubleshootingGuide();
                 } catch (error) {
                     console.error('Photo analysis error:', error);
-                    this.showStatus('Photo analysis failed - please try again', 'error');
-                    this.displayError(error.message);
+                    
+                    // More helpful error messages
+                    let userMessage = 'Photo analysis failed';
+                    if (error.message.includes('timeout')) {
+                        userMessage = 'Analysis timed out - try a smaller image';
+                    } else if (error.message.includes('500')) {
+                        userMessage = 'Server temporarily unavailable - please retry';
+                    } else if (error.message.includes('fetch')) {
+                        userMessage = 'Connection error - check internet and retry';
+                    }
+                    
+                    this.showStatus(userMessage, 'error');
+                    this.displayError(`${userMessage}. ${error.message}`);
                 } finally {
                     this.isAnalyzing = false;
                     this.elements.photoAnalyzeBtn.disabled = false;
@@ -959,7 +973,10 @@
                 return data.response || data.message || 'No response received';
             }
 
-            async callPhotoAnalyzer() {
+            async callPhotoAnalyzer(retryCount = 0) {
+                const maxRetries = 2;
+                const retryDelay = 2000; // 2 seconds
+                
                 const payload = {
                     imageData: this.photoData,
                     query: 'Extract all technical specifications and rating plate data from this HVAC equipment photo',
@@ -967,22 +984,68 @@
                     timestamp: new Date().toISOString()
                 };
 
-                console.log('📷 Sending to Photo Analyzer API:', payload);
+                console.log(`📷 Sending to Photo Analyzer API (attempt ${retryCount + 1}/${maxRetries + 1}):`, payload);
 
-                const response = await fetch('/.netlify/functions/photo-analyzer', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload)
-                });
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-                if (!response.ok) {
-                    throw new Error(`Photo Analyzer API Error: ${response.status}`);
+                    const response = await fetch('/.netlify/functions/photo-analyzer', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload),
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+
+                    if (!response.ok) {
+                        // Check if it's a server error that might be retryable
+                        if (response.status >= 500 && retryCount < maxRetries) {
+                            console.warn(`📷 Server error ${response.status}, retrying in ${retryDelay}ms...`);
+                            if (this.showStatus) {
+                                this.showStatus(`Server error - retrying (${retryCount + 2}/${maxRetries + 1})...`, 'warning');
+                            }
+                            await new Promise(resolve => setTimeout(resolve, retryDelay));
+                            return this.callPhotoAnalyzer(retryCount + 1);
+                        }
+                        
+                        // Get more detailed error information
+                        let errorMessage;
+                        try {
+                            const errorData = await response.json();
+                            errorMessage = errorData.error || errorData.message || `HTTP ${response.status}`;
+                        } catch {
+                            errorMessage = `HTTP ${response.status} - ${response.statusText}`;
+                        }
+                        
+                        throw new Error(`Photo Analyzer API Error: ${errorMessage}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('📷 Photo analysis successful:', data.success);
+                    return data.analysis || data.message || 'No analysis received';
+
+                } catch (error) {
+                    if (error.name === 'AbortError') {
+                        if (retryCount < maxRetries) {
+                            console.warn('📷 Request timeout, retrying...');
+                            return this.callPhotoAnalyzer(retryCount + 1);
+                        }
+                        throw new Error('Photo analysis timed out. Please try with a smaller image.');
+                    }
+                    
+                    // Network errors might be retryable
+                    if (error.message.includes('fetch') && retryCount < maxRetries) {
+                        console.warn(`📷 Network error, retrying in ${retryDelay}ms...`);
+                        await new Promise(resolve => setTimeout(resolve, retryDelay));
+                        return this.callPhotoAnalyzer(retryCount + 1);
+                    }
+                    
+                    throw error;
                 }
-
-                const data = await response.json();
-                return data.analysis || data.message || 'No analysis received';
             }
 
             addToConversationHistory(type, content) {
