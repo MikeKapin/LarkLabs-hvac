@@ -52,6 +52,21 @@ exports.handler = async (event, context) => {
       timestamp
     });
 
+    // Handle health check
+    if (message === 'health-check') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          status: 'healthy',
+          version: '5.0',
+          backendConnected: true,
+          timestamp: new Date().toISOString()
+        })
+      };
+    }
+
     // Validate input
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return {
