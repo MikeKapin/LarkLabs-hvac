@@ -53,6 +53,7 @@ exports.handler = async (event, context) => {
       });
 
       console.log('🐍 Calling Python backend for enhanced photo analysis...');
+      console.log('Backend URL:', pythonBackendUrl);
       
       const response = await axios.post(
         `${pythonBackendUrl}/api/v1/analyze-rating-plate`,
@@ -65,7 +66,9 @@ exports.handler = async (event, context) => {
         }
       );
 
+      console.log('✅ Python backend responded with status:', response.status);
       const pythonAnalysis = response.data;
+      console.log('📊 Python analysis data keys:', Object.keys(pythonAnalysis));
 
       // Format enhanced response
       const enhancedAnalysis = formatEnhancedPhotoAnalysis(pythonAnalysis, query);
@@ -85,9 +88,12 @@ exports.handler = async (event, context) => {
       };
 
     } catch (pythonError) {
-      console.warn('🔄 Python backend unavailable, using fallback analysis:', pythonError.message);
-      console.warn('Python backend URL:', pythonBackendUrl);
-      console.warn('Full error:', pythonError);
+      console.error('🔄 Python backend failed:', pythonError.message);
+      console.error('Python backend URL:', pythonBackendUrl);
+      console.error('Error status:', pythonError.response?.status);
+      console.error('Error data:', pythonError.response?.data);
+      
+      console.log('Attempting Claude fallback...');
       
       // Fallback to basic Claude Vision analysis
       const fallbackAnalysis = await analyzeWithClaudeFallback(imageData, query);
