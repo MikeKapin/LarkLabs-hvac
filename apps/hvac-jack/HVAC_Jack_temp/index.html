@@ -957,45 +957,29 @@
             }
 
             async callPhotoAnalyzer() {
-                console.log('📷 Using client-side photo analysis approach');
+                const payload = {
+                    imageData: this.photoData,
+                    query: 'Extract all technical specifications and rating plate data from this HVAC equipment photo',
+                    sessionId: this.sessionId,
+                    timestamp: new Date().toISOString()
+                };
 
-                // Client-side fallback approach - shows photo received successfully
-                const analysisResult = `# 📷 HVAC Jack 4.0 Photo Analysis Complete
+                console.log('📷 Sending to Photo Analyzer API:', payload);
 
-## 🔍 Image Processing Status
-✅ **Photo uploaded successfully**  
-✅ **Image data processed and ready**  
-✅ **Available for troubleshooting context**  
+                const response = await fetch('/.netlify/functions/photo-analyzer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
 
-## 💬 Next Steps - Enhanced Troubleshooting
+                if (!response.ok) {
+                    throw new Error(`Photo Analyzer API Error: ${response.status}`);
+                }
 
-Your HVAC equipment photo is now part of the conversation context. Use the chat interface below to:
-
-### 📋 **Ask About Your Equipment**
-- *"What type of equipment is in my photo?"*
-- *"Help me read the rating plate specifications"*
-- *"What maintenance does this unit need?"*
-- *"Diagnose any issues you can see in the photo"*
-
-### 🔧 **Technical Analysis**
-- *"What are the electrical specifications?"*
-- *"What refrigerant type does this use?"*
-- *"Calculate the system capacity and efficiency"*
-- *"Identify any safety concerns"*
-
-### ⚙️ **Troubleshooting**
-- *"System won't start - analyze the photo"*
-- *"Strange noises - what should I check?"*
-- *"Poor performance - help diagnose"*
-
-## 🚀 **Ready for Professional Diagnosis**
-
-Your photo provides visual context for expert HVAC troubleshooting. Start your technical discussion using the chat interface below.
-
----
-*HVAC Jack 4.0 - AI-Powered Professional HVAC Assistant*`;
-
-                return analysisResult;
+                const data = await response.json();
+                return data.analysis || data.message || 'No analysis received';
             }
 
             addToConversationHistory(type, content) {
