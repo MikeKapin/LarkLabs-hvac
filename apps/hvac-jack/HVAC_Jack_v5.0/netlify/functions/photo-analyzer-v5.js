@@ -70,8 +70,8 @@ exports.handler = async (event, context) => {
       const pythonAnalysis = response.data;
       console.log('📊 Python analysis data keys:', Object.keys(pythonAnalysis));
 
-      // Format enhanced response
-      const enhancedAnalysis = formatEnhancedPhotoAnalysis(pythonAnalysis, query);
+      // Use raw GPT-4o analysis directly - NO FILTERING
+      const enhancedAnalysis = pythonAnalysis.raw_analysis || pythonAnalysis;
 
       return {
         statusCode: 200,

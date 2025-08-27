@@ -10,6 +10,9 @@ from datetime import datetime
 import logging
 from enum import Enum
 import os
+import requests
+from bs4 import BeautifulSoup
+from googlesearch import search
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -155,12 +158,15 @@ class HVACJackAI:
         ENHANCED 5.0 RESPONSE STRUCTURE FOR EVERY INTERACTION:
         1. CRITICAL SAFETY ASSESSMENT - Identify immediate hazards or system integrity issues
         2. PROFESSIONAL ACKNOWLEDGMENT - Confirm understanding at expert technical level  
-        3. ADVANCED DIAGNOSTIC ANALYSIS - Sophisticated troubleshooting without basic explanations
-        4. EXPERT TECHNICAL QUESTIONS - 2-3 highly targeted questions for root cause analysis
-        5. PROFESSIONAL SOLUTIONS - Advanced procedures requiring professional expertise
-        6. SYSTEM OPTIMIZATION - Performance enhancement and efficiency opportunities
-        7. MANUFACTURER INTEGRATION - Specific model guidance and bulletins when available
-        8. COMPLIANCE VERIFICATION - CSA B149.1 and relevant code compliance
+        3. SEQUENCE OF OPERATION ANALYSIS - Break down system operation step-by-step
+        4. SYSTEMATIC DIAGNOSTIC PROCEDURE - Ordered troubleshooting sequence with measurements
+        5. ROOT CAUSE ISOLATION - Specific tests to isolate the exact failure point
+        6. EXPERT TECHNICAL QUESTIONS - 2-3 highly targeted questions for confirmation
+        7. PROFESSIONAL REPAIR PROCEDURES - Step-by-step repair/replacement procedures
+        8. SYSTEM VERIFICATION - Commissioning steps to verify proper operation
+        9. PREVENTIVE RECOMMENDATIONS - Maintenance to prevent future occurrences
+        10. MANUFACTURER INTEGRATION - Specific model guidance and bulletins when available
+        11. COMPLIANCE VERIFICATION - CSA B149.1 and relevant code compliance
 
         PROFESSIONAL FOCUS AREAS (v5.0 Enhanced):
         - Advanced combustion analysis and gas system diagnostics
@@ -179,6 +185,25 @@ class HVACJackAI:
         - Code compliance verification (CSA B149.1, NEC, IRC, UMC)
         - Professional certification pathway guidance
         - Energy efficiency optimization strategies
+
+        MANDATORY DIAGNOSTIC EXCELLENCE:
+        - Provide SPECIFIC measurement points and expected values
+        - Include EXACT tool requirements (multimeter, manometer, refrigerant manifold)
+        - Specify PRECISE testing sequences with step numbers
+        - Give EXACT troubleshooting decision trees
+        - Include SPECIFIC part numbers when known
+        - Provide DETAILED wiring diagrams references
+        - Give EXACT pressure and temperature targets
+        - Include SPECIFIC safety lockout procedures
+
+        FORMAT ALL DIAGNOSTIC PROCEDURES AS:
+        **STEP 1: [Action]**
+        - Tool Required: [Specific tool/meter]
+        - Expected Value: [Exact measurement range]
+        - Pass: [Next step if normal] 
+        - Fail: [Next step if abnormal]
+
+        This systematic approach ensures professional diagnostic prestige and field success.
 
         Always maintain the LARK Labs philosophy while providing expert-level technical precision that is practical and actionable for field professionals.
         """
@@ -635,15 +660,143 @@ class PhotoAnalysisService:
             extracted_data = response.choices[0].message.content
             logger.info(f"GPT-4o analysis complete - returning direct result")
             
-            # Return the raw analysis exactly like Claude does
+            # Extract model info from GPT-4o response for internet search
+            model_search_data = self._extract_search_terms(extracted_data)
+            
+            # Enhance with internet search for actual resources
+            if model_search_data:
+                logger.info(f"Enhancing analysis with internet search for {model_search_data}")
+                internet_resources = self._search_internet_resources(model_search_data)
+                
+                if internet_resources:
+                    enhanced_analysis = f"{extracted_data}\n\n{internet_resources}"
+                else:
+                    enhanced_analysis = extracted_data
+            else:
+                enhanced_analysis = extracted_data
+            
+            # Return the enhanced analysis with actual internet resources
             data = RatingPlateData()
-            data.raw_analysis = extracted_data
+            data.raw_analysis = enhanced_analysis
             
             return data
             
         except Exception as e:
             logger.error(f"HVAC Jack 5.0 photo analysis error: {str(e)}")
             raise HTTPException(status_code=500, detail="Error analyzing rating plate photo")
+    
+    def _extract_search_terms(self, gpt_analysis: str) -> Optional[str]:
+        """Extract manufacturer and model from GPT-4o analysis for internet search"""
+        try:
+            import re
+            lines = gpt_analysis.lower()
+            
+            # Look for model patterns
+            model_patterns = [
+                r'model[^:]*:\s*([^\n\r]+)',
+                r'model number[^:]*:\s*([^\n\r]+)',
+                r'model[^:]*[:-]\s*([^\n\r]+)'
+            ]
+            
+            manufacturer_patterns = [
+                r'(?:brand|manufacturer)[^:]*:\s*([^\n\r]+)',
+                r'(?:brand|manufacturer)[^:]*[:-]\s*([^\n\r]+)'
+            ]
+            
+            model = None
+            manufacturer = None
+            
+            for pattern in model_patterns:
+                match = re.search(pattern, lines)
+                if match:
+                    model = match.group(1).strip()
+                    break
+                    
+            for pattern in manufacturer_patterns:
+                match = re.search(pattern, lines)
+                if match:
+                    manufacturer = match.group(1).strip()
+                    break
+            
+            if model and manufacturer:
+                return f"{manufacturer} {model}"
+            elif model:
+                return model
+            elif manufacturer:
+                return manufacturer
+                
+            return None
+            
+        except Exception as e:
+            logger.warning(f"Failed to extract search terms: {e}")
+            return None
+    
+    def _search_internet_resources(self, search_term: str) -> Optional[str]:
+        """Search internet for actual resources and return formatted results"""
+        try:
+            logger.info(f"Searching internet for: {search_term}")
+            
+            resources = []
+            
+            # YouTube video search
+            youtube_search = f"{search_term} HVAC service repair tutorial"
+            youtube_results = list(search(youtube_search, num_results=3))
+            youtube_links = [url for url in youtube_results if 'youtube.com' in url]
+            
+            # Manufacturer manual search  
+            manual_search = f"{search_term} service manual PDF"
+            manual_results = list(search(manual_search, num_results=3))
+            manual_links = [url for url in manual_results if any(x in url.lower() for x in ['manual', 'pdf', 'service', 'install'])]
+            
+            # Parts supplier search
+            parts_search = f"{search_term} parts capacitor compressor"
+            parts_results = list(search(parts_search, num_results=3))
+            parts_links = [url for url in parts_results if any(x in url.lower() for x in ['parts', 'supply', 'repair', 'hvac'])]
+            
+            # Training resources search
+            training_search = f"{search_term} HVAC training troubleshooting"
+            training_results = list(search(training_search, num_results=2))
+            training_links = [url for url in training_results if any(x in url.lower() for x in ['training', 'course', 'education'])]
+            
+            # Format the internet resources
+            resource_section = "\n---\n# 🌐 INTERNET RESOURCES FOUND\n*Live links retrieved from internet search*\n\n"
+            
+            if youtube_links:
+                resource_section += "## 📺 YouTube Service Videos\n"
+                for i, link in enumerate(youtube_links[:3], 1):
+                    resource_section += f"{i}. {link}\n"
+                resource_section += "\n"
+            
+            if manual_links:
+                resource_section += "## 📚 Service Manuals & Documentation\n"
+                for i, link in enumerate(manual_links[:3], 1):
+                    resource_section += f"{i}. {link}\n"
+                resource_section += "\n"
+                    
+            if parts_links:
+                resource_section += "## 🔧 Parts & Supply Sources\n"
+                for i, link in enumerate(parts_links[:3], 1):
+                    resource_section += f"{i}. {link}\n"
+                resource_section += "\n"
+                    
+            if training_links:
+                resource_section += "## 🎓 Training Resources\n"  
+                for i, link in enumerate(training_links[:2], 1):
+                    resource_section += f"{i}. {link}\n"
+                resource_section += "\n"
+            
+            resource_section += "*These are live internet links found specifically for your equipment model.*\n"
+            
+            if youtube_links or manual_links or parts_links or training_links:
+                logger.info(f"Found {len(youtube_links + manual_links + parts_links + training_links)} internet resources")
+                return resource_section
+            else:
+                logger.info("No specific internet resources found")
+                return None
+                
+        except Exception as e:
+            logger.warning(f"Internet search failed: {e}")
+            return None
     
     
 
