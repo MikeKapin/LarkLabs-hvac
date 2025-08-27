@@ -533,24 +533,44 @@ class PhotoAnalysisService:
                         "content": [
                             {
                                 "type": "text",
-                                "text": """HVAC Jack 5.0 Professional Rating Plate Analysis
+                                "text": """HVAC Jack 5.0 Comprehensive Professional Equipment Analysis
 
-Analyze this HVAC equipment rating plate with professional precision and extract all technical specifications for certified technicians.
+Analyze this HVAC equipment photo with professional precision and extract all technical specifications and operational data for certified technicians.
 
-EXTRACT THE FOLLOWING DATA:
+## 🔍 EQUIPMENT IDENTIFICATION & SPECIFICATIONS
 - Model Number (exact alphanumeric sequence)
-- Serial Number (complete sequence)
+- Serial Number (complete sequence)  
 - Manufacturer/Brand Name
-- Capacity in BTU/h (cooling and heating if different)
-- Refrigerant Type (R-410A, R-22, etc.)
-- Electrical Specifications (voltage, amperage, phase, frequency)
-- Gas Specifications if present (input BTU/h, manifold pressure)
 - Manufacturing Year or Date Code
-- Efficiency Ratings (SEER, AFUE, HSPF, EER)
-- Additional Technical Data (pressure ratings, weight, dimensions)
+- Equipment Type (heat pump, A/C, furnace, etc.)
 
-Provide structured, accurate data suitable for professional HVAC diagnosis and parts ordering.
-If any specification is unclear or partially obscured, indicate with "Unclear" rather than guessing."""
+## ⚡ ELECTRICAL & CAPACITY DATA
+- Capacity in BTU/h (cooling and heating if different)
+- Electrical Specifications (voltage, amperage, phase, frequency, watts)
+- Compressor specifications (RLA, LRA, motor type)
+- Fan motor specifications (voltage, amperage, RPM, capacitor ratings)
+- Capacitor ratings (μF, voltage rating - dual/single capacitor specs)
+
+## 🌡️ REFRIGERANT & GAS DATA
+- Refrigerant Type (R-410A, R-22, R-32, etc.)
+- Refrigerant Charge Amount (ounces, pounds, or kg)
+- Operating pressures (high/low side pressures)
+- Gas Specifications if present (input BTU/h, manifold pressure, gas type)
+
+## 📊 PERFORMANCE & EFFICIENCY
+- Efficiency Ratings (SEER, AFUE, HSPF, EER, COP)
+- Performance data at rated conditions
+- Sound levels if listed
+- Weight and dimensions
+
+## 🔧 TECHNICAL DETAILS & CONDITION
+- Additional component specifications visible
+- Installation requirements or notes
+- Refrigerant line sizes
+- Physical condition observations
+- Any safety warnings or certifications visible
+
+Provide comprehensive, structured data with exact values. If any specification is unclear, indicate "Unclear" rather than guessing."""
                             },
                             {
                                 "type": "image_url",
@@ -561,8 +581,8 @@ If any specification is unclear or partially obscured, indicate with "Unclear" r
                         ]
                     }
                 ],
-                max_tokens=800,
-                temperature=0.1  # Very low temperature for accurate data extraction
+                max_tokens=2000,
+                temperature=0.15  # Low temperature for accurate but comprehensive analysis
             )
             
             extracted_data = response.choices[0].message.content
