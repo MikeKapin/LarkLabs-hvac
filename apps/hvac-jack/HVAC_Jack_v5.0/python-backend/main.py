@@ -62,12 +62,21 @@ class RatingPlateData(BaseModel):
     model_number: Optional[str] = None
     serial_number: Optional[str] = None
     manufacturer: Optional[str] = None
+    equipment_type: Optional[str] = None
     capacity_btuh: Optional[int] = None
     refrigerant_type: Optional[str] = None
+    refrigerant_charge: Optional[str] = None
     electrical_specs: Optional[Dict[str, Any]] = None
+    capacitor_specs: Optional[Dict[str, Any]] = None
+    compressor_specs: Optional[Dict[str, Any]] = None
+    fan_motor_specs: Optional[Dict[str, Any]] = None
+    efficiency_ratings: Optional[Dict[str, Any]] = None
+    operating_pressures: Optional[Dict[str, Any]] = None
     gas_specs: Optional[Dict[str, Any]] = None
     year_manufactured: Optional[int] = None
+    weight_dimensions: Optional[Dict[str, Any]] = None
     additional_specs: Optional[Dict[str, Any]] = None
+    raw_analysis: Optional[str] = None  # Full GPT analysis preserved
 
 class TroubleshootingRequest(BaseModel):
     user_id: str = Field(..., description="Unique identifier for the user")
@@ -593,38 +602,86 @@ Provide comprehensive, structured data with exact values. If any specification i
             raise HTTPException(status_code=500, detail="Error analyzing rating plate photo")
     
     def _parse_rating_plate_data(self, extracted_text: str) -> RatingPlateData:
-        """Enhanced parsing for HVAC Jack 5.0 with improved accuracy"""
+        """Enhanced parsing for HVAC Jack 5.0 with comprehensive data extraction"""
+        import re
+        
         data = RatingPlateData()
+        data.raw_analysis = extracted_text  # Preserve full analysis
         
         lines = extracted_text.split('\n')
+        data.electrical_specs = {}
+        data.capacitor_specs = {}
+        data.compressor_specs = {}
+        data.fan_motor_specs = {}
+        data.efficiency_ratings = {}
+        data.operating_pressures = {}
+        data.additional_specs = {}
+        
         for line in lines:
             line_lower = line.lower().strip()
             
+            # Basic identification
             if 'model' in line_lower and ':' in line:
                 data.model_number = line.split(':', 1)[1].strip()
             elif 'serial' in line_lower and ':' in line:
                 data.serial_number = line.split(':', 1)[1].strip()
             elif any(word in line_lower for word in ['manufacturer', 'brand', 'make']) and ':' in line:
                 data.manufacturer = line.split(':', 1)[1].strip()
+            elif 'equipment type' in line_lower or 'type:' in line_lower:
+                data.equipment_type = line.split(':', 1)[1].strip() if ':' in line else None
+                
+            # Capacity and refrigerant
             elif 'capacity' in line_lower and 'btu' in line_lower:
-                # Extract BTU capacity
-                import re
                 btu_match = re.search(r'(\d+,?\d*)\s*btu', line_lower)
                 if btu_match:
                     data.capacity_btuh = int(btu_match.group(1).replace(',', ''))
-            elif 'refrigerant' in line_lower and ':' in line:
+            elif 'refrigerant type' in line_lower and ':' in line:
                 data.refrigerant_type = line.split(':', 1)[1].strip()
-            elif any(word in line_lower for word in ['voltage', 'volts', 'electrical']) and ':' in line:
-                if not data.electrical_specs:
-                    data.electrical_specs = {}
+            elif 'charge' in line_lower and ('oz' in line_lower or 'lb' in line_lower or 'kg' in line_lower):
+                data.refrigerant_charge = line.split(':', 1)[1].strip() if ':' in line else line.strip()
+                
+            # Electrical specifications
+            elif any(word in line_lower for word in ['voltage', 'volts', 'amperage', 'amps', 'watts', 'phase', 'frequency']) and ':' in line:
                 key = line.split(':')[0].strip()
                 value = line.split(':', 1)[1].strip()
                 data.electrical_specs[key] = value
+                
+            # Capacitor specifications  
+            elif 'capacitor' in line_lower and ('μf' in line_lower or 'uf' in line_lower or 'mfd' in line_lower):
+                key = line.split(':')[0].strip() if ':' in line else 'Capacitor'
+                value = line.split(':', 1)[1].strip() if ':' in line else line.strip()
+                data.capacitor_specs[key] = value
+                
+            # Compressor specs
+            elif any(word in line_lower for word in ['rla', 'lra', 'compressor']) and ':' in line:
+                key = line.split(':')[0].strip()
+                value = line.split(':', 1)[1].strip()
+                data.compressor_specs[key] = value
+                
+            # Efficiency ratings
+            elif any(word in line_lower for word in ['seer', 'afue', 'hspf', 'eer', 'cop']) and ':' in line:
+                key = line.split(':')[0].strip()
+                value = line.split(':', 1)[1].strip()
+                data.efficiency_ratings[key] = value
+                
+            # Operating pressures
+            elif 'pressure' in line_lower and ':' in line:
+                key = line.split(':')[0].strip()
+                value = line.split(':', 1)[1].strip()
+                data.operating_pressures[key] = value
+                
+            # Year
             elif 'year' in line_lower or 'date' in line_lower:
-                import re
                 year_match = re.search(r'(20\d{2}|19\d{2})', line)
                 if year_match:
                     data.year_manufactured = int(year_match.group(1))
+                    
+            # Catch additional specifications
+            elif ':' in line and line.strip():
+                key = line.split(':')[0].strip()
+                value = line.split(':', 1)[1].strip()
+                if value and not any(d and key in d for d in [data.electrical_specs, data.capacitor_specs, data.compressor_specs, data.efficiency_ratings]):
+                    data.additional_specs[key] = value
         
         return data
 
