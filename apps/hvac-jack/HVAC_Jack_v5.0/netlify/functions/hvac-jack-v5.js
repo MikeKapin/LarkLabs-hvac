@@ -209,7 +209,7 @@ function extractCapacity(text) {
 function extractElectricalSpecs(text) {
   const specs = {};
   const voltageMatch = text.match(/(\d+)\s*v(?:olt)?/i);
-  const ampMatch = text.match/(\d+\.?\d*)\s*amp/i);
+  const ampMatch = text.match(/(\d+\.?\d*)\s*amp/i);
   
   if (voltageMatch) specs.voltage = voltageMatch[1] + 'V';
   if (ampMatch) specs.amperage = ampMatch[1] + 'A';
