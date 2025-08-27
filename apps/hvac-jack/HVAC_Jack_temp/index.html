@@ -966,7 +966,7 @@
 
                 console.log('📷 Sending to Photo Analyzer API:', payload);
 
-                const response = await fetch('/.netlify/functions/photo-analyzer', {
+                const response = await fetch('/.netlify/functions/analyze-photo', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
