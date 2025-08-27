@@ -87,6 +87,8 @@ exports.handler = async (event, context) => {
 
     } catch (pythonError) {
       console.warn('🔄 Python backend unavailable, using fallback analysis:', pythonError.message);
+      console.warn('Python backend URL:', pythonBackendUrl);
+      console.warn('Full error:', pythonError);
       
       // Fallback to basic Claude Vision analysis
       const fallbackAnalysis = await analyzeWithClaudeFallback(imageData, query);
@@ -228,7 +230,7 @@ function calculateConfidenceScore(data) {
 
 async function analyzeWithClaudeFallback(imageData, query) {
   // Fallback to Claude Vision API when Python backend is unavailable
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
   
   if (!apiKey) {
     throw new Error('Neither Python backend nor Claude API is available');
