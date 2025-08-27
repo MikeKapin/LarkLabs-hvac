@@ -1,6 +1,8 @@
 // netlify/functions/photo-analyzer.js  
 // HVAC Jack 4.0 - Photo Analysis with Explainer Integration
 
+const fetch = require('node-fetch');
+
 exports.handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -49,13 +51,16 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error('Photo analysis error:', error);
+    console.error('Error stack:', error.stack);
     
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         error: 'Photo analysis failed',
-        success: false
+        success: false,
+        details: error.message,
+        timestamp: new Date().toISOString()
       })
     };
   }

@@ -6,9 +6,10 @@
 [build.environment]
   NODE_VERSION = "18"
 
-[functions]
-  directory = "netlify/functions/"
-  node_bundler = "esbuild"
+# Disable functions for static-only deployment
+# [functions]
+#   directory = "netlify/functions/"
+#   node_bundler = "esbuild"
 
 [[redirects]]
   from = "/apps/hvac-jack/HVAC_Jack_temp/HVAC_Jack_Mobile_Updated.html"
