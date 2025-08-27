@@ -59,7 +59,7 @@ exports.handler = async (event, context) => {
         `${pythonBackendUrl}/api/v1/analyze-rating-plate`,
         formData,
         {
-          timeout: 45000, // 45 second timeout for photo analysis
+          timeout: 90000, // 90 second timeout to handle Render cold starts
           headers: {
             ...formData.getHeaders()
           }

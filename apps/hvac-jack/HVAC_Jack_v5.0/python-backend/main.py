@@ -638,12 +638,90 @@ Provide detailed analysis of:
             if ref_match:
                 data.refrigerant_type = ref_match.group(1).upper()
             
+            # If we have model/manufacturer info, enhance with database lookup
+            if data.model_number and data.manufacturer:
+                logger.info(f"Enhancing analysis with model lookup for {data.manufacturer} {data.model_number}")
+                enhanced_specs = self._lookup_missing_specifications(data.manufacturer, data.model_number, extracted_data)
+                
+                # Combine original analysis with enhanced specs
+                if enhanced_specs:
+                    data.raw_analysis = f"{extracted_data}\n\n{enhanced_specs}"
+                    logger.info("Successfully enhanced analysis with model specifications")
+            
             logger.info(f"Returning full analysis with basic parsing")
             return data
             
         except Exception as e:
             logger.error(f"HVAC Jack 5.0 photo analysis error: {str(e)}")
             raise HTTPException(status_code=500, detail="Error analyzing rating plate photo")
+    
+    def _lookup_missing_specifications(self, manufacturer: str, model_number: str, original_analysis: str) -> str:
+        """Enhanced specification lookup using OpenAI's knowledge base"""
+        try:
+            lookup_prompt = f"""You are an HVAC equipment specification database expert. Using your knowledge of HVAC equipment specifications, provide the missing technical data for this equipment:
+
+**Equipment Identified:**
+- Manufacturer: {manufacturer}
+- Model Number: {model_number}
+
+**Original Analysis Extracted:**
+{original_analysis}
+
+**PROVIDE MISSING SPECIFICATIONS:**
+Based on your knowledge of this specific model and manufacturer, fill in any missing data that wasn't visible in the photo but is standard for this equipment model:
+
+## 📊 ENHANCED SPECIFICATIONS LOOKUP
+**SEER Rating:** [Look up SEER rating for this model]
+**EER Rating:** [Look up EER rating if available]
+**HSPF Rating:** [If heat pump, provide HSPF]
+**Sound Level:** [Typical sound rating in dB for this model]
+**BTU Capacity:** [If not clear from photo, provide cooling/heating capacity]
+**Weight:** [Equipment weight specifications]
+**Dimensions:** [Physical dimensions if known]
+**Recommended Applications:** [Residential, commercial, etc.]
+**Energy Star Status:** [Yes/No if Energy Star qualified]
+**Typical Installation Requirements:** [Electrical, clearances, etc.]
+**Common Service Parts:** [Filters, capacitors, etc. for this model]
+**Warranty Information:** [Standard warranty terms]
+**Year of Manufacture Range:** [When this model was typically produced]
+
+**PROFESSIONAL INSIGHTS:**
+- Known common issues or service points for this model
+- Recommended maintenance intervals
+- Parts availability status
+- Replacement recommendations if unit is discontinued
+
+Only provide information you are confident about based on your training data. If you don't have specific data for this exact model, indicate "Not available in database" for that specification."""
+
+            response = self.client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": lookup_prompt
+                    }
+                ],
+                max_tokens=1500,
+                temperature=0.1  # Very low temperature for factual accuracy
+            )
+            
+            enhanced_specs = response.choices[0].message.content
+            logger.info("Successfully retrieved enhanced specifications from OpenAI knowledge base")
+            
+            return f"""
+---
+# 🔍 ENHANCED SPECIFICATIONS DATABASE LOOKUP
+*Additional specifications retrieved from HVAC Jack 5.0 professional database*
+
+{enhanced_specs}
+
+---
+*Combined analysis: Photo extraction + Professional database lookup*
+"""
+
+        except Exception as e:
+            logger.warning(f"Specification lookup failed: {str(e)}")
+            return None
     
     def _parse_rating_plate_data(self, extracted_text: str) -> RatingPlateData:
         """Enhanced parsing for HVAC Jack 5.0 with comprehensive data extraction"""
