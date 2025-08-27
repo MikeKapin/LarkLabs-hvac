@@ -530,7 +530,7 @@ class PhotoAnalysisService:
     def __init__(self, openai_api_key: str):
         self.client = openai.OpenAI(api_key=openai_api_key)
     
-    async def analyze_rating_plate(self, image_data: bytes) -> RatingPlateData:
+    def analyze_rating_plate(self, image_data: bytes) -> RatingPlateData:
         try:
             base64_image = base64.b64encode(image_data).decode('utf-8')
             
@@ -761,7 +761,7 @@ async def analyze_rating_plate(file: UploadFile = File(...)):
         image_data = await file.read()
         logger.info(f"HVAC Jack 5.0 analyzing rating plate image: {file.filename}")
         
-        rating_plate_data = await photo_service.analyze_rating_plate(image_data)
+        rating_plate_data = photo_service.analyze_rating_plate(image_data)
         logger.info("Successfully analyzed rating plate")
         
         return rating_plate_data
