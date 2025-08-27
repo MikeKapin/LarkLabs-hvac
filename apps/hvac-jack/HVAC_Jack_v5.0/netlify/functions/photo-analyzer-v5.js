@@ -129,6 +129,19 @@ exports.handler = async (event, context) => {
 };
 
 function formatEnhancedPhotoAnalysis(pythonData, originalQuery) {
+  // If we have raw_analysis from GPT-4o, use it directly (like 4.0 does)
+  if (pythonData.raw_analysis) {
+    let analysis = `# 📷 HVAC Jack 5.0 Enhanced Photo Analysis (GPT-4o Vision)\n\n`;
+    
+    if (originalQuery) {
+      analysis += `**Analysis Request:** ${originalQuery}\n\n`;
+    }
+    
+    analysis += pythonData.raw_analysis;
+    return analysis;
+  }
+  
+  // Fallback to structured format if no raw analysis
   let analysis = `# 📷 HVAC Jack 5.0 Enhanced Photo Analysis\n\n`;
   
   if (originalQuery) {

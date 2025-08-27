@@ -597,10 +597,33 @@ Provide comprehensive, structured data with exact values. If any specification i
             extracted_data = response.choices[0].message.content
             logger.info(f"Raw GPT-4o analysis response: {extracted_data}")
             
-            parsed_data = self._parse_rating_plate_data(extracted_data)
-            logger.info(f"Parsed data fields: {[k for k, v in parsed_data.dict().items() if v is not None]}")
+            # Return simple structure with full analysis (like 4.0 does)
+            data = RatingPlateData()
+            data.raw_analysis = extracted_data  # Full GPT-4o analysis
             
-            return parsed_data
+            # Basic parsing for key fields only
+            import re
+            lines = extracted_data.lower()
+            
+            # Extract just the most obvious data points
+            model_match = re.search(r'model[:\s-]+([^\n\r]+)', lines)
+            if model_match:
+                data.model_number = model_match.group(1).strip()
+                
+            serial_match = re.search(r'serial[:\s-]+([^\n\r]+)', lines) 
+            if serial_match:
+                data.serial_number = serial_match.group(1).strip()
+                
+            manufacturer_match = re.search(r'(?:manufacturer|brand|make)[:\s-]+([^\n\r]+)', lines)
+            if manufacturer_match:
+                data.manufacturer = manufacturer_match.group(1).strip()
+                
+            ref_match = re.search(r'(r-?\d+[a-z]*)', lines)
+            if ref_match:
+                data.refrigerant_type = ref_match.group(1).upper()
+            
+            logger.info(f"Returning full analysis with basic parsing")
+            return data
             
         except Exception as e:
             logger.error(f"HVAC Jack 5.0 photo analysis error: {str(e)}")
