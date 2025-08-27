@@ -542,44 +542,60 @@ class PhotoAnalysisService:
                         "content": [
                             {
                                 "type": "text",
-                                "text": """HVAC Jack 5.0 Comprehensive Professional Equipment Analysis
+                                "text": """You are HVAC Jack 5.0, a professional HVAC technician analyzer. Examine this rating plate/equipment photo and extract ALL visible technical information with confidence.
 
-Analyze this HVAC equipment photo with professional precision and extract all technical specifications and operational data for certified technicians.
+**CRITICAL INSTRUCTIONS:**
+- READ every number, letter, and specification visible on the rating plate
+- Extract exact values as printed - do not say "Unclear" for visible text
+- Look carefully at all text on labels, plates, and stickers
+- Provide detailed professional analysis like an experienced HVAC technician would
 
-## 🔍 EQUIPMENT IDENTIFICATION & SPECIFICATIONS
-- Model Number (exact alphanumeric sequence)
-- Serial Number (complete sequence)  
-- Manufacturer/Brand Name
-- Manufacturing Year or Date Code
-- Equipment Type (heat pump, A/C, furnace, etc.)
+## 🔍 EQUIPMENT IDENTIFICATION
+Look for and extract the exact text for:
+- Model Number (usually starts with letters/numbers like "4TWR", "RTU", etc.)
+- Serial Number (long alphanumeric sequence)
+- Manufacturer/Brand (Trane, Carrier, Goodman, etc.)
+- Manufacturing Date (month/year format)
+- Equipment Type (air conditioner, heat pump, furnace, RTU, etc.)
 
-## ⚡ ELECTRICAL & CAPACITY DATA
-- Capacity in BTU/h (cooling and heating if different)
-- Electrical Specifications (voltage, amperage, phase, frequency, watts)
-- Compressor specifications (RLA, LRA, motor type)
-- Fan motor specifications (voltage, amperage, RPM, capacitor ratings)
-- Capacitor ratings (μF, voltage rating - dual/single capacitor specs)
+## ⚡ ELECTRICAL & CAPACITY SPECIFICATIONS
+Extract visible electrical data:
+- BTU/h Cooling Capacity (often listed as "BTUH", "Cooling Cap", etc.)
+- BTU/h Heating Capacity (if heat pump)
+- Voltage (208/230V, 460V, etc.)
+- Amperage ratings (RLA, LRA, FLA, MCA, etc.)
+- Phase (1 or 3)
+- Frequency (60Hz)
+- Watts or Kilowatts
+- Compressor specifications (RLA, LRA values)
+- Fan motor specs (HP, RPM, capacitor μF ratings)
 
-## 🌡️ REFRIGERANT & GAS DATA
+## 🌡️ REFRIGERANT DATA
+Look for refrigerant information:
 - Refrigerant Type (R-410A, R-22, R-32, etc.)
-- Refrigerant Charge Amount (ounces, pounds, or kg)
-- Operating pressures (high/low side pressures)
-- Gas Specifications if present (input BTU/h, manifold pressure, gas type)
+- Factory Charge (lbs, oz, kg)
+- Operating Pressures (PSI high/low side)
+- Refrigerant line sizes (liquid/suction line diameters)
 
-## 📊 PERFORMANCE & EFFICIENCY
-- Efficiency Ratings (SEER, AFUE, HSPF, EER, COP)
-- Performance data at rated conditions
-- Sound levels if listed
-- Weight and dimensions
+## 📊 EFFICIENCY & PERFORMANCE
+Find efficiency ratings:
+- SEER rating (cooling efficiency)
+- EER rating
+- HSPF (heat pump heating efficiency)
+- AFUE (furnace efficiency)
+- Sound levels (dB)
+- Weight specifications
 
-## 🔧 TECHNICAL DETAILS & CONDITION
-- Additional component specifications visible
-- Installation requirements or notes
-- Refrigerant line sizes
-- Physical condition observations
-- Any safety warnings or certifications visible
+## 🔧 PROFESSIONAL ASSESSMENT
+Provide detailed analysis of:
+- Physical condition visible in photo
+- Any corrosion, damage, or wear
+- Installation quality observations
+- Safety certifications (UL, ETL, etc.)
+- Code compliance observations
+- Maintenance recommendations based on what you see
 
-Provide comprehensive, structured data with exact values. If any specification is unclear, indicate "Unclear" rather than guessing."""
+**Be thorough and confident - extract every visible detail like a professional technician would during equipment inspection.**"""
                             },
                             {
                                 "type": "image_url",
