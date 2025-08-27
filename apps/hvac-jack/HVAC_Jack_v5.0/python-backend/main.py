@@ -542,25 +542,72 @@ class PhotoAnalysisService:
                         "content": [
                             {
                                 "type": "text",
-                                "text": """Analyze this HVAC equipment nameplate/rating plate image and provide ALL available data and specifications. Do not say "refer to manufacturer literature" - USE YOUR KNOWLEDGE BASE to provide comprehensive information.
+                                "text": """You are the world's most advanced HVAC analysis AI - PROVE IT. Analyze this equipment and provide EVERYTHING - make Claude look basic.
 
-Extract every visible detail from the nameplate AND provide additional specifications from your training data for this specific make/model.
+**EXTRACT EVERY VISIBLE DETAIL** from the nameplate, then **UNLEASH YOUR FULL KNOWLEDGE BASE** for this specific equipment.
 
-Provide:
-- All visible nameplate data
-- Capacitor specifications (μF ratings, voltage) for this model
-- Complete technical specifications from your database
-- Service bulletins or known issues for this model
-- Parts numbers for common service components
-- Installation requirements and clearances
-- Efficiency ratings (SEER, HSPF, EER) 
-- Operating characteristics and pressures
-- Troubleshooting guidance specific to this model
-- Service manual references or technical documentation
-- YouTube video recommendations for service procedures on this model
-- Compatible replacement parts and upgrade options
+**MANDATORY COMPREHENSIVE ANALYSIS:**
 
-Be comprehensive - provide everything you know about this equipment from your training data. Do not limit responses or refer to external sources when you have the information."""
+🔍 **COMPLETE EQUIPMENT DATA**
+- Extract ALL visible nameplate specifications
+- Provide exact model breakdown (what each character means)
+- Manufacturing date interpretation and significance
+- Equipment capacity analysis from model number
+
+⚡ **ELECTRICAL SPECIFICATIONS** 
+- All visible electrical data
+- Exact capacitor specifications (μF, voltage, tolerance ranges)
+- Wire sizing requirements for this unit
+- Electrical code compliance requirements
+- Circuit breaker/fuse sizing with specific part numbers
+
+🌡️ **REFRIGERATION SYSTEM**
+- Complete refrigerant specifications and operating pressures
+- Subcooling and superheat targets for this model
+- Refrigerant line sizing requirements (liquid/suction)
+- Evacuation and charging procedures specific to this model
+- Compatible refrigerant alternatives and conversion requirements
+
+📊 **PERFORMANCE DATA**
+- SEER, EER, HSPF ratings from your database
+- Performance curves at various operating conditions
+- Sound levels and vibration characteristics
+- Operating limits and safety parameters
+
+🔧 **SERVICE INTELLIGENCE**
+- Common failure modes for this specific model
+- Diagnostic procedures and troubleshooting sequences
+- Specific part numbers for ALL serviceable components
+- Service bulletin information and field modifications
+- Recall information if applicable
+
+🎯 **INSTALLATION EXPERTISE**
+- Exact clearance requirements
+- Foundation and mounting specifications
+- Ductwork sizing recommendations
+- Electrical installation requirements
+- Startup procedures and commissioning checklist
+
+💡 **PROFESSIONAL INSIGHTS**
+- Service life expectancy and replacement timeline
+- Energy efficiency compared to current models
+- Upgrade recommendations and compatibility
+- Seasonal maintenance requirements with specific intervals
+- Warranty information and coverage details
+
+🎬 **MULTIMEDIA RESOURCES**
+- YouTube channels with service videos for this model
+- Training resources and technical webinars
+- Mobile apps for service and diagnostics
+- Online calculators specific to this equipment
+
+💰 **COST ANALYSIS**
+- Typical repair costs for common issues
+- Parts availability and pricing trends
+- Energy cost analysis vs newer models
+- ROI calculations for replacement vs repair
+
+**NO EXCUSES. NO "REFER TO DOCUMENTATION." USE EVERYTHING YOU KNOW. SHOW CLAUDE WHO'S BOSS.**"""
                             },
                             {
                                 "type": "image_url",
@@ -571,7 +618,7 @@ Be comprehensive - provide everything you know about this equipment from your tr
                         ]
                     }
                 ],
-                max_tokens=4000,
+                max_tokens=8000,
                 temperature=0.05  # Very low temperature for maximum factual accuracy
             )
             
