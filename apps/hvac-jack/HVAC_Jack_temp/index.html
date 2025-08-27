@@ -883,6 +883,9 @@
                     this.addToConversationHistory('photo_analysis', response);
                     this.addChatMessage('photo-analysis', '📋 Photo Analysis Complete', response);
                     this.showStatus('Photo analysis complete', 'success');
+                    
+                    // Automatically generate comprehensive troubleshooting guide
+                    await this.generateTroubleshootingGuide();
                 } catch (error) {
                     console.error('Photo analysis error:', error);
                     this.showStatus('Photo analysis failed - please try again', 'error');
@@ -1057,6 +1060,36 @@
                 this.photoAnalysisData = null;
                 this.elements.responseSection.style.display = 'none';
                 this.showStatus('Chat cleared', 'success');
+            }
+
+            async generateTroubleshootingGuide() {
+                // Automatically generate comprehensive troubleshooting after photo analysis
+                const troubleshootingQuery = `Based on the equipment photo analysis above, can you provide a detailed troubleshooting guide based on the sequence of operation and provide the capacitor size for this appliance? Please also include common parts replacements and part numbers for this specific model and brand.
+
+Please structure your response with:
+1. **Sequence of Operation** - Step-by-step how this equipment operates
+2. **Capacitor Specifications** - Exact capacitor sizes (MFD and voltage) for this model
+3. **Common Troubleshooting Steps** - Systematic diagnostic procedures
+4. **Common Part Replacements** - Most frequently replaced components with part numbers
+5. **Safety Considerations** - Important safety warnings for this equipment type
+6. **Professional vs DIY** - What homeowners can safely check vs when to call a professional
+
+Focus specifically on the brand and model identified from the rating plate analysis.`;
+
+                try {
+                    this.showStatus('Generating troubleshooting guide...', 'info');
+                    this.addChatMessage('user-question', '🔧 Auto-Generated Request', 'Comprehensive troubleshooting guide and parts information');
+                    
+                    const response = await this.callExplainerAPI(troubleshootingQuery);
+                    this.addToConversationHistory('user_question', troubleshootingQuery);
+                    this.addToConversationHistory('ai_response', response);
+                    this.addChatMessage('ai-response', '🛠️ Comprehensive Troubleshooting Guide', response);
+                    this.showStatus('Troubleshooting guide complete', 'success');
+                } catch (error) {
+                    console.error('Troubleshooting guide generation failed:', error);
+                    this.showStatus('Could not generate troubleshooting guide', 'error');
+                    this.addChatMessage('ai-response', '⚠️ Notice', 'Unable to generate automatic troubleshooting guide. You can manually ask: "Provide troubleshooting guide and capacitor specs for this equipment"');
+                }
             }
 
             formatResponse(response) {
