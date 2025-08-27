@@ -288,8 +288,8 @@ class HVACJackAI:
     
     async def _call_openai(self, context: str) -> str:
         try:
-            response = await self.client.chat.completions.create(
-                model="gpt-4-1106-preview",  # Use latest GPT-4 model for enhanced capabilities
+            response = self.client.chat.completions.create(
+                model="gpt-4o",  # Use latest GPT-4o model for enhanced capabilities
                 messages=[
                     {"role": "system", "content": self.system_prompt},
                     {"role": "user", "content": context}
@@ -525,7 +525,7 @@ class PhotoAnalysisService:
         try:
             base64_image = base64.b64encode(image_data).decode('utf-8')
             
-            response = await self.client.chat.completions.create(
+            response = self.client.chat.completions.create(
                 model="gpt-4o",
                 messages=[
                     {
