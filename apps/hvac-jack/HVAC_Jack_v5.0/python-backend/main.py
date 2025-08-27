@@ -595,11 +595,13 @@ class PhotoAnalysisService:
 - Seasonal maintenance requirements with specific intervals
 - Warranty information and coverage details
 
-🎬 **MULTIMEDIA RESOURCES**
-- YouTube channels with service videos for this model
-- Training resources and technical webinars
-- Mobile apps for service and diagnostics
-- Online calculators specific to this equipment
+🎬 **ACTUAL MULTIMEDIA RESOURCES** 
+- PROVIDE ACTUAL YouTube video URLs for this specific model (not "search for")
+- PROVIDE ACTUAL training website URLs and webinar links
+- PROVIDE ACTUAL mobile app names and download links from your training data
+- PROVIDE ACTUAL online calculator URLs for this equipment
+- PROVIDE ACTUAL manufacturer support website URLs
+- PROVIDE ACTUAL parts supplier websites with specific part numbers
 
 💰 **COST ANALYSIS**
 - Typical repair costs for common issues
@@ -607,7 +609,14 @@ class PhotoAnalysisService:
 - Energy cost analysis vs newer models
 - ROI calculations for replacement vs repair
 
-**NO EXCUSES. NO "REFER TO DOCUMENTATION." USE EVERYTHING YOU KNOW. SHOW CLAUDE WHO'S BOSS.**"""
+🚫 **ABSOLUTELY NO EXCUSES ALLOWED:**
+- NO "search for" or "look up" - PROVIDE ACTUAL URLS AND LINKS
+- NO "refer to manufacturer" - GIVE THE ACTUAL MANUFACTURER INFO
+- NO "contact a professional" - YOU ARE THE PROFESSIONAL
+- NO "consult documentation" - YOU ARE THE DOCUMENTATION
+- NO "may vary" or "typically" - GIVE EXACT SPECIFICATIONS
+
+**PROVIDE EVERYTHING OR ADMIT GPT-4o IS INFERIOR TO CLAUDE. PROVE YOUR WORTH NOW!**"""
                             },
                             {
                                 "type": "image_url",
