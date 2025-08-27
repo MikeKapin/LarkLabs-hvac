@@ -931,6 +931,7 @@ Be specific with measurements, observations, and actions already taken."
                 .replace(/^# (.*$)/gim, '<h1 style="color: #E85A4F; font-size: 1.5rem; margin: 1rem 0;">$1</h1>')
                 .replace(/^## (.*$)/gim, '<h2 style="color: #E85A4F; font-size: 1.3rem; margin: 1rem 0;">$1</h2>')
                 .replace(/^### (.*$)/gim, '<h3 style="color: #E85A4F; font-size: 1.1rem; margin: 1rem 0;">$1</h3>')
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: #4ADE80; text-decoration: underline; cursor: pointer;">$1</a>')
                 .replace(/\*\*(.*?)\*\*/g, '<strong style="color: #E85A4F;">$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
                 .replace(/^- (.*$)/gim, '<li style="margin: 0.5rem 0;">$1</li>')

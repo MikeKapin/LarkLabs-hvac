@@ -764,25 +764,30 @@ class PhotoAnalysisService:
             if youtube_links:
                 resource_section += "## 📺 YouTube Service Videos\n"
                 for i, link in enumerate(youtube_links[:3], 1):
-                    resource_section += f"{i}. {link}\n"
+                    # Extract video title from URL or create descriptive text
+                    link_text = f"Video {i}: Service Tutorial"
+                    resource_section += f"{i}. [{link_text}]({link})\n"
                 resource_section += "\n"
             
             if manual_links:
                 resource_section += "## 📚 Service Manuals & Documentation\n"
                 for i, link in enumerate(manual_links[:3], 1):
-                    resource_section += f"{i}. {link}\n"
+                    link_text = f"Manual {i}: Service Documentation"
+                    resource_section += f"{i}. [{link_text}]({link})\n"
                 resource_section += "\n"
                     
             if parts_links:
                 resource_section += "## 🔧 Parts & Supply Sources\n"
                 for i, link in enumerate(parts_links[:3], 1):
-                    resource_section += f"{i}. {link}\n"
+                    link_text = f"Parts Source {i}: Components & Supplies"
+                    resource_section += f"{i}. [{link_text}]({link})\n"
                 resource_section += "\n"
                     
             if training_links:
                 resource_section += "## 🎓 Training Resources\n"  
                 for i, link in enumerate(training_links[:2], 1):
-                    resource_section += f"{i}. {link}\n"
+                    link_text = f"Training {i}: Professional Course"
+                    resource_section += f"{i}. [{link_text}]({link})\n"
                 resource_section += "\n"
             
             resource_section += "*These are live internet links found specifically for your equipment model.*\n"
