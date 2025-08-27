@@ -649,7 +649,21 @@ Be specific with measurements, observations, and actions already taken."
                     })
                 });
 
-                const result = await response.json();
+                // Better error handling for JSON parsing
+                let result;
+                try {
+                    result = await response.json();
+                } catch (jsonError) {
+                    console.error('JSON parsing error:', jsonError);
+                    console.log('Response status:', response.status);
+                    console.log('Response text:', await response.text());
+                    
+                    if (response.status === 504) {
+                        throw new Error('Request timed out. The analysis is taking longer than expected. Please try again.');
+                    } else {
+                        throw new Error('Server response error. Please try again.');
+                    }
+                }
                 
                 if (result.success) {
                     currentPhotoAnalysis = result.structuredData || result.analysis;
@@ -661,7 +675,18 @@ Be specific with measurements, observations, and actions already taken."
             } catch (error) {
                 console.error('Photo analysis error:', error);
                 resetPhotoSection();
-                alert('Photo analysis failed. Please ensure the image is clear and try again.');
+                
+                // More specific error messages
+                let errorMessage = 'Photo analysis failed. ';
+                if (error.message.includes('timeout') || error.message.includes('504')) {
+                    errorMessage += 'The analysis is taking longer than expected due to internet search. Please try again.';
+                } else if (error.message.includes('JSON')) {
+                    errorMessage += 'Server communication error. Please try again.';
+                } else {
+                    errorMessage += 'Please ensure the image is clear and try again.';
+                }
+                
+                alert(errorMessage);
             }
         }
 

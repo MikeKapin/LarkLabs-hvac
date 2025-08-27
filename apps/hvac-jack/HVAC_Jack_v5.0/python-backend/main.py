@@ -663,17 +663,22 @@ class PhotoAnalysisService:
             # Extract model info from GPT-4o response for internet search
             model_search_data = self._extract_search_terms(extracted_data)
             
-            # Enhance with internet search for actual resources
+            # Enhance with internet search for actual resources (with timeout protection)
+            enhanced_analysis = extracted_data
             if model_search_data:
-                logger.info(f"Enhancing analysis with internet search for {model_search_data}")
-                internet_resources = self._search_internet_resources(model_search_data)
-                
-                if internet_resources:
-                    enhanced_analysis = f"{extracted_data}\n\n{internet_resources}"
-                else:
-                    enhanced_analysis = extracted_data
-            else:
-                enhanced_analysis = extracted_data
+                try:
+                    logger.info(f"Enhancing analysis with internet search for {model_search_data}")
+                    # Use asyncio timeout to prevent hanging
+                    internet_resources = self._search_internet_resources(model_search_data)
+                    
+                    if internet_resources:
+                        enhanced_analysis = f"{extracted_data}\n\n{internet_resources}"
+                        logger.info("Successfully added internet resources")
+                    else:
+                        logger.info("No internet resources found, using GPT-4o analysis only")
+                except Exception as e:
+                    logger.warning(f"Internet search failed, using GPT-4o analysis only: {e}")
+                    # Continue with just the GPT-4o analysis
             
             # Return the enhanced analysis with actual internet resources
             data = RatingPlateData()
@@ -736,27 +741,47 @@ class PhotoAnalysisService:
         try:
             logger.info(f"Searching internet for: {search_term}")
             
+            # Set timeouts to prevent 504 errors
+            import socket
+            socket.setdefaulttimeout(15)  # 15 second timeout for searches
+            
             resources = []
+            youtube_links = []
+            manual_links = []
+            parts_links = []
+            training_links = []
             
-            # YouTube video search
-            youtube_search = f"{search_term} HVAC service repair tutorial"
-            youtube_results = list(search(youtube_search, num_results=3))
-            youtube_links = [url for url in youtube_results if 'youtube.com' in url]
+            try:
+                # YouTube video search with timeout protection
+                youtube_search = f"{search_term} HVAC service repair tutorial"
+                youtube_results = list(search(youtube_search, num_results=2, lang='en', pause=1))
+                youtube_links = [url for url in youtube_results if 'youtube.com' in url][:2]
+            except Exception as e:
+                logger.warning(f"YouTube search failed: {e}")
             
-            # Manufacturer manual search  
-            manual_search = f"{search_term} service manual PDF"
-            manual_results = list(search(manual_search, num_results=3))
-            manual_links = [url for url in manual_results if any(x in url.lower() for x in ['manual', 'pdf', 'service', 'install'])]
+            try:
+                # Manufacturer manual search with timeout protection
+                manual_search = f"{search_term} service manual PDF"
+                manual_results = list(search(manual_search, num_results=2, lang='en', pause=1))
+                manual_links = [url for url in manual_results if any(x in url.lower() for x in ['manual', 'pdf', 'service', 'install'])][:2]
+            except Exception as e:
+                logger.warning(f"Manual search failed: {e}")
             
-            # Parts supplier search
-            parts_search = f"{search_term} parts capacitor compressor"
-            parts_results = list(search(parts_search, num_results=3))
-            parts_links = [url for url in parts_results if any(x in url.lower() for x in ['parts', 'supply', 'repair', 'hvac'])]
+            try:
+                # Parts supplier search with timeout protection
+                parts_search = f"{search_term} parts capacitor compressor"
+                parts_results = list(search(parts_search, num_results=2, lang='en', pause=1))
+                parts_links = [url for url in parts_results if any(x in url.lower() for x in ['parts', 'supply', 'repair', 'hvac'])][:2]
+            except Exception as e:
+                logger.warning(f"Parts search failed: {e}")
             
-            # Training resources search
-            training_search = f"{search_term} HVAC training troubleshooting"
-            training_results = list(search(training_search, num_results=2))
-            training_links = [url for url in training_results if any(x in url.lower() for x in ['training', 'course', 'education'])]
+            # Skip training search to speed up response
+            # try:
+            #     training_search = f"{search_term} HVAC training troubleshooting"
+            #     training_results = list(search(training_search, num_results=1, lang='en', pause=1))
+            #     training_links = [url for url in training_results if any(x in url.lower() for x in ['training', 'course', 'education'])][:1]
+            # except Exception as e:
+            #     logger.warning(f"Training search failed: {e}")
             
             # Format the internet resources
             resource_section = "\n---\n# 🌐 INTERNET RESOURCES FOUND\n*Live links retrieved from internet search*\n\n"
