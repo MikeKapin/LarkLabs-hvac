@@ -60,8 +60,7 @@ exports.handler = async (event, context) => {
         {
           timeout: 45000, // 45 second timeout for photo analysis
           headers: {
-            ...formData.getHeaders(),
-            'Authorization': `Bearer ${process.env.PYTHON_API_KEY || 'development'}`
+            ...formData.getHeaders()
           }
         }
       );
