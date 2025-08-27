@@ -595,7 +595,12 @@ Provide comprehensive, structured data with exact values. If any specification i
             )
             
             extracted_data = response.choices[0].message.content
-            return self._parse_rating_plate_data(extracted_data)
+            logger.info(f"Raw GPT-4o analysis response: {extracted_data}")
+            
+            parsed_data = self._parse_rating_plate_data(extracted_data)
+            logger.info(f"Parsed data fields: {[k for k, v in parsed_data.dict().items() if v is not None]}")
+            
+            return parsed_data
             
         except Exception as e:
             logger.error(f"HVAC Jack 5.0 photo analysis error: {str(e)}")
@@ -620,23 +625,41 @@ Provide comprehensive, structured data with exact values. If any specification i
         for line in lines:
             line_lower = line.lower().strip()
             
-            # Basic identification
-            if 'model' in line_lower and ':' in line:
-                data.model_number = line.split(':', 1)[1].strip()
-            elif 'serial' in line_lower and ':' in line:
-                data.serial_number = line.split(':', 1)[1].strip()
-            elif any(word in line_lower for word in ['manufacturer', 'brand', 'make']) and ':' in line:
-                data.manufacturer = line.split(':', 1)[1].strip()
-            elif 'equipment type' in line_lower or 'type:' in line_lower:
-                data.equipment_type = line.split(':', 1)[1].strip() if ':' in line else None
+            # Basic identification - more flexible matching
+            if ('model' in line_lower or 'model#' in line_lower or 'model number' in line_lower) and (':' in line or '-' in line):
+                separator = ':' if ':' in line else '-'
+                parts = line.split(separator, 1)
+                if len(parts) > 1:
+                    data.model_number = parts[1].strip()
+            elif ('serial' in line_lower or 'serial#' in line_lower or 'serial number' in line_lower) and (':' in line or '-' in line):
+                separator = ':' if ':' in line else '-'
+                parts = line.split(separator, 1)
+                if len(parts) > 1:
+                    data.serial_number = parts[1].strip()
+            elif any(word in line_lower for word in ['manufacturer', 'brand', 'make']) and (':' in line or '-' in line):
+                separator = ':' if ':' in line else '-'
+                parts = line.split(separator, 1)
+                if len(parts) > 1:
+                    data.manufacturer = parts[1].strip()
+            elif ('equipment type' in line_lower or 'type:' in line_lower or 'unit type' in line_lower):
+                if ':' in line or '-' in line:
+                    separator = ':' if ':' in line else '-'
+                    parts = line.split(separator, 1)
+                    if len(parts) > 1:
+                        data.equipment_type = parts[1].strip()
                 
             # Capacity and refrigerant
             elif 'capacity' in line_lower and 'btu' in line_lower:
                 btu_match = re.search(r'(\d+,?\d*)\s*btu', line_lower)
                 if btu_match:
                     data.capacity_btuh = int(btu_match.group(1).replace(',', ''))
-            elif 'refrigerant type' in line_lower and ':' in line:
-                data.refrigerant_type = line.split(':', 1)[1].strip()
+            elif ('refrigerant' in line_lower and ('r-' in line_lower or 'r410' in line_lower or 'r22' in line_lower or 'r32' in line_lower)):
+                # Extract refrigerant type from the line
+                ref_match = re.search(r'(r-?\d+[a-z]*)', line_lower)
+                if ref_match:
+                    data.refrigerant_type = ref_match.group(1).upper()
+                elif ':' in line:
+                    data.refrigerant_type = line.split(':', 1)[1].strip()
             elif 'charge' in line_lower and ('oz' in line_lower or 'lb' in line_lower or 'kg' in line_lower):
                 data.refrigerant_charge = line.split(':', 1)[1].strip() if ':' in line else line.strip()
                 
