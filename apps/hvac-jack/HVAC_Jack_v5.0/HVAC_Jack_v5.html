@@ -846,7 +846,7 @@ Be specific with measurements, observations, and actions already taken."
             const urgencyBadge = document.getElementById('urgencyBadge');
             
             // Update urgency badge
-            if (result.structuredData && result.structuredData.urgencyLevel) {
+            if (urgencyBadge && result.structuredData && result.structuredData.urgencyLevel) {
                 const urgency = result.structuredData.urgencyLevel;
                 urgencyBadge.className = `urgency-badge urgency-${urgency}`;
                 urgencyBadge.textContent = urgency.toUpperCase();
