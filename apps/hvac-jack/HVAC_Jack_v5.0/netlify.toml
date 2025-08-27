@@ -1,37 +1,24 @@
 [build]
+  base = "apps/hvac-jack/HVAC_Jack_v5.0"
   publish = "."
-  functions = "netlify/functions"
-  
+  command = "echo 'HVAC Jack 4.0 build'"
+
 [build.environment]
   NODE_VERSION = "18"
 
 [functions]
+  directory = "netlify/functions/"
   node_bundler = "esbuild"
 
-[dev]
-  functions = "netlify/functions"
-  port = 8888
+[[redirects]]
+  from = "/apps/hvac-jack/HVAC_Jack_temp/HVAC_Jack_Mobile_Updated.html"
+  to = "/apps/hvac-jack/HVAC_Jack_temp/"
+  status = 301
 
 [[redirects]]
-  from = "/api/v5/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/"
-  to = "/HVAC_Jack_v5.html"
-  status = 200
-
-# Environment variables needed:
-# OPENAI_API_KEY - Your OpenAI API key for GPT-4 access
-# PYTHON_BACKEND_URL - URL where your Python FastAPI backend is hosted
-# PYTHON_API_KEY - API key for securing Python backend access (optional but recommended)
-
-[functions."hvac-jack-v5"]
-  external_node_modules = ["axios"]
-
-[functions."photo-analyzer-v5"]
-  external_node_modules = ["axios", "form-data"]
+  from = "/apps/hvac-jack/HVAC_Jack_temp"
+  to = "/apps/hvac-jack/HVAC_Jack_temp/"
+  status = 301
 
 [[headers]]
   for = "/*"
@@ -39,4 +26,3 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    X-XSS-Protection = "1; mode=block"
