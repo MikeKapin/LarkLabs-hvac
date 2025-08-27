@@ -542,7 +542,25 @@ class PhotoAnalysisService:
                         "content": [
                             {
                                 "type": "text",
-                                "text": "Analyze this HVAC equipment nameplate/rating plate image and provide complete appliance data and specifications."
+                                "text": """Analyze this HVAC equipment nameplate/rating plate image and provide ALL available data and specifications. Do not say "refer to manufacturer literature" - USE YOUR KNOWLEDGE BASE to provide comprehensive information.
+
+Extract every visible detail from the nameplate AND provide additional specifications from your training data for this specific make/model.
+
+Provide:
+- All visible nameplate data
+- Capacitor specifications (μF ratings, voltage) for this model
+- Complete technical specifications from your database
+- Service bulletins or known issues for this model
+- Parts numbers for common service components
+- Installation requirements and clearances
+- Efficiency ratings (SEER, HSPF, EER) 
+- Operating characteristics and pressures
+- Troubleshooting guidance specific to this model
+- Service manual references or technical documentation
+- YouTube video recommendations for service procedures on this model
+- Compatible replacement parts and upgrade options
+
+Be comprehensive - provide everything you know about this equipment from your training data. Do not limit responses or refer to external sources when you have the information."""
                             },
                             {
                                 "type": "image_url",
@@ -553,8 +571,8 @@ class PhotoAnalysisService:
                         ]
                     }
                 ],
-                max_tokens=2000,
-                temperature=0.15  # Low temperature for accurate but comprehensive analysis
+                max_tokens=4000,
+                temperature=0.05  # Very low temperature for maximum factual accuracy
             )
             
             # Get the raw GPT-4o analysis - that's it!
