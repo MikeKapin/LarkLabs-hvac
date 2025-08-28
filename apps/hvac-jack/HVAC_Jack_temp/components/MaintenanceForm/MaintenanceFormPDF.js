@@ -153,11 +153,13 @@ class MaintenanceFormPDF {
         this.doc.setTextColor(...this.colors.text);
         this.doc.text('Professional HVAC Service Solutions', logoX + 65, logoY + 35);
         
-        // Form Title (right side)
+        // Dynamic Form Title (right side)
         const rightX = this.pageWidth - this.margin;
         this.setFont(this.fonts.heading);
         this.doc.setTextColor(...this.colors.primary);
-        this.doc.text('Gas Furnace Maintenance Report', rightX, logoY + 15, { align: 'right' });
+        
+        const dynamicTitle = this.generateDynamicTitle(formData);
+        this.doc.text(dynamicTitle, rightX, logoY + 15, { align: 'right' });
         
         // Service Date and Order Number
         this.setFont(this.fonts.body);
@@ -175,6 +177,51 @@ class MaintenanceFormPDF {
         this.doc.line(this.margin, this.currentY, this.pageWidth - this.margin, this.currentY);
         
         this.currentY += 20;
+    }
+
+    /**
+     * Generate dynamic title based on appliance and service type selections
+     */
+    generateDynamicTitle(formData) {
+        const applianceType = formData['appliance-type'] || '';
+        const serviceType = formData['service-type'] || '';
+
+        // Map appliance values to display names
+        const applianceNames = {
+            'furnace': 'Furnace',
+            'air-conditioner': 'Air Conditioner',
+            'heat-pump': 'Heat Pump',
+            'waterheater': 'Water Heater',
+            'boiler': 'Boiler',
+            'combo-boiler': 'Combo-Boiler',
+            'unit-heater': 'Unit Heater',
+            'pool-heater': 'Pool Heater',
+            'radiant-heater': 'Radiant Heater',
+            'fireplace': 'Fireplace',
+            'other': 'Equipment'
+        };
+
+        // Map service values to display names
+        const serviceNames = {
+            'maintenance': 'Maintenance Report',
+            'service': 'Service Report',
+            'maintenance-service': 'Maintenance & Service Report'
+        };
+
+        // Build the dynamic title
+        if (applianceType && serviceType) {
+            const applianceName = applianceNames[applianceType] || 'Equipment';
+            const serviceName = serviceNames[serviceType] || 'Service Report';
+            return `${applianceName} ${serviceName}`;
+        } else if (applianceType) {
+            const applianceName = applianceNames[applianceType] || 'Equipment';
+            return `${applianceName} Service Report`;
+        } else if (serviceType) {
+            const serviceName = serviceNames[serviceType] || 'Service Report';
+            return `Equipment ${serviceName}`;
+        } else {
+            return 'Equipment Maintenance / Service Report';
+        }
     }
 
     /**

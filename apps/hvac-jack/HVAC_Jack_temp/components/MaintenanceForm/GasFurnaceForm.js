@@ -98,7 +98,35 @@ class GasFurnaceForm {
                         </div>
                     </div>
                     <div class="form-title-section">
-                        <h2>Gas Furnace Maintenance Form</h2>
+                        <h2 id="dynamic-form-title">Equipment Maintenance / Service Form</h2>
+                        <div class="appliance-selection-section">
+                            <div class="form-group inline-group ${this.isMobile ? 'mobile-stacked' : ''}">
+                                <label for="appliance-type">Equipment Type <span class="required">*</span>:</label>
+                                <select id="appliance-type" class="touch-optimized required" onchange="this.closest('.gas-furnace-form').updateFormTitle()">
+                                    <option value="">Select Equipment Type...</option>
+                                    <option value="furnace">Furnace</option>
+                                    <option value="air-conditioner">Air Conditioner</option>
+                                    <option value="heat-pump">Heat Pump</option>
+                                    <option value="waterheater">Water Heater</option>
+                                    <option value="boiler">Boiler</option>
+                                    <option value="combo-boiler">Combo-Boiler</option>
+                                    <option value="unit-heater">Unit Heater</option>
+                                    <option value="pool-heater">Pool Heater</option>
+                                    <option value="radiant-heater">Radiant Heater</option>
+                                    <option value="fireplace">Fireplace</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group inline-group ${this.isMobile ? 'mobile-stacked' : ''}">
+                                <label for="service-type">Service Type <span class="required">*</span>:</label>
+                                <select id="service-type" class="touch-optimized required" onchange="this.closest('.gas-furnace-form').updateFormTitle()">
+                                    <option value="">Select Service Type...</option>
+                                    <option value="maintenance">Maintenance</option>
+                                    <option value="service">Service / Repair</option>
+                                    <option value="maintenance-service">Maintenance & Service</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="service-info">
                             <div class="form-group inline-group">
                                 <label>Service Date:</label>
@@ -827,6 +855,9 @@ class GasFurnaceForm {
         // Set global reference for form methods
         window.gasFurnaceForm = this;
 
+        // Make the form container accessible for title updates
+        this.container.updateFormTitle = () => this.updateFormTitle();
+
         // Setup auto-save
         this.setupAutoSave();
 
@@ -835,6 +866,86 @@ class GasFurnaceForm {
 
         // Setup form sync methods
         this.setupFormSync();
+
+        // Setup dynamic title updates
+        this.setupDynamicTitle();
+    }
+
+    /**
+     * Setup dynamic title updates
+     */
+    setupDynamicTitle() {
+        const applianceSelect = this.container.querySelector('#appliance-type');
+        const serviceSelect = this.container.querySelector('#service-type');
+
+        if (applianceSelect) {
+            applianceSelect.addEventListener('change', () => this.updateFormTitle());
+        }
+        if (serviceSelect) {
+            serviceSelect.addEventListener('change', () => this.updateFormTitle());
+        }
+    }
+
+    /**
+     * Update form title based on selected appliance and service type
+     */
+    updateFormTitle() {
+        const applianceSelect = this.container.querySelector('#appliance-type');
+        const serviceSelect = this.container.querySelector('#service-type');
+        const titleElement = this.container.querySelector('#dynamic-form-title');
+
+        if (!titleElement) return;
+
+        const applianceValue = applianceSelect?.value || '';
+        const serviceValue = serviceSelect?.value || '';
+
+        // Map appliance values to display names
+        const applianceNames = {
+            'furnace': 'Furnace',
+            'air-conditioner': 'Air Conditioner',
+            'heat-pump': 'Heat Pump',
+            'waterheater': 'Water Heater',
+            'boiler': 'Boiler',
+            'combo-boiler': 'Combo-Boiler',
+            'unit-heater': 'Unit Heater',
+            'pool-heater': 'Pool Heater',
+            'radiant-heater': 'Radiant Heater',
+            'fireplace': 'Fireplace',
+            'other': 'Equipment'
+        };
+
+        // Map service values to display names
+        const serviceNames = {
+            'maintenance': 'Maintenance',
+            'service': 'Service',
+            'maintenance-service': 'Maintenance & Service'
+        };
+
+        // Build the title
+        let title = '';
+        
+        if (applianceValue && serviceValue) {
+            const applianceName = applianceNames[applianceValue] || 'Equipment';
+            const serviceName = serviceNames[serviceValue] || 'Service';
+            title = `${applianceName} ${serviceName} Form`;
+        } else if (applianceValue) {
+            const applianceName = applianceNames[applianceValue] || 'Equipment';
+            title = `${applianceName} Service Form`;
+        } else if (serviceValue) {
+            const serviceName = serviceNames[serviceValue] || 'Service';
+            title = `Equipment ${serviceName} Form`;
+        } else {
+            title = 'Equipment Maintenance / Service Form';
+        }
+
+        // Update the title with animation
+        titleElement.style.opacity = '0.5';
+        setTimeout(() => {
+            titleElement.textContent = title;
+            titleElement.style.opacity = '1';
+        }, 150);
+
+        console.log(`📝 Form title updated to: ${title}`);
     }
 
     /**
