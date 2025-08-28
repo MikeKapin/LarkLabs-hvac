@@ -122,17 +122,20 @@ class EquipmentDataMapper {
             data.manufacturer = manufacturerMatch[1];
         }
 
-        // Extract model number patterns
+        // Extract model number patterns - more specific to avoid labels
         const modelPatterns = [
-            /model\s*(?:number|#|no)?\s*:?\s*([A-Z0-9\-\/]{4,20})/i,
-            /model\s*([A-Z0-9\-\/]{4,20})/i,
-            /^([A-Z]{2,4}\d{4,8}[A-Z]?\d*)/m,
-            // Additional patterns for common formats
-            /model:\s*([A-Z0-9\-\/]+)/i,
-            /model\s+number:\s*([A-Z0-9\-\/]+)/i,
-            /^model\s+([A-Z0-9\-\/]{4,20})/im,
-            // For inline formats like "Model 58MCA080"
-            /model\s+([58][0-9A-Z\-\/]{5,15})/i
+            // Look for colon followed by alphanumeric sequence
+            /model\s*(?:number|#|no)?\s*:\s*([A-Z0-9\-\/]{4,20})/i,
+            // Look for "Model" followed by space and alphanumeric (not "Number")
+            /model\s+(?!number)([A-Z0-9\-\/]{4,20})/i,
+            // Common furnace model patterns starting with numbers
+            /model\s*:?\s*([0-9][A-Z0-9\-\/]{3,19})/i,
+            // Patterns for equipment starting with letters followed by numbers
+            /model\s*:?\s*([A-Z]{2,4}[0-9][A-Z0-9\-\/]{2,15})/i,
+            // For formats like "Model: 58MCA080"
+            /model\s*(?:number|#|no)?\s*:\s*([58][0-9A-Z\-\/]{5,15})/i,
+            // Generic alphanumeric after model
+            /^model\s+([A-Z0-9\-\/]{4,20})/im
         ];
         
         for (const pattern of modelPatterns) {
@@ -144,17 +147,20 @@ class EquipmentDataMapper {
             }
         }
 
-        // Extract serial number
+        // Extract serial number - more specific patterns to avoid capturing labels
         const serialPatterns = [
-            /serial\s*(?:number|#|no)?\s*:?\s*([A-Z0-9]{4,20})/i,
-            /s\/n\s*:?\s*([A-Z0-9]{4,20})/i,
-            /ser\s*:?\s*([A-Z0-9]{4,20})/i,
-            // Additional patterns for common formats
-            /serial:\s*([A-Z0-9]{4,20})/i,
-            /serial\s+number:\s*([A-Z0-9]{4,20})/i,
-            /^serial\s+([A-Z0-9]{4,20})/im,
-            // For formats like "Serial: 2318M12345"
-            /serial.*?([0-9]{4}[A-Z0-9]{4,12})/i
+            // Look for colon followed by alphanumeric sequence
+            /serial\s*(?:number|#|no)?\s*:\s*([A-Z0-9]{4,20})/i,
+            /s\/n\s*:\s*([A-Z0-9]{4,20})/i,
+            /ser\s*:\s*([A-Z0-9]{4,20})/i,
+            // Look for "Serial" followed by space and alphanumeric (not "Number")
+            /serial\s+(?!number)([A-Z0-9]{4,20})/i,
+            // For formats with clear separation like "Serial: 2318M12345"  
+            /serial\s*(?:number|#|no)?\s*:?\s*([0-9]{2,4}[A-Z0-9]{2,16})/i,
+            // S/N variations
+            /s\/n:?\s*([A-Z0-9]{4,20})/i,
+            // Serial with numbers that start with digits
+            /serial.*?([0-9][A-Z0-9]{3,19})/i
         ];
         
         for (const pattern of serialPatterns) {
@@ -163,6 +169,31 @@ class EquipmentDataMapper {
                 data.serialNumber = match[1].trim();
                 console.log('📋 Extracted serial number:', data.serialNumber);
                 break;
+            }
+        }
+
+        // Fallback: Look for structured data patterns in Claude's analysis
+        if (!data.modelNumber) {
+            // Look for line that starts with "Model" and extract the value after colon or space
+            const modelLineMatch = analysisText.match(/^.*model.*?[:]\s*(.+)$/im);
+            if (modelLineMatch) {
+                const modelValue = modelLineMatch[1].trim().split(/\s+/)[0]; // Take first word
+                if (modelValue && modelValue.length >= 4 && !/^(number|#|no)$/i.test(modelValue)) {
+                    data.modelNumber = modelValue;
+                    console.log('📋 Fallback extracted model number:', data.modelNumber);
+                }
+            }
+        }
+
+        if (!data.serialNumber) {
+            // Look for line that starts with "Serial" and extract the value after colon or space
+            const serialLineMatch = analysisText.match(/^.*serial.*?[:]\s*(.+)$/im);
+            if (serialLineMatch) {
+                const serialValue = serialLineMatch[1].trim().split(/\s+/)[0]; // Take first word
+                if (serialValue && serialValue.length >= 4 && !/^(number|#|no)$/i.test(serialValue)) {
+                    data.serialNumber = serialValue;
+                    console.log('📋 Fallback extracted serial number:', data.serialNumber);
+                }
             }
         }
 
