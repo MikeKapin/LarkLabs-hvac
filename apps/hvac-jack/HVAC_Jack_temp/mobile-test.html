@@ -340,6 +340,7 @@
                     'customer-name': 'Test Customer',
                     'customer-phone': '(555) 123-4567',
                     'customer-email': 'test@example.com',
+                    'company-email': 'tech@hvaccompany.com',
                     'service-address': '123 Test Street, Test City, TC 12345',
                     'service-date': new Date().toISOString().split('T')[0],
                     'equipment-manufacturer': 'Carrier',
@@ -357,7 +358,9 @@
                     'service-status': 'completed',
                     'service-time': '2.5',
                     'technician-name': 'Test Technician',
-                    'data-confidence': '85'
+                    'data-confidence': '85',
+                    'email-customer': true,
+                    'email-company': true
                 };
                 
                 // Create PDF generator and test
