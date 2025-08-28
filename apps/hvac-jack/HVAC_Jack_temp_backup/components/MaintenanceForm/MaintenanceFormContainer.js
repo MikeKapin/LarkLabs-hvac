@@ -239,10 +239,10 @@ class MaintenanceFormContainer {
      * Show maintenance form when photo analysis indicates gas equipment
      */
     onPhotoAnalysisComplete(analysisData) {
-        // Check if this is HVAC equipment that supports maintenance forms
-        const isHVACEquipment = this.isHVACEquipmentDetected(analysisData);
+        // Check if this is gas equipment that supports maintenance forms
+        const isGasEquipment = this.isGasEquipmentDetected(analysisData);
         
-        if (isHVACEquipment) {
+        if (isGasEquipment) {
             this.showToggleButton();
             
             // Store analysis data for form population
@@ -255,43 +255,26 @@ class MaintenanceFormContainer {
                 badge.textContent = this.getEquipmentType(analysisData) + ' Detected';
             }
         } else {
-            // Show button anyway but with generic message - let user manually specify equipment
-            this.showToggleButton();
-            this.analysisData = analysisData;
-            
-            const badge = document.getElementById('form-availability-badge');
-            if (badge) {
-                badge.style.display = 'inline-block';
-                badge.textContent = 'Create Maintenance Form';
-                badge.style.background = '#3498db'; // Blue color for generic
-            }
+            this.hideToggleButton();
         }
     }
 
     /**
      * Check if detected equipment supports maintenance forms
      */
-    isHVACEquipmentDetected(analysisData) {
+    isGasEquipmentDetected(analysisData) {
         if (!analysisData) return false;
         
         const analysisText = typeof analysisData === 'string' ? analysisData : JSON.stringify(analysisData);
         const lowerText = analysisText.toLowerCase();
         
-        // Check for all HVAC equipment types that support maintenance forms
-        const hvacEquipmentKeywords = [
-            // Heating equipment
-            'furnace', 'boiler', 'water heater', 'unit heater', 'radiant heater',
-            'pool heater', 'fireplace', 'gas', 'natural gas', 'propane', 'lp',
-            // Cooling equipment
-            'air conditioner', 'air conditioning', 'ac unit', 'central air',
-            'heat pump', 'mini split', 'ductless', 'split system',
-            // General HVAC terms
-            'hvac', 'rooftop', 'rtu', 'condenser', 'evaporator', 'compressor',
-            'refrigerant', 'cooling coil', 'heating coil', 'air handler',
-            'blower', 'fan coil', 'package unit', 'thermostat'
+        // Check for gas equipment types
+        const gasEquipmentKeywords = [
+            'furnace', 'boiler', 'water heater', 'unit heater', 
+            'rooftop', 'rtu', 'gas', 'natural gas', 'propane', 'lp'
         ];
         
-        return hvacEquipmentKeywords.some(keyword => lowerText.includes(keyword));
+        return gasEquipmentKeywords.some(keyword => lowerText.includes(keyword));
     }
 
     /**
@@ -301,24 +284,13 @@ class MaintenanceFormContainer {
         const analysisText = typeof analysisData === 'string' ? analysisData : JSON.stringify(analysisData);
         const lowerText = analysisText.toLowerCase();
         
-        // Check for specific equipment types in order of priority
-        if (lowerText.includes('air conditioner') || lowerText.includes('air conditioning') || lowerText.includes('ac unit') || lowerText.includes('central air')) return 'Air Conditioner';
-        if (lowerText.includes('heat pump')) return 'Heat Pump';
-        if (lowerText.includes('furnace')) return 'Furnace';
-        if (lowerText.includes('boiler')) return 'Boiler';
+        if (lowerText.includes('furnace')) return 'Gas Furnace';
+        if (lowerText.includes('boiler')) return 'Gas Boiler';
         if (lowerText.includes('water heater')) return 'Water Heater';
         if (lowerText.includes('unit heater')) return 'Unit Heater';
-        if (lowerText.includes('pool heater')) return 'Pool Heater';
-        if (lowerText.includes('radiant heater')) return 'Radiant Heater';
-        if (lowerText.includes('fireplace')) return 'Fireplace';
         if (lowerText.includes('rooftop') || lowerText.includes('rtu')) return 'Rooftop Unit';
-        if (lowerText.includes('mini split') || lowerText.includes('ductless')) return 'Mini Split';
-        if (lowerText.includes('split system')) return 'Split System';
-        if (lowerText.includes('package unit')) return 'Package Unit';
-        if (lowerText.includes('air handler')) return 'Air Handler';
         
-        // Fallback to generic HVAC equipment if specific type not detected
-        return 'HVAC Equipment';
+        return 'Gas Equipment';
     }
 
     /**
