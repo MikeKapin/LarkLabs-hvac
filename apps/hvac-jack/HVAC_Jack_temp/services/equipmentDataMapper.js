@@ -124,6 +124,8 @@ class EquipmentDataMapper {
 
         // Extract model number patterns - more specific to avoid labels
         const modelPatterns = [
+            // Markdown format: **Model:** 4TWR4030Q1000AA
+            /\*\*model\*\*:\s*([A-Z0-9\-\/]{4,25})/i,
             // Look for colon followed by alphanumeric sequence
             /model\s*(?:number|#|no)?\s*:\s*([A-Z0-9\-\/]{4,20})/i,
             // Look for "Model" followed by space and alphanumeric (not "Number")
