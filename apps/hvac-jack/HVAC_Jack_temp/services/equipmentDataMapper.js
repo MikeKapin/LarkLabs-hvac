@@ -48,7 +48,7 @@ class EquipmentDataMapper {
             // Get target values based on gas type and equipment
             const targetValues = this.getTargetValues(extractedData.gasType, equipmentType);
             
-            return {
+            const mappedData = {
                 // Basic Equipment Info
                 manufacturer: extractedData.manufacturer || '',
                 model: extractedData.modelNumber || '',
@@ -89,6 +89,16 @@ class EquipmentDataMapper {
                 // Raw Data for Reference
                 rawPhotoAnalysis: photoAnalysisData
             };
+
+            console.log('📋 Final mapped data:', {
+                manufacturer: mappedData.manufacturer,
+                model: mappedData.model,
+                serial: mappedData.serial,
+                inputBTU: mappedData.inputBTU,
+                confidence: mappedData.dataConfidence
+            });
+
+            return mappedData;
         } catch (error) {
             console.error('Error mapping photo data:', error);
             return this.getEmptyFormData();
@@ -103,6 +113,8 @@ class EquipmentDataMapper {
     extractStructuredData(analysisText) {
         const data = {};
         
+        console.log('📋 Equipment Data Mapper - Extracting from analysis text:', analysisText.substring(0, 500) + '...');
+        
         // Extract manufacturer (common brands)
         const manufacturerRegex = /(Carrier|Lennox|Trane|Goodman|Rheem|Ruud|American Standard|York|Bryant|Payne|Amana|Heil|Tempstar|Comfortmaker|ICP|Ducane|Nordyne|Maytag|Frigidaire|Gibson|Kelvinator|Westinghouse|Coleman|Miller|Intertherm|Luxaire|Fraser-Johnston|Climatrol|Airease)/i;
         const manufacturerMatch = analysisText.match(manufacturerRegex);
@@ -112,30 +124,44 @@ class EquipmentDataMapper {
 
         // Extract model number patterns
         const modelPatterns = [
-            /model\s*(?:number|#)?\s*:?\s*([A-Z0-9\-]{6,20})/i,
-            /model\s*([A-Z0-9\-]{6,20})/i,
-            /^([A-Z]{2,4}\d{4,8}[A-Z]?\d*)/m
+            /model\s*(?:number|#|no)?\s*:?\s*([A-Z0-9\-\/]{4,20})/i,
+            /model\s*([A-Z0-9\-\/]{4,20})/i,
+            /^([A-Z]{2,4}\d{4,8}[A-Z]?\d*)/m,
+            // Additional patterns for common formats
+            /model:\s*([A-Z0-9\-\/]+)/i,
+            /model\s+number:\s*([A-Z0-9\-\/]+)/i,
+            /^model\s+([A-Z0-9\-\/]{4,20})/im,
+            // For inline formats like "Model 58MCA080"
+            /model\s+([58][0-9A-Z\-\/]{5,15})/i
         ];
         
         for (const pattern of modelPatterns) {
             const match = analysisText.match(pattern);
             if (match) {
-                data.modelNumber = match[1];
+                data.modelNumber = match[1].trim();
+                console.log('📋 Extracted model number:', data.modelNumber);
                 break;
             }
         }
 
         // Extract serial number
         const serialPatterns = [
-            /serial\s*(?:number|#)?\s*:?\s*([A-Z0-9]{8,20})/i,
-            /s\/n\s*:?\s*([A-Z0-9]{8,20})/i,
-            /ser\s*:?\s*([A-Z0-9]{8,20})/i
+            /serial\s*(?:number|#|no)?\s*:?\s*([A-Z0-9]{4,20})/i,
+            /s\/n\s*:?\s*([A-Z0-9]{4,20})/i,
+            /ser\s*:?\s*([A-Z0-9]{4,20})/i,
+            // Additional patterns for common formats
+            /serial:\s*([A-Z0-9]{4,20})/i,
+            /serial\s+number:\s*([A-Z0-9]{4,20})/i,
+            /^serial\s+([A-Z0-9]{4,20})/im,
+            // For formats like "Serial: 2318M12345"
+            /serial.*?([0-9]{4}[A-Z0-9]{4,12})/i
         ];
         
         for (const pattern of serialPatterns) {
             const match = analysisText.match(pattern);
             if (match) {
-                data.serialNumber = match[1];
+                data.serialNumber = match[1].trim();
+                console.log('📋 Extracted serial number:', data.serialNumber);
                 break;
             }
         }
@@ -184,6 +210,14 @@ class EquipmentDataMapper {
         if (dateMatch) {
             data.installDate = dateMatch[1];
         }
+
+        console.log('📋 Extracted raw data:', {
+            manufacturer: data.manufacturer,
+            modelNumber: data.modelNumber,
+            serialNumber: data.serialNumber,
+            inputBTU: data.inputBTU,
+            gasType: data.gasType
+        });
 
         return data;
     }
