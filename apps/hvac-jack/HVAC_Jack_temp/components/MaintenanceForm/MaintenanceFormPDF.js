@@ -502,18 +502,33 @@ class MaintenanceFormPDF {
             const y = this.currentY + index * 18;
             const isChecked = formData[item.id] === true || formData[item.id] === 'true';
             
-            // Checkbox
-            this.doc.setDrawColor(...this.colors.border);
-            this.doc.rect(this.margin, y - 10, 12, 12);
-            
+            // Checkbox with enhanced visibility
             if (isChecked) {
-                this.doc.setTextColor(...this.colors.success);
-                this.doc.text('✓', this.margin + 2, y - 2);
+                // Filled checkbox with green background for checked items
+                this.doc.setFillColor(34, 197, 94); // Green background
+                this.doc.setDrawColor(34, 197, 94); // Green border
+                this.doc.rect(this.margin, y - 10, 14, 14, 'FD'); // Filled and outlined
+                
+                // Bold white checkmark
+                this.doc.setTextColor(255, 255, 255); // White color for contrast
+                this.setFont(this.fonts.body, 'bold');
+                this.doc.text('✓', this.margin + 3, y - 1);
+                
+                // Make the label text bold for checked items
+                this.setFont(this.fonts.body, 'bold');
                 this.doc.setTextColor(...this.colors.text);
+                this.doc.text(item.label, this.margin + 22, y);
+            } else {
+                // Empty checkbox for unchecked items
+                this.doc.setDrawColor(...this.colors.border);
+                this.doc.setLineWidth(1);
+                this.doc.rect(this.margin, y - 10, 14, 14);
+                
+                // Regular label text for unchecked items
+                this.setFont(this.fonts.body);
+                this.doc.setTextColor(...this.colors.text);
+                this.doc.text(item.label, this.margin + 22, y);
             }
-            
-            // Label
-            this.doc.text(item.label, this.margin + 20, y);
         });
         
         this.currentY += items.length * 18 + 10;
