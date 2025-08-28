@@ -70,8 +70,11 @@ class GasFurnaceForm {
                 ${this.generateCustomerInfoSection()}
                 ${this.generateEquipmentInfoSection()}
                 ${this.generatePreServiceSection()}
-                ${this.generateCombustionAnalysisSection()}
-                ${this.generatePerformanceTestingSection()}
+                <div id="dynamic-system-sections">
+                    ${this.generateCombustionAnalysisSection()}
+                    ${this.generatePerformanceTestingSection()}
+                    ${this.generateCoolingSystemSection()}
+                </div>
                 ${this.generateSafetyInspectionSection()}
                 ${this.generateMaintenanceActionsSection()}
                 ${this.generateCommentsSection()}
@@ -427,6 +430,97 @@ class GasFurnaceForm {
                         <label for="static-pressure">Static Pressure Readings:</label>
                         <textarea id="static-pressure" class="touch-optimized" rows="${this.isMobile ? '3' : '2'}" 
                                   placeholder="Record supply and return static pressures..."></textarea>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Generate cooling system specific section (for AC and Heat Pump)
+     */
+    generateCoolingSystemSection() {
+        return `
+            <div class="form-section collapsible-section cooling-system-section" data-section="cooling-system" style="display: none;">
+                <div class="section-header touch-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                    <h3 class="section-title">
+                        <span class="section-icon">❄️</span>
+                        Cooling System Analysis
+                    </h3>
+                    <span class="collapse-indicator">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="form-grid ${this.isMobile ? 'mobile-grid' : ''}">
+                        <div class="form-group">
+                            <label for="delta-t-rise">Delta T Rise (°F):</label>
+                            <input type="text" id="delta-t-rise" class="touch-optimized" 
+                                   placeholder="Temperature rise" inputmode="decimal">
+                            <small class="field-hint">Supply air temp - Return air temp</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="delta-t-drop">Delta T Drop (°F):</label>
+                            <input type="text" id="delta-t-drop" class="touch-optimized" 
+                                   placeholder="Temperature drop" inputmode="decimal">
+                            <small class="field-hint">Return air temp - Supply air temp (cooling mode)</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="superheat-reading">Superheat (°F):</label>
+                            <input type="text" id="superheat-reading" class="touch-optimized" 
+                                   placeholder="Superheat reading" inputmode="decimal">
+                            <small class="field-hint">Target: 8-12°F typical</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="subcooling-reading">Subcooling (°F):</label>
+                            <input type="text" id="subcooling-reading" class="touch-optimized" 
+                                   placeholder="Subcooling reading" inputmode="decimal">
+                            <small class="field-hint">Target: 10-15°F typical</small>
+                        </div>
+                    </div>
+                    
+                    <h4 class="subsection-title">Coil Conditions & Maintenance</h4>
+                    <div class="checkbox-grid ${this.isMobile ? 'mobile-checkbox-grid' : ''}">
+                        <div class="form-group touch-checkbox">
+                            <input type="checkbox" id="acoil-condition-good" class="touch-checkbox-input">
+                            <label for="acoil-condition-good" class="touch-checkbox-label">
+                                A-Coil condition good
+                            </label>
+                        </div>
+                        <div class="form-group touch-checkbox">
+                            <input type="checkbox" id="condensor-coil-condition-good" class="touch-checkbox-input">
+                            <label for="condensor-coil-condition-good" class="touch-checkbox-label">
+                                Condensor coil condition good
+                            </label>
+                        </div>
+                        <div class="form-group touch-checkbox">
+                            <input type="checkbox" id="leak-detected" class="touch-checkbox-input">
+                            <label for="leak-detected" class="touch-checkbox-label">
+                                Leak detected (specify location in comments)
+                            </label>
+                        </div>
+                        <div class="form-group touch-checkbox">
+                            <input type="checkbox" id="condensor-coil-cleaned" class="touch-checkbox-input">
+                            <label for="condensor-coil-cleaned" class="touch-checkbox-label">
+                                Condensor coil cleaned
+                            </label>
+                        </div>
+                        <div class="form-group touch-checkbox">
+                            <input type="checkbox" id="evaporator-coil-cleaned" class="touch-checkbox-input">
+                            <label for="evaporator-coil-cleaned" class="touch-checkbox-label">
+                                Evaporator coil cleaned
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="refrigerant-type">Refrigerant Type:</label>
+                        <select id="refrigerant-type" class="touch-optimized">
+                            <option value="">Select refrigerant type...</option>
+                            <option value="R-410A">R-410A</option>
+                            <option value="R-22">R-22</option>
+                            <option value="R-32">R-32</option>
+                            <option value="R-134a">R-134a</option>
+                            <option value="Other">Other (specify in comments)</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -945,7 +1039,69 @@ class GasFurnaceForm {
             titleElement.style.opacity = '1';
         }, 150);
 
+        // Update section visibility based on appliance type
+        this.updateSectionVisibility(applianceValue);
+
         console.log(`📝 Form title updated to: ${title}`);
+    }
+
+    /**
+     * Update section visibility based on appliance type
+     */
+    updateSectionVisibility(applianceType) {
+        const combustionSection = this.container.querySelector('[data-section="combustion-analysis"]');
+        const performanceSection = this.container.querySelector('[data-section="performance-testing"]');
+        const coolingSection = this.container.querySelector('.cooling-system-section');
+
+        // Define which appliances show which sections
+        const isCoolingSystem = ['air-conditioner', 'heat-pump'].includes(applianceType);
+        const isHeatingSystem = ['furnace', 'boiler', 'combo-boiler', 'unit-heater', 'pool-heater', 'radiant-heater'].includes(applianceType);
+        const isFireplace = applianceType === 'fireplace';
+
+        // Show/hide sections based on appliance type
+        if (combustionSection) {
+            if (isHeatingSystem || isFireplace) {
+                combustionSection.style.display = 'block';
+                combustionSection.classList.remove('section-hidden');
+            } else {
+                combustionSection.style.display = 'none';
+                combustionSection.classList.add('section-hidden');
+            }
+        }
+
+        if (performanceSection) {
+            if (isHeatingSystem || isCoolingSystem) {
+                performanceSection.style.display = 'block';
+                performanceSection.classList.remove('section-hidden');
+                // Update performance section title based on system type
+                const perfTitle = performanceSection.querySelector('.section-title');
+                if (perfTitle && isCoolingSystem) {
+                    perfTitle.innerHTML = '<span class="section-icon">📊</span>Heating Performance Testing';
+                } else if (perfTitle) {
+                    perfTitle.innerHTML = '<span class="section-icon">📊</span>Additional Performance Testing';
+                }
+            } else {
+                performanceSection.style.display = 'none';
+                performanceSection.classList.add('section-hidden');
+            }
+        }
+
+        if (coolingSection) {
+            if (isCoolingSystem) {
+                coolingSection.style.display = 'block';
+                coolingSection.classList.remove('section-hidden');
+            } else {
+                coolingSection.style.display = 'none';
+                coolingSection.classList.add('section-hidden');
+            }
+        }
+
+        // Log the changes
+        console.log(`🔧 Updated sections for ${applianceType}:`, {
+            combustion: isHeatingSystem || isFireplace ? 'visible' : 'hidden',
+            performance: isHeatingSystem || isCoolingSystem ? 'visible' : 'hidden',
+            cooling: isCoolingSystem ? 'visible' : 'hidden'
+        });
     }
 
     /**

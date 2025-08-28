@@ -469,6 +469,40 @@
     margin-bottom: var(--space-md);
 }
 
+/* Dynamic Section Visibility */
+.section-hidden {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.form-section:not(.section-hidden) {
+    opacity: 1;
+    max-height: none;
+    transition: opacity 0.4s ease;
+}
+
+/* Cooling System Section Styles */
+.cooling-system-section {
+    border-left: 4px solid #3b82f6;
+}
+
+.cooling-system-section .section-icon {
+    color: #3b82f6;
+}
+
+.subsection-title {
+    color: var(--hvac-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: var(--space-lg) 0 var(--space-md) 0;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--hvac-primary-light);
+}
+
 /* =============================================================================
    FORM INPUTS
    ============================================================================= */

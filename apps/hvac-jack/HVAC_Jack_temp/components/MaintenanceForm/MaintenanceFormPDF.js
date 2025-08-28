@@ -93,6 +93,7 @@ class MaintenanceFormPDF {
             await this.generateEquipmentInfo(formData);
             await this.generateInspectionResults(formData);
             await this.generateCombustionAnalysis(formData);
+            await this.generateCoolingSystemAnalysis(formData);
             await this.generateSafetyChecks(formData);
             await this.generateMaintenanceActions(formData);
             await this.generateComments(formData);
@@ -313,6 +314,99 @@ class MaintenanceFormPDF {
         if (formData['static-pressure']) {
             this.addTextBlock('Static Pressure Readings:', formData['static-pressure']);
         }
+    }
+
+    /**
+     * Generate cooling system analysis section (for AC and Heat Pump)
+     */
+    async generateCoolingSystemAnalysis(formData) {
+        const applianceType = formData['appliance-type'] || '';
+        const isCoolingSystem = ['air-conditioner', 'heat-pump'].includes(applianceType);
+        
+        // Only generate this section for cooling systems
+        if (!isCoolingSystem) return;
+
+        this.addSection('Cooling System Analysis', [59, 130, 246]); // Blue color for cooling
+        
+        // Temperature and refrigerant readings
+        const coolingData = [
+            { parameter: 'Delta T Rise (°F)', reading: formData['delta-t-rise'] || 'N/A', target: '15-25°F typical' },
+            { parameter: 'Delta T Drop (°F)', reading: formData['delta-t-drop'] || 'N/A', target: '15-25°F typical' },
+            { parameter: 'Superheat (°F)', reading: formData['superheat-reading'] || 'N/A', target: '8-12°F typical' },
+            { parameter: 'Subcooling (°F)', reading: formData['subcooling-reading'] || 'N/A', target: '10-15°F typical' }
+        ];
+
+        // Create analysis table
+        this.checkPageBreak(coolingData.length * 25 + 40);
+        
+        // Table header
+        const tableY = this.currentY;
+        const colWidths = [150, 80, 100];
+        const headers = ['Parameter', 'Reading', 'Target Range'];
+        
+        this.doc.setFillColor(240, 248, 255); // Light blue background
+        this.doc.rect(this.margin, tableY, this.pageWidth - this.margin * 2, 25, 'F');
+        
+        this.setFont(this.fonts.body, 'bold');
+        this.doc.setTextColor(...this.colors.text);
+        
+        let x = this.margin + 5;
+        headers.forEach((header, i) => {
+            this.doc.text(header, x, tableY + 15);
+            x += colWidths[i];
+        });
+        
+        // Table rows
+        this.currentY = tableY + 25;
+        coolingData.forEach((item, index) => {
+            const rowY = this.currentY + index * 25;
+            
+            // Alternate row colors
+            if (index % 2 === 1) {
+                this.doc.setFillColor(248, 250, 252);
+                this.doc.rect(this.margin, rowY, this.pageWidth - this.margin * 2, 25, 'F');
+            }
+            
+            this.setFont(this.fonts.body);
+            this.doc.setTextColor(...this.colors.text);
+            
+            x = this.margin + 5;
+            this.doc.text(item.parameter, x, rowY + 15);
+            x += colWidths[0];
+            
+            // Reading value with color coding
+            const reading = item.reading;
+            if (reading !== 'N/A' && reading !== '') {
+                this.doc.setTextColor(...this.colors.success);
+            } else {
+                this.doc.setTextColor(...this.colors.text);
+            }
+            this.doc.text(reading, x, rowY + 15);
+            x += colWidths[1];
+            
+            this.doc.setTextColor(...this.colors.text);
+            this.doc.text(item.target, x, rowY + 15);
+        });
+        
+        this.currentY += coolingData.length * 25 + 20;
+
+        // Refrigerant type
+        if (formData['refrigerant-type']) {
+            this.addTextBlock('Refrigerant Type:', formData['refrigerant-type']);
+        }
+
+        // Coil conditions and maintenance checklist
+        this.addSection('Coil Conditions & Maintenance', [59, 130, 246]);
+        
+        const coilItems = [
+            { id: 'acoil-condition-good', label: 'A-Coil condition good' },
+            { id: 'condensor-coil-condition-good', label: 'Condensor coil condition good' },
+            { id: 'leak-detected', label: 'Leak detected (location noted in comments)' },
+            { id: 'condensor-coil-cleaned', label: 'Condensor coil cleaned' },
+            { id: 'evaporator-coil-cleaned', label: 'Evaporator coil cleaned' }
+        ];
+
+        this.addChecklistGrid(coilItems, formData);
     }
 
     /**
