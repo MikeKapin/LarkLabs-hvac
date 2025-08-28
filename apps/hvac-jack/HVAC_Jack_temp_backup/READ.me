@@ -1,0 +1,271 @@
+# HVAC Jack - Enhanced with Content Filtering & Usage Tracking
+
+Your Jack of All Trades HVAC AI Assistant with enterprise-grade content filtering, usage tracking, and security monitoring.
+
+## 🆕 New Features
+
+### 🛡️ Content Filtering
+- **Frontend validation** - Real-time input filtering and sanitization
+- **Backend protection** - Server-side content validation with HVAC focus
+- **Rate limiting** - Prevents spam and abuse
+- **HVAC-only scope** - Blocks off-topic requests (programming, explicit content, etc.)
+
+### 📊 Usage Tracking & Analytics
+- **Real-time monitoring** - Track sessions, messages, and user patterns
+- **Admin dashboard** - Comprehensive analytics and security alerts
+- **Performance metrics** - Response times, success rates, error tracking
+- **Security monitoring** - Content filtering logs and abuse detection
+
+### 🔒 Enhanced Security
+- **Multi-layer protection** - Frontend + backend content filtering
+- **Session management** - Secure password protection for beta access
+- **IP-based tracking** - Monitor usage patterns and detect abuse
+- **Automated alerts** - Real-time security notifications
+
+## 🚀 Quick Setup
+
+### 1. Environment Configuration
+```bash
+# Copy the environment template
+cp .env.example .env
+
+# Edit .env and add your Claude API key
+CLAUDE_API_KEY=sk-ant-api03-your-key-here
+```
+
+### 2. Deploy to Netlify
+1. Connect your GitHub repository to Netlify
+2. Set environment variables in Netlify dashboard:
+   - `CLAUDE_API_KEY` (required)
+   - `CONTENT_FILTER_ENABLED=true`
+   - `RATE_LIMIT_ENABLED=true`
+3. Deploy automatically from main branch
+
+### 3. Access Your App
+- **Main App**: `your-site.netlify.app/HVAC_Jack_Mobile.html`
+- **Admin Dashboard**: `your-site.netlify.app/admin-dashboard.html`
+- **Beta Password**: `HVACJACK2025` (change in code)
+
+## 📁 File Structure
+
+```
+your-repo/
+├── HVAC_Jack_Mobile.html          # ✅ Enhanced main app with content filtering
+├── admin-dashboard.html           # 🆕 Admin monitoring dashboard
+├── netlify/functions/
+│   ├── chat.js                    # ✅ Enhanced with content filtering
+│   ├── health.js                  # ✅ Enhanced with usage logging
+│   ├── track-usage.js             # 🆕 Usage tracking endpoint
+│   └── get-usage-stats.js         # 🆕 Dashboard data endpoint
+├── .env.example                   # 🆕 Environment configuration template
+├── manifest.json                  # ✅ PWA manifest
+├── logo_2.png                     # ✅ App logo
+└── README.md                      # ✅ This file
+```
+
+## 🔧 Content Filtering Details
+
+### What Gets Blocked
+- **Programming requests** - Code, scripts, technical tutorials
+- **Explicit content** - Adult, inappropriate material  
+- **Off-topic queries** - Cooking, politics, medical advice
+- **System manipulation** - Attempts to bypass filters
+- **Spam/abuse** - Repeated characters, nonsense text
+
+### What's Allowed
+- **HVAC topics** - Heating, cooling, ventilation systems
+- **Troubleshooting** - Diagnostic steps and repair guidance
+- **Safety questions** - Gas leaks, electrical hazards
+- **Maintenance** - Filter changes, seasonal prep
+- **Technical specs** - For technician mode users
+
+### Smart Filtering
+- **Context aware** - Allows follow-up questions in conversations
+- **Mode sensitive** - Different validation for homeowner vs technician
+- **Progressive blocking** - Warnings before permanent blocks
+- **Lenient approach** - Favors helping users over strict blocking
+
+## 📊 Usage Analytics
+
+### Tracked Events
+- `message_sent` - User sends message
+- `response_generated` - AI responds successfully  
+- `input_rejected` - Content filter blocks message
+- `mode_switched` - User changes homeowner/technician mode
+- `connection_success/failed` - Backend connectivity
+- `session_start/end` - User session tracking
+
+### Dashboard Metrics
+- **Total sessions** - Unique user interactions
+- **Message volume** - Daily/weekly message trends
+- **Success rates** - % of successful responses
+- **Blocked content** - Security incidents and patterns
+- **Problem analysis** - Most common HVAC issues
+- **Mode distribution** - Homeowner vs technician usage
+
+## 🛡️ Security Features
+
+### Rate Limiting
+- **10 messages per minute** per user (frontend)
+- **20 requests per minute** per IP (backend)
+- **500 character limit** per message
+- **Progressive penalties** for repeat offenders
+
+### Content Monitoring
+- **Real-time alerts** for security incidents
+- **IP tracking** for abuse patterns
+- **Session monitoring** for suspicious behavior
+- **Automated logging** of all blocked content
+
+### Admin Controls
+- **Security dashboard** - Monitor threats and usage
+- **Content filtering** - Adjust filtering rules
+- **User management** - Block problematic IPs
+- **Export capabilities** - Download logs and reports
+
+## 🔌 API Endpoints
+
+### Main Endpoints
+- `/.netlify/functions/chat` - AI chat processing
+- `/.netlify/functions/health` - System health check
+- `/.netlify/functions/track-usage` - Usage analytics
+- `/.netlify/functions/get-usage-stats` - Dashboard data
+
+### Response Formats
+```javascript
+// Chat response
+{
+  "response": "AI generated response",
+  "timestamp": "2025-01-15T10:30:00Z",
+  "mode": "homeowner",
+  "blocked": false
+}
+
+// Usage tracking
+{
+  "eventType": "message_sent",
+  "sessionId": "sess_abc123",
+  "data": { "messageLength": 45 },
+  "timestamp": "2025-01-15T10:30:00Z"
+}
+```
+
+## 🎛️ Configuration Options
+
+### Content Filtering
+```env
+CONTENT_FILTER_ENABLED=true
+MAX_MESSAGE_LENGTH=1000
+RATE_LIMIT_ENABLED=true
+MAX_MESSAGES_PER_MINUTE=20
+```
+
+### Usage Tracking
+```env
+LOG_BLOCKED_CONTENT=true
+LOG_SUCCESSFUL_INTERACTIONS=true
+```
+
+### Security Settings  
+```env
+ADMIN_PASSWORD=your_secure_password
+SESSION_SECRET=your_session_secret
+```
+
+## 📈 Monitoring & Alerts
+
+### Built-in Monitoring
+- **Health checks** - Automatic system monitoring
+- **Performance tracking** - Response times and error rates
+- **Security alerts** - Real-time threat detection
+- **Usage analytics** - Daily/weekly usage reports
+
+### External Integration Options
+```env
+# Slack notifications
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+
+# Email alerts  
+SMTP_HOST=smtp.gmail.com
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+
+# Database storage
+MONGODB_URI=mongodb://localhost:27017/hvac_jack
+```
+
+## 🔄 Upgrade Path
+
+### From Basic Version
+1. Replace `HVAC_Jack_Mobile.html` with enhanced version
+2. Update `netlify/functions/chat.js` with filtering
+3. Add new functions: `track-usage.js`, `get-usage-stats.js`
+4. Create `admin-dashboard.html` for monitoring
+5. Configure environment variables
+
+### Database Integration (Optional)
+```javascript
+// Example: Store usage data in MongoDB
+async function storeUsageData(logEntry) {
+  const { MongoClient } = require('mongodb');
+  const client = new MongoClient(process.env.MONGODB_URI);
+  
+  try {
+    await client.connect();
+    const db = client.db('hvac_jack');
+    const collection = db.collection('usage_logs');
+    await collection.insertOne(logEntry);
+  } finally {
+    await client.close();
+  }
+}
+```
+
+## 🆘 Troubleshooting
+
+### Common Issues
+
+**Content Getting Blocked Incorrectly**
+- Check HVAC keyword list in content filter
+- Adjust `hvacKeywords` array in validation function
+- Review `prohibitedPatterns` for false positives
+
+**Dashboard Not Loading**
+- Verify `get-usage-stats.js` function is deployed
+- Check browser console for API errors
+- Ensure CORS headers are set correctly
+
+**High Memory Usage**
+- Limit conversation history to last 10 messages
+- Clear old rate limit data periodically
+- Consider external database for large-scale usage
+
+**Rate Limiting Too Strict**
+- Adjust `maxMessagesPerWindow` in frontend
+- Modify `maxRequests` in backend rate limiter
+- Consider IP-based vs session-based limiting
+
+### Debug Mode
+```env
+DEBUG_MODE=true
+NODE_ENV=development
+```
+
+Enable debug mode to see detailed logging of:
+- Content filtering decisions
+- Usage tracking events  
+- API request/response details
+- Performance metrics
+
+## 📞 Support
+
+For technical support or feature requests:
+- Check the admin dashboard for system status
+- Review console logs for error details
+- Monitor usage analytics for patterns
+- Contact: [Your support email/channel]
+
+---
+
+**HVAC Jack v1.1.0** - Enhanced with enterprise-grade content filtering and usage analytics
+© 2025 LARK Labs. All rights reserved.
