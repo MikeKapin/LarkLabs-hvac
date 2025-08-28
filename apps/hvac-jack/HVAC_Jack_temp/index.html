@@ -12,6 +12,9 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="192x192" href="hvac-jack-icon.png">
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Maintenance Form Styles -->
+    <link rel="stylesheet" href="./components/MaintenanceForm/maintenanceForm.css">
     <style>
         * {
             margin: 0;
@@ -886,6 +889,11 @@
                     this.addChatMessage('photo-analysis', '📋 Photo Analysis Complete', response);
                     this.showStatus('Photo analysis complete', 'success');
                     
+                    // Dispatch event for maintenance form system
+                    window.dispatchEvent(new CustomEvent('hvacjack-photo-analysis-complete', {
+                        detail: response
+                    }));
+                    
                     // Automatically generate comprehensive troubleshooting guide
                     this.showStatus('Generating troubleshooting guide...', 'info');
                     await this.generateTroubleshootingGuide();
@@ -1206,7 +1214,23 @@ Focus specifically on the brand and model identified from the rating plate analy
             // Initialize main app
             window.hvacJack = new HVACJack4();
             console.log('🔧 HVAC Jack 4.0 initialized with beta protection');
+            
+            // Initialize maintenance form system after a brief delay
+            setTimeout(() => {
+                if (window.hvacJack) {
+                    window.maintenanceFormContainer = new MaintenanceFormContainer(window.hvacJack);
+                    console.log('📋 Maintenance Form System initialized');
+                }
+            }, 500);
         });
     </script>
+    
+    <!-- Maintenance Form System Scripts -->
+    <script src="./services/mobileDetection.js"></script>
+    <script src="./services/equipmentDataMapper.js"></script>
+    <script src="./components/MaintenanceForm/MaintenanceFormContainer.js"></script>
+    <script src="./components/MaintenanceForm/GasFurnaceForm.js"></script>
+    <script src="./components/MaintenanceForm/MaintenanceFormPDF.js"></script>
+    <script src="./components/MaintenanceForm/EmailService.js"></script>
 </body>
 </html>

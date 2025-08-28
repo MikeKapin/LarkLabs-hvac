@@ -28,7 +28,9 @@
       "Bash(git init:*)",
       "Bash(npm install)",
       "Bash(npm run dev:*)",
-      "Bash(npx http-server:*)"
+      "Bash(npx http-server:*)",
+      "Bash(robocopy:*)",
+      "Bash(xcopy:*)"
     ],
     "deny": [],
     "ask": [],
