@@ -344,12 +344,18 @@ class MaintenanceFormPDF {
         
         this.addStatusBox(serviceStatus);
         
+        // Add proper spacing after status box
+        this.currentY += 15;
+        
         const summaryData = [
             { label: 'Service Time (hours)', value: serviceTime },
             { label: 'Report Generated', value: new Date().toLocaleString() }
         ];
         
         this.addDataGrid(summaryData, 2);
+        
+        // Add extra spacing after service summary
+        this.currentY += 10;
     }
 
     /**
@@ -458,9 +464,11 @@ class MaintenanceFormPDF {
      * Add data grid (key-value pairs)
      */
     addDataGrid(data, columns = 2) {
-        this.checkPageBreak(data.length * 20);
+        this.checkPageBreak(data.length * 25);
         
         const colWidth = (this.pageWidth - this.margin * 2) / columns;
+        const labelWidth = colWidth * 0.4; // 40% for label
+        const valueWidth = colWidth * 0.6; // 60% for value
         let row = 0;
         let col = 0;
         
@@ -469,15 +477,21 @@ class MaintenanceFormPDF {
         
         data.forEach(item => {
             const x = this.margin + col * colWidth;
-            const y = this.currentY + row * 20;
+            const y = this.currentY + row * 22; // Increased spacing
             
             // Label
             this.setFont(this.fonts.body, 'bold');
-            this.doc.text(`${item.label}:`, x, y);
+            const labelText = `${item.label}:`;
+            this.doc.text(labelText, x, y);
             
-            // Value
+            // Value with text wrapping to prevent overflow
             this.setFont(this.fonts.body);
-            this.doc.text(item.value || 'N/A', x + 100, y);
+            const valueText = item.value || 'N/A';
+            const valueLines = this.doc.splitTextToSize(valueText, valueWidth - 10);
+            
+            valueLines.forEach((line, lineIndex) => {
+                this.doc.text(line, x + labelWidth, y + (lineIndex * this.lineHeight));
+            });
             
             col++;
             if (col >= columns) {
@@ -486,7 +500,7 @@ class MaintenanceFormPDF {
             }
         });
         
-        this.currentY += Math.ceil(data.length / columns) * 20 + 10;
+        this.currentY += Math.ceil(data.length / columns) * 22 + 15;
     }
 
     /**
@@ -611,86 +625,108 @@ class MaintenanceFormPDF {
     addTextBlock(title, content) {
         if (!content) return;
         
-        this.checkPageBreak(40);
+        const estimatedHeight = 40 + (content.length / 80) * this.lineHeight;
+        this.checkPageBreak(estimatedHeight);
         
         // Title
         this.setFont(this.fonts.subheading);
         this.doc.setTextColor(...this.colors.primary);
         this.doc.text(title, this.margin, this.currentY);
-        this.currentY += 20;
+        this.currentY += 22;
         
-        // Content
+        // Content with proper text wrapping
         this.setFont(this.fonts.body);
         this.doc.setTextColor(...this.colors.text);
         
-        const lines = this.doc.splitTextToSize(content, this.pageWidth - this.margin * 2);
-        this.checkPageBreak(lines.length * this.lineHeight);
+        const maxWidth = this.pageWidth - this.margin * 2 - 20; // Extra margin for safety
+        const lines = this.doc.splitTextToSize(content, maxWidth);
+        this.checkPageBreak(lines.length * this.lineHeight + 20);
         
         lines.forEach(line => {
-            this.doc.text(line, this.margin, this.currentY);
+            this.doc.text(line, this.margin + 10, this.currentY);
             this.currentY += this.lineHeight;
         });
         
-        this.currentY += 10;
+        this.currentY += 15; // Better spacing after text blocks
     }
 
     /**
      * Add notice box
      */
     addNoticeBox(title, subtitle, color) {
-        this.checkPageBreak(40);
+        const maxWidth = this.pageWidth - this.margin * 2 - 20;
+        const titleLines = this.doc.splitTextToSize(title, maxWidth);
+        const subtitleLines = subtitle ? this.doc.splitTextToSize(subtitle, maxWidth) : [];
+        const boxHeight = Math.max(30, titleLines.length * 14 + subtitleLines.length * 12 + 15);
+        
+        this.checkPageBreak(boxHeight + 10);
         
         // Background
         this.doc.setFillColor(...color, 0.1);
-        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, 30, 'F');
+        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, boxHeight, 'F');
         
         // Border
         this.doc.setDrawColor(...color);
         this.doc.setLineWidth(1);
-        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, 30);
+        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, boxHeight);
         
-        // Content
+        // Content - Title
         this.setFont(this.fonts.body, 'bold');
         this.doc.setTextColor(...color);
-        this.doc.text(title, this.margin + 10, this.currentY + 12);
+        let textY = this.currentY + 12;
         
-        if (subtitle) {
+        titleLines.forEach(line => {
+            this.doc.text(line, this.margin + 10, textY);
+            textY += 14;
+        });
+        
+        if (subtitle && subtitleLines.length > 0) {
             this.setFont(this.fonts.small);
-            this.doc.text(subtitle, this.margin + 10, this.currentY + 25);
+            subtitleLines.forEach(line => {
+                this.doc.text(line, this.margin + 10, textY);
+                textY += 12;
+            });
         }
         
-        this.currentY += 40;
+        this.currentY += boxHeight + 10;
     }
 
     /**
      * Add warning box
      */
     addWarningBox(text) {
-        this.checkPageBreak(40);
+        const maxWidth = this.pageWidth - this.margin * 2 - 20;
+        const textLines = this.doc.splitTextToSize(text, maxWidth);
+        const boxHeight = Math.max(35, textLines.length * 16 + 10);
+        
+        this.checkPageBreak(boxHeight + 10);
         
         // Background
         this.doc.setFillColor(254, 242, 242);
-        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, 30, 'F');
+        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, boxHeight, 'F');
         
         // Border
         this.doc.setDrawColor(...this.colors.error);
         this.doc.setLineWidth(2);
-        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, 30);
+        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, boxHeight);
         
         // Content
         this.setFont(this.fonts.body, 'bold');
         this.doc.setTextColor(...this.colors.error);
-        this.doc.text(text, this.margin + 10, this.currentY + 20);
+        let textY = this.currentY + 18;
         
-        this.currentY += 40;
+        textLines.forEach(line => {
+            this.doc.text(line, this.margin + 10, textY);
+            textY += 16;
+        });
+        
+        this.currentY += boxHeight + 10;
     }
 
     /**
      * Add status box
      */
     addStatusBox(status) {
-        this.checkPageBreak(40);
-        
         let color = this.colors.secondary;
         let bgColor = [240, 255, 244];
         let icon = '✓';
@@ -708,16 +744,28 @@ class MaintenanceFormPDF {
             icon = '⏰';
         }
         
+        const statusText = `${icon} Service Status: ${status}`;
+        const maxWidth = this.pageWidth - this.margin * 2 - 20;
+        const statusLines = this.doc.splitTextToSize(statusText, maxWidth);
+        const boxHeight = Math.max(35, statusLines.length * 16 + 10);
+        
+        this.checkPageBreak(boxHeight + 10);
+        
         // Background
         this.doc.setFillColor(...bgColor);
-        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, 30, 'F');
+        this.doc.rect(this.margin, this.currentY, this.pageWidth - this.margin * 2, boxHeight, 'F');
         
         // Content
         this.setFont(this.fonts.body, 'bold');
         this.doc.setTextColor(...color);
-        this.doc.text(`${icon} Service Status: ${status}`, this.margin + 10, this.currentY + 20);
+        let textY = this.currentY + 18;
         
-        this.currentY += 40;
+        statusLines.forEach(line => {
+            this.doc.text(line, this.margin + 10, textY);
+            textY += 16;
+        });
+        
+        this.currentY += boxHeight + 10;
     }
 
     /**
