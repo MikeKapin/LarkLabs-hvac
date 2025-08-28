@@ -54,7 +54,7 @@ class GasFurnaceForm {
         this.setupFormInteractions();
         
         // Initialize form validation
-        this.initFormValidation();
+        this.setupValidation();
         
         // Setup accessibility features
         this.setupAccessibility();

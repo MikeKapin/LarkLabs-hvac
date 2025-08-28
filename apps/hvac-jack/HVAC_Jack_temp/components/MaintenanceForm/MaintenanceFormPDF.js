@@ -37,7 +37,7 @@ class MaintenanceFormPDF {
      * Load jsPDF library if not already loaded
      */
     async loadJsPDF() {
-        if (this.jsPDFLoaded || window.jsPDF) {
+        if (this.jsPDFLoaded || window.jspdf || window.jsPDF) {
             this.jsPDFLoaded = true;
             return true;
         }
@@ -78,7 +78,8 @@ class MaintenanceFormPDF {
             }
 
             // Initialize PDF document
-            this.doc = new window.jsPDF({
+            const { jsPDF } = window.jspdf || window;
+            this.doc = new jsPDF({
                 orientation: 'portrait',
                 unit: 'pt',
                 format: 'letter'
@@ -759,6 +760,57 @@ class MaintenanceFormPDF {
         const timestamp = Date.now().toString().slice(-6);
         
         return `HVAC_Maintenance_${customerName}_${date}_${timestamp}.pdf`;
+    }
+
+    /**
+     * Generate PDF as blob for email attachment
+     * @param {Object} formData - Complete form data
+     * @param {Object} mobileService - Mobile detection service
+     * @returns {Promise<Blob>} PDF blob
+     */
+    async generateBlob(formData, mobileService = null) {
+        try {
+            // Load jsPDF if not loaded
+            const jsPDFLoaded = await this.loadJsPDF();
+            if (!jsPDFLoaded) {
+                throw new Error('Failed to load PDF generation library');
+            }
+
+            // Initialize PDF document
+            const { jsPDF } = window.jspdf || window;
+            this.doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'pt',
+                format: 'letter'
+            });
+
+            this.currentY = this.margin;
+
+            // Generate PDF content (same as generate method but without saving)
+            await this.generateHeader(formData);
+            await this.generateCustomerInfo(formData);
+            await this.generateEquipmentInfo(formData);
+            await this.generateInspectionResults(formData);
+            await this.generateCombustionAnalysis(formData);
+            await this.generateSafetyChecks(formData);
+            await this.generateMaintenanceActions(formData);
+            await this.generateComments(formData);
+            await this.generateServiceSummary(formData);
+            await this.generateSignatures(formData);
+            await this.generateFooter(formData);
+
+            // Handle mobile-specific optimizations
+            if (mobileService?.deviceInfo?.isMobile) {
+                await this.optimizeForMobile();
+            }
+
+            // Return as blob instead of downloading
+            return this.doc.output('blob');
+
+        } catch (error) {
+            console.error('PDF blob generation error:', error);
+            throw error;
+        }
     }
 
     /**
