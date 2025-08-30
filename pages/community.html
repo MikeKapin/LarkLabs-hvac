@@ -819,6 +819,53 @@
             color: white;
             margin: 0 auto 1rem;
             border: 4px solid rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .profile-image:hover .upload-overlay {
+            opacity: 1;
+        }
+
+        .upload-text {
+            color: white;
+            font-size: 0.8rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        #profilePhotoInput {
+            display: none;
         }
 
         .profile-details h2 {
@@ -1428,7 +1475,7 @@
                             </div>
                         </div>
                         <div id="chatInput" style="display: flex; gap: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 1rem; border: 1px solid rgba(255,255,255,0.1);">
-                            <div class="comment-avatar" id="chatUserAvatar">U</div>
+                            <div class="comment-avatar" id="chatUserAvatar">${currentUser ? (currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)) : 'U'}</div>
                             <input type="text" id="chatMessageInput" placeholder="Type your message..." style="flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 10px 15px; color: white; font-size: 0.95rem;">
                             <button onclick="sendChatMessage()" id="chatSendBtn" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; border-radius: 20px; padding: 10px 20px; cursor: pointer; font-weight: 500; transition: all 0.3s;">Send</button>
                         </div>
@@ -1924,14 +1971,9 @@
                 document.getElementById('guestActions').style.display = 'none';
                 document.getElementById('userActions').style.display = 'flex';
                 document.getElementById('headerUsername').textContent = currentUser.name;
-                document.getElementById('headerAvatar').textContent = getInitials(currentUser.name);
-                document.getElementById('postCreatorAvatar').textContent = getInitials(currentUser.name);
                 
-                // Update chat avatar
-                const chatAvatar = document.getElementById('chatUserAvatar');
-                if (chatAvatar) {
-                    chatAvatar.textContent = getInitials(currentUser.name);
-                }
+                // Update all avatar displays
+                updateAllAvatarDisplays();
                 
                 // Update profile section
                 updateProfileSection();
@@ -1980,10 +2022,14 @@
 
             const profileContent = document.getElementById('profileContent');
             profileContent.innerHTML = `
+                <input type="file" id="profilePhotoInput" accept="image/*" onchange="handleProfilePhotoUpload(event)">
                 <div class="profile-grid">
                     <div class="profile-image-section">
-                        <div class="profile-image" id="profileImage">
-                            ${currentUser.avatar ? `<img src="${currentUser.avatar}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)}
+                        <div class="profile-image" id="profileImage" onclick="document.getElementById('profilePhotoInput').click()">
+                            ${currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}">` : getInitials(currentUser.name)}
+                            <div class="upload-overlay">
+                                <div class="upload-text">📸<br>Upload Photo</div>
+                            </div>
                         </div>
                         <button class="auth-button" onclick="editProfile()">✏️ Edit Profile</button>
                     </div>
@@ -2152,6 +2198,7 @@
                 id: generatePostId(),
                 author: currentUser.name,
                 authorId: currentUser.id,
+                authorPhoto: currentUser.profilePhoto,
                 content: content,
                 timestamp: new Date().toISOString(),
                 likes: 0,
@@ -2192,7 +2239,7 @@
             
             postElement.innerHTML = `
                 <div class="post-header">
-                    <div class="post-avatar">${getInitials(postData.author)}</div>
+                    <div class="post-avatar">${postData.authorPhoto ? `<img src="${postData.authorPhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(postData.author)}</div>
                     <div class="post-info">
                         <div class="post-author">${postData.author}</div>
                         <div class="post-meta">
@@ -2221,7 +2268,7 @@
                 </div>
                 <div class="comments-section" style="display: none;">
                     <div class="comment-input-area">
-                        <div class="comment-avatar">${currentUser ? getInitials(currentUser.name) : 'U'}</div>
+                        <div class="comment-avatar">${currentUser ? (currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)) : 'U'}</div>
                         <input type="text" class="comment-input" placeholder="Write a comment...">
                         <button class="comment-submit" onclick="postComment(this, '${postData.id}')">Post</button>
                     </div>
@@ -2312,6 +2359,7 @@
                 id: generatePostId(),
                 author: currentUser.name,
                 authorId: currentUser.id,
+                authorPhoto: currentUser.profilePhoto,
                 content: content,
                 timestamp: new Date().toISOString(),
                 likes: 0,
@@ -2325,7 +2373,7 @@
             const comment = document.createElement('div');
             comment.className = 'comment';
             comment.innerHTML = `
-                <div class="comment-avatar">${getInitials(currentUser.name)}</div>
+                <div class="comment-avatar">${currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)}</div>
                 <div class="comment-content">
                     <div class="comment-header">
                         <span class="comment-author">${currentUser.name}</span>
@@ -2356,6 +2404,52 @@
         // Utility Functions
         function getInitials(name) {
             return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        function getAvatarDisplay(user) {
+            if (user.profilePhoto) {
+                return `<img src="${user.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+            }
+            return getInitials(user.name);
+        }
+
+        function getUserById(userId) {
+            const users = JSON.parse(localStorage.getItem('hvacCommunityUsers')) || [];
+            return users.find(u => u.id === userId);
+        }
+
+        function updateAllAvatarDisplays() {
+            if (!currentUser) return;
+
+            // Update header avatar
+            const headerAvatar = document.getElementById('headerAvatar');
+            if (headerAvatar) {
+                if (currentUser.profilePhoto) {
+                    headerAvatar.innerHTML = `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+                } else {
+                    headerAvatar.textContent = getInitials(currentUser.name);
+                }
+            }
+
+            // Update post creator avatar
+            const postCreatorAvatar = document.getElementById('postCreatorAvatar');
+            if (postCreatorAvatar) {
+                if (currentUser.profilePhoto) {
+                    postCreatorAvatar.innerHTML = `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+                } else {
+                    postCreatorAvatar.textContent = getInitials(currentUser.name);
+                }
+            }
+
+            // Update chat avatar
+            const chatAvatar = document.getElementById('chatUserAvatar');
+            if (chatAvatar) {
+                if (currentUser.profilePhoto) {
+                    chatAvatar.innerHTML = `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+                } else {
+                    chatAvatar.textContent = getInitials(currentUser.name);
+                }
+            }
         }
 
         function generateUserId() {
@@ -2408,7 +2502,7 @@
             
             postElement.innerHTML = `
                 <div class="post-header">
-                    <div class="post-avatar">${getInitials(postData.author)}</div>
+                    <div class="post-avatar">${postData.authorPhoto ? `<img src="${postData.authorPhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(postData.author)}</div>
                     <div class="post-info">
                         <div class="post-author">${postData.author}</div>
                         <div class="post-meta">
@@ -2437,7 +2531,7 @@
                     <div class="existing-comments">
                         ${(postData.comments || []).map(comment => `
                             <div class="comment">
-                                <div class="comment-avatar">${getInitials(comment.author)}</div>
+                                <div class="comment-avatar">${comment.authorPhoto ? `<img src="${comment.authorPhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(comment.author)}</div>
                                 <div class="comment-content">
                                     <div class="comment-header">
                                         <span class="comment-author">${comment.author}</span>
@@ -2453,7 +2547,7 @@
                         `).join('')}
                     </div>
                     <div class="comment-input-area">
-                        <div class="comment-avatar">${currentUser ? getInitials(currentUser.name) : 'U'}</div>
+                        <div class="comment-avatar">${currentUser ? (currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)) : 'U'}</div>
                         <input type="text" class="comment-input" placeholder="Write a comment...">
                         <button class="comment-submit" onclick="postComment(this, '${postData.id}')">Post</button>
                     </div>
@@ -2564,6 +2658,49 @@
                 .catch(() => showNotification('Share functionality coming soon! 🔗', 'info'));
         }
 
+        function handleProfilePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                showNotification('Please select a valid image file.', 'error');
+                return;
+            }
+
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('Image size must be less than 5MB.', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                
+                // Update current user profile photo
+                currentUser.profilePhoto = imageData;
+                
+                // Save to localStorage
+                const users = JSON.parse(localStorage.getItem('hvacCommunityUsers')) || [];
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                if (userIndex !== -1) {
+                    users[userIndex].profilePhoto = imageData;
+                    localStorage.setItem('hvacCommunityUsers', JSON.stringify(users));
+                }
+                
+                // Update profile section display
+                updateProfileSection();
+                
+                // Update all avatar displays throughout the app
+                updateAllAvatarDisplays();
+                
+                showNotification('Profile photo updated successfully! 📸', 'success');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
         function editProfile() {
             if (!currentUser) {
                 showAuthModal('login');
@@ -2627,7 +2764,7 @@
             replyArea.style.cssText = 'margin-top: 0.5rem; padding-left: 2rem;';
             replyArea.innerHTML = `
                 <div style="display: flex; gap: 0.8rem; margin-top: 0.5rem;">
-                    <div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${getInitials(currentUser.name)}</div>
+                    <div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)}</div>
                     <input type="text" class="comment-input" placeholder="Write a reply..." style="flex: 1; min-height: 35px; font-size: 0.85rem;">
                     <button class="comment-submit" onclick="postReply(this, '${comment.dataset.commentId || generatePostId()}')" style="padding: 8px 12px; font-size: 0.85rem;">Reply</button>
                 </div>
@@ -2650,7 +2787,7 @@
             reply.className = 'comment reply';
             reply.style.cssText = 'margin-left: 2rem; margin-top: 0.5rem; background: rgba(255, 255, 255, 0.03);';
             reply.innerHTML = `
-                <div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${getInitials(currentUser.name)}</div>
+                <div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)}</div>
                 <div class="comment-content">
                     <div class="comment-header">
                         <span class="comment-author" style="font-size: 0.85rem;">${currentUser.name}</span>
@@ -2777,7 +2914,7 @@
             const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             
             messageElement.innerHTML = `
-                <div class="comment-avatar">${getInitials(currentUser.name)}</div>
+                <div class="comment-avatar">${currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)}</div>
                 <div style="flex: 1;">
                     <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
                         <span style="color: #3498db; font-weight: bold; font-size: 0.9rem;">${currentUser.name}</span>
@@ -2861,7 +2998,7 @@
             userProfile.innerHTML = `
                 <div style="background: rgba(52,152,219,0.1); border-radius: 15px; padding: 1.5rem; border: 2px solid #3498db; transition: all 0.3s; cursor: pointer;" onclick="showSection('profile')">
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                        <div class="post-avatar">${getInitials(currentUser.name)}</div>
+                        <div class="post-avatar">${currentUser.profilePhoto ? `<img src="${currentUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(currentUser.name)}</div>
                         <div>
                             <div style="color: #ffffff; font-weight: bold;">${currentUser.name}</div>
                             <div style="color: #3498db; font-size: 0.9rem;">${currentUser.title}</div>
@@ -3045,6 +3182,7 @@
                 id: generatePostId(),
                 from: currentUser.id,
                 fromName: currentUser.name,
+                fromPhoto: currentUser.profilePhoto,
                 to: userId,
                 timestamp: new Date().toISOString(),
                 status: 'pending'
@@ -3071,7 +3209,7 @@
                 friendsList.innerHTML = currentUser.friends.map(friend => `
                     <div class="friend-card" style="background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
                         <div style="display: flex; align-items: center; gap: 1rem;">
-                            <div class="post-avatar">${getInitials(friend.name)}</div>
+                            <div class="post-avatar">${friend.profilePhoto ? `<img src="${friend.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(friend.name)}</div>
                             <div style="flex: 1;">
                                 <div style="color: #ffffff; font-weight: bold;">${friend.name}</div>
                                 <div style="color: #95a5a6; font-size: 0.9rem;">${friend.title} • ${friend.location}</div>
@@ -3104,7 +3242,7 @@
                 requestsContainer.innerHTML = incomingRequests.map(request => `
                     <div class="request-card" style="background: rgba(52,152,219,0.1); border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(52,152,219,0.2);">
                         <div style="display: flex; align-items: center; gap: 1rem;">
-                            <div class="post-avatar">${getInitials(request.fromName)}</div>
+                            <div class="post-avatar">${request.fromPhoto ? `<img src="${request.fromPhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(request.fromName)}</div>
                             <div style="flex: 1;">
                                 <div style="color: #ffffff; font-weight: bold;">${request.fromName}</div>
                                 <div style="color: #95a5a6; font-size: 0.9rem;">wants to be friends</div>
@@ -3133,11 +3271,16 @@
 
             // Add to friends list
             if (!currentUser.friends) currentUser.friends = [];
+            
+            // Get the requesting user's full profile data
+            const requestingUser = getUserById(request.from);
+            
             currentUser.friends.push({
                 id: request.from,
                 name: request.fromName,
-                title: 'HVAC Professional', // Would be loaded from user profile
-                location: 'Ontario, Canada' // Would be loaded from user profile
+                profilePhoto: request.fromPhoto,
+                title: requestingUser?.title || 'HVAC Professional',
+                location: requestingUser?.location || 'Ontario, Canada'
             });
 
             // Update request status
@@ -3263,7 +3406,7 @@
             const messageHeader = document.getElementById('messageHeader');
             messageHeader.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div class="comment-avatar">${getInitials(friend.name)}</div>
+                    <div class="comment-avatar">${friend.profilePhoto ? `<img src="${friend.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(friend.name)}</div>
                     <div>
                         <div style="color: #ffffff; font-weight: bold;">${friend.name}</div>
                         <div style="color: #95a5a6; font-size: 0.9rem;">${friend.title}</div>
@@ -3292,7 +3435,7 @@
                              onclick="loadMessages('${conv.id}')" 
                              style="padding: 0.8rem; border-radius: 8px; cursor: pointer; margin-bottom: 0.5rem; ${currentConversation === conv.id ? 'background: rgba(52,152,219,0.2);' : 'background: rgba(255,255,255,0.03);'} transition: all 0.3s;">
                             <div style="display: flex; align-items: center; gap: 0.8rem;">
-                                <div class="comment-avatar" style="width: 35px; height: 35px; font-size: 0.8rem;">${getInitials(otherUser?.name || 'Unknown')}</div>
+                                <div class="comment-avatar" style="width: 35px; height: 35px; font-size: 0.8rem;">${otherUser?.profilePhoto ? `<img src="${otherUser.profilePhoto}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : getInitials(otherUser?.name || 'Unknown')}</div>
                                 <div style="flex: 1; min-width: 0;">
                                     <div style="color: #ffffff; font-weight: bold; font-size: 0.9rem;">${otherUser?.name || 'Unknown'}</div>
                                     <div style="color: #95a5a6; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -3321,16 +3464,21 @@
             const messagesArea = document.getElementById('messagesArea');
             
             if (conversation.messages.length > 0) {
-                messagesArea.innerHTML = conversation.messages.map(message => `
+                messagesArea.innerHTML = conversation.messages.map(message => {
+                    const sender = getUserById(message.senderId);
+                    const senderAvatar = sender ? getAvatarDisplay(sender) : getInitials(message.senderName);
+                    const currentUserAvatar = getAvatarDisplay(currentUser);
+                    
+                    return `
                     <div style="display: flex; gap: 0.8rem; margin: 1rem 0; ${message.senderId === currentUser.id ? 'justify-content: flex-end;' : ''}">
-                        ${message.senderId !== currentUser.id ? `<div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${getInitials(message.senderName)}</div>` : ''}
+                        ${message.senderId !== currentUser.id ? `<div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${senderAvatar}</div>` : ''}
                         <div style="max-width: 70%; padding: 0.8rem; border-radius: 15px; ${message.senderId === currentUser.id ? 'background: linear-gradient(45deg, #3498db, #2980b9); color: white;' : 'background: rgba(255,255,255,0.1); color: #ecf0f1;'}">
                             <div style="font-size: 0.95rem; margin-bottom: 0.3rem;">${message.content}</div>
                             <div style="font-size: 0.75rem; opacity: 0.8;">${getTimeAgo(message.timestamp)}</div>
                         </div>
-                        ${message.senderId === currentUser.id ? `<div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${getInitials(currentUser.name)}</div>` : ''}
-                    </div>
-                `).join('');
+                        ${message.senderId === currentUser.id ? `<div class="comment-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">${currentUserAvatar}</div>` : ''}
+                    </div>`;
+                }).join('');
             } else {
                 messagesArea.innerHTML = `
                     <div style="text-align: center; padding: 3rem; color: #95a5a6;">
