@@ -2050,7 +2050,14 @@
                     bio: ''
                 };
                 
+                // Save current user
                 localStorage.setItem('hvacCommunityUser', JSON.stringify(currentUser));
+                
+                // Add to all users list for community features
+                const allUsers = JSON.parse(localStorage.getItem('hvacCommunityAllUsers')) || [];
+                allUsers.push(currentUser);
+                localStorage.setItem('hvacCommunityAllUsers', JSON.stringify(allUsers));
+                
                 showNotification(`Welcome to the community, ${name}! 🎉`, 'success');
             } else {
                 // Login simulation - in production, this would authenticate against a backend
@@ -2133,6 +2140,13 @@
         }
 
         function addPostToFeed(postData) {
+            // Add post to the posts array for persistence
+            posts.unshift(postData);
+            
+            // Save posts to localStorage
+            localStorage.setItem('hvacCommunityPosts', JSON.stringify(posts));
+            
+            // Create and add the post element to DOM
             const feedPosts = document.getElementById('feedPosts');
             const postElement = document.createElement('div');
             postElement.className = 'feed-post';
@@ -2159,10 +2173,10 @@
                 <div class="post-engagement">
                     <div class="engagement-buttons">
                         <button class="engagement-button" onclick="togglePostLike(this)">
-                            <span>👍</span> <span>Like (${postData.likes})</span>
+                            <span>👍</span> <span>Like (${postData.likes || 0})</span>
                         </button>
                         <button class="engagement-button" onclick="toggleComments(this)">
-                            <span>💬</span> <span>Comment (${postData.comments.length})</span>
+                            <span>💬</span> <span>Comment (${(postData.comments || []).length})</span>
                         </button>
                         <button class="engagement-button" onclick="sharePost('${postData.id}')">
                             <span>🔗</span> <span>Share</span>
@@ -2197,17 +2211,34 @@
                 return;
             }
 
+            const postElement = button.closest('.feed-post');
+            const postId = postElement.getAttribute('data-post-id');
+            const post = posts.find(p => p.id === postId);
+            
+            if (!post) return;
+
             const isLiked = button.classList.contains('liked');
             const likeSpan = button.querySelector('span:last-child');
-            const currentLikes = parseInt(likeSpan.textContent.match(/\d+/)[0]);
             
             if (isLiked) {
+                // Remove like
                 button.classList.remove('liked');
-                likeSpan.textContent = `Like (${currentLikes - 1})`;
+                post.likes = Math.max(0, post.likes - 1);
+                post.likedBy = post.likedBy.filter(id => id !== currentUser.id);
+                likeSpan.textContent = `Like (${post.likes})`;
             } else {
+                // Add like
                 button.classList.add('liked');
-                likeSpan.textContent = `Like (${currentLikes + 1})`;
+                post.likes = (post.likes || 0) + 1;
+                post.likedBy = post.likedBy || [];
+                if (!post.likedBy.includes(currentUser.id)) {
+                    post.likedBy.push(currentUser.id);
+                }
+                likeSpan.textContent = `Like (${post.likes})`;
             }
+            
+            // Save updated posts to localStorage
+            localStorage.setItem('hvacCommunityPosts', JSON.stringify(posts));
         }
 
         function toggleComments(button) {
@@ -2236,6 +2267,25 @@
                 return;
             }
 
+            // Find the post in the posts array
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            // Create comment data
+            const commentData = {
+                id: generatePostId(),
+                author: currentUser.name,
+                authorId: currentUser.id,
+                content: content,
+                timestamp: new Date().toISOString(),
+                likes: 0,
+                likedBy: []
+            };
+
+            // Add comment to post data
+            post.comments = post.comments || [];
+            post.comments.push(commentData);
+
             const comment = document.createElement('div');
             comment.className = 'comment';
             comment.innerHTML = `
@@ -2258,8 +2308,10 @@
             
             // Update comment count
             const commentButton = button.closest('.feed-post').querySelector('.engagement-button:nth-child(2) span:last-child');
-            const currentCount = parseInt(commentButton.textContent.match(/\d+/)[0]);
-            commentButton.textContent = `Comment (${currentCount + 1})`;
+            commentButton.textContent = `Comment (${post.comments.length})`;
+            
+            // Save updated posts to localStorage
+            localStorage.setItem('hvacCommunityPosts', JSON.stringify(posts));
             
             input.value = '';
             showNotification('Comment posted! 💬', 'success');
@@ -2296,6 +2348,83 @@
             // Load saved posts from localStorage
             const savedPosts = JSON.parse(localStorage.getItem('hvacCommunityPosts')) || [];
             posts = savedPosts;
+            
+            // Render existing posts to the feed
+            const feedPosts = document.getElementById('feedPosts');
+            if (feedPosts && posts.length > 0) {
+                // Clear existing posts in DOM
+                feedPosts.innerHTML = '';
+                
+                // Render each saved post
+                posts.forEach(postData => {
+                    renderPostToDOM(postData);
+                });
+            }
+        }
+
+        function renderPostToDOM(postData) {
+            const feedPosts = document.getElementById('feedPosts');
+            const postElement = document.createElement('div');
+            postElement.className = 'feed-post';
+            postElement.setAttribute('data-post-id', postData.id);
+            
+            const timeAgo = getTimeAgo(new Date(postData.timestamp));
+            
+            postElement.innerHTML = `
+                <div class="post-header">
+                    <div class="post-avatar">${getInitials(postData.author)}</div>
+                    <div class="post-info">
+                        <div class="post-author">${postData.author}</div>
+                        <div class="post-meta">
+                            <span class="user-badge">Community Member</span>
+                            <span>•</span>
+                            <span>${timeAgo}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">${postData.content.replace(/\n/g, '<br>')}</div>
+                ${postData.image ? `<div class="post-media"><img src="${postData.image}" class="post-image" onclick="openImageModal('${postData.image}')" alt="Post image"></div>` : ''}
+                <div class="post-engagement">
+                    <div class="engagement-buttons">
+                        <button class="engagement-button ${currentUser && postData.likedBy && postData.likedBy.includes(currentUser.id) ? 'liked' : ''}" onclick="togglePostLike(this)">
+                            <span>👍</span> <span>Like (${postData.likes || 0})</span>
+                        </button>
+                        <button class="engagement-button" onclick="toggleComments(this)">
+                            <span>💬</span> <span>Comment (${(postData.comments || []).length})</span>
+                        </button>
+                        <button class="engagement-button" onclick="sharePost('${postData.id}')">
+                            <span>🔗</span> <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="comments-section" style="display: none;">
+                    <div class="existing-comments">
+                        ${(postData.comments || []).map(comment => `
+                            <div class="comment">
+                                <div class="comment-avatar">${getInitials(comment.author)}</div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span class="comment-author">${comment.author}</span>
+                                        <span class="comment-time">${getTimeAgo(new Date(comment.timestamp))}</span>
+                                    </div>
+                                    <div class="comment-text">${comment.content}</div>
+                                    <div class="comment-actions">
+                                        <button class="comment-button" onclick="toggleCommentLike(this)">👍 ${comment.likes || 0}</button>
+                                        <button class="comment-button" onclick="replyToComment(this)">Reply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="comment-input-area">
+                        <div class="comment-avatar">${currentUser ? getInitials(currentUser.name) : 'U'}</div>
+                        <input type="text" class="comment-input" placeholder="Write a comment...">
+                        <button class="comment-submit" onclick="postComment(this, '${postData.id}')">Post</button>
+                    </div>
+                </div>
+            `;
+            
+            feedPosts.appendChild(postElement);
         }
 
         function updateUI() {
