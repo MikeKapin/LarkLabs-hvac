@@ -892,6 +892,65 @@
         .image-modal-close:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+
+        /* Content Section Navigation */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Online Users Styles */
+        .online-user {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .online-user:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .online-indicator {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: #00c851;
+            border: 2px solid #1a1a1a;
+            border-radius: 50%;
+            animation: pulse-online 2s infinite;
+        }
+
+        @keyframes pulse-online {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .online-status {
+            font-size: 0.8rem;
+            color: #95a5a6;
+        }
     </style>
 </head>
 <body>
@@ -1671,36 +1730,7 @@
                 <div class="widget">
                     <h4>🟢 Online Now</h4>
                     <div id="onlineUsers">
-                        <div class="online-user">
-                            <div style="position: relative;">
-                                <div class="user-avatar-small">MR</div>
-                                <div class="online-indicator"></div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.9rem; color: #ffffff;">Mike R.</div>
-                                <div style="font-size: 0.8rem; color: #95a5a6;">G2 Certified</div>
-                            </div>
-                        </div>
-                        <div class="online-user">
-                            <div style="position: relative;">
-                                <div class="user-avatar-small">SK</div>
-                                <div class="online-indicator"></div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.9rem; color: #ffffff;">Sarah K.</div>
-                                <div style="font-size: 0.8rem; color: #95a5a6;">Student</div>
-                            </div>
-                        </div>
-                        <div class="online-user">
-                            <div style="position: relative;">
-                                <div class="user-avatar-small">TW</div>
-                                <div class="online-indicator"></div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.9rem; color: #ffffff;">Tom W.</div>
-                                <div style="font-size: 0.8rem; color: #95a5a6;">Inspector</div>
-                            </div>
-                        </div>
+                        <!-- Online users will be populated dynamically -->
                     </div>
                 </div>
 
@@ -1814,6 +1844,7 @@
             initializeChat();
             initializeDirectory();
             initializeMessaging();
+            initializeOnlineUsers();
         });
 
         // User Authentication System
@@ -1885,6 +1916,11 @@
 
         function updateUserInterface() {
             if (currentUser) {
+                // Update online status
+                if (typeof updateUserOnlineStatus === 'function') {
+                    updateUserOnlineStatus(currentUser, true);
+                }
+                
                 document.getElementById('guestActions').style.display = 'none';
                 document.getElementById('userActions').style.display = 'flex';
                 document.getElementById('headerUsername').textContent = currentUser.name;
@@ -3702,11 +3738,172 @@
             return emailRegex.test(email);
         }
 
-        // Auto-update online count simulation
+        // Online Users System
+        let onlineUsers = [];
+        let lastActivity = Date.now();
+
+        function initializeOnlineUsers() {
+            // Mark current user as online when they login
+            if (currentUser) {
+                updateUserOnlineStatus(currentUser, true);
+            }
+            
+            // Load existing online users
+            loadOnlineUsers();
+            
+            // Update display
+            updateOnlineUsersDisplay();
+            
+            // Simulate some online users for demo
+            addSimulatedUsers();
+            
+            // Update activity timestamp periodically
+            setInterval(updateActivity, 30000); // Every 30 seconds
+            
+            // Clean up inactive users periodically
+            setInterval(cleanupInactiveUsers, 60000); // Every minute
+        }
+
+        function addSimulatedUsers() {
+            const demoUsers = [
+                { id: 'demo1', name: 'Mike Rodriguez', title: 'G2 Certified', initials: 'MR', lastActivity: Date.now() },
+                { id: 'demo2', name: 'Sarah Kim', title: 'Student', initials: 'SK', lastActivity: Date.now() - 120000 },
+                { id: 'demo3', name: 'Tom Wilson', title: 'Inspector', initials: 'TW', lastActivity: Date.now() - 60000 },
+                { id: 'demo4', name: 'Lisa Chen', title: 'G3 Tech', initials: 'LC', lastActivity: Date.now() - 300000 }
+            ];
+            
+            demoUsers.forEach(user => {
+                if (!onlineUsers.find(u => u.id === user.id)) {
+                    onlineUsers.push(user);
+                }
+            });
+            
+            updateOnlineUsersDisplay();
+        }
+
+        function updateUserOnlineStatus(user, isOnline) {
+            if (isOnline) {
+                // Add or update user in online list
+                const existingIndex = onlineUsers.findIndex(u => u.id === user.id);
+                const userData = {
+                    id: user.id,
+                    name: user.name,
+                    title: user.title || 'Community Member',
+                    initials: getInitials(user.name),
+                    lastActivity: Date.now()
+                };
+                
+                if (existingIndex !== -1) {
+                    onlineUsers[existingIndex] = userData;
+                } else {
+                    onlineUsers.push(userData);
+                }
+            } else {
+                // Remove user from online list
+                onlineUsers = onlineUsers.filter(u => u.id !== user.id);
+            }
+            
+            saveOnlineUsers();
+            updateOnlineUsersDisplay();
+        }
+
+        function loadOnlineUsers() {
+            const saved = localStorage.getItem('hvacCommunityOnlineUsers');
+            if (saved) {
+                onlineUsers = JSON.parse(saved);
+                // Filter out users who haven't been active in the last 5 minutes
+                const fiveMinutesAgo = Date.now() - (5 * 60 * 1000);
+                onlineUsers = onlineUsers.filter(user => user.lastActivity > fiveMinutesAgo);
+            }
+        }
+
+        function saveOnlineUsers() {
+            localStorage.setItem('hvacCommunityOnlineUsers', JSON.stringify(onlineUsers));
+        }
+
+        function updateActivity() {
+            lastActivity = Date.now();
+            if (currentUser) {
+                updateUserOnlineStatus(currentUser, true);
+            }
+        }
+
+        function cleanupInactiveUsers() {
+            const fiveMinutesAgo = Date.now() - (5 * 60 * 1000);
+            const activeUsers = onlineUsers.filter(user => user.lastActivity > fiveMinutesAgo);
+            
+            if (activeUsers.length !== onlineUsers.length) {
+                onlineUsers = activeUsers;
+                saveOnlineUsers();
+                updateOnlineUsersDisplay();
+            }
+        }
+
+        function updateOnlineUsersDisplay() {
+            const container = document.getElementById('onlineUsers');
+            if (!container) return;
+            
+            // Sort by most recent activity
+            const sortedUsers = onlineUsers.sort((a, b) => b.lastActivity - a.lastActivity);
+            
+            if (sortedUsers.length === 0) {
+                container.innerHTML = '<div style="color: #95a5a6; text-align: center; padding: 1rem;">No users currently online</div>';
+                return;
+            }
+            
+            container.innerHTML = sortedUsers.map(user => `
+                <div class="online-user" onclick="viewUserProfile('${user.id}')">
+                    <div style="position: relative;">
+                        <div class="user-avatar-small">${user.initials}</div>
+                        <div class="online-indicator"></div>
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-size: 0.9rem; color: #ffffff; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.name}</div>
+                        <div class="online-status">${user.title}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update header count if it exists
+            const onlineCountElement = document.getElementById('onlineCount');
+            if (onlineCountElement) {
+                onlineCountElement.textContent = sortedUsers.length;
+            }
+        }
+
+        function viewUserProfile(userId) {
+            const user = onlineUsers.find(u => u.id === userId);
+            if (user) {
+                showNotification(`Viewing ${user.name}'s profile (feature coming soon!)`, 'info');
+            }
+        }
+
+        // Update login/logout functions to manage online status
+
+        function logout() {
+            if (currentUser) {
+                updateUserOnlineStatus(currentUser, false);
+            }
+            
+            currentUser = null;
+            localStorage.removeItem('hvacCommunityUser');
+            updateUserInterface();
+            showNotification('Logged out successfully! 👋', 'info');
+            
+            // Redirect to main site after logout
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1500);
+        }
+
+        // Auto-update online count simulation (keeping for compatibility)
         setInterval(() => {
-            const baseOnline = 23;
-            const randomVariation = Math.floor(Math.random() * 10) - 5;
-            document.getElementById('onlineCount').textContent = Math.max(1, baseOnline + randomVariation);
+            const baseOnline = Math.max(onlineUsers.length, 1);
+            const randomVariation = Math.floor(Math.random() * 3);
+            const onlineCountElement = document.getElementById('onlineCount');
+            if (onlineCountElement) {
+                onlineCountElement.textContent = baseOnline + randomVariation;
+            }
         }, 30000);
     </script>
 </body>
