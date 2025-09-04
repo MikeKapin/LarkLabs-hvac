@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete A2L Refrigerant Guide for Canadian HVAC Professionals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #dc143c 0%, #b22222 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .maple-leaf {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            clip-path: polygon(50% 0%, 60% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 40% 35%);
+        }
+
+        .nav {
+            background: #2c3e50;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #dc143c;
+        }
+
+        .section h2 {
+            color: #dc143c;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            margin: 1rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .faq-question {
+            background: #dc143c;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 1.5rem;
+            display: none;
+            background: white;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .faq-answer.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #c0392b;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #2d3436;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #00695c;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .resource-card h4 {
+            color: #dc143c;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .resource-link {
+            display: inline-block;
+            background: #dc143c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .resource-link:hover {
+            background: #b22222;
+            transform: translateY(-2px);
+        }
+
+        .checklist {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00b894;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background: #dc143c;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer h3 {
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #dc143c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-to-top:hover {
+            background: #b22222;
+            transform: scale(1.1);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: #dc143c;
+            z-index: 1001;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="maple-leaf"></div>
+            <h1>A2L REFRIGERANT TRANSITION GUIDE</h1>
+            <p class="subtitle">Comprehensive Guide for Canadian HVAC Professionals</p>
+        </header>
+
+        <nav class="nav">
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#regulations">Canadian Regulations</a></li>
+                <li><a href="#safety">Safety Requirements</a></li>
+                <li><a href="#installation">Installation & Service</a></li>
+                <li><a href="#certification">Certification</a></li>
+                <li><a href="#faqs">FAQs</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <section id="introduction" class="section">
+                <h2>Introduction to A2L Refrigerants</h2>
+                
+                <p>A2L refrigerants represent a crucial step forward in the HVAC industry's commitment to environmental sustainability and climate protection. These mildly flammable, low Global Warming Potential (GWP) refrigerants are becoming the standard replacement for traditional high-GWP refrigerants across Canada.</p>
+
+                <div class="info-box">
+                    <h4>What Makes A2L Refrigerants Special?</h4>
+                    <p>A2L refrigerants can mimic the performance of refrigerants with significantly higher GWP values while requiring minimal equipment redesign. Their similarity to traditional refrigerants makes the transition more manageable for HVAC professionals.</p>
+                </div>
+
+                <h3>Why the Transition?</h3>
+                <p>The global shift to A2L refrigerants is driven by:</p>
+                <ul>
+                    <li><strong>Environmental Protection:</strong> Significantly lower GWP compared to traditional refrigerants</li>
+                    <li><strong>Regulatory Compliance:</strong> Meeting international standards like the Kigali Amendment to the Montreal Protocol</li>
+                    <li><strong>Climate Goals:</strong> Supporting Canada's commitment to reducing greenhouse gas emissions</li>
+                    <li><strong>Future-Proofing:</strong> Ensuring HVAC systems remain compliant with evolving regulations</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Key Classification:</h4>
+                    <p>A2L refrigerants are classified as "mildly flammable" with lower flammability than A2 or A3 refrigerants, but they require specific safety protocols and trained technicians for safe handling.</p>
+                </div>
+            </section>
+
+            <section id="regulations" class="section">
+                <h2>Canadian Regulations and Standards</h2>
+
+                <h3>Federal Regulations</h3>
+                <p>In Canada, A2L refrigerants fall under several regulatory frameworks:</p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Regulation</th>
+                                <th>Authority</th>
+                                <th>Scope</th>
+                                <th>Key Requirements</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Federal Halocarbon Regulations</td>
+                                <td>Environment and Climate Change Canada</td>
+                                <td>Manufacturing, import, sale</td>
+                                <td>GWP limits, reporting requirements</td>
+                            </tr>
+                            <tr>
+                                <td>Canadian Standards Association (CSA)</td>
+                                <td>CSA Group</td>
+                                <td>Safety standards</td>
+                                <td>Installation, service protocols</td>
+                            </tr>
+                            <tr>
+                                <td>National Building Code of Canada</td>
+                                <td>National Research Council</td>
+                                <td>Building applications</td>
+                                <td>Ventilation, safety systems</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Provincial Variations</h3>
+                <p>Each province may have additional requirements:</p>
+
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>Ontario</h4>
+                        <p>Technical Standards and Safety Authority (TSSA) oversees refrigerant handling and certification requirements.</p>
+                        <a href="https://www.tssa.org/" class="resource-link">TSSA Guidelines</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>British Columbia</h4>
+                        <p>BC Safety Authority provides provincial oversight for refrigeration systems and technician certification.</p>
+                        <a href="https://www.bcsafetyauthority.ca/" class="resource-link">BCSA Resources</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Alberta</h4>
+                        <p>Alberta Boilers Safety Association regulates pressure vessel and refrigeration system installations.</p>
+                        <a href="https://www.absa.ca/" class="resource-link">ABSA Information</a>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h4>Important Note for Canadian Professionals:</h4>
+                    <p>Always check with your provincial authority for the most current regulations, as requirements can vary significantly between provinces and may be updated frequently as A2L adoption increases.</p>
+                </div>
+            </section>
+
+            <section id="safety" class="section">
+                <h2>Safety Requirements and Mitigation</h2>
+
+                <h3>Understanding Flammability Classifications</h3>
+                <p>A2L refrigerants have specific flammability characteristics that require careful consideration:</p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>A2L Refrigerants</th>
+                                <th>A1 Refrigerants</th>
+                                <th>A3 Refrigerants</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Flammability</td>
+                                <td>Mildly Flammable</td>
+                                <td>Non-Flammable</td>
+                                <td>Highly Flammable</td>
+                            </tr>
+                            <tr>
+                                <td>Lower Flammability Limit (LFL)</td>
+                                <td>Higher (safer)</td>
+                                <td>N/A</td>
+                                <td>Lower (more hazardous)</td>
+                            </tr>
+                            <tr>
+                                <td>Burning Velocity</td>
+                                <td>≤ 10 cm/s</td>
+                                <td>N/A</td>
+                                <td>> 10 cm/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Required Safety Measures</h3>
+                <p>Safety measures for A2L refrigerants are based on refrigerant charge limits and application:</p>
+
+                <div class="checklist">
+                    <h4>Mandatory Safety Requirements:</h4>
+                    <ul>
+                        <li>Enhanced ventilation systems in mechanical rooms</li>
+                        <li>Refrigerant leak detection systems</li>
+                        <li>Non-sparking tools during service</li>
+                        <li>Proper electrical equipment ratings</li>
+                        <li>Emergency shutdown mechanisms</li>
+                        <li>Clear system labeling and identification</li>
+                        <li>Trained personnel only for installation and service</li>
+                    </ul>
+                </div>
+
+                <h3>Active Mitigation Systems</h3>
+                <p>Active mitigation refers to engineered systems that detect and respond to refrigerant leaks:</p>
+
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>Leak Detection</h4>
+                        <p>Sensors that continuously monitor refrigerant concentration levels and trigger alarms when thresholds are exceeded.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Ventilation Control</h4>
+                        <p>Automatic ventilation systems that activate upon leak detection to disperse refrigerant vapors.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h4>System Isolation</h4>
+                        <p>Automatic shutdown of ignition sources and system isolation to prevent accumulation of flammable concentrations.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Critical Safety Note:</h4>
+                    <p>The Lower Flammability Limit (LFL) is crucial for determining safe handling practices and charge limits. Never exceed manufacturer-specified charge limits, and always ensure proper ventilation during service.</p>
+                </div>
+            </section>
+
+            <section id="installation" class="section">
+                <h2>Installation and Service Procedures</h2>
+
+                <h3>Pre-Installation Requirements</h3>
+                <p>Before installing A2L systems, several preparatory steps are essential:</p>
+
+                <div class="checklist">
+                    <h4>Site Assessment Checklist:</h4>
+                    <ul>
+                        <li>Evaluate ventilation requirements based on room volume</li>
+                        <li>Identify potential ignition sources in the area</li>
+                        <li>Assess electrical equipment ratings and compatibility</li>
+                        <li>Determine leak detection system requirements</li>
+                        <li>Review local building code compliance</li>
+                        <li>Plan emergency procedures and evacuation routes</li>
+                    </ul>
+                </div>
+
+                <h3>Charging Procedures</h3>
+                <p>Charging A2L systems requires specific protocols:</p>
+
+                <div class="faq-item">
+                    <div class="faq-question">How do you charge A2L refrigerant safely?</div>
+                    <div class="faq-answer">
+                        <p>Charging A2L refrigerants follows similar procedures to traditional refrigerants but with additional safety measures:</p>
+                        <ul>
+                            <li><strong>Use proper equipment:</strong> Ensure all tools are rated for flammable gases</li>
+                            <li><strong>Eliminate ignition sources:</strong> No smoking, open flames, or sparking tools</li>
+                            <li><strong>Ensure ventilation:</strong> Adequate airflow to prevent vapor accumulation</li>
+                            <li><strong>Monitor superheat and subcooling:</strong> Standard measurement procedures apply</li>
+                            <li><strong>Follow manufacturer specifications:</strong> Adhere to exact charge amounts and procedures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Transportation and Storage</h3>
+                <p>A2L refrigerants have specific requirements for transportation and storage in Canada:</p>
+
+                <div class="info-box">
+                    <h4>Transport Canada Requirements:</h4>
+                    <p>A2L refrigerants are classified as dangerous goods under Transport Canada regulations. Special permits are available for limited quantities in service vehicles, but proper documentation, labeling, and container specifications must be followed.</p>
+                </div>
+
+                <h3>System Identification</h3>
+                <p>Proper identification of A2L systems is crucial for safety:</p>
+
+                <div class="success-box">
+                    <h4>Required Labeling:</h4>
+                    <ul>
+                        <li>Refrigerant type and classification (A2L)</li>
+                        <li>Red striping on refrigerant lines</li>
+                        <li>Flammability warnings</li>
+                        <li>Emergency contact information</li>
+                        <li>Charge amount and date</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="certification" class="section">
+                <h2>Certification and Training Requirements</h2>
+
+                <h3>Canadian Certification Landscape</h3>
+                <p>Working with A2L refrigerants in Canada requires specific certifications and training:</p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Certification</th>
+                                <th>Issuing Body</th>
+                                <th>Requirement Level</th>
+                                <th>A2L Coverage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Refrigeration Mechanic License</td>
+                                <td>Provincial Authorities</td>
+                                <td>Mandatory</td>
+                                <td>Being updated to include A2L</td>
+                            </tr>
+                            <tr>
+                                <td>HRAI Certification</td>
+                                <td>Heating, Refrigeration and Air Conditioning Institute of Canada</td>
+                                <td>Industry Standard</td>
+                                <td>A2L modules available</td>
+                            </tr>
+                            <tr>
+                                <td>CSA Certification</td>
+                                <td>Canadian Standards Association</td>
+                                <td>Specialized</td>
+                                <td>Safety-focused A2L training</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Training Components</h3>
+                <p>Comprehensive A2L training should cover:</p>
+
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>Safety Fundamentals</h4>
+                        <p>Understanding flammability characteristics, LFL concepts, and risk assessment procedures.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Installation Procedures</h4>
+                        <p>Proper installation techniques, safety system integration, and code compliance.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Service and Maintenance</h4>
+                        <p>Safe service procedures, leak detection, and emergency response protocols.</p>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Regulatory Compliance</h4>
+                        <p>Canadian and provincial regulations, documentation requirements, and reporting procedures.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Certification Requirement:</h4>
+                    <p>While specific A2L certification may not be federally mandated yet, it is highly recommended and may become required. Many provinces are updating their certification requirements to include A2L handling.</p>
+                </div>
+            </section>
+
+            <section id="faqs" class="section">
+                <h2>Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question">What are the charge limits for A2L refrigerants in Canada?</div>
+                    <div class="faq-answer">
+                        <p>Charge limits vary based on application, system design, and safety standards. These limits are determined by:</p>
+                        <ul>
+                            <li>Room volume and ventilation capacity</li>
+                            <li>Refrigerant-specific Lower Flammability Limit (LFL)</li>
+                            <li>Presence of active mitigation systems</li>
+                            <li>Provincial building code requirements</li>
+                        </ul>
+                        <p>Always refer to manufacturer specifications and local codes for exact limits.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can you mix A2L refrigerants with other refrigerants?</div>
+                    <div class="faq-answer">
+                        <p>No, mixing A2L refrigerants with other refrigerants is strictly prohibited. This applies to:</p>
+                        <ul>
+                            <li>System charging - never mix different refrigerant types</li>
+                            <li>Recovery cylinders - use dedicated cylinders for each refrigerant type</li>
+                            <li>Retrofit applications - complete system evacuation required</li>
+                        </ul>
+                        <p>Mixing can result in unpredictable behavior, safety hazards, reduced efficiency, and equipment damage.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do I need different tools for A2L service?</div>
+                    <div class="faq-answer">
+                        <p>Yes, servicing A2L systems requires spark-proof tools and equipment rated for flammable gases:</p>
+                        <ul>
+                            <li>Non-sparking wrenches and hand tools</li>
+                            <li>Intrinsically safe electrical equipment</li>
+                            <li>Explosion-proof refrigerant recovery machines</li>
+                            <li>Appropriate leak detectors for flammable refrigerants</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can A2L refrigerants be used in existing A1 systems?</div>
+                    <div class="faq-answer">
+                        <p>No, A2L refrigerants should never be used in systems designed for A1 refrigerants. A1 systems are not equipped with:</p>
+                        <ul>
+                            <li>Appropriate safety systems for flammable refrigerants</li>
+                            <li>Proper ventilation and leak detection</li>
+                            <li>Electrical equipment ratings for hazardous areas</li>
+                        </ul>
+                        <p>Using A2L in A1 systems creates serious safety hazards and violates safety standards.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What happens if A2L refrigerant leaks?</div>
+                    <div class="faq-answer">
+                        <p>A2L refrigerant leaks pose mild flammability risks and require immediate attention:</p>
+                        <ul>
+                            <li><strong>Immediate response:</strong> Eliminate ignition sources and ensure ventilation</li>
+                            <li><strong>Area evacuation:</strong> Clear personnel from the leak area</li>
+                            <li><strong>Professional repair:</strong> Only trained technicians should address leaks</li>
+                            <li><strong>System inspection:</strong> Complete system evaluation before restart</li>
+                        </ul>
+                        <p>Proper leak detection systems and emergency procedures are essential for safe operation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Are A2L refrigerants covered under Canadian environmental regulations?</div>
+                    <div class="faq-answer">
+                        <p>Yes, A2L refrigerants fall under Environment and Climate Change Canada's halocarbon regulations:</p>
+                        <ul>
+                            <li>Proper handling and disposal requirements</li>
+                            <li>Technician certification for handling</li>
+                            <li>Record-keeping and reporting obligations</li>
+                            <li>Recovery and recycling mandates</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Which manufacturers are using A2L refrigerants in Canada?</div>
+                    <div class="faq-answer">
+                        <p>Major HVAC manufacturers operating in Canada have announced A2L transitions:</p>
+                        <ul>
+                            <li><strong>Carrier:</strong> R-454B for residential and commercial applications</li>
+                            <li><strong>Mitsubishi Electric:</strong> R-32 for mini-split systems</li>
+                            <li><strong>Daikin:</strong> R-32 and R-454B across various products</li>
+                            <li><strong>Lennox:</strong> R-454B for residential systems</li>
+                            <li><strong>York:</strong> R-454B for commercial applications</li>
+                        </ul>
+                        <p>Check manufacturer announcements for specific product lines and timelines.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How do charging procedures differ for A2L systems?</div>
+                    <div class="faq-answer">
+                        <p>While the fundamental charging process remains similar, A2L systems require additional safety measures:</p>
+                        <ul>
+                            <li><strong>Superheat and subcooling:</strong> Standard measurement procedures apply</li>
+                            <li><strong>Safety precautions:</strong> Enhanced ventilation and no ignition sources</li>
+                            <li><strong>Equipment requirements:</strong> Spark-proof tools and appropriate recovery machines</li>
+                            <li><strong>Documentation:</strong> Detailed records of charge amounts and procedures</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="resources" class="section">
+                <h2>Canadian Resources and Links</h2>
+
+                <h3>Government Resources</h3>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>Environment and Climate Change Canada</h4>
+                        <p>Federal halocarbon regulations, reporting requirements, and environmental compliance information.</p>
+                        <a href="https://www.canada.ca/en/environment-climate-change.html" class="resource-link">Visit ECCC</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>National Research Council Canada</h4>
+                        <p>National Building Code updates and construction standards for A2L refrigerant systems.</p>
+                        <a href="https://nrc.canada.ca/" class="resource-link">Visit NRC</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Transport Canada</h4>
+                        <p>Dangerous goods regulations for A2L refrigerant transportation and special permits.</p>
+                        <a href="https://tc.canada.ca/" class="resource-link">Visit Transport Canada</a>
+                    </div>
+                </div>
+
+                <h3>Industry Organizations</h3>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>HRAI - Heating, Refrigeration and Air Conditioning Institute of Canada</h4>
+                        <p>Canadian industry standards, training programs, and A2L transition resources.</p>
+                        <a href="https://www.hrai.ca/" class="resource-link">Visit HRAI</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>CSA Group</h4>
+                        <p>Canadian standards development and safety certification for refrigeration systems.</p>
+                        <a href="https://www.csagroup.org/" class="resource-link">Visit CSA</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>ASHRAE - Toronto Chapter</h4>
+                        <p>Technical resources, training seminars, and refrigerant transition guidance.</p>
+                        <a href="https://ashrae.org/" class="resource-link">Visit ASHRAE</a>
+                    </div>
+                </div>
+
+                <h3>Provincial Authorities</h3>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>Technical Standards and Safety Authority (Ontario)</h4>
+                        <p>Provincial certification and regulatory oversight for refrigeration systems in Ontario.</p>
+                        <a href="https://www.tssa.org/" class="resource-link">Visit TSSA</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>BC Safety Authority</h4>
+                        <p>British Columbia's provincial safety authority for pressure vessels and refrigeration.</p>
+                        <a href="https://www.bcsafetyauthority.ca/" class="resource-link">Visit BCSA</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Alberta Boilers Safety Association</h4>
+                        <p>Alberta's regulatory authority for pressure vessels and refrigeration system safety.</p>
+                        <a href="https://www.absa.ca/" class="resource-link">Visit ABSA</a>
+                    </div>
+                </div>
+
+                <h3>Training and Certification</h3>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>Refrigeration Service Engineers Society - Canada</h4>
+                        <p>Professional development and certification programs for refrigeration technicians.</p>
+                        <a href="https://www.rses.org/" class="resource-link">Visit RSES Canada</a>
+                    </div>
+                    <div class="resource-card">
+                        <h4>Canadian Institute of Plumbing & Heating</h4>
+                        <p>Training programs and certification for HVAC professionals across Canada.</p>
+                        <a href="https://www.ciph.com/" class="resource-link">Visit CIPH</a>
+                    </div>
+                </div>
+
+                <h3>Manufacturer Resources</h3>
+                <div class="info-box">
+                    <h4>Key Refrigerant Suppliers in Canada:</h4>
+                    <ul>
+                        <li><strong>Honeywell:</strong> R-454B, R-452B, and other low-GWP alternatives</li>
+                        <li><strong>Chemours:</strong> Opteon series A2L refrigerants</li>
+                        <li><strong>Mexichem Fluor:</strong> Klea series low-GWP refrigerants</li>
+                        <li><strong>Arkema:</strong> Forane series A2L refrigerants</li>
+                    </ul>
+                </div>
+
+                <h3>Emergency and Safety Resources</h3>
+                <div class="warning-box">
+                    <h4>Emergency Contacts:</h4>
+                    <ul>
+                        <li><strong>Emergency Services:</strong> 911</li>
+                        <li><strong>CANUTEC (Canadian Transport Emergency Centre):</strong> 1-888-CANUTEC (226-8832)</li>
+                        <li><strong>Provincial Emergency Services:</strong> Contact your provincial authority</li>
+                        <li><strong>Manufacturer Technical Support:</strong> Available 24/7 for emergency situations</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <h3>LARK Labs - Your Partner in A2L Transition</h3>
+            <p>LARK Labs is committed to supporting Canadian HVAC professionals through the A2L refrigerant transition. Our technical expertise, training programs, and ongoing support ensure safe, compliant, and successful adoption of new refrigerant technologies.</p>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
+                <h4 style="color: #3498db; margin-bottom: 1rem;">Contact LARK Labs</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: left;">
+                    <div>
+                        <strong>Technical Support:</strong><br>
+                        1-800-LARK-A2L<br>
+                        support@larklabs.ca
+                    </div>
+                    <div>
+                        <strong>Training Inquiries:</strong><br>
+                        training@larklabs.ca<br>
+                        Online Portal Available
+                    </div>
+                    <div>
+                        <strong>Consultation Services:</strong><br>
+                        consulting@larklabs.ca<br>
+                        National Coverage
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#introduction">Introduction</a>
+                <a href="#regulations">Regulations</a>
+                <a href="#safety">Safety</a>
+                <a href="#installation">Installation</a>
+                <a href="#certification">Certification</a>
+                <a href="#faqs">FAQs</a>
+                <a href="#resources">Resources</a>
+            </div>
+            
+            <p style="margin-top: 2rem; opacity: 0.8;">
+                © 2025 LARK Labs - A2L Refrigerant Transition Guide for Canadian HVAC Professionals<br>
+                This guide is for educational purposes. Always consult current regulations and manufacturer specifications.<br>
+                <strong>Developed by LARK Labs Technical Team | Version 1.0 | Updated September 2025</strong>
+            </p>
+        </footer>
+    </div>
+
+    <button class="scroll-to-top" id="scrollToTop">↑</button>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = question.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('show');
+                });
+                
+                // Toggle current FAQ
+                if (!isActive) {
+                    question.classList.add('active');
+                    answer.classList.add('show');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = window.scrollY;
+            const progress = (scrolled / windowHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        });
+
+        // Add hover effects to resource cards
+        document.querySelectorAll('.resource-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
