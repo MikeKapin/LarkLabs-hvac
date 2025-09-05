@@ -133,7 +133,11 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
 
   // Update display when measurement comes from parent component
   useEffect(() => {
+    console.log('VirtualMultimeter received currentMeasurement:', currentMeasurement);
+    console.log('Multimeter isOn:', multimeterState.isOn);
+    
     if (currentMeasurement && multimeterState.isOn) {
+      console.log('Updating multimeter display with:', currentMeasurement);
       setMultimeterState(prev => ({
         ...prev,
         display: {

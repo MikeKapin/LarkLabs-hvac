@@ -84,6 +84,7 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
           };
       }
       
+      console.log('CircuitSimulator calling onMeasurement with:', measurement);
       onMeasurement(measurement);
     } else if (redNode || blackNode) {
       // One probe connected - show partial connection status

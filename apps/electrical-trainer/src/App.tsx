@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { CircuitDiagram, MultimeterReading, MultimeterMode } from './types';
 import { VirtualMultimeter } from './components/multimeter';
 import { CircuitLibrary, CircuitSimulator } from './components/circuits';
@@ -15,7 +15,7 @@ const App: React.FC = () => {
     unit: 'V',
     isValid: false,
     isOverload: false,
-    displayValue: '----'
+    displayValue: 'NO PROBES CONNECTED'
   });
   const [safetyWarnings, setSafetyWarnings] = useState<string[]>([]);
 
@@ -30,19 +30,24 @@ const App: React.FC = () => {
   }, []);
 
   const handleSimulationResult = useCallback((result: any) => {
+    console.log('App.handleSimulationResult received:', result);
+    
     // Handle both old complex measurement format and new simplified format
     if (result.reading) {
       // Old format from simulation engine
+      console.log('Using old format reading:', result.reading);
       setCurrentMeasurement(result.reading);
     } else if (result.value !== undefined) {
       // New simplified format from direct calculation
-      setCurrentMeasurement({
+      const measurement = {
         value: result.value,
         unit: result.unit,
         isValid: result.isValid,
         isOverload: false,
         displayValue: result.displayValue
-      });
+      };
+      console.log('Using new format measurement:', measurement);
+      setCurrentMeasurement(measurement);
     }
     
     if (result.safetyChecks) {
@@ -61,6 +66,12 @@ const App: React.FC = () => {
   const handleModeChange = useCallback((mode: MultimeterMode) => {
     setMultimeterMode(mode);
   }, []);
+
+  // Debug effect to monitor probe position changes
+  useEffect(() => {
+    console.log('App: Probe positions changed:', probePositions);
+    console.log('App: Current measurement state:', currentMeasurement);
+  }, [probePositions, currentMeasurement]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
