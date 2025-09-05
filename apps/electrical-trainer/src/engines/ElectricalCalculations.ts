@@ -164,8 +164,17 @@ export class ElectricalCalculations {
     nodeVoltages: Map<string, number>,
     branchCurrents: Map<string, number>
   ): { value: number; unit: string; isValid: boolean; displayValue: string } {
+    console.log('simulateMultimeterReading called with:', {
+      probePositions,
+      mode,
+      nodeVoltages: Array.from(nodeVoltages.entries()),
+      branchCurrents: Array.from(branchCurrents.entries())
+    });
+    
     const redVoltage = nodeVoltages.get(probePositions.red) || 0;
     const blackVoltage = nodeVoltages.get(probePositions.black) || 0;
+    
+    console.log('Probe voltages:', { red: redVoltage, black: blackVoltage });
 
     switch (mode) {
       case 'DC_VOLTAGE':

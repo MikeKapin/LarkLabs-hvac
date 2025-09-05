@@ -9,7 +9,7 @@ const App: React.FC = () => {
     red: '',
     black: ''
   });
-  const [multimeterMode] = useState<MultimeterMode>('DC_VOLTAGE');
+  const [multimeterMode, setMultimeterMode] = useState<MultimeterMode>('DC_VOLTAGE');
   const [currentMeasurement, setCurrentMeasurement] = useState<MultimeterReading>({
     value: 0,
     unit: 'V',
@@ -44,6 +44,10 @@ const App: React.FC = () => {
 
   const handleSafetyViolation = useCallback((violation: string) => {
     setSafetyWarnings(prev => [...prev.filter(w => w !== violation), violation]);
+  }, []);
+
+  const handleModeChange = useCallback((mode: MultimeterMode) => {
+    setMultimeterMode(mode);
   }, []);
 
   return (
@@ -139,6 +143,7 @@ const App: React.FC = () => {
                   onMeasurement={handleMeasurement}
                   onProbePositionChange={handleProbePositionChange}
                   onSafetyViolation={handleSafetyViolation}
+                  onModeChange={handleModeChange}
                   testPoints={selectedCircuit ? selectedCircuit.nodes
                     .filter(node => node.testPoints)
                     .map(node => ({

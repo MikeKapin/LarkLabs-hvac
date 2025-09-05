@@ -7,6 +7,7 @@ interface VirtualMultimeterProps {
   onMeasurement: (reading: MultimeterReading) => void;
   onProbePositionChange: (probes: { red: string; black: string }) => void;
   onSafetyViolation: (violation: string) => void;
+  onModeChange?: (mode: MultimeterMode) => void;
   testPoints?: Array<{ id: string; x: number; y: number; label: string }>;
   isEnabled?: boolean;
   className?: string;
@@ -16,6 +17,7 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
   onMeasurement,
   onProbePositionChange,
   onSafetyViolation,
+  onModeChange,
   testPoints = [],
   isEnabled = true,
   className = ''
@@ -54,7 +56,12 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
       },
       safetyWarnings: getSafetyWarningsForMode(newMode)
     }));
-  }, [isEnabled]);
+    
+    // Notify parent component of mode change
+    if (onModeChange) {
+      onModeChange(newMode);
+    }
+  }, [isEnabled, onModeChange]);
 
   // Handle range selection
   const handleRangeChange = useCallback((newRange: MeasurementRange) => {
