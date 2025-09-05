@@ -307,36 +307,20 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
     }
   }, [selectedComponent, isEnabled, simulationState, getComponentStyle]);
 
-  // Handle test point clicks for direct measurement
+  // DISABLED: Handle test point clicks for direct measurement
+  // This system was interfering with the ProbeController drag system
   const handleTestPointClick = useCallback((nodeId: string, event: React.MouseEvent) => {
     event.stopPropagation();
     
-    // Determine which probe to connect based on current state or user preference
-    if (!probePositions.red) {
-      // Connect red probe first
-      if (onProbePositionChange) {
-        onProbePositionChange({ red: nodeId, black: probePositions.black });
-      }
-      console.log('Connected red probe to:', nodeId);
-    } else if (!probePositions.black) {
-      // Connect black probe second
-      if (onProbePositionChange) {
-        onProbePositionChange({ red: probePositions.red, black: nodeId });
-      }
-      console.log('Connected black probe to:', nodeId);
-    } else {
-      // Both probes connected, replace red probe
-      if (onProbePositionChange) {
-        onProbePositionChange({ red: nodeId, black: probePositions.black });
-      }
-      console.log('Moved red probe to:', nodeId);
-    }
-  }, [probePositions, onProbePositionChange]);
+    console.log('Node click disabled - use ProbeController drag system instead');
+    // The ProbeController components handle all probe positioning now
+  }, []);
 
-  // Render circuit nodes (test points) with click handlers
+  // Render circuit nodes (test points) - simplified without probe state conflict
   const renderNode = useCallback((node: CircuitNode) => {
-    const isRedProbe = probePositions.red === node.id;
-    const isBlackProbe = probePositions.black === node.id;
+    // Check if probes are connected using LOCAL probes state, not props
+    const isRedProbe = probes.red.connectedTo === node.id;
+    const isBlackProbe = probes.black.connectedTo === node.id;
     const isProbeConnected = isRedProbe || isBlackProbe;
     const probeColor = isRedProbe ? 'red' : 'black';
     
@@ -345,17 +329,17 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
     return (
       <div
         key={node.id}
-        className={`circuit-node absolute w-6 h-6 rounded-full border-2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 cursor-pointer ${
+        className={`circuit-node absolute w-6 h-6 rounded-full border-2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${
           isProbeConnected 
-            ? `bg-${probeColor}-500 border-${probeColor}-700 ring-4 ring-${probeColor}-200 scale-125` 
-            : 'bg-yellow-400 border-yellow-600 hover:scale-110 hover:bg-yellow-300'
+            ? `bg-${probeColor}-500 border-${probeColor}-700 ring-4 ring-${probeColor}-200 scale-125 cursor-default` 
+            : 'bg-yellow-400 border-yellow-600 cursor-default'
         }`}
         style={{
           left: node.position.x,
           top: node.position.y,
           zIndex: 20
         }}
-        title={`Click to connect ${!probePositions.red ? 'red' : !probePositions.black ? 'black' : 'red'} probe to ${node.id}`}
+        title={`Test point: ${node.id}${isProbeConnected ? ` (${probeColor} probe connected)` : ''}`}
         onClick={(e) => handleTestPointClick(node.id, e)}
       >
         {/* Probe indicator */}
@@ -376,7 +360,7 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
         </div>
       </div>
     );
-  }, [probePositions, handleTestPointClick]);
+  }, [probes, handleTestPointClick]);
 
   // Render connecting wires
   const renderWires = useMemo(() => {
