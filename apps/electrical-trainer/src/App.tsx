@@ -30,12 +30,12 @@ const App: React.FC = () => {
   }, []);
 
   const handleSimulationResult = useCallback((result: any) => {
-    console.log('App.handleSimulationResult received:', result);
+    console.log('App.handleSimulationResult received:', JSON.stringify(result));
     
     // Handle both old complex measurement format and new simplified format
     if (result.reading) {
       // Old format from simulation engine
-      console.log('Using old format reading:', result.reading);
+      console.log('Using old format reading:', JSON.stringify(result.reading));
       setCurrentMeasurement(result.reading);
     } else if (result.value !== undefined) {
       // New simplified format from direct calculation
@@ -46,7 +46,7 @@ const App: React.FC = () => {
         isOverload: false,
         displayValue: result.displayValue
       };
-      console.log('Using new format measurement:', measurement);
+      console.log('Using new format measurement:', JSON.stringify(measurement));
       setCurrentMeasurement(measurement);
     }
     
@@ -69,8 +69,8 @@ const App: React.FC = () => {
 
   // Debug effect to monitor probe position changes
   useEffect(() => {
-    console.log('App: Probe positions changed:', probePositions);
-    console.log('App: Current measurement state:', currentMeasurement);
+    console.log('App: Probe positions changed:', JSON.stringify(probePositions));
+    console.log('App: Current measurement state:', JSON.stringify(currentMeasurement));
   }, [probePositions, currentMeasurement]);
 
   return (

@@ -36,14 +36,19 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
     probe: 'red' | 'black',
     position: ProbePosition
   ) => {
+    console.log(`CircuitSimulator - ${probe} probe position update:`, JSON.stringify(position));
+    
     const newProbes = { ...probes, [probe]: position };
     setProbes(newProbes);
     
+    // Always notify parent component of the connection changes
     if (onProbePositionChange) {
-      onProbePositionChange({
+      const connectionUpdate = {
         red: newProbes.red.connectedTo || '',
         black: newProbes.black.connectedTo || ''
-      });
+      };
+      console.log('CircuitSimulator notifying parent of probe positions:', JSON.stringify(connectionUpdate));
+      onProbePositionChange(connectionUpdate);
     }
   }, [probes, onProbePositionChange]);
 
@@ -52,11 +57,16 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
     return simulationEngine.getNodeVoltages();
   }, [simulationEngine]);
 
-  // Direct measurement calculation bypassing probe connections
+  // Direct measurement calculation using local probes state
   useEffect(() => {
-    // Calculate measurement directly from probe positions
-    const redNode = probePositions.red;
-    const blackNode = probePositions.black;
+    console.log('CircuitSimulator measurement calculation - Probes state:', JSON.stringify(probes));
+    console.log('CircuitSimulator measurement calculation - nodeVoltages:', Array.from(nodeVoltages.entries()));
+    
+    // Calculate measurement directly from LOCAL probe positions (not props!)
+    const redNode = probes.red.connectedTo;
+    const blackNode = probes.black.connectedTo;
+    
+    console.log(`Red probe connected to: ${redNode}, Black probe connected to: ${blackNode}`);
     
     if (redNode && blackNode && nodeVoltages.has(redNode) && nodeVoltages.has(blackNode)) {
       const redVoltage = nodeVoltages.get(redNode) || 0;
@@ -84,7 +94,7 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
           };
       }
       
-      console.log('CircuitSimulator calling onMeasurement with:', measurement);
+      console.log('CircuitSimulator calling onMeasurement with:', JSON.stringify(measurement));
       onMeasurement(measurement);
     } else if (redNode || blackNode) {
       // One probe connected - show partial connection status
@@ -94,6 +104,7 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
         isValid: false,
         displayValue: 'CONNECT BOTH PROBES'
       };
+      console.log('CircuitSimulator - One probe connected:', JSON.stringify(measurement));
       onMeasurement(measurement);
     } else {
       // No probes connected
@@ -103,9 +114,10 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
         isValid: false,
         displayValue: 'NO PROBES CONNECTED'
       };
+      console.log('CircuitSimulator - No probes connected:', JSON.stringify(measurement));
       onMeasurement(measurement);
     }
-  }, [probePositions, multimeterMode, nodeVoltages, onMeasurement]);
+  }, [probes, multimeterMode, nodeVoltages, onMeasurement]);
 
   // Get component visual properties
   const getComponentStyle = useCallback((component: ComponentSpec): React.CSSProperties => {

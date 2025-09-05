@@ -37,6 +37,10 @@ export const DisplayController: React.FC<DisplayControllerProps> = ({
   };
 
   const formatDisplayValue = (value: MultimeterReading): string => {
+    console.log('DisplayController formatting value:', JSON.stringify(value));
+    console.log('DisplayController display:', JSON.stringify(display));
+    console.log('DisplayController isOn:', isOn);
+    
     if (!isOn) return '';
     
     if (display.isOverload || !isFinite(value.value)) {
@@ -47,6 +51,7 @@ export const DisplayController: React.FC<DisplayControllerProps> = ({
       return '----';
     }
     
+    console.log('DisplayController returning displayValue:', display.displayValue);
     return display.displayValue;
   };
 

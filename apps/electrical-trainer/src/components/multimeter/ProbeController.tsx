@@ -88,7 +88,7 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
         connectedTo: nearbyTestPoint.id,
         isConnected: true
       };
-      console.log(`${probeType} probe final connection:`, finalPosition);
+      console.log(`${probeType} probe final connection:`, JSON.stringify(finalPosition));
       onPositionChange(finalPosition);
       
       // Add haptic feedback for connection
@@ -247,7 +247,7 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
               connectedTo: testPoint.id,
               isConnected: true
             };
-            console.log(`${probeType} probe connecting via click:`, newPosition);
+            console.log(`${probeType} probe connecting via click:`, JSON.stringify(newPosition));
             onPositionChange(newPosition);
             
             // Add haptic feedback
