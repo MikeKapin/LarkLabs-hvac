@@ -16,7 +16,7 @@
 # Redirect electrical trainer to Vercel app
 [[redirects]]
   from = "/electrical-trainer/*"
-  to = "https://electrical-trainer.vercel.app/:splat"
+  to = "https://lark-labs-hvac.vercel.app/:splat"
   status = 200
 
 # Force HTTPS
