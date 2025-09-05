@@ -122,6 +122,7 @@ const App: React.FC = () => {
                   onMeasurement={handleSimulationResult}
                   probePositions={probePositions}
                   multimeterMode={multimeterMode}
+                  onProbePositionChange={handleProbePositionChange}
                   className="mb-6"
                 />
               </div>

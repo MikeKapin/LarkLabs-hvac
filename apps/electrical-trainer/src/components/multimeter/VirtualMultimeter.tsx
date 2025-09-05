@@ -255,22 +255,7 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
         </div>
       </div>
 
-      {/* Probe Controllers */}
-      <ProbeController
-        probeType="red"
-        position={multimeterState.probes.red}
-        onPositionChange={(position) => handleProbePositionUpdate('red', position)}
-        isEnabled={isEnabled && multimeterState.isOn}
-        testPoints={testPoints}
-      />
-      
-      <ProbeController
-        probeType="black"
-        position={multimeterState.probes.black}
-        onPositionChange={(position) => handleProbePositionUpdate('black', position)}
-        isEnabled={isEnabled && multimeterState.isOn}
-        testPoints={testPoints}
-      />
+      {/* Note: Probe Controllers are now rendered in CircuitSimulator */}
     </div>
   );
 };

@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { CircuitDiagram, ComponentSpec, CircuitNode, MultimeterMode } from '../../types';
+import { CircuitDiagram, ComponentSpec, CircuitNode, MultimeterMode, ProbePosition } from '../../types';
 import { CircuitSimulationEngine } from '../../engines';
+import { ProbeController } from '../multimeter/ProbeController';
 
 interface CircuitSimulatorProps {
   circuit: CircuitDiagram;
   onMeasurement: (result: any) => void;
   probePositions: { red: string; black: string };
   multimeterMode: MultimeterMode;
+  onProbePositionChange?: (probes: { red: string; black: string }) => void;
   isEnabled?: boolean;
   className?: string;
 }
@@ -16,6 +18,7 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
   onMeasurement,
   probePositions,
   multimeterMode,
+  onProbePositionChange,
   isEnabled = true,
   className = ''
 }) => {
@@ -23,17 +26,42 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
   const [simulationState, setSimulationState] = useState(simulationEngine.getSimulationState());
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [showComponentInfo, setShowComponentInfo] = useState(false);
+  const [probes, setProbes] = useState<{ red: ProbePosition; black: ProbePosition }>({
+    red: { x: 100, y: 200, connectedTo: '', isConnected: false },
+    black: { x: 150, y: 200, connectedTo: '', isConnected: false }
+  });
+
+  // Handle probe position updates
+  const handleProbePositionUpdate = useCallback((
+    probe: 'red' | 'black',
+    position: ProbePosition
+  ) => {
+    const newProbes = { ...probes, [probe]: position };
+    setProbes(newProbes);
+    
+    if (onProbePositionChange) {
+      onProbePositionChange({
+        red: newProbes.red.connectedTo || '',
+        black: newProbes.black.connectedTo || ''
+      });
+    }
+  }, [probes, onProbePositionChange]);
 
   // Update simulation when probe positions or mode changes
   useEffect(() => {
-    if (probePositions.red && probePositions.black) {
+    const probeConnections = {
+      red: probes.red.connectedTo || '',
+      black: probes.black.connectedTo || ''
+    };
+    
+    if (probeConnections.red && probeConnections.black) {
       const measurement = simulationEngine.simulateMultimeterMeasurement(
-        probePositions,
+        probeConnections,
         multimeterMode
       );
       onMeasurement(measurement);
     }
-  }, [probePositions, multimeterMode, simulationEngine, onMeasurement]);
+  }, [probes, multimeterMode, simulationEngine, onMeasurement]);
 
   // Get component visual properties
   const getComponentStyle = useCallback((component: ComponentSpec): React.CSSProperties => {
@@ -334,6 +362,25 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
 
         {/* Render nodes (test points) */}
         {circuit.nodes.map(node => renderNode(node))}
+
+        {/* Render Multimeter Probes */}
+        <ProbeController
+          probeType="red"
+          position={probes.red}
+          onPositionChange={(position) => handleProbePositionUpdate('red', position)}
+          isEnabled={isEnabled}
+          testPoints={testPoints}
+          className="absolute inset-0"
+        />
+        
+        <ProbeController
+          probeType="black"
+          position={probes.black}
+          onPositionChange={(position) => handleProbePositionUpdate('black', position)}
+          isEnabled={isEnabled}
+          testPoints={testPoints}
+          className="absolute inset-0"
+        />
 
         {/* Circuit Title */}
         <div className="absolute top-4 left-4 bg-white px-3 py-2 rounded-lg shadow-md border border-gray-200">
