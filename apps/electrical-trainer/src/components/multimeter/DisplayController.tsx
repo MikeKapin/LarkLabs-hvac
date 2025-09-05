@@ -19,17 +19,21 @@ export const DisplayController: React.FC<DisplayControllerProps> = ({
   className = ''
 }) => {
   const getDisplayClasses = () => {
-    const baseClasses = 'multimeter-display bg-black text-green-400 font-mono text-2xl p-4 rounded border-2 border-gray-600 min-h-[120px] flex flex-col justify-center items-center relative';
+    let baseClasses = 'multimeter-display bg-black font-mono p-4 rounded border-2 border-gray-600 min-h-[120px] flex flex-col justify-center items-center relative';
     
     if (!isOn) {
-      return `${baseClasses} opacity-50`;
+      return `${baseClasses} opacity-50 text-gray-500 text-xl`;
     }
     
     if (display.isOverload) {
-      return `${baseClasses} text-red-400 animate-pulse`;
+      return `${baseClasses} text-red-400 animate-pulse text-3xl font-bold`;
     }
     
-    return baseClasses;
+    if (display.isValid) {
+      return `${baseClasses} text-green-400 text-4xl font-bold shadow-lg`;
+    }
+    
+    return `${baseClasses} text-yellow-400 text-2xl`;
   };
 
   const formatDisplayValue = (value: MultimeterReading): string => {
@@ -113,7 +117,7 @@ export const DisplayController: React.FC<DisplayControllerProps> = ({
 
         {/* Main Reading */}
         <div className="main-reading text-center">
-          <div className="value text-4xl font-bold leading-none">
+          <div className="value font-bold leading-none">
             {formatDisplayValue(display)}
           </div>
           

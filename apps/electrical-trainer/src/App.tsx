@@ -156,6 +156,7 @@ const App: React.FC = () => {
                   onProbePositionChange={handleProbePositionChange}
                   onSafetyViolation={handleSafetyViolation}
                   onModeChange={handleModeChange}
+                  currentMeasurement={currentMeasurement}
                   testPoints={selectedCircuit ? selectedCircuit.nodes
                     .filter(node => node.testPoints)
                     .map(node => ({

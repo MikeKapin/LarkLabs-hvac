@@ -9,6 +9,7 @@ interface VirtualMultimeterProps {
   onSafetyViolation: (violation: string) => void;
   onModeChange?: (mode: MultimeterMode) => void;
   testPoints?: Array<{ id: string; x: number; y: number; label: string }>;
+  currentMeasurement?: MultimeterReading;
   isEnabled?: boolean;
   className?: string;
 }
@@ -19,6 +20,7 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
   onSafetyViolation,
   onModeChange,
   testPoints = [],
+  currentMeasurement,
   isEnabled = true,
   className = ''
 }) => {
@@ -31,13 +33,13 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
       unit: 'V',
       isValid: false,
       isOverload: false,
-      displayValue: '0.000'
+      displayValue: 'NO PROBES CONNECTED'
     },
     probes: {
       red: { x: 0, y: 0, connectedTo: '', isConnected: false },
       black: { x: 0, y: 0, connectedTo: '', isConnected: false }
     },
-    isOn: false,
+    isOn: true,
     batteryLevel: 85,
     safetyWarnings: []
   });
@@ -128,6 +130,19 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
       onSafetyViolation(warning);
     });
   }, [multimeterState.safetyWarnings, onSafetyViolation]);
+
+  // Update display when measurement comes from parent component
+  useEffect(() => {
+    if (currentMeasurement && multimeterState.isOn) {
+      setMultimeterState(prev => ({
+        ...prev,
+        display: {
+          ...currentMeasurement,
+          isValid: currentMeasurement.isValid
+        }
+      }));
+    }
+  }, [currentMeasurement, multimeterState.isOn]);
 
   return (
     <div className={`virtual-multimeter ${className}`}>
