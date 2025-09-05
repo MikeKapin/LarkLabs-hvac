@@ -30,9 +30,21 @@ const App: React.FC = () => {
   }, []);
 
   const handleSimulationResult = useCallback((result: any) => {
+    // Handle both old complex measurement format and new simplified format
     if (result.reading) {
+      // Old format from simulation engine
       setCurrentMeasurement(result.reading);
+    } else if (result.value !== undefined) {
+      // New simplified format from direct calculation
+      setCurrentMeasurement({
+        value: result.value,
+        unit: result.unit,
+        isValid: result.isValid,
+        isOverload: false,
+        displayValue: result.displayValue
+      });
     }
+    
     if (result.safetyChecks) {
       setSafetyWarnings(result.safetyChecks.map((check: any) => check.message));
     }

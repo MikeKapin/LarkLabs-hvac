@@ -22,8 +22,8 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
   isEnabled = true,
   className = ''
 }) => {
-  const [simulationEngine] = useState(() => new CircuitSimulationEngine(circuit));
-  const [simulationState, setSimulationState] = useState(simulationEngine.getSimulationState());
+  const simulationEngine = useMemo(() => new CircuitSimulationEngine(circuit), [circuit]);
+  const [simulationState, setSimulationState] = useState(() => simulationEngine.getSimulationState());
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [showComponentInfo, setShowComponentInfo] = useState(false);
   const [probes, setProbes] = useState<{ red: ProbePosition; black: ProbePosition }>({
@@ -47,28 +47,64 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
     }
   }, [probes, onProbePositionChange]);
 
-  // Update simulation when probe positions or mode changes
+  // Get node voltages once and memoize them
+  const nodeVoltages = useMemo(() => {
+    return simulationEngine.getNodeVoltages();
+  }, [simulationEngine]);
+
+  // Direct measurement calculation bypassing probe connections
   useEffect(() => {
-    const probeConnections = {
-      red: probes.red.connectedTo || '',
-      black: probes.black.connectedTo || ''
-    };
+    // Calculate measurement directly from probe positions
+    const redNode = probePositions.red;
+    const blackNode = probePositions.black;
     
-    console.log('Probe positions:', JSON.stringify(probeConnections));
-    console.log('Multimeter mode:', multimeterMode);
-    
-    if (probeConnections.red && probeConnections.black) {
-      console.log('Attempting measurement...');
-      const measurement = simulationEngine.simulateMultimeterMeasurement(
-        probeConnections,
-        multimeterMode
-      );
-      console.log('Measurement result:', JSON.stringify(measurement));
+    if (redNode && blackNode && nodeVoltages.has(redNode) && nodeVoltages.has(blackNode)) {
+      const redVoltage = nodeVoltages.get(redNode) || 0;
+      const blackVoltage = nodeVoltages.get(blackNode) || 0;
+      
+      let measurement;
+      switch (multimeterMode) {
+        case 'DC_VOLTAGE':
+        case 'AC_VOLTAGE':
+          const voltage = redVoltage - blackVoltage;
+          measurement = {
+            value: voltage,
+            unit: 'V',
+            isValid: true,
+            displayValue: formatDisplayValue(voltage, 'V')
+          };
+          console.log(`Measurement: ${redNode}(${redVoltage}V) - ${blackNode}(${blackVoltage}V) = ${voltage}V`);
+          break;
+        default:
+          measurement = {
+            value: 0,
+            unit: '',
+            isValid: false,
+            displayValue: 'SELECT VOLTAGE MODE'
+          };
+      }
+      
+      onMeasurement(measurement);
+    } else if (redNode || blackNode) {
+      // One probe connected - show partial connection status
+      const measurement = {
+        value: 0,
+        unit: 'V',
+        isValid: false,
+        displayValue: 'CONNECT BOTH PROBES'
+      };
       onMeasurement(measurement);
     } else {
-      console.log('Missing probe connections:', JSON.stringify(probeConnections));
+      // No probes connected
+      const measurement = {
+        value: 0,
+        unit: 'V',
+        isValid: false,
+        displayValue: 'NO PROBES CONNECTED'
+      };
+      onMeasurement(measurement);
     }
-  }, [probes, multimeterMode, simulationEngine, onMeasurement]);
+  }, [probePositions, multimeterMode, nodeVoltages, onMeasurement]);
 
   // Get component visual properties
   const getComponentStyle = useCallback((component: ComponentSpec): React.CSSProperties => {
@@ -258,37 +294,76 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
     }
   }, [selectedComponent, isEnabled, simulationState, getComponentStyle]);
 
-  // Render circuit nodes (test points)
+  // Handle test point clicks for direct measurement
+  const handleTestPointClick = useCallback((nodeId: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    
+    // Determine which probe to connect based on current state or user preference
+    if (!probePositions.red) {
+      // Connect red probe first
+      if (onProbePositionChange) {
+        onProbePositionChange({ red: nodeId, black: probePositions.black });
+      }
+      console.log('Connected red probe to:', nodeId);
+    } else if (!probePositions.black) {
+      // Connect black probe second
+      if (onProbePositionChange) {
+        onProbePositionChange({ red: probePositions.red, black: nodeId });
+      }
+      console.log('Connected black probe to:', nodeId);
+    } else {
+      // Both probes connected, replace red probe
+      if (onProbePositionChange) {
+        onProbePositionChange({ red: nodeId, black: probePositions.black });
+      }
+      console.log('Moved red probe to:', nodeId);
+    }
+  }, [probePositions, onProbePositionChange]);
+
+  // Render circuit nodes (test points) with click handlers
   const renderNode = useCallback((node: CircuitNode) => {
-    const isProbeConnected = probePositions.red === node.id || probePositions.black === node.id;
-    const probeColor = probePositions.red === node.id ? 'red' : 'black';
+    const isRedProbe = probePositions.red === node.id;
+    const isBlackProbe = probePositions.black === node.id;
+    const isProbeConnected = isRedProbe || isBlackProbe;
+    const probeColor = isRedProbe ? 'red' : 'black';
     
     if (!node.testPoints) return null;
 
     return (
       <div
         key={node.id}
-        className={`circuit-node absolute w-4 h-4 rounded-full border-2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${
+        className={`circuit-node absolute w-6 h-6 rounded-full border-2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 cursor-pointer ${
           isProbeConnected 
             ? `bg-${probeColor}-500 border-${probeColor}-700 ring-4 ring-${probeColor}-200 scale-125` 
-            : 'bg-yellow-400 border-yellow-600 hover:scale-110'
+            : 'bg-yellow-400 border-yellow-600 hover:scale-110 hover:bg-yellow-300'
         }`}
         style={{
           left: node.position.x,
           top: node.position.y,
           zIndex: 20
         }}
-        title={`Test Point: ${node.id}`}
+        title={`Click to connect ${!probePositions.red ? 'red' : !probePositions.black ? 'black' : 'red'} probe to ${node.id}`}
+        onClick={(e) => handleTestPointClick(node.id, e)}
       >
+        {/* Probe indicator */}
+        {isProbeConnected && (
+          <div className={`absolute inset-0 rounded-full bg-${probeColor}-400 opacity-60 animate-pulse`} />
+        )}
+        
         {/* Node label */}
-        <div className={`absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-semibold ${
+        <div className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-semibold ${
           isProbeConnected ? `text-${probeColor}-600` : 'text-yellow-700'
         } whitespace-nowrap`}>
           {node.id.replace('node_', '')}
+          {isProbeConnected && (
+            <div className={`text-${probeColor}-500 text-[10px] font-bold`}>
+              {isRedProbe ? 'RED' : 'BLACK'}
+            </div>
+          )}
         </div>
       </div>
     );
-  }, [probePositions]);
+  }, [probePositions, handleTestPointClick]);
 
   // Render connecting wires
   const renderWires = useMemo(() => {
@@ -484,6 +559,26 @@ function formatComponentValue(value: number, unit: string): string {
     return `${(value / 1000).toFixed(1)}k${unit}`;
   } else {
     return `${value}${unit}`;
+  }
+}
+
+function formatDisplayValue(value: number, unit: string): string {
+  if (!isFinite(value)) return 'OL'; // Overload
+  
+  const absValue = Math.abs(value);
+  
+  if (absValue >= 1e6) {
+    return `${(value / 1e6).toFixed(2)}M${unit}`;
+  } else if (absValue >= 1e3) {
+    return `${(value / 1e3).toFixed(2)}k${unit}`;
+  } else if (absValue >= 1) {
+    return `${value.toFixed(3)}${unit}`;
+  } else if (absValue >= 1e-3) {
+    return `${(value * 1e3).toFixed(1)}m${unit}`;
+  } else if (absValue >= 1e-6) {
+    return `${(value * 1e6).toFixed(1)}µ${unit}`;
+  } else {
+    return `${value.toExponential(2)}${unit}`;
   }
 }
 
