@@ -59,6 +59,9 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
     // Check for test point connections
     const nearbyTestPoint = findNearbyTestPoint(newX, newY, testPoints);
     
+    console.log(`${probeType} probe at (${newX}, ${newY}), testPoints:`, testPoints);
+    console.log(`${probeType} nearbyTestPoint:`, nearbyTestPoint);
+    
     const newPosition: ProbePosition = {
       x: newX,
       y: newY,
@@ -68,7 +71,7 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
     
     setConnectionIndicator(nearbyTestPoint?.label || null);
     onPositionChange(newPosition);
-  }, [isDragging, isEnabled, dragOffset, testPoints, onPositionChange]);
+  }, [isDragging, isEnabled, dragOffset, testPoints, onPositionChange, probeType]);
 
   // Handle probe dragging end
   const handleDragEnd = useCallback(() => {
@@ -210,24 +213,40 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
       {testPoints.map((testPoint) => (
         <div
           key={testPoint.id}
-          className="test-point absolute w-4 h-4 bg-yellow-500 border-2 border-yellow-700 rounded-full"
+          className="test-point absolute w-6 h-6 bg-yellow-500 border-2 border-yellow-700 rounded-full cursor-pointer hover:bg-yellow-400 transition-colors"
           style={{
             left: testPoint.x,
             top: testPoint.y,
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%)',
+            zIndex: 5
           }}
-          title={testPoint.label}
+          title={`Click to connect ${probeType} probe to ${testPoint.label}`}
+          onClick={() => {
+            console.log(`${probeType} probe clicked on test point ${testPoint.id}`);
+            const newPosition: ProbePosition = {
+              x: testPoint.x,
+              y: testPoint.y,
+              connectedTo: testPoint.id,
+              isConnected: true
+            };
+            onPositionChange(newPosition);
+          }}
         >
-          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-yellow-700 whitespace-nowrap">
+          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-yellow-700 whitespace-nowrap pointer-events-none">
             {testPoint.label}
           </div>
+          {/* Connection indicator for this test point */}
+          {position.connectedTo === testPoint.id && (
+            <div className="absolute -inset-1 rounded-full bg-green-400 opacity-60 animate-pulse" />
+          )}
         </div>
       ))}
 
       {/* Probe Instructions */}
       {!position.isConnected && isEnabled && (
         <div className="probe-instructions absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-sm text-gray-600 max-w-xs">
-          <p>Drag the {probeType} probe to test points on the circuit</p>
+          <p>Click on yellow test points to connect the {probeType} probe</p>
+          <p className="text-xs mt-1">Or drag the probe near test points to connect</p>
           {testPoints.length === 0 && (
             <p className="text-xs mt-1 text-gray-500">Load a circuit to see available test points</p>
           )}
@@ -242,7 +261,7 @@ function findNearbyTestPoint(
   x: number,
   y: number,
   testPoints: Array<{ id: string; x: number; y: number; label: string }>,
-  threshold: number = 30
+  threshold: number = 50
 ): { id: string; x: number; y: number; label: string } | null {
   for (const testPoint of testPoints) {
     const distance = Math.sqrt(
