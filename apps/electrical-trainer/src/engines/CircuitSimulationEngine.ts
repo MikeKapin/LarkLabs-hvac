@@ -221,7 +221,9 @@ export class CircuitSimulationEngine {
    */
   startSimulation(): void {
     this.state.isRunning = true;
-    this.simulationLoop();
+    // Don't start continuous loop - just solve once
+    this.solveCircuit();
+    this.updateSimulationState();
   }
 
   /**
@@ -272,8 +274,8 @@ export class CircuitSimulationEngine {
 
     this.stepSimulation();
     
-    // Schedule next iteration
-    requestAnimationFrame(() => this.simulationLoop());
+    // Disabled continuous loop to prevent excessive recalculations
+    // requestAnimationFrame(() => this.simulationLoop());
   }
 
   private resetToSafeState(): void {
