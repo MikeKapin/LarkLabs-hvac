@@ -7,6 +7,7 @@ interface VirtualMultimeterProps {
   onMeasurement: (reading: MultimeterReading) => void;
   onProbePositionChange: (probes: { red: string; black: string }) => void;
   onSafetyViolation: (violation: string) => void;
+  testPoints?: Array<{ id: string; x: number; y: number; label: string }>;
   isEnabled?: boolean;
   className?: string;
 }
@@ -15,6 +16,7 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
   onMeasurement,
   onProbePositionChange,
   onSafetyViolation,
+  testPoints = [],
   isEnabled = true,
   className = ''
 }) => {
@@ -259,6 +261,7 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
         position={multimeterState.probes.red}
         onPositionChange={(position) => handleProbePositionUpdate('red', position)}
         isEnabled={isEnabled && multimeterState.isOn}
+        testPoints={testPoints}
       />
       
       <ProbeController
@@ -266,6 +269,7 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
         position={multimeterState.probes.black}
         onPositionChange={(position) => handleProbePositionUpdate('black', position)}
         isEnabled={isEnabled && multimeterState.isOn}
+        testPoints={testPoints}
       />
     </div>
   );

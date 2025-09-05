@@ -55,13 +55,13 @@ export const FREE_TIER_CIRCUITS: CircuitDiagram[] = [
       {
         id: 'wire_1',
         from: 'node_positive',
-        to: 'resistor_1',
+        to: 'node_load',
         color: 'red'
       },
       {
         id: 'wire_2',
-        from: 'node_negative',
-        to: 'battery_1',
+        from: 'node_load',
+        to: 'node_negative',
         color: 'black'
       }
     ],
@@ -279,22 +279,40 @@ export const FREE_TIER_CIRCUITS: CircuitDiagram[] = [
     ],
     connections: [
       {
-        id: 'wire_1',
+        id: 'wire_left_r1',
         from: 'node_left',
         to: 'resistor_1',
         color: 'red'
       },
       {
-        id: 'wire_2',
+        id: 'wire_left_r2',
         from: 'node_left',
         to: 'resistor_2',
         color: 'red'
       },
       {
-        id: 'wire_3',
+        id: 'wire_left_r3',
         from: 'node_left',
         to: 'resistor_3',
         color: 'red'
+      },
+      {
+        id: 'wire_right_r1',
+        from: 'resistor_1',
+        to: 'node_right',
+        color: 'black'
+      },
+      {
+        id: 'wire_right_r2',
+        from: 'resistor_2',
+        to: 'node_right',
+        color: 'black'
+      },
+      {
+        id: 'wire_right_r3',
+        from: 'resistor_3',
+        to: 'node_right',
+        color: 'black'
       }
     ],
     supplyVoltage: 0,
@@ -382,13 +400,37 @@ export const FREE_TIER_CIRCUITS: CircuitDiagram[] = [
       {
         id: 'wire_1',
         from: 'node_positive',
-        to: 'node_led_anode',
+        to: 'resistor_1',
         color: 'red'
       },
       {
         id: 'wire_2',
+        from: 'resistor_1',
+        to: 'node_led_anode',
+        color: 'red'
+      },
+      {
+        id: 'wire_3',
         from: 'node_led_anode',
+        to: 'led_1',
+        color: 'red'
+      },
+      {
+        id: 'wire_4',
+        from: 'led_1',
         to: 'node_negative',
+        color: 'black'
+      },
+      {
+        id: 'wire_5',
+        from: 'node_negative',
+        to: 'battery_1',
+        color: 'black'
+      },
+      {
+        id: 'wire_6',
+        from: 'battery_1',
+        to: 'node_positive',
         color: 'red'
       }
     ],
@@ -499,18 +541,36 @@ export const FREE_TIER_CIRCUITS: CircuitDiagram[] = [
       {
         id: 'wire_1',
         from: 'node_1',
-        to: 'node_2',
+        to: 'switch_1',
         color: 'black'
       },
       {
         id: 'wire_2',
-        from: 'node_2',
-        to: 'node_3',
+        from: 'switch_1',
+        to: 'node_2',
         color: 'black'
       },
       {
         id: 'wire_3',
+        from: 'node_2',
+        to: 'fuse_1',
+        color: 'black'
+      },
+      {
+        id: 'wire_4',
+        from: 'fuse_1',
+        to: 'node_3',
+        color: 'black'
+      },
+      {
+        id: 'wire_5',
         from: 'node_3',
+        to: 'wire_break',
+        color: 'black'
+      },
+      {
+        id: 'wire_6',
+        from: 'wire_break',
         to: 'node_4',
         color: 'black',
         isDefective: true

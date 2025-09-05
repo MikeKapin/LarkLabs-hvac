@@ -138,6 +138,14 @@ const App: React.FC = () => {
                   onMeasurement={handleMeasurement}
                   onProbePositionChange={handleProbePositionChange}
                   onSafetyViolation={handleSafetyViolation}
+                  testPoints={selectedCircuit ? selectedCircuit.nodes
+                    .filter(node => node.testPoints)
+                    .map(node => ({
+                      id: node.id,
+                      x: node.position.x,
+                      y: node.position.y,
+                      label: node.id.replace('node_', '').replace('_', ' ')
+                    })) : []}
                 />
               </div>
 
