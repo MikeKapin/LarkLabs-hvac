@@ -59,8 +59,8 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
     // Check for test point connections
     const nearbyTestPoint = findNearbyTestPoint(newX, newY, testPoints);
     
-    console.log(`${probeType} probe at (${newX}, ${newY}), testPoints:`, testPoints);
-    console.log(`${probeType} nearbyTestPoint:`, nearbyTestPoint);
+    console.log(`${probeType} probe at (${newX}, ${newY}), testPoints:`, JSON.stringify(testPoints.map(tp => ({id: tp.id, x: tp.x, y: tp.y, label: tp.label}))));
+    console.log(`${probeType} nearbyTestPoint:`, nearbyTestPoint ? JSON.stringify(nearbyTestPoint) : 'null');
     
     const newPosition: ProbePosition = {
       x: newX,
@@ -78,11 +78,27 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
     setIsDragging(false);
     setConnectionIndicator(null);
     
-    // Add haptic feedback for connection
-    if ('vibrate' in navigator && position.isConnected) {
-      navigator.vibrate([100, 50, 100]);
+    // Check for final connection when drag ends
+    const nearbyTestPoint = findNearbyTestPoint(position.x, position.y, testPoints);
+    
+    if (nearbyTestPoint) {
+      const finalPosition: ProbePosition = {
+        x: nearbyTestPoint.x, // Snap to test point center
+        y: nearbyTestPoint.y,
+        connectedTo: nearbyTestPoint.id,
+        isConnected: true
+      };
+      console.log(`${probeType} probe final connection:`, finalPosition);
+      onPositionChange(finalPosition);
+      
+      // Add haptic feedback for connection
+      if ('vibrate' in navigator) {
+        navigator.vibrate([100, 50, 100]);
+      }
+    } else {
+      console.log(`${probeType} probe drag ended - no connection`);
     }
-  }, [position.isConnected]);
+  }, [position.x, position.y, testPoints, probeType, onPositionChange]);
 
   // Set up event listeners
   useEffect(() => {
@@ -221,7 +237,9 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
             zIndex: 5
           }}
           title={`Click to connect ${probeType} probe to ${testPoint.label}`}
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
             console.log(`${probeType} probe clicked on test point ${testPoint.id}`);
             const newPosition: ProbePosition = {
               x: testPoint.x,
@@ -229,7 +247,13 @@ export const ProbeController: React.FC<ProbeControllerProps> = ({
               connectedTo: testPoint.id,
               isConnected: true
             };
+            console.log(`${probeType} probe connecting via click:`, newPosition);
             onPositionChange(newPosition);
+            
+            // Add haptic feedback
+            if ('vibrate' in navigator) {
+              navigator.vibrate([50, 25, 50]);
+            }
           }}
         >
           <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-yellow-700 whitespace-nowrap pointer-events-none">
