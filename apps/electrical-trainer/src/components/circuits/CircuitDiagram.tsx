@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircuitDiagram as CircuitDiagramType, ComponentSpec, CircuitNode } from '@/types';
+import { CircuitDiagram as CircuitDiagramType, ComponentSpec, CircuitNode } from '../../types';
 
 interface CircuitDiagramProps {
   circuit: CircuitDiagramType;

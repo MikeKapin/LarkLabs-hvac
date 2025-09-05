@@ -1,4 +1,4 @@
-import { SafetyProtocol, MultimeterMode, CircuitDiagram } from '@/types';
+import { MultimeterMode, CircuitDiagram } from '../types';
 
 export interface SafetyCheck {
   id: string;

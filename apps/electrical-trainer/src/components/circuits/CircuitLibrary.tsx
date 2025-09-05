@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircuitDiagram } from '@/types';
+import { CircuitDiagram } from '../../types';
 
 // Define the 5 fundamental circuit scenarios for the free tier
 export const FREE_TIER_CIRCUITS: CircuitDiagram[] = [
@@ -559,7 +559,7 @@ export const FREE_TIER_CIRCUITS: CircuitDiagram[] = [
 
 interface CircuitLibraryProps {
   onCircuitSelect: (circuit: CircuitDiagram) => void;
-  selectedCircuit?: string;
+  selectedCircuit: string;
   className?: string;
 }
 

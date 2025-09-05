@@ -1,5 +1,5 @@
 import React from 'react';
-import { MultimeterReading, MultimeterMode, MeasurementRange } from '@/types';
+import { MultimeterReading, MultimeterMode, MeasurementRange } from '../../types';
 
 interface DisplayControllerProps {
   display: MultimeterReading;

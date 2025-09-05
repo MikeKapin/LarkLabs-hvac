@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { MultimeterState, MultimeterMode, MeasurementRange, MultimeterReading } from '@/types';
+import { MultimeterState, MultimeterMode, MeasurementRange, MultimeterReading } from '../../types';
 import { DisplayController } from './DisplayController';
 import { ProbeController } from './ProbeController';
 

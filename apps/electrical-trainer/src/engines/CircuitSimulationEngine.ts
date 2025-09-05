@@ -1,4 +1,4 @@
-import { CircuitDiagram, CircuitSimulationState, FaultCondition, MultimeterMode } from '@/types';
+import { CircuitDiagram, CircuitSimulationState, FaultCondition, MultimeterMode } from '../types';
 import { ElectricalCalculations } from './ElectricalCalculations';
 import { SafetyEngine } from './SafetyEngine';
 

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { CircuitDiagram, MultimeterReading, MultimeterMode } from '@/types';
-import { VirtualMultimeter } from '@/components/multimeter';
-import { CircuitLibrary, CircuitSimulator } from '@/components/circuits';
+import { CircuitDiagram, MultimeterReading, MultimeterMode } from './types';
+import { VirtualMultimeter } from './components/multimeter';
+import { CircuitLibrary, CircuitSimulator } from './components/circuits';
 
 const App: React.FC = () => {
   const [selectedCircuit, setSelectedCircuit] = useState<CircuitDiagram | null>(null);
@@ -9,7 +9,7 @@ const App: React.FC = () => {
     red: '',
     black: ''
   });
-  const [multimeterMode, setMultimeterMode] = useState<MultimeterMode>('DC_VOLTAGE');
+  const [multimeterMode] = useState<MultimeterMode>('DC_VOLTAGE');
   const [currentMeasurement, setCurrentMeasurement] = useState<MultimeterReading>({
     value: 0,
     unit: 'V',
@@ -58,8 +58,8 @@ const App: React.FC = () => {
                 alt="LARK Labs" 
                 className="h-10 w-auto"
                 onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling!.style.display = 'block';
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'block';
                 }}
               />
               <span 
@@ -97,7 +97,7 @@ const App: React.FC = () => {
           /* Circuit Library View */
           <CircuitLibrary
             onCircuitSelect={handleCircuitSelect}
-            selectedCircuit={selectedCircuit?.id}
+            selectedCircuit=""
           />
         ) : (
           /* Training Interface */

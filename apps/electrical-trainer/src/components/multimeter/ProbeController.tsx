@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { ProbePosition } from '@/types';
+import { ProbePosition } from '../../types';
 
 interface ProbeControllerProps {
   probeType: 'red' | 'black';

@@ -1,4 +1,4 @@
-import { ComponentSpec, CircuitNode, CircuitDiagram, MultimeterMode } from '@/types';
+import { ComponentSpec, CircuitNode, CircuitDiagram, MultimeterMode } from '../types';
 
 export class ElectricalCalculations {
   private static readonly MIN_RESISTANCE = 1e-6; // Minimum resistance to prevent division by zero
@@ -182,7 +182,7 @@ export class ElectricalCalculations {
         // For current measurement, multimeter must be in series with the circuit
         const current = this.getCurrentThroughPath(probePositions, branchCurrents);
         return {
-          value: current,
+          value: current || 0,
           unit: 'A',
           isValid: current !== null,
           displayValue: this.formatDisplayValue(current || 0, 'A')

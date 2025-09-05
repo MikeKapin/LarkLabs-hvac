@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { CircuitDiagram, ComponentSpec, CircuitNode, MultimeterMode } from '@/types';
-import { CircuitSimulationEngine } from '@/engines';
+import { CircuitDiagram, ComponentSpec, CircuitNode, MultimeterMode } from '../../types';
+import { CircuitSimulationEngine } from '../../engines';
 
 interface CircuitSimulatorProps {
   circuit: CircuitDiagram;
