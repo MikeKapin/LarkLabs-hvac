@@ -117,12 +117,13 @@ export const VirtualMultimeter: React.FC<VirtualMultimeterProps> = ({
     });
   }, [onProbePositionChange]);
 
-  // Update display when measurement changes
-  useEffect(() => {
-    if (multimeterState.display.isValid) {
-      onMeasurement(multimeterState.display);
-    }
-  }, [multimeterState.display, onMeasurement]);
+  // REMOVED: Update display when measurement changes
+  // This was causing infinite loops - measurements now come from CircuitSimulator only
+  // useEffect(() => {
+  //   if (multimeterState.display.isValid) {
+  //     onMeasurement(multimeterState.display);
+  //   }
+  // }, [multimeterState.display, onMeasurement]);
 
   // Check for safety violations
   useEffect(() => {
