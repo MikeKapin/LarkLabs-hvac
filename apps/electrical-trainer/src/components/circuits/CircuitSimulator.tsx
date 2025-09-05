@@ -54,7 +54,7 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
       black: probes.black.connectedTo || ''
     };
     
-    console.log('Probe positions:', probeConnections);
+    console.log('Probe positions:', JSON.stringify(probeConnections));
     console.log('Multimeter mode:', multimeterMode);
     
     if (probeConnections.red && probeConnections.black) {
@@ -63,10 +63,10 @@ export const CircuitSimulator: React.FC<CircuitSimulatorProps> = ({
         probeConnections,
         multimeterMode
       );
-      console.log('Measurement result:', measurement);
+      console.log('Measurement result:', JSON.stringify(measurement));
       onMeasurement(measurement);
     } else {
-      console.log('Missing probe connections:', probeConnections);
+      console.log('Missing probe connections:', JSON.stringify(probeConnections));
     }
   }, [probes, multimeterMode, simulationEngine, onMeasurement]);
 

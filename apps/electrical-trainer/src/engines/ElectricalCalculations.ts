@@ -76,6 +76,9 @@ export class ElectricalCalculations {
     const nodeVoltages = new Map<string, number>();
     const nodes = circuit.nodes.filter(node => node.id !== 'ground');
     
+    console.log('Solving circuit with nodes:', nodes.map(n => n.id));
+    console.log('Circuit components:', circuit.components);
+    
     // Initialize all node voltages to 0 except voltage sources
     nodes.forEach(node => {
       nodeVoltages.set(node.id, 0);
@@ -88,12 +91,17 @@ export class ElectricalCalculations {
     circuit.components.forEach(component => {
       if (component.type === 'VOLTAGE_SOURCE') {
         const connectedNodes = component.connections;
+        console.log('Voltage source found:', component, 'connections:', connectedNodes);
         if (connectedNodes.length >= 2) {
+          // For basic DC circuit: positive node gets source voltage, negative node is reference (0V)
           nodeVoltages.set(connectedNodes[0], component.value);
-          nodeVoltages.set(connectedNodes[1], 0); // Assume negative terminal is ground
+          nodeVoltages.set(connectedNodes[1], 0);
+          console.log(`Set ${connectedNodes[0]} = ${component.value}V, ${connectedNodes[1]} = 0V`);
         }
       }
     });
+    
+    console.log('Initial node voltages:', Array.from(nodeVoltages.entries()));
 
     // Iterative solution using Gauss-Seidel method
     for (let iteration = 0; iteration < this.MAX_ITERATIONS; iteration++) {
@@ -112,6 +120,7 @@ export class ElectricalCalculations {
       if (maxChange < this.CONVERGENCE_TOLERANCE) break;
     }
 
+    console.log('Final node voltages:', Array.from(nodeVoltages.entries()));
     return nodeVoltages;
   }
 
@@ -174,18 +183,25 @@ export class ElectricalCalculations {
     const redVoltage = nodeVoltages.get(probePositions.red) || 0;
     const blackVoltage = nodeVoltages.get(probePositions.black) || 0;
     
-    console.log('Probe voltages:', { red: redVoltage, black: blackVoltage });
+    console.log('Probe voltages:', { 
+      red: redVoltage, 
+      black: blackVoltage,
+      redProbeNode: probePositions.red,
+      blackProbeNode: probePositions.black
+    });
 
     switch (mode) {
       case 'DC_VOLTAGE':
       case 'AC_VOLTAGE':
         const voltage = redVoltage - blackVoltage;
-        return {
+        const result = {
           value: voltage,
           unit: 'V',
           isValid: true,
           displayValue: this.formatDisplayValue(voltage, 'V')
         };
+        console.log('DC/AC Voltage measurement result:', result);
+        return result;
 
       case 'CURRENT':
         // For current measurement, multimeter must be in series with the circuit
