@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canadian Gas Piping Sizing Calculator - CSA B149.1:25</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Professional CSA B149.1:25 compliant gas piping sizing calculator for natural gas and propane systems">
+    <meta name="theme-color" content="#1e3c72">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Gas Pipe Calc">
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+    <link rel="manifest" href="gas-pipe-calc-manifest.json">
     <style>
         * {
             margin: 0;
@@ -3244,6 +3257,17 @@
         document.addEventListener('DOMContentLoaded', function() {
             updateTotal();
         });
+
+        // Register Service Worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
     </script>
 </body>
 </html>
