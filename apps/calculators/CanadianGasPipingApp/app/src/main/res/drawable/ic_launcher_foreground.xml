@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:translateX="27"
+        android:translateY="27">
+        <!-- Pipe icon -->
+        <path
+            android:fillColor="@color/white"
+            android:pathData="M8,20h32v8H8z" />
+        <path
+            android:fillColor="@color/white"
+            android:pathData="M40,16v16h8V16z" />
+        <path
+            android:fillColor="@color/white"
+            android:pathData="M8,12h32v8H8z" />
+        <!-- Flame icon -->
+        <path
+            android:fillColor="@color/accent_color"
+            android:pathData="M24,32c-4,0-8-4-8-8s4-8,8-8s8,4,8,8S28,32,24,32z" />
+        <path
+            android:fillColor="@color/accent_color"
+            android:pathData="M26,26c-1,0-2-1-2-2s1-2,2-2s2,1,2,2S27,26,26,26z" />
+    </group>
+</vector>

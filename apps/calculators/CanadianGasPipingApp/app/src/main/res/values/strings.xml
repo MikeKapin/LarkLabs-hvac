@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Canadian Gas Piping Calculator</string>
+    <string name="app_subtitle">CSA B149.1:25 Compliant Pipe Sizing</string>
+    <string name="powered_by">Powered by LarkLabs</string>
+</resources>
