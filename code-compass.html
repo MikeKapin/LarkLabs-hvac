@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Compass - CSA B149.1 Gas Code Search App | LARK Labs</title>
+    <meta name="description" content="Instantly search CSA B149.1 gas codes with Code Compass. Mobile app for HVAC technicians, gas fitters, and inspectors. Always current, always accessible. Free version available.">
+    <meta name="keywords" content="CSA B149.1 app, gas code search, HVAC code lookup, gas technician tools, Code Compass, TSSA regulations, Canadian gas codes, gas fitter app, HVAC mobile app">
+    
+    <!-- SEO Enhancements -->
+    <link rel="canonical" href="https://larklabs.org/code-compass" />
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="LARK Labs - HVAC Training and Tools">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" type="image/png" href="https://larklabs.org/favicon.png" />
+    <link rel="apple-touch-icon" href="https://larklabs.org/apple-touch-icon.png" />
+    
+    <!-- Open Graph for Facebook/LinkedIn -->
+    <meta property="og:title" content="Code Compass - CSA B149.1 Gas Code Search App">
+    <meta property="og:description" content="Never flip through gas code books again! Instantly search CSA B149.1 regulations with our mobile-optimized tool for Canadian gas technicians.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://larklabs.org/code-compass">
+    <meta property="og:image" content="https://larklabs.org/assets/images/code-compass-preview.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Code Compass - CSA B149.1 Gas Code Search App">
+    <meta name="twitter:description" content="Instantly search CSA B149.1 gas codes. Mobile app for HVAC technicians and gas fitters.">
+    <meta name="twitter:image" content="https://larklabs.org/assets/images/code-compass-preview.png">
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://larklabs.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Code Compass",
+          "item": "https://larklabs.org/code-compass"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Software Application Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "Code Compass",
+      "operatingSystem": "Web",
+      "applicationCategory": "Professional Tool",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free Version",
+          "price": "0",
+          "priceCurrency": "CAD",
+          "availability": "https://schema.org/InStock",
+          "description": "Ontario Regulations + Limited CSA B149.1/2 access"
+        },
+        {
+          "@type": "Offer",
+          "name": "Premium Version",
+          "price": "79.00",
+          "priceCurrency": "CAD",
+          "availability": "https://schema.org/InStock",
+          "description": "Full CSA B149.1/2 access + AI-powered explanations"
+        }
+      ],
+      "description": "AI-powered CSA B149.1 gas code search and interpretation tool for Canadian gas technicians and HVAC professionals",
+      "url": "https://codecompassapp.netlify.app/",
+      "screenshot": "https://larklabs.org/assets/images/code-compass-screenshot.png",
+      "featureList": [
+        "Instant CSA B149.1 regulation searches",
+        "Always up-to-date code compliance",
+        "Mobile-optimized for field work",
+        "Bookmark frequently used codes",
+        "Offline access to downloaded sections",
+        "AI-powered code explanations"
+      ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Gas technicians, HVAC professionals, inspectors"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "LARK Labs"
+      }
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c5aa0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        /* Problem/Solution Section */
+        .problem-solution {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 80px 0;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .comparison-card.problem {
+            border-left: 5px solid #e74c3c;
+        }
+
+        .comparison-card.solution {
+            border-left: 5px solid #2ecc71;
+        }
+
+        .comparison-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .comparison-card.problem h3 {
+            color: #e74c3c;
+        }
+
+        .comparison-card.solution h3 {
+            color: #2ecc71;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f39c12;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 80px 0;
+            color: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">LARK Labs</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="code-compass.html">Code Compass</a></li>
+                <li><a href="hvac-jack-40.html">HVAC JACK 4.0</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#training">Training</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>🧭 Never Flip Through Gas Code Books Again</h1>
+            <p>Instant CSA B149.1 regulation searches at your fingertips. Mobile-optimized for field work.</p>
+            <div class="cta-buttons">
+                <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">🚀 Try Free Version</a>
+                <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button secondary">📱 Launch App</a>
+            </div>
+            <p style="font-size: 1rem; opacity: 0.8;">✨ Used by 1000+ Canadian gas technicians and inspectors</p>
+        </div>
+    </section>
+
+    <!-- Problem/Solution Section -->
+    <section class="problem-solution">
+        <div class="container">
+            <h2 class="section-title">Stop Wasting Time on Manual Code Lookups</h2>
+            <div class="comparison">
+                <div class="comparison-card problem">
+                    <h3>❌ The Old Way</h3>
+                    <ul>
+                        <li>Flipping through hundreds of pages</li>
+                        <li>Carrying heavy code books to job sites</li>
+                        <li>Outdated regulations in printed manuals</li>
+                        <li>Time-consuming searches during inspections</li>
+                        <li>Difficult to find specific requirements</li>
+                    </ul>
+                </div>
+                <div class="comparison-card solution">
+                    <h3>✅ The Code Compass Way</h3>
+                    <ul>
+                        <li>Instant keyword searches in seconds</li>
+                        <li>Always up-to-date regulations</li>
+                        <li>Mobile-optimized for field use</li>
+                        <li>Smart bookmarks for frequent codes</li>
+                        <li>AI-powered explanations (Premium)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Everything You Need for Code Compliance</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Instant Search</h3>
+                    <p>Find any CSA B149.1 regulation in seconds with our powerful search engine. No more flipping through pages.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile Optimized</h3>
+                    <p>Perfect for field work. Access codes on your phone or tablet while on job sites and inspections.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Always Current</h3>
+                    <p>Automatically updated with the latest code changes. Never work with outdated regulations again.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔖</div>
+                    <h3>Smart Bookmarks</h3>
+                    <p>Save and organize frequently used codes for instant access during installations and inspections.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📴</div>
+                    <h3>Offline Access</h3>
+                    <p>Download sections for offline use. Access critical codes even without internet connection.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Explanations</h3>
+                    <p>Premium feature: Get plain-English explanations of complex regulations with AI-powered insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <h2 class="section-title">Choose Your Plan</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free Version</h3>
+                    <div class="price">$0</div>
+                    <ul class="pricing-features">
+                        <li>All Ontario gas regulations</li>
+                        <li>TSSA Act complete access</li>
+                        <li>Limited CSA B149.1 sections</li>
+                        <li>Basic search functionality</li>
+                        <li>Mobile-optimized interface</li>
+                        <li>Regular updates</li>
+                    </ul>
+                    <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">Start Free</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">MOST POPULAR</div>
+                    <h3>Premium</h3>
+                    <div class="price">$79<span style="font-size: 1rem;">/year</span></div>
+                    <ul class="pricing-features">
+                        <li>Full CSA B149.1 & B149.2 access</li>
+                        <li>AI-powered code explanations</li>
+                        <li>Advanced search with filters</li>
+                        <li>Unlimited smart bookmarks</li>
+                        <li>Priority customer support</li>
+                        <li>Exclusive updates & features</li>
+                    </ul>
+                    <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">7-Day Free Trial</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience Section -->
+    <section class="features" style="background: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title">Perfect for Canadian Gas Professionals</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Gas Technicians</h3>
+                    <p>G2 and G3 certified technicians use Code Compass daily for installations, repairs, and compliance checks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏗️</div>
+                    <h3>HVAC Contractors</h3>
+                    <p>Streamline your gas system installations with instant access to piping requirements and appliance codes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Inspectors</h3>
+                    <p>Speed up inspections with quick code references and compliance verification tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Students & Educators</h3>
+                    <p>Essential learning tool for HVAC programs and gas technician certification courses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Canadian Technicians Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-text">"Code Compass has completely changed how I work. What used to take 10 minutes of searching now takes 10 seconds. Essential tool for any gas technician."</div>
+                    <div class="testimonial-author">- Mike R., G2 Gas Technician, Ontario</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"The AI explanations in the premium version are incredible. Complex codes are explained in plain English. Worth every penny."</div>
+                    <div class="testimonial-author">- Sarah L., HVAC Contractor, Alberta</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"Perfect for field work. I can access any code right from my phone during inspections. Game changer for our business."</div>
+                    <div class="testimonial-author">- David T., TSSA Inspector, Ontario</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Revolutionize Your Code Lookups?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Join thousands of Canadian gas technicians who trust Code Compass</p>
+            <div class="cta-buttons">
+                <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">🚀 Start Free Trial</a>
+                <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button secondary">📱 Launch App Now</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">Free version includes Ontario regulations • Premium: 7-day free trial</p>
+        </div>
+    </section>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

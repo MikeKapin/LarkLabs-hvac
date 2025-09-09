@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC JACK 4.0 - AI HVAC Diagnostic Tool | LARK Labs</title>
+    <meta name="description" content="HVAC JACK 4.0 offers advanced AI diagnostics and photo analysis for HVAC professionals. Revolutionary troubleshooting tool with auto-form filling and instant part lookups.">
+    <meta name="keywords" content="HVAC JACK, HVAC calculation software, HVAC diagnostics, photo analysis, AI troubleshooting, HVAC app, Canadian HVAC tools, service forms automation">
+    
+    <!-- SEO Enhancements -->
+    <link rel="canonical" href="https://larklabs.org/hvac-jack-40" />
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="LARK Labs - HVAC Training and Tools">
+    <meta name="theme-color" content="#ff6b6b">
+    <link rel="icon" type="image/png" href="https://larklabs.org/favicon.png" />
+    <link rel="apple-touch-icon" href="https://larklabs.org/apple-touch-icon.png" />
+    
+    <!-- Open Graph for Facebook/LinkedIn -->
+    <meta property="og:title" content="HVAC JACK 4.0 - Revolutionary AI HVAC Diagnostic Tool">
+    <meta property="og:description" content="Canada's first AI HVAC assistant. Snap photos for instant diagnostics, auto-filled service forms, and replacement part numbers. For professional technicians only.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://larklabs.org/hvac-jack-40">
+    <meta property="og:image" content="https://larklabs.org/assets/images/hvac-jack-preview.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HVAC JACK 4.0 - AI HVAC Diagnostic Tool">
+    <meta name="twitter:description" content="Revolutionary AI troubleshooting assistant with photo analysis for Canadian HVAC professionals.">
+    <meta name="twitter:image" content="https://larklabs.org/assets/images/hvac-jack-preview.png">
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://larklabs.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "HVAC JACK 4.0",
+          "item": "https://larklabs.org/hvac-jack-40"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Software Application Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "HVAC JACK 4.0",
+      "operatingSystem": "Web",
+      "applicationCategory": "Professional Tool",
+      "offers": {
+        "@type": "Offer",
+        "name": "Professional Version",
+        "price": "0",
+        "priceCurrency": "CAD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free lifetime access for first 100 beta users"
+      },
+      "description": "Revolutionary AI HVAC troubleshooting assistant with photo analysis, instant diagnostics, and auto-form filling for Canadian HVAC professionals",
+      "url": "https://larklabs.org/hvac-jack-40",
+      "screenshot": "https://larklabs.org/assets/images/hvac-jack-screenshot.png",
+      "featureList": [
+        "AI-powered photo analysis",
+        "Instant diagnostic troubleshooting",
+        "Auto-filled service forms",
+        "Universal brand compatibility",
+        "Canadian code compliance",
+        "Real-time part number lookups"
+      ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Professional HVAC technicians and contractors"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "LARK Labs"
+      }
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c5aa0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b6b;
+        }
+
+        .beta-badge {
+            background: #00c851;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 200, 81, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 200, 81, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 200, 81, 0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #ff6b6b;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: white;
+            color: #ff6b6b;
+        }
+
+        /* What's New Section */
+        .whats-new {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .version-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .version-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .version-card.new {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .version-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f39c12;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .version-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .feature-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .version-card.new .feature-list li:before {
+            color: #fff;
+        }
+
+        /* Features Section */
+        .features {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        /* Beta Access Section */
+        .beta-access {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .beta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .beta-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .beta-features li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .beta-features li:before {
+            content: "🎉";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-size: 4rem;
+            color: #ff6b6b;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .version-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .version-card.new {
+                transform: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">LARK Labs <span class="beta-badge">BETA</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="code-compass.html">Code Compass</a></li>
+                <li><a href="hvac-jack-40.html">HVAC JACK 4.0</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#training">Training</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>🤖 HVAC JACK 4.0</h1>
+                <p>Canada's First AI HVAC Assistant for Expert Technicians</p>
+                <div class="cta-buttons">
+                    <a href="#beta-access" class="cta-button">🎉 Get Beta Access</a>
+                    <a href="#features" class="cta-button secondary">📋 View Features</a>
+                </div>
+                <p style="font-size: 1rem; opacity: 0.8;">✨ Revolutionary photo analysis & diagnostic tool</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's New in 4.0 Section -->
+    <section class="whats-new">
+        <div class="container">
+            <h2 class="section-title">What's New in HVAC JACK 4.0</h2>
+            <div class="version-comparison">
+                <div class="version-card">
+                    <h3>Previous Versions</h3>
+                    <ul class="feature-list">
+                        <li>Basic HVAC calculations</li>
+                        <li>Manual data entry</li>
+                        <li>Static troubleshooting guides</li>
+                        <li>Limited brand compatibility</li>
+                        <li>No photo analysis</li>
+                    </ul>
+                </div>
+                <div class="version-card new">
+                    <div class="version-badge">NEW 4.0</div>
+                    <h3>HVAC JACK 4.0</h3>
+                    <ul class="feature-list">
+                        <li>AI-powered photo analysis</li>
+                        <li>Instant data extraction</li>
+                        <li>Auto-filled service forms</li>
+                        <li>Universal brand compatibility</li>
+                        <li>Real-time diagnostics</li>
+                        <li>Canadian code compliance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Revolutionary Features for HVAC Professionals</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Photo Analysis</h3>
+                    <p>Snap a photo of any appliance rating plate and instantly extract model numbers, serial numbers, and specifications—no manual typing required.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>AI Diagnostics</h3>
+                    <p>Get expert-level troubleshooting recommendations, error code interpretations, and replacement part numbers in seconds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Auto-Fill Forms</h3>
+                    <p>Service reports and maintenance forms are automatically populated with extracted data, saving hours of paperwork.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏭</div>
+                    <h3>Universal Compatibility</h3>
+                    <p>Works with all major brands—Goodman, Trane, Carrier, Lennox, Ruud, and more. One tool for every job.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🍁</div>
+                    <h3>Canadian Code Compliance</h3>
+                    <p>Built for Canadian HVAC professionals with full CSA B149.1 and Ontario TSSA regulation alignment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-Time Analysis</h3>
+                    <p>Instant results with advanced AI that reads even faded or damaged rating plates that are hard to see.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How HVAC JACK 4.0 Works</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>📱 Snap a Photo</h3>
+                    <p>Take a photo of any appliance rating plate or nameplate using your mobile device</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>🤖 AI Analysis</h3>
+                    <p>Advanced AI instantly extracts all critical data—model numbers, serial numbers, specifications</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>🔧 Get Diagnostics</h3>
+                    <p>Receive AI-powered troubleshooting, error code interpretations, and replacement part numbers</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>📋 Auto-Fill Forms</h3>
+                    <p>Service and maintenance forms are automatically populated with extracted data</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beta Access Section -->
+    <section class="beta-access" id="beta-access">
+        <div class="container">
+            <div class="beta-content">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">🎉 FREE Beta Access</h2>
+                <p style="font-size: 1.3rem; margin-bottom: 2rem;">First 100 Professional Technicians Only</p>
+                
+                <ul class="beta-features">
+                    <li>Lifetime access to HVAC JACK 4.0</li>
+                    <li>Photo analysis & auto-form filling</li>
+                    <li>Instant diagnostics & part numbers</li>
+                    <li>Canadian code compliance features</li>
+                    <li>Priority customer support</li>
+                    <li>Exclusive feature previews</li>
+                </ul>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+                    <p style="font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem;">🚨 Limited Time Offer</p>
+                    <p>No free tier after beta. No DIY/home access. Professional tools for professional results.</p>
+                </div>
+                
+                <a href="mailto:lark_labs@outlook.com?subject=HVAC JACK 4.0 Beta Access Request" class="cta-button" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">Request Beta Access</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="features" style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Perfect for Canadian HVAC Professionals</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Service Technicians</h3>
+                    <p>Speed up service calls with instant appliance data extraction and diagnostic recommendations for faster repairs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏗️</div>
+                    <h3>HVAC Contractors</h3>
+                    <p>Streamline installations and maintenance with automated form filling and code compliance checking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Maintenance Teams</h3>
+                    <p>Simplify routine maintenance with automated data collection and service report generation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Commercial HVAC</h3>
+                    <p>Handle large-scale commercial systems efficiently with universal brand compatibility and instant part lookups.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Beta Testers Are Saying</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-text">Photo analysis saves me 15 minutes per call—no more manual data entry. The diagnostics are spot-on, and the parts lookup is a game-changer.</div>
+                    <div class="testimonial-author">— Beta Tester, Toronto</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">Finally, a Canadian HVAC app that understands our codes and workflow. HVAC Jack AI is now my go-to troubleshooting tool.</div>
+                    <div class="testimonial-author">— Senior Technician, Ottawa</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">The accuracy of the photo recognition is incredible. It reads plates I can barely see myself and fills everything out perfectly.</div>
+                    <div class="testimonial-author">— Licensed Technician, Vancouver</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Revolutionize Your Service Calls?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Join the first 100 Canadian HVAC professionals with exclusive beta access</p>
+            <div class="cta-buttons">
+                <a href="mailto:lark_labs@outlook.com?subject=HVAC JACK 4.0 Beta Access Request" class="cta-button">🎉 Request Beta Access</a>
+                <a href="index.html" class="cta-button secondary">🏠 Back to Home</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">Limited to 100 professionals • Lifetime access • No subscription fees</p>
+        </div>
+    </section>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.feature-card, .testimonial, .step').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
