@@ -40,7 +40,7 @@
             justify-content: center;
         }
 
-        .csa-logo {
+        .education-logo {
             width: 100%;
             height: auto;
         }
@@ -396,23 +396,28 @@
         <!-- Main Navigation -->
         <div id="mainMenu">
             <div class="logo">
-                <svg class="csa-logo" viewBox="0 0 1024 600" xmlns="http://www.w3.org/2000/svg">
-                    <!-- CSA Square Logo with curved design -->
-                    <rect x="0" y="150" width="300" height="300" fill="#1565C0" rx="20"/>
-                    <!-- Green curved element -->
-                    <path d="M 50 250 Q 150 200 250 250 Q 200 300 100 280 Q 75 265 50 250" fill="#7CB342"/>
-                    <!-- White curved swoosh -->
-                    <path d="M 0 350 Q 100 300 200 350 Q 250 380 300 400 L 300 450 Q 200 420 100 450 Q 50 430 0 450 Z" fill="white"/>
+                <svg class="education-logo" viewBox="0 0 1024 600" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Educational Theme Logo -->
+                    <rect x="50" y="150" width="300" height="300" fill="#1565C0" rx="20"/>
+                    <!-- Book/Learning symbol -->
+                    <path d="M 100 200 L 300 200 L 300 400 L 100 400 Z" fill="white"/>
+                    <path d="M 120 220 L 280 220 M 120 250 L 280 250 M 120 280 L 280 280 M 120 310 L 280 310 M 120 340 L 280 340 M 120 370 L 280 370" stroke="#1565C0" stroke-width="3"/>
                     
-                    <!-- CSA Text -->
-                    <text x="350" y="280" font-family="Arial, sans-serif" font-size="120" font-weight="bold" fill="#1565C0">CSA</text>
+                    <!-- Learning Text -->
+                    <text x="400" y="280" font-family="Arial, sans-serif" font-size="90" font-weight="bold" fill="#1565C0">LEARNING</text>
                     
-                    <!-- STANDARDS Text -->
-                    <text x="0" y="550" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#7CB342">STANDARDS</text>
+                    <!-- Educational Text -->
+                    <text x="50" y="550" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#7CB342">EDUCATIONAL RESOURCES</text>
                 </svg>
             </div>
             <h1>Unit 5 - Basic Electricity</h1>
             <p class="subtitle">Gas Trade Training - Chapter Questions</p>
+            
+            <!-- Educational Disclaimer -->
+            <div style="background: #e74c3c; color: white; border-radius: 10px; padding: 15px; margin: 20px 0; text-align: center; font-size: 14px;">
+                <strong>⚠️ Independent Educational Content</strong><br>
+                This content is provided by LARK Labs as an independent educational resource. We are not affiliated with CSA Group or any regulatory body. These materials complement official training but do not replace certified instruction.
+            </div>
             
             <div class="button-grid">
                 <button class="nav-button" onclick="startQuiz('chapter1')">
@@ -481,23 +486,42 @@
                 <div class="footer-content">
                     <span class="created-by">Created by</span>
                     <svg class="lark-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Bird -->
-                        <ellipse cx="80" cy="80" rx="45" ry="30" fill="#4A90E2"/>
-                        <ellipse cx="70" cy="70" rx="25" ry="18" fill="#357ABD"/>
-                        <circle cx="60" cy="65" r="4" fill="white"/>
-                        <circle cx="58" cy="64" r="2" fill="#2C5AA0"/>
-                        <!-- Beak -->
-                        <polygon points="30,75 15,80 30,85" fill="#FF6B6B"/>
-                        <!-- Sound lines -->
-                        <path d="M 5 65 Q 15 60 25 65" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <path d="M 5 75 Q 15 70 25 75" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <path d="M 5 85 Q 15 80 25 85" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <!-- HVAC Unit Main Body -->
+                        <rect x="20" y="30" width="140" height="100" fill="#2E4A6B" rx="8"/>
+                        
+                        <!-- Fan/Blower Circle -->
+                        <circle cx="90" cy="80" r="35" fill="none" stroke="white" stroke-width="4"/>
+                        <circle cx="90" cy="80" r="28" fill="none" stroke="white" stroke-width="2"/>
+                        <circle cx="90" cy="80" r="20" fill="none" stroke="white" stroke-width="2"/>
+                        
+                        <!-- Fan Blades -->
+                        <g transform="translate(90,80)">
+                            <path d="M -15,0 Q -8,-12 0,-15 Q 8,-12 15,0 Q 8,12 0,15 Q -8,12 -15,0" fill="white" opacity="0.8"/>
+                            <path d="M 0,-15 Q 12,-8 15,0 Q 12,8 0,15 Q -12,8 -15,0 Q -12,-8 0,-15" fill="white" opacity="0.6"/>
+                        </g>
+                        
+                        <!-- Control Panel Lines -->
+                        <rect x="125" y="45" width="25" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="55" width="20" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="65" width="25" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="75" width="18" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="85" width="22" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="95" width="25" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="105" width="20" height="3" fill="white" rx="1"/>
+                        
+                        <!-- Status Light -->
+                        <circle cx="135" cy="115" r="3" fill="#4CAF50"/>
+                        
+                        <!-- Unit Feet -->
+                        <rect x="35" y="130" width="8" height="6" fill="#2E4A6B" rx="2"/>
+                        <rect x="117" y="130" width="8" height="6" fill="#2E4A6B" rx="2"/>
+                        
                         <!-- LARK text -->
-                        <text x="180" y="90" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#2C5AA0">LARK</text>
+                        <text x="180" y="85" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#2E4A6B">LARK</text>
                         <!-- LABS text -->
-                        <text x="180" y="130" font-family="Arial, sans-serif" font-size="32" fill="#95A5A6">LABS</text>
+                        <text x="180" y="115" font-family="Arial, sans-serif" font-size="28" fill="#5A7A9A">Labs</text>
                         <!-- Subtitle -->
-                        <text x="180" y="155" font-family="Arial, sans-serif" font-size="16" fill="#BDC3C7">SOFTWARE DEVELOPMENT</text>
+                        <text x="180" y="140" font-family="Arial, sans-serif" font-size="14" fill="#7A8A9A">HVAC MOBILE TOOLS AND TRAINING</text>
                     </svg>
                 </div>
             </div>
@@ -542,23 +566,42 @@
                 <div class="footer-content">
                     <span class="created-by">Created by</span>
                     <svg class="lark-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Bird -->
-                        <ellipse cx="80" cy="80" rx="45" ry="30" fill="#4A90E2"/>
-                        <ellipse cx="70" cy="70" rx="25" ry="18" fill="#357ABD"/>
-                        <circle cx="60" cy="65" r="4" fill="white"/>
-                        <circle cx="58" cy="64" r="2" fill="#2C5AA0"/>
-                        <!-- Beak -->
-                        <polygon points="30,75 15,80 30,85" fill="#FF6B6B"/>
-                        <!-- Sound lines -->
-                        <path d="M 5 65 Q 15 60 25 65" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <path d="M 5 75 Q 15 70 25 75" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <path d="M 5 85 Q 15 80 25 85" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <!-- HVAC Unit Main Body -->
+                        <rect x="20" y="30" width="140" height="100" fill="#2E4A6B" rx="8"/>
+                        
+                        <!-- Fan/Blower Circle -->
+                        <circle cx="90" cy="80" r="35" fill="none" stroke="white" stroke-width="4"/>
+                        <circle cx="90" cy="80" r="28" fill="none" stroke="white" stroke-width="2"/>
+                        <circle cx="90" cy="80" r="20" fill="none" stroke="white" stroke-width="2"/>
+                        
+                        <!-- Fan Blades -->
+                        <g transform="translate(90,80)">
+                            <path d="M -15,0 Q -8,-12 0,-15 Q 8,-12 15,0 Q 8,12 0,15 Q -8,12 -15,0" fill="white" opacity="0.8"/>
+                            <path d="M 0,-15 Q 12,-8 15,0 Q 12,8 0,15 Q -12,8 -15,0 Q -12,-8 0,-15" fill="white" opacity="0.6"/>
+                        </g>
+                        
+                        <!-- Control Panel Lines -->
+                        <rect x="125" y="45" width="25" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="55" width="20" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="65" width="25" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="75" width="18" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="85" width="22" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="95" width="25" height="3" fill="white" rx="1"/>
+                        <rect x="125" y="105" width="20" height="3" fill="white" rx="1"/>
+                        
+                        <!-- Status Light -->
+                        <circle cx="135" cy="115" r="3" fill="#4CAF50"/>
+                        
+                        <!-- Unit Feet -->
+                        <rect x="35" y="130" width="8" height="6" fill="#2E4A6B" rx="2"/>
+                        <rect x="117" y="130" width="8" height="6" fill="#2E4A6B" rx="2"/>
+                        
                         <!-- LARK text -->
-                        <text x="180" y="90" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#2C5AA0">LARK</text>
+                        <text x="180" y="85" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#2E4A6B">LARK</text>
                         <!-- LABS text -->
-                        <text x="180" y="130" font-family="Arial, sans-serif" font-size="32" fill="#95A5A6">LABS</text>
+                        <text x="180" y="115" font-family="Arial, sans-serif" font-size="28" fill="#5A7A9A">Labs</text>
                         <!-- Subtitle -->
-                        <text x="180" y="155" font-family="Arial, sans-serif" font-size="16" fill="#BDC3C7">SOFTWARE DEVELOPMENT</text>
+                        <text x="180" y="140" font-family="Arial, sans-serif" font-size="14" fill="#7A8A9A">HVAC MOBILE TOOLS AND TRAINING</text>
                     </svg>
                 </div>
             </div>
@@ -569,23 +612,42 @@
             <div class="footer-content">
                 <span class="created-by">Created by</span>
                 <svg class="lark-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Bird -->
-                    <ellipse cx="80" cy="80" rx="45" ry="30" fill="#4A90E2"/>
-                    <ellipse cx="70" cy="70" rx="25" ry="18" fill="#357ABD"/>
-                    <circle cx="60" cy="65" r="4" fill="white"/>
-                    <circle cx="58" cy="64" r="2" fill="#2C5AA0"/>
-                    <!-- Beak -->
-                    <polygon points="30,75 15,80 30,85" fill="#FF6B6B"/>
-                    <!-- Sound lines -->
-                    <path d="M 5 65 Q 15 60 25 65" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
-                    <path d="M 5 75 Q 15 70 25 75" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
-                    <path d="M 5 85 Q 15 80 25 85" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <!-- HVAC Unit Main Body -->
+                    <rect x="20" y="30" width="140" height="100" fill="#2E4A6B" rx="8"/>
+                    
+                    <!-- Fan/Blower Circle -->
+                    <circle cx="90" cy="80" r="35" fill="none" stroke="white" stroke-width="4"/>
+                    <circle cx="90" cy="80" r="28" fill="none" stroke="white" stroke-width="2"/>
+                    <circle cx="90" cy="80" r="20" fill="none" stroke="white" stroke-width="2"/>
+                    
+                    <!-- Fan Blades -->
+                    <g transform="translate(90,80)">
+                        <path d="M -15,0 Q -8,-12 0,-15 Q 8,-12 15,0 Q 8,12 0,15 Q -8,12 -15,0" fill="white" opacity="0.8"/>
+                        <path d="M 0,-15 Q 12,-8 15,0 Q 12,8 0,15 Q -12,8 -15,0 Q -12,-8 0,-15" fill="white" opacity="0.6"/>
+                    </g>
+                    
+                    <!-- Control Panel Lines -->
+                    <rect x="125" y="45" width="25" height="3" fill="white" rx="1"/>
+                    <rect x="125" y="55" width="20" height="3" fill="white" rx="1"/>
+                    <rect x="125" y="65" width="25" height="3" fill="white" rx="1"/>
+                    <rect x="125" y="75" width="18" height="3" fill="white" rx="1"/>
+                    <rect x="125" y="85" width="22" height="3" fill="white" rx="1"/>
+                    <rect x="125" y="95" width="25" height="3" fill="white" rx="1"/>
+                    <rect x="125" y="105" width="20" height="3" fill="white" rx="1"/>
+                    
+                    <!-- Status Light -->
+                    <circle cx="135" cy="115" r="3" fill="#4CAF50"/>
+                    
+                    <!-- Unit Feet -->
+                    <rect x="35" y="130" width="8" height="6" fill="#2E4A6B" rx="2"/>
+                    <rect x="117" y="130" width="8" height="6" fill="#2E4A6B" rx="2"/>
+                    
                     <!-- LARK text -->
-                    <text x="180" y="90" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#2C5AA0">LARK</text>
+                    <text x="180" y="85" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#2E4A6B">LARK</text>
                     <!-- LABS text -->
-                    <text x="180" y="130" font-family="Arial, sans-serif" font-size="32" fill="#95A5A6">LABS</text>
+                    <text x="180" y="115" font-family="Arial, sans-serif" font-size="28" fill="#5A7A9A">Labs</text>
                     <!-- Subtitle -->
-                    <text x="180" y="155" font-family="Arial, sans-serif" font-size="16" fill="#BDC3C7">SOFTWARE DEVELOPMENT</text>
+                    <text x="180" y="140" font-family="Arial, sans-serif" font-size="14" fill="#7A8A9A">HVAC MOBILE TOOLS AND TRAINING</text>
                 </svg>
             </div>
         </div>
