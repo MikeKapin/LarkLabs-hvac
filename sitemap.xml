@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage (Main SPA) -->
+  <!-- Homepage (Highest Priority) -->
   <url>
     <loc>https://larklabs.org/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- Main Product Pages -->
@@ -13,19 +13,19 @@
     <loc>https://larklabs.org/code-compass.html</loc>
     <priority>0.95</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2024-12-09T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/hvac-jack-40.html</loc>
     <priority>0.95</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2024-12-09T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/hvac-jack-4-landing.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2024-12-09T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- Main Pages -->
@@ -33,7 +33,7 @@
     <loc>https://larklabs.org/pages/community.html</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- Blog Pages -->
@@ -41,55 +41,33 @@
     <loc>https://larklabs.org/pages/blog/index.html</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/pages/blog/tssa-g2-exam-guide.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/pages/blog/tssa-g3-exam-guide.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
-  <!-- Payment Pages -->
-  <url>
-    <loc>https://larklabs.org/pages/payment/g2_premium_access.html</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/pages/payment/G2_modules_premium_access.html</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-
-  <!-- HVAC Marketplace (NEW) -->
+  <!-- HVAC Marketplace -->
   <url>
     <loc>https://larklabs.org/apps/hvac-marketplace/index.html</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/hvac-marketplace/premium.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-
-  <!-- HVAC Tool Vault Marketplace (Peer-to-Peer) -->
-  <url>
-    <loc>https://larklabs.org/apps/hvac-tool-vault/index.html</loc>
-    <priority>0.9</priority>
-    <changefreq>daily</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- HVAC Tools & Calculators -->
@@ -97,55 +75,67 @@
     <loc>https://larklabs.org/apps/calculators/canadian-gas-piping-calculator.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2024-12-09T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/apps/calculators/canadian-gas-venting-calculator.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/apps/calculators/hvac-lesson-plan-generator.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/calculators/hvac-load-calculator.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/calculators/superheat-subcooling-calculator.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/calculators/duct_sizing_calculator.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/calculators/universal_unit_converter.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/calculators/psychrometric_calculator.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/calculators/pipe_sizing_calculator.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/calculators/A2L_refrigerant_calculator.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/apps/tools/HVAC_PRO_Tools.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- Training Courses -->
@@ -153,13 +143,19 @@
     <loc>https://larklabs.org/training/courses/A2L_Safety_Course.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/training/courses/A2L_Course.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/Gas_Code_Navigation_Microcredential.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- A2L Tools -->
@@ -167,13 +163,13 @@
     <loc>https://larklabs.org/training/a2l/A2L_Calculator_App.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/training/a2l/index.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- TSSA Exam Simulators -->
@@ -181,13 +177,13 @@
     <loc>https://larklabs.org/training/simulators/TSSA_G2_Exam_SimulatorV3.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/training/simulators/TSSA_G3_Exam_SimulatorV3.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- G2 Training Modules -->
@@ -195,67 +191,97 @@
     <loc>https://larklabs.org/training/g2/G2/index.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_15_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_10_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_16_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_11_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_17_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_12_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_18_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_13_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_19_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_14_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_20_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_15_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_21_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_16_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_22_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_17_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_23_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_18_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://larklabs.org/training/g2/CSA_Unit_24_Chapter_Reviews.html</loc>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_19_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_20_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_21_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_22_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_23_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_24_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- G3 Training Modules -->
@@ -263,69 +289,129 @@
     <loc>https://larklabs.org/training/g3/G3/index.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_1_Safety_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_2_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_3_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_4_&_4a_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_7_Customer_Relations_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_8_Intro_to_Piping_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
-  <!-- CSA G3 Chapter Reviews -->
+  <!-- CSA G3 Chapter Reviews (Main Directory) -->
   <url>
     <loc>https://larklabs.org/CSA_Unit_1_Safety_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_2_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_2_Complete_Training_Module.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_3_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_4_&_4a_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_7_Customer_Relations_Chapter_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_8_Intro_to_Piping_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_10_Chapter_Reviews.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- CSA B149.1 Reference -->
@@ -333,357 +419,13 @@
     <loc>https://larklabs.org/CSA_B149_Reference_Guide.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://larklabs.org/B149_1_Changes.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-
-  <!-- HVAC Jack Application -->
-  <url>
-    <loc>https://larklabs.org/apps/hvac-jack/HVAC_Jack_temp/HVAC_Jack.html</loc>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-
-  <!-- Individual Unit Chapter Files (from root directory) -->
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_1_Safety.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_1_Chapter_1.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_1_Chapter_2.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_1_Chapter_3.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_1_Chapter_4.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_2_Chapter_1.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_2_Chapter_2.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_2_Chapter_3.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_2_Chapter_4.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_2_Chapter_5.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_2_Chapter_6.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_3_Chapter_1.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_3_Chapter_2.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_3_Chapter_3.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_4_Chapter_1.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_4_Chapter_2.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_4_Chapter_3.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_4a_Chapter_1.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_4a_Chapter_2.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_4a_Chapter_3.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_4a_Chapter_4.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_5_Chapter_1.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_5_Chapter_2.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_5_Chapter_3.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_5_Chapter_4.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_5_Chapter_5.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_5_Chapter_6.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_5_Chapter_7.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_6_Chapter_1.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_6_Chapter_2.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/CSA_Unit_6_Chapter_3.html</loc>
-    <priority>0.5</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-
-  <!-- G2 Advanced Chapter Reviews (correct paths) -->
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_10_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_11_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_12_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_13_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_14_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_15_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_16_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_17_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_18_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_19_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_20_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_21_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_22_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_23_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g2/G2/CSA_Unit_24_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-
-  <!-- G3 Chapter Reviews (correct paths) -->
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_1_Safety_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_2_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_3_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_4_&_4a_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_7_Customer_Relations_Chapter_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_8_Intro_to_Piping_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://larklabs.org/training/g3/G3/CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
   <!-- Specialized Exam Prep -->
@@ -691,22 +433,252 @@
     <loc>https://larklabs.org/G3_Exam_Prep_Resource.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
-  <!-- Email Template (if public) -->
+  <!-- HVAC Jack Applications -->
   <url>
-    <loc>https://larklabs.org/email_template.html</loc>
-    <priority>0.3</priority>
-    <changefreq>rarely</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <loc>https://larklabs.org/apps/hvac-jack/HVAC_Jack_temp/index.html</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 
-  <!-- Admin Dashboard (if public) -->
+  <!-- Individual Unit Chapter Files (from root directory) -->
   <url>
-    <loc>https://larklabs.org/admin-dashboard.html</loc>
-    <priority>0.2</priority>
-    <changefreq>rarely</changefreq>
-    <lastmod>2025-08-17T00:00:00+00:00</lastmod>
+    <loc>https://larklabs.org/CSA_Unit_1_Safety.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_1_Chapter_1.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_1_Chapter_2.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_1_Chapter_3.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_1_Chapter_4.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_2_Chapter_1.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_2_Chapter_2.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_2_Chapter_3.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_2_Chapter_4.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_2_Chapter_5.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_2_Chapter_6.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_3_Chapter_1.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_3_Chapter_2.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_3_Chapter_3.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_4_Chapter_1.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_4_Chapter_2.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_4_Chapter_3.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_4a_Chapter_1.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_4a_Chapter_2.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_4a_Chapter_3.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_4a_Chapter_4.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_5_Chapter_1.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_5_Chapter_2.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_5_Chapter_3.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_5_Chapter_4.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_5_Chapter_5.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_5_Chapter_6.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_5_Chapter_7.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_6_Chapter_1.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_6_Chapter_2.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/CSA_Unit_6_Chapter_3.html</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+
+  <!-- Payment Pages -->
+  <url>
+    <loc>https://larklabs.org/pages/payment/g2_premium_access.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/pages/payment/G2_modules_premium_access.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+
+  <!-- Specialty Tools -->
+  <url>
+    <loc>https://larklabs.org/apps/hvac-troubleshooting-simulator/index.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/apps/tools/pt-chart-generator.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+
+  <!-- CSA Tutor Apps -->
+  <url>
+    <loc>https://larklabs.org/csa-tutor-app/index.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+
+  <!-- Additional Training Resources -->
+  <url>
+    <loc>https://larklabs.org/training/a2l/a2l-refrigerant-guide.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://larklabs.org/training/courses/A2L_Safety_Course_Enhanced.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2025-01-11T00:00:00+00:00</lastmod>
   </url>
 </urlset>
