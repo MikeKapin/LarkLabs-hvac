@@ -404,67 +404,95 @@
             <h2 style="text-align: center; color: #3498db; font-size: 2.5rem; margin-bottom: 3rem;">Course Modules</h2>
             
             <div class="modules-grid">
-                <div class="module-card" onclick="openFile('unit1')">
+                <div class="module-card">
                     <div class="module-icon">🛡️</div>
                     <h3>Unit 1 - Safety</h3>
                     <p>On-the-Job Safety, Government Acts, Hazardous Materials, Fire Safety, Personal Protective Equipment, and Workplace Safety Procedures</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_1_Safety.pdf', '_blank')">📖 Study Material</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_1_Safety_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
+                    </div>
                 </div>
 
-                <div class="module-card" onclick="openFile('unit2')">
+                <div class="module-card">
                     <div class="module-icon">🔧</div>
                     <h3>Unit 2 - Tools & Equipment</h3>
                     <p>Fasteners, Hand Tools, Power Tools, Measuring Instruments, Testing Equipment, and Proper Tool Usage</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_2_Fasteners_Tools_and_Test_Equipment.pdf', '_blank')">📖 Study Material</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_2_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
+                    </div>
                 </div>
 
-                <div class="module-card" onclick="openFile('unit3')">
+                <div class="module-card">
                     <div class="module-icon">⛽</div>
                     <h3>Unit 3 - Gas Properties</h3>
                     <p>Fuel Gas Properties, Combustion Principles, Gas Hazards, Safe Handling Procedures, and Gas Detection</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_3_Properties_and_Safe_Handling_of_Fuel_Gases.pdf', '_blank')">📖 Study Material</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_3_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
+                    </div>
                 </div>
 
-                <div class="module-card" onclick="openFile('unit4')">
+                <div class="module-card">
                     <div class="module-icon">📋</div>
                     <h3>Unit 4 & 4a - Codes & Regulations</h3>
                     <p>CSA B149.1 Utilization Codes, Provincial Acts, Regulations, and Ontario Supplement Requirements</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_4_Gas-Industry-Codes-Acts-and-Regulations.pdf', '_blank')" style="flex: 1; min-width: 120px;">📖 Unit 4 PDF</button>
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_4a_Laws-Governing-the-Gas-Industry.pdf', '_blank')" style="flex: 1; min-width: 120px;">📖 Unit 4a PDF</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_4_&_4a_Chapter_Reviews.html', '_blank')" style="width: 100%;">✅ Practice Questions</button>
+                    </div>
                 </div>
 
-                <div class="module-card" onclick="openFile('unit5')">
+                <div class="module-card">
                     <div class="module-icon">⚡</div>
                     <h3>Unit 5 - Basic Electricity</h3>
                     <p>Electrical Safety, Theory, Circuits, Magnetism, AC/DC Power, and Electrical Testing Instruments</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_5_Basic_Electricity.pdf', '_blank')">📖 Study Material</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
+                    </div>
                 </div>
 
-                <div class="module-card" onclick="openFile('unit6')">
+                <div class="module-card">
                     <div class="module-icon">📐</div>
                     <h3>Unit 6 - Technical Drawings & Manuals</h3>
                     <p>Technical Drawing Interpretation, Reference Manuals, Charts, Graphs, and Schematic Reading</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_6_Technical_Manuals_Specs_Drawings.pdf', '_blank')">📖 Study Material</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html', '_blank')">✅ Practice Questions</button>
+                    </div>
                 </div>
 
-                <div class="module-card" onclick="openFile('unit7')">
+                <div class="module-card">
                     <div class="module-icon">🤝</div>
                     <h3>Unit 7 - Customer Relations</h3>
                     <p>Professional Communication, Customer Service Excellence, and Workplace Relations</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_7_Customer_Relations.pdf', '_blank')">📖 Study Material</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_7_Customer_Relations_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
+                    </div>
                 </div>
 
-                <div class="module-card" onclick="openFile('unit8')">
+                <div class="module-card">
                     <div class="module-icon">🔩</div>
                     <h3>Unit 8 - Gas Piping Systems</h3>
                     <p>Gas Piping Materials, Installation Methods, System Components, and Safety Procedures</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_8_Intro_to_Piping_and_Tubing_Systems.pdf', '_blank')">📖 Study Material</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_8_Intro_to_Piping_Reviews.html', '_blank')">✅ Practice Questions</button>
+                    </div>
                 </div>
 
-                <div class="module-card" onclick="openFile('unit9')">
+                <div class="module-card">
                     <div class="module-icon">🔥</div>
                     <h3>Unit 9 - Gas Appliances</h3>
                     <p>Gas Appliance Types, Components, Operation Principles, and Safety Features</p>
-                    <span class="module-status">Available</span>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_9_Intro_to_Gas_Appliances.pdf', '_blank')">📖 Study Material</button>
+                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html', '_blank')">✅ Practice Questions</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -531,110 +559,7 @@
             }
         }
 
-        // Corrected file operations based on actual file names
-        function openFile(unitId) {
-            // Create a dropdown/menu for each unit showing available materials
-            const unitMap = {
-                'unit1': {
-                    name: 'Unit 1 - Safety',
-                    files: [
-                        { name: 'CSA_Unit_1_Safety.pdf', type: 'PDF Content', icon: '📄' },
-                        { name: 'CSA_Unit_1_Safety_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                },
-                'unit2': {
-                    name: 'Unit 2 - Tools & Equipment',
-                    files: [
-                        { name: 'CSA_Unit_2_Fasteners_Tools_and_Test_Equipment.pdf', type: 'PDF Content', icon: '📄' },
-                        { name: 'CSA_Unit_2_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                },
-                'unit3': {
-                    name: 'Unit 3 - Gas Properties',
-                    files: [
-                        { name: 'CSA_Unit_3_Properties_and_Safe_Handling_of_Fuel_Gases.pdf', type: 'PDF Content', icon: '📄' },
-                        { name: 'CSA_Unit_3_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                },
-                'unit4': {
-                    name: 'Unit 4 & 4a - Codes & Regulations',
-                    files: [
-                        { name: 'CSA_Unit_4_Gas-Industry-Codes-Acts-and-Regulations.pdf', type: 'Unit 4 PDF', icon: '📄' },
-                        { name: 'CSA_Unit_4a_Laws-Governing-the-Gas-Industry.pdf', type: 'Unit 4a PDF', icon: '📄' },
-                        { name: 'CSA_Unit_4_&_4a_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                },
-                'unit5': {
-                    name: 'Unit 5 - Basic Electricity',
-                    files: [
-                        { name: 'CSA_Unit_5_Basic_Electricity.pdf', type: 'PDF Content', icon: '📄' },
-                        { name: 'CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                },
-                'unit6': {
-                    name: 'Unit 6 - Technical Drawings & Manuals',
-                    files: [
-                        { name: 'CSA_Unit_6_Technical_Manuals_Specs_Drawings.pdf', type: 'PDF Content', icon: '📄' },
-                        { name: 'CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                },
-                'unit7': {
-                    name: 'Unit 7 - Customer Relations',
-                    files: [
-                        { name: 'CSA_Unit_7_Customer_Relations.pdf', type: 'PDF Content', icon: '📄' },
-                        { name: 'CSA_Unit_7_Customer_Relations_Chapter_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                },
-                'unit8': {
-                    name: 'Unit 8 - Gas Piping Systems',
-                    files: [
-                        { name: 'CSA_Unit_8_Intro_to_Piping_and_Tubing_Systems.pdf', type: 'PDF Content', icon: '📄' },
-                        { name: 'CSA_Unit_8_Intro_to_Piping_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                },
-                'unit9': {
-                    name: 'Unit 9 - Gas Appliances',
-                    files: [
-                        { name: 'CSA_Unit_9_Intro_to_Gas_Appliances.pdf', type: 'PDF Content', icon: '📄' },
-                        { name: 'CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html', type: 'Chapter Reviews', icon: '❓' }
-                    ]
-                }
-            };
-
-            const unit = unitMap[unitId];
-            if (!unit) {
-                alert(`Unit ${unitId} not found!`);
-                return;
-            }
-
-            // Create a simple selection dialog
-            let message = `Select material for ${unit.name}:\n\n`;
-            unit.files.forEach((file, index) => {
-                message += `${index + 1}. ${file.icon} ${file.type}\n`;
-            });
-            message += '\nEnter number (1-' + unit.files.length + ') or click Cancel:';
-
-            const selection = prompt(message);
-            if (selection && !isNaN(selection)) {
-                const fileIndex = parseInt(selection) - 1;
-                if (fileIndex >= 0 && fileIndex < unit.files.length) {
-                    const selectedFile = unit.files[fileIndex];
-                    try {
-                        window.open(selectedFile.name, '_blank');
-                        
-                        // Mark module as accessed after a delay
-                        setTimeout(() => {
-                            const confirmComplete = confirm(`Did you complete working with ${unit.name}? Click OK to mark as completed.`);
-                            if (confirmComplete) {
-                                markModuleComplete(unitId);
-                            }
-                        }, 3000);
-                    } catch (error) {
-                        alert(`Could not open file: ${selectedFile.name}\n\nPlease ensure the file exists in the G3 directory.`);
-                    }
-                }
-            }
-        }
+        // Direct file access - no longer need prompt selection since we have dual buttons
 
         function openFileByName(fileName) {
             try {
