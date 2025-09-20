@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start canadian_gas_piping_app.html)",
+      "Bash(node:*)",
+      "Read(//c/Users/m_kap/OneDrive/Desktop/Personal/LARKLabs/Website/apps/calculators/**)",
+      "Read(//c/Users/m_kap/onedrive/desktop/personal/larklabs/website/apps/**)",
+      "Read(//c/Users/m_kap/onedrive/desktop/personal/larklabs/website/**)",
+      "Bash(start index.html)",
+      "Bash(start apps/calculators/canadian-gas-piping-calculator.html)",
+      "Bash(start canadian-gas-piping-calculator.html)",
+      "Read(//c/Program Files/**)",
+      "Bash(copy:*)",
+      "Bash(start \"\" \"C:\\Program Files\\Android\\Android Studio\\bin\\studio64.exe\" .)",
+      "Bash(start \"\" \"C:\\Program Files\\Android\\Android Studio\\bin\\studio64.exe\")",
+      "Bash(start canadian-gas-venting-calculator.html)",
+      "Read(//d//**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
