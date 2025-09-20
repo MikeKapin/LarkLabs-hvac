@@ -2928,42 +2928,46 @@
 
         // Navigation functionality
         function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+            // Add small delay to ensure DOM is ready
+            setTimeout(() => {
+                // Hide all sections
+                const sections = document.querySelectorAll('.section');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
 
-            // Show selected section
-            const targetSection = document.getElementById(sectionId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            } else {
-                console.warn(`Section '${sectionId}' not found. Showing home section instead.`);
-                // Fallback to home section
-                const homeSection = document.getElementById('home');
-                if (homeSection) {
-                    homeSection.classList.add('active');
+                // Show selected section
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    console.log(`Showing section: ${sectionId}`);
+                } else {
+                    console.warn(`Section '${sectionId}' not found. Showing home section instead.`);
+                    // Fallback to home section
+                    const homeSection = document.getElementById('home');
+                    if (homeSection) {
+                        homeSection.classList.add('active');
+                    }
                 }
-            }
 
-            // Update navigation
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
+                // Update navigation
+                const navLinks = document.querySelectorAll('.nav-links a');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
 
-            // Find and activate current nav link
-            const currentLink = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
-            if (currentLink) {
-                currentLink.classList.add('active');
-            }
+                // Find and activate current nav link
+                const currentLink = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+                if (currentLink) {
+                    currentLink.classList.add('active');
+                }
 
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Close mobile menu if open
-            closeMobileMenu();
+                // Close mobile menu if open
+                closeMobileMenu();
+            }, 10); // Small delay to ensure DOM is ready
         }
 
         // Function to show CSA Chapter Questions
