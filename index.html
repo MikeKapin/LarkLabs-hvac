@@ -12,7 +12,7 @@
     <meta name="robots" content="index, follow">
     <meta name="author" content="LARK Labs - HVAC Training and Tools">
     <meta name="theme-color" content="#3498db">
-    <link rel="icon" type="image/png" href="https://larklabs.org/favicon.png" />
+    <link rel="icon" type="image/png" href="assets/images/lark-labs-new-logo.png" />
     <link rel="apple-touch-icon" href="https://larklabs.org/apple-touch-icon.png" />
 
     <!-- Performance Optimizations -->
@@ -730,16 +730,26 @@
         /* Reduced padding for main sections to prevent header obstruction */
         .main-content-with-header {
             padding: 200px 0 80px 0;
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin: 0 20px;
         }
 
         .section {
             display: none;
             animation: fadeIn 0.5s ease-in;
             padding-top: 100px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
 
         .section.active {
             display: block;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(1px);
         }
 
         .section#home {
