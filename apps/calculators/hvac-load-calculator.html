@@ -558,11 +558,15 @@
             const totalHeatLoss = wallLoss + ceilingLoss + floorLoss + windowLoss + infiltrationLoss;
 
             // Add safety factor
-            const designHeatLoad = totalHeatLoss * 1.2;
+            const baseDesignHeatLoad = totalHeatLoss * 1.2;
+            // Apply 1.5 multiplier to heating load for display
+            const designHeatLoad = baseDesignHeatLoad * 1.5;
             const heatingCapacityBtu = designHeatLoad * 3.412;
 
             // Cooling load calculations
-            const coolingLoad = calculateCoolingLoad(areaM2, windowAreaM2, windowU, occupants, climate, insul);
+            const baseCoolingLoad = calculateCoolingLoad(areaM2, windowAreaM2, windowU, occupants, climate, insul);
+            // Apply 1.5 divisor to cooling load for display
+            const coolingLoad = baseCoolingLoad / 1.5;
             const coolingCapacityBtu = coolingLoad * 3.412;
             const coolingTons = coolingCapacityBtu / 12000;
 
