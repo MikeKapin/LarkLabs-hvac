@@ -2252,6 +2252,22 @@
                         <p>Comprehensive training on mildly flammable A2L refrigerants including safety protocols, handling procedures, and regulatory compliance. Complete this course to earn your A2L Refrigerant Safety Certificate and stay current with industry standards for R-32, R-454B, and other next-generation refrigerants.</p>
                         <span class="tool-status status-available external-link">Start Training</span>
                     </div>
+                    <div class="tool-card" onclick="window.open('./training/simulators/TSSA_G3_Exam_SimulatorV3.html', '_blank')">
+                        <div class="tool-icon">🔥</div>
+                        <h3>TSSA G3 Practice Exam - Free</h3>
+                        <p>Prepare for your Gas Technician 3 certification with realistic practice tests covering all exam topics</p>
+                        <span class="tool-status status-available external-link">Start Exam</span>
+                    </div>
+                    <div class="tool-card" onclick="window.open('./training/g3/G3/index.html', '_blank')">
+                        <div class="tool-icon">🎓</div>
+                        <h3>Canadian Gaseous Fuels Learning Modules - G3</h3>
+                        <p>Comprehensive learning modules for Gas Technician 3 certification training with interactive content and assessments</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="cta-button" onclick="event.stopPropagation(); window.open('./training/g3/G3/index.html', '_blank')" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Browse All Materials</button>
+                            <button class="cta-button secondary" onclick="event.stopPropagation(); showCSAChapterQuestions();" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Chapter Reviews</button>
+                        </div>
+                        <span class="tool-status status-available external-link">Access Modules</span>
+                    </div>
                     <div class="tool-card" onclick="window.location.href='pages/payment/g2_premium_access.html'">
                         <div class="premium-badge">PREMIUM</div>
                         <div class="tool-icon">🔥</div>
@@ -2259,32 +2275,16 @@
                         <p>Master your Gas Technician 2 certification with comprehensive practice exams. Premium simulator with 500+ questions, detailed explanations, and unlimited access.</p>
                         <span class="tool-status status-premium">Premium - $79 Lifetime Access</span>
                     </div>
-                    <div class="tool-card" onclick="window.open('./training/simulators/TSSA_G3_Exam_SimulatorV3.html', '_blank')">
-                        <div class="tool-icon">🔥</div>
-                        <h3>TSSA G3 Practice Exam - Free</h3>
-                        <p>Prepare for your Gas Technician 3 certification with realistic practice tests covering all exam topics</p>
-                        <span class="tool-status status-available external-link">Start Exam</span>
-                    </div>
                     <div class="tool-card" onclick="showCSAG2ChapterQuestions()">
                         <div class="new-badge" style="background: #27ae60;">FREE</div>
                         <div class="tool-icon">🎓</div>
-                        <h3>Canadian Gaseous Fuels Learning Modules - Level 2</h3>
+                        <h3>Canadian Gaseous Fuels Learning Modules - G2</h3>
                         <p>Comprehensive learning modules for Gas Technician 2 certification training with interactive content and assessments covering advanced piping systems, appliances, and controls</p>
                         <div style="margin-top: 1rem;">
                             <button class="cta-button" onclick="event.stopPropagation(); showCSAG2ChapterQuestions();" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Start Learning</button>
                             <button class="cta-button secondary" onclick="event.stopPropagation(); showCSAG2ChapterQuestions();" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Chapter Reviews</button>
                         </div>
                         <span class="tool-status status-available">🎉 Now Free for All Canadian Technicians</span>
-                    </div>
-                    <div class="tool-card" onclick="window.open('./training/g3/G3/index.html', '_blank')">
-                        <div class="tool-icon">🎓</div>
-                        <h3>Canadian Gaseous Fuels Learning Modules - Level 3</h3>
-                        <p>Comprehensive learning modules for Gas Technician 3 certification training with interactive content and assessments</p>
-                        <div style="margin-top: 1rem;">
-                            <button class="cta-button" onclick="event.stopPropagation(); window.open('./training/g3/G3/index.html', '_blank')" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Browse All Materials</button>
-                            <button class="cta-button secondary" onclick="event.stopPropagation(); showCSAChapterQuestions();" style="margin: 5px; padding: 8px 16px; font-size: 0.9rem;">Chapter Reviews</button>
-                        </div>
-                        <span class="tool-status status-available external-link">Access Modules</span>
                     </div>
                     <div class="tool-card" onclick="window.open('https://www.youtube.com/channel/UCWp7BGt8Bq68IuAuOfWJmJA', '_blank')">
                         <div class="new-badge">NEW</div>
@@ -2406,7 +2406,7 @@
         <!-- CSA GAS TECHNICIAN 2 CHAPTERS SECTION -->
         <section id="csa-g2-chapters" class="section">
             <div class="container main-content-with-header">
-                <h2 class="section-title">Canadian Gaseous Fuels Advanced Training Modules - Level 2</h2>
+                <h2 class="section-title">Canadian Gaseous Fuels Advanced Training Modules - G2</h2>
                 <p style="text-align: center; margin-bottom: 2rem; color: #bdc3c7;">
                     Advanced chapter-by-chapter study guides for Gas Technician 2 certification. These modules cover advanced piping systems, appliances, controls, and specialized installations.
                 </p>
@@ -3093,9 +3093,9 @@
                 // Training
                 { name: 'CSA B149.1-25 Changes', keywords: 'csa b149 code changes review 2025 updates', action: () => window.open('./B149_1_Changes.html', '_blank'), section: 'training' },
                 { name: 'A2L Refrigerant Training', keywords: 'a2l refrigerant training safety flammable r32 r454b', action: () => window.open('./training/courses/A2L_Safety_Course.html', '_blank'), section: 'training' },
-                { name: 'G2 Learning Modules', keywords: 'g2 learning modules gas technician level 2 certification training', action: () => showCSAG2ChapterQuestions(), section: 'training' },
+                { name: 'G2 Learning Modules', keywords: 'g2 learning modules gas technician g2 certification training', action: () => showCSAG2ChapterQuestions(), section: 'training' },
                 { name: 'G2 Practice Exam', keywords: 'g2 practice exam tssa gas technician certification', action: () => window.location.href='pages/payment/g2_premium_access.html', section: 'training' },
-                { name: 'G3 Training', keywords: 'g3 training gas technician level 3', action: () => window.open('./training/g3/G3/index.html', '_blank'), section: 'training' },
+                { name: 'G3 Training', keywords: 'g3 training gas technician g3', action: () => window.open('./training/g3/G3/index.html', '_blank'), section: 'training' },
 
                 // Other sections
                 { name: 'Community', keywords: 'community forum chat professionals networking', action: () => window.location.href='pages/community.html', section: 'community' },
