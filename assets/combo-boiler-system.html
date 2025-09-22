@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combo-Boiler System - CSA Gas Technician Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .power-btn {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .power-btn.on {
+            background: #10b981;
+        }
+        
+        .zone-btn {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .zone-btn.active {
+            background: #3b82f6;
+        }
+        
+        .dhw-btn {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .dhw-btn.active {
+            background: #f59e0b;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #4b5563;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #d1d5db;
+        }
+        
+        .diagram-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 30px;
+        }
+        
+        svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        .info-panels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .panel {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .panel h3 {
+            color: #1f2937;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-grid {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background: #f9fafb;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .status-label {
+            color: #6b7280;
+        }
+        
+        .status-value {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .status-value.active {
+            color: #10b981;
+        }
+        
+        .status-value.inactive {
+            color: #ef4444;
+        }
+        
+        .status-value.dhw {
+            color: #f59e0b;
+        }
+        
+        .education-panel {
+            background: #fef3c7;
+            border: 1px solid #fbbf24;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .education-panel h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+        
+        .education-panel ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .education-panel li {
+            padding: 6px 0;
+            color: #78350f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .education-panel li:before {
+            content: "▸ ";
+            color: #f59e0b;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .component-hover {
+            cursor: pointer;
+        }
+        
+        .component-hover:hover {
+            filter: brightness(1.1);
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: #1f2937;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .temp-display {
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .priority-panel {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .priority-panel h3 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+        
+        .priority-text {
+            color: #1e40af;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥💧 Combo-Boiler System - Domestic Hot Water & Space Heating</h1>
+            <p style="color: #6b7280;">CSA Gas Technician Training Module - Combination Boiler Systems</p>
+        </div>
+        
+        <div class="priority-panel">
+            <h3>⚡ DHW Priority Mode</h3>
+            <p class="priority-text">
+                This combo-boiler operates with DHW priority. When hot water is demanded at a tap, 
+                the 3-way diverter valve automatically switches to DHW mode, temporarily suspending 
+                space heating to provide instant hot water. Maximum efficiency: 95% AFUE.
+            </p>
+        </div>
+        
+        <div class="controls">
+            <button id="powerBtn" class="power-btn" onclick="togglePower()">
+                System Power: OFF
+            </button>
+            <button id="zone1Btn" class="zone-btn" onclick="toggleZone(1)">
+                Zone 1 Heating: OFF
+            </button>
+            <button id="zone2Btn" class="zone-btn" onclick="toggleZone(2)">
+                Zone 2 Heating: OFF
+            </button>
+            <button id="dhwBtn" class="dhw-btn" onclick="toggleDHW()">
+                Hot Water Tap: CLOSED
+            </button>
+            <button onclick="resetSystem()" style="background: #f59e0b; color: white;">
+                Reset System
+            </button>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #dc2626;"></div>
+                <span>Heating Supply (Hot)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #2563eb;"></div>
+                <span>Heating Return (Cool)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #06b6d4;"></div>
+                <span>Cold Water Supply</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f97316;"></div>
+                <span>Domestic Hot Water</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ffff00; border: 2px solid #ff6600;"></div>
+                <span>Active Flow</span>
+            </div>
+        </div>
+        
+        <div class="diagram-container">
+            <svg viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg">
+                <!-- Define gradients -->
+                <defs>
+                    <linearGradient id="heatingSupply" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="heatingReturn" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="coldWater" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="hotWater" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#fb923c;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Combo Boiler Unit -->
+                <g id="comboBoiler" class="component-hover">
+                    <rect x="150" y="250" width="250" height="350" fill="#374151" stroke="#1f2937" stroke-width="4" rx="10"/>
+                    <rect x="170" y="270" width="210" height="100" fill="#dc2626" rx="5"/>
+                    <text x="275" y="315" text-anchor="middle" fill="white" font-weight="bold" font-size="16">COMBO-BOILER</text>
+                    <text x="275" y="335" text-anchor="middle" fill="white" font-size="12">95% AFUE</text>
+                    <text x="275" y="355" text-anchor="middle" fill="white" font-size="11">Condensing Unit</text>
+                    
+                    <!-- Primary Heat Exchanger -->
+                    <rect x="180" y="390" width="190" height="80" fill="#6b7280" stroke="#4b5563" stroke-width="2" rx="5"/>
+                    <text x="275" y="425" text-anchor="middle" fill="white" font-weight="bold" font-size="11">PRIMARY HX</text>
+                    <path d="M 190 435 L 360 435 M 190 445 L 360 445 M 190 455 L 360 455" 
+                          stroke="#fbbf24" stroke-width="2" opacity="0.8"/>
+                    
+                    <!-- Secondary Plate Heat Exchanger for DHW -->
+                    <rect x="180" y="480" width="190" height="60" fill="#0891b2" stroke="#0e7490" stroke-width="2" rx="5"/>
+                    <text x="275" y="505" text-anchor="middle" fill="white" font-weight="bold" font-size="11">PLATE HX</text>
+                    <text x="275" y="520" text-anchor="middle" fill="white" font-size="10">(DHW)</text>
+                    
+                    <!-- Temperature display -->
+                    <rect x="200" y="550" width="150" height="30" fill="#1f2937" rx="3"/>
+                    <text id="boilerTemp" x="275" y="570" text-anchor="middle" fill="#10b981" class="temp-display">TEMP: 20°C</text>
+                    
+                    <!-- Burner flames animation -->
+                    <g id="flames" style="display: none;">
+                        <path d="M 210 380 Q 215 370 220 380 Q 225 370 230 380" fill="#fbbf24" opacity="0.8">
+                            <animate attributeName="d" 
+                                values="M 210 380 Q 215 370 220 380 Q 225 370 230 380;
+                                        M 210 380 Q 215 365 220 380 Q 225 365 230 380;
+                                        M 210 380 Q 215 370 220 380 Q 225 370 230 380"
+                                dur="0.5s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M 250 380 Q 255 370 260 380 Q 265 370 270 380" fill="#f97316" opacity="0.8">
+                            <animate attributeName="d" 
+                                values="M 250 380 Q 255 370 260 380 Q 265 370 270 380;
+                                        M 250 380 Q 255 365 260 380 Q 265 365 270 380;
+                                        M 250 380 Q 255 370 260 380 Q 265 370 270 380"
+                                dur="0.4s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M 290 380 Q 295 370 300 380 Q 305 370 310 380" fill="#fbbf24" opacity="0.8">
+                            <animate attributeName="d" 
+                                values="M 290 380 Q 295 370 300 380 Q 305 370 310 380;
+                                        M 290 380 Q 295 365 300 380 Q 305 365 310 380;
+                                        M 290 380 Q 295 370 300 380 Q 305 370 310 380"
+                                dur="0.6s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+                </g>
+                
+                <!-- 3-Way Diverter Valve -->
+                <g id="diverterValve" class="component-hover">
+                    <rect x="460" y="380" width="80" height="80" fill="#6b7280" stroke="#374151" stroke-width="3" rx="10"/>
+                    <circle cx="500" cy="420" r="25" fill="#4b5563" stroke="#374151" stroke-width="2"/>
+                    <text x="500" y="425" text-anchor="middle" fill="white" font-weight="bold" font-size="10">3-WAY</text>
+                    <text x="500" y="370" text-anchor="middle" fill="#1f2937" font-size="11">Diverter Valve</text>
+                    
+                    <!-- Valve position indicator -->
+                    <g id="valveIndicator">
+                        <line x1="500" y1="420" x2="530" y2="420" stroke="#10b981" stroke-width="4" stroke-linecap="round" id="valvePosition"/>
+                    </g>
+                    
+                    <!-- Status text -->
+                    <text id="valveStatus" x="500" y="475" text-anchor="middle" fill="#6b7280" font-size="10">HEATING MODE</text>
+                </g>
+                
+                <!-- Built-in Circulation Pump -->
+                <g id="primaryPump" class="component-hover">
+                    <circle cx="275" cy="200" r="30" fill="#6b7280" stroke="#374151" stroke-width="3"/>
+                    <circle cx="275" cy="200" r="20" fill="#4b5563"/>
+                    <text x="275" y="205" text-anchor="middle" fill="white" font-weight="bold" font-size="10">PUMP</text>
+                    <text x="275" y="170" text-anchor="middle" fill="#1f2937" font-size="11">Internal Pump</text>
+                    
+                    <!-- Pump impeller animation -->
+                    <g id="primaryImpeller" transform="rotate(0 275 200)" style="display: none;">
+                        <path d="M 275 200 L 290 200 L 275 185 Z" fill="#10b981"/>
+                        <path d="M 275 200 L 275 185 L 260 200 Z" fill="#10b981"/>
+                        <path d="M 275 200 L 260 200 L 275 215 Z" fill="#10b981"/>
+                        <path d="M 275 200 L 275 215 L 290 200 Z" fill="#10b981"/>
+                        <animateTransform attributeName="transform" type="rotate" 
+                            from="0 275 200" to="360 275 200" dur="1s" repeatCount="indefinite"/>
+                    </g>
+                </g>
+                
+                <!-- Expansion Tank -->
+                <g id="expansionTank" class="component-hover">
+                    <ellipse cx="450" cy="150" rx="35" ry="45" fill="#6b7280" stroke="#374151" stroke-width="2"/>
+                    <line x1="450" y1="105" x2="450" y2="130" stroke="#374151" stroke-width="8"/>
+                    <text x="450" y="155" text-anchor="middle" fill="white" font-size="11">EXP</text>
+                    <text x="450" y="95" text-anchor="middle" fill="#1f2937" font-size="11">Expansion Tank</text>
+                </g>
+                
+                <!-- Flow Switch for DHW -->
+                <g id="flowSwitch" class="component-hover">
+                    <rect x="100" y="680" width="60" height="30" fill="#0891b2" stroke="#0e7490" stroke-width="2" rx="5"/>
+                    <circle cx="130" cy="695" r="8" fill="#06b6d4" id="flowSwitchIndicator"/>
+                    <text x="130" y="730" text-anchor="middle" fill="#1f2937" font-size="10">Flow Switch</text>
+                </g>
+                
+                <!-- Cold Water Supply -->
+                <g id="coldWaterSupply">
+                    <rect x="50" y="650" width="80" height="40" fill="#06b6d4" stroke="#0891b2" stroke-width="3" rx="5"/>
+                    <text x="90" y="670" text-anchor="middle" fill="white" font-weight="bold" font-size="11">COLD</text>
+                    <text x="90" y="685" text-anchor="middle" fill="white" font-size="10">MAINS</text>
+                    
+                    <!-- Cold water pipe to boiler -->
+                    <line x1="130" y1="670" x2="180" y2="670" stroke="#06b6d4" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="180" y1="670" x2="180" y2="510" stroke="#06b6d4" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="180" y1="510" x2="180" y2="510" stroke="#06b6d4" stroke-width="10" stroke-linecap="round"/>
+                </g>
+                
+                <!-- DHW Outlet -->
+                <g id="dhwOutlet" class="component-hover">
+                    <rect x="50" y="750" width="80" height="40" fill="#f97316" stroke="#ea580c" stroke-width="3" rx="5"/>
+                    <text x="90" y="770" text-anchor="middle" fill="white" font-weight="bold" font-size="11">DHW</text>
+                    <text x="90" y="785" text-anchor="middle" fill="white" font-size="10">OUT</text>
+                </g>
+                
+                <!-- Hot Water Tap -->
+                <g id="hotWaterTap" class="component-hover">
+                    <rect x="320" y="740" width="60" height="60" fill="#e5e7eb" stroke="#9ca3af" stroke-width="2" rx="5"/>
+                    <circle cx="350" cy="770" r="15" fill="#6b7280"/>
+                    <rect x="345" y="755" width="10" height="20" fill="#374151"/>
+                    <text x="350" y="820" text-anchor="middle" fill="#1f2937" font-size="11">Hot Tap</text>
+                    
+                    <!-- Water stream animation -->
+                    <g id="waterStream" style="display: none;">
+                        <rect x="345" y="785" width="10" height="30" fill="#3b82f6" opacity="0.6">
+                            <animate attributeName="height" values="0;30;0" dur="0.5s" repeatCount="indefinite"/>
+                            <animate attributeName="y" values="785;785;815" dur="0.5s" repeatCount="indefinite"/>
+                        </rect>
+                    </g>
+                </g>
+                
+                <!-- Zone 1 -->
+                <g id="zone1">
+                    <!-- Zone 1 Valve -->
+                    <g id="zone1Valve" class="component-hover">
+                        <rect x="650" y="340" width="40" height="20" fill="#6b7280" stroke="#374151" stroke-width="2" rx="3"/>
+                        <circle cx="670" cy="350" r="8" fill="#ef4444" id="zone1ValveIndicator"/>
+                        <text x="670" y="330" text-anchor="middle" fill="#1f2937" font-size="10">Zone 1</text>
+                    </g>
+                    
+                    <!-- Zone 1 Radiators -->
+                    <g id="zone1Radiator" class="component-hover">
+                        <rect x="780" y="330" width="120" height="40" fill="#9ca3af" stroke="#6b7280" stroke-width="2" rx="5"/>
+                        <line x1="790" y1="340" x2="890" y2="340" stroke="#6b7280" stroke-width="2"/>
+                        <line x1="790" y1="350" x2="890" y2="350" stroke="#6b7280" stroke-width="2"/>
+                        <line x1="790" y1="360" x2="890" y2="360" stroke="#6b7280" stroke-width="2"/>
+                        <text x="840" y="355" text-anchor="middle" fill="#1f2937" font-weight="bold" font-size="11">ZONE 1</text>
+                        <text x="840" y="390" text-anchor="middle" fill="#6b7280" font-size="10">Radiators</text>
+                        
+                        <!-- Heat waves -->
+                        <g id="zone1Heat" style="display: none;">
+                            <path d="M 800 320 Q 805 315 810 320" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.6">
+                                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            <path d="M 830 320 Q 835 315 840 320" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.6">
+                                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                            </path>
+                            <path d="M 860 320 Q 865 315 870 320" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.6">
+                                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </path>
+                        </g>
+                    </g>
+                    
+                    <!-- Zone 1 Thermostat -->
+                    <g id="zone1Thermostat" class="component-hover">
+                        <rect x="820" y="250" width="40" height="40" fill="#f3f4f6" stroke="#9ca3af" stroke-width="2" rx="5"/>
+                        <circle cx="840" cy="270" r="12" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+                        <text x="840" y="274" text-anchor="middle" fill="#1f2937" font-weight="bold" font-size="10">21°</text>
+                        <text x="840" y="240" text-anchor="middle" fill="#1f2937" font-size="10">T-STAT 1</text>
+                    </g>
+                </g>
+                
+                <!-- Zone 2 -->
+                <g id="zone2">
+                    <!-- Zone 2 Valve -->
+                    <g id="zone2Valve" class="component-hover">
+                        <rect x="650" y="490" width="40" height="20" fill="#6b7280" stroke="#374151" stroke-width="2" rx="3"/>
+                        <circle cx="670" cy="500" r="8" fill="#ef4444" id="zone2ValveIndicator"/>
+                        <text x="670" y="530" text-anchor="middle" fill="#1f2937" font-size="10">Zone 2</text>
+                    </g>
+                    
+                    <!-- Zone 2 Radiators -->
+                    <g id="zone2Radiator" class="component-hover">
+                        <rect x="780" y="480" width="120" height="40" fill="#9ca3af" stroke="#6b7280" stroke-width="2" rx="5"/>
+                        <line x1="790" y1="490" x2="890" y2="490" stroke="#6b7280" stroke-width="2"/>
+                        <line x1="790" y1="500" x2="890" y2="500" stroke="#6b7280" stroke-width="2"/>
+                        <line x1="790" y1="510" x2="890" y2="510" stroke="#6b7280" stroke-width="2"/>
+                        <text x="840" y="505" text-anchor="middle" fill="#1f2937" font-weight="bold" font-size="11">ZONE 2</text>
+                        <text x="840" y="540" text-anchor="middle" fill="#6b7280" font-size="10">Radiators</text>
+                        
+                        <!-- Heat waves -->
+                        <g id="zone2Heat" style="display: none;">
+                            <path d="M 800 470 Q 805 465 810 470" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.6">
+                                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            <path d="M 830 470 Q 835 465 840 470" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.6">
+                                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                            </path>
+                            <path d="M 860 470 Q 865 465 870 470" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.6">
+                                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </path>
+                        </g>
+                    </g>
+                    
+                    <!-- Zone 2 Thermostat -->
+                    <g id="zone2Thermostat" class="component-hover">
+                        <rect x="820" y="580" width="40" height="40" fill="#f3f4f6" stroke="#9ca3af" stroke-width="2" rx="5"/>
+                        <circle cx="840" cy="600" r="12" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+                        <text x="840" y="604" text-anchor="middle" fill="#1f2937" font-weight="bold" font-size="10">22°</text>
+                        <text x="840" y="640" text-anchor="middle" fill="#1f2937" font-size="10">T-STAT 2</text>
+                    </g>
+                </g>
+                
+                <!-- Primary Heating Loop -->
+                <g id="heatingLoop">
+                    <!-- Supply from boiler through pump -->
+                    <line x1="275" y1="250" x2="275" y2="230" stroke="#dc2626" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="275" y1="170" x2="275" y2="130" stroke="#dc2626" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="275" y1="130" x2="450" y2="130" stroke="#dc2626" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="450" y1="130" x2="550" y2="130" stroke="#dc2626" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="550" y1="130" x2="550" y2="420" stroke="#dc2626" stroke-width="12" stroke-linecap="round"/>
+                    
+                    <!-- Through 3-way valve to zones -->
+                    <line x1="540" y1="420" x2="600" y2="420" stroke="#dc2626" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="600" y1="420" x2="600" y2="350" stroke="#dc2626" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="600" y1="350" x2="650" y2="350" stroke="#dc2626" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="600" y1="420" x2="600" y2="500" stroke="#dc2626" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="600" y1="500" x2="650" y2="500" stroke="#dc2626" stroke-width="10" stroke-linecap="round"/>
+                    
+                    <!-- Zone 1 supply and return -->
+                    <line x1="690" y1="350" x2="780" y2="350" stroke="#dc2626" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="900" y1="350" x2="1000" y2="350" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="1000" y1="350" x2="1000" y2="420" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>
+                    
+                    <!-- Zone 2 supply and return -->
+                    <line x1="690" y1="500" x2="780" y2="500" stroke="#dc2626" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="900" y1="500" x2="1000" y2="500" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="1000" y1="500" x2="1000" y2="420" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>
+                    
+                    <!-- Common return -->
+                    <line x1="1000" y1="420" x2="600" y2="420" stroke="#2563eb" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="600" y1="420" x2="600" y2="550" stroke="#2563eb" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="600" y1="550" x2="400" y2="550" stroke="#2563eb" stroke-width="12" stroke-linecap="round"/>
+                    
+                    <!-- Return to boiler -->
+                    <line x1="400" y1="550" x2="400" y2="550" stroke="#2563eb" stroke-width="12" stroke-linecap="round"/>
+                </g>
+                
+                <!-- DHW Circuit (Always visible) -->
+                <g id="dhwCircuit">
+                    <!-- DHW pipes from boiler to tap - ALWAYS VISIBLE -->
+                    <line x1="370" y1="510" x2="420" y2="510" stroke="#f97316" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="420" y1="510" x2="420" y2="770" stroke="#f97316" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="420" y1="770" x2="380" y2="770" stroke="#f97316" stroke-width="10" stroke-linecap="round"/>
+                    <line x1="320" y1="770" x2="130" y2="770" stroke="#f97316" stroke-width="10" stroke-linecap="round"/>
+                    
+                    <!-- Label for DHW pipe -->
+                    <text x="420" y="640" text-anchor="middle" fill="#ea580c" font-size="10" transform="rotate(-90 420 640)">DHW SUPPLY</text>
+                </g>
+                
+                <!-- Flow animations for heating -->
+                <g id="heatingFlow" style="display: none;">
+                    <circle r="6" fill="#ffff00" stroke="#ff6600" stroke-width="2">
+                        <animateMotion dur="5s" repeatCount="indefinite">
+                            <mpath href="#heatingFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="6" fill="#ffff00" stroke="#ff6600" stroke-width="2">
+                        <animateMotion dur="5s" repeatCount="indefinite" begin="1.5s">
+                            <mpath href="#heatingFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="6" fill="#ffff00" stroke="#ff6600" stroke-width="2">
+                        <animateMotion dur="5s" repeatCount="indefinite" begin="3s">
+                            <mpath href="#heatingFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                </g>
+                
+                <!-- Zone 1 specific flow -->
+                <g id="zone1FlowAnim" style="display: none;">
+                    <circle r="5" fill="#ffff00" stroke="#ff6600" stroke-width="1">
+                        <animateMotion dur="4s" repeatCount="indefinite">
+                            <mpath href="#zone1FlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="5" fill="#ffff00" stroke="#ff6600" stroke-width="1">
+                        <animateMotion dur="4s" repeatCount="indefinite" begin="2s">
+                            <mpath href="#zone1FlowPath"/>
+                        </animateMotion>
+                    </circle>
+                </g>
+                
+                <!-- Zone 2 specific flow -->
+                <g id="zone2FlowAnim" style="display: none;">
+                    <circle r="5" fill="#ffff00" stroke="#ff6600" stroke-width="1">
+                        <animateMotion dur="4s" repeatCount="indefinite">
+                            <mpath href="#zone2FlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="5" fill="#ffff00" stroke="#ff6600" stroke-width="1">
+                        <animateMotion dur="4s" repeatCount="indefinite" begin="2s">
+                            <mpath href="#zone2FlowPath"/>
+                        </animateMotion>
+                    </circle>
+                </g>
+                
+                <!-- Return flow animation -->
+                <g id="returnFlow" style="display: none;">
+                    <circle r="6" fill="#2563eb" stroke="#1e40af" stroke-width="2">
+                        <animateMotion dur="5s" repeatCount="indefinite">
+                            <mpath href="#returnFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="6" fill="#2563eb" stroke="#1e40af" stroke-width="2">
+                        <animateMotion dur="5s" repeatCount="indefinite" begin="1.5s">
+                            <mpath href="#returnFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="6" fill="#2563eb" stroke="#1e40af" stroke-width="2">
+                        <animateMotion dur="5s" repeatCount="indefinite" begin="3s">
+                            <mpath href="#returnFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                </g>
+                
+                <!-- Flow animations for DHW -->
+                <g id="dhwFlow" style="display: none;">
+                    <circle r="6" fill="#f97316" stroke="#ea580c" stroke-width="2">
+                        <animateMotion dur="3s" repeatCount="indefinite">
+                            <mpath href="#dhwFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="6" fill="#f97316" stroke="#ea580c" stroke-width="2">
+                        <animateMotion dur="3s" repeatCount="indefinite" begin="1s">
+                            <mpath href="#dhwFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="6" fill="#f97316" stroke="#ea580c" stroke-width="2">
+                        <animateMotion dur="3s" repeatCount="indefinite" begin="2s">
+                            <mpath href="#dhwFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                </g>
+                
+                <!-- Cold water flow animation -->
+                <g id="coldFlow" style="display: none;">
+                    <circle r="5" fill="#06b6d4" stroke="#0891b2" stroke-width="2">
+                        <animateMotion dur="3s" repeatCount="indefinite">
+                            <mpath href="#coldFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="5" fill="#06b6d4" stroke="#0891b2" stroke-width="2">
+                        <animateMotion dur="3s" repeatCount="indefinite" begin="1.5s">
+                            <mpath href="#coldFlowPath"/>
+                        </animateMotion>
+                    </circle>
+                </g>
+                
+                <!-- Hidden paths for animations -->
+                <defs>
+                    <path id="heatingFlowPath" d="M 275 250 L 275 130 L 550 130 L 550 420 L 600 420"/>
+                    <path id="zone1FlowPath" d="M 650 350 L 780 350 L 900 350 L 1000 350 L 1000 420"/>
+                    <path id="zone2FlowPath" d="M 650 500 L 780 500 L 900 500 L 1000 500 L 1000 420"/>
+                    <path id="returnFlowPath" d="M 1000 420 L 600 420 L 600 550 L 400 550"/>
+                    <path id="dhwFlowPath" d="M 370 510 L 420 510 L 420 770 L 130 770"/>
+                    <path id="coldFlowPath" d="M 130 670 L 180 670 L 180 510"/>
+                </defs>
+                
+                <!-- System Labels -->
+                <text x="700" y="50" text-anchor="middle" fill="#1f2937" font-size="22" font-weight="bold">
+                    Combination Boiler System - DHW Priority Control
+                </text>
+                <text x="700" y="75" text-anchor="middle" fill="#6b7280" font-size="14">
+                    CSA B149.1 / B214 Compliant - Condensing Technology
+                </text>
+                
+                <!-- Condensate Drain -->
+                <g id="condensateDrain" class="component-hover">
+                    <rect x="220" y="590" width="110" height="20" fill="#9ca3af" stroke="#6b7280" stroke-width="2" rx="3"/>
+                    <text x="275" y="605" text-anchor="middle" fill="#1f2937" font-size="10">Condensate Drain</text>
+                    <path d="M 275 610 L 275 630 L 260 630" stroke="#6b7280" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <circle cx="260" cy="630" r="3" fill="#6b7280"/>
+                </g>
+                
+                <!-- Pressure Relief Valve -->
+                <g id="prvValve" class="component-hover">
+                    <rect x="410" y="500" width="30" height="20" fill="#fbbf24" stroke="#f59e0b" stroke-width="2" rx="3"/>
+                    <text x="425" y="515" text-anchor="middle" fill="#1f2937" font-weight="bold" font-size="8">PRV</text>
+                    <text x="425" y="535" text-anchor="middle" fill="#6b7280" font-size="9">3 bar</text>
+                </g>
+                
+                <!-- Mode Indicator -->
+                <rect x="1050" y="100" width="200" height="80" fill="#f3f4f6" stroke="#9ca3af" stroke-width="2" rx="10"/>
+                <text x="1150" y="130" text-anchor="middle" fill="#1f2937" font-weight="bold" font-size="14">OPERATING MODE</text>
+                <text id="modeIndicator" x="1150" y="160" text-anchor="middle" fill="#6b7280" font-size="18" font-weight="bold">STANDBY</text>
+            </svg>
+        </div>
+        
+        <div class="info-panels">
+            <div class="panel">
+                <h3>🌡️ Boiler Status</h3>
+                <div class="status-grid">
+                    <div class="status-row">
+                        <span class="status-label">System Power:</span>
+                        <span id="powerStatus" class="status-value inactive">OFF</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Boiler Status:</span>
+                        <span id="boilerStatus" class="status-value inactive">STANDBY</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Primary Temp:</span>
+                        <span id="boilerTempStatus" class="status-value">20°C</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Internal Pump:</span>
+                        <span id="pumpStatus" class="status-value inactive">OFF</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Gas Valve:</span>
+                        <span id="gasStatus" class="status-value inactive">CLOSED</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>💧 DHW Status</h3>
+                <div class="status-grid">
+                    <div class="status-row">
+                        <span class="status-label">DHW Demand:</span>
+                        <span id="dhwDemandStatus" class="status-value inactive">NO</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Flow Switch:</span>
+                        <span id="flowSwitchStatus" class="status-value inactive">NO FLOW</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">DHW Temp:</span>
+                        <span id="dhwTempStatus" class="status-value">--°C</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Flow Rate:</span>
+                        <span id="dhwFlowRate" class="status-value">0 L/min</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Priority:</span>
+                        <span id="priorityStatus" class="status-value dhw">DHW PRIORITY</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>🏠 Heating Zones</h3>
+                <div class="status-grid">
+                    <div class="status-row">
+                        <span class="status-label">Zone 1 Call:</span>
+                        <span id="zone1Status" class="status-value inactive">NO</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Zone 1 Valve:</span>
+                        <span id="zone1ValveStatus" class="status-value inactive">CLOSED</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Zone 2 Call:</span>
+                        <span id="zone2Status" class="status-value inactive">NO</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">Zone 2 Valve:</span>
+                        <span id="zone2ValveStatus" class="status-value inactive">CLOSED</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">3-Way Valve:</span>
+                        <span id="diverterStatus" class="status-value">HEATING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="education-panel">
+            <h3>📚 CSA Gas Technician Key Learning Points - Combo-Boiler Systems</h3>
+            <ul>
+                <li><strong>DHW Priority Control:</strong> When hot water is demanded, the 3-way diverter valve immediately switches to DHW mode, suspending space heating. This ensures maximum heat transfer for instant hot water delivery (typically 10-12 L/min).</li>
+                <li><strong>Plate Heat Exchanger:</strong> Secondary stainless steel plate heat exchanger provides instant DHW without storage, eliminating Legionella risk. Primary circuit water never mixes with potable water.</li>
+                <li><strong>Flow Switch Activation:</strong> DHW demand detected by flow switch (typically 1.5 L/min minimum flow). Activates boiler at maximum output for rapid DHW heating.</li>
+                <li><strong>Condensing Technology:</strong> 95% AFUE efficiency achieved through condensing heat exchanger. Requires proper condensate drainage per CSA B149.1 and local codes.</li>
+                <li><strong>Modulating Burner:</strong> Gas valve modulates from 10-100% to maintain DHW setpoint (typically 50-60°C) and heating temperatures (typically 70-82°C).</li>
+                <li><strong>Safety Features:</strong> Pressure relief valve (3 bar), temperature limiters, flame supervision, and freeze protection ensure safe operation per CSA B214 requirements.</li>
+                <li><strong>No Storage Tank:</strong> Eliminates standby losses and reduces space requirements. Ideal for homes with limited mechanical room space.</li>
+                <li><strong>Heating Operation:</strong> When no DHW demand exists, system operates as standard sealed system boiler with weather compensation and zone control.</li>
+                <li><strong>Typical Capacity:</strong> 24-35kW for heating, up to 40kW for DHW production. Serves homes up to 2500 sq ft with 2-3 bathrooms.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="tooltip" class="tooltip"></div>
+    
+    <footer style="text-align: center; padding: 20px 0; margin-top: 30px; border-top: 2px solid #e5e7eb; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: 600; font-size: 16px; border-radius: 0 0 12px 12px; margin: -30px -30px -30px -30px;">
+        Created by LARK Labs
+    </footer>
+    
+    <script>
+        let systemPower = false;
+        let zone1Call = false;
+        let zone2Call = false;
+        let dhwDemand = false;
+        let boilerTemp = 20;
+        let dhwTemp = 20;
+        let boilerInterval;
+        
+        function togglePower() {
+            systemPower = !systemPower;
+            const btn = document.getElementById('powerBtn');
+            const powerStatus = document.getElementById('powerStatus');
+            
+            if (systemPower) {
+                btn.classList.add('on');
+                btn.textContent = 'System Power: ON';
+                powerStatus.textContent = 'ON';
+                powerStatus.className = 'status-value active';
+                
+                document.getElementById('pumpStatus').textContent = 'READY';
+                document.getElementById('pumpStatus').className = 'status-value';
+                
+                checkSystemOperation();
+            } else {
+                btn.classList.remove('on');
+                btn.textContent = 'System Power: OFF';
+                powerStatus.textContent = 'OFF';
+                powerStatus.className = 'status-value inactive';
+                
+                resetSystem();
+            }
+        }
+        
+        function toggleZone(zoneNum) {
+            if (!systemPower) {
+                alert('Please turn on system power first!');
+                return;
+            }
+            
+            if (dhwDemand) {
+                alert('DHW has priority - heating suspended during hot water demand!');
+                return;
+            }
+            
+            if (zoneNum === 1) {
+                zone1Call = !zone1Call;
+                const btn = document.getElementById('zone1Btn');
+                
+                if (zone1Call) {
+                    btn.classList.add('active');
+                    btn.textContent = 'Zone 1 Heating: ON';
+                    activateZone1();
+                } else {
+                    btn.classList.remove('active');
+                    btn.textContent = 'Zone 1 Heating: OFF';
+                    deactivateZone1();
+                }
+            } else if (zoneNum === 2) {
+                zone2Call = !zone2Call;
+                const btn = document.getElementById('zone2Btn');
+                
+                if (zone2Call) {
+                    btn.classList.add('active');
+                    btn.textContent = 'Zone 2 Heating: ON';
+                    activateZone2();
+                } else {
+                    btn.classList.remove('active');
+                    btn.textContent = 'Zone 2 Heating: OFF';
+                    deactivateZone2();
+                }
+            }
+            
+            checkSystemOperation();
+        }
+        
+        function toggleDHW() {
+            if (!systemPower) {
+                alert('Please turn on system power first!');
+                return;
+            }
+            
+            dhwDemand = !dhwDemand;
+            const btn = document.getElementById('dhwBtn');
+            
+            if (dhwDemand) {
+                btn.classList.add('active');
+                btn.textContent = 'Hot Water Tap: OPEN';
+                activateDHW();
+            } else {
+                btn.classList.remove('active');
+                btn.textContent = 'Hot Water Tap: CLOSED';
+                deactivateDHW();
+            }
+            
+            checkSystemOperation();
+        }
+        
+        function activateDHW() {
+            // Suspend heating for DHW priority
+            if (zone1Call || zone2Call) {
+                document.getElementById('zone1Heat').style.display = 'none';
+                document.getElementById('zone2Heat').style.display = 'none';
+                document.getElementById('heatingFlow').style.display = 'none';
+                document.getElementById('zone1FlowAnim').style.display = 'none';
+                document.getElementById('zone2FlowAnim').style.display = 'none';
+                document.getElementById('returnFlow').style.display = 'none';
+            }
+            
+            // Update status
+            document.getElementById('dhwDemandStatus').textContent = 'YES';
+            document.getElementById('dhwDemandStatus').className = 'status-value dhw';
+            document.getElementById('flowSwitchStatus').textContent = 'FLOW DETECTED';
+            document.getElementById('flowSwitchStatus').className = 'status-value active';
+            document.getElementById('dhwFlowRate').textContent = '11 L/min';
+            document.getElementById('flowSwitchIndicator').setAttribute('fill', '#10b981');
+            
+            // Switch 3-way valve to DHW
+            document.getElementById('valvePosition').setAttribute('x2', '500');
+            document.getElementById('valvePosition').setAttribute('y2', '450');
+            document.getElementById('valveStatus').textContent = 'DHW MODE';
+            document.getElementById('diverterStatus').textContent = 'DHW';
+            document.getElementById('diverterStatus').className = 'status-value dhw';
+            
+            // Show DHW flow animations (pipes are always visible)
+            document.getElementById('dhwFlow').style.display = 'block';
+            document.getElementById('coldFlow').style.display = 'block';
+            document.getElementById('waterStream').style.display = 'block';
+            
+            // Update mode indicator
+            document.getElementById('modeIndicator').textContent = 'DHW PRIORITY';
+            document.getElementById('modeIndicator').setAttribute('fill', '#f59e0b');
+        }
+        
+        function deactivateDHW() {
+            // Update status
+            document.getElementById('dhwDemandStatus').textContent = 'NO';
+            document.getElementById('dhwDemandStatus').className = 'status-value inactive';
+            document.getElementById('flowSwitchStatus').textContent = 'NO FLOW';
+            document.getElementById('flowSwitchStatus').className = 'status-value inactive';
+            document.getElementById('dhwFlowRate').textContent = '0 L/min';
+            document.getElementById('dhwTempStatus').textContent = '--°C';
+            document.getElementById('flowSwitchIndicator').setAttribute('fill', '#06b6d4');
+            
+            // Switch 3-way valve back to heating
+            document.getElementById('valvePosition').setAttribute('x2', '530');
+            document.getElementById('valvePosition').setAttribute('y2', '420');
+            document.getElementById('valveStatus').textContent = 'HEATING MODE';
+            document.getElementById('diverterStatus').textContent = 'HEATING';
+            document.getElementById('diverterStatus').className = 'status-value';
+            
+            // Hide DHW flow animations (pipes remain visible)
+            document.getElementById('dhwFlow').style.display = 'none';
+            document.getElementById('coldFlow').style.display = 'none';
+            document.getElementById('waterStream').style.display = 'none';
+            
+            dhwTemp = 20;
+            
+            // Resume heating if zones are calling
+            if (zone1Call || zone2Call) {
+                checkSystemOperation();
+            }
+        }
+        
+        function activateZone1() {
+            document.getElementById('zone1Status').textContent = 'YES';
+            document.getElementById('zone1Status').className = 'status-value active';
+            document.getElementById('zone1ValveStatus').textContent = 'OPEN';
+            document.getElementById('zone1ValveStatus').className = 'status-value active';
+            document.getElementById('zone1ValveIndicator').setAttribute('fill', '#10b981');
+            
+            if (!dhwDemand) {
+                document.getElementById('zone1Heat').style.display = 'block';
+                document.getElementById('zone1Radiator').querySelector('rect').setAttribute('fill', '#fbbf24');
+                document.getElementById('zone1FlowAnim').style.display = 'block';
+            }
+        }
+        
+        function deactivateZone1() {
+            document.getElementById('zone1Status').textContent = 'NO';
+            document.getElementById('zone1Status').className = 'status-value inactive';
+            document.getElementById('zone1ValveStatus').textContent = 'CLOSED';
+            document.getElementById('zone1ValveStatus').className = 'status-value inactive';
+            document.getElementById('zone1ValveIndicator').setAttribute('fill', '#ef4444');
+            document.getElementById('zone1Heat').style.display = 'none';
+            document.getElementById('zone1Radiator').querySelector('rect').setAttribute('fill', '#9ca3af');
+            document.getElementById('zone1FlowAnim').style.display = 'none';
+        }
+        
+        function activateZone2() {
+            document.getElementById('zone2Status').textContent = 'YES';
+            document.getElementById('zone2Status').className = 'status-value active';
+            document.getElementById('zone2ValveStatus').textContent = 'OPEN';
+            document.getElementById('zone2ValveStatus').className = 'status-value active';
+            document.getElementById('zone2ValveIndicator').setAttribute('fill', '#10b981');
+            
+            if (!dhwDemand) {
+                document.getElementById('zone2Heat').style.display = 'block';
+                document.getElementById('zone2Radiator').querySelector('rect').setAttribute('fill', '#fbbf24');
+                document.getElementById('zone2FlowAnim').style.display = 'block';
+            }
+        }
+        
+        function deactivateZone2() {
+            document.getElementById('zone2Status').textContent = 'NO';
+            document.getElementById('zone2Status').className = 'status-value inactive';
+            document.getElementById('zone2ValveStatus').textContent = 'CLOSED';
+            document.getElementById('zone2ValveStatus').className = 'status-value inactive';
+            document.getElementById('zone2ValveIndicator').setAttribute('fill', '#ef4444');
+            document.getElementById('zone2Heat').style.display = 'none';
+            document.getElementById('zone2Radiator').querySelector('rect').setAttribute('fill', '#9ca3af');
+            document.getElementById('zone2FlowAnim').style.display = 'none';
+        }
+        
+        function checkSystemOperation() {
+            if (systemPower && (zone1Call || zone2Call || dhwDemand)) {
+                // Start boiler
+                document.getElementById('flames').style.display = 'block';
+                document.getElementById('boilerStatus').textContent = dhwDemand ? 'MAX FIRE - DHW' : 'MODULATING';
+                document.getElementById('boilerStatus').className = 'status-value active';
+                document.getElementById('gasStatus').textContent = 'OPEN';
+                document.getElementById('gasStatus').className = 'status-value active';
+                
+                // Start pump
+                document.getElementById('primaryImpeller').style.display = 'block';
+                document.getElementById('pumpStatus').textContent = 'RUNNING';
+                document.getElementById('pumpStatus').className = 'status-value active';
+                document.querySelector('#primaryPump circle').setAttribute('fill', '#16a34a');
+                
+                // Show appropriate flow
+                if (!dhwDemand && (zone1Call || zone2Call)) {
+                    document.getElementById('heatingFlow').style.display = 'block';
+                    document.getElementById('returnFlow').style.display = 'block';
+                    document.getElementById('modeIndicator').textContent = 'SPACE HEATING';
+                    document.getElementById('modeIndicator').setAttribute('fill', '#10b981');
+                    
+                    // Show zone-specific flows
+                    if (zone1Call) {
+                        document.getElementById('zone1FlowAnim').style.display = 'block';
+                    }
+                    if (zone2Call) {
+                        document.getElementById('zone2FlowAnim').style.display = 'block';
+                    }
+                }
+                
+                // Start temperature control
+                if (!boilerInterval) {
+                    boilerInterval = setInterval(() => {
+                        if (dhwDemand) {
+                            // Rapid heating for DHW
+                            if (boilerTemp < 85) boilerTemp += 3;
+                            if (dhwTemp < 55) {
+                                dhwTemp += 2;
+                                document.getElementById('dhwTempStatus').textContent = `${dhwTemp}°C`;
+                            }
+                        } else {
+                            // Normal heating operation
+                            if (boilerTemp < 70) boilerTemp += 2;
+                        }
+                        updateBoilerTemp();
+                    }, 1000);
+                }
+            } else if (systemPower) {
+                // Standby mode
+                document.getElementById('flames').style.display = 'none';
+                document.getElementById('boilerStatus').textContent = 'STANDBY';
+                document.getElementById('boilerStatus').className = 'status-value';
+                document.getElementById('gasStatus').textContent = 'CLOSED';
+                document.getElementById('gasStatus').className = 'status-value inactive';
+                document.getElementById('primaryImpeller').style.display = 'none';
+                document.getElementById('heatingFlow').style.display = 'none';
+                document.getElementById('returnFlow').style.display = 'none';
+                document.getElementById('zone1FlowAnim').style.display = 'none';
+                document.getElementById('zone2FlowAnim').style.display = 'none';
+                document.getElementById('pumpStatus').textContent = 'READY';
+                document.getElementById('pumpStatus').className = 'status-value';
+                document.querySelector('#primaryPump circle').setAttribute('fill', '#6b7280');
+                document.getElementById('modeIndicator').textContent = 'STANDBY';
+                document.getElementById('modeIndicator').setAttribute('fill', '#6b7280');
+                
+                // Cool down
+                if (boilerInterval) {
+                    clearInterval(boilerInterval);
+                    boilerInterval = setInterval(() => {
+                        if (boilerTemp > 20) {
+                            boilerTemp -= 1;
+                            updateBoilerTemp();
+                        }
+                    }, 2000);
+                }
+            }
+        }
+        
+        function updateBoilerTemp() {
+            document.getElementById('boilerTemp').textContent = `TEMP: ${boilerTemp}°C`;
+            document.getElementById('boilerTempStatus').textContent = `${boilerTemp}°C`;
+            
+            // Change color based on temperature
+            if (boilerTemp > 70) {
+                document.getElementById('boilerTemp').setAttribute('fill', '#ef4444');
+            } else if (boilerTemp > 50) {
+                document.getElementById('boilerTemp').setAttribute('fill', '#fbbf24');
+            } else {
+                document.getElementById('boilerTemp').setAttribute('fill', '#10b981');
+            }
+        }
+        
+        function resetSystem() {
+            systemPower = false;
+            zone1Call = false;
+            zone2Call = false;
+            dhwDemand = false;
+            boilerTemp = 20;
+            dhwTemp = 20;
+            
+            if (boilerInterval) {
+                clearInterval(boilerInterval);
+                boilerInterval = null;
+            }
+            
+            // Reset all buttons
+            document.getElementById('powerBtn').classList.remove('on');
+            document.getElementById('powerBtn').textContent = 'System Power: OFF';
+            document.getElementById('zone1Btn').classList.remove('active');
+            document.getElementById('zone1Btn').textContent = 'Zone 1 Heating: OFF';
+            document.getElementById('zone2Btn').classList.remove('active');
+            document.getElementById('zone2Btn').textContent = 'Zone 2 Heating: OFF';
+            document.getElementById('dhwBtn').classList.remove('active');
+            document.getElementById('dhwBtn').textContent = 'Hot Water Tap: CLOSED';
+            
+            // Reset all visual elements
+            document.getElementById('primaryImpeller').style.display = 'none';
+            document.getElementById('heatingFlow').style.display = 'none';
+            document.getElementById('returnFlow').style.display = 'none';
+            document.getElementById('zone1FlowAnim').style.display = 'none';
+            document.getElementById('zone2FlowAnim').style.display = 'none';
+            document.getElementById('flames').style.display = 'none';
+            document.getElementById('dhwFlow').style.display = 'none';
+            document.getElementById('coldFlow').style.display = 'none';
+            document.getElementById('waterStream').style.display = 'none';
+            
+            // Reset status panels
+            document.getElementById('powerStatus').textContent = 'OFF';
+            document.getElementById('powerStatus').className = 'status-value inactive';
+            document.getElementById('boilerStatus').textContent = 'STANDBY';
+            document.getElementById('boilerStatus').className = 'status-value inactive';
+            document.getElementById('pumpStatus').textContent = 'OFF';
+            document.getElementById('pumpStatus').className = 'status-value inactive';
+            document.getElementById('gasStatus').textContent = 'CLOSED';
+            document.getElementById('gasStatus').className = 'status-value inactive';
+            
+            // Reset DHW status
+            document.getElementById('dhwDemandStatus').textContent = 'NO';
+            document.getElementById('dhwDemandStatus').className = 'status-value inactive';
+            document.getElementById('flowSwitchStatus').textContent = 'NO FLOW';
+            document.getElementById('flowSwitchStatus').className = 'status-value inactive';
+            document.getElementById('dhwFlowRate').textContent = '0 L/min';
+            document.getElementById('dhwTempStatus').textContent = '--°C';
+            
+            // Reset component colors
+            document.querySelector('#primaryPump circle').setAttribute('fill', '#6b7280');
+            document.getElementById('flowSwitchIndicator').setAttribute('fill', '#06b6d4');
+            
+            // Reset valve position
+            document.getElementById('valvePosition').setAttribute('x2', '530');
+            document.getElementById('valvePosition').setAttribute('y2', '420');
+            document.getElementById('valveStatus').textContent = 'HEATING MODE';
+            document.getElementById('diverterStatus').textContent = 'HEATING';
+            document.getElementById('diverterStatus').className = 'status-value';
+            
+            // DHW pipes remain visible, only hide flow animations
+            
+            // Reset mode indicator
+            document.getElementById('modeIndicator').textContent = 'STANDBY';
+            document.getElementById('modeIndicator').setAttribute('fill', '#6b7280');
+            
+            // Deactivate both zones
+            deactivateZone1();
+            deactivateZone2();
+            
+            updateBoilerTemp();
+        }
+        
+        // Add hover tooltips for components
+        document.querySelectorAll('.component-hover').forEach(element => {
+            element.addEventListener('mouseenter', (e) => {
+                const tooltip = document.getElementById('tooltip');
+                let text = '';
+                
+                switch(element.id) {
+                    case 'comboBoiler':
+                        text = 'Combination boiler - provides both DHW and space heating';
+                        break;
+                    case 'primaryPump':
+                        text = 'Internal circulation pump - runs for both heating and DHW';
+                        break;
+                    case 'expansionTank':
+                        text = 'Sealed system expansion vessel - maintains system pressure';
+                        break;
+                    case 'diverterValve':
+                        text = '3-way motorized valve - switches between heating and DHW';
+                        break;
+                    case 'flowSwitch':
+                        text = 'Detects water flow when tap opens - triggers DHW mode';
+                        break;
+                    case 'condensateDrain':
+                        text = 'Removes acidic condensate from flue gases';
+                        break;
+                    case 'prvValve':
+                        text = 'Pressure relief valve - opens at 3 bar';
+                        break;
+                    case 'hotWaterTap':
+                        text = 'Domestic hot water outlet point';
+                        break;
+                }
+                
+                if (text) {
+                    tooltip.textContent = text;
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = e.pageX + 10 + 'px';
+                    tooltip.style.top = e.pageY - 30 + 'px';
+                }
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                document.getElementById('tooltip').style.display = 'none';
+            });
+            
+            element.addEventListener('mousemove', (e) => {
+                const tooltip = document.getElementById('tooltip');
+                if (tooltip.style.display === 'block') {
+                    tooltip.style.left = e.pageX + 10 + 'px';
+                    tooltip.style.top = e.pageY - 30 + 'px';
+                }
+            });
+        });
+        
+        // Initialize
+        updateBoilerTemp();
+    </script>
+</body>
+</html>
