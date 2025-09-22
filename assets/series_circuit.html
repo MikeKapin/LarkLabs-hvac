@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Series Circuit Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #f9fafb;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .header {
+            margin-bottom: 24px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-on { background: #10b981; color: white; }
+        .btn-on:hover { background: #059669; }
+        .btn-off { background: #ef4444; color: white; }
+        .btn-off:hover { background: #dc2626; }
+
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+        }
+
+        .resistance-panel {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+        }
+
+        .panel-title {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .input {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-note {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .circuit-container {
+            position: relative;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            margin-bottom: 24px;
+        }
+
+        .circuit-svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .info-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d1d5db;
+            max-width: 320px;
+            z-index: 10;
+        }
+
+        .info-close {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 18px;
+            float: right;
+        }
+
+        .info-close:hover { color: #6b7280; }
+
+        .info-title {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .info-desc {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+
+        .info-specs {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .info-specs div {
+            margin-bottom: 4px;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        .analysis-panel {
+            padding: 16px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .spec-label { color: #6b7280; }
+        .spec-value { font-weight: 500; }
+        .spec-green { color: #10b981; }
+        .spec-red { color: #ef4444; }
+        .spec-purple { color: #8b5cf6; }
+
+        .branch-item {
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .branch-yellow { border-left: 4px solid #fbbf24; padding-left: 12px; }
+        .branch-green { border-left: 4px solid #10b981; padding-left: 12px; }
+        .branch-blue { border-left: 4px solid #3b82f6; padding-left: 12px; }
+
+        .branch-title { font-weight: 500; }
+        .branch-specs { color: #6b7280; }
+
+        .educational-note {
+            margin-top: 16px;
+            padding: 16px;
+            background: #dbeafe;
+            border: 1px solid #93c5fd;
+            border-radius: 6px;
+        }
+
+        .note-title {
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .note-list {
+            font-size: 14px;
+            color: #1e40af;
+            list-style: none;
+        }
+
+        .note-list li {
+            margin-bottom: 4px;
+        }
+
+        .clickable { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2 class="title">Series Circuit - Variable Load Resistances</h2>
+            <div class="controls">
+                <button id="switchBtn" class="btn btn-off">Switch OFF (Open)</button>
+                <div class="legend">
+                    <div class="legend-dot" style="background: #dc2626;"></div>
+                    <span>Hot Wire (Live)</span>
+                </div>
+                <div class="legend">
+                    <div class="legend-dot" style="background: #2563eb;"></div>
+                    <span>Neutral Wire</span>
+                </div>
+                <div class="legend">
+                    <div class="legend-dot" style="background: #fbbf24;"></div>
+                    <span>Current Flow</span>
+                </div>
+                <div class="status">
+                    <strong>Current: <span id="currentDisplay">0.000A</span></strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="resistance-panel">
+            <h3 class="panel-title">⚡ Circuit Controls</h3>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label class="label">Supply Voltage (V)</label>
+                    <input type="number" id="supplyVoltageInput" class="input" min="1" max="500" value="120">
+                    <div class="input-note">AC Power Source Voltage</div>
+                </div>
+                <div class="input-group">
+                    <label class="label">Bulb 1 Resistance (Ω)</label>
+                    <input type="number" id="bulb1Input" class="input" min="1" max="1000" value="100">
+                    <div class="input-note" id="bulb1Note">48.0W @ 40.0V</div>
+                </div>
+                <div class="input-group">
+                    <label class="label">Bulb 2 Resistance (Ω)</label>
+                    <input type="number" id="bulb2Input" class="input" min="1" max="1000" value="100">
+                    <div class="input-note" id="bulb2Note">48.0W @ 40.0V</div>
+                </div>
+                <div class="input-group">
+                    <label class="label">Bulb 3 Resistance (Ω)</label>
+                    <input type="number" id="bulb3Input" class="input" min="1" max="1000" value="100">
+                    <div class="input-note" id="bulb3Note">48.0W @ 40.0V</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="circuit-container">
+            <svg viewBox="0 0 1000 500" class="circuit-svg" id="circuitSVG">
+                <!-- Series Circuit Wiring -->
+                <g stroke="#DC2626" stroke-width="4" fill="none">
+                    <path d="M 100 250 L 200 250"/>
+                    <path d="M 300 250 L 400 250"/>
+                    <path d="M 450 250 L 550 250"/>
+                    <path d="M 600 250 L 700 250"/>
+                    <path d="M 750 250 L 850 250 L 850 350 L 100 350"/>
+                </g>
+                
+                <g stroke="#2563EB" stroke-width="4" fill="none">
+                    <path d="M 100 350 L 100 250"/>
+                </g>
+
+                <!-- Wire labels -->
+                <text x="30" y="240" class="fill-red-600" style="font-weight: bold; font-size: 14px; fill: #dc2626;">HOT</text>
+                <text x="10" y="340" class="fill-blue-600" style="font-weight: bold; font-size: 14px; fill: #2563eb;">NEUTRAL</text>
+
+                <!-- Current flow animation -->
+                <g id="currentFlow" style="display: none;">
+                    <circle r="8" fill="#eab308">
+                        <animateMotion dur="6s" repeatCount="indefinite">
+                            <mpath href="#series-current-path"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="8" fill="#eab308">
+                        <animateMotion dur="6s" repeatCount="indefinite" begin="1s">
+                            <mpath href="#series-current-path"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="8" fill="#eab308">
+                        <animateMotion dur="6s" repeatCount="indefinite" begin="2s">
+                            <mpath href="#series-current-path"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="8" fill="#eab308">
+                        <animateMotion dur="6s" repeatCount="indefinite" begin="3s">
+                            <mpath href="#series-current-path"/>
+                        </animateMotion>
+                    </circle>
+                </g>
+
+                <!-- Hidden path for animation -->
+                <defs>
+                    <path id="series-current-path" d="M 300 250 L 400 250 L 450 250 L 550 250 L 600 250 L 700 250 L 750 250 L 850 250 L 850 350 L 100 350 L 100 250 L 200 250"/>
+                </defs>
+
+                <!-- Current direction arrows -->
+                <g id="currentArrows" style="display: none;" fill="#eab308">
+                    <polygon points="360,240 380,250 360,260"/>
+                    <polygon points="510,240 530,250 510,260"/>
+                    <polygon points="660,240 680,250 660,260"/>
+                    <polygon points="800,240 820,250 800,260"/>
+                    <polygon points="840,300 850,320 860,300"/>
+                    <polygon points="500,360 480,350 500,340"/>
+                    <polygon points="150,360 130,350 150,340"/>
+                </g>
+
+                <!-- Power Source -->
+                <g class="clickable" data-component="source">
+                    <rect x="75" y="200" width="50" height="150" fill="#DC2626" stroke="#991B1B" stroke-width="3" rx="5"/>
+                    <text x="100" y="260" text-anchor="middle" id="sourceVoltageText" style="fill: white; font-weight: bold; font-size: 14px;">120V</text>
+                    <text x="100" y="275" text-anchor="middle" style="fill: white; font-weight: bold; font-size: 18px;">~</text>
+                    <text x="100" y="290" text-anchor="middle" style="fill: white; font-weight: bold; font-size: 14px;">AC</text>
+                    <text x="100" y="305" text-anchor="middle" style="fill: white; font-weight: bold; font-size: 14px;">SOURCE</text>
+                    
+                    <path id="acWaveform" d="M 85 320 Q 92 310 100 320 Q 108 330 115 320" 
+                          stroke="#FFF" stroke-width="2" fill="none" opacity="0.8" style="display: none;">
+                        <animate attributeName="opacity" values="0.8;0.3;0.8" dur="0.5s" repeatCount="indefinite"/>
+                    </path>
+                </g>
+
+                <!-- SPST Switch -->
+                <g class="clickable" data-component="switch">
+                    <circle cx="200" cy="250" r="8" fill="#1F2937" stroke="#4B5563" stroke-width="2"/>
+                    <circle cx="300" cy="250" r="8" fill="#1F2937" stroke="#4B5563" stroke-width="2"/>
+                    
+                    <line id="switchLever" x1="208" y1="250" x2="280" y2="230" stroke="#1F2937" stroke-width="4" stroke-linecap="round"/>
+                    
+                    <rect x="180" y="200" width="140" height="100" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="2" rx="5"/>
+                    <text x="250" y="190" text-anchor="middle" style="fill: #1f2937; font-weight: bold; font-size: 14px;">SPST SWITCH</text>
+                    <text x="250" y="320" text-anchor="middle" id="switchStatus" style="fill: #1f2937; font-weight: bold; font-size: 12px;">OPEN</text>
+                    
+                    <rect id="switchIndicator" x="240" y="270" width="20" height="10" fill="#EF4444" rx="2"/>
+                </g>
+
+                <!-- Light Bulb 1 -->
+                <g class="clickable" data-component="bulb1">
+                    <circle id="bulb1Circle" cx="425" cy="250" r="35" fill="#D1D5DB" stroke="#92400E" stroke-width="3"/>
+                    <text x="425" y="195" text-anchor="middle" style="fill: #1f2937; font-weight: bold; font-size: 12px;">BULB 1</text>
+                    <text x="425" y="250" text-anchor="middle" id="bulb1Icon" style="font-size: 24px;">⚫</text>
+                    <text x="425" y="265" text-anchor="middle" id="bulb1Resistance" style="fill: #1f2937; font-size: 12px;">100Ω</text>
+                    <text x="425" y="300" text-anchor="middle" id="bulb1Voltage" style="fill: #8b5cf6; font-weight: bold; font-size: 14px;">0.0V</text>
+                    
+                    <circle id="bulb1Glow" cx="425" cy="250" r="25" fill="#FFA500" opacity="0" style="display: none;"/>
+                    
+                    <circle cx="390" cy="250" r="4" fill="#DC2626"/>
+                    <circle cx="460" cy="250" r="4" fill="#DC2626"/>
+                </g>
+
+                <!-- Light Bulb 2 -->
+                <g class="clickable" data-component="bulb2">
+                    <circle id="bulb2Circle" cx="575" cy="250" r="35" fill="#D1D5DB" stroke="#92400E" stroke-width="3"/>
+                    <text x="575" y="195" text-anchor="middle" style="fill: #1f2937; font-weight: bold; font-size: 12px;">BULB 2</text>
+                    <text x="575" y="250" text-anchor="middle" id="bulb2Icon" style="font-size: 24px;">⚫</text>
+                    <text x="575" y="265" text-anchor="middle" id="bulb2Resistance" style="fill: #1f2937; font-size: 12px;">100Ω</text>
+                    <text x="575" y="300" text-anchor="middle" id="bulb2Voltage" style="fill: #8b5cf6; font-weight: bold; font-size: 14px;">0.0V</text>
+                    
+                    <circle id="bulb2Glow" cx="575" cy="250" r="25" fill="#FFA500" opacity="0" style="display: none;"/>
+                    
+                    <circle cx="540" cy="250" r="4" fill="#DC2626"/>
+                    <circle cx="610" cy="250" r="4" fill="#DC2626"/>
+                </g>
+
+                <!-- Light Bulb 3 -->
+                <g class="clickable" data-component="bulb3">
+                    <circle id="bulb3Circle" cx="725" cy="250" r="35" fill="#D1D5DB" stroke="#92400E" stroke-width="3"/>
+                    <text x="725" y="195" text-anchor="middle" style="fill: #1f2937; font-weight: bold; font-size: 12px;">BULB 3</text>
+                    <text x="725" y="250" text-anchor="middle" id="bulb3Icon" style="font-size: 24px;">⚫</text>
+                    <text x="725" y="265" text-anchor="middle" id="bulb3Resistance" style="fill: #1f2937; font-size: 12px;">100Ω</text>
+                    <text x="725" y="300" text-anchor="middle" id="bulb3Voltage" style="fill: #8b5cf6; font-weight: bold; font-size: 14px;">0.0V</text>
+                    
+                    <circle id="bulb3Glow" cx="725" cy="250" r="25" fill="#FFA500" opacity="0" style="display: none;"/>
+                    
+                    <circle cx="690" cy="250" r="4" fill="#DC2626"/>
+                    <circle cx="760" cy="250" r="4" fill="#DC2626"/>
+                </g>
+
+                <!-- Wire junction dots -->
+                <g fill="#DC2626">
+                    <circle cx="100" cy="250" r="4"/>
+                    <circle cx="200" cy="250" r="4"/>
+                    <circle cx="300" cy="250" r="4"/>
+                    <circle cx="850" cy="250" r="4"/>
+                    <circle cx="850" cy="350" r="4"/>
+                </g>
+                
+                <g fill="#2563EB">
+                    <circle cx="100" cy="350" r="4"/>
+                </g>
+
+                <!-- Voltage indicators -->
+                <text id="totalVoltage" x="500" y="150" text-anchor="middle" style="fill: #10b981; font-weight: bold; font-size: 18px; display: none;">
+                    Total: 120V = 0.0V + 0.0V + 0.0V = 0.0V
+                </text>
+
+                <!-- Current indicator -->
+                <text id="currentIndicator" x="500" y="450" text-anchor="middle" style="fill: #fbbf24; font-weight: bold; font-size: 18px; display: none;">
+                    Current: 0.000A flows through ALL components (Series Circuit)
+                </text>
+
+                <!-- Circuit label -->
+                <text x="500" y="50" text-anchor="middle" style="fill: #1f2937; font-weight: bold; font-size: 20px;">
+                    TRUE SERIES CIRCUIT - Single Current Path
+                </text>
+            </svg>
+
+            <div id="infoPanel" class="info-panel" style="display: none;">
+                <button class="info-close" onclick="closeInfo()">✕</button>
+                <h3 id="infoTitle" class="info-title"></h3>
+                <p id="infoDesc" class="info-desc"></p>
+                <div id="infoSpecs" class="info-specs"></div>
+            </div>
+        </div>
+
+        <div class="analysis-grid">
+            <div class="analysis-panel">
+                <h3 class="panel-title">Series Circuit Measurements</h3>
+                <div class="spec-row">
+                    <span class="spec-label">Source Voltage:</span>
+                    <span class="spec-value" id="sourceVoltageDisplay">120V AC</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Total Resistance:</span>
+                    <span class="spec-value" id="totalResistance">300Ω</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Circuit Current:</span>
+                    <span class="spec-value spec-red" id="circuitCurrent">0.000A</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Total Power:</span>
+                    <span class="spec-value" id="totalPower">0.0W</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Voltage Check:</span>
+                    <span class="spec-value spec-purple" id="voltageCheck">0.0V ✓</span>
+                </div>
+            </div>
+
+            <div class="analysis-panel">
+                <h3 class="panel-title">Individual Voltage Drops</h3>
+                <div class="branch-item branch-yellow">
+                    <div class="branch-title" id="bulb1Analysis">Bulb 1: 100Ω</div>
+                    <div class="branch-specs" id="bulb1Specs">V = 0.0V (0.0%)</div>
+                </div>
+                <div class="branch-item branch-green">
+                    <div class="branch-title" id="bulb2Analysis">Bulb 2: 100Ω</div>
+                    <div class="branch-specs" id="bulb2Specs">V = 0.0V (0.0%)</div>
+                </div>
+                <div class="branch-item branch-blue">
+                    <div class="branch-title" id="bulb3Analysis">Bulb 3: 100Ω</div>
+                    <div class="branch-specs" id="bulb3Specs">V = 0.0V (0.0%)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="educational-note">
+            <h3 class="note-title">🎓 Series Circuit Key Points</h3>
+            <ul class="note-list">
+                <li>• <strong>Single Path:</strong> Current flows through each component in sequence</li>
+                <li>• <strong>Same Current:</strong> All components have identical current (I = I₁ = I₂ = I₃)</li>
+                <li>• <strong>Voltage Division:</strong> V₁/V₂ = R₁/R₂ (voltage divides proportionally to resistance)</li>
+                <li>• <strong>One Fails, All Fail:</strong> If any component opens, the entire circuit stops</li>
+                <li>• <strong>Total Resistance:</strong> Rtotal = R₁ + R₂ + R₃ (resistances add up)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Circuit state
+        let switchClosed = false;
+        let selectedComponent = null;
+        let supplyVoltage = 120;
+        let bulb1Resistance = 100;
+        let bulb2Resistance = 100;
+        let bulb3Resistance = 100;
+
+        // Component data
+        const components = {
+            source: {
+                name: "120V AC Power Source",
+                description: "Provides electrical energy to the circuit",
+                voltage: "120V AC",
+                frequency: "60Hz"
+            },
+            switch: {
+                name: "SPST Switch (Hot Wire)",
+                description: "Single Pole Single Throw switch controls current flow on the live wire only"
+            },
+            bulb1: {
+                name: "Light Bulb #1",
+                description: "Incandescent bulb converts electrical energy to light and heat"
+            },
+            bulb2: {
+                name: "Light Bulb #2", 
+                description: "Incandescent bulb converts electrical energy to light and heat"
+            },
+            bulb3: {
+                name: "Light Bulb #3",
+                description: "Incandescent bulb converts electrical energy to light and heat"
+            }
+        };
+
+        // Calculate circuit values
+        function calculateCircuit() {
+            const sourceVoltage = supplyVoltage;
+            const totalResistance = bulb1Resistance + bulb2Resistance + bulb3Resistance;
+            const current = switchClosed && totalResistance > 0 ? sourceVoltage / totalResistance : 0;
+            
+            const voltage1 = current * bulb1Resistance;
+            const voltage2 = current * bulb2Resistance;
+            const voltage3 = current * bulb3Resistance;
+            
+            const wattage1 = Math.pow(current, 2) * bulb1Resistance;
+            const wattage2 = Math.pow(current, 2) * bulb2Resistance;
+            const wattage3 = Math.pow(current, 2) * bulb3Resistance;
+
+            return {
+                current,
+                voltage1,
+                voltage2,
+                voltage3,
+                wattage1,
+                wattage2,
+                wattage3,
+                totalResistance,
+                totalPower: wattage1 + wattage2 + wattage3
+            };
+        }
+
+        // Update display
+        function updateDisplay() {
+            const calc = calculateCircuit();
+            
+            // Update switch
+            const switchBtn = document.getElementById('switchBtn');
+            const switchLever = document.getElementById('switchLever');
+            const switchStatus = document.getElementById('switchStatus');
+            const switchIndicator = document.getElementById('switchIndicator');
+            
+            if (switchClosed) {
+                switchBtn.textContent = 'Switch ON (Closed)';
+                switchBtn.className = 'btn btn-on';
+                switchLever.setAttribute('x2', '292');
+                switchLever.setAttribute('y2', '250');
+                switchStatus.textContent = 'CLOSED';
+                switchIndicator.setAttribute('fill', '#10B981');
+            } else {
+                switchBtn.textContent = 'Switch OFF (Open)';
+                switchBtn.className = 'btn btn-off';
+                switchLever.setAttribute('x2', '280');
+                switchLever.setAttribute('y2', '230');
+                switchStatus.textContent = 'OPEN';
+                switchIndicator.setAttribute('fill', '#EF4444');
+            }
+
+            // Update source voltage display
+            document.getElementById('sourceVoltageText').textContent = supplyVoltage + 'V';
+            document.getElementById('sourceVoltageDisplay').textContent = supplyVoltage + 'V AC';
+
+            // Update current display
+            document.getElementById('currentDisplay').textContent = calc.current.toFixed(3) + 'A';
+
+            // Update bulbs
+            updateBulb('bulb1', calc.voltage1, calc.current, calc.wattage1, bulb1Resistance);
+            updateBulb('bulb2', calc.voltage2, calc.current, calc.wattage2, bulb2Resistance);
+            updateBulb('bulb3', calc.voltage3, calc.current, calc.wattage3, bulb3Resistance);
+
+            // Update resistance displays
+            document.getElementById('bulb1Resistance').textContent = bulb1Resistance + 'Ω';
+            document.getElementById('bulb2Resistance').textContent = bulb2Resistance + 'Ω';
+            document.getElementById('bulb3Resistance').textContent = bulb3Resistance + 'Ω';
+
+            // Update input notes
+            document.getElementById('bulb1Note').textContent = calc.wattage1.toFixed(1) + 'W @ ' + calc.voltage1.toFixed(1) + 'V';
+            document.getElementById('bulb2Note').textContent = calc.wattage2.toFixed(1) + 'W @ ' + calc.voltage2.toFixed(1) + 'V';
+            document.getElementById('bulb3Note').textContent = calc.wattage3.toFixed(1) + 'W @ ' + calc.voltage3.toFixed(1) + 'V';
+
+            // Update animations and indicators
+            const currentFlow = document.getElementById('currentFlow');
+            const currentArrows = document.getElementById('currentArrows');
+            const acWaveform = document.getElementById('acWaveform');
+            const totalVoltage = document.getElementById('totalVoltage');
+            const currentIndicator = document.getElementById('currentIndicator');
+
+            if (switchClosed) {
+                currentFlow.style.display = 'block';
+                currentArrows.style.display = 'block';
+                acWaveform.style.display = 'block';
+                totalVoltage.style.display = 'block';
+                currentIndicator.style.display = 'block';
+
+                totalVoltage.textContent = `Total: ${supplyVoltage}V = ${calc.voltage1.toFixed(1)}V + ${calc.voltage2.toFixed(1)}V + ${calc.voltage3.toFixed(1)}V = ${(calc.voltage1 + calc.voltage2 + calc.voltage3).toFixed(1)}V`;
+                currentIndicator.textContent = `Current: ${calc.current.toFixed(3)}A flows through ALL components (Series Circuit)`;
+            } else {
+                currentFlow.style.display = 'none';
+                currentArrows.style.display = 'none';
+                acWaveform.style.display = 'none';
+                totalVoltage.style.display = 'none';
+                currentIndicator.style.display = 'none';
+            }
+
+            // Update analysis panels
+            document.getElementById('totalResistance').textContent = calc.totalResistance + 'Ω';
+            document.getElementById('circuitCurrent').textContent = calc.current.toFixed(3) + 'A';
+            document.getElementById('circuitCurrent').className = 'spec-value ' + (switchClosed ? 'spec-green' : 'spec-red');
+            document.getElementById('totalPower').textContent = calc.totalPower.toFixed(1) + 'W';
+            document.getElementById('voltageCheck').textContent = (calc.voltage1 + calc.voltage2 + calc.voltage3).toFixed(1) + 'V ✓';
+
+            document.getElementById('bulb1Analysis').textContent = `Bulb 1: ${bulb1Resistance}Ω`;
+            document.getElementById('bulb1Specs').textContent = `V = ${calc.voltage1.toFixed(1)}V (${(calc.voltage1/supplyVoltage*100).toFixed(1)}%)`;
+            document.getElementById('bulb2Analysis').textContent = `Bulb 2: ${bulb2Resistance}Ω`;
+            document.getElementById('bulb2Specs').textContent = `V = ${calc.voltage2.toFixed(1)}V (${(calc.voltage2/supplyVoltage*100).toFixed(1)}%)`;
+            document.getElementById('bulb3Analysis').textContent = `Bulb 3: ${bulb3Resistance}Ω`;
+            document.getElementById('bulb3Specs').textContent = `V = ${calc.voltage3.toFixed(1)}V (${(calc.voltage3/supplyVoltage*100).toFixed(1)}%)`;
+        }
+
+        function updateBulb(bulbId, voltage, current, wattage, resistance) {
+            const circle = document.getElementById(bulbId + 'Circle');
+            const icon = document.getElementById(bulbId + 'Icon');
+            const voltageText = document.getElementById(bulbId + 'Voltage');
+            const glow = document.getElementById(bulbId + 'Glow');
+
+            if (switchClosed) {
+                circle.setAttribute('fill', '#FCD34D');
+                icon.textContent = '💡';
+                voltageText.textContent = voltage.toFixed(1) + 'V';
+                glow.style.display = 'block';
+                glow.setAttribute('opacity', Math.min(wattage / 100, 0.8));
+            } else {
+                circle.setAttribute('fill', '#D1D5DB');
+                icon.textContent = '⚫';
+                voltageText.textContent = '0.0V';
+                glow.style.display = 'none';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('switchBtn').addEventListener('click', () => {
+            switchClosed = !switchClosed;
+            updateDisplay();
+        });
+
+        document.getElementById('supplyVoltageInput').addEventListener('input', (e) => {
+            supplyVoltage = Number(e.target.value);
+            updateDisplay();
+        });
+
+        document.getElementById('bulb1Input').addEventListener('input', (e) => {
+            bulb1Resistance = Number(e.target.value);
+            updateDisplay();
+        });
+
+        document.getElementById('bulb2Input').addEventListener('input', (e) => {
+            bulb2Resistance = Number(e.target.value);
+            updateDisplay();
+        });
+
+        document.getElementById('bulb3Input').addEventListener('input', (e) => {
+            bulb3Resistance = Number(e.target.value);
+            updateDisplay();
+        });
+
+        // Component info
+        document.querySelectorAll('.clickable').forEach(element => {
+            element.addEventListener('click', (e) => {
+                const component = e.currentTarget.dataset.component;
+                showInfo(component);
+            });
+        });
+
+        function showInfo(component) {
+            const calc = calculateCircuit();
+            selectedComponent = component;
+            const info = components[component];
+            const panel = document.getElementById('infoPanel');
+            
+            document.getElementById('infoTitle').textContent = info.name;
+            document.getElementById('infoDesc').textContent = info.description;
+            
+            let specs = '';
+            if (component === 'source') {
+                specs = `<div><strong>Voltage:</strong> ${supplyVoltage}V AC</div>`;
+                specs += `<div><strong>Frequency:</strong> ${info.frequency}</div>`;
+            } else if (component === 'switch') {
+                specs = `<div><strong>Position:</strong> ${switchClosed ? 'CLOSED' : 'OPEN'}</div>`;
+                specs += `<div><strong>Current:</strong> ${switchClosed ? calc.current.toFixed(2) + 'A' : '0A'}</div>`;
+            } else if (component === 'bulb1') {
+                specs = `<div><strong>Voltage Drop:</strong> ${calc.voltage1.toFixed(1)}V</div>`;
+                specs += `<div><strong>Current:</strong> ${calc.current.toFixed(2)}A</div>`;
+                specs += `<div><strong>Resistance:</strong> ${bulb1Resistance}Ω</div>`;
+                specs += `<div><strong>Power:</strong> ${calc.wattage1.toFixed(1)}W</div>`;
+            } else if (component === 'bulb2') {
+                specs = `<div><strong>Voltage Drop:</strong> ${calc.voltage2.toFixed(1)}V</div>`;
+                specs += `<div><strong>Current:</strong> ${calc.current.toFixed(2)}A</div>`;
+                specs += `<div><strong>Resistance:</strong> ${bulb2Resistance}Ω</div>`;
+                specs += `<div><strong>Power:</strong> ${calc.wattage2.toFixed(1)}W</div>`;
+            } else if (component === 'bulb3') {
+                specs = `<div><strong>Voltage Drop:</strong> ${calc.voltage3.toFixed(1)}V</div>`;
+                specs += `<div><strong>Current:</strong> ${calc.current.toFixed(2)}A</div>`;
+                specs += `<div><strong>Resistance:</strong> ${bulb3Resistance}Ω</div>`;
+                specs += `<div><strong>Power:</strong> ${calc.wattage3.toFixed(1)}W</div>`;
+            }
+            
+            document.getElementById('infoSpecs').innerHTML = specs;
+            panel.style.display = 'block';
+        }
+
+        function closeInfo() {
+            document.getElementById('infoPanel').style.display = 'none';
+            selectedComponent = null;
+        }
+
+        // Initialize
+        updateDisplay();
+    </script>
+</body>
+</html>
