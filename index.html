@@ -1883,6 +1883,7 @@
                     <li><a onclick="showSection('home'); closeMobileMenu();" class="active">Home</a></li>
                     <li><a onclick="showSection('tools'); closeMobileMenu();">Tools</a></li>
                     <li><a onclick="showSection('training'); closeMobileMenu();">Training</a></li>
+                    <li><a href="pages/blog/index.html">Blog</a></li>
                     <li><a href="code-compass.html">Code Compass</a></li>
                     <li><a href="hvac-jack-40.html">HVAC JACK</a></li>
                     <li><a href="pages/community.html">Community</a></li>
@@ -2073,6 +2074,11 @@
                     <div class="faq-item">
                         <div class="faq-question">What makes these HVAC tools different from others?</div>
                         <div class="faq-answer">Our tools are built by experienced HVAC professionals and educators specifically for the Canadian market. They include Canadian climate data, CSA standards, TSSA regulations, and are designed based on 20+ years of field experience and 10 years of teaching HVAC programs.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Where can I find more HVAC study resources and industry insights?</div>
+                        <div class="faq-answer">Check out our <a href="pages/blog/index.html" style="color: #3498db; text-decoration: none;">HVAC Training Blog</a> featuring comprehensive exam guides, study strategies, code updates, and industry insights specifically for Canadian gas technicians. All content is written by experienced HVAC professionals and educators.</div>
                     </div>
                 </div>
 
@@ -2331,6 +2337,15 @@
                         <p>Step-by-step video guides for common HVAC procedures and Canadian code compliance</p>
                         <span class="tool-status status-available external-link">Watch on YouTube</span>
                     </div>
+                </div>
+
+                <!-- Blog Cross-Link Section -->
+                <div class="cta-section" style="background: linear-gradient(45deg, #3498db, #2980b9); border-radius: 15px; padding: 2rem; text-align: center; margin: 3rem 0;">
+                    <h3 style="color: white; margin-bottom: 1rem; font-size: 1.8rem;">📖 Explore Our HVAC Training Blog</h3>
+                    <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem;">Dive deeper with expert study guides, exam strategies, and industry insights for Canadian gas technicians</p>
+                    <a href="pages/blog/index.html" class="cta-button" style="display: inline-block; background: white; color: #3498db; padding: 12px 24px; text-decoration: none; border-radius: 25px; font-weight: bold; margin: 0 10px 10px 0; transition: all 0.3s;">Visit Training Blog</a>
+                    <a href="pages/blog/tssa-g3-exam-guide.html" class="cta-button" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; text-decoration: none; border-radius: 25px; font-weight: bold; margin: 0 10px 10px 0; transition: all 0.3s;">G3 Study Guide</a>
+                    <a href="pages/blog/tssa-g2-exam-guide.html" class="cta-button" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; text-decoration: none; border-radius: 25px; font-weight: bold; margin: 0 10px 10px 0; transition: all 0.3s;">G2 Study Guide</a>
                 </div>
 
                 <div class="quote">
@@ -2821,6 +2836,13 @@
                     </div>
 
                     <p>At LARK Labs, we're not just developing software – we're cultivating the future of the Canadian HVAC industry. Through innovative technology, comprehensive education, and unwavering commitment to excellence, we're helping to ensure that the next generation of HVAC professionals is better equipped and better prepared.</p>
+
+                    <!-- Blog Reference -->
+                    <div class="cta-section" style="background: rgba(52, 152, 219, 0.1); border-radius: 15px; padding: 2rem; text-align: center; margin: 2rem 0; border: 1px solid rgba(52, 152, 219, 0.2);">
+                        <h4 style="color: #3498db; margin-bottom: 1rem;">📚 Stay Informed with Our Training Blog</h4>
+                        <p style="color: #bdc3c7; margin-bottom: 1.5rem;">Explore in-depth study guides, industry insights, and expert tips on our HVAC Training Blog - your go-to resource for Canadian gas technician education.</p>
+                        <a href="pages/blog/index.html" class="cta-button" style="display: inline-block; background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 20px; font-weight: bold; transition: all 0.3s;">Explore Training Blog</a>
+                    </div>
                 </div>
 
                 <div class="founder-section">
@@ -3140,6 +3162,10 @@
                 { name: 'Combination Boiler System', keywords: 'combination boiler combi system training dhw heating installation troubleshooting', action: () => window.open('./assets/combo-boiler-system.html', '_blank'), section: 'training' },
                 { name: 'G2 Practice Exam', keywords: 'g2 practice exam tssa gas technician certification', action: () => window.location.href='pages/payment/g2_premium_access.html', section: 'training' },
                 { name: 'G3 Training', keywords: 'g3 training gas technician g3', action: () => window.open('./training/g3/G3/index.html', '_blank'), section: 'training' },
+
+                // Blog
+                { name: 'Blog', keywords: 'blog articles guides study resources hvac training', action: () => window.location.href='pages/blog/index.html', section: 'blog' },
+                { name: 'Blog - Study Guides', keywords: 'blog study guides exam preparation tssa g2 g3 articles', action: () => window.location.href='pages/blog/index.html', section: 'blog' },
 
                 // Other sections
                 { name: 'Community', keywords: 'community forum chat professionals networking', action: () => window.location.href='pages/community.html', section: 'community' },
