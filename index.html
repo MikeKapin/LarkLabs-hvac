@@ -1889,9 +1889,10 @@
                     <li><a href="pages/community.html">Community</a></li>
                     <li><a onclick="showSection('about'); closeMobileMenu();">About</a></li>
                 </ul>
-                <div class="search-control" style="display: flex; align-items: center; gap: 0.5rem;">
-                    <input type="search" id="searchInput" placeholder="Search tools..." style="padding: 0.5rem; border: 1px solid #3498db; border-radius: 20px; background: rgba(255,255,255,0.1); color: white; font-size: 0.9rem;" aria-label="Search HVAC tools and resources">
+                <div class="search-control" style="position: relative; display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="search" id="searchInput" placeholder="Search tools, guides, training..." style="padding: 0.5rem; border: 1px solid #3498db; border-radius: 20px; background: rgba(255,255,255,0.1); color: white; font-size: 0.9rem; min-width: 250px;" aria-label="Search HVAC tools and resources" autocomplete="off">
                     <button type="button" id="searchButton" onclick="performSearch()" style="background: #3498db; color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.9rem;" aria-label="Search">🔍</button>
+                    <div id="searchResults" style="position: absolute; top: 100%; left: 0; right: 0; z-index: 1000; background: rgba(30, 39, 46, 0.98); backdrop-filter: blur(15px); border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 15px; margin-top: 0.5rem; max-height: 400px; overflow-y: auto; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"></div>
                 </div>
             </div>
         </nav>
@@ -3129,96 +3130,282 @@
             showSection('csa-g2-chapters');
         }
 
-        // Search functionality
+        // Enhanced Search functionality
+        let searchableItems = []; // Will be populated dynamically
+
+        // Auto-discover blog posts from blog index page
+        async function discoverBlogPosts() {
+            try {
+                const response = await fetch('./pages/blog/index.html');
+                const text = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+
+                const blogCards = doc.querySelectorAll('.blog-card');
+                const discoveredPosts = [];
+
+                blogCards.forEach(card => {
+                    const link = card.href || card.getAttribute('href');
+                    const titleElement = card.querySelector('h2');
+                    const descElement = card.querySelector('p');
+                    const badgeElement = card.querySelector('.blog-badge');
+
+                    if (link && titleElement) {
+                        const title = titleElement.textContent.trim();
+                        const description = descElement ? descElement.textContent.trim().substring(0, 100) + '...' : '';
+                        const category = badgeElement ? badgeElement.textContent.trim() : 'Blog Article';
+
+                        // Extract keywords from title and description
+                        const keywords = [title, description, category]
+                            .join(' ')
+                            .toLowerCase()
+                            .replace(/[^\w\s]/g, ' ')
+                            .split(/\s+/)
+                            .filter(word => word.length > 2)
+                            .join(' ');
+
+                        discoveredPosts.push({
+                            name: title,
+                            keywords: keywords,
+                            action: () => window.open(link, '_blank'),
+                            section: 'blog',
+                            description: description,
+                            icon: '📰'
+                        });
+                    }
+                });
+
+                return discoveredPosts;
+            } catch (error) {
+                console.log('Could not auto-discover blog posts:', error);
+                return [];
+            }
+        }
+
+        async function initializeSearch() {
+            // Discover blog posts automatically
+            const discoveredBlogPosts = await discoverBlogPosts();
+
+            searchableItems = [
+                // Tools
+                { name: 'HVAC Pro Tools App', keywords: 'hvac pro tools calculator app professional mobile android ios', action: () => window.open('./HVAC_Tools/index.html', '_blank'), section: 'tools', description: 'Professional HVAC calculator app with 20+ tools', icon: '🔧' },
+                { name: 'Gas Tech Tutor', keywords: 'gas technician ai tutor g2 g3 certification training interactive assistant', action: () => window.open('https://gas-technician-ai-tutor-new.vercel.app/', '_blank'), section: 'home', description: 'AI-powered tutor for gas technician certification', icon: '🤖' },
+                { name: 'Code Compass', keywords: 'code compass gas search csa b149 ontario regulations navigation', action: () => window.open('https://codecompassapp.netlify.app/', '_blank'), section: 'tools', description: 'Canadian gas code search and navigation tool', icon: '🧭' },
+                { name: 'Load Calculator', keywords: 'load calculator heating cooling canadian climate sizing', action: () => window.open('./apps/calculators/hvac-load-calculator.html', '_blank'), section: 'tools', description: 'Calculate heating and cooling loads for Canadian climate', icon: '📊' },
+                { name: 'Superheat Subcooling Calculator', keywords: 'superheat subcooling calculator refrigerant diagnostics troubleshooting', action: () => window.open('./apps/calculators/superheat-subcooling-calculator.html', '_blank'), section: 'tools', description: 'Refrigerant system diagnostic calculator', icon: '🌡️' },
+                { name: 'P-T Chart Generator', keywords: 'pt chart pressure temperature refrigeration r410a r22 r32', action: () => window.open('./apps/tools/pt-chart-generator.html', '_blank'), section: 'tools', description: 'Pressure-Temperature charts for refrigerants', icon: '📈' },
+                { name: 'Gas Piping Calculator', keywords: 'gas piping calculator canadian sizing natural propane', action: () => window.open('./apps/calculators/canadian-gas-piping-calculator.html', '_blank'), section: 'tools', description: 'Canadian gas piping sizing calculator', icon: '🔧' },
+
+                // Training
+                { name: 'CSA B149.1-25 Changes', keywords: 'csa b149 code changes review 2025 updates new regulations', action: () => window.open('./B149_1_Changes.html', '_blank'), section: 'training', description: 'Latest CSA B149.1-25 code changes and updates', icon: '📋' },
+                { name: 'A2L Refrigerant Training', keywords: 'a2l refrigerant training safety flammable r32 r454b mildly flammable', action: () => window.open('./training/courses/A2L_Safety_Course.html', '_blank'), section: 'training', description: 'Safety training for A2L mildly flammable refrigerants', icon: '⚠️' },
+                { name: 'TSSA G3 Exam Guide', keywords: 'tssa g3 exam guide study preparation gas technician certification ontario', action: () => window.open('./pages/blog/tssa-g3-exam-guide.html', '_blank'), section: 'training', description: 'Complete TSSA G3 exam preparation guide', icon: '📚' },
+                { name: 'TSSA G2 Exam Guide', keywords: 'tssa g2 exam guide study preparation gas technician advanced certification ontario', action: () => window.open('./pages/blog/tssa-g2-exam-guide.html', '_blank'), section: 'training', description: 'Advanced TSSA G2 exam preparation strategies', icon: '📚' },
+                { name: 'G2 Learning Modules', keywords: 'g2 learning modules gas technician g2 certification training interactive', action: () => showCSAG2ChapterQuestions(), section: 'training', description: 'Interactive G2 certification learning modules', icon: '🎓' },
+                { name: 'Series Circuit Training', keywords: 'series circuit electrical training module unit 5 electricity ohms law', action: () => window.open('./assets/series_circuit.html', '_blank'), section: 'training', description: 'Interactive series circuit training module', icon: '⚡' },
+                { name: 'Parallel Circuit Training', keywords: 'parallel circuit electrical training module unit 5 electricity voltage current', action: () => window.open('./assets/parallel_circuit.html', '_blank'), section: 'training', description: 'Interactive parallel circuit training module', icon: '⚡' },
+                { name: 'Boiler System Diagram', keywords: 'boiler system diagram training heating gas fired components piping safety controls', action: () => window.open('./assets/boiler-system-diagram.html', '_blank'), section: 'training', description: 'Interactive boiler system diagram and training', icon: '🔥' },
+                { name: 'Combination Boiler System', keywords: 'combination boiler combi system training dhw heating installation troubleshooting', action: () => window.open('./assets/combo-boiler-system.html', '_blank'), section: 'training', description: 'Combi boiler system training and diagnostics', icon: '🏠' },
+                { name: 'G2 Practice Exam', keywords: 'g2 practice exam tssa gas technician certification test questions', action: () => window.location.href='pages/payment/g2_premium_access.html', section: 'training', description: 'Premium G2 practice exam with 500+ questions', icon: '📝' },
+                { name: 'G3 Training', keywords: 'g3 training gas technician g3 basic certification course modules', action: () => window.open('./training/g3/G3/index.html', '_blank'), section: 'training', description: 'Comprehensive G3 training course', icon: '🎓' },
+
+                // Blog Articles
+                { name: 'Blog', keywords: 'blog articles guides study resources hvac training industry news', action: () => window.location.href='pages/blog/index.html', section: 'blog', description: 'HVAC training blog with expert guides and insights', icon: '📰' },
+                { name: 'Women in HVAC: Breaking Barriers and Building Careers', keywords: 'women hvac breaking barriers careers trades diversity female technicians industry insights equality', action: () => window.open('./pages/blog/women-in-hvac-breaking-barriers-building-careers.html', '_blank'), section: 'blog', description: 'How women are transforming the HVAC industry', icon: '👩‍🔧' },
+                { name: 'Heat Pump Efficiency in Sub-Zero Temperatures', keywords: 'heat pump efficiency sub zero temperatures canadian guide winter heating cold climate homeowner performance', action: () => window.open('./pages/blog/heat-pump-efficiency-sub-zero-temperatures-canadian-guide.html', '_blank'), section: 'blog', description: 'Canadian guide to heat pump performance in extreme cold', icon: '❄️' },
+                { name: 'Preparing Your Furnace for Canadian Winters', keywords: 'furnace preparation canadian winters homeowner maintenance winter heating safety checklist', action: () => window.open('./pages/blog/preparing-furnace-canadian-winters-homeowner-guide.html', '_blank'), section: 'blog', description: 'Complete furnace winterization guide for homeowners', icon: '🏠' },
+                { name: 'Bridging Traditional HVAC Education with Modern Technology', keywords: 'traditional hvac education modern technology digital learning 2026 vision fanshawe college innovation', action: () => window.open('./pages/blog/bridging-traditional-hvac-education-modern-technology-2026.html', '_blank'), section: 'blog', description: 'The future of HVAC education and technology integration', icon: '💡' },
+
+                // Navigation & Other
+                { name: 'Community', keywords: 'community forum chat professionals networking discussion technicians', action: () => window.location.href='pages/community.html', section: 'community', description: 'Join the HVAC professional community', icon: '👥' },
+                { name: 'HVAC Jack', keywords: 'hvac jack ai diagnostic photo analysis troubleshooting assistant artificial intelligence', action: () => window.location.href='hvac-jack-40.html', section: 'hvac-jack', description: 'AI-powered HVAC diagnostic assistant', icon: '🤖' },
+                { name: 'Tools Section', keywords: 'tools calculators professional apps section navigation', action: () => showSection('tools'), section: 'tools', description: 'Browse all HVAC tools and calculators', icon: '🔧' },
+                { name: 'Training Section', keywords: 'training certification courses modules education learning', action: () => showSection('training'), section: 'training', description: 'Access training courses and certification prep', icon: '🎓' },
+                { name: 'About Section', keywords: 'about founder lark labs background story mission vision', action: () => showSection('about'), section: 'about', description: 'Learn about LARK Labs and our mission', icon: 'ℹ️' }
+            ];
+
+            // Add discovered blog posts (will replace the manually defined ones if found)
+            if (discoveredBlogPosts.length > 0) {
+                // Remove manually defined blog posts except the main blog entry
+                searchableItems = searchableItems.filter(item =>
+                    item.section !== 'blog' ||
+                    item.name === 'Blog' ||
+                    item.name === 'Blog - Study Guides'
+                );
+
+                // Add discovered blog posts
+                searchableItems.push(...discoveredBlogPosts);
+                console.log(`Auto-discovered ${discoveredBlogPosts.length} blog posts for search`);
+            }
+        }
+
         function performSearch() {
             const searchInput = document.getElementById('searchInput');
             const searchTerm = searchInput.value.toLowerCase().trim();
 
             if (!searchTerm) {
-                alert('Please enter a search term');
+                showSearchSuggestions();
                 return;
             }
 
-            // Define searchable items with their content and actions
-            const searchableItems = [
-                // Tools
-                { name: 'HVAC Pro Tools App', keywords: 'hvac pro tools calculator app professional', action: () => window.open('./HVAC_Tools/index.html', '_blank'), section: 'tools' },
-                { name: 'Gas Tech Tutor', keywords: 'gas technician ai tutor g2 g3 certification training interactive', action: () => window.open('https://gas-technician-ai-tutor-new.vercel.app/', '_blank'), section: 'home' },
-                { name: 'Code Compass', keywords: 'code compass gas search csa b149 ontario regulations', action: () => window.open('https://codecompassapp.netlify.app/', '_blank'), section: 'tools' },
-                { name: 'Load Calculator', keywords: 'load calculator heating cooling canadian climate', action: () => window.open('./apps/calculators/hvac-load-calculator.html', '_blank'), section: 'tools' },
-                { name: 'Superheat Subcooling Calculator', keywords: 'superheat subcooling calculator refrigerant diagnostics', action: () => window.open('./apps/calculators/superheat-subcooling-calculator.html', '_blank'), section: 'tools' },
-                { name: 'P-T Chart Generator', keywords: 'pt chart pressure temperature refrigeration', action: () => window.open('./apps/tools/pt-chart-generator.html', '_blank'), section: 'tools' },
-                { name: 'Gas Piping Calculator', keywords: 'gas piping calculator canadian sizing', action: () => window.open('./apps/calculators/canadian-gas-piping-calculator.html', '_blank'), section: 'tools' },
+            showSearchResults(searchTerm);
+        }
 
-                // Training
-                { name: 'CSA B149.1-25 Changes', keywords: 'csa b149 code changes review 2025 updates', action: () => window.open('./B149_1_Changes.html', '_blank'), section: 'training' },
-                { name: 'A2L Refrigerant Training', keywords: 'a2l refrigerant training safety flammable r32 r454b', action: () => window.open('./training/courses/A2L_Safety_Course.html', '_blank'), section: 'training' },
-                { name: 'TSSA G3 Exam Guide', keywords: 'tssa g3 exam guide study preparation gas technician certification', action: () => window.open('./pages/blog/tssa-g3-exam-guide.html', '_blank'), section: 'training' },
-                { name: 'TSSA G2 Exam Guide', keywords: 'tssa g2 exam guide study preparation gas technician advanced certification', action: () => window.open('./pages/blog/tssa-g2-exam-guide.html', '_blank'), section: 'training' },
-                { name: 'G2 Learning Modules', keywords: 'g2 learning modules gas technician g2 certification training', action: () => showCSAG2ChapterQuestions(), section: 'training' },
-                { name: 'Series Circuit Training', keywords: 'series circuit electrical training module unit 5 electricity', action: () => window.open('./assets/series_circuit.html', '_blank'), section: 'training' },
-                { name: 'Parallel Circuit Training', keywords: 'parallel circuit electrical training module unit 5 electricity', action: () => window.open('./assets/parallel_circuit.html', '_blank'), section: 'training' },
-                { name: 'Boiler System Diagram', keywords: 'boiler system diagram training heating gas fired components piping safety', action: () => window.open('./assets/boiler-system-diagram.html', '_blank'), section: 'training' },
-                { name: 'Combination Boiler System', keywords: 'combination boiler combi system training dhw heating installation troubleshooting', action: () => window.open('./assets/combo-boiler-system.html', '_blank'), section: 'training' },
-                { name: 'G2 Practice Exam', keywords: 'g2 practice exam tssa gas technician certification', action: () => window.location.href='pages/payment/g2_premium_access.html', section: 'training' },
-                { name: 'G3 Training', keywords: 'g3 training gas technician g3', action: () => window.open('./training/g3/G3/index.html', '_blank'), section: 'training' },
-
-                // Blog
-                { name: 'Blog', keywords: 'blog articles guides study resources hvac training', action: () => window.location.href='pages/blog/index.html', section: 'blog' },
-                { name: 'Blog - Study Guides', keywords: 'blog study guides exam preparation tssa g2 g3 articles', action: () => window.location.href='pages/blog/index.html', section: 'blog' },
-                { name: 'Preparing Your Furnace for Canadian Winters', keywords: 'furnace preparation canadian winters homeowner maintenance winter heating safety', action: () => window.open('./pages/blog/preparing-furnace-canadian-winters-homeowner-guide.html', '_blank'), section: 'blog' },
-                { name: 'Bridging Traditional HVAC Education with Modern Technology', keywords: 'traditional hvac education modern technology digital learning 2026 vision fanshawe college', action: () => window.open('./pages/blog/bridging-traditional-hvac-education-modern-technology-2026.html', '_blank'), section: 'blog' },
-
-                // Other sections
-                { name: 'Community', keywords: 'community forum chat professionals networking', action: () => window.location.href='pages/community.html', section: 'community' },
-                { name: 'HVAC Jack', keywords: 'hvac jack ai diagnostic photo analysis troubleshooting', action: () => window.location.href='hvac-jack-40.html', section: 'hvac-jack' },
-
-                // Navigation
-                { name: 'Tools Section', keywords: 'tools calculators professional apps', action: () => showSection('tools'), section: 'tools' },
-                { name: 'Training Section', keywords: 'training certification courses modules', action: () => showSection('training'), section: 'training' },
-                { name: 'About Section', keywords: 'about founder lark labs background', action: () => showSection('about'), section: 'about' }
-            ];
-
-            // Search for matches
+        function showSearchResults(searchTerm) {
             const matches = searchableItems.filter(item =>
                 item.name.toLowerCase().includes(searchTerm) ||
-                item.keywords.includes(searchTerm)
+                item.keywords.includes(searchTerm) ||
+                item.description.toLowerCase().includes(searchTerm)
             );
 
+            const resultsContainer = document.getElementById('searchResults');
+
             if (matches.length === 0) {
-                alert(`No results found for "${searchTerm}". Try searching for: tools, calculators, training, g2, g3, hvac, gas, or specific tool names.`);
+                resultsContainer.innerHTML = `
+                    <div style="padding: 1rem; text-align: center; color: #bdc3c7;">
+                        <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">🔍 No results found</div>
+                        <div style="font-size: 0.9rem;">Try: tools, g2, g3, training, blog, women, heat pump</div>
+                    </div>
+                `;
+                resultsContainer.style.display = 'block';
                 return;
             }
 
-            if (matches.length === 1) {
-                // Single match - execute directly
-                matches[0].action();
-                searchInput.value = ''; // Clear search
-            } else {
-                // Multiple matches - show options
-                let message = `Found ${matches.length} results for "${searchTerm}":\n\n`;
-                matches.forEach((match, index) => {
-                    message += `${index + 1}. ${match.name}\n`;
-                });
-                message += `\nOpening the first result: ${matches[0].name}`;
+            let resultsHTML = '';
+            matches.slice(0, 8).forEach(item => {
+                const sectionColor = getSectionColor(item.section);
+                resultsHTML += `
+                    <div onclick="executeSearchResult('${item.name}')"
+                         onmouseover="this.style.background='rgba(52, 152, 219, 0.1)'"
+                         onmouseout="this.style.background='transparent'"
+                         style="padding: 0.75rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.2s;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <span style="font-size: 1.2rem;">${item.icon}</span>
+                            <div style="flex: 1;">
+                                <div style="color: #ffffff; font-weight: 500; margin-bottom: 0.2rem;">${item.name}</div>
+                                <div style="color: #bdc3c7; font-size: 0.85rem; line-height: 1.3;">${item.description}</div>
+                                <div style="color: ${sectionColor}; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; margin-top: 0.25rem;">${item.section}</div>
+                            </div>
+                            <span style="color: #3498db; font-size: 0.8rem;">→</span>
+                        </div>
+                    </div>
+                `;
+            });
 
-                alert(message);
-                matches[0].action(); // Open first result
-                searchInput.value = ''; // Clear search
+            if (matches.length > 8) {
+                resultsHTML += `
+                    <div style="padding: 0.75rem; text-align: center; color: #bdc3c7; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                        Showing first 8 of ${matches.length} results
+                    </div>
+                `;
+            }
+
+            resultsContainer.innerHTML = resultsHTML;
+            resultsContainer.style.display = 'block';
+        }
+
+        function showSearchSuggestions() {
+            const resultsContainer = document.getElementById('searchResults');
+            const suggestions = [
+                { icon: '🔧', text: 'HVAC Tools', search: 'tools' },
+                { icon: '📚', text: 'G2/G3 Training', search: 'g2' },
+                { icon: '📰', text: 'Blog Articles', search: 'blog' },
+                { icon: '👩‍🔧', text: 'Women in HVAC', search: 'women' },
+                { icon: '❄️', text: 'Heat Pumps', search: 'heat pump' },
+                { icon: '🤖', text: 'AI Tools', search: 'ai' }
+            ];
+
+            let suggestionsHTML = '<div style="padding: 0.75rem; color: #bdc3c7; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Popular searches:</div>';
+
+            suggestions.forEach(suggestion => {
+                suggestionsHTML += `
+                    <div onclick="searchFor('${suggestion.search}')"
+                         onmouseover="this.style.background='rgba(52, 152, 219, 0.1)'"
+                         onmouseout="this.style.background='transparent'"
+                         style="padding: 0.5rem 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <span>${suggestion.icon}</span>
+                        <span style="color: #ffffff;">${suggestion.text}</span>
+                    </div>
+                `;
+            });
+
+            resultsContainer.innerHTML = suggestionsHTML;
+            resultsContainer.style.display = 'block';
+        }
+
+        function searchFor(term) {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = term;
+            showSearchResults(term);
+        }
+
+        function executeSearchResult(itemName) {
+            const item = searchableItems.find(i => i.name === itemName);
+            if (item) {
+                item.action();
+                hideSearchResults();
+                document.getElementById('searchInput').value = '';
             }
         }
 
-        // Allow Enter key to trigger search
+        function getSectionColor(section) {
+            const colors = {
+                'tools': '#e74c3c',
+                'training': '#f39c12',
+                'blog': '#27ae60',
+                'community': '#9b59b6',
+                'hvac-jack': '#3498db',
+                'home': '#34495e'
+            };
+            return colors[section] || '#bdc3c7';
+        }
+
+        function hideSearchResults() {
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.style.display = 'none';
+        }
+
+        // Initialize search and event handlers
         document.addEventListener('DOMContentLoaded', function() {
+            initializeSearch(); // Initialize search data
+
             const searchInput = document.getElementById('searchInput');
             if (searchInput) {
+                // Search on Enter key
                 searchInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         e.preventDefault();
                         performSearch();
                     }
                 });
+
+                // Show suggestions on focus
+                searchInput.addEventListener('focus', function() {
+                    if (!searchInput.value.trim()) {
+                        showSearchSuggestions();
+                    } else {
+                        showSearchResults(searchInput.value.toLowerCase().trim());
+                    }
+                });
+
+                // Real-time search as user types
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = searchInput.value.toLowerCase().trim();
+                    if (searchTerm) {
+                        showSearchResults(searchTerm);
+                    } else {
+                        showSearchSuggestions();
+                    }
+                });
             }
+
+            // Hide search results when clicking outside
+            document.addEventListener('click', function(e) {
+                const searchControl = document.querySelector('.search-control');
+                if (searchControl && !searchControl.contains(e.target)) {
+                    hideSearchResults();
+                }
+            });
         });
 
         // AI Assistant Chat Functionality - Removed for Performance
