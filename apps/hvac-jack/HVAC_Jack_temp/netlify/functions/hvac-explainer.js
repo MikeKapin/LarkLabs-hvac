@@ -164,7 +164,7 @@ async function callClaude(prompt) {
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
       temperature: 0.3,
       system: `You are HVAC Jack 4.0, the world's premier HVAC troubleshooting expert. You provide comprehensive, detailed technical analysis that professional HVAC technicians can immediately implement. Every response must be thorough, specific, and actionable.`,
