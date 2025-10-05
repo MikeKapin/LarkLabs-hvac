@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All TSSA G2 Gas Trade Training Units | Advanced CSA B149.1-25 | LARK Labs</title>
+    <meta name="description" content="Complete list of advanced Gas Trade Training Units for TSSA G2 intermediate certification. CSA B149.1-25 and B149.2-25 compliant study materials for independent gas technician work in Ontario.">
+    <meta name="keywords" content="TSSA G2 units, Gas Trade G2, CSA B149.1-25 advanced, Ontario gas technician G2, TSSA intermediate certification, gas technician G2 study guide">
+
+    <link rel="stylesheet" href="assets/css/unit-pages-seo.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 20px;
+        }
+
+        .lead {
+            text-align: center;
+            font-size: 1.2em;
+            color: #34495e;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto 40px;
+        }
+
+        .certification-requirements {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left: 5px solid #27ae60;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .certification-requirements h2 {
+            color: #155724;
+            margin-bottom: 20px;
+        }
+
+        .certification-requirements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .certification-requirements li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #155724;
+            font-size: 1.05em;
+        }
+
+        .certification-requirements li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .unit-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .unit-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #27ae60, #229954);
+        }
+
+        .unit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(39, 174, 96, 0.2);
+            border-color: #27ae60;
+        }
+
+        .unit-number {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .unit-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            line-height: 1.3;
+        }
+
+        .unit-card > p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .unit-chapters {
+            list-style: none;
+            padding-left: 0;
+            margin: 20px 0;
+        }
+
+        .unit-chapters li {
+            padding: 8px 0;
+            padding-left: 25px;
+            color: #555;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .unit-chapters li:before {
+            content: "▸";
+            position: absolute;
+            left: 5px;
+            color: #27ae60;
+        }
+
+        .prerequisites-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #fff9e6 100%);
+            border-left: 5px solid #ffc107;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .prerequisites-box h2 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .prerequisites-box p {
+            color: #533f03;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+
+        .next-steps {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .next-steps h2 {
+            color: white;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+
+        .coming-soon {
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .coming-soon h4 {
+            color: #721c24;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .units-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <a href="/">Home</a> >
+            <a href="/tssa-g2-exam-prep.html">TSSA G2 Exam Prep</a> >
+            <span>All G2 Training Units</span>
+        </nav>
+
+        <!-- Training Navigation -->
+        <div class="training-navigation">
+            <a href="/">Home</a> |
+            <a href="/tssa-g3-exam-prep.html">G3 Exam Prep</a> |
+            <a href="/tssa-g2-exam-prep.html">G2 Exam Prep</a> |
+            <a href="/tssa-g3-units-index.html">All G3 Units</a> |
+            <a href="https://codecompassapp.netlify.app/" target="_blank">CSA Code Search</a>
+        </div>
+
+        <h1>TSSA G2 Gas Trade Training Units</h1>
+        <p class="lead">Advanced Gas Trade Training Units for TSSA G2 (Gas Technician 2 - Intermediate) certification. Comprehensive CSA B149.1-25 and B149.2-25 applications for independent gas technician work in Ontario.</p>
+
+        <!-- Prerequisites Box -->
+        <div class="prerequisites-box">
+            <h2>⚠️ G2 Prerequisites Required</h2>
+            <p><strong>Before pursuing G2 certification, you must have:</strong></p>
+            <ul style="margin-top: 15px; padding-left: 25px;">
+                <li>Valid TSSA G3 (Gas Technician 3) certification</li>
+                <li>Minimum 2 years (4,000 hours) of documented gas fitting experience under supervision</li>
+                <li>Enrollment in TSSA-accredited G2 training program</li>
+                <li>Strong understanding of CSA B149.1-25 fundamentals from G3 training</li>
+            </ul>
+        </div>
+
+        <!-- Certification Requirements -->
+        <div class="certification-requirements">
+            <h2>📋 G2 Certification Requirements</h2>
+            <ul>
+                <li><strong>Prerequisites:</strong> Valid G3 certification + 2 years (4,000 hours) documented experience</li>
+                <li><strong>Units Required:</strong> Gas Trade Units 10+ (advanced topics building on G3 foundation)</li>
+                <li><strong>Code Knowledge:</strong> Complete CSA B149.1-25 (all sections), CSA B149.2-25 propane handling</li>
+                <li><strong>Training:</strong> TSSA-accredited G2 program (typically 8-12 weeks)</li>
+                <li><strong>Exam Format:</strong> Multiple choice + practical evaluations</li>
+                <li><strong>Passing Grade:</strong> 75% or higher on all exams</li>
+                <li><strong>Work Scope:</strong> Independent work on appliances up to 1,200,000 BTUH, complex installations</li>
+                <li><strong>Next Step:</strong> G1 certification for unrestricted gas work (additional requirements apply)</li>
+            </ul>
+        </div>
+
+        <!-- Units Grid -->
+        <div class="units-grid">
+
+            <!-- Unit 10: Advanced Piping Systems -->
+            <div class="unit-card">
+                <div class="unit-number">10</div>
+                <h3>Unit 10: Advanced Piping Systems</h3>
+                <p>Complex gas piping design, pressure drop calculations, meter installations, and regulator applications per CSA B149.1-25.</p>
+                <ul class="unit-chapters">
+                    <li>Advanced pipe sizing and pressure drop</li>
+                    <li>Complex piping system design</li>
+                    <li>Gas meters and regulator installation</li>
+                    <li>Multi-appliance manifold systems</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 4, 5</p>
+                <a href="/CSA_Unit_10_Chapter_Reviews.html" class="btn-primary">Study Unit 10 →</a>
+            </div>
+
+            <!-- Unit 13: Controls -->
+            <div class="unit-card">
+                <div class="unit-number">13</div>
+                <h3>Unit 13: Controls</h3>
+                <p>Advanced gas appliance controls, safety devices, control circuits, and troubleshooting - critical for independent technician work.</p>
+                <ul class="unit-chapters">
+                    <li>Gas valve types and operation</li>
+                    <li>Control circuits and wiring diagrams</li>
+                    <li>Safety interlocks and limit controls</li>
+                    <li>Advanced troubleshooting techniques</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 3 (advanced controls)</p>
+                <div class="coming-soon">
+                    <h4>🚧 Additional G2 Units Coming Soon</h4>
+                    <p>We're developing comprehensive study materials for all G2 training units. Check back soon for more advanced content!</p>
+                </div>
+            </div>
+
+            <!-- Placeholder for future units -->
+            <div class="unit-card" style="opacity: 0.6; border-style: dashed;">
+                <div class="unit-number">11-20+</div>
+                <h3>Additional G2 Advanced Units</h3>
+                <p>More advanced Gas Trade units for complete G2 certification preparation are being developed.</p>
+                <ul class="unit-chapters">
+                    <li>Advanced venting systems</li>
+                    <li>Complex appliance installations</li>
+                    <li>Commercial gas systems</li>
+                    <li>CSA B149.2-25 propane applications</li>
+                    <li>And more advanced topics...</li>
+                </ul>
+                <p><strong>Status:</strong> In Development - Coming Soon</p>
+                <a href="/tssa-g2-exam-prep.html" class="btn-secondary">View G2 Overview →</a>
+            </div>
+
+        </div>
+
+        <!-- G3 Foundation Notice -->
+        <div class="prerequisites-box" style="background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%); border-left-color: #17a2b8;">
+            <h2 style="color: #0c5460;">💡 Building on G3 Foundation</h2>
+            <p style="color: #0c5460;">G2 training builds directly on Gas Trade Units 1-9 from G3 certification. Make sure you have strong understanding of:</p>
+            <ul style="margin-top: 15px; padding-left: 25px; color: #0c5460;">
+                <li><strong>Unit 1:</strong> Safety protocols and procedures</li>
+                <li><strong>Unit 2:</strong> Tools and testing equipment proficiency</li>
+                <li><strong>Unit 3:</strong> Venting and combustion air fundamentals</li>
+                <li><strong>Unit 4/4a:</strong> CSA B149.1-25 code structure and Ontario regulations</li>
+                <li><strong>Unit 8:</strong> Basic piping principles (foundation for Unit 10)</li>
+                <li><strong>Unit 9:</strong> Gas appliance basics (foundation for advanced work)</li>
+            </ul>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="/tssa-g3-units-index.html" class="btn-primary">Review G3 Units →</a>
+            </div>
+        </div>
+
+        <!-- Next Steps CTA -->
+        <div class="next-steps">
+            <h2>🚀 Ready for Advanced G2 Training?</h2>
+            <a href="/CSA_Unit_10_Chapter_Reviews.html" class="btn-large-primary">Start with Unit 10 →</a>
+            <a href="https://codecompassapp.netlify.app/" target="_blank" class="btn-large-secondary">Study Full CSA B149.1-25 Code →</a>
+            <a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank" class="btn-large-secondary">Launch AI Tutor (G2 Mode) →</a>
+        </div>
+
+        <!-- Study Resources -->
+        <section class="study-resources">
+            <h3>📚 Additional G2 Study Resources</h3>
+            <ul>
+                <li><a href="/tssa-g2-exam-prep.html">TSSA G2 Exam Preparation Overview</a></li>
+                <li><a href="/g2-practice-tests.html">G2 Practice Tests and Exams</a></li>
+                <li><a href="/tssa-g3-units-index.html">Review G3 Foundation Units</a></li>
+                <li><a href="https://codecompassapp.netlify.app/" target="_blank">Code Compass - Full CSA B149.1-25 Search</a></li>
+                <li><a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank">Canadian Gas Technician AI Tutor (G2 Level)</a></li>
+                <li><a href="https://www.tssa.org/en/fuels/training-and-certification.aspx" target="_blank" rel="noopener">Official TSSA G2 Certification Info ↗</a></li>
+                <li><a href="https://www.csagroup.org/store/product/CSA_B149.1:25/" target="_blank" rel="noopener">Purchase Official CSA B149.1-25 Code ↗</a></li>
+                <li><a href="https://www.csagroup.org/store/product/CSA_B149.2:25/" target="_blank" rel="noopener">Purchase Official CSA B149.2-25 Code ↗</a></li>
+            </ul>
+        </section>
+
+        <!-- Disclaimer -->
+        <section class="unit-disclaimer">
+            <h3>⚠️ Independent Educational Content</h3>
+            <div class="disclaimer-box">
+                <p><strong>Advanced CSA-Compliant Study Materials:</strong> This content is provided by LARK Labs as independent educational resources for TSSA G2 intermediate certification. Materials are based on CSA B149.1-25, CSA B149.2-25, and advanced Gas Trade Training curriculum. We are not affiliated with CSA Group or TSSA.</p>
+
+                <p><strong>Supplementary Training:</strong> These advanced materials complement official TSSA-accredited G2 training programs but do not replace certified instruction. G2 certification requires completion of an approved training program, valid G3 certification, and documented field experience.</p>
+
+                <p><strong>Code References:</strong> All code references are to CSA B149.1-25 (17th Edition, 2025) and CSA B149.2-25 (7th Edition, 2025). Always consult official published codes for authoritative information on complex installations.</p>
+
+                <p class="creator-credit"><strong>Created by:</strong> Mike Kapin | 20 years field experience + 10 years teaching HVAC and Gas Trade programs at Fanshawe College</p>
+
+                <p class="copyright">Copyright © 2025 LARK Labs • Free CSA-compliant educational resources for Ontario gas technicians</p>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
