@@ -164,6 +164,44 @@
             color: #27ae60;
         }
 
+        .unit-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-study,
+        .btn-practice {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .btn-study {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-study:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
         .prerequisites-box {
             background: linear-gradient(135deg, #fff3cd 0%, #fff9e6 100%);
             border-left: 5px solid #ffc107;
@@ -183,6 +221,34 @@
             font-size: 1.05em;
         }
 
+        .study-path {
+            background: linear-gradient(135deg, #fff3cd 0%, #fff9e6 100%);
+            border-left: 5px solid #ffc107;
+            border-radius: 12px;
+            padding: 35px;
+            margin: 50px 0;
+        }
+
+        .study-path h2 {
+            color: #856404;
+            margin-bottom: 25px;
+        }
+
+        .study-path ol {
+            padding-left: 25px;
+        }
+
+        .study-path ol li {
+            padding: 12px 0;
+            color: #533f03;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+
+        .study-path ol li strong {
+            color: #6c4f00;
+        }
+
         .next-steps {
             background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
             padding: 50px;
@@ -197,20 +263,6 @@
             margin-bottom: 30px;
         }
 
-        .coming-soon {
-            background: #f8d7da;
-            border: 2px solid #f5c6cb;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .coming-soon h4 {
-            color: #721c24;
-            margin-bottom: 10px;
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
@@ -222,6 +274,10 @@
 
             .units-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .unit-buttons {
+                flex-direction: column;
             }
         }
     </style>
@@ -264,7 +320,7 @@
             <h2>📋 G2 Certification Requirements</h2>
             <ul>
                 <li><strong>Prerequisites:</strong> Valid G3 certification + 2 years (4,000 hours) documented experience</li>
-                <li><strong>Units Required:</strong> Gas Trade Units 10+ (advanced topics building on G3 foundation)</li>
+                <li><strong>Units Required:</strong> Gas Trade Units 10-24 (15 advanced units building on G3 foundation)</li>
                 <li><strong>Code Knowledge:</strong> Complete CSA B149.1-25 (all sections), CSA B149.2-25 propane handling</li>
                 <li><strong>Training:</strong> TSSA-accredited G2 program (typically 8-12 weeks)</li>
                 <li><strong>Exam Format:</strong> Multiple choice + practical evaluations</li>
@@ -277,53 +333,281 @@
         <!-- Units Grid -->
         <div class="units-grid">
 
-            <!-- Unit 10: Advanced Piping Systems -->
+            <!-- Unit 10 -->
             <div class="unit-card">
                 <div class="unit-number">10</div>
-                <h3>Unit 10: Advanced Piping Systems</h3>
-                <p>Complex gas piping design, pressure drop calculations, meter installations, and regulator applications per CSA B149.1-25.</p>
+                <h3>Unit 10: Gas Meters and Regulators</h3>
+                <p>Advanced gas measurement, metering, and pressure regulation systems - essential for complex installations and commercial work.</p>
                 <ul class="unit-chapters">
-                    <li>Advanced pipe sizing and pressure drop</li>
-                    <li>Complex piping system design</li>
-                    <li>Gas meters and regulator installation</li>
-                    <li>Multi-appliance manifold systems</li>
+                    <li>Meters and Measurement</li>
+                    <li>Pressure Regulators - First and Second Stage</li>
+                    <li>Regulator Applications and Installation</li>
+                    <li>Regulator Venting and Safety Systems</li>
                 </ul>
-                <p><strong>CSA Code:</strong> B149.1-25 Section 4, 5</p>
-                <a href="/CSA_Unit_10_Chapter_Reviews.html" class="btn-primary">Study Unit 10 →</a>
-            </div>
-
-            <!-- Unit 13: Controls -->
-            <div class="unit-card">
-                <div class="unit-number">13</div>
-                <h3>Unit 13: Controls</h3>
-                <p>Advanced gas appliance controls, safety devices, control circuits, and troubleshooting - critical for independent technician work.</p>
-                <ul class="unit-chapters">
-                    <li>Gas valve types and operation</li>
-                    <li>Control circuits and wiring diagrams</li>
-                    <li>Safety interlocks and limit controls</li>
-                    <li>Advanced troubleshooting techniques</li>
-                </ul>
-                <p><strong>CSA Code:</strong> B149.1-25 Section 3 (advanced controls)</p>
-                <div class="coming-soon">
-                    <h4>🚧 Additional G2 Units Coming Soon</h4>
-                    <p>We're developing comprehensive study materials for all G2 training units. Check back soon for more advanced content!</p>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 5 (Gas Supply and Metering)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_10_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit10" class="btn-practice">✅ Practice Questions</a>
                 </div>
             </div>
 
-            <!-- Placeholder for future units -->
-            <div class="unit-card" style="opacity: 0.6; border-style: dashed;">
-                <div class="unit-number">11-20+</div>
-                <h3>Additional G2 Advanced Units</h3>
-                <p>More advanced Gas Trade units for complete G2 certification preparation are being developed.</p>
+            <!-- Unit 11 -->
+            <div class="unit-card">
+                <div class="unit-number">11</div>
+                <h3>Unit 11: Pool Heaters and Boilers</h3>
+                <p>Swimming pool heating systems, advanced boiler installations, and water heating applications for commercial settings.</p>
                 <ul class="unit-chapters">
-                    <li>Advanced venting systems</li>
-                    <li>Complex appliance installations</li>
-                    <li>Commercial gas systems</li>
-                    <li>CSA B149.2-25 propane applications</li>
-                    <li>And more advanced topics...</li>
+                    <li>Pool Heater Types and Installation</li>
+                    <li>Pool Heater Safety and Controls</li>
+                    <li>Boiler Classifications and Applications</li>
+                    <li>Boiler Installation and Piping</li>
+                    <li>Boiler Controls and Safety Devices</li>
                 </ul>
-                <p><strong>Status:</strong> In Development - Coming Soon</p>
-                <a href="/tssa-g2-exam-prep.html" class="btn-secondary">View G2 Overview →</a>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6 (Water Heating Equipment)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_11_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit11" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 12 -->
+            <div class="unit-card">
+                <div class="unit-number">12</div>
+                <h3>Unit 12: Forced Air Furnaces</h3>
+                <p>Advanced forced air heating systems, furnace installation, airflow calculations, and ducting requirements per code.</p>
+                <ul class="unit-chapters">
+                    <li>Forced Air Heating Systems Components</li>
+                    <li>Furnace Types and Efficiency Ratings</li>
+                    <li>Installation and Clearance Requirements</li>
+                    <li>Airflow and Temperature Rise Calculations</li>
+                    <li>Ductwork Design and Installation</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6 (Furnace Installation)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_12_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit12" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 13 -->
+            <div class="unit-card">
+                <div class="unit-number">13</div>
+                <h3>Unit 13: Controls</h3>
+                <p>Advanced control systems, thermostats, safety interlocks, and troubleshooting for gas appliances and systems.</p>
+                <ul class="unit-chapters">
+                    <li>Gas Valves and Control Components</li>
+                    <li>Thermostats and Temperature Controls</li>
+                    <li>Limit Controls and Safety Devices</li>
+                    <li>Advanced Control Circuits and Troubleshooting</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 3 (Control Systems)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_13_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit13" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 14 -->
+            <div class="unit-card">
+                <div class="unit-number">14</div>
+                <h3>Unit 14: Building as a System</h3>
+                <p>Understanding building science, stack effect, depressurization, and building-appliance interactions for safe installations.</p>
+                <ul class="unit-chapters">
+                    <li>Key Components - Building Envelope and Heat Transfer</li>
+                    <li>Gas Technician/Fitter Use of Building as a System</li>
+                    <li>Assessment Tools for the Building as a System</li>
+                    <li>Indoor Air Quality - Ventilation and Pollutant Control</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 7 (Venting in Building Context)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_14_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit14" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 15 -->
+            <div class="unit-card">
+                <div class="unit-number">15</div>
+                <h3>Unit 15: Storage Water Heaters</h3>
+                <p>Advanced water heater sizing, installation, safety systems, and maintenance for residential and commercial applications.</p>
+                <ul class="unit-chapters">
+                    <li>Water Heater Types and Components</li>
+                    <li>Sizing and Capacity Calculations</li>
+                    <li>Installation Requirements and Clearances</li>
+                    <li>Temperature and Pressure Relief Devices</li>
+                    <li>Maintenance and Troubleshooting</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6 (Water Heating Equipment)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_15_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit15" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 16 -->
+            <div class="unit-card">
+                <div class="unit-number">16</div>
+                <h3>Unit 16: Water Heaters - Direct Vent/Power Vent & Tankless</h3>
+                <p>Advanced direct vent, power vent, and tankless water heater technologies, installations, and troubleshooting techniques.</p>
+                <ul class="unit-chapters">
+                    <li>Direct Vent Water Heaters - Design and Installation</li>
+                    <li>Power Vent Systems and Components</li>
+                    <li>Tankless Water Heaters - Operation and Sizing</li>
+                    <li>Condensing Technology and Efficiency</li>
+                    <li>Advanced Troubleshooting and Diagnostics</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6, 7 (Vented Water Heating)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_16_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit16" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 17 -->
+            <div class="unit-card">
+                <div class="unit-number">17</div>
+                <h3>Unit 17: Ranges, Ovens & Cooktops</h3>
+                <p>Gas cooking appliances, installation requirements, gas pressure adjustments, and safety systems for commercial settings.</p>
+                <ul class="unit-chapters">
+                    <li>Gas Ranges and Ovens - Types and Components</li>
+                    <li>Cooktops and Built-In Units</li>
+                    <li>Installation and Clearance Requirements</li>
+                    <li>Pressure Adjustment and Conversion</li>
+                    <li>Commercial Cooking Equipment</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6 (Cooking Appliances)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_17_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit17" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 18 -->
+            <div class="unit-card">
+                <div class="unit-number">18</div>
+                <h3>Unit 18: Dryers, Conversions & Miscellaneous Appliances</h3>
+                <p>Gas dryer installations, fuel conversions, and various specialty gas appliances for residential and commercial use.</p>
+                <ul class="unit-chapters">
+                    <li>Gas Dryers - Installation and Venting</li>
+                    <li>Fuel Conversions - Natural Gas to Propane</li>
+                    <li>Conversion Procedures and Adjustments</li>
+                    <li>Miscellaneous Gas Appliances</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6 (Dryers and Appliances)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_18_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit18" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 19 -->
+            <div class="unit-card">
+                <div class="unit-number">19</div>
+                <h3>Unit 19: Basic Hydronic Systems</h3>
+                <p>Hydronic heating fundamentals, boiler systems, piping configurations, and water-based heating distribution systems.</p>
+                <ul class="unit-chapters">
+                    <li>Hydronic System Components and Operation</li>
+                    <li>Boiler Types and Applications</li>
+                    <li>Piping Configurations and Design</li>
+                    <li>Circulators and System Controls</li>
+                    <li>Expansion Tanks and Air Elimination</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6 (Hydronic Equipment)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_19_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit19" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 20 -->
+            <div class="unit-card">
+                <div class="unit-number">20</div>
+                <h3>Unit 20: Basic Radiant Heating Systems</h3>
+                <p>Radiant heating design, installation, controls, and applications for residential and commercial comfort heating.</p>
+                <ul class="unit-chapters">
+                    <li>Radiant Heating Principles and Benefits</li>
+                    <li>Radiant System Types - Floor, Wall, Ceiling</li>
+                    <li>Design and Layout Considerations</li>
+                    <li>Controls and Zone Management</li>
+                    <li>Installation Requirements and Best Practices</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6 (Radiant Heating)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_20_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit20" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 21 -->
+            <div class="unit-card">
+                <div class="unit-number">21</div>
+                <h3>Unit 21: Space Heaters and Fireplaces</h3>
+                <p>Gas fireplaces, space heaters, unit heaters, and decorative appliances - installation, venting, and safety requirements.</p>
+                <ul class="unit-chapters">
+                    <li>Gas Fireplaces - Types and Installation</li>
+                    <li>Vented and Vent-Free Space Heaters</li>
+                    <li>Unit Heaters - Suspended and Floor Models</li>
+                    <li>Decorative Gas Appliances</li>
+                    <li>Clearances and Safety Requirements</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 6 (Space Heating)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_21_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit21" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 22 -->
+            <div class="unit-card">
+                <div class="unit-number">22</div>
+                <h3>Unit 22: Venting Systems</h3>
+                <p>Advanced venting design, vent sizing calculations, Category I-IV appliances, and combustion air requirements - heavily tested.</p>
+                <ul class="unit-chapters">
+                    <li>Venting Systems - Types and Materials</li>
+                    <li>Vent Installation and Assembly</li>
+                    <li>Vent Design for Category I Appliances</li>
+                    <li>Size Venting Systems for Category I Appliances</li>
+                    <li>Vent Inspection and Troubleshooting</li>
+                    <li>Air Requirements - Combustion and Ventilation</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 7 (Venting and Combustion Air)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_22_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit22" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 23 -->
+            <div class="unit-card">
+                <div class="unit-number">23</div>
+                <h3>Unit 23: Indoor Air Quality (Forced Air Add-Ons)</h3>
+                <p>Air filters, humidifiers, cooling coils, and IAQ equipment integration with forced air gas heating systems.</p>
+                <ul class="unit-chapters">
+                    <li>Air Filters and Cleaners - Types and MERV Ratings</li>
+                    <li>Humidifiers - Installation and Water Supply</li>
+                    <li>Cooling Coils - Integration with Gas Systems</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 7 (Ventilation and Air Quality)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_23_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit23" class="btn-practice">✅ Practice Questions</a>
+                </div>
+            </div>
+
+            <!-- Unit 24 -->
+            <div class="unit-card">
+                <div class="unit-number">24</div>
+                <h3>Unit 24: Heat Loss/Heat Gain & Air Handling Units</h3>
+                <p>Load calculations, heat loss/gain methods, appliance sizing, and air handling unit operations - final G2 unit.</p>
+                <ul class="unit-chapters">
+                    <li>Heat Loss/Heat Gain - Calculation Methods</li>
+                    <li>Air Handling Units - Components and Operation</li>
+                </ul>
+                <p><strong>CSA Code:</strong> B149.1-25 Section 9 (Appliance Sizing)</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_24_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g2-practice-tests.html#unit24" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
         </div>
@@ -337,12 +621,30 @@
                 <li><strong>Unit 2:</strong> Tools and testing equipment proficiency</li>
                 <li><strong>Unit 3:</strong> Venting and combustion air fundamentals</li>
                 <li><strong>Unit 4/4a:</strong> CSA B149.1-25 code structure and Ontario regulations</li>
-                <li><strong>Unit 8:</strong> Basic piping principles (foundation for Unit 10)</li>
-                <li><strong>Unit 9:</strong> Gas appliance basics (foundation for advanced work)</li>
+                <li><strong>Unit 8:</strong> Basic piping principles (foundation for advanced work)</li>
+                <li><strong>Unit 9:</strong> Gas appliance basics (foundation for advanced installations)</li>
             </ul>
             <div style="text-align: center; margin-top: 20px;">
                 <a href="/tssa-g3-units-index.html" class="btn-primary">Review G3 Units →</a>
             </div>
+        </div>
+
+        <!-- Study Path -->
+        <div class="study-path">
+            <h2>📚 Recommended G2 Study Path</h2>
+            <ol>
+                <li><strong>Start with Unit 10: Gas Meters and Regulators</strong> - Foundation of advanced gas supply systems.</li>
+                <li><strong>Progress to Unit 22: Venting Systems</strong> - Most heavily tested unit, critical for all installations.</li>
+                <li><strong>Study Unit 14: Building as a System</strong> - Understanding building science prevents common problems.</li>
+                <li><strong>Complete Unit 12: Forced Air Furnaces</strong> - Core residential installation knowledge.</li>
+                <li><strong>Learn Unit 13: Controls</strong> - Essential for troubleshooting and advanced work.</li>
+                <li><strong>Study Units 15-16: Water Heaters</strong> - Common service and installation work.</li>
+                <li><strong>Complete Units 19-20: Hydronic and Radiant</strong> - Specialized heating systems.</li>
+                <li><strong>Finish Units 17-18, 21, 23-24</strong> - Round out your knowledge with specialty appliances and calculations.</li>
+                <li><strong>Take Practice Exams Regularly</strong> - Test knowledge with chapter reviews and unit exams.</li>
+                <li><strong>Review CSA B149.1-25 Throughout</strong> - Use Code Compass for specific code sections.</li>
+                <li><strong>Complete TSSA-Accredited Program</strong> - Required formal training for exam eligibility.</li>
+            </ol>
         </div>
 
         <!-- Next Steps CTA -->
