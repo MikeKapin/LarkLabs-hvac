@@ -143,6 +143,44 @@
             margin-bottom: 15px;
         }
 
+        .unit-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-study,
+        .btn-practice {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .btn-study {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-study:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
         .unit-chapters {
             list-style: none;
             padding-left: 0;
@@ -271,7 +309,10 @@
                     <li>Emergency response procedures</li>
                 </ul>
                 <p><strong>CSA Code:</strong> B149.1-25 Section 2, 3</p>
-                <a href="/CSA_Unit_1_Safety_Chapter_Reviews.html" class="btn-primary">Study Unit 1 →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_1_Safety_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit1" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
             <!-- Unit 2: Tools, Fasteners and Testing Equipment -->
@@ -287,22 +328,28 @@
                     <li>Electrical testing equipment</li>
                 </ul>
                 <p><strong>CSA Code:</strong> B149.1-25 Section 8</p>
-                <a href="/CSA_Unit_2_Chapter_Reviews.html" class="btn-primary">Study Unit 2 →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_2_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit2" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
-            <!-- Unit 3: Venting and Combustion Air -->
+            <!-- Unit 3: Properties of Natural Gas & Propane -->
             <div class="unit-card">
                 <div class="unit-number">3</div>
-                <h3>Unit 3: Venting & Combustion Air</h3>
-                <p>Critical knowledge of venting systems, combustion air requirements, and proper appliance venting per CSA B149.1-25 Section 7.</p>
+                <h3>Unit 3: Properties of Natural Gas & Propane</h3>
+                <p>Understanding fuel properties, combustion principles, and safe handling of natural gas and propane - foundation for all gas work.</p>
                 <ul class="unit-chapters">
-                    <li>Venting principles and categories</li>
-                    <li>Combustion air calculations</li>
-                    <li>Draft systems and operation</li>
-                    <li>Common venting problems</li>
+                    <li>Properties of Natural Gas</li>
+                    <li>Properties of Propane</li>
+                    <li>Combustion Principles</li>
+                    <li>Safe Fuel Handling</li>
                 </ul>
-                <p><strong>CSA Code:</strong> B149.1-25 Section 7</p>
-                <a href="/CSA_Unit_3_Chapter_Reviews.html" class="btn-primary">Study Unit 3 →</a>
+                <p><strong>CSA Code:</strong> B149.1-25 Fuel Properties</p>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_3_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit3" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
             <!-- Unit 4: Codes and Regulations -->
@@ -317,7 +364,10 @@
                     <li>General installation requirements</li>
                 </ul>
                 <p><strong>CSA Code:</strong> B149.1-25 All Sections</p>
-                <a href="/CSA_Unit_4_&_4a_Chapter_Reviews.html" class="btn-primary">Study Unit 4 →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_4_&_4a_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit4" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
             <!-- Unit 4a: Ontario Regulations -->
@@ -332,7 +382,10 @@
                     <li>Inspection and compliance</li>
                 </ul>
                 <p><strong>Regulations:</strong> O. Reg. 215/01, TSSA Act</p>
-                <a href="/CSA_Unit_4_&_4a_Chapter_Reviews.html" class="btn-primary">Study Unit 4a →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_4_&_4a_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit4a" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
             <!-- Unit 5: Basic Electricity -->
@@ -349,7 +402,10 @@
                     <li>Grounding and bonding</li>
                 </ul>
                 <p><strong>CSA Code:</strong> B149.1-25 Section 3</p>
-                <a href="/CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html" class="btn-primary">Study Unit 5 →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit5" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
             <!-- Unit 6: Technical Drawing, Manuals and Graphs -->
@@ -364,7 +420,10 @@
                     <li>Graphs and technical charts</li>
                 </ul>
                 <p><strong>CSA Code:</strong> B149.1-25 Section 4</p>
-                <a href="/CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html" class="btn-primary">Study Unit 6 →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit6" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
             <!-- Unit 7: Customer Relations -->
@@ -379,7 +438,10 @@
                     <li>Building customer trust</li>
                 </ul>
                 <p><strong>Focus:</strong> Professional conduct and communication</p>
-                <a href="/CSA_Unit_7_Customer_Relations_Chapter_Reviews.html" class="btn-primary">Study Unit 7 →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_7_Customer_Relations_Chapter_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit7" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
             <!-- Unit 8: Introduction to Piping -->
@@ -394,7 +456,10 @@
                     <li>Support and protection requirements</li>
                 </ul>
                 <p><strong>CSA Code:</strong> B149.1-25 Section 4</p>
-                <a href="/CSA_Unit_8_Intro_to_Piping_Reviews.html" class="btn-primary">Study Unit 8 →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_8_Intro_to_Piping_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit8" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
             <!-- Unit 9: Introduction to Gas Appliances -->
@@ -409,7 +474,10 @@
                     <li>Manufacturer specifications</li>
                 </ul>
                 <p><strong>CSA Code:</strong> B149.1-25 Section 3, 6</p>
-                <a href="/CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html" class="btn-primary">Study Unit 9 →</a>
+                <div class="unit-buttons">
+                    <a href="/CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html" class="btn-study">📖 Study Material</a>
+                    <a href="/g3-practice-tests.html#unit9" class="btn-practice">✅ Practice Questions</a>
+                </div>
             </div>
 
         </div>
