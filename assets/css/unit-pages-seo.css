@@ -41,6 +41,7 @@
     padding: 30px;
     margin-bottom: 40px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    text-align: left;
 }
 
 .unit-header-section h1 {
@@ -101,6 +102,7 @@
     margin: 25px 0;
     border: 1px solid #e0e0e0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: left;
 }
 
 .unit-coverage h3,
@@ -166,6 +168,7 @@
    =============================================== */
 .unit-footer-sections {
     margin-top: 50px;
+    text-align: left;
 }
 
 /* Related Units Section */
@@ -174,6 +177,7 @@
     padding: 40px 30px;
     border-radius: 15px;
     margin-bottom: 40px;
+    text-align: left;
 }
 
 .related-units h3 {
@@ -294,6 +298,7 @@
     border-radius: 15px;
     border: 2px solid #e0e0e0;
     margin-bottom: 40px;
+    text-align: left;
 }
 
 .study-resources h3 {
@@ -335,6 +340,7 @@
 /* Unit Disclaimer */
 .unit-disclaimer {
     margin-bottom: 30px;
+    text-align: left;
 }
 
 .unit-disclaimer h3 {
