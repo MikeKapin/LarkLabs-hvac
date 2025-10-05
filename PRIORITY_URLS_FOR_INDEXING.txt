@@ -1,0 +1,103 @@
+LARK Labs - Priority URLs for Manual Indexing
+============================================
+COPY AND PASTE THESE INTO GOOGLE SEARCH CONSOLE & BING WEBMASTER TOOLS
+
+TIER 1: CRITICAL PAGES (DO THESE FIRST - 10 URLs)
+--------------------------------------------------
+https://larklabs.org/
+https://larklabs.org/tssa-g3-exam-prep.html
+https://larklabs.org/tssa-g3-units-index.html
+https://larklabs.org/pages/blog/tssa-g3-exam-guide.html
+https://larklabs.org/tssa-g2-exam-prep.html
+https://larklabs.org/tssa-g2-units-index.html
+https://larklabs.org/pages/blog/tssa-g2-exam-guide.html
+https://larklabs.org/code-compass.html
+https://larklabs.org/hvac-jack-40.html
+https://larklabs.org/canadian-gas-technician-ai-tutor.html
+
+TIER 2: EXAM SIMULATORS (3 URLs)
+---------------------------------
+https://larklabs.org/training/simulators/tssa_g3_exam_simulatorv3.html
+https://larklabs.org/training/simulators/TSSA_G2_Exam_SimulatorV3.html
+https://larklabs.org/pages/payment/g2_premium_access.html
+
+TIER 3: G3 CHAPTER REVIEWS - UNITS 1-9 (9 URLs)
+------------------------------------------------
+https://larklabs.org/CSA_Unit_1_Safety_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_2_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_3_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_4_&_4a_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html
+https://larklabs.org/CSA_Unit_7_Customer_Relations_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_8_Intro_to_Piping_Reviews.html
+https://larklabs.org/CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html
+
+TIER 4: G2 CHAPTER REVIEWS - UNITS 10-15 (6 URLs)
+--------------------------------------------------
+https://larklabs.org/CSA_Unit_10_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_11_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_12_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_13_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_14_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_15_Chapter_Reviews.html
+
+TIER 5: G2 CHAPTER REVIEWS - UNITS 16-20 (5 URLs)
+--------------------------------------------------
+https://larklabs.org/CSA_Unit_16_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_17_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_18_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_19_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_20_Chapter_Reviews.html
+
+TIER 6: G2 CHAPTER REVIEWS - UNITS 21-24 (4 URLs)
+--------------------------------------------------
+https://larklabs.org/CSA_Unit_21_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_22_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_23_Chapter_Reviews.html
+https://larklabs.org/CSA_Unit_24_Chapter_Reviews.html
+
+TIER 7: TOP CALCULATORS & TOOLS (5 URLs)
+-----------------------------------------
+https://larklabs.org/apps/calculators/canadian-gas-piping-calculator.html
+https://larklabs.org/apps/calculators/canadian-gas-venting-calculator.html
+https://larklabs.org/apps/calculators/superheat-subcooling-calculator.html
+https://larklabs.org/apps/calculators/A2L_refrigerant_calculator.html
+https://larklabs.org/HVAC_Tools/index.html
+
+TIER 8: TRAINING & RESOURCES (5 URLs)
+--------------------------------------
+https://larklabs.org/training/courses/A2L_Safety_Course.html
+https://larklabs.org/Gas_Code_Navigation_Microcredential.html
+https://larklabs.org/CSA_B149_Reference_Guide.html
+https://larklabs.org/pages/blog/index.html
+https://larklabs.org/pages/community.html
+
+============================================
+TOTAL: 50 PRIORITY URLs
+============================================
+
+RECOMMENDED SCHEDULE:
+Day 1: Tier 1 (10 URLs) - MOST IMPORTANT
+Day 2: Tier 2 + Tier 3 (12 URLs)
+Day 3: Tier 4 + Tier 5 (11 URLs)
+Day 4: Tier 6 + Tier 7 (9 URLs)
+Day 5: Tier 8 (5 URLs)
+
+GOOGLE SEARCH CONSOLE:
+1. Go to: https://search.google.com/search-console
+2. Use URL Inspection tool (top search bar)
+3. Paste URL and press Enter
+4. Click "Request Indexing" button
+5. Wait for confirmation
+
+BING WEBMASTER TOOLS:
+1. Go to: https://www.bing.com/webmasters
+2. Go to URL Inspection in left menu
+3. Paste URL
+4. Click "Submit URL"
+
+RATE LIMITS:
+- Google: ~10-12 URLs per hour
+- Bing: ~15-20 URLs per hour
+- Take breaks between batches
