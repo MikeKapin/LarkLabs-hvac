@@ -787,19 +787,6 @@
                                 `;
                             }).join('')}
                         </div>
-                        <script>
-                            // Add click handlers to topics after render
-                            setTimeout(() => {
-                                document.querySelectorAll('#topicsList .topic-item').forEach(btn => {
-                                    btn.onclick = function() {
-                                        const sessionId = parseInt(this.dataset.session);
-                                        const topicIdx = parseInt(this.dataset.topic);
-                                        const url = this.dataset.url;
-                                        openTopicAndToggle(sessionId, topicIdx, url);
-                                    };
-                                });
-                            }, 100);
-                        </script>
                     </div>
 
                     <!-- Notes -->
@@ -838,6 +825,18 @@
                     </div>
                 </div>
             `;
+
+            // Attach event listeners to topic buttons after render
+            setTimeout(() => {
+                document.querySelectorAll('#topicsList .topic-item').forEach(btn => {
+                    btn.onclick = function() {
+                        const sessionId = parseInt(this.dataset.session);
+                        const topicIdx = parseInt(this.dataset.topic);
+                        const url = this.dataset.url;
+                        openTopicAndToggle(sessionId, topicIdx, url);
+                    };
+                });
+            }, 100);
         }
 
         // Open Topic Content and Toggle Completion
