@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Project Development - Session 3 | AI Educators Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; background: #f9fafb; }
+        header { background: linear-gradient(135deg, #012456 0%, #d97757 100%); color: white; padding: 3rem 1rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.125rem; opacity: 0.95; }
+        .breadcrumb { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; font-size: 0.875rem; color: #6b7280; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .content-card { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+        h2 { color: #012456; margin-bottom: 1rem; font-size: 1.75rem; }
+        h3 { color: #1f2937; margin-top: 1.5rem; margin-bottom: 1rem; }
+        .time-estimate { display: inline-block; background: #dbeafe; color: #1e40af; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1.5rem; }
+        .objectives { background: #f0fdf4; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+        .objectives h3 { color: #10b981; margin-top: 0; }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .project-card { background: linear-gradient(135deg, #01245615 0%, #d9775715 100%); border: 2px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .project-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); border-color: #d97757; }
+        .project-card h4 { color: #012456; margin-top: 0; }
+        .difficulty-tag { display: inline-block; background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-top: 0.5rem; }
+        .difficulty-tag.medium { background: #f59e0b; }
+        .difficulty-tag.hard { background: #ef4444; }
+        .phase-card { background: linear-gradient(135deg, #fef3f715 0%, #d9775715 100%); border: 2px solid #d97757; border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .phase-card h3 { color: #d97757; margin-top: 0; }
+        .command-box { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.875rem; margin: 1rem 0; white-space: pre-wrap; }
+        .tip-box { background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+        .tip-box h3 { color: #1e40af; margin-top: 0; }
+        .success-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 2rem; text-align: center; margin: 2rem 0; }
+        .success-box h2 { color: #10b981; }
+        .next-session { text-align: center; margin: 3rem 0; }
+        .next-session a { display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1.125rem; font-weight: 600; transition: transform 0.3s; }
+        footer { background: #1f2937; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        footer a { color: #93c5fd; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎯 Build Your Custom Project</h1>
+        <p>Session 3, Topic 5 | Apply Everything You've Learned</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 3 / Topic 5
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 90 minutes</span>
+            <h2>Create Something That Solves a Real Problem</h2>
+            <p>Now it's time to put all your new skills to work! You'll design a beautiful application with Claude.ai, then use Claude Code to manage and enhance it.</p>
+
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Choose a project that addresses your coordinator needs</li>
+                    <li>Design beautiful UI/UX with Claude.ai</li>
+                    <li>Use Claude Code to manage project files</li>
+                    <li>Add features and functionality iteratively</li>
+                    <li>Test and refine your application</li>
+                    <li>Deploy your finished project</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>💡 The Two-Phase Strategy</h2>
+            <p>We'll combine the strengths of both tools:</p>
+
+            <h3>Phase 1: Claude.ai (Beautiful Design)</h3>
+            <ul>
+                <li>✨ Generates gorgeous, polished interfaces</li>
+                <li>🎨 Creates complete, working applications</li>
+                <li>📱 Ensures mobile responsiveness</li>
+                <li>🎯 Best for initial design and full-page generation</li>
+            </ul>
+
+            <h3>Phase 2: Claude Code (File Management & Iteration)</h3>
+            <ul>
+                <li>📂 Manages multiple files easily</li>
+                <li>🔄 Makes targeted updates quickly</li>
+                <li>🐛 Debugs and fixes issues</li>
+                <li>⚡ Adds features without rewriting everything</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🎨 Project Ideas</h2>
+            <p>Choose ONE project that solves a real problem you face:</p>
+
+            <div class="project-grid">
+                <div class="project-card">
+                    <h4>📊 Automated Report Builder</h4>
+                    <p>Generate weekly/monthly reports from form inputs. Auto-formats, creates summaries, exports to PDF.</p>
+                    <span class="difficulty-tag">Easy Start</span>
+                </div>
+
+                <div class="project-card">
+                    <h4>📅 Smart Scheduling Assistant</h4>
+                    <p>Manages appointments, sends reminders, avoids conflicts, suggests optimal meeting times.</p>
+                    <span class="difficulty-tag medium">Medium</span>
+                </div>
+
+                <div class="project-card">
+                    <h4>🎓 Student Progress Tracker</h4>
+                    <p>Dashboard showing individual student progress, alerts for at-risk students, generates parent reports.</p>
+                    <span class="difficulty-tag medium">Medium</span>
+                </div>
+
+                <div class="project-card">
+                    <h4>📧 Email Campaign Manager</h4>
+                    <p>Create and schedule bulk emails, track opens, personalize content for different audiences.</p>
+                    <span class="difficulty-tag">Easy Start</span>
+                </div>
+
+                <div class="project-card">
+                    <h4>📚 Resource Library System</h4>
+                    <p>Searchable database of teaching materials, categories, tags, usage tracking.</p>
+                    <span class="difficulty-tag hard">Advanced</span>
+                </div>
+
+                <div class="project-card">
+                    <h4>🔧 Custom Tool</h4>
+                    <p>Have a unique need? Describe your specific requirement and we'll help you build it!</p>
+                    <span class="difficulty-tag">Varies</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="phase-card">
+                <h3>🎨 Phase 1: Beautiful Design with Claude.ai (30 minutes)</h3>
+
+                <h4 style="margin-top: 1.5rem;">Step 1: Open Claude.ai</h4>
+                <ol>
+                    <li>Go to <a href="https://claude.ai" target="_blank">claude.ai</a> in your browser</li>
+                    <li>Start a new conversation</li>
+                    <li>Use this enhanced prompt template:</li>
+                </ol>
+
+                <div class="command-box">Create a beautiful, modern [PROJECT NAME] web application.
+
+Requirements:
+- [Describe what it should do - be specific!]
+- [List key features needed]
+- [Mention any data it should track]
+
+Design:
+- Professional [color scheme] theme
+- Mobile-responsive layout
+- Clean, intuitive interface
+- Modern card-based design
+- Smooth animations
+
+Features:
+- [Feature 1]
+- [Feature 2]
+- [Feature 3]
+- Data saved in browser localStorage
+- Export/print functionality
+- Dark mode toggle (optional)
+
+Please provide complete HTML with embedded CSS and JavaScript in a single file.</div>
+
+                <h4 style="margin-top: 1.5rem;">Step 2: Review and Refine</h4>
+                <ul>
+                    <li>Claude will generate complete code</li>
+                    <li>Ask for changes: "Make the buttons bigger" or "Change to blue theme"</li>
+                    <li>Iterate until you love the design</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Step 3: Save the Code</h4>
+                <ol>
+                    <li>Copy all the code Claude generated</li>
+                    <li>Open VSCodium</li>
+                    <li>Create new file: <code>[project-name].html</code></li>
+                    <li>Paste the code</li>
+                    <li>Save</li>
+                    <li>Test in browser</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="phase-card" style="background: linear-gradient(135deg, #01245615 0%, #0891b215 100%); border-color: #012456;">
+                <h3 style="color: #012456;">⚡ Phase 2: File Management with Claude Code (60 minutes)</h3>
+
+                <h4 style="margin-top: 1.5rem;">Step 1: Set Up Project in Claude Code</h4>
+                <ol>
+                    <li>Open PowerShell</li>
+                    <li>Navigate to your project folder:</li>
+                </ol>
+                <div class="command-box">cd Desktop\ClaudeCodeProjects
+mkdir MyProject
+cd MyProject</div>
+
+                <ol start="3">
+                    <li>Copy your HTML file into this folder</li>
+                    <li>Start Claude Code:</li>
+                </ol>
+                <div class="command-box">claude</div>
+
+                <h4 style="margin-top: 1.5rem;">Step 2: Enhance with Claude Code</h4>
+                <p>Now you can make targeted improvements:</p>
+
+                <h5>Add New Features:</h5>
+                <div class="command-box">Add a search bar to filter results in [filename].html</div>
+
+                <h5>Fix Issues:</h5>
+                <div class="command-box">The save button isn't working in [filename].html - please debug and fix it</div>
+
+                <h5>Improve Styling:</h5>
+                <div class="command-box">Make the header sticky and add a subtle shadow when scrolling</div>
+
+                <h5>Add New Sections:</h5>
+                <div class="command-box">Add a statistics dashboard showing total entries, averages, and trends</div>
+
+                <h4 style="margin-top: 1.5rem;">Step 3: Organize Multiple Files</h4>
+                <p>If your project grows, Claude Code can split it:</p>
+                <div class="command-box">Split [filename].html into separate HTML, CSS, and JavaScript files</div>
+
+                <h4 style="margin-top: 1.5rem;">Step 4: Test and Iterate</h4>
+                <ol>
+                    <li>After each change, test in browser</li>
+                    <li>Keep refining: "The buttons are too small on mobile"</li>
+                    <li>Add polish: "Add loading animations"</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Pro Tips for Project Success</h3>
+                <ul>
+                    <li><strong>Start Simple:</strong> Build core functionality first, add features later</li>
+                    <li><strong>Test Early:</strong> Check in browser after every major change</li>
+                    <li><strong>Save Versions:</strong> Copy working files before big changes</li>
+                    <li><strong>Be Specific:</strong> "Add blue submit button in top right" vs "Make it better"</li>
+                    <li><strong>Use Examples:</strong> "Like the Gmail interface" helps AI understand</li>
+                    <li><strong>Iterate Gradually:</strong> One feature at a time prevents errors</li>
+                    <li><strong>Review Code:</strong> Understand what Claude creates (learning opportunity!)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>📝 Example: Building a Weekly Report Generator</h2>
+
+            <h3>Phase 1 Prompt (Claude.ai):</h3>
+            <div class="command-box">Create a beautiful Weekly Report Generator web application.
+
+Requirements:
+- Form to input: week dates, meetings held, events organized, achievements, challenges, next week priorities
+- Generate formatted report from inputs
+- One-click copy to clipboard
+- Save drafts in browser storage
+
+Design:
+- Professional teal and blue theme
+- Card-based layout
+- Mobile responsive
+- Clean input fields with labels
+
+Features:
+- Form validation
+- Preview before copy
+- Clear form button
+- Load previous report
+- Print-friendly format
+
+Provide complete HTML with embedded CSS and JavaScript.</div>
+
+            <h3>Phase 2 Enhancements (Claude Code):</h3>
+            <div class="command-box"># Add features one by one:
+Add email template format option
+Add PDF export button
+Create templates for different report types
+Add data visualization showing weekly trends
+Implement autosave every 30 seconds</div>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 Deployment Options</h2>
+
+            <h3>1. Local Use (Easiest)</h3>
+            <ul>
+                <li>Keep on your computer</li>
+                <li>Access via file:// in browser</li>
+                <li>Perfect for personal tools</li>
+            </ul>
+
+            <h3>2. GitHub Pages (Free Hosting)</h3>
+            <ul>
+                <li>Create GitHub account</li>
+                <li>Upload your HTML file</li>
+                <li>Enable GitHub Pages</li>
+                <li>Get public URL</li>
+            </ul>
+
+            <h3>3. Share with Colleagues</h3>
+            <ul>
+                <li>Email the HTML file</li>
+                <li>They open it in their browser</li>
+                <li>Works offline once saved</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>✅ Project Completion Checklist</h2>
+            <ul>
+                <li>✓ Chose a project that solves real problem</li>
+                <li>✓ Generated beautiful design with Claude.ai</li>
+                <li>✓ Tested initial version in browser</li>
+                <li>✓ Set up project folder for Claude Code</li>
+                <li>✓ Added at least 2 enhancements with Claude Code</li>
+                <li>✓ Fixed any bugs or issues</li>
+                <li>✓ Tested on mobile view</li>
+                <li>✓ Saved and backed up project files</li>
+                <li>✓ Documented how to use the tool</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <h2>🎉 Congratulations!</h2>
+            <p style="font-size: 1.125rem; color: #1f2937; margin: 1rem 0;">You've completed Session 3: Power Tools - PowerShell & Claude Code!</p>
+            <p style="color: #6b7280;">You've mastered:</p>
+            <ul style="list-style: none; margin: 1rem 0;">
+                <li>✅ PowerShell command-line navigation</li>
+                <li>✅ Node.js development environment</li>
+                <li>✅ Anthropic Console and API management</li>
+                <li>✅ Claude Code CLI for AI-powered development</li>
+                <li>✅ Building custom applications from scratch</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 What's Next in Session 4?</h2>
+            <p><strong>Free Power Tools - Interactive Projects</strong></p>
+            <ul>
+                <li>Explore LMArena for comparing AI models</li>
+                <li>Use NanoBanana platform for no-code development</li>
+                <li>Build interactive educational projects</li>
+                <li>Create advanced features without coding</li>
+                <li>Develop custom applications for free</li>
+            </ul>
+            <p style="margin-top: 1rem; color: #6b7280;">
+                <strong>Time Commitment:</strong> 3-4 hours<br>
+                <strong>Cost:</strong> $0 (completely free tools!)
+            </p>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Before Session 4</h3>
+                <ul>
+                    <li>Complete your custom project from this session</li>
+                    <li>Use your project daily to find improvement opportunities</li>
+                    <li>Share with a colleague and get feedback</li>
+                    <li>Document any issues or desired features</li>
+                    <li>Backup all your projects to cloud storage</li>
+                    <li>Celebrate your progress - you're now an AI-powered developer!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="next-session">
+            <a href="ai-educators.html">Complete Session 3 - Return to Dashboard →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
+    </footer>
+</body>
+</html>

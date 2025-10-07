@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Installation - Session 3 | AI Educators Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; background: #f9fafb; }
+        header { background: linear-gradient(135deg, #012456 0%, #d97757 100%); color: white; padding: 3rem 1rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.125rem; opacity: 0.95; }
+        .breadcrumb { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; font-size: 0.875rem; color: #6b7280; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .content-card { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+        h2 { color: #012456; margin-bottom: 1rem; font-size: 1.75rem; }
+        h3 { color: #1f2937; margin-top: 1.5rem; margin-bottom: 1rem; }
+        .time-estimate { display: inline-block; background: #dbeafe; color: #1e40af; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1.5rem; }
+        .objectives { background: #f0fdf4; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+        .objectives h3 { color: #10b981; margin-top: 0; }
+        .step-by-step { counter-reset: step-counter; }
+        .step { background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; position: relative; padding-left: 4rem; }
+        .step::before { counter-increment: step-counter; content: counter(step-counter); position: absolute; left: 1.5rem; top: 1.5rem; background: linear-gradient(135deg, #012456 0%, #d97757 100%); color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.125rem; }
+        .step h4 { margin: 0 0 0.75rem 0; color: #012456; }
+        .command-box { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.875rem; margin: 1rem 0; }
+        .warning { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+        .warning strong { color: #d97706; }
+        .tip-box { background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+        .tip-box h3 { color: #1e40af; margin-top: 0; }
+        .success-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; }
+        .success-box h3 { color: #10b981; margin-top: 0; }
+        .command-output { background: #f3f4f6; border-left: 4px solid #10b981; padding: 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-family: 'Courier New', monospace; font-size: 0.875rem; }
+        .next-topic { text-align: center; margin: 3rem 0; }
+        .next-topic a { display: inline-block; background: linear-gradient(135deg, #012456 0%, #d97757 100%); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1.125rem; font-weight: 600; transition: transform 0.3s; }
+        .next-topic a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(1, 36, 86, 0.4); }
+        footer { background: #1f2937; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        footer a { color: #93c5fd; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⚡ Install Claude Code CLI</h1>
+        <p>Session 3, Topic 4 | AI-Powered Development Tool</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 3 / Topic 4
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 15 minutes</span>
+            <h2>Your AI Coding Assistant</h2>
+            <p>Claude Code is a command-line tool that lets you have AI-powered conversations about code, generate files, debug problems, and build entire projects - all from PowerShell!</p>
+
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Install Claude Code globally using npm</li>
+                    <li>Configure Claude Code with your API key</li>
+                    <li>Test the installation with a simple project</li>
+                    <li>Learn basic Claude Code commands</li>
+                    <li>Troubleshoot common installation issues</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🤔 What is Claude Code?</h2>
+            <p>Claude Code is an <strong>AI development assistant</strong> that runs in your terminal. It combines the power of Claude AI with your local file system.</p>
+
+            <h3>What Can Claude Code Do?</h3>
+            <ul>
+                <li>✨ <strong>Generate complete projects:</strong> "Create a task tracker app"</li>
+                <li>📝 <strong>Write and edit files:</strong> "Add dark mode to index.html"</li>
+                <li>🐛 <strong>Debug code:</strong> "Fix the JavaScript error in app.js"</li>
+                <li>🔄 <strong>Refactor code:</strong> "Make this function more efficient"</li>
+                <li>📚 <strong>Explain code:</strong> "What does this function do?"</li>
+                <li>🎨 <strong>Add features:</strong> "Add a search bar to the dashboard"</li>
+            </ul>
+
+            <h3>How It Works:</h3>
+            <ol>
+                <li>You type a request in natural language</li>
+                <li>Claude Code analyzes your project</li>
+                <li>It generates/modifies code automatically</li>
+                <li>Files are created/updated on your computer</li>
+                <li>You review and test the changes</li>
+            </ol>
+        </div>
+
+        <div class="content-card">
+            <h2>📦 Installation Process</h2>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <h4>Open PowerShell as Administrator</h4>
+                    <ul>
+                        <li>Press <kbd>Windows</kbd> + <kbd>X</kbd></li>
+                        <li>Press <kbd>A</kbd></li>
+                        <li>Click "Yes" for administrator permission</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Install Claude Code Globally</h4>
+                    <p>Run this single command:</p>
+                    <div class="command-box">npm install -g @anthropic-ai/claude-code</div>
+
+                    <p style="margin-top: 1rem;">What happens:</p>
+                    <ul>
+                        <li>npm downloads Claude Code from the internet</li>
+                        <li>Installs it globally (<code>-g</code> flag)</li>
+                        <li>Makes <code>claude</code> command available everywhere</li>
+                        <li>Takes 1-2 minutes</li>
+                    </ul>
+
+                    <p style="margin-top: 1rem;">You'll see text scrolling by - this is normal! It shows:</p>
+                    <div class="command-output">npm WARN deprecated ...
+added 127 packages in 45s
+24 packages are looking for funding</div>
+                </div>
+
+                <div class="step">
+                    <h4>Verify Installation</h4>
+                    <p>Check that Claude Code is installed:</p>
+                    <div class="command-box">claude --version</div>
+
+                    <p style="margin-top: 1rem;"><strong>Expected output:</strong></p>
+                    <div class="command-output">claude-code version 1.0.0</div>
+
+                    <div class="warning">
+                        <strong>⚠️ If you see "command not found":</strong>
+                        <ul style="margin: 0.5rem 0 0 1.5rem;">
+                            <li>Close PowerShell completely</li>
+                            <li>Re-open PowerShell as Administrator</li>
+                            <li>Try the command again</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Start Claude Code for the First Time</h4>
+                    <p>Launch Claude Code:</p>
+                    <div class="command-box">claude</div>
+
+                    <p style="margin-top: 1rem;">You'll be prompted to enter your API key:</p>
+                    <div class="command-output">Welcome to Claude Code!
+Please enter your Anthropic API key:</div>
+                </div>
+
+                <div class="step">
+                    <h4>Configure Your API Key</h4>
+                    <ol>
+                        <li>Open the text file where you saved your API key</li>
+                        <li>Copy the entire key (starts with <code>sk-ant-api03-...</code>)</li>
+                        <li>Return to PowerShell</li>
+                        <li>Right-click to paste (or press <kbd>Ctrl</kbd>+<kbd>V</kbd>)</li>
+                        <li>Press <kbd>Enter</kbd></li>
+                    </ol>
+
+                    <div class="success-box">
+                        <h3>🎉 Success!</h3>
+                        <p>You should see: "API key configured successfully!"</p>
+                        <p>Claude Code is now ready to use!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🧪 Test Your Installation</h2>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <h4>Create a Test Project</h4>
+                    <p>Let's build a simple HTML file to verify everything works:</p>
+
+                    <ol>
+                        <li>Make sure you're in your projects folder:</li>
+                        <div class="command-box">cd Desktop
+mkdir ClaudeCodeProjects
+cd ClaudeCodeProjects</div>
+
+                        <li>Start Claude Code:</li>
+                        <div class="command-box">claude</div>
+
+                        <li>Type this request:</li>
+                        <div class="command-box">Create a simple HTML file called hello.html with a colorful background, centered text that says "Hello from Claude Code!", and a button that shows an alert when clicked.</div>
+
+                        <li>Watch as Claude Code generates the file!</li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h4>Review the Generated File</h4>
+                    <p>Claude Code will show you the code it created. You can:</p>
+                    <ul>
+                        <li>Review the changes</li>
+                        <li>Accept by typing <code>yes</code> or <code>y</code></li>
+                        <li>Reject by typing <code>no</code> or <code>n</code></li>
+                        <li>Request modifications: "Make the background blue"</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Test the Generated File</h4>
+                    <ol>
+                        <li>Type <code>exit</code> to leave Claude Code</li>
+                        <li>Open File Explorer and navigate to ClaudeCodeProjects</li>
+                        <li>Double-click <code>hello.html</code></li>
+                        <li>You should see your working webpage!</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>💬 Basic Claude Code Commands</h2>
+
+            <h3>Navigation:</h3>
+            <ul>
+                <li><code>exit</code> - Leave Claude Code</li>
+                <li><code>clear</code> - Clear the screen</li>
+                <li><code>help</code> - Show available commands</li>
+            </ul>
+
+            <h3>File Operations:</h3>
+            <ul>
+                <li>"Create a file called [name]" - Generate new file</li>
+                <li>"Edit [filename]" - Modify existing file</li>
+                <li>"Delete [filename]" - Remove file</li>
+                <li>"Show me [filename]" - Display file contents</li>
+            </ul>
+
+            <h3>Project Operations:</h3>
+            <ul>
+                <li>"Build a [type] app" - Generate complete project</li>
+                <li>"Add [feature] to the app" - Enhance existing project</li>
+                <li>"Fix the bug in [filename]" - Debug code</li>
+                <li>"Explain this code" - Get explanations</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Pro Tips for Claude Code</h3>
+                <ul>
+                    <li><strong>Be Specific:</strong> "Add a dark blue navigation bar at the top" vs "Make it look better"</li>
+                    <li><strong>Iterate:</strong> Start simple, then add features one by one</li>
+                    <li><strong>Review Code:</strong> Always check generated code before accepting</li>
+                    <li><strong>Use Natural Language:</strong> Talk to it like a colleague</li>
+                    <li><strong>Save Often:</strong> Back up your projects regularly</li>
+                    <li><strong>Context Matters:</strong> Claude Code can see all files in current folder</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🔧 Troubleshooting</h2>
+
+            <h3>Problem: "command not found" after installation</h3>
+            <ul>
+                <li>Close all PowerShell windows</li>
+                <li>Open new PowerShell as Administrator</li>
+                <li>Try <code>claude --version</code> again</li>
+                <li>If still failing, restart computer</li>
+            </ul>
+
+            <h3>Problem: API key not accepted</h3>
+            <ul>
+                <li>Verify you copied the entire key (very long string)</li>
+                <li>Check for extra spaces before/after the key</li>
+                <li>Generate a new key in Anthropic Console</li>
+            </ul>
+
+            <h3>Problem: "Insufficient credits" error</h3>
+            <ul>
+                <li>Check balance in Anthropic Console</li>
+                <li>Add more credits if needed</li>
+                <li>Verify API key is active in Console</li>
+            </ul>
+
+            <h3>Problem: Code generation fails</h3>
+            <ul>
+                <li>Check internet connection</li>
+                <li>Verify API key in Console is "Active"</li>
+                <li>Try simpler request first</li>
+                <li>Check Console usage page for error logs</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>✅ Topic Completion Checklist</h2>
+            <ul>
+                <li>✓ Installed Claude Code globally using npm</li>
+                <li>✓ Verified installation with <code>claude --version</code></li>
+                <li>✓ Configured API key successfully</li>
+                <li>✓ Created test project (hello.html)</li>
+                <li>✓ Generated code executed without errors</li>
+                <li>✓ Understand basic Claude Code commands</li>
+                <li>✓ Know how to start/exit Claude Code</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 What's Next?</h2>
+            <p>You now have a fully functional AI development environment! In the next topic, you'll use Claude Code to build a complete custom project that solves a real problem in your coordinator work.</p>
+        </div>
+
+        <div class="next-topic">
+            <a href="session3-topic5-custom-project.html">Next Topic: Build Your Custom Project →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
+    </footer>
+</body>
+</html>

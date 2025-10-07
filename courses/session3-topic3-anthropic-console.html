@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthropic Console Setup - Session 3 | AI Educators Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; background: #f9fafb; }
+        header { background: linear-gradient(135deg, #012456 0%, #d97757 100%); color: white; padding: 3rem 1rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.125rem; opacity: 0.95; }
+        .breadcrumb { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; font-size: 0.875rem; color: #6b7280; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .content-card { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+        h2 { color: #012456; margin-bottom: 1rem; font-size: 1.75rem; }
+        h3 { color: #1f2937; margin-top: 1.5rem; margin-bottom: 1rem; }
+        .time-estimate { display: inline-block; background: #dbeafe; color: #1e40af; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1.5rem; }
+        .objectives { background: #f0fdf4; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+        .objectives h3 { color: #10b981; margin-top: 0; }
+        .step-by-step { counter-reset: step-counter; }
+        .step { background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; position: relative; padding-left: 4rem; }
+        .step::before { counter-increment: step-counter; content: counter(step-counter); position: absolute; left: 1.5rem; top: 1.5rem; background: linear-gradient(135deg, #012456 0%, #d97757 100%); color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.125rem; }
+        .step h4 { margin: 0 0 0.75rem 0; color: #012456; }
+        .step ol, .step ul { margin: 0.5rem 0 0 1rem; }
+        .step li { margin: 0.5rem 0; }
+        .pricing-card { background: linear-gradient(135deg, #d9775715 0%, #01245615 100%); border: 2px solid #d97757; border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .pricing-card h3 { color: #d97757; margin-top: 0; }
+        .warning { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+        .warning strong { color: #d97706; }
+        .tip-box { background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+        .tip-box h3 { color: #1e40af; margin-top: 0; }
+        .secret-box { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #ef4444; }
+        .secret-box strong { color: #fca5a5; }
+        .cost-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: white; border-radius: 8px; overflow: hidden; }
+        .cost-table th { background: #d97757; color: white; padding: 1rem; text-align: left; font-weight: 600; }
+        .cost-table td { padding: 1rem; border-bottom: 1px solid #e5e7eb; }
+        .next-topic { text-align: center; margin: 3rem 0; }
+        .next-topic a { display: inline-block; background: linear-gradient(135deg, #012456 0%, #d97757 100%); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1.125rem; font-weight: 600; transition: transform 0.3s; }
+        .next-topic a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(1, 36, 86, 0.4); }
+        footer { background: #1f2937; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        footer a { color: #93c5fd; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🤖 Set Up Anthropic Console</h1>
+        <p>Session 3, Topic 3 | Get Your API Key ($5 Budget)</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 3 / Topic 3
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 30 minutes</span>
+            <h2>Your Gateway to AI-Powered Development</h2>
+            <p>The Anthropic Console is where you manage your Claude API access and budget. You'll add $5 in credits - more than enough for dozens of projects!</p>
+
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Create an Anthropic Console account</li>
+                    <li>Understand API pricing and costs</li>
+                    <li>Add $5 in credits with spending controls</li>
+                    <li>Generate and secure your API key</li>
+                    <li>Set up usage alerts and limits</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="pricing-card">
+                <h3>💰 Understanding the Costs</h3>
+                <p><strong>Your $5 budget will get you approximately:</strong></p>
+                <ul>
+                    <li>✅ 500+ complete website builds</li>
+                    <li>✅ 1,000+ code generations</li>
+                    <li>✅ 2,000+ debugging sessions</li>
+                    <li>✅ 5,000+ simple queries</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Typical costs:</strong></p>
+                <ul>
+                    <li>Simple task: $0.01 - $0.03 (1-3 cents)</li>
+                    <li>Full project: $0.05 - $0.15 (5-15 cents)</li>
+                    <li>Complex application: $0.20 - $0.50 (20-50 cents)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>📊 Pricing Breakdown</h2>
+            <p>Claude API pricing is based on tokens (roughly 4 characters = 1 token):</p>
+
+            <table class="cost-table">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Input (per 1M tokens)</th>
+                        <th>Output (per 1M tokens)</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Claude Sonnet 4</strong></td>
+                        <td>$3.00</td>
+                        <td>$15.00</td>
+                        <td>Complex projects, best quality</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude Sonnet 3.5</strong></td>
+                        <td>$3.00</td>
+                        <td>$15.00</td>
+                        <td>Balanced performance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude Haiku</strong></td>
+                        <td>$0.25</td>
+                        <td>$1.25</td>
+                        <td>Quick, simple tasks</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 1rem;"><strong>Translation:</strong> With $5, you can generate about 300,000 words of code/content using Claude Sonnet!</p>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 Step-by-Step Setup</h2>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <h4>Create Your Account</h4>
+                    <ol>
+                        <li>Open your browser and go to: <strong>console.anthropic.com</strong></li>
+                        <li>Click the <strong>"Sign Up"</strong> button</li>
+                        <li>Enter your work email (or personal email if preferred)</li>
+                        <li>Create a strong password (save it in your password manager)</li>
+                        <li>Click <strong>"Create Account"</strong></li>
+                        <li>Check your email for verification link</li>
+                        <li>Click the verification link to activate your account</li>
+                        <li>Log in to the Anthropic Console</li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h4>Add Payment Method</h4>
+                    <ol>
+                        <li>In the Console, click <strong>"Billing"</strong> in the left sidebar</li>
+                        <li>Click <strong>"Add Payment Method"</strong></li>
+                        <li>Enter your credit/debit card information</li>
+                        <li>Enter billing address</li>
+                        <li>Click <strong>"Save"</strong></li>
+                    </ol>
+                    <div class="warning">
+                        <strong>💳 Note:</strong> Your card won't be charged yet - you'll manually add credits in the next step.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Add $5 in Credits</h4>
+                    <ol>
+                        <li>Still in the Billing section, click <strong>"Add Credits"</strong></li>
+                        <li>Enter amount: <strong>$5.00</strong></li>
+                        <li>Review the charge</li>
+                        <li>Click <strong>"Add Credits"</strong> to confirm</li>
+                        <li>Wait for confirmation (should be instant)</li>
+                        <li>Verify your balance shows $5.00</li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h4>Disable Auto-Recharge (Important!)</h4>
+                    <ol>
+                        <li>In Billing settings, find <strong>"Auto-Recharge"</strong></li>
+                        <li>Make sure the toggle is <strong>OFF</strong></li>
+                        <li>This prevents spending more than your $5 budget</li>
+                    </ol>
+                    <div class="tip-box">
+                        <strong>💡 Pro Tip:</strong> Set up email alerts when you reach $2.50 and $4.00 spent so you know when you're running low.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Create Your API Key</h4>
+                    <ol>
+                        <li>Click <strong>"API Keys"</strong> in the left sidebar</li>
+                        <li>Click <strong>"Create Key"</strong> button</li>
+                        <li>Name your key: <strong>"Claude Code Development"</strong></li>
+                        <li>Leave permissions as default (full access)</li>
+                        <li>Click <strong>"Create Key"</strong></li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h4>Save Your API Key (Critical!)</h4>
+                    <div class="secret-box">
+                        <strong>🔐 IMPORTANT:</strong> The API key will only be shown ONCE. You cannot view it again!
+                    </div>
+                    <ol>
+                        <li>The key will appear (starts with <code>sk-ant-api03-...</code>)</li>
+                        <li>Click the <strong>"Copy"</strong> button</li>
+                        <li>Immediately paste it into a safe place:
+                            <ul>
+                                <li>Create a text file on your desktop called "ClaudeAPIKey.txt"</li>
+                                <li>Or save in your password manager</li>
+                                <li>Or paste into a secure note app</li>
+                            </ul>
+                        </li>
+                        <li>Keep this file secure and backed up</li>
+                    </ol>
+
+                    <div class="warning">
+                        <strong>⚠️ Security Rules:</strong>
+                        <ul style="margin: 0.5rem 0 0 1.5rem;">
+                            <li>Never share your API key with anyone</li>
+                            <li>Never post it on forums, GitHub, or social media</li>
+                            <li>Never email it or send it via chat</li>
+                            <li>Treat it like a password or credit card number</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Test Your API Key (Optional)</h4>
+                    <p>You can verify your key works by checking the Console:</p>
+                    <ol>
+                        <li>Go to <strong>"API Keys"</strong> section</li>
+                        <li>You should see your key listed with name and creation date</li>
+                        <li>Status should show as <strong>"Active"</strong></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>📈 Monitoring Your Usage</h2>
+
+            <h3>Check Your Balance:</h3>
+            <ol>
+                <li>Go to <strong>"Billing"</strong> in Console</li>
+                <li>View current balance and usage statistics</li>
+                <li>See breakdown by model and date</li>
+            </ol>
+
+            <h3>Set Up Alerts:</h3>
+            <ol>
+                <li>In Billing, find <strong>"Usage Alerts"</strong></li>
+                <li>Add alert at $2.50 (50% used)</li>
+                <li>Add alert at $4.00 (80% used)</li>
+                <li>You'll receive emails when thresholds are reached</li>
+            </ol>
+
+            <h3>View Detailed Usage:</h3>
+            <ul>
+                <li><strong>Dashboard:</strong> Real-time usage charts</li>
+                <li><strong>Usage tab:</strong> Per-request breakdown</li>
+                <li><strong>Billing tab:</strong> Cost summaries by day/week/month</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Budget Management Tips</h3>
+                <ul>
+                    <li><strong>Start Small:</strong> Test with simple projects first to understand costs</li>
+                    <li><strong>Use Haiku for Simple Tasks:</strong> It's much cheaper for basic operations</li>
+                    <li><strong>Be Specific in Prompts:</strong> Clear requests = less back-and-forth = lower costs</li>
+                    <li><strong>Monitor Daily:</strong> Check your usage every few days</li>
+                    <li><strong>Cache Responses:</strong> Don't regenerate the same thing twice</li>
+                    <li><strong>Set Hard Limits:</strong> Disable auto-recharge to prevent overspending</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🔧 Troubleshooting</h2>
+
+            <h3>Problem: Payment Failed</h3>
+            <ul>
+                <li>Check card has available balance</li>
+                <li>Verify billing address matches card</li>
+                <li>Try a different card</li>
+                <li>Contact your bank (may have blocked international transaction)</li>
+            </ul>
+
+            <h3>Problem: Can't See API Key After Creation</h3>
+            <ul>
+                <li>You can't view existing keys again</li>
+                <li>Delete the old key and create a new one</li>
+                <li>Make sure to save the new key immediately</li>
+            </ul>
+
+            <h3>Problem: Want to Add More Credits Later</h3>
+            <ul>
+                <li>Go to Billing → Add Credits</li>
+                <li>Enter amount (e.g., another $5)</li>
+                <li>Confirm payment</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>✅ Topic Completion Checklist</h2>
+            <ul>
+                <li>✓ Created Anthropic Console account</li>
+                <li>✓ Verified email address</li>
+                <li>✓ Added payment method</li>
+                <li>✓ Purchased $5 in credits</li>
+                <li>✓ Disabled auto-recharge</li>
+                <li>✓ Created API key named "Claude Code Development"</li>
+                <li>✓ Copied and saved API key securely</li>
+                <li>✓ Set up usage alerts (recommended)</li>
+                <li>✓ Understand API pricing and costs</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 What's Next?</h2>
+            <p>With your API key ready, you're now prepared to install Claude Code CLI and start building AI-powered projects! Keep your API key file handy - you'll need it in the next topic.</p>
+        </div>
+
+        <div class="next-topic">
+            <a href="session3-topic4-claude-code-install.html">Next Topic: Install Claude Code →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
+    </footer>
+</body>
+</html>
