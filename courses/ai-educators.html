@@ -58,6 +58,16 @@
             color: #6b7280;
         }
 
+        .access-info {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #1e40af;
+        }
+
         .form-group {
             margin-bottom: 1rem;
         }
@@ -481,20 +491,10 @@
                         required
                     />
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input
-                        type="password"
-                        id="loginPassword"
-                        class="form-input"
-                        placeholder="Enter password"
-                        required
-                    />
-                </div>
-                <button type="submit" class="btn-primary">Sign In / Register</button>
+                <button type="submit" class="btn-primary">Access Course</button>
             </form>
-            <div class="login-note">
-                <p>New users will be automatically registered</p>
+            <div class="access-info">
+                <strong>📧 Restricted Access:</strong> Only pre-registered email addresses can access this course. Contact the administrator if you need access.
             </div>
         </div>
     </div>
@@ -617,6 +617,15 @@
             ]
         };
 
+        // Allowed Email Addresses (Whitelist)
+        // Add authorized email addresses to this array
+        const ALLOWED_EMAILS = [
+            'test@example.com',  // Example - remove this and add real emails
+            // Add more emails below (one per line):
+            // 'instructor1@college.edu',
+            // 'coordinator@institution.edu',
+        ];
+
         // State Management
         let currentUser = null;
         let users = {};
@@ -652,24 +661,21 @@
             }
         }
 
-        // Login/Register Handler
+        // Login Handler (Email Whitelist Only)
         document.getElementById('loginForm')?.addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
 
-            if (users[email]) {
-                if (users[email].password === password) {
-                    currentUser = email;
-                    showDashboard();
-                } else {
-                    alert('Incorrect password');
-                }
-            } else {
-                // New user registration
+            // Check if email is in the allowed list
+            if (!ALLOWED_EMAILS.map(e => e.toLowerCase()).includes(email)) {
+                alert('Access Denied: Your email address is not authorized for this course. Please contact the administrator if you believe this is an error.');
+                return;
+            }
+
+            // If user doesn't exist, create their record
+            if (!users[email]) {
                 users[email] = {
                     email: email,
-                    password: password,
                     registeredDate: new Date().toISOString()
                 };
 
@@ -681,11 +687,12 @@
                         topicsCompleted: {}
                     };
                 });
-
-                currentUser = email;
-                saveData();
-                showDashboard();
             }
+
+            // Grant access
+            currentUser = email;
+            saveData();
+            showDashboard();
         });
 
         // Show Dashboard
