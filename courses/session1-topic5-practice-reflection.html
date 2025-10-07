@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice & Reflection - Session 1 | AI Educators Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            color: #1f2937;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-estimate {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .objectives {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .objectives h3 {
+            color: #10b981;
+            margin-top: 0;
+        }
+
+        .challenge-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .challenge-card h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .challenge-card .difficulty {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .reflection-prompt {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .reflection-prompt h4 {
+            color: #d97706;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .checklist {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .checklist h4 {
+            margin-top: 0;
+            color: #1f2937;
+        }
+
+        .checklist label {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.75rem 0;
+            cursor: pointer;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .checklist label:last-child {
+            border-bottom: none;
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .tip-box {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tip-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tool-item {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tool-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-item .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-item h4 {
+            margin: 0.5rem 0;
+            color: #1f2937;
+            font-size: 1rem;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .success-box h2 {
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        .next-session {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .next-session a {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .next-session a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .back-to-dashboard {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .back-to-dashboard a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-to-dashboard a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎯 Practice & Reflection</h1>
+        <p>Session 1, Topic 5 | Apply What You've Learned</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 1 / Topic 5
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 60-90 minutes</span>
+
+            <h2>Put Your New Skills to Work!</h2>
+            <p>Time to apply everything you've learned in Session 1. Complete these hands-on challenges to solidify your understanding of AI tools for coordinators.</p>
+
+            <div class="objectives">
+                <h3>🎯 Session Goals</h3>
+                <ul>
+                    <li>Complete at least 3 practical challenges</li>
+                    <li>Reflect on your learning experience</li>
+                    <li>Identify immediate applications for your work</li>
+                    <li>Prepare for Session 2</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🏆 Practical Challenges</h2>
+            <p>Choose at least 3 challenges to complete. Start with the easier ones and work your way up!</p>
+
+            <div class="challenge-card">
+                <span class="difficulty">Easy</span>
+                <h3>Challenge 1: Email Draft Challenge</h3>
+                <p><strong>Task:</strong> Use ChatGPT to draft 3 different types of emails:</p>
+                <ul>
+                    <li>A welcome email for new students</li>
+                    <li>A reminder about an upcoming deadline</li>
+                    <li>A thank you note to department heads</li>
+                </ul>
+                <p><strong>Deliverable:</strong> Save your best email draft and note which AI you used and why.</p>
+            </div>
+
+            <div class="challenge-card">
+                <span class="difficulty">Easy</span>
+                <h3>Challenge 2: AI Comparison Report</h3>
+                <p><strong>Task:</strong> Ask the same question to ChatGPT, Claude, and Gemini:</p>
+                <p style="font-style: italic; margin: 1rem 0;">"What are 5 ways program coordinators can use AI to save time?"</p>
+                <ul>
+                    <li>Compare the responses</li>
+                    <li>Note differences in style, depth, and suggestions</li>
+                    <li>Choose which answer you prefer and explain why</li>
+                </ul>
+                <p><strong>Deliverable:</strong> A short comparison (can use your course notes feature).</p>
+            </div>
+
+            <div class="challenge-card">
+                <span class="difficulty">Medium</span>
+                <h3>Challenge 3: Create a Program One-Pager</h3>
+                <p><strong>Task:</strong> Use Gamma to create a professional one-pager for one of your programs or services:</p>
+                <ul>
+                    <li>Include program overview, benefits, and contact info</li>
+                    <li>Customize the colors to match your institution</li>
+                    <li>Add your department logo</li>
+                    <li>Export as PDF</li>
+                </ul>
+                <p><strong>Deliverable:</strong> A polished one-pager ready to share with colleagues.</p>
+            </div>
+
+            <div class="challenge-card">
+                <span class="difficulty">Medium</span>
+                <h3>Challenge 4: Video Announcement</h3>
+                <p><strong>Task:</strong> Create a 30-60 second video using Pictory announcing an upcoming event or deadline:</p>
+                <ul>
+                    <li>Write a clear, engaging script</li>
+                    <li>Let Pictory generate the video</li>
+                    <li>Add AI voiceover or background music</li>
+                    <li>Ensure captions are enabled</li>
+                </ul>
+                <p><strong>Deliverable:</strong> An exported video ready for social media or email.</p>
+            </div>
+
+            <div class="challenge-card">
+                <span class="difficulty">Hard</span>
+                <h3>Challenge 5: Complete Communication Package</h3>
+                <p><strong>Task:</strong> Create a full promotional package for a workshop or event using multiple AI tools:</p>
+                <ul>
+                    <li>Draft announcement email (ChatGPT/Claude)</li>
+                    <li>Create visual flyer (Gamma)</li>
+                    <li>Design promotional video (Pictory)</li>
+                    <li>Write social media posts for 3 platforms (ChatGPT)</li>
+                </ul>
+                <p><strong>Deliverable:</strong> A coordinated set of materials ready to launch.</p>
+            </div>
+
+            <div class="challenge-card">
+                <span class="difficulty">Hard</span>
+                <h3>Challenge 6: AI-Powered Workflow</h3>
+                <p><strong>Task:</strong> Identify a recurring task in your work and create an AI-assisted workflow:</p>
+                <ul>
+                    <li>Document your current process (step-by-step)</li>
+                    <li>Identify which steps AI can help with</li>
+                    <li>Test the AI-assisted workflow</li>
+                    <li>Measure time saved</li>
+                    <li>Document the new process with AI prompts to use</li>
+                </ul>
+                <p><strong>Deliverable:</strong> A documented workflow you can share with colleagues.</p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🤔 Reflection Questions</h2>
+            <p>Take 10-15 minutes to reflect on your learning. You can use the Notes section in the course dashboard to record your thoughts.</p>
+
+            <div class="reflection-prompt">
+                <h4>💭 What surprised you most about AI tools?</h4>
+                <p>Think about any features, capabilities, or results that exceeded your expectations.</p>
+            </div>
+
+            <div class="reflection-prompt">
+                <h4>💭 Which tool resonated most with your work style?</h4>
+                <p>Consider ChatGPT, Claude, Gemini, Gamma, or Pictory. Which feels most natural for your needs?</p>
+            </div>
+
+            <div class="reflection-prompt">
+                <h4>💭 What's one task you'll start doing differently this week?</h4>
+                <p>Identify a specific, immediate application for AI in your daily work.</p>
+            </div>
+
+            <div class="reflection-prompt">
+                <h4>💭 What concerns or questions do you still have?</h4>
+                <p>Note any uncertainties, ethical concerns, or technical questions. Use the Q&A feature to ask Claude!</p>
+            </div>
+
+            <div class="reflection-prompt">
+                <h4>💭 How will you introduce these tools to colleagues?</h4>
+                <p>Think about how you might share your knowledge with your team.</p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>✅ Session 1 Completion Checklist</h2>
+
+            <div class="checklist">
+                <h4>Before moving to Session 2, verify:</h4>
+                <label>
+                    <input type="checkbox">
+                    <span>Created accounts on ChatGPT, Claude, Gemini, and Gamma</span>
+                </label>
+                <label>
+                    <input type="checkbox">
+                    <span>Tested each AI assistant with at least one real question</span>
+                </label>
+                <label>
+                    <input type="checkbox">
+                    <span>Created at least one Gamma presentation</span>
+                </label>
+                <label>
+                    <input type="checkbox">
+                    <span>Completed at least 3 practical challenges</span>
+                </label>
+                <label>
+                    <input type="checkbox">
+                    <span>Reflected on key learnings in course notes</span>
+                </label>
+                <label>
+                    <input type="checkbox">
+                    <span>Identified 2-3 immediate applications for your work</span>
+                </label>
+                <label>
+                    <input type="checkbox">
+                    <span>Bookmarked all AI tools in your browser</span>
+                </label>
+                <label>
+                    <input type="checkbox">
+                    <span>Asked any lingering questions using the Q&A feature</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Moving Forward: Building Your AI Toolkit</h3>
+                <ul>
+                    <li><strong>Daily Practice:</strong> Use at least one AI tool every day this week</li>
+                    <li><strong>Document Prompts:</strong> Keep a running list of effective prompts</li>
+                    <li><strong>Share Wins:</strong> Tell a colleague about one thing AI helped you create</li>
+                    <li><strong>Stay Curious:</strong> Experiment with different prompts to see what works best</li>
+                    <li><strong>Privacy First:</strong> Remember to never input sensitive student data</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>📚 Quick Reference: Your AI Toolkit</h2>
+
+            <div class="tool-grid">
+                <div class="tool-item">
+                    <div class="icon">💬</div>
+                    <h4>ChatGPT</h4>
+                    <p>Quick answers, brainstorming, drafts</p>
+                </div>
+
+                <div class="tool-item">
+                    <div class="icon">🤖</div>
+                    <h4>Claude</h4>
+                    <p>Long documents, analysis, formal writing</p>
+                </div>
+
+                <div class="tool-item">
+                    <div class="icon">✨</div>
+                    <h4>Gemini</h4>
+                    <p>Research, current info, Google integration</p>
+                </div>
+
+                <div class="tool-item">
+                    <div class="icon">🎨</div>
+                    <h4>Gamma</h4>
+                    <p>Presentations, one-pagers, visual content</p>
+                </div>
+
+                <div class="tool-item">
+                    <div class="icon">🎬</div>
+                    <h4>Pictory</h4>
+                    <p>Script-to-video, social media content</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-box">
+            <h2>🎉 Congratulations!</h2>
+            <p style="font-size: 1.125rem; color: #1f2937; margin-bottom: 1rem;">
+                You've completed Session 1: AI Foundations & Quick Wins!
+            </p>
+            <p style="color: #6b7280;">
+                You now have hands-on experience with 5 powerful AI tools. In Session 2, you'll build your own digital workspace with VSCodium and create custom HTML tools for your program.
+            </p>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 What's Next in Session 2?</h2>
+            <p><strong>Building Your Digital Workspace</strong></p>
+            <ul>
+                <li>Install and set up VSCodium (free code editor)</li>
+                <li>Create a Program Coordinator Portal</li>
+                <li>Build a Weekly Report Generator</li>
+                <li>Design a Student Resource Hub</li>
+                <li>Learn basic HTML with AI assistance</li>
+            </ul>
+            <p style="margin-top: 1rem; color: #6b7280;">
+                <strong>Time Commitment:</strong> 3 hours<br>
+                <strong>Prerequisites:</strong> Session 1 completion + bring real examples from your work
+            </p>
+        </div>
+
+        <div class="next-session">
+            <a href="ai-educators.html">Complete Session 1 - Return to Dashboard →</a>
+        </div>
+
+        <div class="back-to-dashboard">
+            <a href="ai-educators.html">← Back to Course Dashboard</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
+    </footer>
+</body>
+</html>

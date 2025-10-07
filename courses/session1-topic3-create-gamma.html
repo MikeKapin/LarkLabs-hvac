@@ -4,93 +4,442 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create with Gamma - Session 1 | AI Educators Course</title>
-    <link rel="stylesheet" href="session1-styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            color: #1f2937;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-estimate {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .objectives {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .objectives h3 {
+            color: #10b981;
+            margin-top: 0;
+        }
+
+        .step-by-step {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 1.5rem;
+            top: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .step h4 {
+            margin: 0 0 0.75rem 0;
+            color: #2563eb;
+        }
+
+        .step ul {
+            margin: 0.5rem 0 0 1rem;
+            padding: 0;
+        }
+
+        .step li {
+            margin: 0.5rem 0;
+        }
+
+        .prompt-example {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9375rem;
+            white-space: pre-wrap;
+        }
+
+        .tip-box {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tip-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning strong {
+            color: #d97706;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .use-case-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .use-case-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .use-case-card h4 {
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .next-topic {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .next-topic a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .next-topic a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>🎨 Create with Gamma</h1>
         <p>Session 1, Topic 3 | AI-Powered Presentations in Minutes</p>
     </header>
+
     <div class="breadcrumb">
-        <a href="ai-educators.html">← Dashboard</a> / Session 1 / Topic 3
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 1 / Topic 3
     </div>
+
     <main>
         <div class="content-card">
             <span class="time-estimate">⏱️ 30 minutes</span>
+
             <h2>Create Professional Presentations with AI</h2>
             <p>Gamma transforms your ideas into beautiful, professional presentations using AI. No design skills required!</p>
-            <h3>🎯 Learning Objectives</h3>
-            <ul>
-                <li>Create a one-pager in under 5 minutes</li>
-                <li>Use AI to generate content and layouts</li>
-                <li>Customize designs for your brand</li>
-                <li>Export and share your creations</li>
-            </ul>
-        </div>
-        <div class="content-card">
-            <h2>🚀 Quick Start Tutorial</h2>
-            <div class="step">
-                <h4>Step 1: Start a New Gamma</h4>
+
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
                 <ul>
-                    <li>Log into <a href="https://gamma.app" target="_blank">gamma.app</a></li>
-                    <li>Click "Create new" → "Generate"</li>
-                    <li>Choose "One-pager" as your format</li>
+                    <li>Create a one-pager in under 5 minutes</li>
+                    <li>Use AI to generate content and layouts</li>
+                    <li>Customize designs for your brand</li>
+                    <li>Export and share your creations</li>
                 </ul>
             </div>
-            <div class="step">
-                <h4>Step 2: Describe Your Content</h4>
-                <p>Try this example prompt:</p>
-                <div class="prompt-example">
-Create a one-pager about our new student mentorship program. Include:
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 Quick Start Tutorial</h2>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <h4>Start a New Gamma</h4>
+                    <ul>
+                        <li>Log into <a href="https://gamma.app" target="_blank">gamma.app</a></li>
+                        <li>Click "Create new" → "Generate"</li>
+                        <li>Choose "One-pager" as your format</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Describe Your Content</h4>
+                    <p>Try this example prompt:</p>
+                    <div class="prompt-example">Create a one-pager about our new student mentorship program. Include:
 - Program overview
 - Benefits for students
 - How to sign up
 - Success stories
-Make it professional but friendly, using blue and white colors.
+Make it professional but friendly, using blue and white colors.</div>
+                </div>
+
+                <div class="step">
+                    <h4>Let AI Generate</h4>
+                    <ul>
+                        <li>Watch as Gamma creates your layout</li>
+                        <li>AI will generate text, choose fonts, and arrange content</li>
+                        <li>Takes about 30-60 seconds</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Customize & Polish</h4>
+                    <ul>
+                        <li>Click any text to edit it</li>
+                        <li>Change colors using the theme selector</li>
+                        <li>Add your logo or images</li>
+                        <li>Rearrange sections by dragging</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Export & Share</h4>
+                    <ul>
+                        <li>Click "Export" → "PDF" for printing</li>
+                        <li>Or get a shareable link</li>
+                        <li>Embed on your website</li>
+                    </ul>
                 </div>
             </div>
-            <div class="step">
-                <h4>Step 3: Let AI Generate</h4>
-                <ul>
-                    <li>Watch as Gamma creates your layout</li>
-                    <li>AI will generate text, choose fonts, and arrange content</li>
-                    <li>Takes about 30-60 seconds</li>
-                </ul>
-            </div>
-            <div class="step">
-                <h4>Step 4: Customize & Polish</h4>
-                <ul>
-                    <li>Click any text to edit it</li>
-                    <li>Change colors using the theme selector</li>
-                    <li>Add your logo or images</li>
-                    <li>Rearrange sections by dragging</li>
-                </ul>
-            </div>
-            <div class="step">
-                <h4>Step 5: Export & Share</h4>
-                <ul>
-                    <li>Click "Export" → "PDF" for printing</li>
-                    <li>Or get a shareable link</li>
-                    <li>Embed on your website</li>
-                </ul>
-            </div>
         </div>
+
         <div class="content-card">
             <h2>💡 Real-World Use Cases for Coordinators</h2>
+
+            <div class="use-case-grid">
+                <div class="use-case-card">
+                    <h4>📋 Program Overviews</h4>
+                    <p>Create one-pagers for each program with key details, requirements, and contact information.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <h4>📅 Event Announcements</h4>
+                    <p>Design beautiful flyers for workshops, career fairs, and info sessions in minutes.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <h4>📚 Student Resources</h4>
+                    <p>Build visual guides for registration, financial aid, campus services, and more.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <h4>📊 Reports & Dashboards</h4>
+                    <p>Transform boring data into engaging visual reports for stakeholders.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <h4>🎓 Training Materials</h4>
+                    <p>Create quick reference guides for staff and student workers.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <h4>📢 Department Updates</h4>
+                    <p>Design monthly newsletters or policy updates that people actually read.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>✍️ Practice Exercise</h2>
+            <p><strong>Task:</strong> Create a one-pager for an upcoming event at your institution.</p>
+
+            <h3>Prompt Template:</h3>
+            <div class="prompt-example">Create a professional one-pager for [EVENT NAME].
+
+Event Details:
+- Date: [DATE]
+- Time: [TIME]
+- Location: [LOCATION]
+- Target Audience: [WHO SHOULD ATTEND]
+
+Include:
+- Eye-catching title
+- Event description (2-3 sentences)
+- Key benefits of attending
+- Registration information
+- Contact details
+
+Style: [professional/casual/modern] with [COLOR SCHEME] colors.</div>
+
+            <h3>What to Include:</h3>
             <ul>
-                <li><strong>Program Overviews:</strong> Create one-pagers for each program</li>
-                <li><strong>Event Announcements:</strong> Beautiful flyers in minutes</li>
-                <li><strong>Student Resources:</strong> Visual guides and infographics</li>
-                <li><strong>Reports:</strong> Transform boring data into engaging visuals</li>
-                <li><strong>Training Materials:</strong> Quick reference guides</li>
+                <li>Event title and tagline</li>
+                <li>Date, time, and location</li>
+                <li>Brief description</li>
+                <li>Key benefits or learning outcomes</li>
+                <li>How to register or RSVP</li>
+                <li>Contact information</li>
             </ul>
         </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Pro Tips for Gamma Success</h3>
+                <ul>
+                    <li><strong>Be Specific:</strong> The more detail in your prompt, the better the results</li>
+                    <li><strong>Iterate:</strong> Generate multiple versions and pick the best one</li>
+                    <li><strong>Brand Consistency:</strong> Save your school colors as a custom theme</li>
+                    <li><strong>Templates:</strong> Create templates for recurring content types</li>
+                    <li><strong>Collaborate:</strong> Share edit links with colleagues for feedback</li>
+                    <li><strong>Mobile-Friendly:</strong> All Gamma content automatically works on phones</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="warning">
+                <strong>⚠️ Free Plan Limits:</strong> Gamma's free tier includes AI credits that refresh monthly. For heavy use, consider the paid plan or use credits strategically for important projects.
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🎓 Key Takeaways</h2>
+            <ul>
+                <li>Gamma uses AI to design professional presentations in minutes</li>
+                <li>No design skills needed - AI handles layout and styling</li>
+                <li>Perfect for one-pagers, flyers, reports, and training materials</li>
+                <li>Fully customizable after AI generation</li>
+                <li>Export to PDF, web link, or embed code</li>
+                <li>Free plan is generous for coordinator needs</li>
+            </ul>
+        </div>
+
         <div class="next-topic">
             <a href="session1-topic4-pictory-videos.html">Next Topic: Make Videos with Pictory →</a>
         </div>
     </main>
+
     <footer>
-        <p>&copy; 2025 LARK Labs | <a href="ai-educators.html" style="color: #93c5fd;">Course Dashboard</a></p>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
     </footer>
 </body>
 </html>

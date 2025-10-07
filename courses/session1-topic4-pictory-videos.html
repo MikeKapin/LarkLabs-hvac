@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Videos with Pictory - Session 1 | AI Educators Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            color: #1f2937;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-estimate {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .objectives {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .objectives h3 {
+            color: #10b981;
+            margin-top: 0;
+        }
+
+        .step-by-step {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 1.5rem;
+            top: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .step h4 {
+            margin: 0 0 0.75rem 0;
+            color: #2563eb;
+        }
+
+        .step ul {
+            margin: 0.5rem 0 0 1rem;
+            padding: 0;
+        }
+
+        .step li {
+            margin: 0.5rem 0;
+        }
+
+        .prompt-example {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9375rem;
+            white-space: pre-wrap;
+        }
+
+        .tip-box {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tip-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning strong {
+            color: #d97706;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card h4 {
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: #2563eb;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .example-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .example-box h3 {
+            color: #d97706;
+            margin-top: 0;
+        }
+
+        .next-topic {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .next-topic a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .next-topic a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎬 Make Videos with Pictory</h1>
+        <p>Session 1, Topic 4 | Turn Text into Professional Videos with AI</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 1 / Topic 4
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 45 minutes</span>
+
+            <h2>Transform Text into Engaging Videos</h2>
+            <p>Pictory uses AI to automatically convert scripts, articles, or blog posts into professional-looking videos with stock footage, music, and captions. No video editing experience required!</p>
+
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Create a video from a script in under 10 minutes</li>
+                    <li>Automatically add relevant stock footage</li>
+                    <li>Generate AI voiceovers or add your own</li>
+                    <li>Export videos for social media or presentations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🌟 Why Use Pictory?</h2>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">⚡</div>
+                    <h4>Fast Creation</h4>
+                    <p>Turn text into video in minutes, not hours</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🎥</div>
+                    <h4>Stock Library</h4>
+                    <p>Access millions of stock videos and images</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🗣️</div>
+                    <h4>AI Voiceover</h4>
+                    <p>Natural-sounding text-to-speech in multiple languages</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">📝</div>
+                    <h4>Auto Captions</h4>
+                    <p>Automatic subtitles for accessibility</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 Quick Start Tutorial</h2>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <h4>Sign Up for Pictory</h4>
+                    <ul>
+                        <li>Visit <a href="https://pictory.ai" target="_blank">pictory.ai</a></li>
+                        <li>Create a free account (no credit card required)</li>
+                        <li>Free plan includes 3 video projects</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Choose "Script to Video"</h4>
+                    <ul>
+                        <li>Click "Create a Video"</li>
+                        <li>Select "Script to Video" option</li>
+                        <li>This is perfect for creating from scratch</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Write or Paste Your Script</h4>
+                    <p>Try this example script:</p>
+                    <div class="prompt-example">Welcome to Our Career Services Workshop
+
+Are you ready to land your dream job? Our Career Services team is here to help.
+
+We offer resume reviews, interview coaching, and job search strategies.
+
+Book your appointment today and take the first step toward your future career.
+
+Visit our office or schedule online at careers.edu</div>
+                </div>
+
+                <div class="step">
+                    <h4>Let AI Work Its Magic</h4>
+                    <ul>
+                        <li>Pictory analyzes your script</li>
+                        <li>Automatically selects relevant stock footage</li>
+                        <li>Creates scene transitions</li>
+                        <li>Takes about 2-3 minutes</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Customize Your Video</h4>
+                    <ul>
+                        <li>Replace stock footage if desired</li>
+                        <li>Adjust text size and position</li>
+                        <li>Add background music from library</li>
+                        <li>Choose AI voiceover or upload your own</li>
+                        <li>Edit scene duration</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Add Voiceover and Music</h4>
+                    <ul>
+                        <li>Click "Audio" tab</li>
+                        <li>Select AI voice (multiple options available)</li>
+                        <li>Or record your own voiceover</li>
+                        <li>Add background music from library</li>
+                        <li>Adjust volume levels</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Preview and Export</h4>
+                    <ul>
+                        <li>Click "Preview" to watch your video</li>
+                        <li>Make final adjustments</li>
+                        <li>Click "Generate" to render (takes 5-10 minutes)</li>
+                        <li>Download or share directly to social media</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>💡 Use Cases for Coordinators</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>Description</th>
+                        <th>Estimated Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Program Announcements</strong></td>
+                        <td>Short videos announcing new programs or deadlines</td>
+                        <td>10-15 minutes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Event Promotions</strong></td>
+                        <td>Eye-catching videos for social media promotion</td>
+                        <td>15-20 minutes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tutorial Videos</strong></td>
+                        <td>How-to guides for students (registration, resources, etc.)</td>
+                        <td>20-30 minutes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Student Testimonials</strong></td>
+                        <td>Convert written testimonials into video format</td>
+                        <td>15-20 minutes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meeting Recaps</strong></td>
+                        <td>Summarize key points from meetings or trainings</td>
+                        <td>10-15 minutes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-card">
+            <div class="example-box">
+                <h3>✍️ Practice Exercise</h3>
+                <p><strong>Task:</strong> Create a 30-second promotional video for an upcoming workshop.</p>
+
+                <h3>Your Script Template:</h3>
+                <div class="prompt-example">[Workshop Title]
+
+[Opening hook - one compelling sentence]
+
+[Key benefit 1]
+
+[Key benefit 2]
+
+[Call to action with date/time]
+
+[Registration information]</div>
+
+                <h3>Example:</h3>
+                <div class="prompt-example">Time Management for College Success
+
+Feeling overwhelmed by deadlines and commitments?
+
+Learn proven strategies to organize your schedule and reduce stress.
+
+Discover tools that successful students use every day.
+
+Join us Wednesday, March 15th at 4 PM in the Student Center.
+
+Register at studentservices.edu/workshops</div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Pro Tips for Better Videos</h3>
+                <ul>
+                    <li><strong>Keep It Short:</strong> 30-90 seconds is ideal for social media</li>
+                    <li><strong>Hook First:</strong> Start with your most compelling message</li>
+                    <li><strong>One Scene = One Idea:</strong> Don't cram too much into each scene</li>
+                    <li><strong>Use Captions:</strong> Many people watch videos without sound</li>
+                    <li><strong>Brand Consistency:</strong> Add your logo and use school colors</li>
+                    <li><strong>Call to Action:</strong> Always end with a clear next step</li>
+                    <li><strong>Test on Mobile:</strong> Most viewers will watch on phones</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🆚 Pictory vs. Traditional Video Editing</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Traditional Editing</th>
+                        <th>Pictory AI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Time Required</strong></td>
+                        <td>2-4 hours per video</td>
+                        <td>10-20 minutes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Learning Curve</strong></td>
+                        <td>Steep (weeks to months)</td>
+                        <td>Minimal (30 minutes)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stock Footage</strong></td>
+                        <td>Must source separately</td>
+                        <td>Built-in library</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Voiceover</strong></td>
+                        <td>Record and edit manually</td>
+                        <td>AI-generated or easy upload</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Captions</strong></td>
+                        <td>Manual entry</td>
+                        <td>Automatic generation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-card">
+            <div class="warning">
+                <strong>⚠️ Free Plan Limits:</strong> Pictory's free plan includes 3 video projects (10 minutes total). Videos include a Pictory watermark. For regular use, consider the paid plan ($23/month) which removes watermarks and offers more credits.
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>📱 Optimization Tips by Platform</h2>
+
+            <h3>Instagram/TikTok (Vertical)</h3>
+            <ul>
+                <li>Use 9:16 aspect ratio</li>
+                <li>30-60 seconds max</li>
+                <li>Captions essential</li>
+                <li>Hook in first 3 seconds</li>
+            </ul>
+
+            <h3>Facebook/LinkedIn (Square)</h3>
+            <ul>
+                <li>Use 1:1 aspect ratio</li>
+                <li>60-90 seconds ideal</li>
+                <li>Auto-play friendly (captions on)</li>
+                <li>Professional tone</li>
+            </ul>
+
+            <h3>YouTube (Horizontal)</h3>
+            <ul>
+                <li>Use 16:9 aspect ratio</li>
+                <li>2-5 minutes acceptable</li>
+                <li>Include keyword-rich title</li>
+                <li>Add description and tags</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🎓 Key Takeaways</h2>
+            <ul>
+                <li>Pictory converts scripts into professional videos automatically</li>
+                <li>No video editing experience required</li>
+                <li>Built-in stock footage, music, and AI voiceovers</li>
+                <li>Perfect for social media, presentations, and student communications</li>
+                <li>Automatic captions improve accessibility</li>
+                <li>Free plan allows testing before committing to paid version</li>
+                <li>Saves hours compared to traditional video editing</li>
+            </ul>
+        </div>
+
+        <div class="next-topic">
+            <a href="session1-topic5-practice-reflection.html">Next Topic: Practice & Reflection →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
+    </footer>
+</body>
+</html>
