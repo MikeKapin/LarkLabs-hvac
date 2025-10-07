@@ -562,6 +562,7 @@
                     id: 1,
                     title: "AI Foundations & Quick Wins",
                     duration: "3 hours",
+                    contentUrl: "session1-foundations.html",
                     topics: [
                         "Welcome & Tool Setup",
                         "Compare AI Assistants",
@@ -575,6 +576,7 @@
                     id: 2,
                     title: "Building Your Digital Workspace",
                     duration: "3 hours",
+                    contentUrl: "session2-advanced.html",
                     topics: [
                         "VSCodium Setup",
                         "Program Coordinator Portal",
@@ -588,6 +590,7 @@
                     id: 3,
                     title: "Power Tools - PowerShell & Claude Code",
                     duration: "3-4 hours",
+                    contentUrl: "session3-claude-code.html",
                     topics: [
                         "PowerShell Introduction",
                         "Node.js Installation",
@@ -601,6 +604,7 @@
                     id: 4,
                     title: "Free Power Tools - Interactive Projects",
                     duration: "3-4 hours",
+                    contentUrl: "session4-bonus.html",
                     topics: [
                         "LMArena Introduction",
                         "NanoBanana Platform",
@@ -748,21 +752,35 @@
                     <div class="card">
                         <h2 class="card-title">Session ${session.id}: ${session.title}</h2>
                         <p style="color: #6b7280; margin-bottom: 1rem;">${session.description}</p>
-                        <div style="font-size: 0.875rem; color: #9ca3af;">
-                            📚 Duration: ${session.duration}
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                            <div style="font-size: 0.875rem; color: #9ca3af;">
+                                📚 Duration: ${session.duration}
+                            </div>
+                            <a
+                                href="${session.contentUrl}"
+                                target="_blank"
+                                class="btn-secondary"
+                                style="text-decoration: none; display: inline-block;"
+                            >
+                                📖 View Full Session Content
+                            </a>
                         </div>
                     </div>
 
                     <!-- Topics Checklist -->
                     <div class="card">
                         <h3 class="card-title">Topics Covered</h3>
+                        <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">
+                            Click any topic to open detailed content in a new tab
+                        </p>
                         <div class="topics-list">
                             ${session.topics.map((topic, idx) => {
                                 const isCompleted = userProgress[currentUser]?.[selectedSession]?.topicsCompleted[idx];
                                 return `
-                                    <button class="topic-item" onclick="toggleTopic(${selectedSession}, ${idx})">
+                                    <button class="topic-item" onclick="openTopicAndToggle(${selectedSession}, ${idx}, '${session.contentUrl}')">
                                         <span class="topic-icon">${isCompleted ? '✅' : '⭕'}</span>
                                         <span class="topic-text ${isCompleted ? 'topic-completed' : ''}">${topic}</span>
+                                        <span style="margin-left: auto; color: #3b82f6; font-size: 0.875rem;">➜</span>
                                     </button>
                                 `;
                             }).join('')}
@@ -807,7 +825,36 @@
             `;
         }
 
-        // Toggle Topic Completion
+        // Open Topic Content and Toggle Completion
+        function openTopicAndToggle(sessionId, topicIndex, contentUrl) {
+            // Open content in new tab
+            window.open(contentUrl, '_blank');
+
+            // Toggle completion
+            if (!userProgress[currentUser]) {
+                userProgress[currentUser] = {};
+            }
+            if (!userProgress[currentUser][sessionId]) {
+                userProgress[currentUser][sessionId] = { completed: false, topicsCompleted: {} };
+            }
+
+            userProgress[currentUser][sessionId].topicsCompleted[topicIndex] =
+                !userProgress[currentUser][sessionId].topicsCompleted[topicIndex];
+
+            // Check if all topics are completed
+            const session = courseData.sessions.find(s => s.id === sessionId);
+            const allCompleted = session.topics.every((_, idx) =>
+                userProgress[currentUser][sessionId].topicsCompleted[idx]
+            );
+            userProgress[currentUser][sessionId].completed = allCompleted;
+
+            saveData();
+            renderSessionDetails();
+            updateProgress();
+            renderSessionList();
+        }
+
+        // Toggle Topic Completion (for backwards compatibility)
         function toggleTopic(sessionId, topicIndex) {
             if (!userProgress[currentUser]) {
                 userProgress[currentUser] = {};
