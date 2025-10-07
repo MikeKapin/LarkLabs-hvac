@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Educators & AI Tools - LARK Labs</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+
+        /* Login Screen */
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #EFF6FF 0%, #E0E7FF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 28rem;
+            width: 100%;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .login-note {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* Dashboard Header */
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 80rem;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+        }
+
+        .header-subtitle {
+            color: #BFDBFE;
+            margin-top: 0.25rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-email {
+            text-align: right;
+        }
+
+        .user-label {
+            font-size: 0.875rem;
+            color: #BFDBFE;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Progress Card */
+        .progress-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .progress-percent {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 1rem;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #4f46e5 100%);
+            transition: width 0.5s ease;
+        }
+
+        /* Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Session List */
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .session-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .session-item {
+            width: 100%;
+            text-align: left;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .session-item:hover {
+            background: #f3f4f6;
+        }
+
+        .session-item.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #4f46e5 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .session-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .session-title-text {
+            font-weight: 600;
+        }
+
+        .session-subtitle {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .session-duration {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Session Details */
+        .session-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .empty-state {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .empty-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: #9ca3af;
+        }
+
+        /* Topics List */
+        .topics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border: none;
+            background: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .topic-item:hover {
+            background: #f9fafb;
+        }
+
+        .topic-icon {
+            flex-shrink: 0;
+        }
+
+        .topic-text {
+            flex: 1;
+        }
+
+        .topic-completed {
+            text-decoration: line-through;
+            color: #6b7280;
+        }
+
+        /* Notes & Questions */
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-secondary {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-indigo {
+            background: #4f46e5;
+        }
+
+        .btn-indigo:hover {
+            background: #4338ca;
+        }
+
+        .note-item, .question-item {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-item {
+            background: #fef3c7;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .question-item {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .ai-response {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .ai-response-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-text {
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-timestamp {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .empty-message {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .loading {
+            color: #3b82f6;
+            font-style: italic;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="login-icon">🎓</div>
+                <h1 class="login-title">College Educators & AI Tools</h1>
+                <p class="login-subtitle">Professional Development Program by LARK Labs</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        class="form-input"
+                        placeholder="your.email@institution.edu"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        class="form-input"
+                        placeholder="Enter password"
+                        required
+                    />
+                </div>
+                <button type="submit" class="btn-primary">Sign In / Register</button>
+            </form>
+            <div class="login-note">
+                <p>New users will be automatically registered</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div>
+                    <h1 class="header-title">College Educators & AI Tools</h1>
+                    <p class="header-subtitle">Professional Development Program by LARK Labs</p>
+                </div>
+                <div class="user-info">
+                    <div class="user-email">
+                        <div class="user-label">Signed in as</div>
+                        <div class="user-name" id="currentUserEmail"></div>
+                    </div>
+                    <button class="btn-logout" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Progress Card -->
+            <div class="progress-card">
+                <div class="progress-header">
+                    <h2 class="progress-title">Your Progress</h2>
+                    <span class="progress-percent" id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="dashboard-grid">
+                <!-- Session List -->
+                <div>
+                    <div class="card">
+                        <h3 class="card-title">Course Sessions</h3>
+                        <div class="session-list" id="sessionList"></div>
+                    </div>
+                </div>
+
+                <!-- Session Details -->
+                <div id="sessionDetails">
+                    <div class="empty-state">
+                        <div class="empty-icon">📚</div>
+                        <h3 class="empty-title">Select a Session to Begin</h3>
+                        <p class="empty-text">Choose a session from the left to view content and track your progress</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Course Data
+        const courseData = {
+            title: "College Educators & AI Tools",
+            subtitle: "Professional Development Program by LARK Labs",
+            sessions: [
+                {
+                    id: 1,
+                    title: "AI Foundations & Quick Wins",
+                    duration: "3 hours",
+                    topics: [
+                        "Welcome & Tool Setup",
+                        "Compare AI Assistants",
+                        "Create with Gamma",
+                        "Make Videos with Pictory",
+                        "Practice & Reflection"
+                    ],
+                    description: "Hands-on introduction to AI tools for program coordinators"
+                },
+                {
+                    id: 2,
+                    title: "Building Your Digital Workspace",
+                    duration: "3 hours",
+                    topics: [
+                        "VSCodium Setup",
+                        "Program Coordinator Portal",
+                        "Weekly Report Generator",
+                        "Student Resource Hub",
+                        "Integration & Navigation"
+                    ],
+                    description: "Create professional HTML tools with VSCodium"
+                },
+                {
+                    id: 3,
+                    title: "Power Tools - PowerShell & Claude Code",
+                    duration: "3-4 hours",
+                    topics: [
+                        "PowerShell Introduction",
+                        "Node.js Installation",
+                        "Anthropic Console Setup",
+                        "Claude Code Installation",
+                        "Custom Project Development"
+                    ],
+                    description: "Transition to AI-powered development"
+                },
+                {
+                    id: 4,
+                    title: "Free Power Tools - Interactive Projects",
+                    duration: "3-4 hours",
+                    topics: [
+                        "LMArena Introduction",
+                        "NanoBanana Platform",
+                        "Interactive Human Body Project",
+                        "Advanced Features",
+                        "Custom Applications"
+                    ],
+                    description: "Professional development without spending money"
+                }
+            ]
+        };
+
+        // State Management
+        let currentUser = null;
+        let users = {};
+        let userProgress = {};
+        let userNotes = {};
+        let userQuestions = {};
+        let selectedSession = null;
+
+        // Claude API Configuration
+        const CLAUDE_API_KEY = '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';
+
+        // Load data from localStorage
+        function loadData() {
+            users = JSON.parse(localStorage.getItem('courseUsers') || '{}');
+            userProgress = JSON.parse(localStorage.getItem('courseProgress') || '{}');
+            userNotes = JSON.parse(localStorage.getItem('courseNotes') || '{}');
+            userQuestions = JSON.parse(localStorage.getItem('courseQuestions') || '{}');
+            currentUser = localStorage.getItem('currentUser');
+
+            if (currentUser) {
+                showDashboard();
+            }
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('courseUsers', JSON.stringify(users));
+            localStorage.setItem('courseProgress', JSON.stringify(userProgress));
+            localStorage.setItem('courseNotes', JSON.stringify(userNotes));
+            localStorage.setItem('courseQuestions', JSON.stringify(userQuestions));
+            if (currentUser) {
+                localStorage.setItem('currentUser', currentUser);
+            }
+        }
+
+        // Login/Register Handler
+        document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (users[email]) {
+                if (users[email].password === password) {
+                    currentUser = email;
+                    showDashboard();
+                } else {
+                    alert('Incorrect password');
+                }
+            } else {
+                // New user registration
+                users[email] = {
+                    email: email,
+                    password: password,
+                    registeredDate: new Date().toISOString()
+                };
+
+                // Initialize progress for new user
+                userProgress[email] = {};
+                courseData.sessions.forEach(session => {
+                    userProgress[email][session.id] = {
+                        completed: false,
+                        topicsCompleted: {}
+                    };
+                });
+
+                currentUser = email;
+                saveData();
+                showDashboard();
+            }
+        });
+
+        // Show Dashboard
+        function showDashboard() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('currentUserEmail').textContent = currentUser;
+
+            renderSessionList();
+            updateProgress();
+            saveData();
+        }
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            selectedSession = null;
+            localStorage.removeItem('currentUser');
+
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('loginForm').reset();
+        }
+
+        // Render Session List
+        function renderSessionList() {
+            const listEl = document.getElementById('sessionList');
+            listEl.innerHTML = courseData.sessions.map(session => {
+                const isCompleted = userProgress[currentUser]?.[session.id]?.completed;
+                const isActive = selectedSession === session.id;
+
+                return `
+                    <button
+                        class="session-item ${isActive ? 'active' : ''}"
+                        onclick="selectSession(${session.id})"
+                    >
+                        <div class="session-header">
+                            <span class="topic-icon">${isCompleted ? '✅' : '⭕'}</span>
+                            <span class="session-title-text">Session ${session.id}</span>
+                        </div>
+                        <div class="session-subtitle">${session.title}</div>
+                        <div class="session-duration">${session.duration}</div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // Select Session
+        function selectSession(sessionId) {
+            selectedSession = sessionId;
+            renderSessionList();
+            renderSessionDetails();
+        }
+
+        // Render Session Details
+        function renderSessionDetails() {
+            const session = courseData.sessions.find(s => s.id === selectedSession);
+            if (!session) return;
+
+            const detailsEl = document.getElementById('sessionDetails');
+            detailsEl.innerHTML = `
+                <div class="session-details">
+                    <!-- Session Info -->
+                    <div class="card">
+                        <h2 class="card-title">Session ${session.id}: ${session.title}</h2>
+                        <p style="color: #6b7280; margin-bottom: 1rem;">${session.description}</p>
+                        <div style="font-size: 0.875rem; color: #9ca3af;">
+                            📚 Duration: ${session.duration}
+                        </div>
+                    </div>
+
+                    <!-- Topics Checklist -->
+                    <div class="card">
+                        <h3 class="card-title">Topics Covered</h3>
+                        <div class="topics-list">
+                            ${session.topics.map((topic, idx) => {
+                                const isCompleted = userProgress[currentUser]?.[selectedSession]?.topicsCompleted[idx];
+                                return `
+                                    <button class="topic-item" onclick="toggleTopic(${selectedSession}, ${idx})">
+                                        <span class="topic-icon">${isCompleted ? '✅' : '⭕'}</span>
+                                        <span class="topic-text ${isCompleted ? 'topic-completed' : ''}">${topic}</span>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="card">
+                        <h3 class="card-title">My Notes</h3>
+                        <textarea
+                            id="noteInput"
+                            class="form-textarea"
+                            placeholder="Add your notes here..."
+                            rows="3"
+                        ></textarea>
+                        <button class="btn-secondary" onclick="addNote()">Add Note</button>
+
+                        <div id="notesList" style="margin-top: 1rem;">
+                            ${renderNotes()}
+                        </div>
+                    </div>
+
+                    <!-- Questions & Help -->
+                    <div class="card">
+                        <h3 class="card-title">Questions & Help with AI Assistant</h3>
+                        <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">
+                            Ask any questions about this session. Claude AI will provide instant answers!
+                        </p>
+                        <textarea
+                            id="questionInput"
+                            class="form-textarea"
+                            placeholder="Ask a question about this session..."
+                            rows="3"
+                        ></textarea>
+                        <button class="btn-secondary btn-indigo" onclick="addQuestion()">Submit Question</button>
+
+                        <div id="questionsList" style="margin-top: 1rem;">
+                            ${renderQuestions()}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle Topic Completion
+        function toggleTopic(sessionId, topicIndex) {
+            if (!userProgress[currentUser]) {
+                userProgress[currentUser] = {};
+            }
+            if (!userProgress[currentUser][sessionId]) {
+                userProgress[currentUser][sessionId] = { completed: false, topicsCompleted: {} };
+            }
+
+            userProgress[currentUser][sessionId].topicsCompleted[topicIndex] =
+                !userProgress[currentUser][sessionId].topicsCompleted[topicIndex];
+
+            // Check if all topics are completed
+            const session = courseData.sessions.find(s => s.id === sessionId);
+            const allCompleted = session.topics.every((_, idx) =>
+                userProgress[currentUser][sessionId].topicsCompleted[idx]
+            );
+            userProgress[currentUser][sessionId].completed = allCompleted;
+
+            saveData();
+            renderSessionDetails();
+            updateProgress();
+            renderSessionList();
+        }
+
+        // Add Note
+        function addNote() {
+            const input = document.getElementById('noteInput');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            if (!userNotes[currentUser]) userNotes[currentUser] = {};
+            if (!userNotes[currentUser][selectedSession]) userNotes[currentUser][selectedSession] = [];
+
+            userNotes[currentUser][selectedSession].push({
+                text: text,
+                timestamp: new Date().toISOString()
+            });
+
+            input.value = '';
+            saveData();
+            renderSessionDetails();
+        }
+
+        // Add Question with AI Response
+        async function addQuestion() {
+            const input = document.getElementById('questionInput');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            if (!userQuestions[currentUser]) userQuestions[currentUser] = {};
+            if (!userQuestions[currentUser][selectedSession]) userQuestions[currentUser][selectedSession] = [];
+
+            const question = {
+                text: text,
+                timestamp: new Date().toISOString(),
+                answer: null,
+                loading: true
+            };
+
+            userQuestions[currentUser][selectedSession].push(question);
+            input.value = '';
+            saveData();
+            renderSessionDetails();
+
+            // Get AI response
+            const session = courseData.sessions.find(s => s.id === selectedSession);
+            const answer = await getAIResponse(text, session);
+
+            question.answer = answer;
+            question.loading = false;
+            saveData();
+            renderSessionDetails();
+        }
+
+        // Get AI Response from Claude
+        async function getAIResponse(question, session) {
+            try {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': CLAUDE_API_KEY,
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 1024,
+                        messages: [{
+                            role: 'user',
+                            content: `You are an AI teaching assistant for a professional development course called "College Educators & AI Tools" by LARK Labs.
+
+Current Session: ${session.title}
+Session Description: ${session.description}
+Topics Covered: ${session.topics.join(', ')}
+
+Student Question: ${question}
+
+Please provide a helpful, educational response that directly addresses the question in the context of this session. Be concise, practical, and encouraging.`
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                return data.content[0].text;
+            } catch (error) {
+                console.error('AI Response Error:', error);
+                return 'I apologize, but I encountered an error processing your question. Please try again or contact the instructor for assistance.';
+            }
+        }
+
+        // Render Notes
+        function renderNotes() {
+            const notes = userNotes[currentUser]?.[selectedSession] || [];
+            if (notes.length === 0) {
+                return '<p class="empty-message">No notes yet</p>';
+            }
+            return notes.map(note => `
+                <div class="note-item">
+                    <p class="item-text">${note.text}</p>
+                    <p class="item-timestamp">${new Date(note.timestamp).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+
+        // Render Questions
+        function renderQuestions() {
+            const questions = userQuestions[currentUser]?.[selectedSession] || [];
+            if (questions.length === 0) {
+                return '<p class="empty-message">No questions yet</p>';
+            }
+            return questions.map(q => `
+                <div class="question-item">
+                    <p class="item-text">💬 ${q.text}</p>
+                    <p class="item-timestamp">${new Date(q.timestamp).toLocaleString()}</p>
+                    ${q.loading ?
+                        '<p class="loading" style="margin-top: 0.5rem;">🤖 Claude is thinking...</p>' :
+                        q.answer ? `
+                            <div class="ai-response">
+                                <div class="ai-response-label">🤖 CLAUDE AI RESPONSE:</div>
+                                <p style="color: #1f2937;">${q.answer}</p>
+                            </div>
+                        ` : ''
+                    }
+                </div>
+            `).join('');
+        }
+
+        // Update Progress
+        function updateProgress() {
+            if (!currentUser || !userProgress[currentUser]) {
+                document.getElementById('progressPercent').textContent = '0%';
+                document.getElementById('progressFill').style.width = '0%';
+                return;
+            }
+
+            const completed = Object.values(userProgress[currentUser]).filter(s => s.completed).length;
+            const percent = Math.round((completed / courseData.sessions.length) * 100);
+
+            document.getElementById('progressPercent').textContent = `${percent}%`;
+            document.getElementById('progressFill').style.width = `${percent}%`;
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
