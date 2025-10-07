@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Coordinator Portal - Session 2 | AI Educators Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        header {
+            background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #14b8a6;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            color: #1f2937;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-estimate {
+            display: inline-block;
+            background: #ccfbf1;
+            color: #115e59;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .objectives {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .objectives h3 {
+            color: #10b981;
+            margin-top: 0;
+        }
+
+        .step-by-step {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 1.5rem;
+            top: 1.5rem;
+            background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .step h4 {
+            margin: 0 0 0.75rem 0;
+            color: #14b8a6;
+        }
+
+        .step ul, .step ol {
+            margin: 0.5rem 0 0 1rem;
+            padding: 0;
+        }
+
+        .step li {
+            margin: 0.5rem 0;
+        }
+
+        .prompt-box {
+            background: #f3f4f6;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #14b8a6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .copy-btn:hover {
+            background: #0891b2;
+        }
+
+        .keyboard-shortcut {
+            background: #1f2937;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+        }
+
+        .tip-box {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tip-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning strong {
+            color: #d97706;
+        }
+
+        .feature-list {
+            background: linear-gradient(135deg, #14b8a615 0%, #0891b215 100%);
+            border: 2px solid #14b8a6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-list h4 {
+            color: #14b8a6;
+            margin-top: 0;
+        }
+
+        .feature-list ul {
+            margin: 0.5rem 0 0 1.5rem;
+        }
+
+        .feature-list li {
+            margin: 0.5rem 0;
+        }
+
+        .screenshot-placeholder {
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            color: #6b7280;
+            margin: 1.5rem 0;
+        }
+
+        .customization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .custom-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .custom-card h4 {
+            color: #14b8a6;
+            margin-top: 0;
+        }
+
+        .next-topic {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .next-topic a {
+            display: inline-block;
+            background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .next-topic a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎯 Build Your Program Coordinator Portal</h1>
+        <p>Session 2, Topic 2 | All Your Tools in One Dashboard</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 2 / Topic 2
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 60 minutes</span>
+
+            <h2>Create Your Command Center</h2>
+            <p>Stop juggling browser tabs! Build a personal dashboard that brings together all your daily tools - AI assistants, email, student systems, and more - in one beautiful, organized place.</p>
+
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Use AI to generate a complete dashboard HTML file</li>
+                    <li>Create quick-launch cards for all your daily tools</li>
+                    <li>Add a task checklist that saves in your browser</li>
+                    <li>Build a notes section that persists across sessions</li>
+                    <li>Customize colors, tools, and layout</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🏗️ What We're Building</h2>
+
+            <div class="feature-list">
+                <h4>Your Dashboard Will Include:</h4>
+                <ul>
+                    <li>✨ Quick-launch cards for ChatGPT, Claude, Gemini, Gamma, Pictory</li>
+                    <li>📧 Direct links to email, calendar, and student systems</li>
+                    <li>✅ Interactive task checklist (saves automatically)</li>
+                    <li>📝 Quick notes area (persists in browser storage)</li>
+                    <li>📅 Important dates reminder section</li>
+                    <li>🔍 Search/filter functionality</li>
+                    <li>🌙 Dark mode toggle</li>
+                    <li>📱 Mobile-responsive design</li>
+                </ul>
+            </div>
+
+            <div class="screenshot-placeholder">
+                <p>📸 Your Dashboard Preview</p>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem;">Grid of colorful tool cards • Task list • Notes section</p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 Step-by-Step Build Process</h2>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <h4>Prepare Your AI Prompt</h4>
+                    <p>Copy this entire prompt - it's designed to get you a complete, working dashboard:</p>
+
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='Copied!'">Copy</button>
+                        <div>Create a Program Coordinator Dashboard HTML page with these specifications:
+
+HEADER SECTION:
+- Title: "Program Coordinator Command Center"
+- Display current date and time (live updating)
+- Welcome message with user's name (editable)
+
+QUICK TOOLS SECTION:
+Create a grid of cards for these tools (each card should have icon, name, short description):
+- ChatGPT (chat.openai.com)
+- Claude (claude.ai)
+- Google Gemini (gemini.google.com)
+- Gamma Presentations (gamma.app)
+- Pictory Video (pictory.ai)
+- Outlook Email (outlook.office.com)
+- Google Calendar (calendar.google.com)
+- VSCodium (mention it's a local app)
+- Google Sheets (sheets.google.com)
+- [Placeholder for Student System - make it customizable]
+
+PRODUCTIVITY SECTIONS:
+1. Today's Tasks - Interactive checklist
+   - Add new tasks
+   - Check off completed
+   - Delete tasks
+   - Save to localStorage
+
+2. Quick Notes - Text area
+   - Auto-saves as you type
+   - Uses localStorage
+
+3. Important Dates - Display list
+   - Upcoming deadlines
+   - Events
+   - Customizable
+
+FEATURES REQUIRED:
+- Search/filter box to find tools quickly
+- Dark mode toggle button (switch between light/dark themes)
+- Responsive grid layout (works on phone, tablet, desktop)
+- Professional teal/blue color scheme
+- All links open in new tabs
+- localStorage for persistence
+
+STYLING:
+- Modern card-based design with shadows
+- Hover effects on cards
+- Clean, professional typography
+- Proper spacing and padding
+- Icons/emojis for visual appeal
+
+Please provide complete, ready-to-use HTML with embedded CSS and JavaScript.</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Generate with AI</h4>
+                    <ul>
+                        <li>Open your preferred AI tool (ChatGPT, Claude, or Gemini)</li>
+                        <li>Paste the prompt above</li>
+                        <li>Wait 30-60 seconds for generation</li>
+                        <li>Review the code - it should be a complete HTML file</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Copy Code to VSCodium</h4>
+                    <ol>
+                        <li>In AI's response, click the "Copy code" button (or select all text)</li>
+                        <li>Open VSCodium</li>
+                        <li>Navigate to your <code>dashboard</code> folder</li>
+                        <li>Click on <code>index.html</code> (or create it if needed)</li>
+                        <li>Select all existing content (<span class="keyboard-shortcut">Ctrl+A</span>)</li>
+                        <li>Paste the new code (<span class="keyboard-shortcut">Ctrl+V</span>)</li>
+                        <li>Save (<span class="keyboard-shortcut">Ctrl+S</span>)</li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h4>Preview Your Dashboard</h4>
+                    <ol>
+                        <li>Right-click <code>index.html</code> in VSCodium Explorer</li>
+                        <li>Select "Reveal in File Explorer"</li>
+                        <li>Double-click the file to open in your browser</li>
+                        <li>🎉 Your dashboard should now be live!</li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h4>Test All Features</h4>
+                    <ul>
+                        <li>Click each tool card - links should open in new tabs</li>
+                        <li>Add a task to the checklist and check it off</li>
+                        <li>Type a note and refresh page - note should persist</li>
+                        <li>Try the dark mode toggle</li>
+                        <li>Test search/filter functionality</li>
+                        <li>Resize browser to test mobile responsiveness</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Bookmark for Daily Use</h4>
+                    <ol>
+                        <li>With dashboard open in browser, press <span class="keyboard-shortcut">Ctrl+D</span></li>
+                        <li>Name it "My Dashboard"</li>
+                        <li>Consider setting it as your browser homepage!</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🎨 Customization Ideas</h2>
+
+            <div class="customization-grid">
+                <div class="custom-card">
+                    <h4>Add More Tools</h4>
+                    <p>Prompt: "Add these tool cards to my dashboard: [Tool Name] at [URL], [Another Tool] at [URL]"</p>
+                </div>
+
+                <div class="custom-card">
+                    <h4>Change Colors</h4>
+                    <p>Prompt: "Change the color scheme to purple and orange instead of teal and blue"</p>
+                </div>
+
+                <div class="custom-card">
+                    <h4>Add New Sections</h4>
+                    <p>Prompt: "Add a 'Frequently Used Documents' section with links to Google Docs"</p>
+                </div>
+
+                <div class="custom-card">
+                    <h4>Customize Layout</h4>
+                    <p>Prompt: "Make the tool cards display in 4 columns instead of 3"</p>
+                </div>
+
+                <div class="custom-card">
+                    <h4>Add Weather Widget</h4>
+                    <p>Prompt: "Add a weather widget that shows current conditions for [City]"</p>
+                </div>
+
+                <div class="custom-card">
+                    <h4>Student System Link</h4>
+                    <p>Replace the placeholder with your actual student information system URL</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Pro Tips for Your Dashboard</h3>
+                <ul>
+                    <li><strong>Set as Homepage:</strong> Make this your browser's start page</li>
+                    <li><strong>Pin Important Tools:</strong> Reorder cards to put most-used tools first</li>
+                    <li><strong>Use Tasks Daily:</strong> Start each morning by reviewing your checklist</li>
+                    <li><strong>Backup Your File:</strong> Copy index.html to cloud storage periodically</li>
+                    <li><strong>Share with Team:</strong> Send the file to colleagues who might benefit</li>
+                    <li><strong>Mobile Bookmark:</strong> Add to phone home screen for mobile access</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🔧 Quick Edits Without AI</h2>
+
+            <h3>Update a Tool URL:</h3>
+            <ol>
+                <li>Press <span class="keyboard-shortcut">Ctrl+F</span> in VSCodium</li>
+                <li>Search for the tool name (e.g., "ChatGPT")</li>
+                <li>Find the URL in the code</li>
+                <li>Replace with new URL</li>
+                <li>Save and refresh browser</li>
+            </ol>
+
+            <h3>Change Dashboard Title:</h3>
+            <ol>
+                <li>Find the <code>&lt;h1&gt;</code> tag near the top</li>
+                <li>Change text between tags</li>
+                <li>Save and refresh</li>
+            </ol>
+
+            <h3>Add Your Name:</h3>
+            <ol>
+                <li>Search for "Welcome" or similar greeting</li>
+                <li>Edit the text</li>
+                <li>Save and refresh</li>
+            </ol>
+        </div>
+
+        <div class="content-card">
+            <div class="warning">
+                <strong>⚠️ Troubleshooting Common Issues:</strong>
+                <ul style="margin: 0.5rem 0 0 1.5rem;">
+                    <li><strong>Links don't work:</strong> Check URLs have https:// prefix</li>
+                    <li><strong>Tasks don't save:</strong> Ensure localStorage isn't blocked in browser</li>
+                    <li><strong>Layout looks broken:</strong> Make sure you copied ALL the code</li>
+                    <li><strong>Dark mode doesn't work:</strong> Check JavaScript console for errors</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>✅ Topic Completion Checklist</h2>
+            <ul>
+                <li>✓ Generated dashboard HTML with AI</li>
+                <li>✓ Copied code to VSCodium successfully</li>
+                <li>✓ Dashboard opens and displays correctly in browser</li>
+                <li>✓ All tool links work and open in new tabs</li>
+                <li>✓ Task checklist adds, completes, and persists tasks</li>
+                <li>✓ Notes section saves automatically</li>
+                <li>✓ Dark mode toggle functions properly</li>
+                <li>✓ Dashboard bookmarked for easy access</li>
+                <li>✓ Made at least one customization</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 Challenge: Advanced Customizations</h2>
+            <p>Ready to level up? Try these advanced modifications:</p>
+            <ul>
+                <li>Add a Pomodoro timer for time management</li>
+                <li>Include a motivational quote that changes daily</li>
+                <li>Add keyboard shortcuts to open specific tools</li>
+                <li>Create tabs to organize tools by category</li>
+                <li>Add a "Recently Used" section that tracks clicks</li>
+            </ul>
+            <p><strong>Ask AI:</strong> "Add a [feature] to my dashboard" and paste your current code.</p>
+        </div>
+
+        <div class="content-card">
+            <h2>🎓 What You've Learned</h2>
+            <ul>
+                <li>How to use AI as a coding assistant for complete projects</li>
+                <li>localStorage for persistent data in browsers</li>
+                <li>Card-based UI design patterns</li>
+                <li>Dark mode implementation</li>
+                <li>Responsive grid layouts</li>
+                <li>Event handling with JavaScript</li>
+            </ul>
+            <p style="margin-top: 1rem;">You now have a powerful, personalized productivity tool that saves you time every day!</p>
+        </div>
+
+        <div class="next-topic">
+            <a href="session2-topic3-weekly-reports.html">Next Topic: Build a Weekly Report Generator →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
+    </footer>
+</body>
+</html>

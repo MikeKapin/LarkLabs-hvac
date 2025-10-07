@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Report Generator - Session 2 | AI Educators Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        header {
+            background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #14b8a6;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            color: #1f2937;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-estimate {
+            display: inline-block;
+            background: #ccfbf1;
+            color: #115e59;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .objectives {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .objectives h3 {
+            color: #10b981;
+            margin-top: 0;
+        }
+
+        .step-by-step {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 1.5rem;
+            top: 1.5rem;
+            background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .step h4 {
+            margin: 0 0 0.75rem 0;
+            color: #14b8a6;
+        }
+
+        .step ul, .step ol {
+            margin: 0.5rem 0 0 1rem;
+        }
+
+        .step li {
+            margin: 0.5rem 0;
+        }
+
+        .prompt-box {
+            background: #f3f4f6;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #14b8a6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .folder-structure {
+            background: #1f2937;
+            color: #f3f4f6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+            font-size: 0.9375rem;
+        }
+
+        .tip-box {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tip-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .warning {
+            background: #dcfce7;
+            border-left: 4px solid #10b981;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning strong {
+            color: #15803d;
+        }
+
+        .next-topic {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .next-topic a {
+            display: inline-block;
+            background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .next-topic a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📊 Build a Weekly Report Generator</h1>
+        <p>Session 2, Topic 3 | Automate Your Reporting</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 2 / Topic 3
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 45 minutes</span>
+
+            <h2>Stop Starting from Scratch Every Week</h2>
+            <p>Build a smart HTML form that transforms your weekly data into professionally formatted reports with one click. No more rewriting the same email structure every Friday!</p>
+
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Create a form-based report generator</li>
+                    <li>Auto-format data into professional email templates</li>
+                    <li>Implement one-click copy functionality</li>
+                    <li>Save report data for future reference</li>
+                    <li>Generate PDF exports (optional)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🏗️ What We're Building</h2>
+            <p>A local HTML tool that includes:</p>
+            <ul>
+                <li>✅ Input form for weekly metrics (meetings, events, consultations)</li>
+                <li>📝 Text areas for achievements, challenges, and priorities</li>
+                <li>🎨 Auto-formatting into professional email template</li>
+                <li>📋 One-click "Copy Report" button</li>
+                <li>💾 Save data to browser localStorage</li>
+                <li>📄 Optional PDF export</li>
+                <li>🔄 Clear form / Load previous week functions</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 Step-by-Step Build Process</h2>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <h4>Create Project Structure</h4>
+                    <ol>
+                        <li>Open VSCodium to your CoordinatorTools folder</li>
+                        <li>Right-click in Explorer → "New Folder" → name it <code>reports</code></li>
+                        <li>Right-click <code>reports</code> folder → "New File" → name it <code>weekly-generator.html</code></li>
+                    </ol>
+
+                    <h4>Your folder structure:</h4>
+                    <div class="folder-structure">📁 CoordinatorTools/
+  📁 dashboard/
+    📄 index.html
+  📁 reports/
+    📄 weekly-generator.html</div>
+                </div>
+
+                <div class="step">
+                    <h4>Prepare the AI Prompt</h4>
+                    <p>Copy this complete prompt:</p>
+
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='Copied!'">Copy</button>
+                        <div>Create an HTML Weekly Report Generator with these features:
+
+FORM INPUTS:
+- Week dates (start and end date pickers)
+- Number of student meetings held (number input)
+- Number of faculty consultations (number input)
+- Events organized this week (text input)
+- Key achievements (text area, 4-5 lines)
+- Challenges faced (text area, 3-4 lines)
+- Next week priorities (text area, 4-5 lines)
+- Special announcements (optional text area)
+
+FUNCTIONALITY:
+1. "Generate Report" button that creates formatted output
+2. Report preview section that displays formatted email
+3. "Copy to Clipboard" button
+4. "Clear Form" button
+5. "Save Draft" button (uses localStorage)
+6. "Load Last Report" button
+
+REPORT FORMAT:
+Subject: Weekly Report - [Week Dates]
+
+Dear Team,
+
+Here's a summary of this week's activities:
+
+METRICS:
+- Student Meetings: [number]
+- Faculty Consultations: [number]
+- Events: [list]
+
+KEY ACHIEVEMENTS:
+[bulleted list]
+
+CHALLENGES:
+[bulleted list]
+
+NEXT WEEK PRIORITIES:
+[bulleted list]
+
+[Special Announcements section if filled]
+
+Best regards,
+[Your Name - customizable]
+
+STYLING:
+- Professional teal/blue theme
+- Clear sections with labels
+- Responsive layout
+- Easy-to-read preview
+- Success/error notifications
+
+Include complete HTML with embedded CSS and JavaScript.</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Generate with AI</h4>
+                    <ul>
+                        <li>Paste prompt into ChatGPT, Claude, or Gemini</li>
+                        <li>Wait for complete HTML generation</li>
+                        <li>Review code for completeness</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h4>Implement in VSCodium</h4>
+                    <ol>
+                        <li>Copy all AI-generated code</li>
+                        <li>Click on <code>weekly-generator.html</code> in VSCodium</li>
+                        <li>Paste code into editor</li>
+                        <li>Save (Ctrl+S)</li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h4>Test Your Generator</h4>
+                    <ol>
+                        <li>Right-click file → "Reveal in File Explorer"</li>
+                        <li>Double-click <code>weekly-generator.html</code></li>
+                        <li>Fill in sample data:
+                            <ul>
+                                <li>Week: Feb 3-7, 2025</li>
+                                <li>Meetings: 12</li>
+                                <li>Consultations: 5</li>
+                                <li>Events: Career Fair, Study Skills Workshop</li>
+                                <li>Achievement: Successfully launched mentorship program</li>
+                            </ul>
+                        </li>
+                        <li>Click "Generate Report"</li>
+                        <li>Review formatted output</li>
+                        <li>Click "Copy to Clipboard"</li>
+                        <li>Paste into email client to verify</li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h4>Test Save/Load Functions</h4>
+                    <ul>
+                        <li>Fill form with data</li>
+                        <li>Click "Save Draft"</li>
+                        <li>Clear the form</li>
+                        <li>Click "Load Last Report"</li>
+                        <li>Verify data reappears</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Pro Tips for Weekly Reports</h3>
+                <ul>
+                    <li><strong>Set a Reminder:</strong> Every Friday at 3pm to fill out report</li>
+                    <li><strong>Track Throughout Week:</strong> Keep running list of achievements</li>
+                    <li><strong>Consistent Format:</strong> Recipients will appreciate predictability</li>
+                    <li><strong>Quantify When Possible:</strong> Numbers make impact clear</li>
+                    <li><strong>Save Historical Data:</strong> Export/save old reports for annual reviews</li>
+                    <li><strong>Customize Template:</strong> Adjust format to match your supervisor's preferences</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🎨 Customization Ideas</h2>
+
+            <h3>Add More Fields:</h3>
+            <p>Prompt: "Add these fields to my report generator: Budget spending this week, New partnerships, Student success stories"</p>
+
+            <h3>Change Report Format:</h3>
+            <p>Prompt: "Format the report as bullet points instead of paragraphs"</p>
+
+            <h3>Add Charts:</h3>
+            <p>Prompt: "Add a simple bar chart showing meeting numbers over last 4 weeks"</p>
+
+            <h3>Email Integration:</h3>
+            <p>Prompt: "Add a 'Send Email' button that opens email client with pre-filled message"</p>
+        </div>
+
+        <div class="content-card">
+            <div class="warning">
+                <strong>✅ Privacy Benefit:</strong> This tool runs entirely in your browser. No data is sent to any server. Your reports stay on your computer unless you explicitly share them.
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🔗 Link from Your Dashboard</h2>
+            <p>Add this tool to your Coordinator Portal:</p>
+            <ol>
+                <li>Open your <code>dashboard/index.html</code></li>
+                <li>Find the tools section</li>
+                <li>Add a new card linking to <code>../reports/weekly-generator.html</code></li>
+                <li>Or ask AI: "Add a tool card for my Weekly Report Generator at ../reports/weekly-generator.html"</li>
+            </ol>
+        </div>
+
+        <div class="content-card">
+            <h2>✅ Topic Completion Checklist</h2>
+            <ul>
+                <li>✓ Created reports folder and weekly-generator.html file</li>
+                <li>✓ Generated complete report tool with AI</li>
+                <li>✓ Form accepts all required inputs</li>
+                <li>✓ Report generates with proper formatting</li>
+                <li>✓ Copy to clipboard works correctly</li>
+                <li>✓ Save/load functions persist data</li>
+                <li>✓ Tested by creating a sample report</li>
+                <li>✓ Linked from dashboard (optional but recommended)</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🎓 What You've Learned</h2>
+            <ul>
+                <li>Form handling with HTML inputs</li>
+                <li>Template strings and string interpolation</li>
+                <li>Clipboard API for copy functionality</li>
+                <li>localStorage for data persistence</li>
+                <li>Date pickers and number inputs</li>
+                <li>Dynamic content generation</li>
+            </ul>
+        </div>
+
+        <div class="next-topic">
+            <a href="session2-topic4-student-hub.html">Next Topic: Create a Student Resource Hub →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
+    </footer>
+</body>
+</html>
