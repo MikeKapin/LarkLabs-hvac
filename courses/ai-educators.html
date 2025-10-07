@@ -965,7 +965,7 @@
 
 Current Session: ${session.title}
 Session Description: ${session.description}
-Topics Covered: ${session.topics.join(', ')}
+Topics Covered: ${session.topics.map(t => typeof t === 'string' ? t : t.title).join(', ')}
 
 Student Question: ${question}
 
