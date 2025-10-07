@@ -773,11 +773,11 @@
                         <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">
                             Click any topic to open detailed content in a new tab
                         </p>
-                        <div class="topics-list">
+                        <div class="topics-list" id="topicsList">
                             ${session.topics.map((topic, idx) => {
                                 const isCompleted = userProgress[currentUser]?.[selectedSession]?.topicsCompleted[idx];
                                 return `
-                                    <button class="topic-item" onclick="openTopicAndToggle(${selectedSession}, ${idx}, '${session.contentUrl}')">
+                                    <button class="topic-item" data-session="${selectedSession}" data-topic="${idx}" data-url="${session.contentUrl}">
                                         <span class="topic-icon">${isCompleted ? '✅' : '⭕'}</span>
                                         <span class="topic-text ${isCompleted ? 'topic-completed' : ''}">${topic}</span>
                                         <span style="margin-left: auto; color: #3b82f6; font-size: 0.875rem;">➜</span>
@@ -785,6 +785,19 @@
                                 `;
                             }).join('')}
                         </div>
+                        <script>
+                            // Add click handlers to topics after render
+                            setTimeout(() => {
+                                document.querySelectorAll('#topicsList .topic-item').forEach(btn => {
+                                    btn.onclick = function() {
+                                        const sessionId = parseInt(this.dataset.session);
+                                        const topicIdx = parseInt(this.dataset.topic);
+                                        const url = this.dataset.url;
+                                        openTopicAndToggle(sessionId, topicIdx, url);
+                                    };
+                                });
+                            }, 100);
+                        </script>
                     </div>
 
                     <!-- Notes -->
