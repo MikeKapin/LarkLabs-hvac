@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AI Educators Course</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+
+        .admin-container {
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-header p {
+            opacity: 0.9;
+        }
+
+        .refresh-btn {
+            background: white;
+            color: #1f2937;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card h3 {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .section h2 {
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .user-table thead {
+            background: #f3f4f6;
+        }
+
+        .user-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .user-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .user-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: width 0.3s;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-new {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .session-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .session-stat {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .session-stat strong {
+            display: block;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-stat span {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .export-btn {
+            background: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 0.5rem;
+        }
+
+        .export-btn:hover {
+            background: #059669;
+        }
+
+        .clear-btn {
+            background: #ef4444;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .clear-btn:hover {
+            background: #dc2626;
+        }
+
+        .notes-section {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1rem;
+        }
+
+        .question-item {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-item strong {
+            color: #2563eb;
+        }
+
+        .timestamp {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .chart-container {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 200px;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 0.5rem;
+        }
+
+        .bar-value {
+            color: white;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+
+        .bar-label {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h1>🎓 Admin Dashboard</h1>
+                <p>AI Educators Course - Usage Monitoring</p>
+            </div>
+            <button class="refresh-btn" onclick="loadData()">🔄 Refresh Data</button>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <div class="stat-value" id="totalUsers">0</div>
+                <div class="stat-label">Registered participants</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Users</h3>
+                <div class="stat-value" id="activeUsers">0</div>
+                <div class="stat-label">Last 7 days</div>
+            </div>
+            <div class="stat-card">
+                <h3>Course Completions</h3>
+                <div class="stat-value" id="completions">0</div>
+                <div class="stat-label">All sessions finished</div>
+            </div>
+            <div class="stat-card">
+                <h3>Avg. Progress</h3>
+                <div class="stat-value" id="avgProgress">0%</div>
+                <div class="stat-label">Across all users</div>
+            </div>
+        </div>
+
+        <!-- Session Progress Chart -->
+        <div class="section">
+            <h2>📊 Session Progress Overview</h2>
+            <div class="chart-container">
+                <div class="bar-chart" id="sessionChart"></div>
+            </div>
+        </div>
+
+        <!-- User Details Table -->
+        <div class="section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>👥 User Activity</h2>
+                <div>
+                    <button class="export-btn" onclick="exportData()">📥 Export CSV</button>
+                    <button class="clear-btn" onclick="clearAllData()">🗑️ Clear All Data</button>
+                </div>
+            </div>
+
+            <div class="filter-controls">
+                <select class="filter-select" id="statusFilter" onchange="filterUsers()">
+                    <option value="all">All Users</option>
+                    <option value="active">Active Only</option>
+                    <option value="inactive">Inactive Only</option>
+                    <option value="completed">Completed Course</option>
+                </select>
+                <select class="filter-select" id="sortBy" onchange="sortUsers()">
+                    <option value="email">Sort by Email</option>
+                    <option value="progress">Sort by Progress</option>
+                    <option value="date">Sort by Registration Date</option>
+                    <option value="lastAccess">Sort by Last Access</option>
+                </select>
+            </div>
+
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Registered</th>
+                        <th>Last Access</th>
+                        <th>Progress</th>
+                        <th>Status</th>
+                        <th>Sessions Completed</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Users will be populated here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Session Breakdown -->
+        <div class="section">
+            <h2>📚 Session Completion Details</h2>
+            <div class="session-breakdown" id="sessionBreakdown"></div>
+        </div>
+
+        <!-- User Notes & Questions -->
+        <div class="section">
+            <h2>📝 User Notes & Questions</h2>
+            <div id="notesQuestions">
+                <!-- Notes and questions will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let users = {};
+        let userProgress = {};
+        let userNotes = {};
+        let userQuestions = {};
+        let currentFilter = 'all';
+        let currentSort = 'email';
+
+        const courseData = {
+            sessions: [
+                { id: 1, title: "AI Foundations & Quick Wins" },
+                { id: 2, title: "Building Your Digital Workspace" },
+                { id: 3, title: "PowerShell & Claude Code" },
+                { id: 4, title: "Free Power Tools - Interactive Projects" }
+            ]
+        };
+
+        // Load data from localStorage
+        function loadData() {
+            users = JSON.parse(localStorage.getItem('courseUsers') || '{}');
+            userProgress = JSON.parse(localStorage.getItem('courseProgress') || '{}');
+            userNotes = JSON.parse(localStorage.getItem('courseNotes') || '{}');
+            userQuestions = JSON.parse(localStorage.getItem('courseQuestions') || '{}');
+
+            updateDashboard();
+        }
+
+        // Update all dashboard elements
+        function updateDashboard() {
+            updateSummaryStats();
+            updateSessionChart();
+            updateUserTable();
+            updateSessionBreakdown();
+            updateNotesQuestions();
+        }
+
+        // Update summary statistics
+        function updateSummaryStats() {
+            const userEmails = Object.keys(users);
+            const totalUsers = userEmails.length;
+
+            // Calculate active users (accessed in last 7 days)
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            const activeUsers = userEmails.filter(email => {
+                const lastAccess = users[email].lastAccess;
+                return lastAccess && new Date(lastAccess) > sevenDaysAgo;
+            }).length;
+
+            // Calculate completions
+            const completions = userEmails.filter(email => {
+                if (!userProgress[email]) return false;
+                return Object.values(userProgress[email]).every(s => s.completed);
+            }).length;
+
+            // Calculate average progress
+            let totalProgress = 0;
+            userEmails.forEach(email => {
+                if (userProgress[email]) {
+                    const sessionsCompleted = Object.values(userProgress[email]).filter(s => s.completed).length;
+                    totalProgress += (sessionsCompleted / 4) * 100;
+                }
+            });
+            const avgProgress = totalUsers > 0 ? Math.round(totalProgress / totalUsers) : 0;
+
+            document.getElementById('totalUsers').textContent = totalUsers;
+            document.getElementById('activeUsers').textContent = activeUsers;
+            document.getElementById('completions').textContent = completions;
+            document.getElementById('avgProgress').textContent = avgProgress + '%';
+        }
+
+        // Update session progress chart
+        function updateSessionChart() {
+            const chartEl = document.getElementById('sessionChart');
+            const sessionStats = [0, 0, 0, 0];
+
+            Object.keys(userProgress).forEach(email => {
+                const progress = userProgress[email];
+                [1, 2, 3, 4].forEach(sessionId => {
+                    if (progress[sessionId]?.completed) {
+                        sessionStats[sessionId - 1]++;
+                    }
+                });
+            });
+
+            const maxValue = Math.max(...sessionStats, 1);
+            const totalUsers = Object.keys(users).length || 1;
+
+            chartEl.innerHTML = sessionStats.map((count, idx) => {
+                const height = (count / totalUsers) * 100;
+                const percentage = totalUsers > 0 ? Math.round((count / totalUsers) * 100) : 0;
+                return `
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                        <div class="bar" style="height: ${height}%; min-height: 30px;">
+                            <span class="bar-value">${count}</span>
+                        </div>
+                        <div class="bar-label">Session ${idx + 1}<br>${percentage}%</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Update user table
+        function updateUserTable() {
+            const tbody = document.getElementById('userTableBody');
+            const userEmails = Object.keys(users);
+
+            if (userEmails.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #6b7280;">No users registered yet</td></tr>';
+                return;
+            }
+
+            // Filter users
+            let filteredUsers = userEmails.filter(email => {
+                if (currentFilter === 'all') return true;
+                if (currentFilter === 'active') {
+                    const sevenDaysAgo = new Date();
+                    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                    return users[email].lastAccess && new Date(users[email].lastAccess) > sevenDaysAgo;
+                }
+                if (currentFilter === 'inactive') {
+                    const sevenDaysAgo = new Date();
+                    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                    return !users[email].lastAccess || new Date(users[email].lastAccess) <= sevenDaysAgo;
+                }
+                if (currentFilter === 'completed') {
+                    return userProgress[email] && Object.values(userProgress[email]).every(s => s.completed);
+                }
+            });
+
+            // Sort users
+            filteredUsers.sort((a, b) => {
+                if (currentSort === 'email') return a.localeCompare(b);
+                if (currentSort === 'progress') {
+                    const aProgress = calculateUserProgress(a);
+                    const bProgress = calculateUserProgress(b);
+                    return bProgress - aProgress;
+                }
+                if (currentSort === 'date') {
+                    return new Date(users[b].registeredDate) - new Date(users[a].registeredDate);
+                }
+                if (currentSort === 'lastAccess') {
+                    const aAccess = users[a].lastAccess || users[a].registeredDate;
+                    const bAccess = users[b].lastAccess || users[b].registeredDate;
+                    return new Date(bAccess) - new Date(aAccess);
+                }
+            });
+
+            tbody.innerHTML = filteredUsers.map(email => {
+                const user = users[email];
+                const progress = userProgress[email] || {};
+                const sessionsCompleted = Object.values(progress).filter(s => s.completed).length;
+                const progressPercent = (sessionsCompleted / 4) * 100;
+
+                const registeredDate = new Date(user.registeredDate).toLocaleDateString();
+                const lastAccess = user.lastAccess ? new Date(user.lastAccess).toLocaleDateString() : 'Never';
+
+                const isActive = user.lastAccess && (new Date() - new Date(user.lastAccess)) < 7 * 24 * 60 * 60 * 1000;
+                const isCompleted = sessionsCompleted === 4;
+
+                let statusBadge;
+                if (isCompleted) statusBadge = '<span class="badge badge-active">Completed</span>';
+                else if (isActive) statusBadge = '<span class="badge badge-new">Active</span>';
+                else statusBadge = '<span class="badge badge-inactive">Inactive</span>';
+
+                return `
+                    <tr>
+                        <td><strong>${email}</strong></td>
+                        <td>${registeredDate}</td>
+                        <td>${lastAccess}</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                            </div>
+                            <span style="font-size: 0.875rem; color: #6b7280;">${Math.round(progressPercent)}%</span>
+                        </td>
+                        <td>${statusBadge}</td>
+                        <td>${sessionsCompleted} / 4</td>
+                        <td>
+                            <button onclick="viewUserDetails('${email}')" style="background: #3b82f6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.875rem;">View Details</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Calculate user progress percentage
+        function calculateUserProgress(email) {
+            const progress = userProgress[email] || {};
+            const sessionsCompleted = Object.values(progress).filter(s => s.completed).length;
+            return (sessionsCompleted / 4) * 100;
+        }
+
+        // Update session breakdown
+        function updateSessionBreakdown() {
+            const breakdownEl = document.getElementById('sessionBreakdown');
+            const totalUsers = Object.keys(users).length || 1;
+
+            breakdownEl.innerHTML = courseData.sessions.map(session => {
+                const completedCount = Object.keys(userProgress).filter(email => {
+                    return userProgress[email][session.id]?.completed;
+                }).length;
+
+                const percentage = Math.round((completedCount / totalUsers) * 100);
+
+                return `
+                    <div class="session-stat">
+                        <strong>Session ${session.id}</strong>
+                        <span>${session.title}</span>
+                        <div style="margin-top: 0.5rem; font-weight: bold; color: #2563eb;">${completedCount} / ${totalUsers} users (${percentage}%)</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Update notes and questions
+        function updateNotesQuestions() {
+            const notesEl = document.getElementById('notesQuestions');
+
+            let hasContent = false;
+            let content = '';
+
+            // Display user notes
+            Object.keys(userNotes).forEach(email => {
+                const notes = userNotes[email];
+                if (Object.keys(notes).length > 0) {
+                    hasContent = true;
+                    content += `<div class="notes-section"><strong>📝 ${email} - Notes:</strong>`;
+                    Object.keys(notes).forEach(sessionId => {
+                        if (notes[sessionId]) {
+                            content += `<div style="margin-top: 0.5rem;"><em>Session ${sessionId}:</em> ${notes[sessionId]}</div>`;
+                        }
+                    });
+                    content += '</div>';
+                }
+            });
+
+            // Display user questions
+            Object.keys(userQuestions).forEach(email => {
+                const questions = userQuestions[email];
+                if (questions && questions.length > 0) {
+                    hasContent = true;
+                    content += `<div style="margin-top: 1rem;"><strong>❓ ${email} - Questions:</strong>`;
+                    questions.forEach(q => {
+                        content += `
+                            <div class="question-item">
+                                <strong>Q:</strong> ${q.question}
+                                <span class="timestamp">${new Date(q.timestamp).toLocaleString()}</span>
+                                ${q.answer ? `<div style="margin-top: 0.5rem; color: #059669;"><strong>A:</strong> ${q.answer}</div>` : ''}
+                            </div>
+                        `;
+                    });
+                    content += '</div>';
+                }
+            });
+
+            if (!hasContent) {
+                content = '<p style="color: #6b7280;">No notes or questions submitted yet.</p>';
+            }
+
+            notesEl.innerHTML = content;
+        }
+
+        // Filter users
+        function filterUsers() {
+            currentFilter = document.getElementById('statusFilter').value;
+            updateUserTable();
+        }
+
+        // Sort users
+        function sortUsers() {
+            currentSort = document.getElementById('sortBy').value;
+            updateUserTable();
+        }
+
+        // View user details
+        function viewUserDetails(email) {
+            const progress = userProgress[email] || {};
+            const notes = userNotes[email] || {};
+            const questions = userQuestions[email] || [];
+
+            let detailsHTML = `
+                <strong>User:</strong> ${email}<br>
+                <strong>Registered:</strong> ${new Date(users[email].registeredDate).toLocaleString()}<br>
+                <strong>Last Access:</strong> ${users[email].lastAccess ? new Date(users[email].lastAccess).toLocaleString() : 'Never'}<br><br>
+                <strong>Session Progress:</strong><br>
+            `;
+
+            courseData.sessions.forEach(session => {
+                const sessionProgress = progress[session.id] || { completed: false, topicsCompleted: {} };
+                const topicsCompleted = Object.keys(sessionProgress.topicsCompleted || {}).filter(k => sessionProgress.topicsCompleted[k]).length;
+                detailsHTML += `- Session ${session.id}: ${sessionProgress.completed ? '✅ Completed' : `⏳ In Progress (${topicsCompleted} topics)`}<br>`;
+            });
+
+            if (Object.keys(notes).length > 0) {
+                detailsHTML += '<br><strong>Notes:</strong><br>';
+                Object.keys(notes).forEach(sessionId => {
+                    if (notes[sessionId]) {
+                        detailsHTML += `- Session ${sessionId}: ${notes[sessionId]}<br>`;
+                    }
+                });
+            }
+
+            if (questions.length > 0) {
+                detailsHTML += '<br><strong>Questions:</strong><br>';
+                questions.forEach((q, idx) => {
+                    detailsHTML += `${idx + 1}. ${q.question} (${new Date(q.timestamp).toLocaleDateString()})<br>`;
+                });
+            }
+
+            alert(detailsHTML.replace(/<br>/g, '\n').replace(/<strong>/g, '').replace(/<\/strong>/g, ''));
+        }
+
+        // Export data to CSV
+        function exportData() {
+            const userEmails = Object.keys(users);
+            let csv = 'Email,Registered Date,Last Access,Sessions Completed,Progress %,Status\n';
+
+            userEmails.forEach(email => {
+                const user = users[email];
+                const progress = userProgress[email] || {};
+                const sessionsCompleted = Object.values(progress).filter(s => s.completed).length;
+                const progressPercent = Math.round((sessionsCompleted / 4) * 100);
+                const registeredDate = new Date(user.registeredDate).toISOString();
+                const lastAccess = user.lastAccess ? new Date(user.lastAccess).toISOString() : 'Never';
+                const isActive = user.lastAccess && (new Date() - new Date(user.lastAccess)) < 7 * 24 * 60 * 60 * 1000;
+                const status = sessionsCompleted === 4 ? 'Completed' : (isActive ? 'Active' : 'Inactive');
+
+                csv += `${email},${registeredDate},${lastAccess},${sessionsCompleted},${progressPercent}%,${status}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ai-educators-usage-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+
+        // Clear all data (with confirmation)
+        function clearAllData() {
+            if (confirm('⚠️ WARNING: This will delete ALL user data, progress, notes, and questions. This action cannot be undone. Are you sure?')) {
+                if (confirm('Are you ABSOLUTELY sure? Type "DELETE" in the next prompt to confirm.')) {
+                    const confirmation = prompt('Type "DELETE" to confirm deletion:');
+                    if (confirmation === 'DELETE') {
+                        localStorage.removeItem('courseUsers');
+                        localStorage.removeItem('courseProgress');
+                        localStorage.removeItem('courseNotes');
+                        localStorage.removeItem('courseQuestions');
+                        alert('All data has been cleared.');
+                        loadData();
+                    } else {
+                        alert('Deletion cancelled.');
+                    }
+                }
+            }
+        }
+
+        // Initial load
+        loadData();
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadData, 30000);
+    </script>
+</body>
+</html>
