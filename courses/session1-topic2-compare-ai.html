@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare AI Assistants - Session 1 | AI Educators Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            color: #1f2937;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-estimate {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .ai-comparison-card {
+            border: 3px solid;
+            border-radius: 12px;
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .chatgpt {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #10b98110 0%, #10b98105 100%);
+        }
+
+        .claude {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #f59e0b10 0%, #f59e0b05 100%);
+        }
+
+        .gemini {
+            border-color: #8b5cf6;
+            background: linear-gradient(135deg, #8b5cf610 0%, #8b5cf605 100%);
+        }
+
+        .ai-comparison-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ai-comparison-card .icon {
+            font-size: 2rem;
+        }
+
+        .strengths, .best-for {
+            margin: 1rem 0;
+        }
+
+        .strengths h4, .best-for h4 {
+            font-size: 0.9375rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .strengths ul, .best-for ul {
+            padding-left: 1.25rem;
+            margin: 0;
+        }
+
+        .strengths li, .best-for li {
+            margin: 0.5rem 0;
+        }
+
+        .exercise {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .exercise h3 {
+            color: #d97706;
+            margin-top: 0;
+        }
+
+        .prompt-example {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9375rem;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .results-table th {
+            background: #2563eb;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .results-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rating {
+            font-size: 1.25rem;
+        }
+
+        .tip-box {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tip-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .next-topic {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .next-topic a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🤖 Compare AI Assistants</h1>
+        <p>Session 1, Topic 2 | Discover Each AI's Unique Strengths</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 1 / Topic 2
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 60 minutes</span>
+
+            <h2>Understanding AI Personalities</h2>
+            <p>Each AI assistant has a distinct "personality" and excels at different tasks. In this hands-on session, you'll test all three with the same prompts to discover their strengths and ideal use cases.</p>
+
+            <h3>🎯 What You'll Learn</h3>
+            <ul>
+                <li>How ChatGPT, Claude, and Gemini differ in style and approach</li>
+                <li>Which AI to use for specific coordinator tasks</li>
+                <li>How to craft effective prompts for each assistant</li>
+                <li>Real-world applications for your daily work</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🔍 Meet Your AI Assistants</h2>
+
+            <div class="comparison-grid">
+                <div class="ai-comparison-card chatgpt">
+                    <h3><span class="icon">💬</span> ChatGPT</h3>
+                    <p><strong>Style:</strong> Conversational, friendly, quick</p>
+
+                    <div class="strengths">
+                        <h4>✨ Strengths</h4>
+                        <ul>
+                            <li>Fast responses</li>
+                            <li>Great for brainstorming</li>
+                            <li>Excellent at creative writing</li>
+                            <li>Simple explanations</li>
+                            <li>Code generation</li>
+                        </ul>
+                    </div>
+
+                    <div class="best-for">
+                        <h4>🎯 Best For</h4>
+                        <ul>
+                            <li>Quick answers</li>
+                            <li>Email drafts</li>
+                            <li>Social media posts</li>
+                            <li>Meeting agendas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ai-comparison-card claude">
+                    <h3><span class="icon">🤖</span> Claude</h3>
+                    <p><strong>Style:</strong> Professional, detailed, thoughtful</p>
+
+                    <div class="strengths">
+                        <h4>✨ Strengths</h4>
+                        <ul>
+                            <li>Long document analysis</li>
+                            <li>Nuanced reasoning</li>
+                            <li>Professional tone</li>
+                            <li>Ethical considerations</li>
+                            <li>Detailed explanations</li>
+                        </ul>
+                    </div>
+
+                    <div class="best-for">
+                        <h4>🎯 Best For</h4>
+                        <ul>
+                            <li>Policy documents</li>
+                            <li>Complex analysis</li>
+                            <li>Formal reports</li>
+                            <li>Curriculum planning</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ai-comparison-card gemini">
+                    <h3><span class="icon">✨</span> Google Gemini</h3>
+                    <p><strong>Style:</strong> Research-focused, web-connected</p>
+
+                    <div class="strengths">
+                        <h4>✨ Strengths</h4>
+                        <ul>
+                            <li>Real-time web search</li>
+                            <li>Google Workspace integration</li>
+                            <li>Current information</li>
+                            <li>Multimodal (images + text)</li>
+                            <li>YouTube summaries</li>
+                        </ul>
+                    </div>
+
+                    <div class="best-for">
+                        <h4>🎯 Best For</h4>
+                        <ul>
+                            <li>Research tasks</li>
+                            <li>Current events</li>
+                            <li>Finding resources</li>
+                            <li>Data analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="exercise">
+                <h3>🎯 Hands-On Exercise: The Email Challenge</h3>
+                <p>Test all three AI assistants with the same task and compare their responses.</p>
+            </div>
+
+            <h3>Task: Write a Professional Email</h3>
+            <p><strong>Scenario:</strong> You need to email department heads about upcoming professional development sessions.</p>
+
+            <div class="prompt-example">
+<strong>Prompt to use with each AI:</strong><br><br>
+Write a professional email to department heads announcing a new AI tools professional development workshop. Include:
+- Workshop date: February 15, 2025
+- Time: 2:00-4:00 PM
+- Location: Conference Room B
+- Topics: ChatGPT for productivity, Gamma for presentations
+- RSVP deadline: February 8
+- Keep it under 150 words
+            </div>
+
+            <h3>📝 What to Notice</h3>
+            <ul>
+                <li><strong>ChatGPT:</strong> How quickly does it respond? Is the tone casual or formal?</li>
+                <li><strong>Claude:</strong> Does it add context or considerations you didn't think of?</li>
+                <li><strong>Gemini:</strong> Does it suggest current best practices or additional resources?</li>
+            </ul>
+
+            <h3>💡 Expected Results Comparison</h3>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>AI Assistant</th>
+                        <th>Response Speed</th>
+                        <th>Tone</th>
+                        <th>Detail Level</th>
+                        <th>Best Aspect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ChatGPT</strong></td>
+                        <td><span class="rating">⚡⚡⚡</span> Fastest</td>
+                        <td>Friendly & Clear</td>
+                        <td>Concise</td>
+                        <td>Ready to send immediately</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude</strong></td>
+                        <td><span class="rating">⚡⚡</span> Moderate</td>
+                        <td>Professional & Polished</td>
+                        <td>Comprehensive</td>
+                        <td>Considers accessibility & inclusivity</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gemini</strong></td>
+                        <td><span class="rating">⚡⚡</span> Moderate</td>
+                        <td>Informative & Direct</td>
+                        <td>Balanced</td>
+                        <td>May suggest related Google tools</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-card">
+            <div class="exercise">
+                <h3>🎯 Exercise 2: The Research Challenge</h3>
+            </div>
+
+            <h3>Task: Compare Research Capabilities</h3>
+            <p>Try this prompt with each assistant to see how they handle current information:</p>
+
+            <div class="prompt-example">
+What are the top 3 AI trends in education for 2025? Include specific examples and sources.
+            </div>
+
+            <h3>📊 What You'll Discover</h3>
+            <ul>
+                <li><strong>ChatGPT:</strong> Provides general trends but knowledge cutoff may limit currency</li>
+                <li><strong>Claude:</strong> Gives thoughtful analysis but may acknowledge information limitations</li>
+                <li><strong>Gemini:</strong> Performs real-time web search and cites current sources ⭐</li>
+            </ul>
+
+            <p><strong>Winner for Research:</strong> Gemini (web access gives it current information)</p>
+        </div>
+
+        <div class="content-card">
+            <div class="tip-box">
+                <h3>💡 Pro Tips: Choosing the Right AI</h3>
+                <ul>
+                    <li><strong>Need it fast?</strong> → ChatGPT</li>
+                    <li><strong>Need it professional?</strong> → Claude</li>
+                    <li><strong>Need current info?</strong> → Gemini</li>
+                    <li><strong>Brainstorming?</strong> → ChatGPT</li>
+                    <li><strong>Analyzing documents?</strong> → Claude</li>
+                    <li><strong>Finding resources?</strong> → Gemini</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>✍️ Practice Prompts for Coordinators</h2>
+            <p>Try these real-world scenarios with your preferred AI:</p>
+
+            <h3>1. Meeting Minutes</h3>
+            <div class="prompt-example">
+Summarize these meeting notes into professional minutes with action items:
+[Paste your rough notes here]
+            </div>
+
+            <h3>2. Student Communication</h3>
+            <div class="prompt-example">
+Help me write a supportive email to a student who missed the registration deadline. Be empathetic but explain our policy clearly.
+            </div>
+
+            <h3>3. Data Analysis</h3>
+            <div class="prompt-example">
+Analyze this enrollment data and identify trends:
+[Paste spreadsheet data]
+            </div>
+
+            <h3>4. Event Planning</h3>
+            <div class="prompt-example">
+Create a timeline for organizing a career fair in 6 weeks. Include all major tasks and deadlines.
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🎓 Key Takeaways</h2>
+            <ul>
+                <li>No single AI is "best" - each has strengths for different tasks</li>
+                <li>ChatGPT excels at speed and creativity</li>
+                <li>Claude provides depth and professionalism</li>
+                <li>Gemini wins for research and current information</li>
+                <li>Experiment with all three to find your preferences</li>
+                <li>You can use multiple AI's for the same task to get diverse perspectives</li>
+            </ul>
+        </div>
+
+        <div class="next-topic">
+            <a href="session1-topic3-create-gamma.html">Next Topic: Create with Gamma →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html" style="color: #93c5fd; text-decoration: none;">Return to Course Dashboard</a></p>
+    </footer>
+</body>
+</html>

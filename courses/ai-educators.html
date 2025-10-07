@@ -564,11 +564,11 @@
                     duration: "3 hours",
                     contentUrl: "session1-foundations.html",
                     topics: [
-                        "Welcome & Tool Setup",
-                        "Compare AI Assistants",
-                        "Create with Gamma",
-                        "Make Videos with Pictory",
-                        "Practice & Reflection"
+                        {title: "Welcome & Tool Setup", url: "session1-topic1-welcome-setup.html"},
+                        {title: "Compare AI Assistants", url: "session1-topic2-compare-ai.html"},
+                        {title: "Create with Gamma", url: "session1-foundations.html#gamma"},
+                        {title: "Make Videos with Pictory", url: "session1-foundations.html#pictory"},
+                        {title: "Practice & Reflection", url: "session1-foundations.html#reflection"}
                     ],
                     description: "Hands-on introduction to AI tools for program coordinators"
                 },
@@ -776,10 +776,12 @@
                         <div class="topics-list" id="topicsList">
                             ${session.topics.map((topic, idx) => {
                                 const isCompleted = userProgress[currentUser]?.[selectedSession]?.topicsCompleted[idx];
+                                const topicTitle = typeof topic === 'string' ? topic : topic.title;
+                                const topicUrl = typeof topic === 'string' ? session.contentUrl : topic.url;
                                 return `
-                                    <button class="topic-item" data-session="${selectedSession}" data-topic="${idx}" data-url="${session.contentUrl}">
+                                    <button class="topic-item" data-session="${selectedSession}" data-topic="${idx}" data-url="${topicUrl}">
                                         <span class="topic-icon">${isCompleted ? '✅' : '⭕'}</span>
-                                        <span class="topic-text ${isCompleted ? 'topic-completed' : ''}">${topic}</span>
+                                        <span class="topic-text ${isCompleted ? 'topic-completed' : ''}">${topicTitle}</span>
                                         <span style="margin-left: auto; color: #3b82f6; font-size: 0.875rem;">➜</span>
                                     </button>
                                 `;
