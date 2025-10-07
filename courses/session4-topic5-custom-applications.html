@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Applications & Course Wrap-Up - Session 4 | AI Educators Course</title>
+    <style>
+        :root {
+            --arena: #ff6b6b;
+            --nano: #4ecdc4;
+            --purple: #8b5cf6;
+            --pink: #ec4899;
+            --gold: #fbbf24;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; background: #f9fafb; }
+        header { background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #8b5cf6 100%); color: white; padding: 3rem 1rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.125rem; opacity: 0.95; }
+        .breadcrumb { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; font-size: 0.875rem; color: #6b7280; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .content-card { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+        h2 { color: var(--purple); margin-bottom: 1rem; font-size: 1.75rem; }
+        h3 { color: #1f2937; margin-top: 1.5rem; margin-bottom: 1rem; }
+        .time-estimate { display: inline-block; background: #f3e8ff; color: #6b21a8; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1.5rem; }
+        .objectives { background: #faf5ff; border-left: 4px solid var(--purple); padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+        .objectives h3 { color: var(--purple); margin-top: 0; }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .project-card { background: linear-gradient(135deg, #fef2f2 0%, #f0fdfa 50%, #f3e8ff 100%); border: 2px solid var(--purple); border-radius: 12px; padding: 1.5rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(139, 92, 246, 0.3); }
+        .project-icon { font-size: 3rem; text-align: center; margin-bottom: 0.5rem; }
+        .project-card h4 { color: var(--purple); margin-bottom: 0.5rem; text-align: center; }
+        .project-difficulty { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; font-weight: 600; margin: 0.5rem auto; display: block; text-align: center; width: fit-content; }
+        .diff-beginner { background: #dcfce7; color: #166534; }
+        .diff-intermediate { background: #fef3c7; color: #854d0e; }
+        .diff-advanced { background: #fee2e2; color: #991b1b; }
+        .prompt-box { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 0.85rem; margin: 1rem 0; position: relative; white-space: pre-wrap; line-height: 1.6; max-height: 300px; overflow-y: auto; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: var(--nano); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-weight: 600; z-index: 10; }
+        .copy-btn:hover { background: #3db3aa; }
+        .tip-box { background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+        .tip-box h3 { color: #1e40af; margin-top: 0; }
+        .success-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; }
+        .success-box h3 { color: #10b981; margin-top: 0; }
+        .celebration-box { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 3px solid var(--gold); border-radius: 16px; padding: 3rem 2rem; margin: 3rem 0; text-align: center; }
+        .celebration-box h2 { color: #92400e; font-size: 2.5rem; margin-bottom: 1rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .stat-card { background: white; border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .stat-number { font-size: 3rem; font-weight: bold; color: var(--purple); margin-bottom: 0.5rem; }
+        .stat-label { color: #6b7280; font-size: 0.875rem; }
+        .resources-list { background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; margin: 1.5rem 0; }
+        .resources-list h4 { color: var(--nano); margin-bottom: 1rem; }
+        .resources-list ul { list-style: none; }
+        .resources-list li { padding: 0.75rem; margin: 0.5rem 0; border-left: 4px solid var(--nano); background: #f9fafb; border-radius: 0 8px 8px 0; }
+        .next-steps { background: linear-gradient(135deg, #f0f9ff 0%, #fef3c7 100%); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .next-steps h3 { color: var(--purple); margin-top: 0; }
+        .secret-tools { background: #1e293b; color: white; border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .secret-tools h3 { color: var(--gold); margin-top: 0; }
+        .warning-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+        .warning-box strong { color: #d97706; }
+        .final-message { text-align: center; margin: 3rem 0; }
+        .final-message a { display: inline-block; background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #8b5cf6 100%); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1.125rem; font-weight: 600; transition: transform 0.3s; }
+        .final-message a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4); }
+        footer { background: #1f2937; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        footer a { color: #93c5fd; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎨 Custom Applications & Course Wrap-Up</h1>
+        <p>Session 4, Topic 5 | Free Power Tools - Interactive Projects</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="ai-educators.html">← Back to Course Dashboard</a> / Session 4 / Topic 5
+    </div>
+
+    <main>
+        <div class="content-card">
+            <span class="time-estimate">⏱️ 30 minutes + ongoing exploration</span>
+            <h2>Build Anything You Can Imagine</h2>
+            <p>You've learned the tools, mastered the workflow, and built a professional project. Now let's explore <strong>12 more custom applications</strong> you can create with your free AI toolkit, plus celebrate everything you've accomplished in this course!</p>
+
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Discover 12 ready-to-build custom applications</li>
+                    <li>Get copy-paste prompts for instant project starts</li>
+                    <li>Learn how to share and deploy your creations</li>
+                    <li>Understand next steps for continued learning</li>
+                    <li>Celebrate your AI educator transformation!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🚀 12 Custom Applications You Can Build Today</h2>
+            <p>Each project includes a ready-to-use prompt. Copy, paste into LMArena or NanoBanana, and build!</p>
+
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-icon">📝</div>
+                    <h4>Interactive Quiz Generator</h4>
+                    <span class="project-difficulty diff-beginner">Beginner</span>
+                    <p style="margin: 1rem 0;">Create custom quizzes with automatic scoring, timers, and instant feedback</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create an interactive quiz builder as a single HTML file. Features: 10 customizable multiple choice questions, 30-second timer per question, score tracking with percentage, immediate right/wrong feedback, "Try Again" button, mobile responsive design, colorful student-friendly interface.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">📅</div>
+                    <h4>Event Countdown Timer</h4>
+                    <span class="project-difficulty diff-beginner">Beginner</span>
+                    <p style="margin: 1rem 0;">Countdown to important dates (field trips, project deadlines, graduation)</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create a customizable event countdown timer. Show days, hours, minutes, seconds until target date. Allow user to set custom event name and date. Display in large, colorful text. Add confetti animation when countdown reaches zero. Include multiple countdown slots for different events. Save to localStorage.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🎲</div>
+                    <h4>Random Student Selector</h4>
+                    <span class="project-difficulty diff-beginner">Beginner</span>
+                    <p style="margin: 1rem 0;">Fair random selection with animations, tracking, and no-repeat mode</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create a random student name picker. Input list of student names. Big "Pick Random Student" button. Selected name displays in large animated text. "No Repeat" mode (tracks already selected). History log showing all selections. Spinning wheel animation before reveal. Sound effect option. Export selection history to text file.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">📊</div>
+                    <h4>Progress Tracker Dashboard</h4>
+                    <span class="project-difficulty diff-intermediate">Intermediate</span>
+                    <p style="margin: 1rem 0;">Visual progress bars for skills, projects, or learning objectives</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create a student progress tracker dashboard. Add custom skills/subjects (e.g., Math, Reading, Science). Adjustable progress bars (0-100%). Color-coded: red (0-40%), yellow (41-70%), green (71-100%). Add notes for each skill. Visual charts showing overall progress. Export progress report as printable PDF. Save all data in localStorage.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">⏱️</div>
+                    <h4>Pomodoro Study Timer</h4>
+                    <span class="project-difficulty diff-beginner">Beginner</span>
+                    <p style="margin: 1rem 0;">Focus timer with work/break cycles, statistics, and motivational messages</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create a Pomodoro study timer. 25-minute work sessions, 5-minute breaks. Visual circular progress. Auto-switch between work and break. Sound alerts. Motivational messages during breaks. Track completed sessions. Show total study time today. Dark mode for reduced eye strain. Keyboard shortcuts (space to start/pause).</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🗓️</div>
+                    <h4>Weekly Schedule Planner</h4>
+                    <span class="project-difficulty diff-intermediate">Intermediate</span>
+                    <p style="margin: 1rem 0;">Visual weekly calendar with color-coded subjects and reminders</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create a weekly class schedule planner. Grid showing Monday-Friday, 8am-5pm. Click cells to add class names. Color-code by subject (Math=blue, Science=green, etc.). Add notes for each period. Print-friendly view. Export as PNG image. Room number field. Teacher name. Editable time slots. Save schedule to localStorage.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🃏</div>
+                    <h4>Digital Flashcards</h4>
+                    <span class="project-difficulty diff-intermediate">Intermediate</span>
+                    <p style="margin: 1rem 0;">Swipeable flashcards with study modes and progress tracking</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create digital flashcards tool. Add unlimited cards (front/back text). Click to flip. Swipe or arrow keys to navigate. "Shuffle" mode for random order. Mark cards as "mastered" or "need review". Study mode: only shows unmastered cards. Progress bar. Import/export card sets as JSON. Multiple decks. Mobile touch-friendly.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">📈</div>
+                    <h4>Grade Calculator</h4>
+                    <span class="project-difficulty diff-beginner">Beginner</span>
+                    <p style="margin: 1rem 0;">Calculate grades with weighted categories and GPA conversion</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create a grade calculator tool. Input assignments with scores and max points. Weight categories (Tests 40%, Homework 30%, Participation 30%). Auto-calculate current grade percentage and letter grade. Show GPA (4.0 scale). "What-if" calculator: predict needed score on final exam. Visual chart showing grade distribution. Export grade report.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🎨</div>
+                    <h4>Color Palette Generator</h4>
+                    <span class="project-difficulty diff-beginner">Beginner</span>
+                    <p style="margin: 1rem 0;">Generate harmonious color schemes for classroom materials</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create a color palette generator for classroom materials. Click to generate 5-color harmonious palette. Show hex codes, RGB values. Copy individual colors to clipboard. Save favorite palettes. Preview colors on sample poster, worksheet, presentation slide. Generate based on mood (calm, energetic, professional). Export palette as image.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">📖</div>
+                    <h4>Interactive Timeline</h4>
+                    <span class="project-difficulty diff-advanced">Advanced</span>
+                    <p style="margin: 1rem 0;">Visual timeline with events, descriptions, images, and clickable details</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create an interactive historical timeline. Horizontal scrollable timeline with dates. Add events with title, date, description. Click event for detailed popup with image placeholder. Color-code by category (war, invention, discovery). Zoom in/out on timeline. Filter by date range. Search events. Export as printable poster. Mobile responsive with touch scrolling.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🧮</div>
+                    <h4>Math Practice Generator</h4>
+                    <span class="project-difficulty diff-intermediate">Intermediate</span>
+                    <p style="margin: 1rem 0;">Generate unlimited math problems with instant checking and hints</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create a math practice problem generator. Select operation (addition, subtraction, multiplication, division). Difficulty level (1-2 digit, 3-4 digit). Generate 10 problems. Student inputs answers. Instant feedback (green checkmark or red X). Show correct answer if wrong. Hint button. Timer optional. Track accuracy percentage. Print worksheet. New problem set button.</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🗺️</div>
+                    <h4>Interactive Map Quiz</h4>
+                    <span class="project-difficulty diff-advanced">Advanced</span>
+                    <p style="margin: 1rem 0;">Click-to-identify geography quiz with scoring and timed mode</p>
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.textContent.trim()); this.textContent='✓ Copied!'">Copy</button>
+                        <div>Create an interactive US states map quiz. SVG map of USA with all 50 states. "Identify" mode: click on a random state name from list. "Label" mode: click state, type name. Score tracking. Timer for speed challenge. Highlight correct/incorrect states. Difficulty: regions only or all states. Leaderboard. Works with any subject (countries, continents, body parts).</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🤝 Sharing and Deploying Your Tools</h2>
+
+            <h3>Option 1: Local/Email Distribution (Easiest)</h3>
+            <div class="tip-box">
+                <strong>Perfect for:</strong> Sharing with colleagues, single classrooms, personal use
+                <ul style="margin-top: 1rem;">
+                    <li>✓ Email the HTML file as an attachment</li>
+                    <li>✓ Place on shared network drive</li>
+                    <li>✓ Upload to Google Drive and share link with "Viewer" access</li>
+                    <li>✓ Works offline - no internet needed after download!</li>
+                </ul>
+            </div>
+
+            <h3>Option 2: Free Web Hosting</h3>
+            <div class="resources-list">
+                <h4>🌐 Free Hosting Services</h4>
+                <ul>
+                    <li><strong>Netlify Drop:</strong> Drag & drop HTML file → Get instant URL (netlify.app subdomain)</li>
+                    <li><strong>GitHub Pages:</strong> Free hosting, custom domain option, great for open-source educational resources</li>
+                    <li><strong>Google Sites:</strong> Embed HTML in Google Sites page, share via link</li>
+                    <li><strong>Vercel:</strong> Similar to Netlify, instant deployment, fast global CDN</li>
+                </ul>
+                <div class="warning-box">
+                    <strong>💡 Tip:</strong> For tools with localStorage (saved data), warn users that clearing browser data will erase their progress. Consider adding an "Export Data" backup button!
+                </div>
+            </div>
+
+            <h3>Option 3: Learning Management System Integration</h3>
+            <ul style="margin-left: 2rem;">
+                <li><strong>Google Classroom:</strong> Upload as "Material" → Students access directly</li>
+                <li><strong>Canvas/Blackboard:</strong> Add as "External Tool" or file attachment</li>
+                <li><strong>Schoology:</strong> Upload to Resources section</li>
+                <li><strong>Microsoft Teams:</strong> Share in Files tab or as assignment attachment</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <div class="secret-tools">
+                <h3>🤫 Keep These Free Tools Secret!</h3>
+                <p style="margin: 1rem 0;">You've discovered incredibly powerful resources that most educators don't know about:</p>
+                <ul style="margin-left: 2rem; line-height: 2;">
+                    <li><strong>LMArena:</strong> Free access to $60/month worth of AI subscriptions</li>
+                    <li><strong>NanoBanana:</strong> Instant AI with zero barriers</li>
+                    <li><strong>Claude.ai Free:</strong> Professional-quality code generation</li>
+                    <li><strong>The Workflow:</strong> Compare → Iterate → Polish methodology</li>
+                </ul>
+                <p style="margin-top: 1rem; color: var(--gold); font-weight: bold;">The fewer people who know, the longer these stay free and accessible. Share wisely with trusted colleagues only!</p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>📚 Continue Your AI Educator Journey</h2>
+
+            <div class="next-steps">
+                <h3>🎯 Next Steps for Ongoing Learning</h3>
+
+                <h4 style="margin-top: 1.5rem;">Week 1-2: Practice and Build</h4>
+                <ul>
+                    <li>Build 3 of the 12 custom applications above</li>
+                    <li>Share one tool with a colleague and get feedback</li>
+                    <li>Test your tools with actual students</li>
+                    <li>Create a "My AI Tools" folder to organize your work</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Month 1: Integrate Into Workflow</h4>
+                <ul>
+                    <li>Use LMArena for all lesson plan generation</li>
+                    <li>Build one custom tool per week</li>
+                    <li>Track time saved with a simple log</li>
+                    <li>Document your favorite prompts in a personal library</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Month 2-3: Share and Teach</h4>
+                <ul>
+                    <li>Present one tool at a department meeting</li>
+                    <li>Write a blog post or social media thread about your experience</li>
+                    <li>Offer to teach a colleague the basics</li>
+                    <li>Submit a proposal to lead AI training at your institution</li>
+                </ul>
+
+                <h4 style="margin-top: 1.5rem;">Ongoing: Stay Current</h4>
+                <ul>
+                    <li>Try new AI models as they're released on LMArena</li>
+                    <li>Join AI educator communities (Reddit r/ArtificialIntelligence, Twitter/X #AIinEducation)</li>
+                    <li>Experiment with new free tools (they pop up regularly!)</li>
+                    <li>Share your success stories and creations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="celebration-box">
+            <h2>🎉 CONGRATULATIONS! 🎉</h2>
+            <p style="font-size: 1.25rem; margin: 1.5rem 0; color: #78350f;">You've completed the AI Educators Professional Development Course!</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Sessions Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Topics Mastered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$5K+</div>
+                    <div class="stat-label">Value of Tools Built</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$0</div>
+                    <div class="stat-label">Money Spent</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🏆 Your New Superpowers</h2>
+
+            <h3 style="color: var(--arena);">Session 1: AI Foundations & Quick Wins</h3>
+            <ul style="margin-left: 2rem;">
+                <li>✓ Set up ChatGPT, Claude, and Gemini accounts</li>
+                <li>✓ Compare AI assistants and choose the right one for each task</li>
+                <li>✓ Create professional presentations with Gamma</li>
+                <li>✓ Generate engaging videos with Pictory</li>
+            </ul>
+
+            <h3 style="color: var(--nano); margin-top: 1.5rem;">Session 2: Building Your Digital Workspace</h3>
+            <ul style="margin-left: 2rem;">
+                <li>✓ Master VSCodium for file editing</li>
+                <li>✓ Built a Program Coordinator Portal</li>
+                <li>✓ Created Weekly Report Generator</li>
+                <li>✓ Designed Student Resource Hub</li>
+                <li>✓ Linked all tools with navigation systems</li>
+            </ul>
+
+            <h3 style="color: #012456; margin-top: 1.5rem;">Session 3: Power Tools - PowerShell & Claude Code</h3>
+            <ul style="margin-left: 2rem;">
+                <li>✓ Mastered PowerShell command-line basics</li>
+                <li>✓ Installed Node.js development environment</li>
+                <li>✓ Set up Anthropic Console with API keys</li>
+                <li>✓ Installed and configured Claude Code CLI</li>
+                <li>✓ Built custom projects with AI assistance</li>
+            </ul>
+
+            <h3 style="color: var(--purple); margin-top: 1.5rem;">Session 4: Free Power Tools - Interactive Projects</h3>
+            <ul style="margin-left: 2rem;">
+                <li>✓ Discovered LMArena for premium AI access</li>
+                <li>✓ Mastered NanoBanana for rapid development</li>
+                <li>✓ Built professional Interactive Human Body Viewer</li>
+                <li>✓ Learned advanced customization techniques</li>
+                <li>✓ Know how to build 12+ custom applications</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>💰 Your ROI (Return on Investment)</h2>
+
+            <div class="success-box">
+                <h3>🎁 What You've Gained (In Dollar Value)</h3>
+                <div style="text-align: left; max-width: 700px; margin: 2rem auto;">
+                    <p><strong>Free Tools Access:</strong></p>
+                    <ul>
+                        <li>ChatGPT Equivalent: <del>$20/month × 12</del> = <strong>$240/year saved</strong></li>
+                        <li>Claude Pro Equivalent: <del>$20/month × 12</del> = <strong>$240/year saved</strong></li>
+                        <li>Gemini Advanced Equivalent: <del>$20/month × 12</del> = <strong>$240/year saved</strong></li>
+                    </ul>
+
+                    <p style="margin-top: 1rem;"><strong>Tools You Built:</strong></p>
+                    <ul>
+                        <li>Coordinator Portal: <del>$2,000</del> professional value</li>
+                        <li>Weekly Report Generator: <del>$800</del> professional value</li>
+                        <li>Student Resource Hub: <del>$1,200</del> professional value</li>
+                        <li>Human Body Viewer: <del>$5,000</del> professional value</li>
+                    </ul>
+
+                    <p style="margin-top: 1rem;"><strong>Skills Acquired:</strong></p>
+                    <ul>
+                        <li>AI Prompt Engineering: <del>$500</del> course value</li>
+                        <li>Web Development Basics: <del>$800</del> course value</li>
+                        <li>Command-Line Skills: <del>$400</del> course value</li>
+                    </ul>
+
+                    <p style="margin-top: 1.5rem; font-size: 1.5rem; color: var(--purple); font-weight: bold; text-align: center;">
+                        Total Value: $11,420+
+                    </p>
+                    <p style="text-align: center; color: #10b981; font-size: 1.25rem; font-weight: bold;">
+                        Your Investment: $0
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🌟 Final Words</h2>
+            <p style="font-size: 1.125rem; line-height: 1.8;">
+                You started this course as an educator interested in AI. You're finishing as an <strong>AI-powered educator</strong> with practical tools, real projects, and the confidence to build anything you can imagine.
+            </p>
+
+            <p style="font-size: 1.125rem; line-height: 1.8; margin-top: 1rem;">
+                The tools you've learned - ChatGPT, Claude, Gemini, Gamma, Pictory, VSCodium, PowerShell, Claude Code, LMArena, and NanoBanana - are just the beginning. The real power is in your new <strong>AI-assisted workflow</strong>: recognizing opportunities, choosing the right tool, iterating rapidly, and creating professional results.
+            </p>
+
+            <p style="font-size: 1.125rem; line-height: 1.8; margin-top: 1rem;">
+                Most importantly, you've proven that <strong>you don't need to be a programmer</strong> to harness AI's power. You don't need expensive subscriptions. You don't need years of training. You just need curiosity, clear communication, and the willingness to iterate.
+            </p>
+
+            <div class="tip-box" style="margin-top: 2rem;">
+                <h3>🚀 Your Challenge</h3>
+                <p style="font-size: 1.125rem;">Within the next 7 days:</p>
+                <ol style="margin: 1rem 0 1rem 2rem; font-size: 1.125rem;">
+                    <li>Build ONE tool from the 12 custom applications above</li>
+                    <li>Use it with real students or colleagues</li>
+                    <li>Get feedback</li>
+                    <li>Share your success (or lessons learned!)</li>
+                </ol>
+                <p style="font-size: 1.125rem; color: var(--purple); font-weight: bold;">The best way to learn is by doing. Start building today!</p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>✅ Final Course Completion Checklist</h2>
+            <ul>
+                <li>✓ Completed all 4 sessions (20 topics total)</li>
+                <li>✓ Set up 8+ AI accounts and tools</li>
+                <li>✓ Built at least 4 complete projects</li>
+                <li>✓ Have working knowledge of web development basics</li>
+                <li>✓ Understand command-line interfaces</li>
+                <li>✓ Know the three-phase AI workflow</li>
+                <li>✓ Have a library of prompts and techniques</li>
+                <li>✓ Can confidently build custom educational tools</li>
+                <li>✓ Ready to share knowledge with colleagues</li>
+            </ul>
+        </div>
+
+        <div class="final-message">
+            <h2 style="color: var(--purple); margin-bottom: 2rem;">Thank you for being an AI education pioneer! 🎓</h2>
+            <a href="ai-educators.html">← Return to Course Dashboard</a>
+        </div>
+
+        <div class="content-card" style="background: linear-gradient(135deg, #fef2f2 0%, #f0fdfa 50%, #f3e8ff 100%); border: 3px solid var(--purple); text-align: center;">
+            <h3 style="color: var(--purple);">📧 Stay Connected</h3>
+            <p style="margin: 1rem 0;">Questions? Want to share your creations? Need help troubleshooting?</p>
+            <p style="color: #6b7280; font-size: 0.875rem;">This course was created by LARK Labs as part of our mission to empower educators with AI tools.</p>
+            <p style="margin-top: 1rem; font-weight: bold; color: var(--purple);">Keep building, keep learning, and keep making education better with AI!</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LARK Labs | AI Educators Professional Development</p>
+        <p><a href="ai-educators.html">Return to Course Dashboard</a></p>
+        <p style="margin-top: 1rem; font-size: 0.875rem; color: #9ca3af;">Built with AI • Powered by free tools • Designed for educators</p>
+    </footer>
+</body>
+</html>
