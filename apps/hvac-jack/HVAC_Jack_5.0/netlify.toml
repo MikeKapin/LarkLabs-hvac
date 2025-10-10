@@ -1,0 +1,28 @@
+[build]
+  base = "apps/hvac-jack/HVAC_Jack_temp"
+  publish = "."
+  command = "echo 'HVAC Jack 4.0 build - functions enabled'"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions]
+  directory = "netlify/functions/"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/apps/hvac-jack/HVAC_Jack_temp/HVAC_Jack_Mobile_Updated.html"
+  to = "/apps/hvac-jack/HVAC_Jack_temp/"
+  status = 301
+
+[[redirects]]
+  from = "/apps/hvac-jack/HVAC_Jack_temp"
+  to = "/apps/hvac-jack/HVAC_Jack_temp/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
