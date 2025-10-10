@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Session 2: Building Your Digital Workspace — Program Coordinators</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --ink: #0f172a;
+            --sub: #334155;
+            --bg: #ffffff;
+            --brand: #2563eb;
+            --muted: #f1f5f9;
+            --ok: #16a34a;
+            --warn: #f59e0b;
+            --bad: #dc2626;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+            --vscode: #007acc;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 16px/1.6 system-ui, -apple-system, sans-serif;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        
+        header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.95;
+        }
+        
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .prerequisites {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .prerequisites h3 {
+            margin-top: 0;
+            color: #92400e;
+        }
+        
+        .module {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+        }
+        
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        
+        .module-number {
+            background: var(--teal);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .module h2 {
+            margin: 0;
+            color: var(--ink);
+        }
+        
+        .time-estimate {
+            background: var(--muted);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--sub);
+            margin-left: auto;
+        }
+        
+        .vscode-setup {
+            background: linear-gradient(135deg, #007acc15 0%, #007acc30 100%);
+            border: 2px solid var(--vscode);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .vscode-setup h3 {
+            color: var(--vscode);
+            margin-top: 0;
+        }
+        
+        .project-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .project-card h3 {
+            color: var(--teal);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .difficulty {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: normal;
+            margin-left: auto;
+        }
+        
+        .difficulty.easy {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .difficulty.medium {
+            background: #fed7aa;
+            color: #92400e;
+        }
+        
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: ui-monospace, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .code-block .comment {
+            color: #94a3b8;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #475569;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .copy-button:hover {
+            background: #64748b;
+        }
+        
+        .step-box {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .step-box ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .step-box li {
+            margin: 0.5rem 0;
+        }
+        
+        .folder-structure {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: ui-monospace, monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+        
+        .folder-structure .folder {
+            color: var(--vscode);
+            font-weight: bold;
+        }
+        
+        .folder-structure .file {
+            color: var(--sub);
+            margin-left: 1.5rem;
+        }
+        
+        .prompt-template {
+            background: #eff6ff;
+            border: 2px dashed var(--brand);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: ui-monospace, monospace;
+            font-size: 0.9rem;
+            position: relative;
+        }
+        
+        .output-preview {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .output-preview h4 {
+            margin-top: 0;
+            color: var(--sub);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .tip-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tip-box::before {
+            content: "💡 ";
+            font-size: 1.2rem;
+        }
+        
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid #fbbf24;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .warning-box::before {
+            content: "⚠️ ";
+            font-size: 1.2rem;
+        }
+        
+        .visual-guide {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .visual-guide img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .keyboard-shortcut {
+            display: inline-block;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 0.2rem 0.5rem;
+            font-family: ui-monospace, monospace;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 0 #cbd5e1;
+        }
+        
+        .success-banner {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .success-banner h2 {
+            margin-top: 0;
+        }
+        
+        .checklist {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .checklist li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin: 0.5rem 0;
+        }
+        
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-badge {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .module {
+                padding: 1.5rem;
+            }
+            
+            .tool-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Session 2: Building Your Digital Workspace</h1>
+        <p>Create Professional HTML Tools with VSCodium</p>
+    </header>
+    
+    <main>
+        <div class="prerequisites">
+            <h3>✅ Before We Start</h3>
+            <p><strong>Install VSCodium:</strong> Free, open-source code editor</p>
+            <ul>
+                <li>Download from: <code>vscodium.com</code></li>
+                <li>Install with default settings</li>
+                <li>Have your AI tool ready (ChatGPT, Claude, or Gemini)</li>
+            </ul>
+            <p><strong>Why VSCodium?</strong> It's like Microsoft Word but for code - you can see your work clearly, organize files, and make quick edits.</p>
+        </div>
+        
+        <!-- Module 1: VSCodium Setup -->
+        <div class="module">
+            <div class="module-header">
+                <div class="module-number">1</div>
+                <h2>Getting Comfortable with VSCodium</h2>
+                <span class="time-estimate">30 minutes</span>
+            </div>
+            
+            <div class="vscode-setup">
+                <h3>🚀 Quick Start Guide</h3>
+                
+                <div class="step-box">
+                    <strong>Step 1: Open VSCodium and Create Your Workspace</strong>
+                    <ol>
+                        <li>Open VSCodium</li>
+                        <li>Click "File" → "Open Folder"</li>
+                        <li>Create a new folder on Desktop called "CoordinatorTools"</li>
+                        <li>Select it and click "Open"</li>
+                    </ol>
+                </div>
+                
+                <div class="step-box">
+                    <strong>Step 2: Create Your First Project Structure</strong>
+                    <ol>
+                        <li>Right-click in the Explorer panel (left side)</li>
+                        <li>Select "New Folder" → name it "dashboard"</li>
+                        <li>Right-click on "dashboard" folder</li>
+                        <li>Select "New File" → name it "index.html"</li>
+                    </ol>
+                </div>
+                
+                <div class="folder-structure">
+                    <div class="folder">📁 CoordinatorTools/</div>
+                    <div class="folder">  📁 dashboard/</div>
+                    <div class="file">    📄 index.html</div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>Pro tip:</strong> Use keyboard shortcut <span class="keyboard-shortcut">Ctrl+S</span> (or <span class="keyboard-shortcut">Cmd+S</span> on Mac) to save your work frequently!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module 2: Program Coordinator Portal -->
+        <div class="module">
+            <div class="module-header">
+                <div class="module-number">2</div>
+                <h2>Build Your Program Coordinator Portal</h2>
+                <span class="time-estimate">60 minutes</span>
+            </div>
+            
+            <div class="project-card">
+                <h3>Project: All-in-One Dashboard with Quick Links <span class="difficulty easy">Easy</span></h3>
+                
+                <p><strong>What we'll build:</strong> A personal dashboard with all your daily tools in one place - AI assistants, email, Gamma, Pictory, and any other tools you use regularly.</p>
+                
+                <div class="step-box">
+                    <strong>Step 1: Generate the Dashboard Code with AI</strong>
+                    <p>Copy this prompt and paste it into your preferred AI tool:</p>
+                </div>
+                
+                <div class="prompt-template">
+                    <button class="copy-button" onclick="navigator.clipboard.writeText(this.parentElement.textContent.replace('Copy','').trim())">Copy</button>
+Create a Program Coordinator Dashboard HTML page with these sections:
+
+1. Header: "Program Coordinator Command Center" with current date/time
+2. Quick Links Section with cards for:
+   - ChatGPT (chat.openai.com)
+   - Claude (claude.ai)
+   - Gemini (gemini.google.com)
+   - VSCodium (local app)
+   - Outlook Email (outlook.com)
+   - Gamma (gamma.app)
+   - Pictory (pictory.ai)
+   - Google Sheets
+   - Canvas/Blackboard (customizable)
+
+3. Today's Tasks section (editable checklist stored in browser)
+4. Quick Notes section (text area that saves automatically)
+5. Important Dates reminder section
+6. Student Resources section with common links
+
+Requirements:
+- Modern card-based design
+- Each tool card should have an icon/emoji, name, and description
+- Links open in new tabs
+- Dark mode toggle button
+- Mobile responsive
+- Use localStorage to save tasks and notes
+- Professional blue/teal color scheme
+- Include a search box to filter tools
+                </div>
+                
+                <div class="step-box">
+                    <strong>Step 2: Copy Code to VSCodium</strong>
+                    <ol>
+                        <li>Copy ALL the code from AI's response</li>
+                        <li>Go to VSCodium</li>
+                        <li>Click in the index.html file you created</li>
+                        <li>Paste the code (<span class="keyboard-shortcut">Ctrl+V</span>)</li>
+                        <li>Save the file (<span class="keyboard-shortcut">Ctrl+S</span>)</li>
+                    </ol>
+                </div>
+                
+                <div class="step-box">
+                    <strong>Step 3: View Your Dashboard</strong>
+                    <ol>
+                        <li>In VSCodium, right-click on index.html</li>
+                        <li>Select "Reveal in File Explorer" (Windows) or "Reveal in Finder" (Mac)</li>
+                        <li>Double-click the index.html file to open in browser</li>
+                        <li>Bookmark this page for daily use!</li>
+                    </ol>
+                </div>
+                
+                <div class="output-preview">
+                    <h4>What You Should See</h4>
+                    <ul>
+                        <li>A grid of colorful cards for each tool</li>
+                        <li>Working links to all your daily applications</li>
+                        <li>A tasks list you can check off</li>
+                        <li>A notes area that saves what you type</li>
+                        <li>Everything works offline once created!</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3>Customizing Your Dashboard <span class="difficulty easy">Easy</span></h3>
+                
+                <div class="step-box">
+                    <strong>Add Your Own Tools:</strong>
+                    <p>Want to add more tools? Ask AI to help:</p>
+                </div>
+                
+                <div class="prompt-template">
+                    <button class="copy-button" onclick="navigator.clipboard.writeText(this.parentElement.textContent.replace('Copy','').trim())">Copy</button>
+I have this dashboard HTML code: [paste your current code]
+
+Please add these additional tool cards:
+- [Tool Name] with URL [website]
+- [Another Tool] with URL [website]
+
+Keep the same styling and make them fit nicely in the grid.
+                </div>
+                
+                <div class="tip-box">
+                    <strong>Quick Edit in VSCodium:</strong> Use <span class="keyboard-shortcut">Ctrl+F</span> to find specific text you want to change, like updating a URL or changing a tool name.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module 3: Weekly Report Generator -->
+        <div class="module">
+            <div class="module-header">
+                <div class="module-number">3</div>
+                <h2>Automated Weekly Report Generator</h2>
+                <span class="time-estimate">45 minutes</span>
+            </div>
+            
+            <div class="project-card">
+                <h3>Project: Smart Report Template <span class="difficulty medium">Medium</span></h3>
+                
+                <p><strong>What we'll build:</strong> An HTML form that generates formatted weekly reports you can copy into emails.</p>
+                
+                <div class="step-box">
+                    <strong>Step 1: Create New File in VSCodium</strong>
+                    <ol>
+                        <li>In VSCodium, create a new folder called "reports"</li>
+                        <li>Inside "reports", create file "weekly-generator.html"</li>
+                    </ol>
+                </div>
+                
+                <div class="folder-structure">
+                    <div class="folder">📁 CoordinatorTools/</div>
+                    <div class="folder">  📁 dashboard/</div>
+                    <div class="file">    📄 index.html</div>
+                    <div class="folder">  📁 reports/</div>
+                    <div class="file">    📄 weekly-generator.html</div>
+                </div>
+                
+                <div class="step-box">
+                    <strong>Step 2: Generate the Report Tool</strong>
+                </div>
+                
+                <div class="prompt-template">
+                    <button class="copy-button" onclick="navigator.clipboard.writeText(this.parentElement.textContent.replace('Copy','').trim())">Copy</button>
+Create an HTML Weekly Report Generator with these features:
+
+Form inputs for:
+- Week dates (start and end)
+- Number of student meetings held
+- Number of faculty consultations
+- Events organized this week
+- Key achievements (text area)
+- Challenges faced (text area)
+- Next week priorities (text area)
+- Special announcements (optional)
+
+When submitted, generate a professional report that:
+- Formats everything into a clean email template
+- Includes all the entered data
+- Has a professional greeting and closing
+- Can be copied with one button click
+- Shows preview before copying
+- Saves the data for next week's reference
+
+Style: Professional, clean, easy to use
+Include: Copy button, Clear form button, Save as PDF option
+                </div>
+                
+                <div class="step-box">
+                    <strong>Step 3: Test Your Report Generator</strong>
+                    <ol>
+                        <li>Open weekly-generator.html in browser</li>
+                        <li>Fill in sample data</li>
+                        <li>Click "Generate Report"</li>
+                        <li>Copy the formatted report</li>
+                        <li>Paste into your email client</li>
+                    </ol>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>Remember:</strong> This tool stays on your computer - no data is sent anywhere. Perfect for maintaining privacy while creating professional reports!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module 4: Student Resource Hub -->
+        <div class="module">
+            <div class="module-header">
+                <div class="module-number">4</div>
+                <h2>Create a Student Resource Hub</h2>
+                <span class="time-estimate">45 minutes</span>
+            </div>
+            
+            <div class="project-card">
+                <h3>Project: Interactive Student Portal <span class="difficulty medium">Medium</span></h3>
+                
+                <p><strong>What we'll build:</strong> A searchable, organized resource page for students with FAQs, links, and important dates.</p>
+                
+                <div class="step-box">
+                    <strong>File Setup in VSCodium:</strong>
+                    <ol>
+                        <li>Create folder "student-resources"</li>
+                        <li>Create file "resources.html" inside it</li>
+                    </ol>
+                </div>
+                
+                <div class="prompt-template">
+                    <button class="copy-button" onclick="navigator.clipboard.writeText(this.parentElement.textContent.replace('Copy','').trim())">Copy</button>
+Build a Student Resource Hub HTML page with:
+
+1. Search bar that filters all content
+2. Categorized resource sections:
+   - Academic Support (tutoring, writing center, library)
+   - Registration & Enrollment (how-to guides, deadlines)
+   - Financial Aid (links, FAQ, contact info)
+   - Student Life (clubs, events, wellness)
+   - Career Services (resume help, job board)
+
+3. Expandable FAQ section with 10 common questions
+4. Important dates calendar/timeline
+5. Emergency contacts sidebar
+6. "Quick Actions" buttons:
+   - Schedule advising appointment
+   - View degree requirements
+   - Calculate GPA
+   - Find study spaces
+
+Make it:
+- Mobile-friendly
+- Easy to navigate with smooth scrolling
+- Printable version available
+- Accessible with good contrast
+- Include "last updated" date
+                </div>
+                
+                <div class="tip-box">
+                    <strong>VSCodium Tip:</strong> Use the "Split Editor" feature (icon in top right) to view your AI prompt and code side-by-side while working!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module 5: Practice and Integration -->
+        <div class="module">
+            <div class="module-header">
+                <div class="module-number">5</div>
+                <h2>Connecting Everything Together</h2>
+                <span class="time-estimate">30 minutes</span>
+            </div>
+            
+            <div class="project-card">
+                <h3>Create Your Master Navigation</h3>
+                
+                <p>Let's link all your projects together:</p>
+                
+                <div class="step-box">
+                    <strong>Add Navigation to Your Dashboard:</strong>
+                    <p>Ask AI to modify your dashboard code:</p>
+                </div>
+                
+                <div class="prompt-template">
+                    <button class="copy-button" onclick="navigator.clipboard.writeText(this.parentElement.textContent.replace('Copy','').trim())">Copy</button>
+Add a navigation menu to my dashboard HTML that links to:
+- Weekly Report Generator (../reports/weekly-generator.html)
+- Student Resources (../student-resources/resources.html)
+- Back to Dashboard (index.html)
+
+Make it a sticky header that stays at top when scrolling.
+Style it to match the existing design.
+                </div>
+                
+                <div class="checklist">
+                    <h4>Final Checklist - Your Digital Workspace:</h4>
+                    <ul>
+                        <li>Dashboard with all your daily tools</li>
+                        <li>Weekly report generator</li>
+                        <li>Student resource hub</li>
+                        <li>All files organized in VSCodium</li>
+                        <li>Everything works offline</li>
+                        <li>Bookmarks saved for quick access</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3>Bonus Enhancements</h3>
+                
+                <p>Choose one enhancement to try:</p>
+                
+                <div class="tool-grid">
+                    <div class="tool-badge">📊 Add Charts</div>
+                    <div class="tool-badge">🎨 Custom Colors</div>
+                    <div class="tool-badge">📱 Mobile App Icon</div>
+                    <div class="tool-badge">🔔 Notifications</div>
+                    <div class="tool-badge">📈 Analytics</div>
+                    <div class="tool-badge">🌙 Dark Mode</div>
+                </div>
+                
+                <div class="prompt-template">
+                    <button class="copy-button" onclick="navigator.clipboard.writeText(this.parentElement.textContent.replace('Copy','').trim())">Copy</button>
+Add [chosen enhancement] to my HTML page:
+[Paste your current code]
+
+For example: "Add a simple bar chart showing student enrollment by program using Chart.js"
+                </div>
+            </div>
+        </div>
+        
+        <!-- Session Wrap-up -->
+        <div class="success-banner">
+            <h2>🎉 Session 2 Complete!</h2>
+            <p><strong>You've accomplished:</strong></p>
+            <p>✓ Set up VSCodium as your development environment<br>
+            ✓ Created a personalized coordinator dashboard<br>
+            ✓ Built a weekly report generator<br>
+            ✓ Developed a student resource hub<br>
+            ✓ Learned to modify and customize HTML with AI help</p>
+            
+            <div style="background: white; color: var(--ink); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <h3>Your New Workflow:</h3>
+                <ol style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <li>Open your dashboard bookmark each morning</li>
+                    <li>Access all tools from one central location</li>
+                    <li>Generate weekly reports in 2 minutes</li>
+                    <li>Share the student resource link with students</li>
+                    <li>Update and improve with AI assistance anytime</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="module" style="background: #f0f9ff; border-color: #0ea5e9;">
+            <h3>📚 Take-Home Resources</h3>
+            
+            <p><strong>VSCodium Shortcuts to Remember:</strong></p>
+            <ul>
+                <li><span class="keyboard-shortcut">Ctrl+S</span> - Save file</li>
+                <li><span class="keyboard-shortcut">Ctrl+F</span> - Find text</li>
+                <li><span class="keyboard-shortcut">Ctrl+H</span> - Find and replace</li>
+                <li><span class="keyboard-shortcut">Ctrl+/</span> - Comment/uncomment code</li>
+                <li><span class="keyboard-shortcut">Alt+Z</span> - Toggle word wrap</li>
+            </ul>
+            
+            <p><strong>AI Prompts for Future Projects:</strong></p>
+            <ul>
+                <li>"Add a countdown timer to my page for [event]"</li>
+                <li>"Create a grade calculator tool in HTML"</li>
+                <li>"Build an attendance tracker with charts"</li>
+                <li>"Make an interactive campus map"</li>
+                <li>"Generate an event RSVP form"</li>
+            </ul>
+            
+            <p><strong>Next Session Preview:</strong> We'll deploy everything online and create advanced automations!</p>
+        </div>
+    </main>
+</body>
+</html>

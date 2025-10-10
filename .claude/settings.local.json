@@ -1,27 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Read(//c/Users/m_kap/OneDrive/Desktop/Personal/LARKLabs/Images/**)",
-      "Bash(for:*)",
-      "Bash(do echo \"Processing $file\")",
-      "Bash(done)",
-      "Bash(find:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Read(//c/Users/m_kap/OneDrive/Desktop/Personal/LARKLabs/**)",
-      "Bash(git stash push:*)",
-      "Bash(git fetch:*)",
-      "Bash(git pull:*)",
-      "Read(//c/Users/m_kap/OneDrive/Desktop/Personal/Wall Drops/Code compass/**)",
-      "Read(//c/Users/m_kap/OneDrive/Desktop/Personal/Android App Project/**)",
-      "Read(//c/Users/m_kap/CODE_COMPASS_2025/**)",
-      "Bash(xcopy:*)",
-      "Bash(robocopy:*)",
-      "Bash(npm run dev:*)",
-      "Bash(node:*)",
-      "Bash(awk:*)",
-      "Read(//d/LARKLabs/Code Compass/csa-code-search/data/**)"
+      "Bash(timeout:*)",
+      "WebFetch(domain:claudia.so)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm run tauri:*)",
+      "Bash(cargo --version)",
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": [],

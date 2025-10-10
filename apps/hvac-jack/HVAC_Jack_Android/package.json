@@ -1,0 +1,28 @@
+{
+  "name": "hvac-jack-android",
+  "version": "4.0.0",
+  "description": "HVAC Jack 4.0 - AI-Powered HVAC Troubleshooting Assistant for Android",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx cap sync android",
+    "android": "npx cap open android",
+    "sync": "npx cap sync",
+    "update": "npx cap update"
+  },
+  "keywords": [
+    "hvac",
+    "ai",
+    "assistant",
+    "troubleshooting",
+    "android",
+    "capacitor"
+  ],
+  "author": "LARK Labs",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/cli": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  }
+}

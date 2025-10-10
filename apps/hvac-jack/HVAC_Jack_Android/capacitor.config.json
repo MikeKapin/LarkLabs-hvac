@@ -1,0 +1,24 @@
+{
+  "appId": "com.larklabs.hvacjack",
+  "appName": "HVAC Jack 4.0",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "hostname": "larklabs.org",
+    "allowNavigation": [
+      "https://larklabs.org",
+      "https://*.netlify.app",
+      "https://api.anthropic.com"
+    ]
+  },
+  "android": {
+    "buildOptions": {
+      "keystorePath": "",
+      "keystorePassword": "",
+      "keystoreAlias": "",
+      "keystoreAliasPassword": "",
+      "releaseType": "APK"
+    }
+  }
+}
