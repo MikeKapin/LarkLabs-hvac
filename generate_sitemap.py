@@ -54,9 +54,9 @@ def get_changefreq(filename):
     if any(keyword in filename for keyword in ['tutor', 'jack', 'compass', 'practice', 'simulator']):
         return 'monthly'
 
-    # Training pages - quarterly
+    # Training pages - monthly (quarterly is not valid per sitemap protocol)
     if 'CSA_Unit' in filename:
-        return 'quarterly'
+        return 'monthly'
 
     # Blog - weekly
     if 'blog' in filename:
