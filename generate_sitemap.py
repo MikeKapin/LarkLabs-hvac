@@ -6,6 +6,7 @@ Generates sitemap.xml with proper priorities for AI tools and training pages
 import os
 from datetime import datetime
 from pathlib import Path
+import html
 
 def get_all_html_files():
     """Get all HTML files in the website"""
@@ -95,6 +96,9 @@ def generate_sitemap():
         # Clean up path
         url_path = file_path.replace('\\', '/')
 
+        # Escape special XML characters in URL (&, <, >, ", ')
+        url_path_escaped = html.escape(url_path, quote=False)
+
         # Skip certain files
         if any(skip in file_path for skip in ['backup', 'template', 'test', 'cancel', 'success', 'protected']):
             continue
@@ -104,7 +108,7 @@ def generate_sitemap():
         changefreq = get_changefreq(filename)
 
         sitemap += f'''  <url>
-    <loc>{base_url}/{url_path}</loc>
+    <loc>{base_url}/{url_path_escaped}</loc>
     <lastmod>{now}</lastmod>
     <changefreq>{changefreq}</changefreq>
     <priority>{priority}</priority>
