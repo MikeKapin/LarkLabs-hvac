@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSA Gas Technician 3 - Learning Modules | LARK Labs</title>
+    <meta http-equiv="refresh" content="0; url=https://larklabs.org/pages/blog/tssa-g3-study-guide.html">
+    <title>Redirecting to G3 Study Guide...</title>
     <style>
         * {
             margin: 0;
@@ -13,642 +14,82 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
-            color: #ffffff;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            background-attachment: fixed;
             min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header */
-        header {
-            background: rgba(52, 152, 219, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 2rem 0;
-            text-align: center;
-            border-radius: 15px;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(52, 152, 219, 0.3);
-        }
-
-        .logo-section {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 1rem;
+            align-items: center;
+            color: white;
         }
 
-        .logo-bird svg {
-            width: 60px;
-            height: 60px;
+        .redirect-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
         }
 
-        .logo-text {
-            text-align: left;
-        }
-
-        .logo-text h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #3498db;
-            margin: 0;
-        }
-
-        .logo-text .subtitle {
-            font-size: 1.2rem;
-            color: #95a5a6;
-            margin-top: -5px;
-        }
-
-        .course-title {
-            font-size: 2.8rem;
-            margin: 1rem 0;
-            background: linear-gradient(45deg, #ffffff, #3498db);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 900;
-        }
-
-        .course-description {
-            font-size: 1.2rem;
-            color: #ecf0f1;
-            max-width: 800px;
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
             margin: 0 auto 2rem auto;
         }
 
-        /* Navigation Buttons */
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .nav-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        .nav-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.4);
-        }
-
-        .nav-button.secondary {
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
-        }
-
-        /* Progress Bar */
-        .progress-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        /* Module Grid */
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .module-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 2rem;
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .module-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(52, 152, 219, 0.2);
-            border-color: rgba(52, 152, 219, 0.3);
-        }
-
-        .module-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(45deg, #3498db, #2980b9);
-        }
-
-        .module-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #3498db;
-        }
-
-        .module-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-
-        .module-card p {
-            color: #bdc3c7;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .module-status {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
-            color: white;
-        }
-
-        .status-locked {
-            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
-        }
-
-        .status-completed {
-            background: linear-gradient(45deg, #f39c12, #e67e22);
-        }
-
-        /* File List Section */
-        .file-section {
-            background: rgba(52, 152, 219, 0.08);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(52, 152, 219, 0.2);
-        }
-
-        .file-section h2 {
-            color: #3498db;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .file-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .file-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .file-item:hover {
-            background: rgba(52, 152, 219, 0.1);
-            border-color: rgba(52, 152, 219, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .file-icon {
+        h1 {
             font-size: 2rem;
             margin-bottom: 1rem;
             color: #3498db;
         }
 
-        .file-name {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #ffffff;
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
         }
 
-        .file-description {
-            font-size: 0.9rem;
-            color: #bdc3c7;
-        }
-
-        /* Quick Access Section */
-        .quick-access {
-            background: linear-gradient(45deg, #2c3e50, #34495e);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .quick-access h3 {
-            color: #3498db;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-        }
-
-        .quick-access-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .quick-button {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        .manual-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #2980b9);
             color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 1rem 2rem;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
             transition: all 0.3s;
-            font-size: 0.9rem;
         }
 
-        .quick-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(231, 76, 60, 0.4);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 3rem;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .course-title {
-                font-size: 2rem;
-            }
-
-            .logo-section {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .modules-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .module-card {
-                padding: 1.5rem;
-            }
-
-            .nav-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .quick-access-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .file-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animation for cards */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .module-card, .file-item {
-            animation: fadeInUp 0.6s ease-out;
+        .manual-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo-section">
-                <div class="logo-bird">
-                    <img src="../../../assets/images/lark-labs-new-logo.png" alt="LARK Labs" style="height: 80px; width: auto;">
-                </div>
-                <div class="logo-text">
-                    <h1>LARK <span style="color: #95a5a6;">LABS</span></h1>
-                    <div class="subtitle">HVAC Education Technology</div>
-                </div>
-            </div>
-            
-            <h2 class="course-title">CSA Gas Technician 3</h2>
-            <h3 style="color: #3498db; margin-bottom: 1rem;">Learning Modules Hub</h3>
-            <p class="course-description">
-                Enhance your Gas Technician 3 Education with our comprehensive 9-module learning system. These materials provide the foundation of theoretical skills for entry-level gas technicians and help to prepare you for the TSSA G3 licensing exam.
-            </p>
-        </header>
-
-        <div class="nav-buttons">
-            <a href="https://www.larklabs.org" class="nav-button">← Back to Main Site</a>
-            <a href="#modules" class="nav-button secondary">View Modules</a>
-            <a href="#files" class="nav-button">Browse All Files</a>
-        </div>
-
-        <div class="progress-section">
-            <h3 style="color: #3498db; margin-bottom: 1rem;">Your Learning Progress</h3>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <p id="progressText">0 of 9 modules completed (0%)</p>
-        </div>
-
-        <section id="modules">
-            <h2 style="text-align: center; color: #3498db; font-size: 2.5rem; margin-bottom: 3rem;">Course Modules</h2>
-            
-            <div class="modules-grid">
-                <div class="module-card">
-                    <div class="module-icon">🛡️</div>
-                    <h3>Unit 1 - Safety</h3>
-                    <p>On-the-Job Safety, Government Acts, Hazardous Materials, Fire Safety, Personal Protective Equipment, and Workplace Safety Procedures</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_1_Safety.pdf', '_blank')">📖 Study Material</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_1_Safety_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
-                    </div>
-                </div>
-
-                <div class="module-card">
-                    <div class="module-icon">🔧</div>
-                    <h3>Unit 2 - Tools & Equipment</h3>
-                    <p>Fasteners, Hand Tools, Power Tools, Measuring Instruments, Testing Equipment, and Proper Tool Usage</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_2_Fasteners_Tools_and_Test_Equipment.pdf', '_blank')">📖 Study Material</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_2_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
-                    </div>
-                </div>
-
-                <div class="module-card">
-                    <div class="module-icon">⛽</div>
-                    <h3>Unit 3 - Gas Properties</h3>
-                    <p>Fuel Gas Properties, Combustion Principles, Gas Hazards, Safe Handling Procedures, and Gas Detection</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_3_Properties_and_Safe_Handling_of_Fuel_Gases.pdf', '_blank')">📖 Study Material</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_3_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
-                    </div>
-                </div>
-
-                <div class="module-card">
-                    <div class="module-icon">📋</div>
-                    <h3>Unit 4 & 4a - Codes & Regulations</h3>
-                    <p>CSA B149.1 Utilization Codes, Provincial Acts, Regulations, and Ontario Supplement Requirements</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_4_Gas-Industry-Codes-Acts-and-Regulations.pdf', '_blank')" style="flex: 1; min-width: 120px;">📖 Unit 4 PDF</button>
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_4a_Laws-Governing-the-Gas-Industry.pdf', '_blank')" style="flex: 1; min-width: 120px;">📖 Unit 4a PDF</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_4_&_4a_Chapter_Reviews.html', '_blank')" style="width: 100%;">✅ Practice Questions</button>
-                    </div>
-                </div>
-
-                <div class="module-card">
-                    <div class="module-icon">⚡</div>
-                    <h3>Unit 5 - Basic Electricity</h3>
-                    <p>Electrical Safety, Theory, Circuits, Magnetism, AC/DC Power, and Electrical Testing Instruments</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_5_Basic_Electricity.pdf', '_blank')">📖 Study Material</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
-                    </div>
-                </div>
-
-                <div class="module-card">
-                    <div class="module-icon">📐</div>
-                    <h3>Unit 6 - Technical Drawings & Manuals</h3>
-                    <p>Technical Drawing Interpretation, Reference Manuals, Charts, Graphs, and Schematic Reading</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_6_Technical_Manuals_Specs_Drawings.pdf', '_blank')">📖 Study Material</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html', '_blank')">✅ Practice Questions</button>
-                    </div>
-                </div>
-
-                <div class="module-card">
-                    <div class="module-icon">🤝</div>
-                    <h3>Unit 7 - Customer Relations</h3>
-                    <p>Professional Communication, Customer Service Excellence, and Workplace Relations</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_7_Customer_Relations.pdf', '_blank')">📖 Study Material</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_7_Customer_Relations_Chapter_Reviews.html', '_blank')">✅ Practice Questions</button>
-                    </div>
-                </div>
-
-                <div class="module-card">
-                    <div class="module-icon">🔩</div>
-                    <h3>Unit 8 - Gas Piping Systems</h3>
-                    <p>Gas Piping Materials, Installation Methods, System Components, and Safety Procedures</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_8_Intro_to_Piping_and_Tubing_Systems.pdf', '_blank')">📖 Study Material</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_8_Intro_to_Piping_Reviews.html', '_blank')">✅ Practice Questions</button>
-                    </div>
-                </div>
-
-                <div class="module-card">
-                    <div class="module-icon">🔥</div>
-                    <h3>Unit 9 - Gas Appliances</h3>
-                    <p>Gas Appliance Types, Components, Operation Principles, and Safety Features</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="nav-button" onclick="event.stopPropagation(); window.open('CSA_Unit_9_Intro_to_Gas_Appliances.pdf', '_blank')">📖 Study Material</button>
-                        <button class="nav-button secondary" onclick="event.stopPropagation(); window.open('CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html', '_blank')">✅ Practice Questions</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="quick-access">
-            <h3>Quick Access Tools</h3>
-            <p style="margin-bottom: 1.5rem; color: #bdc3c7;">Access related LARK Labs tools and resources</p>
-            <div class="quick-access-buttons">
-                <a href="../TSSA_G3_Exam_SimulatorV3.html" class="quick-button">G3 Practice Exam</a>
-                <a href="../CSA_Unit_1_Safety_Chapter_Reviews.html" class="quick-button">Chapter Reviews</a>
-                <a href="../SuperHeat_SubCool_Calculator.html" class="quick-button">HVAC Calculators</a>
-                <a href="../index.html#tools" class="quick-button">All LARK Tools</a>
-            </div>
-        </div>
-
-        <section id="files" class="file-section">
-            <h2>Browse All Learning Materials</h2>
-            <p style="text-align: center; margin-bottom: 2rem; color: #bdc3c7;">
-                Click on any file below to open it directly. These are the actual files available in your G3 directory.
-            </p>
-            
-            <div class="file-grid" id="fileGrid">
-                <!-- Files will be dynamically loaded here -->
-            </div>
-            
-            <div style="text-align: center; margin-top: 2rem;">
-                <button class="nav-button" onclick="refreshFileList()">🔄 Refresh File List</button>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; 2025 LARK Labs - CSA Gas Technician 3 Learning Hub</p>
-            <p style="color: #95a5a6; margin-top: 0.5rem;">Professional HVAC Education Technology</p>
-        </footer>
+    <div class="redirect-container">
+        <div class="spinner"></div>
+        <h1>Redirecting to G3 Study Guide</h1>
+        <p>You are being redirected to the new LARK Labs G3 Study Guide page...</p>
+        <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);">If you are not redirected automatically, click the link below:</p>
+        <a href="https://larklabs.org/pages/blog/tssa-g3-study-guide.html" class="manual-link">Go to G3 Study Guide →</a>
     </div>
 
     <script>
-        // Progress tracking
-        let completedModules = JSON.parse(localStorage.getItem('g3-progress') || '[]');
-
-        function updateProgress() {
-            const progressFill = document.getElementById('progressFill');
-            const progressText = document.getElementById('progressText');
-            const percentage = Math.round((completedModules.length / 9) * 100);
-            
-            progressFill.style.width = percentage + '%';
-            progressText.textContent = `${completedModules.length} of 9 modules completed (${percentage}%)`;
-        }
-
-        function markModuleComplete(moduleId) {
-            if (!completedModules.includes(moduleId)) {
-                completedModules.push(moduleId);
-                localStorage.setItem('g3-progress', JSON.stringify(completedModules));
-                updateProgress();
-                
-                // Update module status visually
-                const moduleCard = document.querySelector(`[onclick="openFile('${moduleId}')"]`);
-                if (moduleCard) {
-                    const status = moduleCard.querySelector('.module-status');
-                    status.textContent = 'Completed';
-                    status.classList.remove('module-status');
-                    status.classList.add('status-completed');
-                }
-            }
-        }
-
-        // Direct file access - no longer need prompt selection since we have dual buttons
-
-        function openFileByName(fileName) {
-            try {
-                window.open(fileName, '_blank');
-            } catch (error) {
-                alert(`Could not open file: ${fileName}\n\nPlease check that the file exists and is accessible.`);
-            }
-        }
-
-        // Load the actual files available based on your file list
-        function loadAvailableFiles() {
-            const fileGrid = document.getElementById('fileGrid');
-            
-            // Actual files from your G3 directory
-            const actualFiles = [
-                { name: 'CSA_Unit_1_Safety.pdf', icon: '📄', desc: 'Unit 1 Safety - PDF Content' },
-                { name: 'CSA_Unit_1_Safety_Chapter_Reviews.html', icon: '❓', desc: 'Unit 1 Safety - Chapter Reviews' },
-                { name: 'CSA_Unit_2_Chapter_Reviews.html', icon: '❓', desc: 'Unit 2 Tools - Chapter Reviews' },
-                { name: 'CSA_Unit_2_Fasteners_Tools_and_Test_Equipment.pdf', icon: '📄', desc: 'Unit 2 Tools & Equipment - PDF Content' },
-                { name: 'CSA_Unit_3_Chapter_Reviews.html', icon: '❓', desc: 'Unit 3 Gas Properties - Chapter Reviews' },
-                { name: 'CSA_Unit_3_Properties_and_Safe_Handling_of_Fuel_Gases.pdf', icon: '📄', desc: 'Unit 3 Gas Properties - PDF Content' },
-                { name: 'CSA_Unit_4_&_4a_Chapter_Reviews.html', icon: '❓', desc: 'Unit 4 & 4a Codes - Chapter Reviews' },
-                { name: 'CSA_Unit_4_Gas-Industry-Codes-Acts-and-Regulations.pdf', icon: '📄', desc: 'Unit 4 Codes & Regulations - PDF Content' },
-                { name: 'CSA_Unit_4a_Laws-Governing-the-Gas-Industry.pdf', icon: '📄', desc: 'Unit 4a Laws - PDF Content' },
-                { name: 'CSA_Unit_5_Basic_Electricity.pdf', icon: '📄', desc: 'Unit 5 Basic Electricity - PDF Content' },
-                { name: 'CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html', icon: '❓', desc: 'Unit 5 Electricity - Chapter Reviews' },
-                { name: 'CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html', icon: '❓', desc: 'Unit 6 Technical Drawings - Chapter Reviews' },
-                { name: 'CSA_Unit_6_Technical_Manuals_Specs_Drawings.pdf', icon: '📄', desc: 'Unit 6 Technical Drawings - PDF Content' },
-                { name: 'CSA_Unit_7_Customer_Relations.pdf', icon: '📄', desc: 'Unit 7 Customer Relations - PDF Content' },
-                { name: 'CSA_Unit_7_Customer_Relations_Chapter_Reviews.html', icon: '❓', desc: 'Unit 7 Customer Relations - Chapter Reviews' },
-                { name: 'CSA_Unit_8_Intro_to_Piping_and_Tubing_Systems.pdf', icon: '📄', desc: 'Unit 8 Piping Systems - PDF Content' },
-                { name: 'CSA_Unit_8_Intro_to_Piping_Reviews.html', icon: '❓', desc: 'Unit 8 Piping - Chapter Reviews' },
-                { name: 'CSA_Unit_9_Intro_to_Gas_Appliances.pdf', icon: '📄', desc: 'Unit 9 Gas Appliances - PDF Content' },
-                { name: 'CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html', icon: '❓', desc: 'Unit 9 Appliances - Chapter Reviews' }
-            ];
-
-            fileGrid.innerHTML = '';
-            
-            actualFiles.forEach(file => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.onclick = () => openFileByName(file.name);
-                
-                fileItem.innerHTML = `
-                    <div class="file-icon">${file.icon}</div>
-                    <div class="file-name">${file.name}</div>
-                    <div class="file-description">${file.desc}</div>
-                `;
-                
-                fileGrid.appendChild(fileItem);
-            });
-        }
-
-        function refreshFileList() {
-            loadAvailableFiles();
-            alert('File list refreshed with actual G3 directory contents!');
-        }
-
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            updateProgress();
-            loadAvailableFiles();
-            
-            // Add smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                switch(e.key) {
-                    case 'h':
-                        e.preventDefault();
-                        window.location.href = '../index.html';
-                        break;
-                    case 'r':
-                        e.preventDefault();
-                        refreshFileList();
-                        break;
-                }
-            }
-        });
+        // Fallback redirect after 2 seconds if meta refresh fails
+        setTimeout(function() {
+            window.location.href = 'https://larklabs.org/pages/blog/tssa-g3-study-guide.html';
+        }, 2000);
     </script>
 </body>
 </html>

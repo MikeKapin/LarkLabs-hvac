@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSSA G3 Study Guide - LARK Labs</title>
+    <meta name="description" content="Comprehensive TSSA G3 Study Guide with detailed exam preparation strategies, study tips, and complete unit coverage for 2025.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #3498db;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #3498db;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin: 0.5rem;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+
+        /* Coming Soon Section */
+        .coming-soon {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.95), rgba(41, 128, 185, 0.95));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 4rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .coming-soon h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .coming-soon p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .coming-soon .highlight {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f39c12;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-card h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card h3::before {
+            content: "✓";
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .info-card li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .features h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover {
+            border-left-width: 8px;
+            transform: translateX(5px);
+        }
+
+        .feature-item h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #27ae60;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: white;
+            color: #27ae60;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 3rem 20px;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #3498db;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .coming-soon {
+                padding: 2rem;
+            }
+
+            .coming-soon h2 {
+                font-size: 1.8rem;
+            }
+
+            .coming-soon p {
+                font-size: 1.1rem;
+            }
+
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-card,
+        .feature-item {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .info-card:nth-child(1) { animation-delay: 0.1s; }
+        .info-card:nth-child(2) { animation-delay: 0.2s; }
+        .info-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="https://www.larklabs.org" class="logo">LARK <span>Labs</span></a>
+            <nav>
+                <a href="https://www.larklabs.org">Home</a>
+                <a href="https://larklabs.org/tssa-g3-exam-prep">G3 Exam Prep</a>
+                <a href="https://www.larklabs.org#tools">Tools</a>
+                <a href="https://www.larklabs.org#training">Training</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>TSSA G3 Study Guide</h1>
+        <p>Your comprehensive guide to G3 certification success</p>
+        <div>
+            <span class="badge">CSA Compliant</span>
+            <span class="badge">2025 Updated</span>
+            <span class="badge">Complete Coverage</span>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Coming Soon Announcement -->
+        <div class="coming-soon">
+            <h2>Coming Soon</h2>
+            <p class="highlight">LARK Labs 2025 CSA Compliant Training Modules for G3</p>
+            <p>We're developing comprehensive, CSA-compliant training modules designed specifically for TSSA G3 certification. Our modules will feature interactive learning, real-world scenarios, and exam-focused preparation strategies.</p>
+            <p>Expected Launch: <strong>Spring 2025</strong></p>
+        </div>
+
+        <!-- What to Expect -->
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Complete Unit Coverage</h3>
+                <ul>
+                    <li>CSA B149.1 Natural Gas Code</li>
+                    <li>CSA B149.2 Propane Code</li>
+                    <li>Gas Appliance Fundamentals</li>
+                    <li>Piping Systems & Installation</li>
+                    <li>Safety Standards & Regulations</li>
+                    <li>Technical Drawing Interpretation</li>
+                    <li>Combustion Analysis</li>
+                    <li>Ventilation Requirements</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Study Strategies</h3>
+                <ul>
+                    <li>Personalized learning paths</li>
+                    <li>Interactive practice questions</li>
+                    <li>Video tutorials and demonstrations</li>
+                    <li>Code reference guides</li>
+                    <li>Exam simulation practice</li>
+                    <li>Progress tracking dashboard</li>
+                    <li>Mobile-friendly access</li>
+                    <li>Expert instructor support</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Exam Preparation</h3>
+                <ul>
+                    <li>1000+ practice questions</li>
+                    <li>Detailed answer explanations</li>
+                    <li>Timed practice exams</li>
+                    <li>Performance analytics</li>
+                    <li>Weak area identification</li>
+                    <li>Study schedule planner</li>
+                    <li>Quick reference materials</li>
+                    <li>Last-minute review guides</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <h2>What Makes Our Training Different</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h4>CSA 2025 Compliant</h4>
+                    <p>Fully updated to reflect the latest CSA B149.1 and B149.2 code changes for 2025</p>
+                </div>
+                <div class="feature-item">
+                    <h4>TSSA Aligned</h4>
+                    <p>Content specifically designed to match TSSA G3 examination objectives and format</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Interactive Learning</h4>
+                    <p>Engage with dynamic content, quizzes, and hands-on exercises throughout each module</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Real-World Scenarios</h4>
+                    <p>Learn through practical case studies and field-tested examples from experienced professionals</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Mobile Accessible</h4>
+                    <p>Study anywhere, anytime with full mobile and tablet optimization</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Progress Tracking</h4>
+                    <p>Monitor your learning journey with detailed analytics and performance insights</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Ready to Start Your G3 Journey?</h2>
+            <p>Get notified when our CSA-compliant training modules launch</p>
+            <div class="cta-buttons">
+                <a href="mailto:info@larklabs.org?subject=G3 Training Module Notification Request" class="cta-button">Notify Me at Launch</a>
+                <a href="https://larklabs.org/tssa-g3-exam-prep" class="cta-button secondary">Explore G3 Resources</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About LARK Labs</h3>
+                <p>Bridging traditional HVAC education with digital technology to empower Canadian gas technicians.</p>
+                <p><em>"Technology should serve people, not the other way around."</em></p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="https://www.larklabs.org">Home</a>
+                <a href="https://larklabs.org/tssa-g3-exam-prep">G3 Exam Prep</a>
+                <a href="https://www.larklabs.org#tools">HVAC Tools</a>
+                <a href="https://www.larklabs.org#training">Training Resources</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <a href="mailto:info@larklabs.org">info@larklabs.org</a>
+                <p>Serving Canadian HVAC professionals and students</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 LARK Labs. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
