@@ -62,14 +62,15 @@ async function useActivationCode(activationCode, deviceId, headers) {
         'DEVUNLTD'  // Developer unlimited backup
     ];
 
-    // Special 12-month codes for Fanshawe students/faculty (FANSH0001 - FANSH0080) - one-time use only
+    // Special 12-month codes for LARK Labs students (LARK0001 - LARK0080) - one-time use only
     // These codes grant 12 months access and revert to freemium after expiration
-    if (/^FANSH\d{4}$/.test(activationCode.toUpperCase())) {
-        const codeNumber = parseInt(activationCode.substring(5));
+    // Same codes as Code Compass for unified access across all LARK Labs apps
+    if (/^LARK\d{4}$/.test(activationCode.toUpperCase())) {
+        const codeNumber = parseInt(activationCode.substring(4));
 
         // Validate code is in range 1-80
         if (codeNumber >= 1 && codeNumber <= 80) {
-            console.log('Special Fanshawe 12-month code used:', activationCode);
+            console.log('Special LARK Labs 12-month code used:', activationCode);
 
             // Calculate 12 months from now
             const expirationDate = new Date();
@@ -82,14 +83,14 @@ async function useActivationCode(activationCode, deviceId, headers) {
                     success: true,
                     activated: true,
                     specialCode: true,
-                    fanshaweCode: true,
-                    message: `Fanshawe 12-month access activated! Full AI tutor access until ${expirationDate.toLocaleDateString()}. After expiration, app will revert to free version.`,
+                    larkCode: true,
+                    message: `LARK Labs 12-month access activated! Full AI tutor access until ${expirationDate.toLocaleDateString()}. After expiration, app will revert to free version.`,
                     usedActivations: 1,
                     remainingActivations: 0, // One-time use only
                     expiresAt: expirationDate.toISOString(),
                     months: 12,
                     isSpecialActivation: true,
-                    codeType: 'fanshawe_12month'
+                    codeType: 'lark_12month'
                 })
             };
         }
@@ -119,7 +120,7 @@ async function useActivationCode(activationCode, deviceId, headers) {
     }
 
     // Regular activation code validation
-    if (!activationCode || activationCode.length !== 9) {
+    if (!activationCode || activationCode.length !== 8) {
         return {
             statusCode: 400,
             headers,
@@ -228,11 +229,11 @@ async function validatePaidUserCode(activationCode, deviceId, headers) {
     };
 }
 
-// Generate 9-character activation code
+// Generate 8-character activation code
 function generateActivationCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let code = '';
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 8; i++) {
         code += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return code;

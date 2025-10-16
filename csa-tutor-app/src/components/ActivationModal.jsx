@@ -22,9 +22,10 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
       'DEVUNLTD'  // Developer unlimited backup
     ];
 
-    // Special 12-month codes for Fanshawe students/faculty (FANSH0001 - FANSH0080) - one-time use only
-    if (/^FANSH\d{4}$/.test(upperCode)) {
-      const codeNumber = parseInt(upperCode.substring(5));
+    // Special 12-month codes for Fanshawe students/faculty (LARK0001 - LARK0080) - one-time use only
+    // Same codes as Code Compass app for unified access
+    if (/^LARK\d{4}$/.test(upperCode)) {
+      const codeNumber = parseInt(upperCode.substring(4));
 
       // Validate code is in range 1-80
       if (codeNumber >= 1 && codeNumber <= 80) {
@@ -35,13 +36,13 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
           success: true,
           activated: true,
           specialCode: true,
-          message: `Fanshawe 12-month access activated! Full AI tutor access until ${expirationDate.toLocaleDateString()}. After expiration, app will revert to free version.`,
+          message: `LARK Labs 12-month access activated! Full AI tutor access until ${expirationDate.toLocaleDateString()}. After expiration, app will revert to free version.`,
           usedActivations: 1,
           remainingActivations: 0, // One-time use only
           expiresAt: expirationDate.toISOString(),
           months: 12,
           isSpecialActivation: true,
-          fanshaweCod: true
+          larkCode: true
         };
       }
     }
@@ -110,8 +111,8 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
       return;
     }
 
-    if (activationCode.length !== 9) {
-      setError('Activation code must be 9 characters');
+    if (activationCode.length !== 8) {
+      setError('Activation code must be 8 characters');
       return;
     }
 
@@ -163,7 +164,7 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
           // Mark different code types
           isSpecialActivation: result.isSpecialActivation || false,
           specialCode: result.specialCode || false,
-          fanshaweCode: result.fanshaweCode || false,
+          larkCode: result.larkCode || false,
           masterCode: result.masterCode || false,
           paidCode: result.paidCode || false,
           subscriptionYear: result.subscriptionYear || null
@@ -174,8 +175,8 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
 
         // Different success messages for different code types
         let displayMessage = result.message || 'Activation successful!';
-        if (result.specialCode || result.fanshaweCode) {
-          displayMessage = `🎉 Fanshawe 12-Month Access Activated! Full AI tutor access until ${new Date(result.expiresAt).toLocaleDateString()}. After expiration, app will revert to free version.`;
+        if (result.specialCode || result.larkCode) {
+          displayMessage = `🎉 LARK Labs 12-Month Access Activated! Full AI tutor access until ${new Date(result.expiresAt).toLocaleDateString()}. After expiration, app will revert to free version.`;
         } else if (result.masterCode) {
           displayMessage = '🎉 Developer Access Activated! Unlimited AI tutor features unlocked.';
         } else if (result.paidCode) {
@@ -210,7 +211,7 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
           remainingActivations: offlineResult.remainingActivations,
           isSpecialActivation: offlineResult.isSpecialActivation || false,
           specialCode: offlineResult.specialCode || false,
-          fanshaweCode: offlineResult.fanshaweCode || false,
+          larkCode: offlineResult.larkCode || false,
           masterCode: offlineResult.masterCode || false,
           paidCode: offlineResult.paidCode || false,
           offlineActivation: true // Mark as offline activation
@@ -244,7 +245,7 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
 
   const handleInputChange = (e) => {
     const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-    if (value.length <= 9) {
+    if (value.length <= 8) {
       setActivationCode(value);
       setError('');
     }
@@ -313,7 +314,7 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
             color: '#666',
             fontSize: '1rem'
           }}>
-            Enter your 9-character Fanshawe access code to unlock full AI features
+            Enter your 8-character LARK Labs access code to unlock full AI features
           </p>
         </div>
 
@@ -331,8 +332,8 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
             type="text"
             value={activationCode}
             onChange={handleInputChange}
-            placeholder="FANSH####"
-            maxLength={9}
+            placeholder="LARK####"
+            maxLength={8}
             style={{
               width: '100%',
               padding: '16px',
@@ -392,10 +393,10 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
         {/* Activate button */}
         <button
           onClick={handleActivation}
-          disabled={isLoading || activationCode.length !== 9}
+          disabled={isLoading || activationCode.length !== 8}
           style={{
             width: '100%',
-            background: activationCode.length === 9 && !isLoading ?
+            background: activationCode.length === 8 && !isLoading ?
               'linear-gradient(135deg, #e67e22, #d35400)' : '#94a3b8',
             color: 'white',
             border: 'none',
@@ -403,7 +404,7 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
             borderRadius: '8px',
             fontSize: '1.1rem',
             fontWeight: '600',
-            cursor: activationCode.length === 9 && !isLoading ? 'pointer' : 'not-allowed',
+            cursor: activationCode.length === 8 && !isLoading ? 'pointer' : 'not-allowed',
             transition: 'all 0.3s ease',
             marginBottom: '20px'
           }}
@@ -420,13 +421,13 @@ const ActivationModal = ({ isVisible, onClose, onActivationSuccess }) => {
           fontSize: '0.9rem'
         }}>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>For Fanshawe Students & Faculty</strong>
+            <strong>For LARK Labs Students</strong>
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
-            Receive your access code from your instructor to unlock 12 months of full AI tutor features.
+            Receive your LARK code from your instructor to unlock 12 months of full AI tutor features across all LARK Labs apps.
           </p>
           <p style={{ margin: 0 }}>
-            Each code provides one-time activation. After 12 months, the app will revert to free version.
+            Each code provides one-time activation per app. After 12 months, the app will revert to free version.
           </p>
         </div>
       </div>

@@ -550,10 +550,10 @@
                     </a>
                 </div>
 
-                <!-- Fanshawe Students/Faculty -->
+                <!-- LARK Labs Students -->
                 <div class="pricing-card" style="border-color: #e67e22;">
-                    <div class="popular-badge" style="background: linear-gradient(45deg, #e67e22, #d35400);">STUDENTS/FACULTY</div>
-                    <h3>Fanshawe Access</h3>
+                    <div class="popular-badge" style="background: linear-gradient(45deg, #e67e22, #d35400);">STUDENTS</div>
+                    <h3>Student Access</h3>
                     <div class="price" style="color: #e67e22;">FREE<span class="price-period">/12 months</span></div>
 
                     <ul class="features-list">
@@ -563,12 +563,12 @@
                         <li><span class="check">✓</span> One-Time Activation</li>
                         <li><span class="check">✓</span> No Credit Card Required</li>
                         <li><span class="check">✓</span> Auto-Reverts to Free</li>
-                        <li><span class="check">✓</span> Students & Faculty Only</li>
-                        <li><span class="check">✓</span> Access Code Required</li>
+                        <li><span class="check">✓</span> Works on All LARK Apps</li>
+                        <li><span class="check">✓</span> LARK Code Required</li>
                     </ul>
 
-                    <a href="#" class="cta-button" id="fanshaweBtn" style="background: linear-gradient(45deg, #e67e22, #d35400);">
-                        Activate with Access Code
+                    <a href="#" class="cta-button" id="studentBtn" style="background: linear-gradient(45deg, #e67e22, #d35400);">
+                        Activate with LARK Code
                     </a>
                 </div>
             </div>
@@ -612,8 +612,8 @@
             window.location.href = 'https://buy.stripe.com/5kQeVefxX2VmbCS0tO7ok05';
         });
 
-        // Fanshawe access code button handler
-        document.getElementById('fanshaweBtn').addEventListener('click', function(e) {
+        // Student access code button handler
+        document.getElementById('studentBtn').addEventListener('click', function(e) {
             e.preventDefault();
 
             // Redirect to free app with activation modal trigger
