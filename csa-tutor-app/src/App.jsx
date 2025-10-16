@@ -111,7 +111,7 @@ const CSAGasTutorApp = () => {
       setMessages(prev => [...prev, {
         id: prev.length + 1,
         type: 'bot',
-        content: "🔒 AI-Powered Tutoring is a Premium Feature\n\nThe interactive AI tutor requires a premium subscription or Fanshawe student/faculty access code.\n\n✅ Premium Features Include:\n• AI-powered explanations\n• Interactive Q&A sessions\n• Personalized tutoring\n• Advanced study tracking\n\n🎓 Fanshawe Students/Faculty: Click 'Unlock AI Tutor' to activate 12 months of free access!\n💳 Others: Subscribe for $9.99/month or use the free search mode for course materials.",
+        content: "🔒 AI-Powered Tutoring is a Premium Feature\n\nThe interactive AI tutor requires a premium subscription or LARK Labs student access code.\n\n✅ Premium Features Include:\n• AI-powered explanations\n• Interactive Q&A sessions\n• Personalized tutoring\n• Advanced study tracking\n\n🎓 LARK Labs Students: Click 'Unlock AI Tutor' to activate 12 months of free access!\n💳 Others: Subscribe for $9.99/month or use the free search mode for course materials.",
         timestamp: new Date()
       }]);
       return;
