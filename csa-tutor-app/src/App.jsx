@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, BookOpen, AlertTriangle, Lightbulb, User, Bot, Upload, FileText, Search, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Send, BookOpen, AlertTriangle, Lightbulb, User, Bot, Upload, FileText, Search, ToggleLeft, ToggleRight, Lock } from 'lucide-react';
 import { moduleInfo, getAIResponse } from './data/index.js';
 import InstallPrompt from './components/InstallPrompt.jsx';
 import CSAGasSearchTool from './components/CSAGasSearchTool.jsx';
+import ActivationModal from './components/ActivationModal.jsx';
 import { registerServiceWorker, isRunningStandalone } from './utils/pwa.js';
 
 const CSAGasTutorApp = () => {
@@ -20,6 +21,8 @@ const CSAGasTutorApp = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isPWA, setIsPWA] = useState(false);
+  const [showActivationModal, setShowActivationModal] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
   const messagesEndRef = useRef(null);
 
   const quickTopics = [
@@ -62,16 +65,65 @@ const CSAGasTutorApp = () => {
     registerServiceWorker();
     // Check if running as PWA
     setIsPWA(isRunningStandalone());
+    // Check for premium subscription
+    checkPremiumStatus();
+
+    // Check for activation query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('activate') === 'true') {
+      setShowActivationModal(true);
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }, []);
 
+  const checkPremiumStatus = () => {
+    try {
+      const subscriptionData = localStorage.getItem('gastutor_subscription_data');
+      if (subscriptionData) {
+        const data = JSON.parse(subscriptionData);
+        const now = new Date();
+        const expiresAt = new Date(data.expiresAt);
+
+        if (data.isActive && expiresAt > now) {
+          setIsPremium(true);
+        } else {
+          setIsPremium(false);
+          // Clear expired subscription
+          localStorage.removeItem('gastutor_subscription_data');
+          localStorage.removeItem('subscriptionStatus');
+        }
+      }
+    } catch (error) {
+      console.error('Error checking premium status:', error);
+      setIsPremium(false);
+    }
+  };
+
+  const handleActivationSuccess = (premiumData) => {
+    setIsPremium(true);
+    console.log('Premium activated:', premiumData);
+  };
+
   const simulateAIResponse = async (userMessage) => {
+    // Check if user has premium access for AI features
+    if (!isPremium) {
+      setMessages(prev => [...prev, {
+        id: prev.length + 1,
+        type: 'bot',
+        content: "🔒 AI-Powered Tutoring is a Premium Feature\n\nThe interactive AI tutor requires a premium subscription or Fanshawe student/faculty access code.\n\n✅ Premium Features Include:\n• AI-powered explanations\n• Interactive Q&A sessions\n• Personalized tutoring\n• Advanced study tracking\n\n🎓 Fanshawe Students/Faculty: Click 'Unlock AI Tutor' to activate 12 months of free access!\n💳 Others: Subscribe for $9.99/month or use the free search mode for course materials.",
+        timestamp: new Date()
+      }]);
+      return;
+    }
+
     setIsTyping(true);
-    
+
     try {
       // Use the module-aware AI response system
       const moduleId = selectedModule ? parseInt(selectedModule) : null;
       const aiResponse = await getAIResponse(userMessage, moduleId);
-      
+
       setTimeout(() => {
         let responseContent = aiResponse.response;
         
@@ -276,10 +328,20 @@ const CSAGasTutorApp = () => {
                 <ToggleLeft size={16} />
                 Search Mode
               </button>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <Lightbulb size={16} />
-                <span>AI Tutor Active</span>
-              </div>
+              {isPremium ? (
+                <div className="flex items-center gap-2 text-sm text-green-600 bg-green-50 px-3 py-1.5 rounded-lg">
+                  <Lightbulb size={16} />
+                  <span>AI Tutor Pro Active</span>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowActivationModal(true)}
+                  className="bg-orange-500 text-white px-3 py-1.5 rounded-lg hover:bg-orange-600 transition-colors flex items-center gap-2 text-sm font-medium"
+                >
+                  <Lock size={16} />
+                  Unlock AI Tutor
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -366,6 +428,11 @@ const CSAGasTutorApp = () => {
       </div>
     </div>
     <InstallPrompt />
+    <ActivationModal
+      isVisible={showActivationModal}
+      onClose={() => setShowActivationModal(false)}
+      onActivationSuccess={handleActivationSuccess}
+    />
     </>
   );
 };
