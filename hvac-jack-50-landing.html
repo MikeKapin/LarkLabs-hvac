@@ -15,8 +15,8 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #E85A4F 0%, #FF6B5B 100%);
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         }
 
         .container {
@@ -27,13 +27,14 @@
 
         /* Header */
         header {
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(26, 26, 26, 0.98);
             backdrop-filter: blur(10px);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(232, 90, 79, 0.3);
+            border-bottom: 2px solid #E85A4F;
         }
 
         nav {
@@ -49,6 +50,20 @@
             color: #E85A4F;
         }
 
+        .logo-image {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
@@ -57,7 +72,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: #e0e0e0;
             font-weight: 500;
             transition: color 0.3s;
         }
@@ -74,7 +89,7 @@
             text-align: center;
             color: white;
             padding: 120px 0 80px;
-            background: linear-gradient(135deg, #E85A4F 0%, #FF6B5B 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
             position: relative;
             overflow: hidden;
         }
@@ -86,8 +101,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(232, 90, 79, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(232, 90, 79, 0.15) 0%, transparent 50%);
             animation: pulse 4s ease-in-out infinite;
         }
 
@@ -138,25 +153,26 @@
 
         .cta-button {
             display: inline-block;
-            background: white;
-            color: #E85A4F;
+            background: linear-gradient(135deg, #E85A4F 0%, #d94841 100%);
+            color: white;
             padding: 1.2rem 3rem;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 700;
             font-size: 1.3rem;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(232, 90, 79, 0.5);
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
-            border: none;
+            border: 2px solid #E85A4F;
         }
 
         .cta-button:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            background: #f8f9fa;
+            box-shadow: 0 15px 40px rgba(232, 90, 79, 0.7);
+            background: linear-gradient(135deg, #d94841 0%, #E85A4F 100%);
+            border-color: #ff6b5b;
         }
 
         .pricing-badge {
@@ -167,7 +183,7 @@
 
         /* Pricing Tiers Section */
         .pricing-section {
-            background: white;
+            background: #1a1a1a;
             padding: 100px 0;
             position: relative;
         }
@@ -179,7 +195,7 @@
             left: 0;
             right: 0;
             height: 100px;
-            background: linear-gradient(180deg, #FF6B5B 0%, white 100%);
+            background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
         }
 
         .pricing-section h2 {
@@ -189,6 +205,7 @@
             margin-bottom: 3rem;
             position: relative;
             z-index: 1;
+            text-shadow: 0 0 20px rgba(232, 90, 79, 0.5);
         }
 
         .pricing-grid {
@@ -201,23 +218,25 @@
         }
 
         .pricing-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #2d2d2d 0%, #1f1f1f 100%);
             border-radius: 20px;
             padding: 3rem 2.5rem;
             text-align: center;
-            border: 3px solid transparent;
+            border: 3px solid #3d3d3d;
             transition: all 0.3s ease;
             position: relative;
         }
 
         .pricing-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 50px rgba(232, 90, 79, 0.3);
+            border-color: #E85A4F;
         }
 
         .pricing-card.featured {
             border-color: #E85A4F;
-            background: linear-gradient(135deg, rgba(232, 90, 79, 0.05) 0%, rgba(255, 107, 91, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(232, 90, 79, 0.15) 0%, rgba(26, 26, 26, 0.95) 100%);
+            box-shadow: 0 0 30px rgba(232, 90, 79, 0.4);
         }
 
         .tier-badge {
@@ -240,7 +259,7 @@
         .tier-name {
             font-size: 2rem;
             font-weight: 700;
-            color: #2c3e50;
+            color: #e0e0e0;
             margin-bottom: 1rem;
         }
 
@@ -253,7 +272,7 @@
 
         .tier-price-period {
             font-size: 1rem;
-            color: #7f8c8d;
+            color: #a0a0a0;
             margin-bottom: 2rem;
         }
 
@@ -268,6 +287,7 @@
             align-items: start;
             margin-bottom: 1rem;
             font-size: 1rem;
+            color: #c0c0c0;
         }
 
         .tier-features li::before {
@@ -298,7 +318,7 @@
         }
 
         .tier-cta.secondary {
-            background: white;
+            background: transparent;
             color: #E85A4F;
             border: 2px solid #E85A4F;
         }
@@ -310,15 +330,16 @@
 
         /* Features Section */
         .features-section {
-            background: #f8f9fa;
+            background: #2d2d2d;
             padding: 100px 0;
         }
 
         .features-section h2 {
             text-align: center;
             font-size: 3rem;
-            color: #2c3e50;
+            color: #E85A4F;
             margin-bottom: 3rem;
+            text-shadow: 0 0 20px rgba(232, 90, 79, 0.5);
         }
 
         .features-grid {
@@ -329,17 +350,19 @@
         }
 
         .feature-card {
-            background: white;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
             padding: 2.5rem 2rem;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: all 0.3s ease;
             border-left: 5px solid #E85A4F;
+            border: 2px solid #3d3d3d;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            box-shadow: 0 15px 40px rgba(232, 90, 79, 0.4);
+            border-color: #E85A4F;
         }
 
         .feature-icon {
@@ -350,26 +373,27 @@
 
         .feature-card h3 {
             font-size: 1.5rem;
-            color: #2c3e50;
+            color: #e0e0e0;
             margin-bottom: 1rem;
         }
 
         .feature-card p {
-            color: #666;
+            color: #b0b0b0;
             font-size: 1.05rem;
         }
 
         /* How It Works */
         .how-it-works {
-            background: white;
+            background: #1a1a1a;
             padding: 100px 0;
         }
 
         .how-it-works h2 {
             text-align: center;
             font-size: 3rem;
-            color: #2c3e50;
+            color: #E85A4F;
             margin-bottom: 3rem;
+            text-shadow: 0 0 20px rgba(232, 90, 79, 0.5);
         }
 
         .steps {
@@ -401,27 +425,52 @@
 
         .step h3 {
             font-size: 1.4rem;
-            color: #2c3e50;
+            color: #e0e0e0;
             margin-bottom: 1rem;
+        }
+
+        .step p {
+            color: #b0b0b0;
         }
 
         /* CTA Section */
         .final-cta {
-            background: linear-gradient(135deg, #E85A4F 0%, #FF6B5B 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
             padding: 100px 0;
             text-align: center;
             color: white;
+            border-top: 3px solid #E85A4F;
+            position: relative;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(232, 90, 79, 0.2) 0%, transparent 70%);
         }
 
         .final-cta h2 {
             font-size: 3rem;
             margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .final-cta p {
             font-size: 1.3rem;
             margin-bottom: 2.5rem;
             opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .final-cta .cta-button {
+            position: relative;
+            z-index: 1;
         }
 
         /* Footer */
@@ -495,6 +544,7 @@
 <body>
     <!-- Header -->
     <header>
+        <img src="assets/images/hvac-jack-icon.png" alt="HVAC Jack Logo" class="logo-image">
         <nav class="container">
             <div class="logo">HVAC Jack 5.0</div>
             <ul class="nav-links">
@@ -722,9 +772,9 @@
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 1)';
+                header.style.background = 'rgba(26, 26, 26, 1)';
             } else {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.background = 'rgba(26, 26, 26, 0.98)';
             }
         });
 
