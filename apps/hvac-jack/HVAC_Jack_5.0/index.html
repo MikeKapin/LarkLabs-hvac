@@ -655,6 +655,37 @@
             border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
+        /* PWA Install Button */
+        .install-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .install-btn:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .install-btn.show {
+            display: flex;
+        }
+
         /* Mobile optimizations */
         @media (max-width: 768px) {
             .container {
@@ -747,9 +778,14 @@
         </div>
     </div>
 
+    <!-- PWA Install Button -->
+    <button class="install-btn" id="install-btn">
+        📱 Install App
+    </button>
+
     <div class="container">
         <div class="status-indicator" id="status-indicator">🟢 Connected</div>
-        
+
         <header class="header">
             <div class="logo">🔧 HVAC Jack 5.0</div>
             <div class="tagline">AI-Powered HVAC Troubleshooting Assistant - Student Edition</div>
@@ -1611,15 +1647,49 @@ Focus specifically on the brand and model identified from the rating plate analy
             }
         }
 
+        // PWA Install Manager
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('📱 PWA install prompt available');
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.classList.add('show');
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                console.log('📱 No install prompt available');
+                return;
+            }
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`📱 User response to install prompt: ${outcome}`);
+
+            if (outcome === 'accepted') {
+                console.log('✅ PWA installed successfully');
+            }
+
+            deferredPrompt = null;
+            installBtn.classList.remove('show');
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('✅ HVAC Jack 5.0 PWA installed');
+            installBtn.classList.remove('show');
+        });
+
         // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize tier authentication first
             window.tierAuth = new TierAuth();
-            
+
             // Initialize main app
             window.hvacJack = new HVACJack4();
             console.log('🔧 HVAC Jack 5.0 initialized with student access protection');
-            
+
             // Initialize maintenance form system after a brief delay
             setTimeout(() => {
                 if (window.hvacJack) {
@@ -1627,6 +1697,13 @@ Focus specifically on the brand and model identified from the rating plate analy
                     console.log('📋 Maintenance Form System initialized');
                 }
             }, 500);
+
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+                    .catch(err => console.log('❌ Service Worker registration failed:', err));
+            }
         });
     </script>
     

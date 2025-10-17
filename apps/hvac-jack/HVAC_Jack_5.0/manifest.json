@@ -1,16 +1,34 @@
 {
-  "name": "HVAC Jack 4.0",
-  "short_name": "HVAC Jack",
-  "description": "AI-Powered HVAC Troubleshooting Assistant",
-  "start_url": ".",
+  "name": "HVAC Jack 5.0 - AI HVAC Troubleshooting Assistant",
+  "short_name": "HVAC Jack 5.0",
+  "description": "AI-Powered HVAC Troubleshooting Assistant with Photo Analysis, Expert Guidance, and Maintenance Forms",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#1A1F2E",
   "theme_color": "#E85A4F",
+  "categories": ["productivity", "utilities", "business"],
   "icons": [
     {
       "src": "./apple-touch-icon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./hvac-jack-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
 }
