@@ -1,22 +1,8 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "netlify/functions/**/*.js",
-      "use": "@vercel/node"
+      "source": "/.netlify/functions/(.*)",
+      "destination": "/api/$1"
     }
-  ],
-  "routes": [
-    {
-      "src": "/\\.netlify/functions/(.*)",
-      "dest": "/netlify/functions/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
-  "env": {
-    "ANTHROPIC_API_KEY": "@anthropic_api_key"
-  }
+  ]
 }
