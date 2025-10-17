@@ -2023,7 +2023,7 @@
                 <h2 class="section-title" style="text-align: center; margin-bottom: 3rem; font-size: 2rem; color: #ffffff;">Our Flagship Apps</h2>
                 
                 <!-- Flagship Apps Grid -->
-                <div class="flagship-apps" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;">
+                <div class="flagship-apps" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
                     <!-- HVAC Jack 5.0 - NOW LIVE! -->
                     <div class="flagship-app" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); background-size: cover; background-position: center; border-radius: 20px; padding: 2.5rem; color: white; text-align: center; box-shadow: 0 15px 35px rgba(232, 90, 79, 0.4); position: relative; transition: all 0.3s ease; border: 3px solid #E85A4F;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 50px rgba(232, 90, 79, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 15px 35px rgba(232, 90, 79, 0.4)'">
                         <div class="app-badge" style="background: linear-gradient(135deg, #E85A4F, #d94841); color: white; padding: 0.5rem 1.5rem; border-radius: 25px; font-weight: bold; margin-bottom: 1.5rem; display: inline-block; animation: pulse 2s infinite; font-size: 1.1rem; box-shadow: 0 0 20px rgba(232, 90, 79, 0.6);">🚀 NOW LIVE!</div>
@@ -2065,6 +2065,40 @@
                             <a href="#" class="cta-button-secondary" style="background: rgba(255,255,255,0.2); color: white; text-decoration: none; padding: 1rem 2rem; border-radius: 50px; font-weight: bold; transition: all 0.3s; border: 2px solid rgba(255,255,255,0.5);">See Premium $79/yr</a>
                         </div>
                         <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Used by 1000+ Canadian technicians</div>
+                    </div>
+
+                    <!-- Gas Tech AI Tutor -->
+                    <div class="flagship-app" style="background: linear-gradient(rgba(52, 152, 219, 0.8), rgba(41, 128, 185, 0.8)); border-radius: 20px; padding: 2.5rem; color: white; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="app-badge" style="background: #f39c12; color: white; padding: 0.5rem 1rem; border-radius: 25px; font-weight: bold; margin-bottom: 1.5rem; display: inline-block;">🤖 NEW AI!</div>
+                        <div class="app-icon" style="margin-bottom: 1.5rem;">
+                            <img src="assets/images/Tutor-icon.png" alt="" role="presentation" style="width: 64px; height: 64px;" />
+                        </div>
+                        <h3 style="font-size: 2rem; margin-bottom: 1rem;">Gas Tech AI Tutor</h3>
+                        <p style="font-size: 1.2rem; margin-bottom: 1.5rem; opacity: 0.9;">Interactive AI-powered tutor for G3 and G2 gas technician certification training</p>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 0.8rem; border-radius: 12px;">
+                                <div style="font-size: 1.3rem; font-weight: bold;">G3 & G2</div>
+                                <div style="font-size: 0.85rem; opacity: 0.9;">Certification</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 0.8rem; border-radius: 12px;">
+                                <div style="font-size: 1.3rem; font-weight: bold;">24</div>
+                                <div style="font-size: 0.85rem; opacity: 0.9;">CSA Units</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 0.8rem; border-radius: 12px;">
+                                <div style="font-size: 1.3rem; font-weight: bold;">🤖</div>
+                                <div style="font-size: 0.85rem; opacity: 0.9;">AI Powered</div>
+                            </div>
+                        </div>
+                        <div class="app-features" style="text-align: left; margin-bottom: 2rem;">
+                            <div style="margin-bottom: 0.8rem;">✅ <strong>CSA B149.1-25</strong> Compliant Training</div>
+                            <div style="margin-bottom: 0.8rem;">✅ <strong>AI Tutoring</strong> - Interactive Q&A</div>
+                            <div style="margin-bottom: 0.8rem;">✅ <strong>Tool Integration</strong> - LARK Labs ecosystem</div>
+                            <div style="margin-bottom: 0.8rem;">✅ <strong>Exam Prep</strong> - G3 & G2 Ready</div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: center;">
+                            <a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank" class="cta-button" style="background: white; color: #3498db; text-decoration: none; padding: 1rem 2rem; border-radius: 50px; font-weight: bold; transition: all 0.3s;">Launch AI Tutor →</a>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.9; font-weight: 600;">🎯 Interactive Gas Technician Training</div>
                     </div>
                 </div>
 
@@ -2172,43 +2206,6 @@
                 <h2 class="section-title">Additional Professional Tools</h2>
                 
                 <div class="tools-grid">
-                    <!-- FEATURED: Canadian Gas Technician AI Tutor -->
-                    <div class="tool-card revolutionary-tool" onclick="window.open('https://gas-technician-ai-tutor-new.vercel.app/', '_blank')" style="cursor: pointer; grid-column: 1 / -1; max-width: 800px; margin: 0 auto;">
-                        <div class="new-badge revolutionary-badge">NEW AI!</div>
-                        <div class="tool-icon revolutionary-icon">
-                            <img src="assets/images/Tutor-icon.png" alt="" role="presentation" style="width: 48px; height: 48px;" />
-                        </div>
-                        <h3 style="text-align: center; font-size: 1.8rem;">🎯 Canadian Gas Technician AI Tutor 🎯</h3>
-                        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">Interactive AI-powered tutor for G3 and G2 gas technician certification! CSA B149.1-25 compliant training with authentic course content, LARK Labs tool integration, and professional exam preparation.</p>
-
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                            <div style="background: rgba(255,255,255,0.1); padding: 1rem 1.5rem; border-radius: 15px; text-align: center;">
-                                <div style="font-size: 1.5rem; font-weight: bold; color: #3498db;">G3 & G2</div>
-                                <div style="color: #bdc3c7; font-size: 0.9rem;">Certification Levels</div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.1); padding: 1rem 1.5rem; border-radius: 15px; text-align: center;">
-                                <div style="font-size: 1.5rem; font-weight: bold; color: #3498db;">24</div>
-                                <div style="color: #bdc3c7; font-size: 0.9rem;">CSA Units</div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.1); padding: 1rem 1.5rem; border-radius: 15px; text-align: center;">
-                                <div style="font-size: 1.5rem; font-weight: bold; color: #3498db;">🤖</div>
-                                <div style="color: #bdc3c7; font-size: 0.9rem;">AI Powered</div>
-                            </div>
-                        </div>
-
-                        <div style="margin-bottom: 1.5rem;">
-                            <span style="background: rgba(52, 152, 219, 0.2); color: #3498db; padding: 8px 16px; border-radius: 20px; font-weight: bold; margin-right: 1rem;">🤖 AI Tutoring</span>
-                            <span style="background: rgba(39, 174, 96, 0.2); color: #27ae60; padding: 8px 16px; border-radius: 20px; font-weight: bold; margin-right: 1rem;">📋 CSA B149.1-25</span>
-                            <span style="background: rgba(241, 196, 31, 0.2); color: #f1c40f; padding: 8px 16px; border-radius: 20px; font-weight: bold;">🔧 Tool Integration</span>
-                        </div>
-
-                        <div style="text-align: center;">
-                            <span style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; display: inline-block;">
-                                🤖 Launch AI Tutor →
-                            </span>
-                        </div>
-                        <span class="tool-status status-revolutionary">🎯 NEW AI - Interactive Gas Technician Training!</span>
-                    </div>
                 </div>
 
                 <!-- FAQ Section for SEO -->
