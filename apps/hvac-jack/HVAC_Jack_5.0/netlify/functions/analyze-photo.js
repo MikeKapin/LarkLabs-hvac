@@ -211,7 +211,7 @@ async function performEnhancedClaudeAnalysis(imageData, mode, ocrResult = null) 
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4.5-20250402",
       max_tokens: 4000,
       temperature: 0.05, // Lower temperature for more precise technical analysis
       system: systemPrompt,

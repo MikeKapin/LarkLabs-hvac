@@ -122,7 +122,7 @@ Be specific and detailed. Reference exact observations from the photo.`;
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4.5-20250402',
       max_tokens: 3000,
       temperature: 0.2,
       messages: [
