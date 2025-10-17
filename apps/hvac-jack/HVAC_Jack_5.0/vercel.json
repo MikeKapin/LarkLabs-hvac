@@ -1,4 +1,9 @@
 {
+  "buildCommand": null,
+  "devCommand": null,
+  "installCommand": "npm install",
+  "framework": null,
+  "outputDirectory": null,
   "rewrites": [
     {
       "source": "/.netlify/functions/(.*)",
