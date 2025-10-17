@@ -1,13 +1,22 @@
 {
-  "buildCommand": null,
-  "devCommand": null,
-  "installCommand": "npm install",
-  "framework": null,
-  "outputDirectory": null,
-  "rewrites": [
-    {
-      "source": "/.netlify/functions/(.*)",
-      "destination": "/api/$1"
+  "version": 2,
+  "buildCommand": "echo 'No build required'",
+  "outputDirectory": ".",
+  "functions": {
+    "api/photo-analyzer.js": {
+      "maxDuration": 60
+    },
+    "api/hvac-explainer.js": {
+      "maxDuration": 60
+    },
+    "api/chat.js": {
+      "maxDuration": 60
+    },
+    "api/verify-stripe.js": {
+      "maxDuration": 10
+    },
+    "api/validate-student-code.js": {
+      "maxDuration": 10
     }
-  ]
+  }
 }

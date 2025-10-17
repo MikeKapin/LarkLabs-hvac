@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="HVAC Jack 4.0">
+    <meta name="apple-mobile-web-app-title" content="HVAC Jack 5.0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#E85A4F">
-    <title>HVAC Jack 4.0 - AI HVAC Troubleshooting Assistant</title>
+    <title>HVAC Jack 5.0 - AI HVAC Troubleshooting Assistant</title>
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="192x192" href="hvac-jack-icon.png">
     <link rel="manifest" href="manifest.json">
@@ -184,6 +184,120 @@
             box-shadow: 0 5px 15px rgba(34, 197, 94, 0.4);
             text-decoration: none;
             color: white;
+        }
+
+        /* Tier Selection Styles */
+        .tier-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tier-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            width: 100%;
+        }
+
+        .tier-btn:hover {
+            transform: translateY(-3px);
+            border-color: #E85A4F;
+            background: rgba(232, 90, 79, 0.1);
+            box-shadow: 0 5px 20px rgba(232, 90, 79, 0.3);
+        }
+
+        .tier-free {
+            border-color: rgba(148, 163, 184, 0.3);
+        }
+
+        .tier-free:hover {
+            border-color: #94A3B8;
+            background: rgba(148, 163, 184, 0.1);
+            box-shadow: 0 5px 20px rgba(148, 163, 184, 0.3);
+        }
+
+        .tier-pro {
+            border-color: rgba(232, 90, 79, 0.5);
+            background: rgba(232, 90, 79, 0.08);
+        }
+
+        .tier-pro:hover {
+            border-color: #E85A4F;
+            background: rgba(232, 90, 79, 0.15);
+        }
+
+        .tier-student {
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .tier-student:hover {
+            border-color: #6366F1;
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .tier-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .tier-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #E2E8F0;
+            margin-bottom: 8px;
+        }
+
+        .tier-limits {
+            font-size: 0.95rem;
+            color: #94A3B8;
+            margin-bottom: 12px;
+        }
+
+        .tier-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #22C55E;
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #E85A4F 0%, #FF6B5B 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(232, 90, 79, 0.4);
+        }
+
+        .back-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #94A3B8;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #E2E8F0;
         }
 
         .container {
@@ -567,38 +681,67 @@
     </style>
 </head>
 <body>
-    <!-- Beta Access Overlay -->
+    <!-- Access Selection Overlay -->
     <div class="beta-overlay" id="beta-overlay">
-        <div class="beta-container">
+        <div class="beta-container" id="tier-selection-view">
             <div class="beta-logo">🔧</div>
-            <h1 class="beta-title">HVAC Jack 4.0</h1>
-            <p class="beta-subtitle">Beta Testing Access Required<br>Enter your beta access code to continue</p>
-            
-            <form id="beta-form">
-                <input 
-                    type="password" 
-                    id="beta-passkey" 
-                    class="beta-input" 
-                    placeholder="Enter Beta Access Code"
+            <h1 class="beta-title">HVAC Jack 5.0</h1>
+            <p class="beta-subtitle">Choose Your Access Level</p>
+
+            <!-- Tier Selection Buttons -->
+            <div class="tier-options">
+                <button class="tier-btn tier-free" id="btn-free-tier">
+                    <div class="tier-icon">✨</div>
+                    <div class="tier-name">Free Version</div>
+                    <div class="tier-limits">10 photos • 15 text queries</div>
+                    <div class="tier-price">$0 / month</div>
+                </button>
+
+                <button class="tier-btn tier-pro" id="btn-pro-tier">
+                    <div class="tier-icon">🚀</div>
+                    <div class="tier-name">Pro Version</div>
+                    <div class="tier-limits">250 photos • 250 text queries</div>
+                    <div class="tier-price">$16.99 / month</div>
+                    <div class="tier-badge">BEST VALUE</div>
+                </button>
+
+                <button class="tier-btn tier-student" id="btn-student-tier">
+                    <div class="tier-icon">🎓</div>
+                    <div class="tier-name">Student Access</div>
+                    <div class="tier-limits">Pro features for 12 months</div>
+                    <div class="tier-price">Access code required</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Student Access Code Entry (Hidden by default) -->
+        <div class="beta-container" id="student-code-view" style="display: none;">
+            <div class="beta-logo">🎓</div>
+            <h1 class="beta-title">Student Access</h1>
+            <p class="beta-subtitle">Enter your LARK Labs student access code</p>
+
+            <form id="student-form">
+                <input
+                    type="password"
+                    id="student-passkey"
+                    class="beta-input"
+                    placeholder="Enter Access Code (LARK####)"
                     autocomplete="off"
-                    maxlength="20"
+                    maxlength="12"
                 />
-                <button type="submit" class="beta-submit">Access HVAC Jack 4.0</button>
+                <button type="submit" class="beta-submit">Activate Student Access</button>
             </form>
-            
-            <div class="beta-error" id="beta-error">
-                Invalid access code. Please contact your administrator for the correct beta testing code.
+
+            <div class="beta-error" id="student-error">
+                Invalid student code. Please check your LARK Labs student access code and try again.
             </div>
-            
-            <div class="beta-info">
-                <strong>Beta Version 4.0</strong><br>
-                This is a testing version with advanced AI troubleshooting and rating plate analysis capabilities.
-            </div>
-            
+
+            <button class="back-btn" id="btn-back-to-tiers">← Back to Access Options</button>
+
             <div class="beta-request">
-                <p>Don't have beta access?</p>
-                <a href="mailto:lark_labs@outlook.com?subject=HVAC%20Jack%20Beta%20Access%20Request&body=Hello,%0A%0AI%20would%20like%20to%20request%20beta%20access%20to%20HVAC%20Jack%204.0.%0A%0AThank%20you!" class="beta-request-link">
-                    📧 Request Beta Access
+                <p>Don't have student access?</p>
+                <a href="mailto:lark_labs@outlook.com?subject=HVAC%20Jack%205.0%20Student%20Access%20Request&body=Hello,%0A%0AI%20would%20like%20to%20request%20student%20access%20to%20HVAC%20Jack%205.0.%0A%0AThank%20you!" class="beta-request-link">
+                    📧 Request Student Access
                 </a>
             </div>
         </div>
@@ -608,8 +751,8 @@
         <div class="status-indicator" id="status-indicator">🟢 Connected</div>
         
         <header class="header">
-            <div class="logo">🔧 HVAC Jack 4.0</div>
-            <div class="tagline">AI-Powered HVAC Troubleshooting Assistant</div>
+            <div class="logo">🔧 HVAC Jack 5.0</div>
+            <div class="tagline">AI-Powered HVAC Troubleshooting Assistant - Student Edition</div>
         </header>
 
         <main class="main-interface">
@@ -652,95 +795,312 @@
     </div>
 
     <script>
-        // Beta Authentication System
-        class BetaAuth {
+        // 3-Tier Access Authentication System
+        class TierAuth {
             constructor() {
-                this.correctPasskey = 'HVACJACK2025';
-                this.storageKey = 'hvac-jack-beta-access';
+                this.storageKey = 'hvac-jack-5-access';
+                this.usageKey = 'hvac-jack-5-usage';
+                this.stripePaymentLink = 'https://buy.stripe.com/5kQ28sclL7bCbCSekE';
+
+                // 80 LARK Labs Student Access Codes - 12 months pro access
+                this.validStudentCodes = [
+                    'LARK0001', 'LARK0002', 'LARK0003', 'LARK0004', 'LARK0005',
+                    'LARK0006', 'LARK0007', 'LARK0008', 'LARK0009', 'LARK0010',
+                    'LARK0011', 'LARK0012', 'LARK0013', 'LARK0014', 'LARK0015',
+                    'LARK0016', 'LARK0017', 'LARK0018', 'LARK0019', 'LARK0020',
+                    'LARK0021', 'LARK0022', 'LARK0023', 'LARK0024', 'LARK0025',
+                    'LARK0026', 'LARK0027', 'LARK0028', 'LARK0029', 'LARK0030',
+                    'LARK0031', 'LARK0032', 'LARK0033', 'LARK0034', 'LARK0035',
+                    'LARK0036', 'LARK0037', 'LARK0038', 'LARK0039', 'LARK0040',
+                    'LARK0041', 'LARK0042', 'LARK0043', 'LARK0044', 'LARK0045',
+                    'LARK0046', 'LARK0047', 'LARK0048', 'LARK0049', 'LARK0050',
+                    'LARK0051', 'LARK0052', 'LARK0053', 'LARK0054', 'LARK0055',
+                    'LARK0056', 'LARK0057', 'LARK0058', 'LARK0059', 'LARK0060',
+                    'LARK0061', 'LARK0062', 'LARK0063', 'LARK0064', 'LARK0065',
+                    'LARK0066', 'LARK0067', 'LARK0068', 'LARK0069', 'LARK0070',
+                    'LARK0071', 'LARK0072', 'LARK0073', 'LARK0074', 'LARK0075',
+                    'LARK0076', 'LARK0077', 'LARK0078', 'LARK0079', 'LARK0080'
+                ];
+
                 this.init();
             }
 
             init() {
+                // Check for Stripe success redirect
+                this.checkStripeSuccess();
+
                 // Check if already authenticated
                 if (this.isAuthenticated()) {
                     this.hideOverlay();
                 } else {
                     this.showOverlay();
                 }
-                
-                this.setupAuthListeners();
+
+                this.setupEventListeners();
             }
 
-            setupAuthListeners() {
-                const form = document.getElementById('beta-form');
-                const input = document.getElementById('beta-passkey');
-                
-                form.addEventListener('submit', (e) => {
+            setupEventListeners() {
+                // Tier selection buttons
+                document.getElementById('btn-free-tier').addEventListener('click', () => {
+                    this.activateFreeTier();
+                });
+
+                document.getElementById('btn-pro-tier').addEventListener('click', () => {
+                    this.redirectToStripe();
+                });
+
+                document.getElementById('btn-student-tier').addEventListener('click', () => {
+                    this.showStudentCodeEntry();
+                });
+
+                // Student code form
+                const studentForm = document.getElementById('student-form');
+                studentForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    this.validatePasskey(input.value);
+                    const code = document.getElementById('student-passkey').value;
+                    this.validateStudentCode(code);
                 });
 
-                // Auto-submit on Enter
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        this.validatePasskey(input.value);
-                    }
+                // Back button
+                document.getElementById('btn-back-to-tiers').addEventListener('click', () => {
+                    this.showTierSelection();
                 });
             }
 
-            validatePasskey(enteredPasskey) {
-                const errorElement = document.getElementById('beta-error');
-                
-                if (enteredPasskey === this.correctPasskey) {
-                    // Correct passkey
-                    this.setAuthenticated();
-                    this.hideOverlay();
-                    errorElement.classList.remove('show');
-                } else {
-                    // Incorrect passkey
-                    errorElement.classList.add('show');
-                    document.getElementById('beta-passkey').value = '';
-                    
-                    // Hide error after 3 seconds
-                    setTimeout(() => {
-                        errorElement.classList.remove('show');
-                    }, 3000);
+            async checkStripeSuccess() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const stripeSuccess = urlParams.get('stripe_success');
+                const sessionId = urlParams.get('session_id');
+
+                if (stripeSuccess === 'true' && sessionId) {
+                    console.log('🚀 Stripe payment detected, verifying session...');
+
+                    try {
+                        const response = await fetch('/api/verify-stripe', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ sessionId })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success && data.accessGranted) {
+                            this.setAuthenticated('pro', data.expirationDate, data.limits);
+
+                            // Clean URL
+                            window.history.replaceState({}, document.title, window.location.pathname);
+
+                            console.log('✅ Pro access activated via Stripe!');
+                        } else {
+                            console.error('❌ Stripe verification failed:', data.error);
+                        }
+                    } catch (error) {
+                        console.error('❌ Stripe verification error:', error);
+                    }
                 }
             }
 
-            setAuthenticated() {
-                const expiryTime = new Date().getTime() + (24 * 60 * 60 * 1000); // 24 hours
-                sessionStorage.setItem(this.storageKey, JSON.stringify({
+            showTierSelection() {
+                document.getElementById('tier-selection-view').style.display = 'block';
+                document.getElementById('student-code-view').style.display = 'none';
+            }
+
+            showStudentCodeEntry() {
+                document.getElementById('tier-selection-view').style.display = 'none';
+                document.getElementById('student-code-view').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('student-passkey').focus();
+                }, 300);
+            }
+
+            activateFreeTier() {
+                const limits = {
+                    photoAnalysis: 10,
+                    textQueries: 15
+                };
+
+                this.setAuthenticated('free', null, limits);
+                this.initializeUsageTracking();
+                this.hideOverlay();
+                console.log('✅ Free tier activated (10 photos, 15 text queries)');
+            }
+
+            redirectToStripe() {
+                console.log('🚀 Redirecting to Stripe checkout...');
+                window.location.href = this.stripePaymentLink;
+            }
+
+            async validateStudentCode(enteredCode) {
+                const errorElement = document.getElementById('student-error');
+                const code = enteredCode.toUpperCase().trim();
+
+                if (!this.validStudentCodes.includes(code)) {
+                    errorElement.classList.add('show');
+                    document.getElementById('student-passkey').value = '';
+                    console.log('❌ Invalid student code attempted:', code);
+
+                    setTimeout(() => {
+                        errorElement.classList.remove('show');
+                    }, 3000);
+                    return;
+                }
+
+                // Valid student code
+                try {
+                    const response = await fetch('/api/validate-student-code', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ accessCode: code })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success && data.accessGranted) {
+                        this.setAuthenticated('student', data.expirationDate, data.limits);
+                        errorElement.classList.remove('show');
+                        this.hideOverlay();
+                        console.log('✅ Student access granted (12 months pro access):', code);
+                    } else {
+                        errorElement.classList.add('show');
+                        console.error('❌ Student code validation failed:', data.error);
+                    }
+                } catch (error) {
+                    console.error('❌ Student code validation error:', error);
+                    errorElement.textContent = 'Validation error. Please try again.';
+                    errorElement.classList.add('show');
+                }
+            }
+
+            setAuthenticated(tier, expirationDate, limits) {
+                const authData = {
                     authenticated: true,
-                    expires: expiryTime
-                }));
+                    tier: tier, // 'free', 'pro', or 'student'
+                    activatedDate: new Date().toISOString(),
+                    expirationDate: expirationDate,
+                    limits: limits
+                };
+
+                localStorage.setItem(this.storageKey, JSON.stringify(authData));
+                sessionStorage.setItem(this.storageKey, JSON.stringify(authData));
+            }
+
+            initializeUsageTracking() {
+                const usageData = {
+                    photoAnalysis: 0,
+                    textQueries: 0,
+                    resetDate: new Date().toISOString()
+                };
+
+                localStorage.setItem(this.usageKey, JSON.stringify(usageData));
             }
 
             isAuthenticated() {
                 try {
-                    const authData = JSON.parse(sessionStorage.getItem(this.storageKey));
-                    if (authData && authData.authenticated) {
-                        // Check if not expired
-                        if (new Date().getTime() < authData.expires) {
-                            return true;
-                        } else {
-                            // Expired, remove from storage
-                            sessionStorage.removeItem(this.storageKey);
+                    let authData = JSON.parse(sessionStorage.getItem(this.storageKey));
+                    if (!authData) {
+                        authData = JSON.parse(localStorage.getItem(this.storageKey));
+                        if (authData) {
+                            sessionStorage.setItem(this.storageKey, JSON.stringify(authData));
                         }
                     }
+
+                    if (authData && authData.authenticated) {
+                        // Check expiration for pro and student tiers
+                        if (authData.tier === 'pro' || authData.tier === 'student') {
+                            if (authData.expirationDate) {
+                                const expiryTime = new Date(authData.expirationDate).getTime();
+                                if (new Date().getTime() >= expiryTime) {
+                                    // Expired
+                                    this.clearAuthentication();
+                                    console.log('⏱️ Access expired');
+                                    return false;
+                                }
+                            }
+                        }
+
+                        console.log(`🔓 Access active: ${authData.tier} tier`);
+                        return true;
+                    }
                 } catch (error) {
-                    // Invalid data, remove from storage
-                    sessionStorage.removeItem(this.storageKey);
+                    this.clearAuthentication();
                 }
                 return false;
             }
 
+            canUseFeature(featureType) {
+                const authData = JSON.parse(localStorage.getItem(this.storageKey));
+                if (!authData || !authData.authenticated) return false;
+
+                // Pro and student tiers have unlimited access
+                if (authData.tier === 'pro' || authData.tier === 'student') {
+                    return true;
+                }
+
+                // Free tier - check usage limits
+                if (authData.tier === 'free') {
+                    const usageData = JSON.parse(localStorage.getItem(this.usageKey)) || {
+                        photoAnalysis: 0,
+                        textQueries: 0
+                    };
+
+                    if (featureType === 'photo') {
+                        return usageData.photoAnalysis < authData.limits.photoAnalysis;
+                    } else if (featureType === 'text') {
+                        return usageData.textQueries < authData.limits.textQueries;
+                    }
+                }
+
+                return false;
+            }
+
+            incrementUsage(featureType) {
+                const authData = JSON.parse(localStorage.getItem(this.storageKey));
+                if (!authData || authData.tier !== 'free') return;
+
+                const usageData = JSON.parse(localStorage.getItem(this.usageKey)) || {
+                    photoAnalysis: 0,
+                    textQueries: 0
+                };
+
+                if (featureType === 'photo') {
+                    usageData.photoAnalysis++;
+                } else if (featureType === 'text') {
+                    usageData.textQueries++;
+                }
+
+                localStorage.setItem(this.usageKey, JSON.stringify(usageData));
+                console.log(`📊 Usage updated: ${usageData.photoAnalysis} photos, ${usageData.textQueries} text queries`);
+            }
+
+            getRemainingUsage() {
+                const authData = JSON.parse(localStorage.getItem(this.storageKey));
+                if (!authData || authData.tier !== 'free') {
+                    return { photos: '∞', text: '∞' };
+                }
+
+                const usageData = JSON.parse(localStorage.getItem(this.usageKey)) || {
+                    photoAnalysis: 0,
+                    textQueries: 0
+                };
+
+                return {
+                    photos: authData.limits.photoAnalysis - usageData.photoAnalysis,
+                    text: authData.limits.textQueries - usageData.textQueries
+                };
+            }
+
+            clearAuthentication() {
+                localStorage.removeItem(this.storageKey);
+                sessionStorage.removeItem(this.storageKey);
+                localStorage.removeItem(this.usageKey);
+            }
+
             showOverlay() {
                 document.getElementById('beta-overlay').style.display = 'flex';
-                // Focus on input after animation
-                setTimeout(() => {
-                    document.getElementById('beta-passkey').focus();
-                }, 300);
             }
 
             hideOverlay() {
@@ -841,7 +1201,7 @@
                 if (!file) return;
 
                 try {
-                    // Show preview
+                    // Show preview with original image
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         this.elements.photoPreview.src = e.target.result;
@@ -849,14 +1209,63 @@
                     };
                     reader.readAsDataURL(file);
 
-                    // Convert to base64 for API
-                    this.photoData = await this.fileToBase64(file);
-                    
-                    console.log('📷 Photo uploaded successfully');
+                    // Compress and convert to base64 for API
+                    this.photoData = await this.compressAndConvertImage(file);
+
+                    console.log('📷 Photo uploaded and compressed successfully');
+                    this.showStatus('Photo ready for analysis', 'success');
                 } catch (error) {
                     console.error('Photo upload error:', error);
                     this.showStatus('Photo upload failed', 'error');
                 }
+            }
+
+            async compressAndConvertImage(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            // Create canvas for compression
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+
+                            // Calculate new dimensions (max 1200px on longest side for faster processing)
+                            let width = img.width;
+                            let height = img.height;
+                            const maxDimension = 1200;
+
+                            if (width > maxDimension || height > maxDimension) {
+                                if (width > height) {
+                                    height = (height / width) * maxDimension;
+                                    width = maxDimension;
+                                } else {
+                                    width = (width / height) * maxDimension;
+                                    height = maxDimension;
+                                }
+                            }
+
+                            canvas.width = width;
+                            canvas.height = height;
+
+                            // Draw and compress
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            // Convert to base64 with quality reduction (0.85 = 85% quality)
+                            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
+
+                            const originalSize = (e.target.result.length * 0.75 / 1024).toFixed(0);
+                            const compressedSize = (compressedBase64.length * 0.75 / 1024).toFixed(0);
+                            console.log(`🗜️ Image compressed: ${originalSize}KB → ${compressedSize}KB (${((compressedSize/originalSize)*100).toFixed(0)}%)`);
+
+                            resolve(compressedBase64);
+                        };
+                        img.onerror = reject;
+                        img.src = e.target.result;
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
             }
 
             fileToBase64(file) {
@@ -888,15 +1297,11 @@
                     this.addToConversationHistory('photo_analysis', response);
                     this.addChatMessage('photo-analysis', '📋 Photo Analysis Complete', response);
                     this.showStatus('Photo analysis complete', 'success');
-                    
+
                     // Dispatch event for maintenance form system
                     window.dispatchEvent(new CustomEvent('hvacjack-photo-analysis-complete', {
                         detail: response
                     }));
-                    
-                    // Automatically generate comprehensive troubleshooting guide
-                    this.showStatus('Generating troubleshooting guide...', 'info');
-                    await this.generateTroubleshootingGuide();
                 } catch (error) {
                     console.error('Photo analysis error:', error);
                     
@@ -965,7 +1370,7 @@
 
                 console.log('🚀 Sending to HVAC Jack 4.0 API:', payload);
 
-                const response = await fetch('/.netlify/functions/hvac-explainer', {
+                const response = await fetch('/api/hvac-explainer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -996,9 +1401,9 @@
 
                 try {
                     const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+                    const timeoutId = setTimeout(() => controller.abort(), 55000); // 55 second timeout (Vercel allows 60s)
 
-                    const response = await fetch('/.netlify/functions/photo-analyzer', {
+                    const response = await fetch('/api/photo-analyzer', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -1190,10 +1595,10 @@ Focus specifically on the brand and model identified from the rating plate analy
 
             async checkConnection() {
                 try {
-                    const response = await fetch('/.netlify/functions/hvac-explainer', {
+                    const response = await fetch('/api/hvac-explainer', {
                         method: 'OPTIONS'
                     });
-                    
+
                     if (response.ok) {
                         this.showStatus('Connected', 'connected');
                     } else {
@@ -1208,12 +1613,12 @@ Focus specifically on the brand and model identified from the rating plate analy
 
         // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize beta authentication first
-            window.betaAuth = new BetaAuth();
+            // Initialize tier authentication first
+            window.tierAuth = new TierAuth();
             
             // Initialize main app
             window.hvacJack = new HVACJack4();
-            console.log('🔧 HVAC Jack 4.0 initialized with beta protection');
+            console.log('🔧 HVAC Jack 5.0 initialized with student access protection');
             
             // Initialize maintenance form system after a brief delay
             setTimeout(() => {
