@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LARK Labs Learning Modules - G2 & G3 Gas Technician Certification</title>
+    <title>LARK Labs Learning Modules - Complete Canadian Gas Technician Textbook</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -140,72 +140,39 @@
             font-size: clamp(1.1rem, 2vw, 1.4rem);
             margin-bottom: 2rem;
             opacity: 0.95;
-            max-width: 800px;
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        /* Tabs Section */
-        .tabs-section {
+        /* Modules Section */
+        .modules-section {
             background: rgba(15, 32, 39, 0.95);
             padding: 80px 0;
         }
 
-        .tabs-container {
-            max-width: 1200px;
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        .tabs-header {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .tab-button {
-            background: rgba(52, 152, 219, 0.2);
-            color: #e0e0e0;
-            padding: 1.2rem 3rem;
-            border: 2px solid #3498db;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .tab-button:hover {
-            background: rgba(52, 152, 219, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
-        }
-
-        .tab-button.active {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.5);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Module Cards */
         .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
@@ -213,7 +180,7 @@
         .module-card {
             background: linear-gradient(135deg, rgba(32, 58, 67, 0.9) 0%, rgba(44, 83, 100, 0.9) 100%);
             border-radius: 20px;
-            padding: 2.5rem;
+            padding: 2rem;
             border: 2px solid rgba(52, 152, 219, 0.3);
             transition: all 0.3s ease;
             cursor: pointer;
@@ -225,42 +192,44 @@
             border-color: #3498db;
         }
 
+        .module-number {
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
         .module-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             display: block;
         }
 
         .module-card h3 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #3498db;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .module-card p {
             color: #bdc3c7;
-            font-size: 1.05rem;
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            min-height: 60px;
         }
 
-        .module-stats {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(52, 152, 219, 0.3);
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #95a5a6;
-            font-size: 0.95rem;
-        }
-
-        .stat i {
+        .module-status {
+            display: inline-block;
+            background: rgba(52, 152, 219, 0.2);
             color: #3498db;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         /* Textbook Section */
@@ -310,55 +279,6 @@
             font-size: 1.5rem;
         }
 
-        /* Features Grid */
-        .features-section {
-            background: rgba(44, 83, 100, 0.5);
-            padding: 80px 0;
-        }
-
-        .features-section h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #3498db;
-            margin-bottom: 3rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, rgba(15, 32, 39, 0.9) 0%, rgba(32, 58, 67, 0.9) 100%);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid rgba(52, 152, 219, 0.2);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: #3498db;
-            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            color: #3498db;
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-        }
-
-        .feature-card p {
-            color: #bdc3c7;
-        }
-
         /* Footer */
         footer {
             background: rgba(15, 32, 39, 0.98);
@@ -402,16 +322,8 @@
                 display: none;
             }
 
-            .modules-grid, .features-grid {
+            .modules-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .tabs-header {
-                flex-direction: column;
-            }
-
-            .tab-button {
-                width: 100%;
             }
         }
     </style>
@@ -426,8 +338,8 @@
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="#modules">Modules</a></li>
                 <li><a href="#textbook">Textbook</a></li>
-                <li><a href="#features">Features</a></li>
             </ul>
         </nav>
     </header>
@@ -436,168 +348,227 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <div class="textbook-badge">📚 Based on LARK Labs Textbook</div>
-                <h1>Gas Technician Learning Modules</h1>
-                <p>Comprehensive certification training for G2 & G3 gas technicians. Interactive modules, assessments, and complete coverage of CSA standards.</p>
+                <div class="textbook-badge">📚 Complete Canadian Gas Technician Textbook</div>
+                <h1>23 Learning Modules</h1>
+                <p>Complete G2 & G3 certification training. Each chapter from the LARK Labs textbook is an interactive learning module with assessments and CSA standards coverage.</p>
             </div>
         </div>
     </section>
 
-    <!-- Tabs Section -->
-    <section class="tabs-section">
+    <!-- Modules Section -->
+    <section class="modules-section" id="modules">
         <div class="container">
-            <div class="tabs-container">
-                <div class="tabs-header">
-                    <button class="tab-button active" onclick="switchTab('g3')">
-                        <i class="fas fa-graduation-cap"></i> G3 Basic Modules
-                    </button>
-                    <button class="tab-button" onclick="switchTab('g2')">
-                        <i class="fas fa-fire"></i> G2 Advanced Modules
-                    </button>
+            <div class="section-header">
+                <h2>Complete Canadian Gas Technician Course</h2>
+                <p>23 comprehensive chapters covering everything you need for G2 and G3 certification</p>
+            </div>
+
+            <div class="modules-grid">
+                <!-- Module 1 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 1</span>
+                    <span class="module-icon">📖</span>
+                    <h3>Introduction to Gas Technology</h3>
+                    <p>Fundamentals of gas properties, combustion theory, and safety principles</p>
+                    <span class="module-status">🎓 G3 Foundation</span>
                 </div>
 
-                <!-- G3 Content -->
-                <div id="g3-content" class="tab-content active">
-                    <h2 style="text-align: center; color: #3498db; margin-bottom: 2rem; font-size: 2.2rem;">
-                        Canadian Gaseous Fuels - G3 Basic Certification
-                    </h2>
-                    <p style="text-align: center; color: #bdc3c7; margin-bottom: 3rem; font-size: 1.1rem;">
-                        Complete learning modules covering all 9 Gas Trade training units, Ontario regulations, TSSA Act, and CSA B149.1-25 Sections 1-4
-                    </p>
-
-                    <div class="modules-grid">
-                        <div class="module-card">
-                            <span class="module-icon">📖</span>
-                            <h3>Unit 1: Fundamentals</h3>
-                            <p>Gas properties, combustion theory, and safety fundamentals for gas technicians</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 8 Chapters</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 12 Hours</div>
-                            </div>
-                        </div>
-
-                        <div class="module-card">
-                            <span class="module-icon">🔧</span>
-                            <h3>Units 2-4: Piping & Venting</h3>
-                            <p>Piping systems, materials, installation methods, and venting requirements</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 15 Chapters</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 20 Hours</div>
-                            </div>
-                        </div>
-
-                        <div class="module-card">
-                            <span class="module-icon">⚡</span>
-                            <h3>Unit 5: Electrical</h3>
-                            <p>Electrical fundamentals, circuits, and controls for gas appliances</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 6 Chapters</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 10 Hours</div>
-                            </div>
-                        </div>
-
-                        <div class="module-card">
-                            <span class="module-icon">🔥</span>
-                            <h3>Units 6-9: Appliances</h3>
-                            <p>Furnaces, water heaters, boilers, and specialized gas appliances</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 20 Chapters</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 25 Hours</div>
-                            </div>
-                        </div>
-
-                        <div class="module-card">
-                            <span class="module-icon">⚖️</span>
-                            <h3>CSA B149.1 Standards</h3>
-                            <p>Natural gas and propane installation code - Sections 1-4</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 12 Sections</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 15 Hours</div>
-                            </div>
-                        </div>
-
-                        <div class="module-card">
-                            <span class="module-icon">📋</span>
-                            <h3>Practice & Review</h3>
-                            <p>Chapter reviews, practice questions, and exam preparation</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-question-circle"></i> 500+ Questions</div>
-                                <div class="stat"><i class="fas fa-star"></i> Free</div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Module 2 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 2</span>
+                    <span class="module-icon">⚠️</span>
+                    <h3>Gas Safety & Regulations</h3>
+                    <p>TSSA regulations, Ontario codes, and safety protocols for gas technicians</p>
+                    <span class="module-status">🎓 G3 Foundation</span>
                 </div>
 
-                <!-- G2 Content -->
-                <div id="g2-content" class="tab-content">
-                    <h2 style="text-align: center; color: #3498db; margin-bottom: 2rem; font-size: 2.2rem;">
-                        Canadian Gaseous Fuels - G2 Advanced Certification
-                    </h2>
-                    <p style="text-align: center; color: #bdc3c7; margin-bottom: 3rem; font-size: 1.1rem;">
-                        Advanced learning modules for G2 certification covering complex piping systems, appliances, and controls
-                    </p>
+                <!-- Module 3 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 3</span>
+                    <span class="module-icon">🔧</span>
+                    <h3>Piping Materials & Methods</h3>
+                    <p>Gas piping materials, installation techniques, and code requirements</p>
+                    <span class="module-status">🎓 G3 Core</span>
+                </div>
 
-                    <div class="modules-grid">
-                        <div class="module-card">
-                            <span class="module-icon">🏗️</span>
-                            <h3>Advanced Piping Systems</h3>
-                            <p>Complex piping layouts, pressure calculations, and system design</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 10 Chapters</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 15 Hours</div>
-                            </div>
-                        </div>
+                <!-- Module 4 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 4</span>
+                    <span class="module-icon">📏</span>
+                    <h3>Piping System Design</h3>
+                    <p>Sizing methods, pressure calculations, and system layouts</p>
+                    <span class="module-status">🎓 G3 Core</span>
+                </div>
 
-                        <div class="module-card">
-                            <span class="module-icon">🎛️</span>
-                            <h3>Controls & Automation</h3>
-                            <p>Advanced controls, BMS integration, and automated systems</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 8 Chapters</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 12 Hours</div>
-                            </div>
-                        </div>
+                <!-- Module 5 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 5</span>
+                    <span class="module-icon">💨</span>
+                    <h3>Venting Principles</h3>
+                    <p>Venting categories, design requirements, and installation standards</p>
+                    <span class="module-status">🎓 G3 Core</span>
+                </div>
 
-                        <div class="module-card">
-                            <span class="module-icon">🏭</span>
-                            <h3>Commercial Appliances</h3>
-                            <p>Large-scale boilers, commercial cooking equipment, and industrial systems</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 12 Chapters</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 18 Hours</div>
-                            </div>
-                        </div>
+                <!-- Module 6 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 6</span>
+                    <span class="module-icon">🌬️</span>
+                    <h3>Combustion Air & Ventilation</h3>
+                    <p>Combustion air requirements, ventilation calculations, and code compliance</p>
+                    <span class="module-status">🎓 G3 Core</span>
+                </div>
 
-                        <div class="module-card">
-                            <span class="module-icon">📐</span>
-                            <h3>System Design</h3>
-                            <p>Load calculations, equipment selection, and system optimization</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 8 Chapters</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 12 Hours</div>
-                            </div>
-                        </div>
+                <!-- Module 7 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 7</span>
+                    <span class="module-icon">⚡</span>
+                    <h3>Electrical Fundamentals</h3>
+                    <p>Basic electricity, circuits, and controls for gas appliances</p>
+                    <span class="module-status">🎓 G3 Essential</span>
+                </div>
 
-                        <div class="module-card">
-                            <span class="module-icon">⚖️</span>
-                            <h3>CSA B149.1 Advanced</h3>
-                            <p>Complete code coverage including Sections 5-8 and all appendices</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-book"></i> 15 Sections</div>
-                                <div class="stat"><i class="fas fa-clock"></i> 20 Hours</div>
-                            </div>
-                        </div>
+                <!-- Module 8 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 8</span>
+                    <span class="module-icon">🎛️</span>
+                    <h3>Control Systems</h3>
+                    <p>Thermostats, valves, and safety controls for gas equipment</p>
+                    <span class="module-status">🎓 G3 Essential</span>
+                </div>
 
-                        <div class="module-card">
-                            <span class="module-icon">📋</span>
-                            <h3>G2 Exam Preparation</h3>
-                            <p>Advanced practice questions, case studies, and exam strategies</p>
-                            <div class="module-stats">
-                                <div class="stat"><i class="fas fa-question-circle"></i> 600+ Questions</div>
-                                <div class="stat"><i class="fas fa-star"></i> Free</div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Module 9 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 9</span>
+                    <span class="module-icon">🏠</span>
+                    <h3>Residential Furnaces</h3>
+                    <p>Forced air systems, installation, and troubleshooting</p>
+                    <span class="module-status">🎓 G3 Appliances</span>
+                </div>
+
+                <!-- Module 10 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 10</span>
+                    <span class="module-icon">🚿</span>
+                    <h3>Water Heaters</h3>
+                    <p>Storage tank and tankless water heaters, installation and service</p>
+                    <span class="module-status">🎓 G3 Appliances</span>
+                </div>
+
+                <!-- Module 11 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 11</span>
+                    <span class="module-icon">♨️</span>
+                    <h3>Boilers</h3>
+                    <p>Residential boilers, hydronic systems, and controls</p>
+                    <span class="module-status">🎓 G3 Appliances</span>
+                </div>
+
+                <!-- Module 12 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 12</span>
+                    <span class="module-icon">🍳</span>
+                    <h3>Cooking Appliances</h3>
+                    <p>Ranges, ovens, and specialty cooking equipment</p>
+                    <span class="module-status">🎓 G3 Appliances</span>
+                </div>
+
+                <!-- Module 13 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 13</span>
+                    <span class="module-icon">⚖️</span>
+                    <h3>CSA B149.1 - Part 1</h3>
+                    <p>Installation code: General requirements and definitions</p>
+                    <span class="module-status">📜 Code Standards</span>
+                </div>
+
+                <!-- Module 14 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 14</span>
+                    <span class="module-icon">⚖️</span>
+                    <h3>CSA B149.1 - Part 2</h3>
+                    <p>Installation code: Piping and installation requirements</p>
+                    <span class="module-status">📜 Code Standards</span>
+                </div>
+
+                <!-- Module 15 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 15</span>
+                    <span class="module-icon">🏗️</span>
+                    <h3>Advanced Piping Systems</h3>
+                    <p>Complex layouts, pressure regulation, and commercial applications</p>
+                    <span class="module-status">🔥 G2 Advanced</span>
+                </div>
+
+                <!-- Module 16 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 16</span>
+                    <span class="module-icon">📐</span>
+                    <h3>Load Calculations</h3>
+                    <p>Heat load calculations, equipment selection, and sizing</p>
+                    <span class="module-status">🔥 G2 Advanced</span>
+                </div>
+
+                <!-- Module 17 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 17</span>
+                    <span class="module-icon">🏭</span>
+                    <h3>Commercial Boilers</h3>
+                    <p>Large-scale boiler systems, controls, and maintenance</p>
+                    <span class="module-status">🔥 G2 Commercial</span>
+                </div>
+
+                <!-- Module 18 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 18</span>
+                    <span class="module-icon">🍽️</span>
+                    <h3>Commercial Cooking Equipment</h3>
+                    <p>Restaurant equipment, installation, and safety requirements</p>
+                    <span class="module-status">🔥 G2 Commercial</span>
+                </div>
+
+                <!-- Module 19 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 19</span>
+                    <span class="module-icon">🎯</span>
+                    <h3>Specialty Gas Appliances</h3>
+                    <p>Pool heaters, infrared heaters, and specialty equipment</p>
+                    <span class="module-status">🔥 G2 Specialty</span>
+                </div>
+
+                <!-- Module 20 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 20</span>
+                    <span class="module-icon">🤖</span>
+                    <h3>Building Management Systems</h3>
+                    <p>BMS integration, automation, and advanced controls</p>
+                    <span class="module-status">🔥 G2 Advanced</span>
+                </div>
+
+                <!-- Module 21 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 21</span>
+                    <span class="module-icon">⚖️</span>
+                    <h3>CSA B149.1 - Advanced</h3>
+                    <p>Complete code coverage: Sections 5-8 and appendices</p>
+                    <span class="module-status">📜 Advanced Code</span>
+                </div>
+
+                <!-- Module 22 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 22</span>
+                    <span class="module-icon">🛠️</span>
+                    <h3>Troubleshooting & Diagnostics</h3>
+                    <p>Advanced troubleshooting techniques and diagnostic procedures</p>
+                    <span class="module-status">🔥 G2 Mastery</span>
+                </div>
+
+                <!-- Module 23 -->
+                <div class="module-card">
+                    <span class="module-number">Chapter 23</span>
+                    <span class="module-icon">📋</span>
+                    <h3>Exam Preparation</h3>
+                    <p>Practice questions, case studies, and exam strategies for G2 & G3</p>
+                    <span class="module-status">✅ Certification Prep</span>
                 </div>
             </div>
         </div>
@@ -606,62 +577,18 @@
     <!-- Textbook Section -->
     <section class="textbook-section" id="textbook">
         <div class="container">
-            <h2>📚 Based on Professional Textbook</h2>
+            <h2>📚 Complete Textbook Access</h2>
             <p>
-                All learning modules are based on a comprehensive textbook written by experienced HVAC professionals and educators.
-                The textbook covers all required materials for G2 and G3 certification with detailed explanations, diagrams, and real-world examples.
+                All 23 learning modules are based on the comprehensive LARK Labs Gas Technician textbook.
+                Written by experienced HVAC professionals and educators with 20+ years of field experience and 10 years of teaching.
             </p>
             <a href="#" class="textbook-cta" onclick="alert('PDF textbook link will be available here. Contact lark_labs@outlook.com for access.'); return false;">
                 <i class="fas fa-file-pdf"></i>
-                Access Complete Textbook (PDF)
+                Download Complete Textbook (PDF)
             </a>
             <p style="margin-top: 2rem; font-size: 0.95rem; opacity: 0.8;">
-                Contact <a href="mailto:lark_labs@outlook.com" style="color: #3498db;">lark_labs@outlook.com</a> for textbook access
+                For textbook access, contact <a href="mailto:lark_labs@outlook.com" style="color: #3498db; text-decoration: underline;">lark_labs@outlook.com</a>
             </p>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section" id="features">
-        <div class="container">
-            <h2>Why Choose LARK Labs Learning Modules?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3>Comprehensive Coverage</h3>
-                    <p>Complete G2 and G3 curriculum based on CSA standards and TSSA requirements</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3>Interactive Assessments</h3>
-                    <p>Practice questions, chapter reviews, and mock exams for thorough preparation</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Exam-Focused</h3>
-                    <p>Content specifically designed to help you pass TSSA G2 and G3 certification exams</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">👨‍🏫</div>
-                    <h3>Expert-Written</h3>
-                    <p>Created by experienced HVAC professionals with 20+ years field experience</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🆓</div>
-                    <h3>Free Access</h3>
-                    <p>All learning modules and materials are completely free for Canadian technicians</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Mobile Friendly</h3>
-                    <p>Access modules from any device - desktop, tablet, or smartphone</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -689,30 +616,12 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 LARK Labs. All rights reserved. Professional HVAC Training for Canadian Gas Technicians.</p>
+                <p>&copy; 2025 LARK Labs. All rights reserved. Complete Canadian Gas Technician Training.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        function switchTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-
-            // Show selected tab content
-            document.getElementById(tabName + '-content').classList.add('active');
-
-            // Add active class to clicked button
-            event.target.classList.add('active');
-        }
-
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -737,6 +646,14 @@
             } else {
                 header.style.background = 'rgba(15, 32, 39, 0.98)';
             }
+        });
+
+        // Add click handlers to module cards (placeholder for future functionality)
+        document.querySelectorAll('.module-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const moduleNumber = this.querySelector('.module-number').textContent;
+                alert(`${moduleNumber} will be available soon. Contact lark_labs@outlook.com for early access.`);
+            });
         });
     </script>
 </body>
