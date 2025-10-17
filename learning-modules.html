@@ -365,7 +365,7 @@
 
             <div class="modules-grid">
                 <!-- Module 1 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="1" data-has-presentation="true">
                     <span class="module-number">Chapter 1</span>
                     <span class="module-icon">📖</span>
                     <h3>Introduction to Gas Technology</h3>
@@ -374,7 +374,7 @@
                 </div>
 
                 <!-- Module 2 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="2" data-has-presentation="true">
                     <span class="module-number">Chapter 2</span>
                     <span class="module-icon">⚠️</span>
                     <h3>Gas Safety & Regulations</h3>
@@ -383,7 +383,7 @@
                 </div>
 
                 <!-- Module 3 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="3" data-has-presentation="true">
                     <span class="module-number">Chapter 3</span>
                     <span class="module-icon">🔧</span>
                     <h3>Piping Materials & Methods</h3>
@@ -392,7 +392,7 @@
                 </div>
 
                 <!-- Module 4 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="4" data-has-presentation="true">
                     <span class="module-number">Chapter 4</span>
                     <span class="module-icon">📏</span>
                     <h3>Piping System Design</h3>
@@ -401,7 +401,7 @@
                 </div>
 
                 <!-- Module 5 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="5" data-has-presentation="true">
                     <span class="module-number">Chapter 5</span>
                     <span class="module-icon">💨</span>
                     <h3>Venting Principles</h3>
@@ -410,7 +410,7 @@
                 </div>
 
                 <!-- Module 6 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="6" data-has-presentation="true">
                     <span class="module-number">Chapter 6</span>
                     <span class="module-icon">🌬️</span>
                     <h3>Combustion Air & Ventilation</h3>
@@ -419,7 +419,7 @@
                 </div>
 
                 <!-- Module 7 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="7">
                     <span class="module-number">Chapter 7</span>
                     <span class="module-icon">⚡</span>
                     <h3>Electrical Fundamentals</h3>
@@ -428,7 +428,7 @@
                 </div>
 
                 <!-- Module 8 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="8">
                     <span class="module-number">Chapter 8</span>
                     <span class="module-icon">🎛️</span>
                     <h3>Control Systems</h3>
@@ -437,7 +437,7 @@
                 </div>
 
                 <!-- Module 9 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="9">
                     <span class="module-number">Chapter 9</span>
                     <span class="module-icon">🏠</span>
                     <h3>Residential Furnaces</h3>
@@ -446,7 +446,7 @@
                 </div>
 
                 <!-- Module 10 -->
-                <div class="module-card">
+                <div class="module-card" data-chapter="10">
                     <span class="module-number">Chapter 10</span>
                     <span class="module-icon">🚿</span>
                     <h3>Water Heaters</h3>
@@ -582,7 +582,7 @@
                 All 23 learning modules are based on the comprehensive LARK Labs Gas Technician textbook.
                 Written by experienced HVAC professionals and educators with 20+ years of field experience and 10 years of teaching.
             </p>
-            <a href="#" class="textbook-cta" onclick="alert('PDF textbook link will be available here. Contact lark_labs@outlook.com for access.'); return false;">
+            <a href="Textbook/Natural Gas-Propane-Textbook-by-Mike-Kapin-2025.pdf" class="textbook-cta" target="_blank">
                 <i class="fas fa-file-pdf"></i>
                 Download Complete Textbook (PDF)
             </a>
@@ -648,11 +648,35 @@
             }
         });
 
-        // Add click handlers to module cards (placeholder for future functionality)
+        // Add click handlers to module cards
         document.querySelectorAll('.module-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const moduleNumber = this.querySelector('.module-number').textContent;
-                alert(`${moduleNumber} will be available soon. Contact lark_labs@outlook.com for early access.`);
+            card.addEventListener('click', function(e) {
+                const chapterNum = this.getAttribute('data-chapter');
+                const hasPresentation = this.getAttribute('data-has-presentation') === 'true';
+
+                if (chapterNum) {
+                    // If chapter has both textbook and presentation, show choice
+                    if (hasPresentation) {
+                        const choice = confirm(`Chapter ${chapterNum} Resources:\n\n` +
+                            `Click OK to view the Textbook Chapter\n` +
+                            `Click Cancel to view the Learning Module Presentation`);
+
+                        if (choice) {
+                            // Open textbook chapter
+                            window.open(`Textbook/Canadian Gas Technician-Chapter ${chapterNum}.pdf`, '_blank');
+                        } else {
+                            // Open presentation
+                            window.open(`Textbook/Canadian-Gas-Technician-G3-Learning-Module-${chapterNum}.pdf`, '_blank');
+                        }
+                    } else {
+                        // Only textbook available
+                        window.open(`Textbook/Canadian Gas Technician-Chapter ${chapterNum}.pdf`, '_blank');
+                    }
+                } else {
+                    // No PDF available yet
+                    const moduleNumber = this.querySelector('.module-number').textContent;
+                    alert(`${moduleNumber} will be available soon. Contact lark_labs@outlook.com for early access.`);
+                }
             });
         });
     </script>
