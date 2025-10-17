@@ -1542,11 +1542,11 @@
                 this.elements.responseContent.innerHTML = chatHtml;
                 this.elements.responseSection.style.display = 'block';
                 
-                // Scroll to bottom of chat
+                // Scroll to top of response
                 setTimeout(() => {
                     const responseSection = this.elements.responseSection;
-                    responseSection.scrollTop = responseSection.scrollHeight;
-                    responseSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    responseSection.scrollTop = 0;
+                    responseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
             }
 
