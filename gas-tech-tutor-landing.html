@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Tech AI Tutor - Canadian Gas Technician Certification Training</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 32, 39, 0.98);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(52, 152, 219, 0.3);
+            border-bottom: 2px solid #3498db;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3498db;
+        }
+
+        .logo-image {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #0f2027 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(52, 152, 219, 0.15) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .live-badge {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #3498db;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+
+        .hero p {
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 1.2rem 3rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: 2px solid #3498db;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(52, 152, 219, 0.7);
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+            border-color: #5dade2;
+        }
+
+        .pricing-badge {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem auto;
+            max-width: 800px;
+        }
+
+        .stat-box {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .stat-box .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3498db;
+        }
+
+        .stat-box .label {
+            color: #b0b0b0;
+            font-size: 1rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: #1a2f38;
+            padding: 100px 0;
+        }
+
+        .features-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 100%);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            border: 2px solid #3d3d5c;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(52, 152, 219, 0.4);
+            border-color: #3498db;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #b0b0b0;
+            font-size: 1.05rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: #0f2027;
+            padding: 100px 0;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .step h3 {
+            font-size: 1.4rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .step p {
+            color: #b0b0b0;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a1a1f;
+            color: white;
+            padding: 3rem 0 1rem;
+            border-top: 2px solid #3498db;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 1rem;
+            text-align: center;
+            color: #95a5a6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid, .features-grid, .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="assets/images/Tutor-icon.png" alt="Gas Tech Tutor Logo" class="logo-image">
+        <nav class="container">
+            <div class="logo">Gas Tech AI Tutor</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="https://larklabs.org">LARK Labs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <div class="live-badge">🤖 NEW AI!</div>
+                <h1>Gas Tech AI Tutor</h1>
+                <p>Interactive AI-Powered Tutor for G3 and G2 Gas Technician Certification • CSA B149.1-25 Compliant • 24 Training Units • Professional Exam Prep</p>
+                <a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank" class="cta-button">Launch AI Tutor →</a>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="number">G3 & G2</div>
+                        <div class="label">Certification Levels</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">24</div>
+                        <div class="label">CSA Training Units</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">🤖</div>
+                        <div class="label">AI Powered</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2>Powerful AI Training Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Interactive AI Tutoring</h3>
+                    <p>Ask questions and get instant, personalized answers powered by advanced AI technology.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>CSA B149.1-25 Compliant</h3>
+                    <p>All training content aligns with current CSA B149.1-25 Natural Gas and Propane Installation Code.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>G3 & G2 Certification Prep</h3>
+                    <p>Comprehensive training for both Basic (G3) and Intermediate (G2) Gas Technician certifications.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>LARK Labs Integration</h3>
+                    <p>Seamless integration with Code Compass, practice exams, and other LARK Labs tools.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>24 CSA Training Units</h3>
+                    <p>Complete coverage of all Gas Trade training units required for TSSA certification.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-Time Responses</h3>
+                    <p>Get instant answers to complex gas code questions with AI-powered explanations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Level</h3>
+                    <p>Select G3 Basic or G2 Intermediate certification training path.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Ask Questions</h3>
+                    <p>Ask any question about gas code, regulations, or installation procedures.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Learn & Practice</h3>
+                    <p>Get AI-powered explanations and practice with integrated LARK Labs tools.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Pass Your Exam</h3>
+                    <p>Master all 24 training units and ace your TSSA certification exam.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LARK Labs</h3>
+                    <p>Professional Gas Tech & HVAC Tools</p>
+                    <p><a href="mailto:lark_labs@outlook.com">lark_labs@outlook.com</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="https://larklabs.org">LARK Labs Home</a></p>
+                    <p><a href="#features">Features</a></p>
+                    <p><a href="#how-it-works">How It Works</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Gas Tech AI Tutor</h3>
+                    <p><a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank">Launch App</a></p>
+                    <p><a href="https://codecompassapp.netlify.app/" target="_blank">Code Compass</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LARK Labs. All rights reserved. Gas Tech AI Tutor - Canadian Gas Technician Certification Training.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(15, 32, 39, 1)';
+            } else {
+                header.style.background = 'rgba(15, 32, 39, 0.98)';
+            }
+        });
+    </script>
+</body>
+</html>

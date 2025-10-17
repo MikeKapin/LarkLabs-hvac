@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Compass - Canadian Gas Code Search Tool</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(22, 33, 62, 0.98);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(102, 126, 234, 0.3);
+            border-bottom: 2px solid #667eea;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .logo-image {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .live-badge {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #667eea;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .hero p {
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.2rem 3rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: 2px solid #667eea;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.7);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            border-color: #8b5cf6;
+        }
+
+        .pricing-badge {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Pricing Tiers Section */
+        .pricing-section {
+            background: #1a1a2e;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .pricing-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(180deg, #16213e 0%, #1a1a2e 100%);
+        }
+
+        .pricing-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, #1e1e3f 0%, #1a1a2e 100%);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            border: 3px solid #3d3d5c;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(26, 26, 46, 0.95) 100%);
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .tier-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tier-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .tier-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-price-period {
+            font-size: 1rem;
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+        }
+
+        .tier-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .tier-features li {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #c0c0c0;
+        }
+
+        .tier-features li::before {
+            content: '✓';
+            color: #00c851;
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .tier-cta {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tier-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .tier-cta.secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .tier-cta.secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: #16213e;
+            padding: 100px 0;
+        }
+
+        .features-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            border: 2px solid #3d3d5c;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            border-color: #667eea;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #b0b0b0;
+            font-size: 1.05rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f1626;
+            color: white;
+            padding: 3rem 0 1rem;
+            border-top: 2px solid #667eea;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 1rem;
+            text-align: center;
+            color: #95a5a6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .pricing-grid, .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="assets/images/code-compass-icon.png" alt="Code Compass Logo" class="logo-image">
+        <nav class="container">
+            <div class="logo">Code Compass</div>
+            <ul class="nav-links">
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="https://larklabs.org">LARK Labs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <div class="live-badge">⭐ PREMIUM APP</div>
+                <h1>Code Compass</h1>
+                <p>The Ultimate Canadian Gas Code Search and Navigation Tool • CSA B149.1-25 & B149.2-25 • Smart Bookmarks • Offline Access</p>
+                <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">Launch Code Compass →</a>
+                <div class="pricing-badge">
+                    <strong>Free Access:</strong> Ontario Regs + Sections 1-4<br>
+                    <strong>Premium:</strong> $79/year • Full Code Search + AI Explanations
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <h2>Choose Your Plan</h2>
+            <div class="pricing-grid">
+                <!-- Free Tier -->
+                <div class="pricing-card">
+                    <div class="tier-icon">✨</div>
+                    <div class="tier-name">Free Access</div>
+                    <div class="tier-price">$0</div>
+                    <div class="tier-price-period">Forever</div>
+                    <ul class="tier-features">
+                        <li>Ontario Regulations (O. Reg. 215/01)</li>
+                        <li>CSA B149.1-25 Sections 1-4</li>
+                        <li>CSA B149.2-25 Sections 1-4</li>
+                        <li>Basic search functionality</li>
+                        <li>Mobile-friendly interface</li>
+                    </ul>
+                    <a href="https://codecompassapp.netlify.app/" target="_blank" class="tier-cta secondary">Start Free</a>
+                </div>
+
+                <!-- Premium Tier -->
+                <div class="pricing-card featured">
+                    <div class="tier-badge">MOST POPULAR</div>
+                    <div class="tier-icon">🚀</div>
+                    <div class="tier-name">Premium</div>
+                    <div class="tier-price">$79</div>
+                    <div class="tier-price-period">per year</div>
+                    <ul class="tier-features">
+                        <li>Full CSA B149.1-25 code search</li>
+                        <li>Full CSA B149.2-25 code search</li>
+                        <li>AI-powered code explanations</li>
+                        <li>Smart bookmarks & favorites</li>
+                        <li>Offline access to all sections</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="https://codecompassapp.netlify.app/" target="_blank" class="tier-cta">Upgrade to Premium</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2>Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Code Search</h3>
+                    <p>Quickly find any code clause with our intelligent search system. Search by section, keyword, or topic.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>CSA B149.1-25 & B149.2-25</h3>
+                    <p>Complete access to both Natural Gas/Propane Installation Code and Propane Storage/Handling Code.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Explanations</h3>
+                    <p>Get instant AI-powered explanations of complex code requirements in plain language.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔖</div>
+                    <h3>Smart Bookmarks</h3>
+                    <p>Save your most-used sections and access them instantly. Never lose track of important clauses.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Offline Access</h3>
+                    <p>Download sections for offline use. Access code requirements even without internet connection.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🇨🇦</div>
+                    <h3>Ontario Regulations</h3>
+                    <p>Includes complete Ontario Regulation 215/01 for TSSA compliance and certification.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LARK Labs</h3>
+                    <p>Professional HVAC & Gas Tech Tools</p>
+                    <p><a href="mailto:lark_labs@outlook.com">lark_labs@outlook.com</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="https://larklabs.org">LARK Labs Home</a></p>
+                    <p><a href="#pricing">Pricing</a></p>
+                    <p><a href="#features">Features</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Code Compass</h3>
+                    <p><a href="https://codecompassapp.netlify.app/" target="_blank">Launch App</a></p>
+                    <p><a href="https://codecompassapp.netlify.app/" target="_blank">App Status</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LARK Labs. All rights reserved. Code Compass - Canadian Gas Code Search Tool.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(22, 33, 62, 1)';
+            } else {
+                header.style.background = 'rgba(22, 33, 62, 0.98)';
+            }
+        });
+    </script>
+</body>
+</html>
