@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Jack 5.0 - NOW LIVE! AI HVAC Troubleshooting Assistant</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #E85A4F 0%, #FF6B5B 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #E85A4F;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #E85A4F;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #E85A4F 0%, #FF6B5B 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .live-badge {
+            display: inline-block;
+            background: #00c851;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+            box-shadow: 0 10px 30px rgba(0, 200, 81, 0.4);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #E85A4F;
+            padding: 1.2rem 3rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            background: #f8f9fa;
+        }
+
+        .pricing-badge {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Pricing Tiers Section */
+        .pricing-section {
+            background: white;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .pricing-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(180deg, #FF6B5B 0%, white 100%);
+        }
+
+        .pricing-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #E85A4F;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: #E85A4F;
+            background: linear-gradient(135deg, rgba(232, 90, 79, 0.05) 0%, rgba(255, 107, 91, 0.05) 100%);
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(45deg, #E85A4F, #FF6B5B);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .tier-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tier-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .tier-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #E85A4F;
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-price-period {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .tier-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .tier-features li {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .tier-features li::before {
+            content: '✓';
+            color: #00c851;
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .tier-cta {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #E85A4F, #FF6B5B);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tier-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(232, 90, 79, 0.3);
+        }
+
+        .tier-cta.secondary {
+            background: white;
+            color: #E85A4F;
+            border: 2px solid #E85A4F;
+        }
+
+        .tier-cta.secondary:hover {
+            background: #E85A4F;
+            color: white;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: #f8f9fa;
+            padding: 100px 0;
+        }
+
+        .features-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid #E85A4F;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #E85A4F;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 1.05rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: white;
+            padding: 100px 0;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 3rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #E85A4F, #FF6B5B);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .step h3 {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            background: linear-gradient(135deg, #E85A4F 0%, #FF6B5B 100%);
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .final-cta h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .final-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #E85A4F;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 1rem;
+            text-align: center;
+            color: #95a5a6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .pricing-grid, .features-grid, .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">HVAC Jack 5.0</div>
+            <ul class="nav-links">
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <div class="live-badge">🚀 NOW LIVE!</div>
+                <h1>HVAC Jack 5.0</h1>
+                <p>Professional AI HVAC Troubleshooting Assistant • Photo Analysis • Instant Diagnostics • Auto-Filled Service Forms</p>
+                <a href="https://hvac-jack-5-0.vercel.app/" target="_blank" class="cta-button">Launch HVAC Jack 5.0 →</a>
+                <div class="pricing-badge">
+                    <strong>Free Tier:</strong> 10 Photos • 15 Text Queries<br>
+                    <strong>Pro:</strong> $16.99/month • <strong>Student:</strong> Special Access Codes
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <h2>Choose Your Plan</h2>
+            <div class="pricing-grid">
+                <!-- Free Tier -->
+                <div class="pricing-card">
+                    <div class="tier-icon">✨</div>
+                    <div class="tier-name">Free Tier</div>
+                    <div class="tier-price">$0</div>
+                    <div class="tier-price-period">Forever</div>
+                    <ul class="tier-features">
+                        <li>10 photo analyses (one-time)</li>
+                        <li>15 text queries (one-time)</li>
+                        <li>AI-powered diagnostics</li>
+                        <li>Basic troubleshooting</li>
+                        <li>No credit card required</li>
+                    </ul>
+                    <a href="https://hvac-jack-5-0.vercel.app/" target="_blank" class="tier-cta secondary">Start Free</a>
+                </div>
+
+                <!-- Pro Tier -->
+                <div class="pricing-card featured">
+                    <div class="tier-badge">MOST POPULAR</div>
+                    <div class="tier-icon">🚀</div>
+                    <div class="tier-name">Pro</div>
+                    <div class="tier-price">$16.99</div>
+                    <div class="tier-price-period">per month</div>
+                    <ul class="tier-features">
+                        <li>250 photo analyses/month</li>
+                        <li>250 text queries/month</li>
+                        <li>Advanced AI diagnostics</li>
+                        <li>Maintenance form export</li>
+                        <li>Priority support</li>
+                        <li>Unlimited troubleshooting</li>
+                    </ul>
+                    <a href="https://hvac-jack-5-0.vercel.app/" target="_blank" class="tier-cta">Upgrade to Pro</a>
+                </div>
+
+                <!-- Student Tier -->
+                <div class="pricing-card">
+                    <div class="tier-icon">🎓</div>
+                    <div class="tier-name">Student</div>
+                    <div class="tier-price">Special</div>
+                    <div class="tier-price-period">12-month access</div>
+                    <ul class="tier-features">
+                        <li>All Pro features included</li>
+                        <li>LARK Labs access code required</li>
+                        <li>Full 12-month access</li>
+                        <li>Perfect for students & apprentices</li>
+                        <li>Educational institution support</li>
+                    </ul>
+                    <a href="mailto:lark_labs@outlook.com?subject=Student Access Code Request&body=Hello, I would like to request a student access code for HVAC Jack 5.0." class="tier-cta secondary">Request Access Code</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2>Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📷</div>
+                    <h3>Photo Analysis</h3>
+                    <p>Snap photos of equipment rating plates and get instant data extraction with AI-powered recognition.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Diagnostics</h3>
+                    <p>Advanced troubleshooting powered by Claude AI. Get expert-level analysis for any HVAC issue.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Auto-Filled Forms</h3>
+                    <p>Generate maintenance and service forms automatically from photo analysis data.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Equipment Database</h3>
+                    <p>Comprehensive database of HVAC equipment specs, parts, and troubleshooting guides.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Chat Interface</h3>
+                    <p>Ask follow-up questions and get instant answers about equipment and procedures.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>PWA Technology</h3>
+                    <p>Install as a mobile app for offline access and native-like performance on any device.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>3-Tier Security</h3>
+                    <p>Free, Pro, and Student tiers with secure authentication and usage tracking.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Results</h3>
+                    <p>Get troubleshooting guidance in seconds, not minutes. Save time on every service call.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Tier</h3>
+                    <p>Start free or upgrade to Pro for unlimited access. Students get special access codes.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Upload or Chat</h3>
+                    <p>Take a photo of equipment or describe your HVAC issue in plain text.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get AI Analysis</h3>
+                    <p>Receive instant diagnostics, part numbers, and step-by-step troubleshooting.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Export & Solve</h3>
+                    <p>Generate maintenance forms and solve HVAC problems faster than ever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready to Transform Your HVAC Workflow?</h2>
+            <p>Join thousands of HVAC professionals using AI-powered troubleshooting</p>
+            <a href="https://hvac-jack-5-0.vercel.app/" target="_blank" class="cta-button">Launch HVAC Jack 5.0 Now →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LARK Labs</h3>
+                    <p>Professional HVAC Training & Tools</p>
+                    <p><a href="mailto:lark_labs@outlook.com">lark_labs@outlook.com</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="https://larklabs.org">LARK Labs Home</a></p>
+                    <p><a href="#pricing">Pricing</a></p>
+                    <p><a href="#features">Features</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>HVAC Jack 5.0</h3>
+                    <p><a href="https://hvac-jack-5-0.vercel.app/" target="_blank">Launch App</a></p>
+                    <p><a href="https://vercel.com/mike-kapins-projects/hvac-jack-5-0" target="_blank">Deployment Status</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LARK Labs. All rights reserved. HVAC Jack 5.0 powered by Claude AI.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            }
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.pricing-card, .feature-card, .step').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
