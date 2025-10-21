@@ -1127,7 +1127,7 @@
     <header>
         <nav class="container">
             <div class="logo">
-                <img src="../assets/images/lark-labs-new-logo.png" width="80" height="80" alt="LARK Labs — HVAC tools and training" style="height: 80px; width: auto;">
+                <img src="../assets/images/lark-labs-new-logo.png" width="80" height="80" alt="LARK Labs — HVAC tools and resources" style="height: 80px; width: auto;">
             </div>
 
             <!-- Mobile menu toggle button -->
@@ -1140,7 +1140,7 @@
                 <ul class="nav-links" id="site-nav">
                     <li><a href="../index.html">Home</a></li>
                     <li><a href="../index.html#tools">Tools</a></li>
-                    <li><a href="../index.html#training">Training</a></li>
+                    <li><a href="../index.html#resources">Resources</a></li>
                     <li><a href="../code-compass.html">Code Compass</a></li>
                     <li><a href="../hvac-jack-40.html">HVAC JACK</a></li>
                     <li><a href="community.html" class="active">Community</a></li>
@@ -1280,7 +1280,7 @@
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                                     <div style="background: linear-gradient(45deg, #27ae60, #2ecc71); border-radius: 50%; padding: 0.8rem; font-size: 1.2rem;">🎓</div>
                                     <div>
-                                        <div style="color: #27ae60; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem;">TRAINING NEWS</div>
+                                        <div style="color: #27ae60; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem;">RESOURCE NEWS</div>
                                         <h4 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 0.3rem;">G3 Exam Format Updates</h4>
                                         <div style="color: #95a5a6; font-size: 0.8rem;">Published 3 days ago</div>
                                     </div>
@@ -1337,7 +1337,7 @@
                         <div class="newsletter-signup" style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 2rem; text-align: center; border: 2px dashed rgba(255, 255, 255, 0.1);">
                             <div style="font-size: 2rem; margin-bottom: 1rem;">📧</div>
                             <h3 style="color: #ffffff; margin-bottom: 0.5rem;">Stay Updated</h3>
-                            <p style="color: #bdc3c7; margin-bottom: 1.5rem;">Subscribe to our newsletter for the latest HVAC industry news, training updates, and exclusive promotions.</p>
+                            <p style="color: #bdc3c7; margin-bottom: 1.5rem;">Subscribe to our newsletter for the latest HVAC industry news, resource updates, and exclusive promotions.</p>
                             <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap;">
                                 <input type="email" placeholder="Enter your email address" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 25px; padding: 0.8rem 1.2rem; color: #ffffff; min-width: 250px; outline: none;" id="newsletterEmail">
                                 <button onclick="subscribeNewsletter()" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
@@ -1503,16 +1503,16 @@
                                 <div style="color: #ecf0f1; font-size: 0.9rem;">Troubleshooting, repair help, and technical questions</div>
                             </div>
 
-                            <!-- Certification & Training -->
+                            <!-- Certification & Resource -->
                             <div class="forum-category" style="background: rgba(39,174,96,0.1); border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(39,174,96,0.2); cursor: pointer; transition: all 0.3s;" onclick="openForum('certification')">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                                     <div style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎓</div>
                                     <div>
-                                        <h3 style="color: #27ae60; margin-bottom: 0.3rem;">Certification & Training</h3>
+                                        <h3 style="color: #27ae60; margin-bottom: 0.3rem;">Certification & Resource</h3>
                                         <div style="color: #95a5a6; font-size: 0.9rem;">12 topics • 67 posts</div>
                                     </div>
                                 </div>
-                                <div style="color: #ecf0f1; font-size: 0.9rem;">G1, G2, G3 certification, exam prep, and training resources</div>
+                                <div style="color: #ecf0f1; font-size: 0.9rem;">G1, G2, G3 certification, exam prep, and resources resources</div>
                             </div>
 
                             <!-- Tools & Equipment -->
@@ -1571,7 +1571,7 @@
                                     <div style="flex: 1;">
                                         <div style="color: #3498db; font-weight: bold; font-size: 0.9rem;">Sarah Kim</div>
                                         <div style="color: #ecf0f1; font-size: 0.9rem;">Posted G2 exam study tips and resources</div>
-                                        <div style="color: #95a5a6; font-size: 0.8rem;">in Certification & Training • 4 hours ago</div>
+                                        <div style="color: #95a5a6; font-size: 0.8rem;">in Certification & Resource • 4 hours ago</div>
                                     </div>
                                     <button onclick="openForum('certification')" style="background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-size: 0.85rem;">View</button>
                                 </div>
@@ -3247,7 +3247,7 @@
             const forumNames = {
                 'general': 'General Discussion',
                 'technical': 'Technical Support',
-                'certification': 'Certification & Training',
+                'certification': 'Certification & Resources',
                 'tools': 'Tools & Equipment',
                 'codes': 'Code & Regulations',
                 'career': 'Career & Business'

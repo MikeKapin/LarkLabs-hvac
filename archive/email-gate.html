@@ -109,7 +109,7 @@
     <script>
         // Check if user has already provided email
         const userEmail = localStorage.getItem('userEmail');
-        const redirectSection = new URLSearchParams(window.location.search).get('redirect') || 'training';
+        const redirectSection = new URLSearchParams(window.location.search).get('redirect') || 'resource';
         
         if (userEmail) {
             // User already provided email, redirect immediately to index with section

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G3 AI Tutor - CSA Gas Technician Training</title>
+    <title>G3 AI Tutor - CSA Gas Technician Resource</title>
     <style>
         * {
             margin: 0;
@@ -223,7 +223,7 @@
     <div class="app-container">
         <div class="header">
             <h1>🔥 G3 AI Tutor</h1>
-            <div class="subtitle">CSA Gas Technician Certification Training Assistant</div>
+            <div class="subtitle">CSA Gas Technician Certification Resource Assistant</div>
         </div>
 
         <div class="main-content">
@@ -363,7 +363,7 @@
                         ],
                         confinedSpaces: {
                             definition: "Work area where location, design, or construction restricts entry and exit and where equipment, operations, or atmospheres may pose hazards.",
-                            requirements: "Site- and situation-specific training and certification required before engaging in confined space activities."
+                            requirements: "Site- and situation-specific resources and certification required before engaging in confined space activities."
                         }
                     }
                 },
@@ -387,7 +387,7 @@
                     content: {
                         overview: "Every work site should have Emergency Response Plan and first aid facilities.",
                         firstAid: "Most industrial settings include first aid station with trained attendant. Know location, who staffs it, and available services.",
-                        emergencyPlans: "Every work site should have Emergency Response Plan. Workers must familiarize themselves and consult supervisor for training.",
+                        emergencyPlans: "Every work site should have Emergency Response Plan. Workers must familiarize themselves and consult supervisor for resource.",
                         emergencyShutdown: "Learn location of emergency shutdown systems or 'panic buttons'. Hit the panic button in emergency - don't hunt for correct switch."
                     }
                 },
@@ -486,7 +486,7 @@
                 },
                 {
                     question: "What are the main types of site hazards?",
-                    answer: "Site hazards include physical hazards (restricted spaces, moving equipment, electrical hazards, temperature extremes) and atmospheric hazards (combustible gases, oxygen deficiency/excess, toxic fumes like CO). Confined spaces require special training and certification."
+                    answer: "Site hazards include physical hazards (restricted spaces, moving equipment, electrical hazards, temperature extremes) and atmospheric hazards (combustible gases, oxygen deficiency/excess, toxic fumes like CO). Confined spaces require special resources and certification."
                 },
                 {
                     question: "What is the proper ladder positioning ratio?",
@@ -569,7 +569,7 @@
             // For modules not yet added, show placeholder message
             if (!moduleDataCache[moduleId]) {
                 const moduleName = moduleNames[moduleId] || `Module ${moduleId}`;
-                addMessage('ai', `📚 **Module ${moduleId}: ${moduleName}**\n\nContent for this module is being prepared and will be available soon.\n\nCurrently available:\n• **Module 1: Safety** - Complete with 8 comprehensive chapters\n\nPlease select Module 1 to access the full safety training content, or check back later for additional modules.`);
+                addMessage('ai', `📚 **Module ${moduleId}: ${moduleName}**\n\nContent for this module is being prepared and will be available soon.\n\nCurrently available:\n• **Module 1: Safety** - Complete with 8 comprehensive chapters\n\nPlease select Module 1 to access the full safety resources content, or check back later for additional modules.`);
                 return null;
             }
 

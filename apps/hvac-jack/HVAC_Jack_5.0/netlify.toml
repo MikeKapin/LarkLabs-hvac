@@ -9,6 +9,15 @@
   directory = "netlify/functions/"
   node_bundler = "esbuild"
 
+[functions."photo-analyzer"]
+  timeout = 30
+
+[functions."hvac-explainer"]
+  timeout = 30
+
+[functions."chat"]
+  timeout = 30
+
 [[headers]]
   for = "/*"
   [headers.values]

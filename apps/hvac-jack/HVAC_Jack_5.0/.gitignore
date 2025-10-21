@@ -35,3 +35,4 @@ temp/
 Old - *
 *_backup.*
 *_old.*
+.vercel

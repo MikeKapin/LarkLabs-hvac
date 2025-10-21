@@ -1,39 +1,33 @@
-// netlify/functions/chat.js  
-// HVAC Jack Advanced AI Explainer System - PRODUCTION v3.0
+// api/chat.js
+// HVAC Jack 5.0 - Vercel Chat Function
 
-exports.handler = async (event, context) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Content-Type': 'application/json'
-  };
+export default async function handler(req, res) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
   }
 
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers,
-      body: JSON.stringify({ error: 'Method not allowed' })
-    };
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const startTime = Date.now();
 
   try {
-    const { 
-      message, 
+    const {
+      message,
       mode = 'technician',
-      conversationHistory = [], 
-      systemContext = {}, 
+      conversationHistory = [],
+      systemContext = {},
       sessionId,
       photoAnalysisData,
       explainerMode,
       requestExplanation
-    } = JSON.parse(event.body || '{}');
+    } = req.body;
 
     console.log('📨 PRODUCTION v3.0 - Chat request received:', {
       messageLength: message?.length,
@@ -45,11 +39,7 @@ exports.handler = async (event, context) => {
 
     // Validate message
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: 'Message is required' })
-      };
+      return res.status(400).json({ error: 'Message is required' });
     }
 
     const messageLower = message.toLowerCase();
@@ -96,19 +86,15 @@ Provide detailed, professional-level explanations appropriate for HVAC technicia
 
       const explainerResponse = await callClaude(explainerPrompt, message);
 
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({
-          response: `🎓 **COMPREHENSIVE TECHNICAL EXPLANATION**\n\n${explainerResponse}\n\n---\n📋 *HVAC Jack Professional - Advanced AI Explainer System*`,
-          success: true,
-          routeUsed: 'ai_explainer_comprehensive',
-          usingAI: true,
-          responseTime: (Date.now() - startTime) / 1000,
-          sessionId: sessionId,
-          metadata: { explainerMode: explainerMode || 'comprehensive' }
-        })
-      };
+      return res.status(200).json({
+        response: `🎓 **COMPREHENSIVE TECHNICAL EXPLANATION**\n\n${explainerResponse}\n\n---\n📋 *HVAC Jack Professional - Advanced AI Explainer System*`,
+        success: true,
+        routeUsed: 'ai_explainer_comprehensive',
+        usingAI: true,
+        responseTime: (Date.now() - startTime) / 1000,
+        sessionId: sessionId,
+        metadata: { explainerMode: explainerMode || 'comprehensive' }
+      });
     }
 
     // STANDARD DIAGNOSTIC MODE
@@ -128,41 +114,39 @@ Keep responses concise but thorough.`;
 
     const response = await callClaude(diagnosticPrompt, message);
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        response,
-        success: true,
-        routeUsed: 'standard_diagnostic',
-        usingAI: true,
-        responseTime: (Date.now() - startTime) / 1000,
-        sessionId: sessionId
-      })
-    };
+    return res.status(200).json({
+      response,
+      success: true,
+      routeUsed: 'standard_diagnostic',
+      usingAI: true,
+      responseTime: (Date.now() - startTime) / 1000,
+      sessionId: sessionId
+    });
 
   } catch (error) {
     console.error('Chat error:', error);
-    
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({
-        error: 'Internal server error',
-        message: 'Failed to process request',
-        success: false,
-        fallback: true
-      })
-    };
+
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: 'Failed to process request',
+      success: false,
+      fallback: true
+    });
   }
-};
+}
 
 // Simple Claude API call
 async function callClaude(systemPrompt, userMessage) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  
+
+  console.log('🔑 Chat API Key check:', {
+    exists: !!apiKey,
+    length: apiKey?.length || 0,
+    prefix: apiKey?.substring(0, 7) || 'none'
+  });
+
   if (!apiKey) {
-    throw new Error('ANTHROPIC_API_KEY not configured');
+    throw new Error('ANTHROPIC_API_KEY not configured in environment variables');
   }
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -173,7 +157,7 @@ async function callClaude(systemPrompt, userMessage) {
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4.5-20250402',
+      model: 'claude-sonnet-4-5-20250929',
       max_tokens: 2000,
       system: systemPrompt,
       messages: [

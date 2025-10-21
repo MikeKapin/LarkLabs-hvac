@@ -1,118 +1,106 @@
-// netlify/functions/photo-analyzer.js  
-// HVAC Jack 4.0 - Photo Analysis with Explainer Integration
+// api/photo-analyzer.js
+// HVAC Jack 5.0 - Vercel Photo Analysis Function
 
-// Using built-in fetch (Node 18+ native support)
+export default async function handler(req, res) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
 
-exports.handler = async (event, context) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Content-Type': 'application/json'
-  };
-
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
   }
 
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers,
-      body: JSON.stringify({ error: 'Method not allowed' })
-    };
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const { imageData, query = '' } = JSON.parse(event.body || '{}');
+    const { imageData, query = '' } = req.body;
 
     if (!imageData) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: 'Image data is required' })
-      };
+      return res.status(400).json({ error: 'Image data is required' });
     }
 
-    console.log('📷 HVAC Jack 4.0 photo analysis started');
+    console.log('📷 HVAC Jack 5.0 photo analysis started (Vercel)');
 
     // Analyze photo with Claude Vision
     const photoAnalysis = await analyzePhotoWithClaude(imageData, query);
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        analysis: photoAnalysis,
-        success: true,
-        timestamp: new Date().toISOString()
-      })
-    };
+    return res.status(200).json({
+      analysis: photoAnalysis,
+      success: true,
+      timestamp: new Date().toISOString()
+    });
 
   } catch (error) {
     console.error('Photo analysis error:', error);
     console.error('Error stack:', error.stack);
-    
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({
-        error: 'Photo analysis failed',
-        success: false,
-        details: error.message,
-        timestamp: new Date().toISOString()
-      })
-    };
+
+    return res.status(500).json({
+      error: 'Photo analysis failed',
+      success: false,
+      details: error.message,
+      timestamp: new Date().toISOString()
+    });
   }
-};
+}
 
 async function analyzePhotoWithClaude(imageData, query) {
-  const apiKey = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
-  
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  console.log('🔑 API Key check:', {
+    exists: !!apiKey,
+    length: apiKey?.length || 0,
+    prefix: apiKey?.substring(0, 7) || 'none'
+  });
+
   if (!apiKey) {
-    throw new Error('CLAUDE_API_KEY or ANTHROPIC_API_KEY not configured');
+    throw new Error('ANTHROPIC_API_KEY not configured in environment variables');
   }
 
   // Remove data URL prefix if present
   const base64Data = imageData.replace(/^data:image\/[a-z]+;base64,/, '');
 
-  const prompt = `You are HVAC Jack 4.0 analyzing this HVAC equipment photo. Provide detailed technical analysis:
+  const prompt = `You are HVAC Jack 5.0 analyzing this HVAC equipment photo. Extract all critical technical data from the rating plate:
 
-**Photo Analysis Request:** ${query || 'Identify and analyze the HVAC equipment shown'}
+**Photo Analysis Request:** ${query || 'Extract all rating plate and technical data'}
 
 **Analyze and provide:**
 
 ## 🔍 EQUIPMENT IDENTIFICATION
 - Equipment type and category
-- Brand and model number (if visible)  
-- Age estimation based on design/style
-- System size and capacity indicators
+- Brand and model number (exact as shown)
+- Serial number (exact as shown)
+- Manufacturing date or code
+- Age estimation based on serial number or date code
+- Warranty status (calculate remaining warranty if manufacture date is visible)
 
 ## ⚙️ TECHNICAL SPECIFICATIONS
-- Visible model/serial numbers
-- Electrical specifications (voltage, amperage)
-- Refrigerant type indicators
-- Efficiency ratings (SEER, AFUE, etc.)
+- Electrical specifications (voltage, phase, amperage, Hz)
+- Refrigerant type and charge amount
+- BTU/Tonnage capacity
+- Efficiency ratings (SEER, AFUE, EER, etc.)
+- Compressor specifications (RLA, LRA, part number if visible)
+- Fan motor specifications (HP, RPM, amperage)
+- **CAPACITOR REQUIREMENTS:**
+  - Compressor capacitor: MFD rating and voltage
+  - Fan motor capacitor: MFD rating and voltage
+  - Dual or single run capacitor configuration
 
-## 🔧 CONDITION ASSESSMENT
-- Overall physical condition
-- Signs of wear, damage, or corrosion
-- Connection and wiring condition
-- Cleanliness and maintenance level
+## 🔧 COMMON REPLACEMENT PARTS
+Based on the brand and model identified, provide:
+- **Capacitor:** Part number, MFD rating, voltage (for both compressor and fan motor)
+- **Contactor Relay:** Part number, amperage rating, coil voltage
+- **Time Delay Relay:** Part number (if applicable for this model)
+- Other commonly replaced components specific to this model
 
-## ⚠️ POTENTIAL ISSUES
-- Visible problems or concerns
-- Safety hazards identified
-- Code violations or improper installations
-- Maintenance needs
+## 📋 ADDITIONAL TECHNICAL DATA
+- Any other rating plate data visible
+- Component specifications from labels
+- Wiring diagram references if visible
 
-## 📋 RECOMMENDATIONS
-- Immediate actions needed
-- Maintenance recommendations
-- Safety concerns to address
-- Further inspection points
-
-Be specific and detailed. Reference exact observations from the photo.`;
+**IMPORTANT:** Focus on extracting exact technical data from the rating plate. Do NOT assess physical condition, cleanliness, or cosmetic wear. Do NOT make maintenance recommendations. Only provide factual data visible on labels and rating plates.`;
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -122,8 +110,8 @@ Be specific and detailed. Reference exact observations from the photo.`;
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4.5-20250402',
-      max_tokens: 3000,
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 2500,
       temperature: 0.2,
       messages: [
         {
@@ -148,7 +136,13 @@ Be specific and detailed. Reference exact observations from the photo.`;
   });
 
   if (!response.ok) {
-    throw new Error(`Claude Vision API error: ${response.status}`);
+    const errorBody = await response.text();
+    console.error('❌ Claude API Error Response:', {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorBody
+    });
+    throw new Error(`Claude Vision API error: ${response.status} - ${errorBody}`);
   }
 
   const data = await response.json();
