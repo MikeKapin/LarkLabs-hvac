@@ -1,27 +1,25 @@
 {
   "name": "hvac-jack",
-  "version": "2.0.0",
-  "description": "HVAC Jack - AI-powered HVAC assistant with photo analysis and rating plate recognition",
+  "version": "5.0.0",
+  "description": "HVAC Jack 5.0 - AI-powered HVAC assistant with Claude Sonnet 4.5",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "netlify dev",
+    "dev": "vercel dev",
     "build": "echo 'No build step required'",
     "test": "echo 'No tests specified'",
-    "start": "netlify dev",
-    "deploy": "netlify deploy --prod"
+    "start": "vercel dev",
+    "deploy": "vercel --prod"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.24.3",
-    "node-fetch": "^3.3.2",
-    "cheerio": "^1.0.0-rc.12",
-    "tesseract.js": "^4.1.1",
-    "canvas": "^2.11.2"
+    "stripe": "^17.7.0",
+    "micro": "^10.0.1"
   },
   "devDependencies": {
     "netlify-cli": "^17.0.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "22.x"
   },
   "repository": {
     "type": "git",
