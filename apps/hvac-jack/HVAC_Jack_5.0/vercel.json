@@ -17,6 +17,12 @@
     },
     "api/validate-student-code.js": {
       "maxDuration": 10
+    },
+    "api/send-welcome-email.js": {
+      "maxDuration": 10
+    },
+    "api/stripe-webhook.js": {
+      "maxDuration": 10
     }
   },
   "public": true,
