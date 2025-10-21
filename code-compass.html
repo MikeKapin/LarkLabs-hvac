@@ -332,10 +332,11 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
         }
 
         .pricing-card {
@@ -684,10 +685,14 @@
             <h1>🧭 Never Flip Through Gas Code Books Again</h1>
             <p>Instant CSA B149.1 regulation searches at your fingertips. Mobile-optimized for field work.</p>
             <div class="cta-buttons">
-                <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">🚀 Try Free Version</a>
-                <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button secondary">📱 Launch App</a>
+                <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">🚀 Launch Code Compass</a>
+                <a href="#pricing" class="cta-button secondary">View Pricing</a>
             </div>
-            <p style="font-size: 1rem; opacity: 0.8;">✨ Used by 1000+ Canadian gas technicians and inspectors</p>
+            <div style="margin-top: 1.5rem; font-size: 1rem; opacity: 0.9;">
+                <strong>Free Tier:</strong> Ontario Regulations + Limited CSA Access<br>
+                <strong>Pro:</strong> $79/year • <strong>Student:</strong> Special Access Codes
+            </div>
+            <p style="font-size: 1rem; opacity: 0.8; margin-top: 1rem;">✨ Used by 1000+ Canadian gas technicians and inspectors</p>
         </div>
     </section>
 
@@ -764,9 +769,12 @@
         <div class="container">
             <h2 class="section-title">Choose Your Plan</h2>
             <div class="pricing-grid">
+                <!-- Free Tier -->
                 <div class="pricing-card">
+                    <div class="feature-icon">✨</div>
                     <h3>Free Version</h3>
                     <div class="price">$0</div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Forever</div>
                     <ul class="pricing-features">
                         <li>All Ontario gas regulations</li>
                         <li>TSSA Act complete access</li>
@@ -777,19 +785,40 @@
                     </ul>
                     <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">Start Free</a>
                 </div>
+
+                <!-- Pro Tier -->
                 <div class="pricing-card featured">
                     <div class="pricing-badge">MOST POPULAR</div>
-                    <h3>Premium</h3>
+                    <div class="feature-icon">🚀</div>
+                    <h3>Pro</h3>
                     <div class="price">$79<span style="font-size: 1rem;">/year</span></div>
+                    <div style="font-size: 0.9rem; margin-bottom: 1.5rem;">per year</div>
                     <ul class="pricing-features">
                         <li>Full CSA B149.1 & B149.2 access</li>
                         <li>AI-powered code explanations</li>
                         <li>Advanced search with filters</li>
                         <li>Unlimited smart bookmarks</li>
+                        <li>Offline access for all codes</li>
                         <li>Priority customer support</li>
-                        <li>Exclusive updates & features</li>
                     </ul>
-                    <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">Launch Free Version</a>
+                    <a href="https://codecompassapp.netlify.app/" target="_blank" class="cta-button">Upgrade to Pro</a>
+                </div>
+
+                <!-- Student Tier -->
+                <div class="pricing-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Student</h3>
+                    <div class="price">Special</div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">12-month access</div>
+                    <ul class="pricing-features">
+                        <li>All Pro features included</li>
+                        <li>LARK Labs access code required</li>
+                        <li>Full 12-month access</li>
+                        <li>Perfect for students & apprentices</li>
+                        <li>HVAC & Gas Tech programs</li>
+                        <li>Educational institution support</li>
+                    </ul>
+                    <a href="mailto:lark_labs@outlook.com?subject=Student Access Code Request - Code Compass&body=Hello, I would like to request a student access code for Code Compass." class="cta-button secondary">Request Access Code</a>
                 </div>
             </div>
         </div>
