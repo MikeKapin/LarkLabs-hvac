@@ -699,13 +699,6 @@
             </div>
 
             <div class="card">
-                <h2>🔧 Mode Distribution</h2>
-                <div class="chart-container">
-                    <canvas id="hvacModeChart"></canvas>
-                </div>
-            </div>
-
-            <div class="card">
                 <h2>📋 Recent HVAC Jack Sessions</h2>
                 <div class="data-table">
                     <table id="hvacSessionsTable">
@@ -1170,7 +1163,6 @@
                     data.summary?.blockedMessages?.toLocaleString() || '0';
 
                 createHVACUsageChart(data.dailyUsage || []);
-                createHVACModeChart(data.modeUsage || {});
                 updateHVACSessionsTable(data.recentSessions || []);
 
             } catch (error) {
@@ -1217,35 +1209,6 @@
                     scales: {
                         y: {
                             beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        function createHVACModeChart(modeUsage) {
-            const ctx = document.getElementById('hvacModeChart');
-            if (!ctx) return;
-
-            if (charts.hvacMode) {
-                charts.hvacMode.destroy();
-            }
-
-            charts.hvacMode = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Homeowner', 'Technician'],
-                    datasets: [{
-                        data: [modeUsage.homeowner || 0, modeUsage.technician || 0],
-                        backgroundColor: ['#e74c3c', '#3498db']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
                         }
                     }
                 }
