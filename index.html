@@ -3176,35 +3176,91 @@
             }
         });
 
+        // Track page view
+        function trackPageView() {
+            const sessionId = sessionStorage.getItem('lark_session_id') ||
+                'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('lark_session_id', sessionId);
+
+            fetch('/.netlify/functions/analytics-tracker', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    page: window.location.pathname,
+                    pageTitle: document.title,
+                    referrer: document.referrer || 'direct',
+                    sessionId: sessionId,
+                    eventType: 'page_view',
+                    metadata: {
+                        userAgent: navigator.userAgent,
+                        language: navigator.language,
+                        screenSize: `${window.screen.width}x${window.screen.height}`
+                    }
+                })
+            }).catch(err => console.log('Analytics tracking failed:', err));
+        }
+
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
+            trackPageView();
         });
 
-        // Add this new function to save emails
-        function saveEmailToList(email, source) {
-            // Get existing email list or create empty array
-            let emailList = JSON.parse(localStorage.getItem('collectedEmails') || '[]');
-            
-            // Check if email already exists
-            const existingEmail = emailList.find(entry => entry.email === email);
-            if (existingEmail) {
-                // Update the existing entry's timestamp
-                existingEmail.timestamp = new Date().toISOString();
-                existingEmail.date = new Date().toLocaleDateString();
-                existingEmail.page = source; // Update source if different
-            } else {
-                // Add new email entry
-                emailList.push({
-                    email: email,
-                    page: source,
-                    timestamp: new Date().toISOString(),
-                    date: new Date().toLocaleDateString()
+        // Save email to server via Netlify function
+        async function saveEmailToList(email, source) {
+            try {
+                const response = await fetch('/.netlify/functions/collect-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        source: source,
+                        metadata: {
+                            page: window.location.pathname,
+                            referrer: document.referrer || 'direct'
+                        }
+                    })
                 });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log('Email collected successfully:', email);
+                    // Also save to localStorage as backup
+                    let emailList = JSON.parse(localStorage.getItem('collectedEmails') || '[]');
+                    if (!emailList.find(e => e.email === email)) {
+                        emailList.push({
+                            email: email,
+                            source: source,
+                            timestamp: new Date().toISOString(),
+                            synced: true
+                        });
+                        localStorage.setItem('collectedEmails', JSON.stringify(emailList));
+                    }
+                    return true;
+                } else {
+                    console.warn('Email collection failed:', data.error);
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error collecting email:', error);
+                // Fallback to localStorage only if server fails
+                let emailList = JSON.parse(localStorage.getItem('collectedEmails') || '[]');
+                if (!emailList.find(e => e.email === email)) {
+                    emailList.push({
+                        email: email,
+                        source: source,
+                        timestamp: new Date().toISOString(),
+                        synced: false
+                    });
+                    localStorage.setItem('collectedEmails', JSON.stringify(emailList));
+                }
+                return false;
             }
-            
-            // Save back to localStorage
-            localStorage.setItem('collectedEmails', JSON.stringify(emailList));
         }
 
         function setupEventListeners() {
