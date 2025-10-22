@@ -256,6 +256,24 @@ function calculateAnalyticsStats(days) {
       return lastActivity > thirtyMinutesAgo;
     }).length;
 
+  // Calculate app-specific stats
+  const appStats = {
+    'hvac-jack': { pageViews: 0, launches: 0 },
+    'gas-tech-tutor': { pageViews: 0, launches: 0 },
+    'code-compass': { pageViews: 0, launches: 0 }
+  };
+
+  global.analyticsStore.pageViews.forEach(view => {
+    const appType = view.metadata?.appType;
+    if (appType && appStats[appType]) {
+      if (view.eventType === 'page_view') {
+        appStats[appType].pageViews++;
+      } else if (view.eventType === 'app_launch') {
+        appStats[appType].launches++;
+      }
+    }
+  });
+
   return {
     totalPageViews: totalPageViews,
     activeSessions: activeSessions,
@@ -263,6 +281,7 @@ function calculateAnalyticsStats(days) {
     topPages: topPagesArray,
     topReferrers: topReferrersArray,
     dailyStats: dailyStatsArray,
+    appStats: appStats,
     period: {
       days: days,
       startDate: startDate.toISOString(),

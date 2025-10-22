@@ -597,6 +597,50 @@
     </footer>
 
     <script>
+        // Track page view
+        function trackPageView() {
+            const sessionId = sessionStorage.getItem('lark_session_id') ||
+                'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('lark_session_id', sessionId);
+
+            fetch('/.netlify/functions/analytics-tracker', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    page: '/code-compass-landing',
+                    pageTitle: 'Code Compass',
+                    referrer: document.referrer || 'direct',
+                    sessionId: sessionId,
+                    eventType: 'page_view',
+                    metadata: { appType: 'code-compass' }
+                })
+            }).catch(err => console.log('Analytics:', err));
+        }
+
+        // Track app launch clicks
+        function trackAppLaunch(appName) {
+            const sessionId = sessionStorage.getItem('lark_session_id');
+            fetch('/.netlify/functions/analytics-tracker', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    page: '/code-compass-landing',
+                    pageTitle: 'Code Compass - Launch',
+                    sessionId: sessionId,
+                    eventType: 'app_launch',
+                    metadata: { appType: 'code-compass', action: 'launch_click' }
+                })
+            }).catch(err => console.log('Analytics:', err));
+        }
+
+        // Track page view on load
+        window.addEventListener('DOMContentLoaded', trackPageView);
+
+        // Add click tracking to all launch buttons
+        document.querySelectorAll('a[href*="codecompassapp"]').forEach(link => {
+            link.addEventListener('click', () => trackAppLaunch('code-compass'));
+        });
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

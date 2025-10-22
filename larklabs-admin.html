@@ -524,6 +524,33 @@
             </div>
 
             <div class="card">
+                <h2>🚀 App Usage Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-card danger">
+                        <div class="stat-value danger" id="hvacJackViews">-</div>
+                        <div class="stat-label">🔧 HVAC Jack Page Views</div>
+                        <div style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                            <strong id="hvacJackLaunches">-</strong> Launch Clicks
+                        </div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-value success" id="gasTechViews">-</div>
+                        <div class="stat-label">⚡ Gas Tech AI Page Views</div>
+                        <div style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                            <strong id="gasTechLaunches">-</strong> Launch Clicks
+                        </div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-value info" id="codeCompassViews">-</div>
+                        <div class="stat-label">💻 Code Compass Page Views</div>
+                        <div style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                            <strong id="codeCompassLaunches">-</strong> Launch Clicks
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
                 <h2>🎯 Top Pages</h2>
                 <div class="data-table">
                     <table id="topPagesTable">
@@ -838,6 +865,24 @@
 
                 // Update top pages table
                 updateTopPagesTable(analyticsData.topPages || []);
+
+                // Update app-specific stats
+                if (analyticsData.appStats) {
+                    document.getElementById('hvacJackViews').textContent =
+                        analyticsData.appStats['hvac-jack']?.pageViews?.toLocaleString() || '0';
+                    document.getElementById('hvacJackLaunches').textContent =
+                        analyticsData.appStats['hvac-jack']?.launches?.toLocaleString() || '0';
+
+                    document.getElementById('gasTechViews').textContent =
+                        analyticsData.appStats['gas-tech-tutor']?.pageViews?.toLocaleString() || '0';
+                    document.getElementById('gasTechLaunches').textContent =
+                        analyticsData.appStats['gas-tech-tutor']?.launches?.toLocaleString() || '0';
+
+                    document.getElementById('codeCompassViews').textContent =
+                        analyticsData.appStats['code-compass']?.pageViews?.toLocaleString() || '0';
+                    document.getElementById('codeCompassLaunches').textContent =
+                        analyticsData.appStats['code-compass']?.launches?.toLocaleString() || '0';
+                }
 
             } catch (error) {
                 console.error('Error loading overview data:', error);
