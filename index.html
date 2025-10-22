@@ -1973,7 +1973,7 @@
                 <ul class="nav-links" id="site-nav">
                     <li><a onclick="showSection('home'); closeMobileMenu();" class="active">Home</a></li>
                     <li><a onclick="showSection('tools'); closeMobileMenu();">Tools</a></li>
-                    <li><a onclick="showSection('resource'); closeMobileMenu();">Resources</a></li>
+                    <li><a onclick="showSection('resources'); closeMobileMenu();">Resources</a></li>
                     <li><a href="pages/blog/index.html">Blog</a></li>
                     <li><a href="code-compass.html">Code Compass</a></li>
                     <li><a href="hvac-jack-50-landing.html">HVAC JACK 5.0</a></li>
@@ -1997,7 +1997,7 @@
                     <h1>Free TSSA Gas Technician Exam Prep | CSA-Compliant Resources Resources</h1>
                     <p>Professional Tools for HVAC and Gas Technician Education</p>
                     <a href="#" class="cta-button" onclick="showSection('tools')">Tools</a>
-                    <a href="#" class="cta-button secondary" onclick="showSection('resource')">Resource</a>
+                    <a href="#" class="cta-button secondary" onclick="showSection('resources')">Resources</a>
                 </div>
                 <figcaption class="sr-only">LARK Labs provides free professional-grade HVAC calculators, resources modules, and certification resources specifically designed for Canadian gas technicians and HVAC professionals.</figcaption>
             </figure>
@@ -2257,7 +2257,7 @@
 
                     <div class="faq-item">
                         <div class="faq-question">How do I prepare for the Canadian gas code exam?</div>
-                        <div class="faq-answer">Use our <a href="https://codecompassapp.netlify.app/" target="_blank" style="color: #3498db; text-decoration: none;">Code Compass tool</a> to search and study Canadian gas installation regulations (free for Ontario Regulations and CSA B149.1-25/B149.2-25 Sections 1-4, premium subscription for full code access), combined with our comprehensive <a href="#" onclick="showSection('resource')" style="color: #3498db; text-decoration: none;">chapter review questions</a> covering all units from safety protocols to advanced piping systems and appliance installation.</div>
+                        <div class="faq-answer">Use our <a href="https://codecompassapp.netlify.app/" target="_blank" style="color: #3498db; text-decoration: none;">Code Compass tool</a> to search and study Canadian gas installation regulations (free for Ontario Regulations and CSA B149.1-25/B149.2-25 Sections 1-4, premium subscription for full code access), combined with our comprehensive <a href="#" onclick="showSection('resources')" style="color: #3498db; text-decoration: none;">chapter review questions</a> covering all units from safety protocols to advanced piping systems and appliance installation.</div>
                     </div>
 
                     <div class="faq-item">
@@ -2413,13 +2413,13 @@
             </div>
         </section>
 
-        <!-- RESOURCE SECTION -->
-        <section id="resource" class="section">
+        <!-- RESOURCES SECTION -->
+        <section id="resources" class="section">
             <figure role="img" aria-label="Student reviewing CSA B149.1 updates and A2L refrigerant safety steps on a tablet" class="hero hero--resource">
                 <div class="container">
                     <h2>Canadian HVAC Resources for Gas and Refrigeration Certification</h2>
                     <p>Professional certification resources and learning modules for Canadian Gas and Refrigeration Technicians</p>
-                    <a href="#" class="cta-button secondary" onclick="showSection('resource')">Study Guides</a>
+                    <a href="#" class="cta-button secondary" onclick="showSection('resources')">Study Guides</a>
                 </div>
                 <figcaption class="sr-only">Comprehensive resources modules and certification resources for Canadian HVAC professionals, including CSA B149.1 updates, TSSA exam preparation, and A2L refrigerant safety resource.</figcaption>
             </figure>
@@ -2626,7 +2626,7 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 2rem;">
-                    <button class="cta-button" onclick="showSection('resource')">← Back to Resource</button>
+                    <button class="cta-button" onclick="showSection('resources')">← Back to Resources</button>
                 </div>
             </div>
         </section>
@@ -2782,7 +2782,7 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 2rem;">
-                    <button class="cta-button" onclick="showSection('resource')">← Back to Resources</button>
+                    <button class="cta-button" onclick="showSection('resources')">← Back to Resources</button>
                     <button class="cta-button secondary" onclick="window.open('./G2/index.html', '_blank')">Browse All G2 Materials</button>
                 </div>
             </div>
@@ -3342,16 +3342,16 @@
                 { name: 'Gas Piping Calculator', keywords: 'gas piping calculator canadian sizing natural propane', action: () => window.open('./apps/calculators/canadian-gas-piping-calculator.html', '_blank'), section: 'tools', description: 'Canadian gas piping sizing calculator', icon: '🔧' },
 
                 // Resources
-                { name: 'CSA B149.1-25 Changes', keywords: 'csa b149 code changes review 2025 updates new regulations', action: () => window.open('./B149_1_Changes.html', '_blank'), section: 'resource', description: 'Latest CSA B149.1-25 code changes and updates', icon: '📋' },
+                { name: 'CSA B149.1-25 Changes', keywords: 'csa b149 code changes review 2025 updates new regulations', action: () => window.open('./B149_1_Changes.html', '_blank'), section: 'resources', description: 'Latest CSA B149.1-25 code changes and updates', icon: '📋' },
                 { name: 'A2L Refrigerant Resources', keywords: 'a2l refrigerant resources safety flammable r32 r454b mildly flammable', action: () => window.open('./resources/courses/A2L_Safety_Course.html', '_blank'), section: 'resources', description: 'Safety resources for A2L mildly flammable refrigerants', icon: '⚠️' },
-                { name: 'TSSA G3 Exam Guide', keywords: 'tssa g3 exam guide study preparation gas technician certification ontario', action: () => window.open('./pages/blog/tssa-g3-exam-guide.html', '_blank'), section: 'resource', description: 'Complete TSSA G3 exam preparation guide', icon: '📚' },
+                { name: 'TSSA G3 Exam Guide', keywords: 'tssa g3 exam guide study preparation gas technician certification ontario', action: () => window.open('./pages/blog/tssa-g3-exam-guide.html', '_blank'), section: 'resources', description: 'Complete TSSA G3 exam preparation guide', icon: '📚' },
                 { name: 'TSSA G2 Exam Guide', keywords: 'tssa g2 exam guide study preparation gas technician advanced certification ontario', action: () => window.open('./pages/blog/tssa-g2-exam-guide.html', '_blank'), section: 'resources', description: 'Advanced TSSA G2 exam preparation strategies', icon: '📚' },
                 { name: 'G2 Learning Modules', keywords: 'g2 learning modules gas technician g2 certification resources interactive', action: () => showCSAG2ChapterQuestions(), section: 'resources', description: 'Interactive G2 certification learning modules', icon: '🎓' },
-                { name: 'Series Circuit Resources', keywords: 'series circuit electrical resource module unit 5 electricity ohms law', action: () => window.open('./assets/series_circuit.html', '_blank'), section: 'resource', description: 'Interactive series circuit resource module', icon: '⚡' },
-                { name: 'Parallel Circuit Resource', keywords: 'parallel circuit electrical resource module unit 5 electricity voltage current', action: () => window.open('./assets/parallel_circuit.html', '_blank'), section: 'resource', description: 'Interactive parallel circuit resource module', icon: '⚡' },
-                { name: 'Boiler System Diagram', keywords: 'boiler system diagram resource heating gas fired components piping safety controls', action: () => window.open('./assets/boiler-system-diagram.html', '_blank'), section: 'resource', description: 'Interactive boiler system diagram and resource', icon: '🔥' },
+                { name: 'Series Circuit Resources', keywords: 'series circuit electrical resource module unit 5 electricity ohms law', action: () => window.open('./assets/series_circuit.html', '_blank'), section: 'resources', description: 'Interactive series circuit resource module', icon: '⚡' },
+                { name: 'Parallel Circuit Resource', keywords: 'parallel circuit electrical resource module unit 5 electricity voltage current', action: () => window.open('./assets/parallel_circuit.html', '_blank'), section: 'resources', description: 'Interactive parallel circuit resource module', icon: '⚡' },
+                { name: 'Boiler System Diagram', keywords: 'boiler system diagram resource heating gas fired components piping safety controls', action: () => window.open('./assets/boiler-system-diagram.html', '_blank'), section: 'resources', description: 'Interactive boiler system diagram and resource', icon: '🔥' },
                 { name: 'Combination Boiler System', keywords: 'combination boiler combi system resource dhw heating installation troubleshooting', action: () => window.open('./assets/combo-boiler-system.html', '_blank'), section: 'resources', description: 'Combi boiler system resources and diagnostics', icon: '🏠' },
-                { name: 'G2 Practice Exam', keywords: 'g2 practice exam tssa gas technician certification test questions', action: () => window.location.href='pages/payment/g2_premium_access.html', section: 'resource', description: 'Premium G2 practice exam with 500+ questions', icon: '📝' },
+                { name: 'G2 Practice Exam', keywords: 'g2 practice exam tssa gas technician certification test questions', action: () => window.location.href='pages/payment/g2_premium_access.html', section: 'resources', description: 'Premium G2 practice exam with 500+ questions', icon: '📝' },
                 { name: 'G3 Resources', keywords: 'g3 resources gas technician g3 basic certification course modules', action: () => window.open('./resources/g3/G3/index.html', '_blank'), section: 'resources', description: 'Comprehensive G3 resource course', icon: '🎓' },
 
                 // Blog Articles
@@ -3365,7 +3365,7 @@
                 { name: 'Community', keywords: 'community forum chat professionals networking discussion technicians', action: () => window.location.href='pages/community.html', section: 'community', description: 'Join the HVAC professional community', icon: '👥' },
                 { name: 'HVAC Jack 5.0', keywords: 'hvac jack ai diagnostic photo analysis troubleshooting assistant artificial intelligence 5.0 live', action: () => window.location.href='hvac-jack-50-landing.html', section: 'hvac-jack', description: 'AI-powered HVAC diagnostic assistant - NOW LIVE!', icon: '🚀' },
                 { name: 'Tools Section', keywords: 'tools calculators professional apps section navigation', action: () => showSection('tools'), section: 'tools', description: 'Browse all HVAC tools and calculators', icon: '🔧' },
-                { name: 'Resources Section', keywords: 'resources certification courses modules education learning', action: () => showSection('resource'), section: 'resource', description: 'Access resources courses and certification prep', icon: '🎓' },
+                { name: 'Resources Section', keywords: 'resources certification courses modules education learning', action: () => showSection('resources'), section: 'resources', description: 'Access resources courses and certification prep', icon: '🎓' },
                 { name: 'About Section', keywords: 'about founder lark labs background story mission vision', action: () => showSection('about'), section: 'about', description: 'Learn about LARK Labs and our mission', icon: 'ℹ️' }
             ];
 
