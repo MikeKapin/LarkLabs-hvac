@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3498db">
+    <title>Electrical Troubleshooting Guide - LARK Labs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(41, 128, 185, 0.1));
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-large {
+            font-size: 4rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        h1 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #bdc3c7;
+            font-size: 1rem;
+        }
+
+        .danger-banner {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            border: 2px solid #c0392b;
+        }
+
+        .danger-banner strong {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .danger-banner-content {
+            flex: 1;
+        }
+
+        .voltage-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .voltage-button {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px 20px;
+            border: 2px solid #3498db;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+            color: #3498db;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .voltage-button:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .voltage-button.active {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .progress-bar {
+            background: rgba(44, 62, 80, 0.5);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 2px solid #3498db;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+            border: 2px solid #3498db;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section.critical {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.05));
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .section.critical .section-header {
+            border-bottom-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .section-icon {
+            font-size: 2rem;
+        }
+
+        .section h2 {
+            color: #3498db;
+            font-size: 1.4rem;
+        }
+
+        .section.critical h2 {
+            color: #e74c3c;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(44, 62, 80, 0.7);
+            transform: translateX(5px);
+        }
+
+        .section.critical .checklist-item {
+            border-left-color: #e74c3c;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .section.critical .checkbox {
+            border-color: #e74c3c;
+        }
+
+        .checklist-item:hover .checkbox {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .section.critical .checklist-item:hover .checkbox {
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        .checklist-item.checked .checkbox {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        .section.critical .checklist-item.checked .checkbox {
+            background: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .checklist-item.checked .checkbox::after {
+            display: block;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            color: #ecf0f1;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .item-detail {
+            color: #95a5a6;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .item-values {
+            color: #f1c40f;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .flowchart {
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .flowchart-title {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .flowchart-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .flowchart-step {
+            margin: 8px 0;
+            padding-left: 20px;
+            border-left: 3px solid #3498db;
+        }
+
+        .note {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .note-title {
+            color: #f1c40f;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .voltage-reference {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .voltage-reference-title {
+            color: #2ecc71;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .voltage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .voltage-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .voltage-label {
+            color: #95a5a6;
+            font-size: 0.85rem;
+        }
+
+        .voltage-value {
+            color: #f1c40f;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            margin-top: 4px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            padding: 12px 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateX(-5px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #95a5a6;
+            border-top: 1px solid rgba(52, 152, 219, 0.2);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            .checklist-item {
+                padding: 12px;
+            }
+
+            .voltage-selector {
+                flex-direction: column;
+            }
+
+            .voltage-button {
+                min-width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .back-link, .progress-bar, .voltage-selector {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="hvac-diagnostic-guides.html" class="back-link">← Back to All Guides</a>
+
+        <header>
+            <div class="header-content">
+                <span class="icon-large">⚡</span>
+                <div>
+                    <h1>Electrical Troubleshooting Guide</h1>
+                    <p class="subtitle">Systematic voltage testing and control circuit diagnostics</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="danger-banner">
+            <span style="font-size: 2rem;">⚡</span>
+            <div class="danger-banner-content">
+                <strong>ELECTRICAL SAFETY CRITICAL</strong>
+                <div style="line-height: 1.5;">
+                    Line voltage (120/240VAC) can cause severe injury or death. Always verify power is OFF before touching wires. Use proper test equipment. Never bypass safety devices. Capacitors store lethal voltage even when power is off - ALWAYS discharge before handling. Use lockout/tagout procedures.
+                </div>
+            </div>
+        </div>
+
+        <div class="voltage-selector">
+            <button class="voltage-button active" data-voltage="all">All Voltages</button>
+            <button class="voltage-button" data-voltage="24v">24VAC Control</button>
+            <button class="voltage-button" data-voltage="120v">120VAC Single</button>
+            <button class="voltage-button" data-voltage="240v">240VAC Split</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0% Complete</div>
+        </div>
+
+        <!-- Phase 1: Safety & Setup -->
+        <div class="section critical">
+            <div class="section-header">
+                <span class="section-icon">🛡️</span>
+                <h2>Phase 1: Safety Procedures & Setup</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper test equipment</div>
+                        <div class="item-detail">Digital multimeter (DMM), non-contact voltage tester, clamp meter with fresh batteries</div>
+                        <div class="item-values">DMM must be rated for 600V CAT III minimum</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Don proper PPE</div>
+                        <div class="item-detail">Safety glasses, insulated gloves (if working hot), rubber-soled shoes</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Identify and verify circuit breakers</div>
+                        <div class="item-detail">Locate breakers for unit being serviced, verify they control the correct equipment</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test voltage tester for proper operation</div>
+                        <div class="item-detail">Test on known live circuit before AND after use to verify tester is working</div>
+                        <div class="item-values">Critical safety step - never trust a tester without verification</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Identify voltage levels in system</div>
+                        <div class="item-detail">240VAC line power, 120VAC blower/controls, 24VAC control circuit - know what you're testing</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">⚠️ LOCKOUT/TAGOUT PROCEDURES</div>
+                <div class="note-content">
+                    When performing repairs (not diagnostics), always use lockout/tagout:
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        <li>Turn off and lock breaker in OFF position</li>
+                        <li>Attach tag indicating work in progress</li>
+                        <li>Test for voltage at equipment to confirm power is off</li>
+                        <li>Keep key to lockout device on your person</li>
+                        <li>Never remove another technician's lockout device</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2: Line Voltage Testing -->
+        <div class="section" data-voltage-type="120v 240v all">
+            <div class="section-header">
+                <span class="section-icon">🔌</span>
+                <h2>Phase 2: Line Voltage (120/240VAC) Testing</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test voltage at main disconnect</div>
+                        <div class="item-detail">With disconnect ON, measure L1 to L2, L1 to ground, L2 to ground</div>
+                        <div class="item-values">L1-L2: 240VAC ±10% | L1-GND: 120VAC | L2-GND: 120VAC</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for voltage drop under load</div>
+                        <div class="item-detail">Measure line voltage with equipment running - should not drop more than 10%</div>
+                        <div class="item-values">Excessive drop indicates: undersized wire, loose connection, or utility issue</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect wire connections in junction boxes</div>
+                        <div class="item-detail">Look for overheated terminals, melted insulation, loose wire nuts, corrosion</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test continuity of ground wire</div>
+                        <div class="item-detail">Power OFF - verify ground conductor has continuity to electrical panel ground</div>
+                        <div class="item-values">Should read <1 ohm - open circuit = dangerous ground fault condition</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for proper wire sizing</div>
+                        <div class="item-detail">Verify conductor gauge matches breaker rating and load requirements</div>
+                        <div class="item-values">14AWG=15A max | 12AWG=20A max | 10AWG=30A max | 8AWG=40A max</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="flowchart">
+                <div class="flowchart-title">🔍 LINE VOLTAGE TROUBLESHOOTING FLOW</div>
+                <div class="flowchart-content">
+                    <div class="flowchart-step"><strong>No voltage at disconnect:</strong> Check breaker → Check wire continuity → Check utility power</div>
+                    <div class="flowchart-step"><strong>Low voltage (<216VAC):</strong> Check under load → Test at panel → Call utility if needed</div>
+                    <div class="flowchart-step"><strong>Voltage present but equipment won't run:</strong> Proceed to load testing (Phase 4)</div>
+                    <div class="flowchart-step"><strong>Intermittent voltage:</strong> Check connections → Wiggle wires while monitoring voltage</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3: Control Voltage Testing -->
+        <div class="section" data-voltage-type="24v all">
+            <div class="section-header">
+                <span class="section-icon">🎛️</span>
+                <h2>Phase 3: Control Voltage (24VAC) Testing</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test transformer primary voltage</div>
+                        <div class="item-detail">Measure 120VAC input to transformer - no input = check fuse or line voltage</div>
+                        <div class="item-values">Should be 120VAC ±10% (108-132VAC acceptable)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test transformer secondary output</div>
+                        <div class="item-detail">Measure voltage at transformer secondary terminals (usually labeled R and C)</div>
+                        <div class="item-values">Should be 24-28VAC | Low/no voltage = failed transformer or short circuit</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for shorted control circuit</div>
+                        <div class="item-detail">If transformer output low, disconnect all loads one at a time and retest voltage</div>
+                        <div class="item-values">Voltage returns when short removed = that component or wire is shorted</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test voltage at thermostat</div>
+                        <div class="item-detail">Measure R to C at thermostat - should match transformer output (24-28VAC)</div>
+                        <div class="item-values">No voltage = broken wire or blown fuse | Low voltage = wire resistance or short</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test thermostat call for heat/cool</div>
+                        <div class="item-detail">With thermostat calling, measure R to W (heat) or R to Y (cool) - should be 24VAC</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify control board fuse intact</div>
+                        <div class="item-detail">Most boards have 3A or 5A fuse - test continuity with meter or visual inspection</div>
+                        <div class="item-values">Blown fuse = short circuit exists - find and fix before replacing fuse</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Trace control circuit path</div>
+                        <div class="item-detail">Follow 24VAC from transformer → thermostat → controls → back to transformer</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="flowchart">
+                <div class="flowchart-title">🔍 CONTROL VOLTAGE TROUBLESHOOTING FLOW</div>
+                <div class="flowchart-content">
+                    <div class="flowchart-step"><strong>No 24VAC at transformer:</strong> Check 120V input → Check primary fuse → Replace transformer if input OK</div>
+                    <div class="flowchart-step"><strong>Low 24VAC (12-20V):</strong> Disconnect loads one by one → Find short circuit → Repair/replace shorted component</div>
+                    <div class="flowchart-step"><strong>24VAC present but no operation:</strong> Test switches in circuit → Check for open safeties → Verify control board</div>
+                    <div class="flowchart-step"><strong>Intermittent control voltage:</strong> Check wire connections → Test thermostat wiring → Check for loose terminals</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4: Component Testing -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔧</span>
+                <h2>Phase 4: Component & Switch Testing</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test safety switches (power OFF)</div>
+                        <div class="item-detail">Disconnect switch, high limit, rollout, pressure switches - should show continuity when closed</div>
+                        <div class="item-values">Closed switch = 0 ohms | Open switch = OL (infinite) | Intermittent = bad switch</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test safety switches under power (24VAC)</div>
+                        <div class="item-detail">With system running, measure voltage across switch - 0VAC = closed/good, 24VAC = open</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test contactors/relays</div>
+                        <div class="item-detail">Measure 24VAC at coil → Contacts should close → Check 240VAC passes through contacts</div>
+                        <div class="item-values">Coil energized but contacts don't close = failed contactor</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test motors for short to ground</div>
+                        <div class="item-detail">Power OFF - measure resistance from each motor terminal to ground/case</div>
+                        <div class="item-values">Should read OL (infinite ohms) | Any continuity to ground = FAILED MOTOR</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test motor windings for opens/shorts</div>
+                        <div class="item-detail">Single phase: measure resistance of run and start windings</div>
+                        <div class="item-values">Open = OL reading | Short = very low resistance | Normal = 3-30 ohms typical</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test capacitors</div>
+                        <div class="item-detail">DISCHARGE FIRST with insulated screwdriver, then measure capacitance</div>
+                        <div class="item-values">Within ±6% of rating = good | Outside 6% = weak | Shorted/open = replace</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">⚡ CAPACITOR SAFETY</div>
+                <div class="note-content">
+                    <strong>ALWAYS discharge capacitors before handling:</strong>
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        <li>Turn OFF all power to unit</li>
+                        <li>Wait 60 seconds for residual charge to dissipate</li>
+                        <li>Use insulated screwdriver to short terminals together</li>
+                        <li>You should see/hear a spark - this is normal</li>
+                        <li>If no spark, capacitor may be failed open (still safe)</li>
+                        <li>Never short capacitor with metal tools without insulation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 5: Load Testing -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2>Phase 5: Load & Amp Draw Testing</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure compressor amp draw</div>
+                        <div class="item-detail">Use clamp meter on L1 or L2 lead to compressor</div>
+                        <div class="item-values">Should be 80-100% of RLA | >RLA = overload | <50% RLA = problem | LRA only on start</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test blower motor amp draw</div>
+                        <div class="item-detail">Measure at motor or control board connection</div>
+                        <div class="item-values">Compare to nameplate FLA | High amps = restricted airflow or bad bearing</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check condenser fan motor amps</div>
+                        <div class="item-detail">Should match nameplate rating ±10%</div>
+                        <div class="item-values">No amps = motor not running | Low amps = motor struggling | High amps = bad bearing</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate total system amp draw</div>
+                        <div class="item-detail">Add all loads, compare to breaker rating and wire capacity</div>
+                        <div class="item-values">Total load should be <80% of breaker rating for continuous duty</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for high resistance connections</div>
+                        <div class="item-detail">Feel terminals for heat while running - hot = high resistance = fire hazard</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="voltage-reference">
+                <div class="voltage-reference-title">⚡ COMMON MOTOR AMP READINGS</div>
+                <div class="voltage-grid">
+                    <div class="voltage-item">
+                        <div class="voltage-label">3-ton compressor</div>
+                        <div class="voltage-value">15-20A typical RLA</div>
+                    </div>
+                    <div class="voltage-item">
+                        <div class="voltage-label">1/2 HP blower</div>
+                        <div class="voltage-value">5-7A typical</div>
+                    </div>
+                    <div class="voltage-item">
+                        <div class="voltage-label">Condenser fan</div>
+                        <div class="voltage-value">1-3A typical</div>
+                    </div>
+                    <div class="voltage-item">
+                        <div class="voltage-label">Inducer motor</div>
+                        <div class="voltage-value">0.5-1.5A typical</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 6: Control Board Diagnostics -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🖥️</span>
+                <h2>Phase 6: Control Board Diagnostics</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for LED error codes</div>
+                        <div class="item-detail">Count blinks/flashes on diagnostic LED - reference service manual for codes</div>
+                        <div class="item-values">LED codes indicate: pressure switch, limit, flame sense, communication errors</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify control board receives 24VAC</div>
+                        <div class="item-detail">Measure voltage at board's R and C terminals</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test control board outputs</div>
+                        <div class="item-detail">When calling for heat/cool, verify 24VAC present at inducer, gas valve, Y terminal</div>
+                        <div class="item-values">Output present but no operation = component failure | No output = board failure</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect board for visible damage</div>
+                        <div class="item-detail">Look for burned components, cracked solder joints, corrosion, insect damage</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test flame sense circuit (furnaces)</div>
+                        <div class="item-detail">Measure flame sense current with microamp setting on meter (0.5-10µA DC)</div>
+                        <div class="item-values">Good: 2-10µA | Weak: 0.5-2µA (clean rod) | None: 0µA (no flame or failed rod)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify all safeties to board are closed</div>
+                        <div class="item-detail">Check continuity of all switches in series with board - one open stops operation</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="flowchart">
+                <div class="flowchart-title">🔍 CONTROL BOARD TROUBLESHOOTING FLOW</div>
+                <div class="flowchart-content">
+                    <div class="flowchart-step"><strong>Board has 24VAC but no outputs:</strong> Check for error codes → Reset board → Check safeties → Replace board if outputs still fail</div>
+                    <div class="flowchart-step"><strong>Board outputs present but loads don't work:</strong> Test components individually → Check wiring → Replace failed load</div>
+                    <div class="flowchart-step"><strong>Intermittent operation:</strong> Check connections to board → Look for corrosion → Vibration test → Replace board if internal fault</div>
+                    <div class="flowchart-step"><strong>Blown fuse repeatedly:</strong> Find short circuit → Check all wiring and components → Fix short before replacing fuse</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 7: Advanced Diagnostics -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔬</span>
+                <h2>Phase 7: Advanced Electrical Diagnostics</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test for voltage drop across components</div>
+                        <div class="item-detail">With load running, measure voltage across contacts, switches - should be <0.5VAC</div>
+                        <div class="item-values">High voltage drop = pitted contacts or high resistance connection</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for loose neutral connection</div>
+                        <div class="item-detail">Can cause 240V equipment to work but 120V circuits to fail or have low voltage</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test for ground faults</div>
+                        <div class="item-detail">Measure resistance from hot wires to ground - should be >1MΩ (infinite)</div>
+                        <div class="item-values">Any reading <1MΩ indicates leakage to ground (moisture, damaged insulation)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper phase balance (3-phase equipment)</div>
+                        <div class="item-detail">Check voltage and amp draw on all three phases - should be within 2%</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test for electromagnetic interference</div>
+                        <div class="item-detail">If controls behave erratically, check for nearby sources of EMI, loose grounds</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document all voltage and amp readings</div>
+                        <div class="item-detail">Record for future reference and comparison - baseline measurements are valuable</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Voltage Reference Chart -->
+        <div class="voltage-reference">
+            <div class="voltage-reference-title">📊 QUICK VOLTAGE REFERENCE GUIDE</div>
+            <div class="voltage-grid">
+                <div class="voltage-item">
+                    <div class="voltage-label">Line Voltage (L1-L2)</div>
+                    <div class="voltage-value">240VAC ±10%<br>(216-264VAC)</div>
+                </div>
+                <div class="voltage-item">
+                    <div class="voltage-label">Line to Neutral/Ground</div>
+                    <div class="voltage-value">120VAC ±10%<br>(108-132VAC)</div>
+                </div>
+                <div class="voltage-item">
+                    <div class="voltage-label">Control Transformer</div>
+                    <div class="voltage-value">24-28VAC<br>(secondary)</div>
+                </div>
+                <div class="voltage-item">
+                    <div class="voltage-label">Thermostat Power</div>
+                    <div class="voltage-value">24VAC<br>(R to C)</div>
+                </div>
+                <div class="voltage-item">
+                    <div class="voltage-label">Flame Sense Current</div>
+                    <div class="voltage-value">2-10µA DC<br>(microamps)</div>
+                </div>
+                <div class="voltage-item">
+                    <div class="voltage-label">Closed Switch/Contact</div>
+                    <div class="voltage-value">0VAC across<br>(continuity)</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Part of the <strong>LARK Labs HVAC Emergency Diagnostic Guides</strong></p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">For Canadian HVAC technicians | Always prioritize safety when working with electricity</p>
+        </footer>
+    </div>
+
+    <script>
+        // Voltage selector functionality
+        const voltageButtons = document.querySelectorAll('.voltage-button');
+        const sections = document.querySelectorAll('.section[data-voltage-type]');
+        let currentVoltage = 'all';
+
+        voltageButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                voltageButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Get selected voltage
+                currentVoltage = this.dataset.voltage;
+                
+                // Filter sections
+                sections.forEach(section => {
+                    const voltageTypes = section.dataset.voltageType.split(' ');
+                    if (currentVoltage === 'all' || voltageTypes.includes(currentVoltage)) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+                
+                // Update progress
+                updateProgress();
+                
+                // Save selection
+                localStorage.setItem('electrical-selected-voltage', currentVoltage);
+            });
+        });
+
+        // Initialize checklist functionality
+        const checklistItems = document.querySelectorAll('.checklist-item');
+        const progressBar = document.getElementById('progressBar');
+
+        // Load saved state from localStorage
+        function loadState() {
+            checklistItems.forEach((item, index) => {
+                const isChecked = localStorage.getItem(`electrical-item-${index}`) === 'true';
+                if (isChecked) {
+                    item.classList.add('checked');
+                }
+            });
+            
+            // Load selected voltage
+            const savedVoltage = localStorage.getItem('electrical-selected-voltage');
+            if (savedVoltage) {
+                currentVoltage = savedVoltage;
+                voltageButtons.forEach(btn => {
+                    if (btn.dataset.voltage === savedVoltage) {
+                        btn.click();
+                    }
+                });
+            }
+            
+            updateProgress();
+        }
+
+        // Save state to localStorage
+        function saveState(index, isChecked) {
+            localStorage.setItem(`electrical-item-${index}`, isChecked);
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            // Only count visible items
+            const visibleItems = Array.from(checklistItems).filter(item => {
+                const section = item.closest('.section');
+                return section && section.style.display !== 'none';
+            });
+            
+            const visibleCheckedItems = visibleItems.filter(item => item.classList.contains('checked'));
+            const totalItems = visibleItems.length;
+            const checkedItems = visibleCheckedItems.length;
+            const percentage = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+            
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '% Complete';
+        }
+
+        // Add click handlers
+        checklistItems.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const isChecked = this.classList.contains('checked');
+                saveState(index, isChecked);
+                updateProgress();
+            });
+        });
+
+        // Load state on page load
+        loadState();
+
+        // Reset functionality (Ctrl/Cmd + Shift + R)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'r') {
+                e.preventDefault();
+                if (confirm('Reset all checklist items and voltage selection?')) {
+                    // Clear localStorage
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key && key.startsWith('electrical-')) {
+                            localStorage.removeItem(key);
+                        }
+                    }
+                    // Reset UI
+                    checklistItems.forEach(item => item.classList.remove('checked'));
+                    voltageButtons.forEach(btn => btn.classList.remove('active'));
+                    voltageButtons[0].classList.add('active');
+                    currentVoltage = 'all';
+                    sections.forEach(section => section.style.display = 'block');
+                    updateProgress();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

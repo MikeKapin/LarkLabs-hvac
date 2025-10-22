@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3498db">
+    <title>Refrigeration System Diagnostics - LARK Labs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(41, 128, 185, 0.1));
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-large {
+            font-size: 4rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        h1 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #bdc3c7;
+            font-size: 1rem;
+        }
+
+        .info-banner {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .info-banner strong {
+            font-size: 1.1rem;
+        }
+
+        .refrigerant-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .refrigerant-button {
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+            color: #3498db;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .refrigerant-button:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .refrigerant-button.active {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .calculator-box {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(39, 174, 96, 0.05));
+            border: 2px solid #2ecc71;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .calculator-title {
+            color: #2ecc71;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .calc-input-group {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .calc-label {
+            color: #95a5a6;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .calc-input {
+            width: 100%;
+            padding: 8px;
+            background: rgba(52, 73, 94, 0.7);
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            color: #ecf0f1;
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .calc-result {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.2), rgba(243, 156, 18, 0.1));
+            border: 2px solid #f1c40f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .calc-result-label {
+            color: #f1c40f;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .calc-result-value {
+            color: #f1c40f;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .calc-status {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .status-good {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .status-low {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        .status-high {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .progress-bar {
+            background: rgba(44, 62, 80, 0.5);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 2px solid #3498db;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+            border: 2px solid #3498db;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section.critical {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.05));
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .section.critical .section-header {
+            border-bottom-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .section-icon {
+            font-size: 2rem;
+        }
+
+        .section h2 {
+            color: #3498db;
+            font-size: 1.4rem;
+        }
+
+        .section.critical h2 {
+            color: #e74c3c;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(44, 62, 80, 0.7);
+            transform: translateX(5px);
+        }
+
+        .section.critical .checklist-item {
+            border-left-color: #e74c3c;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .section.critical .checkbox {
+            border-color: #e74c3c;
+        }
+
+        .checklist-item:hover .checkbox {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .section.critical .checklist-item:hover .checkbox {
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        .checklist-item.checked .checkbox {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        .section.critical .checklist-item.checked .checkbox {
+            background: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .checklist-item.checked .checkbox::after {
+            display: block;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            color: #ecf0f1;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .item-detail {
+            color: #95a5a6;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .item-values {
+            color: #f1c40f;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .pt-chart {
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .pt-chart-title {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .pt-chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .pt-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .pt-label {
+            color: #95a5a6;
+            font-size: 0.85rem;
+        }
+
+        .pt-value {
+            color: #f1c40f;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            margin-top: 4px;
+        }
+
+        .diagnostic-matrix {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .diagnostic-matrix-title {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diagnostic-matrix-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .diagnostic-row {
+            margin: 8px 0;
+            padding: 8px;
+            background: rgba(44, 62, 80, 0.5);
+            border-radius: 5px;
+        }
+
+        .note {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .note-title {
+            color: #f1c40f;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            padding: 12px 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateX(-5px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #95a5a6;
+            border-top: 1px solid rgba(52, 152, 219, 0.2);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            .checklist-item {
+                padding: 12px;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .back-link, .progress-bar, .refrigerant-selector, .calculator-box {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="hvac-diagnostic-guides.html" class="back-link">← Back to All Guides</a>
+
+        <header>
+            <div class="header-content">
+                <span class="icon-large">❄️</span>
+                <div>
+                    <h1>Refrigeration System Diagnostics</h1>
+                    <p class="subtitle">Complete refrigeration cycle analysis and charge verification</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="info-banner">
+            <span style="font-size: 1.5rem;">💡</span>
+            <div>
+                <strong>REFRIGERATION FUNDAMENTALS:</strong> Superheat and subcooling are the two most important measurements for diagnosing refrigerant charge and system performance. Master these calculations and you can diagnose 90% of refrigeration issues.
+            </div>
+        </div>
+
+        <div class="refrigerant-selector">
+            <div style="color: #95a5a6; font-weight: 600; width: 100%; margin-bottom: 5px;">Select Refrigerant Type:</div>
+            <button class="refrigerant-button active" data-refrigerant="R-410A">R-410A</button>
+            <button class="refrigerant-button" data-refrigerant="R-22">R-22</button>
+            <button class="refrigerant-button" data-refrigerant="R-32">R-32</button>
+            <button class="refrigerant-button" data-refrigerant="R-454B">R-454B (A2L)</button>
+            <button class="refrigerant-button" data-refrigerant="R-134a">R-134a</button>
+        </div>
+
+        <!-- Superheat/Subcooling Calculator -->
+        <div class="calculator-box">
+            <div class="calculator-title">🧮 Superheat & Subcooling Calculator</div>
+            
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #3498db; margin-bottom: 10px;">Superheat Calculation</h3>
+                <div class="calc-grid">
+                    <div class="calc-input-group">
+                        <div class="calc-label">Suction Pressure (PSI)</div>
+                        <input type="number" id="suctionPressure" class="calc-input" placeholder="e.g., 118" step="0.1">
+                    </div>
+                    <div class="calc-input-group">
+                        <div class="calc-label">Suction Line Temperature (°F)</div>
+                        <input type="number" id="suctionTemp" class="calc-input" placeholder="e.g., 50" step="0.1">
+                    </div>
+                </div>
+                <div class="calc-result" id="superheatResult" style="display: none;">
+                    <div class="calc-result-label">Superheat</div>
+                    <div class="calc-result-value" id="superheatValue">--</div>
+                    <div class="calc-status" id="superheatStatus">Enter values to calculate</div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="color: #3498db; margin-bottom: 10px;">Subcooling Calculation</h3>
+                <div class="calc-grid">
+                    <div class="calc-input-group">
+                        <div class="calc-label">Liquid Pressure (PSI)</div>
+                        <input type="number" id="liquidPressure" class="calc-input" placeholder="e.g., 225" step="0.1">
+                    </div>
+                    <div class="calc-input-group">
+                        <div class="calc-label">Liquid Line Temperature (°F)</div>
+                        <input type="number" id="liquidTemp" class="calc-input" placeholder="e.g., 70" step="0.1">
+                    </div>
+                </div>
+                <div class="calc-result" id="subcoolingResult" style="display: none;">
+                    <div class="calc-result-label">Subcooling</div>
+                    <div class="calc-result-value" id="subcoolingValue">--</div>
+                    <div class="calc-status" id="subcoolingStatus">Enter values to calculate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0% Complete</div>
+        </div>
+
+        <!-- Phase 1: Setup & Safety -->
+        <div class="section critical">
+            <div class="section-header">
+                <span class="section-icon">🛡️</span>
+                <h2>Phase 1: Setup & Safety Procedures</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper refrigerant handling certification</div>
+                        <div class="item-detail">EPA 608 or equivalent required for refrigerant work - illegal to vent refrigerants</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Don safety glasses and gloves</div>
+                        <div class="item-detail">Liquid refrigerant can cause severe frostbite - protect eyes and skin</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Identify refrigerant type</div>
+                        <div class="item-detail">Check nameplate, system label, or use refrigerant identifier - never mix types</div>
+                        <div class="item-values" id="currentRefrigerantDisplay">Currently selected: R-410A</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Prepare proper gauge set</div>
+                        <div class="item-detail">Gauges must be rated for refrigerant type (R-410A requires high-pressure gauges)</div>
+                        <div class="item-values">R-410A: 800 PSI gauges | R-22: 500 PSI gauges</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Ensure system has run 10+ minutes</div>
+                        <div class="item-detail">Pressures must stabilize before accurate readings - allow adequate run time</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">⚠️ REFRIGERANT SAFETY</div>
+                <div class="note-content">
+                    <strong>Never vent refrigerants:</strong> Illegal per EPA regulations, harmful to environment<br>
+                    <strong>Frostbite hazard:</strong> Liquid refrigerant at -40°F can cause instant frostbite<br>
+                    <strong>Asphyxiation risk:</strong> Refrigerants heavier than air, can displace oxygen in confined spaces<br>
+                    <strong>High pressure:</strong> R-410A can exceed 600 PSI - use proper equipment
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2: Pressure Readings -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2>Phase 2: Pressure & Temperature Readings</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Connect manifold gauges to service ports</div>
+                        <div class="item-detail">Blue hose to suction (large line), red hose to liquid (small line), yellow to tank/vacuum</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Record outdoor ambient temperature</div>
+                        <div class="item-detail">Measure in shade near outdoor unit - critical for pressure analysis</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Record indoor temperature and humidity</div>
+                        <div class="item-detail">Return air temp affects evaporator performance and superheat</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Read suction pressure (low side)</div>
+                        <div class="item-detail">Pressure at service port on large line (vapor line)</div>
+                        <div class="item-values" id="suctionPressureRef">R-410A typical: 115-135 PSI @ 75°F indoor</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Read liquid pressure (high side)</div>
+                        <div class="item-detail">Pressure at service port on small line (liquid line)</div>
+                        <div class="item-values" id="liquidPressureRef">R-410A typical: 250-300 PSI @ 86°F outdoor</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure suction line temperature</div>
+                        <div class="item-detail">Use pipe clamp thermometer at service port on large line</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure liquid line temperature</div>
+                        <div class="item-detail">Use pipe clamp thermometer at service port on small line</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="pt-chart" id="ptChart">
+                <div class="pt-chart-title">📊 P-T Chart Reference (<span id="currentRefrigerant">R-410A</span>)</div>
+                <div class="pt-chart-grid">
+                    <div class="pt-item">
+                        <div class="pt-label">35°F Evap Temp</div>
+                        <div class="pt-value" id="pt35F">102 PSI</div>
+                    </div>
+                    <div class="pt-item">
+                        <div class="pt-label">40°F Evap Temp</div>
+                        <div class="pt-value" id="pt40F">118 PSI</div>
+                    </div>
+                    <div class="pt-item">
+                        <div class="pt-label">45°F Evap Temp</div>
+                        <div class="pt-value" id="pt45F">133 PSI</div>
+                    </div>
+                    <div class="pt-item">
+                        <div class="pt-label">80°F Cond Temp</div>
+                        <div class="pt-value" id="pt80F">225 PSI</div>
+                    </div>
+                    <div class="pt-item">
+                        <div class="pt-label">95°F Cond Temp</div>
+                        <div class="pt-value" id="pt95F">316 PSI</div>
+                    </div>
+                    <div class="pt-item">
+                        <div class="pt-label">105°F Cond Temp</div>
+                        <div class="pt-value" id="pt105F">372 PSI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3: Superheat Analysis -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🌡️</span>
+                <h2>Phase 3: Superheat Measurement & Analysis</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Convert suction pressure to saturation temperature</div>
+                        <div class="item-detail">Use P-T chart or app to find evaporating temperature for measured suction pressure</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate superheat</div>
+                        <div class="item-detail">Superheat = Suction line temp - Saturation temp (from P-T chart)</div>
+                        <div class="item-values">Example: 50°F line temp - 40°F sat temp = 10°F superheat</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Compare to target superheat range</div>
+                        <div class="item-detail">TXV systems: 8-12°F typical | Fixed orifice: 10-25°F (varies by conditions)</div>
+                        <div class="item-values">Always check manufacturer specs - target varies by system design</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document superheat reading</div>
+                        <div class="item-detail">Record actual superheat, target range, and outdoor/indoor temps for reference</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="diagnostic-matrix">
+                <div class="diagnostic-matrix-title">🔍 SUPERHEAT DIAGNOSIS</div>
+                <div class="diagnostic-matrix-content">
+                    <div class="diagnostic-row">
+                        <strong style="color: #2ecc71;">Normal Superheat (8-12°F TXV):</strong> System charge is correct, metering device working properly
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong style="color: #e74c3c;">High Superheat (>15°F):</strong> Starved evaporator - low refrigerant charge, restricted metering device, restricted filter drier, or TXV stuck closed
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong style="color: #e74c3c;">Low Superheat (<5°F):</strong> Flooded evaporator - TXV stuck open, overcharge (rare), or low airflow causing low evap temp
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong style="color: #f1c40f;">Hunting Superheat (fluctuating):</strong> TXV cycling, low charge, moisture in system, or improper TXV bulb placement
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4: Subcooling Analysis -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🌊</span>
+                <h2>Phase 4: Subcooling Measurement & Analysis</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Convert liquid pressure to saturation temperature</div>
+                        <div class="item-detail">Use P-T chart to find condensing temperature for measured liquid pressure</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate subcooling</div>
+                        <div class="item-detail">Subcooling = Saturation temp (from P-T chart) - Liquid line temp</div>
+                        <div class="item-values">Example: 80°F sat temp - 70°F line temp = 10°F subcooling</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Compare to target subcooling range</div>
+                        <div class="item-detail">Typical target: 8-15°F (always check manufacturer specifications)</div>
+                        <div class="item-values">Varies by system design - fixed orifice vs TXV, indoor vs outdoor unit</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document subcooling reading</div>
+                        <div class="item-detail">Record actual subcooling, target range, and ambient conditions</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="diagnostic-matrix">
+                <div class="diagnostic-matrix-title">🔍 SUBCOOLING DIAGNOSIS</div>
+                <div class="diagnostic-matrix-content">
+                    <div class="diagnostic-row">
+                        <strong style="color: #2ecc71;">Normal Subcooling (8-15°F):</strong> System charge is correct, condenser performing properly
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong style="color: #e74c3c;">Low Subcooling (<5°F):</strong> Low refrigerant charge, liquid line restriction, or non-condensables in system
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong style="color: #e74c3c;">High Subcooling (>18°F):</strong> Overcharge, restricted airflow on condenser, restricted metering device, or TXV stuck closed
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong style="color: #f1c40f;">Zero Subcooling:</strong> Critically low charge - flashing in liquid line, severe capacity loss, compressor damage risk
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 5: Combined Analysis -->
+        <div class="section critical">
+            <div class="section-header">
+                <span class="section-icon">🎯</span>
+                <h2>Phase 5: Combined Superheat/Subcooling Analysis</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Analyze superheat AND subcooling together</div>
+                        <div class="item-detail">Combined analysis provides complete picture - never rely on one measurement alone</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify airflow before charging</div>
+                        <div class="item-detail">Low airflow mimics low charge - ALWAYS check filter, coils, blower before adding refrigerant</div>
+                        <div class="item-values">Target: 400 CFM per ton (e.g., 3-ton system = 1200 CFM)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Consider non-condensables</div>
+                        <div class="item-detail">High head pressure with low ambient = air/moisture in system (requires recovery/vacuum)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for liquid line restrictions</div>
+                        <div class="item-detail">Temperature drop across filter drier or liquid line = restriction</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="diagnostic-matrix">
+                <div class="diagnostic-matrix-title">🎯 COMBINED DIAGNOSIS MATRIX</div>
+                <div class="diagnostic-matrix-content">
+                    <div class="diagnostic-row">
+                        <strong>High SH + Low SC:</strong> LOW REFRIGERANT CHARGE (most common) - add charge slowly
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong>Low SH + High SC:</strong> OVERCHARGE or LOW AIRFLOW - check filter/coils before removing charge
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong>High SH + High SC:</strong> RESTRICTED METERING DEVICE or filter drier - feel for temp drop
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong>Low SH + Low SC:</strong> TXV STUCK OPEN or overcharge (rare) - check TXV operation
+                    </div>
+                    <div class="diagnostic-row">
+                        <strong>Normal SH + Normal SC:</strong> SYSTEM CHARGED CORRECTLY - look elsewhere for problem
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 6: Leak Detection -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔍</span>
+                <h2>Phase 6: Leak Detection Procedures</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect common leak points visually</div>
+                        <div class="item-detail">Look for oil staining at joints, flares, service ports, Schrader valves</div>
+                        <div class="item-values">Oil follows refrigerant - oil stains indicate potential leak location</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Use electronic leak detector</div>
+                        <div class="item-detail">Heated diode or infrared detector - probe all joints, connections, coils</div>
+                        <div class="item-values">Check: Flare fittings, service valves, brazed joints, evap/cond coils</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Apply soap bubbles to suspect areas</div>
+                        <div class="item-detail">Leak detection solution or dish soap - bubbles confirm leak location</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check Schrader valve cores</div>
+                        <div class="item-detail">Common leak point - apply soap solution, tighten or replace if leaking</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect evaporator coil for leaks</div>
+                        <div class="item-detail">May require UV dye injection on previous visit - check with UV light</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test condensate drain for refrigerant</div>
+                        <div class="item-detail">Evaporator leak may show refrigerant in condensate - use detector on drain line</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document leak location and repair method</div>
+                        <div class="item-detail">Take photos, record leak location, document repair procedure for warranty</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">💡 LEAK DETECTION TIPS</div>
+                <div class="note-content">
+                    <strong>Most common leak points:</strong> Service ports (40%), flare connections (30%), coil leaks (20%), brazed joints (10%)<br>
+                    <strong>UV dye:</strong> Inject on first visit if leak suspected, return in 1-2 weeks to find leak with UV light<br>
+                    <strong>Standing pressure:</strong> System with leak will lose pressure over days/weeks when off<br>
+                    <strong>Nitrogen test:</strong> For slow leaks, pressurize with nitrogen to 150-300 PSI and recheck
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 7: Charging Procedures -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⚗️</span>
+                <h2>Phase 7: Refrigerant Charging Procedures</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Determine charging method</div>
+                        <div class="item-detail">Superheat method (fixed orifice) or Subcooling method (TXV) or Weigh-in method (new install)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Connect charging hoses and scale</div>
+                        <div class="item-detail">Yellow hose to refrigerant tank on scale - verify correct refrigerant type</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Purge charging hoses of air</div>
+                        <div class="item-detail">Crack valve briefly to purge hoses - prevents air contamination</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Add refrigerant in VAPOR form only</div>
+                        <div class="item-detail">To suction port only, with system running - NEVER liquid to suction</div>
+                        <div class="item-values">Tank upright for vapor | Inverted for liquid (liquid line only, system off)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Add refrigerant slowly (2-4 oz at a time)</div>
+                        <div class="item-detail">Wait 5-10 minutes between additions for pressures to stabilize</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Recheck superheat/subcooling after each addition</div>
+                        <div class="item-detail">Stop when readings in target range - easy to overcharge</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document amount of refrigerant added</div>
+                        <div class="item-detail">Record weight added, charge method used, final superheat/subcooling readings</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">⚠️ CHARGING SAFETY & BEST PRACTICES</div>
+                <div class="note-content">
+                    <strong>Never liquid to suction:</strong> Will slug compressor and cause catastrophic damage<br>
+                    <strong>Charge slowly:</strong> Overcharging is worse than undercharging - go slow<br>
+                    <strong>Let system stabilize:</strong> Takes 5-10 min for accurate readings after adding charge<br>
+                    <strong>R-410A charging:</strong> Can be liquid or vapor (near-azeotropic blend) but vapor safer<br>
+                    <strong>Blended refrigerants:</strong> Must be removed and charged as liquid (R-407C, R-404A)
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 8: Final Verification -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">✅</span>
+                <h2>Phase 8: Final System Verification</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify system performance</div>
+                        <div class="item-detail">Check supply air temp, amp draw, airflow - should meet design specs</div>
+                        <div class="item-values">Supply air: 55-65°F typical | Amp draw: within RLA | Airflow: 400 CFM/ton</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Confirm all service ports sealed</div>
+                        <div class="item-detail">Replace caps on service ports - prevents contamination and small leaks</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect all repair work</div>
+                        <div class="item-detail">If leaks were repaired, verify no new leaks at repair points</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Run system through full cycle</div>
+                        <div class="item-detail">Verify startup, operation, and shutdown all normal</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document final readings</div>
+                        <div class="item-detail">Record all pressures, temps, superheat, subcooling, ambient conditions for records</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Complete refrigerant log</div>
+                        <div class="item-detail">EPA requires documentation of refrigerant added/recovered with amounts and dates</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Part of the <strong>LARK Labs HVAC Emergency Diagnostic Guides</strong></p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">For Canadian HVAC technicians | Master superheat and subcooling - everything else follows</p>
+        </footer>
+    </div>
+
+    <script>
+        // Refrigerant P-T data
+        const ptData = {
+            'R-410A': {
+                '35F': '102 PSI', '40F': '118 PSI', '45F': '133 PSI',
+                '80F': '225 PSI', '95F': '316 PSI', '105F': '372 PSI',
+                suction: 'R-410A typical: 115-135 PSI @ 75°F indoor',
+                liquid: 'R-410A typical: 250-300 PSI @ 86°F outdoor',
+                // Temperature lookup table (pressure to temp)
+                pressureToTemp: {
+                    102: 35, 118: 40, 125: 42, 133: 45, 143: 47, 153: 50,
+                    164: 52, 175: 55, 187: 57, 199: 60, 211: 62, 225: 65,
+                    238: 67, 253: 70, 268: 72, 283: 75, 300: 77, 316: 80,
+                    334: 82, 352: 85, 371: 87, 391: 90, 411: 92, 433: 95,
+                    455: 97, 478: 100, 502: 102, 527: 105
+                }
+            },
+            'R-22': {
+                '35F': '62 PSI', '40F': '69 PSI', '45F': '76 PSI',
+                '80F': '158 PSI', '95F': '210 PSI', '105F': '243 PSI',
+                suction: 'R-22 typical: 65-75 PSI @ 75°F indoor',
+                liquid: 'R-22 typical: 200-250 PSI @ 86°F outdoor',
+                pressureToTemp: {
+                    62: 35, 69: 40, 76: 45, 84: 50, 92: 55, 101: 60,
+                    110: 65, 121: 70, 132: 75, 143: 80, 158: 85, 172: 90,
+                    188: 95, 205: 100, 224: 105, 243: 110
+                }
+            },
+            'R-32': {
+                '35F': '79 PSI', '40F': '92 PSI', '45F': '103 PSI',
+                '80F': '191 PSI', '95F': '258 PSI', '105F': '305 PSI',
+                suction: 'R-32 typical: 90-110 PSI @ 75°F indoor',
+                liquid: 'R-32 typical: 220-270 PSI @ 86°F outdoor',
+                pressureToTemp: {
+                    79: 35, 92: 40, 103: 45, 115: 50, 128: 55, 142: 60,
+                    157: 65, 173: 70, 191: 75, 209: 80, 229: 85, 251: 90,
+                    274: 95, 299: 100, 326: 105
+                }
+            },
+            'R-454B': {
+                '35F': '68 PSI', '40F': '81 PSI', '45F': '91 PSI',
+                '80F': '166 PSI', '95F': '225 PSI', '105F': '267 PSI',
+                suction: 'R-454B typical: 80-100 PSI @ 75°F indoor',
+                liquid: 'R-454B typical: 200-250 PSI @ 86°F outdoor',
+                pressureToTemp: {
+                    68: 35, 81: 40, 91: 45, 102: 50, 114: 55, 127: 60,
+                    141: 65, 156: 70, 172: 75, 189: 80, 207: 85, 226: 90,
+                    247: 95, 269: 100, 293: 105
+                }
+            },
+            'R-134a': {
+                '35F': '32 PSI', '40F': '37 PSI', '45F': '42 PSI',
+                '80F': '91 PSI', '95F': '123 PSI', '105F': '147 PSI',
+                suction: 'R-134a typical: 35-45 PSI @ 75°F indoor',
+                liquid: 'R-134a typical: 140-180 PSI @ 86°F outdoor',
+                pressureToTemp: {
+                    32: 35, 37: 40, 42: 45, 48: 50, 54: 55, 61: 60,
+                    69: 65, 77: 70, 86: 75, 96: 80, 107: 85, 118: 90,
+                    131: 95, 145: 100, 160: 105
+                }
+            }
+        };
+
+        // Current refrigerant
+        let currentRefrigerant = 'R-410A';
+
+        // Refrigerant selector
+        const refrigerantButtons = document.querySelectorAll('.refrigerant-button');
+        refrigerantButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                refrigerantButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentRefrigerant = this.dataset.refrigerant;
+                updatePTChart(currentRefrigerant);
+                updateCalculator();
+                localStorage.setItem('refrig-selected-refrigerant', currentRefrigerant);
+            });
+        });
+
+        function updatePTChart(refrigerant) {
+            const data = ptData[refrigerant];
+            document.getElementById('currentRefrigerant').textContent = refrigerant;
+            document.getElementById('currentRefrigerantDisplay').textContent = `Currently selected: ${refrigerant}`;
+            document.getElementById('pt35F').textContent = data['35F'];
+            document.getElementById('pt40F').textContent = data['40F'];
+            document.getElementById('pt45F').textContent = data['45F'];
+            document.getElementById('pt80F').textContent = data['80F'];
+            document.getElementById('pt95F').textContent = data['95F'];
+            document.getElementById('pt105F').textContent = data['105F'];
+            document.getElementById('suctionPressureRef').textContent = data.suction;
+            document.getElementById('liquidPressureRef').textContent = data.liquid;
+        }
+
+        // Calculator functions
+        function findClosestTemp(pressure, lookupTable) {
+            const pressures = Object.keys(lookupTable).map(Number).sort((a, b) => a - b);
+            let closest = pressures[0];
+            let minDiff = Math.abs(pressure - closest);
+            
+            for (let p of pressures) {
+                const diff = Math.abs(pressure - p);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closest = p;
+                }
+            }
+            
+            // Linear interpolation for better accuracy
+            const index = pressures.indexOf(closest);
+            if (pressure > closest && index < pressures.length - 1) {
+                const p1 = pressures[index];
+                const p2 = pressures[index + 1];
+                const t1 = lookupTable[p1];
+                const t2 = lookupTable[p2];
+                const ratio = (pressure - p1) / (p2 - p1);
+                return t1 + ratio * (t2 - t1);
+            } else if (pressure < closest && index > 0) {
+                const p1 = pressures[index - 1];
+                const p2 = pressures[index];
+                const t1 = lookupTable[p1];
+                const t2 = lookupTable[p2];
+                const ratio = (pressure - p1) / (p2 - p1);
+                return t1 + ratio * (t2 - t1);
+            }
+            
+            return lookupTable[closest];
+        }
+
+        function updateCalculator() {
+            const suctionPressure = parseFloat(document.getElementById('suctionPressure').value);
+            const suctionTemp = parseFloat(document.getElementById('suctionTemp').value);
+            const liquidPressure = parseFloat(document.getElementById('liquidPressure').value);
+            const liquidTemp = parseFloat(document.getElementById('liquidTemp').value);
+
+            // Superheat calculation
+            if (!isNaN(suctionPressure) && !isNaN(suctionTemp)) {
+                const satTemp = findClosestTemp(suctionPressure, ptData[currentRefrigerant].pressureToTemp);
+                const superheat = suctionTemp - satTemp;
+                
+                document.getElementById('superheatResult').style.display = 'block';
+                document.getElementById('superheatValue').textContent = superheat.toFixed(1) + '°F';
+                
+                const statusEl = document.getElementById('superheatStatus');
+                if (superheat >= 8 && superheat <= 12) {
+                    statusEl.textContent = '✓ Normal (TXV system)';
+                    statusEl.className = 'calc-status status-good';
+                } else if (superheat > 15) {
+                    statusEl.textContent = '⚠️ High - Low charge or restriction';
+                    statusEl.className = 'calc-status status-high';
+                } else if (superheat < 5) {
+                    statusEl.textContent = '⚠️ Low - Overcharge or TXV issue';
+                    statusEl.className = 'calc-status status-low';
+                } else {
+                    statusEl.textContent = 'Check manufacturer specs';
+                    statusEl.className = 'calc-status status-good';
+                }
+            }
+
+            // Subcooling calculation
+            if (!isNaN(liquidPressure) && !isNaN(liquidTemp)) {
+                const satTemp = findClosestTemp(liquidPressure, ptData[currentRefrigerant].pressureToTemp);
+                const subcooling = satTemp - liquidTemp;
+                
+                document.getElementById('subcoolingResult').style.display = 'block';
+                document.getElementById('subcoolingValue').textContent = subcooling.toFixed(1) + '°F';
+                
+                const statusEl = document.getElementById('subcoolingStatus');
+                if (subcooling >= 8 && subcooling <= 15) {
+                    statusEl.textContent = '✓ Normal range';
+                    statusEl.className = 'calc-status status-good';
+                } else if (subcooling < 5) {
+                    statusEl.textContent = '⚠️ Low - Low charge likely';
+                    statusEl.className = 'calc-status status-low';
+                } else if (subcooling > 18) {
+                    statusEl.textContent = '⚠️ High - Overcharge or restriction';
+                    statusEl.className = 'calc-status status-high';
+                } else {
+                    statusEl.textContent = 'Check manufacturer specs';
+                    statusEl.className = 'calc-status status-good';
+                }
+            }
+        }
+
+        // Add event listeners to calculator inputs
+        document.getElementById('suctionPressure').addEventListener('input', updateCalculator);
+        document.getElementById('suctionTemp').addEventListener('input', updateCalculator);
+        document.getElementById('liquidPressure').addEventListener('input', updateCalculator);
+        document.getElementById('liquidTemp').addEventListener('input', updateCalculator);
+
+        // Checklist functionality
+        const checklistItems = document.querySelectorAll('.checklist-item');
+        const progressBar = document.getElementById('progressBar');
+        const totalItems = checklistItems.length;
+
+        function loadState() {
+            checklistItems.forEach((item, index) => {
+                const isChecked = localStorage.getItem(`refrig-item-${index}`) === 'true';
+                if (isChecked) {
+                    item.classList.add('checked');
+                }
+            });
+            
+            const savedRefrigerant = localStorage.getItem('refrig-selected-refrigerant');
+            if (savedRefrigerant && ptData[savedRefrigerant]) {
+                currentRefrigerant = savedRefrigerant;
+                refrigerantButtons.forEach(btn => {
+                    if (btn.dataset.refrigerant === savedRefrigerant) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                updatePTChart(savedRefrigerant);
+            }
+            
+            updateProgress();
+        }
+
+        function saveState(index, isChecked) {
+            localStorage.setItem(`refrig-item-${index}`, isChecked);
+        }
+
+        function updateProgress() {
+            const checkedItems = document.querySelectorAll('.checklist-item.checked').length;
+            const percentage = Math.round((checkedItems / totalItems) * 100);
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '% Complete';
+        }
+
+        checklistItems.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const isChecked = this.classList.contains('checked');
+                saveState(index, isChecked);
+                updateProgress();
+            });
+        });
+
+        loadState();
+
+        // Reset functionality
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'r') {
+                e.preventDefault();
+                if (confirm('Reset all checklist items and refrigerant selection?')) {
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key && key.startsWith('refrig-')) {
+                            localStorage.removeItem(key);
+                        }
+                    }
+                    checklistItems.forEach(item => item.classList.remove('checked'));
+                    refrigerantButtons.forEach(btn => btn.classList.remove('active'));
+                    refrigerantButtons[0].classList.add('active');
+                    currentRefrigerant = 'R-410A';
+                    updatePTChart('R-410A');
+                    updateProgress();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

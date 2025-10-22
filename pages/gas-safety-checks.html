@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3498db">
+    <title>Gas System Safety Checks - LARK Labs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(41, 128, 185, 0.1));
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-large {
+            font-size: 4rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        h1 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #bdc3c7;
+            font-size: 1rem;
+        }
+
+        .danger-banner {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            border: 2px solid #c0392b;
+        }
+
+        .danger-banner strong {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .danger-banner-content {
+            flex: 1;
+        }
+
+        .code-reference {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(39, 174, 96, 0.05));
+            border: 2px solid #2ecc71;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .code-reference strong {
+            color: #2ecc71;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            background: rgba(44, 62, 80, 0.5);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 2px solid #3498db;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+            border: 2px solid #3498db;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section.critical {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.05));
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .section.critical .section-header {
+            border-bottom-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .section-icon {
+            font-size: 2rem;
+        }
+
+        .section h2 {
+            color: #3498db;
+            font-size: 1.4rem;
+        }
+
+        .section.critical h2 {
+            color: #e74c3c;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(44, 62, 80, 0.7);
+            transform: translateX(5px);
+        }
+
+        .section.critical .checklist-item {
+            border-left-color: #e74c3c;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .section.critical .checkbox {
+            border-color: #e74c3c;
+        }
+
+        .checklist-item:hover .checkbox {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .section.critical .checklist-item:hover .checkbox {
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        .checklist-item.checked .checkbox {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        .section.critical .checklist-item.checked .checkbox {
+            background: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .checklist-item.checked .checkbox::after {
+            display: block;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            color: #ecf0f1;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .item-detail {
+            color: #95a5a6;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .item-values {
+            color: #f1c40f;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-ref {
+            color: #2ecc71;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .note {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .note-title {
+            color: #f1c40f;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .redtag-alert {
+            background: rgba(231, 76, 60, 0.15);
+            border: 3px solid #e74c3c;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .redtag-title {
+            color: #e74c3c;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .redtag-content {
+            color: #ecf0f1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .redtag-content ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .redtag-content li {
+            margin-bottom: 6px;
+        }
+
+        .pass-fail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pass-fail-box {
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid;
+        }
+
+        .pass-box {
+            background: rgba(46, 204, 113, 0.1);
+            border-color: #2ecc71;
+        }
+
+        .pass-box-title {
+            color: #2ecc71;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .fail-box {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: #e74c3c;
+        }
+
+        .fail-box-title {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .box-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            padding: 12px 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateX(-5px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #95a5a6;
+            border-top: 1px solid rgba(52, 152, 219, 0.2);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            .checklist-item {
+                padding: 12px;
+            }
+
+            .pass-fail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .back-link, .progress-bar {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="hvac-diagnostic-guides.html" class="back-link">← Back to All Guides</a>
+
+        <header>
+            <div class="header-content">
+                <span class="icon-large">⚠️</span>
+                <div>
+                    <h1>Gas System Safety Checks</h1>
+                    <p class="subtitle">Critical safety procedures for gas appliances and installations</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="danger-banner">
+            <span style="font-size: 2rem;">🚨</span>
+            <div class="danger-banner-content">
+                <strong>LIFE SAFETY CRITICAL</strong>
+                <div style="line-height: 1.5;">
+                    Gas leaks, carbon monoxide, and improper venting can cause explosions, fires, poisoning, and death. These checks are NOT optional. If you smell gas, evacuate immediately, shut off gas at meter if safe to do so, call emergency services (911), and do not return until cleared by authorities.
+                </div>
+            </div>
+        </div>
+
+        <div class="code-reference">
+            <span style="font-size: 1.5rem;">📘</span>
+            <div>
+                <strong>CSA B149.1 & B149.2 Compliance Required</strong> - All work must comply with current Canadian gas installation codes, TSSA regulations, and manufacturer specifications. G2 or G3 certification required for gas work in Ontario.
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0% Complete</div>
+        </div>
+
+        <!-- Phase 1: Initial Safety Assessment -->
+        <div class="section critical">
+            <div class="section-header">
+                <span class="section-icon">🛡️</span>
+                <h2>Phase 1: Initial Safety Assessment</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for gas odor (mercaptan smell)</div>
+                        <div class="item-detail">Use your nose - natural gas is odorized to smell like rotten eggs or sulfur</div>
+                        <div class="item-values">IF GAS SMELL DETECTED: Evacuate, call 911, shut off gas at meter if safe</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test for carbon monoxide presence</div>
+                        <div class="item-detail">Use portable CO detector - test near appliances, in living spaces, near vents</div>
+                        <div class="item-values">Safe: <9ppm | Concern: 9-35ppm | Danger: >35ppm (evacuate)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify adequate ventilation/combustion air</div>
+                        <div class="item-detail">Check for blocked vents, closed doors preventing air flow to appliances</div>
+                        <div class="code-ref">CSA B149.1 Clause 7.2 - Combustion Air Requirements</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Identify all gas appliances in building</div>
+                        <div class="item-detail">Furnace, water heater, range, dryer, fireplace, pool heater - inventory all gas equipment</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Locate main gas shut-off valve</div>
+                        <div class="item-detail">Typically at meter - verify accessible and functional (1/4 turn to close)</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Phase 2: Gas Piping Inspection -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔧</span>
+                <h2>Phase 2: Gas Piping System Inspection</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Visual inspection of gas piping</div>
+                        <div class="item-detail">Check for corrosion, damage, improper support, unauthorized modifications, flexible connectors condition</div>
+                        <div class="code-ref">CSA B149.1 Clause 6.9 - Piping Support & Protection</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check pipe sizing adequacy</div>
+                        <div class="item-detail">Verify pipe diameter appropriate for BTU load and length - undersized = pressure drop</div>
+                        <div class="code-ref">CSA B149.1 Clause 6.10 - Pipe Sizing Tables</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect all accessible joints and connections</div>
+                        <div class="item-detail">Look for rust staining, leak sealant weeping, loose fittings, improper thread compound</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper sediment trap (drip leg) installation</div>
+                        <div class="item-detail">Required at each appliance - minimum 3" nipple extending down from tee</div>
+                        <div class="code-ref">CSA B149.1 Clause 6.14 - Sediment Traps Required</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check gas valve operation at appliances</div>
+                        <div class="item-detail">Manual shut-off valves should turn freely, handle perpendicular to pipe = closed</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Phase 3: Leak Testing -->
+        <div class="section critical">
+            <div class="section-header">
+                <span class="section-icon">💨</span>
+                <h2>Phase 3: Gas Leak Detection</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Perform soap bubble test on all connections</div>
+                        <div class="item-detail">Apply leak detection solution or soapy water - bubbles indicate leak</div>
+                        <div class="item-values">Test: Meter connections, unions, gas valves, appliance connections, caps</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Use electronic leak detector on suspicious areas</div>
+                        <div class="item-detail">Heated diode or infrared detector for detecting small leaks not visible with bubbles</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check flexible connector condition</div>
+                        <div class="item-detail">CSST (yellow), black iron connector, or stainless flex - look for kinks, damage, corrosion</div>
+                        <div class="item-values">Replace if: Kinked, corroded, damaged, older uncoated CSST</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect gas meter for leaks</div>
+                        <div class="item-detail">Check meter connections, regulator vent, meter body - utility responsibility but check</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test appliance gas valve connections</div>
+                        <div class="item-detail">Where union or flare connects to appliance - common leak point</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="redtag-alert">
+                <div class="redtag-title">🚫 IMMEDIATE RED TAG - GAS LEAKS</div>
+                <div class="redtag-content">
+                    Any detected gas leak requires immediate action:
+                    <ul>
+                        <li>Shut off gas supply to affected appliance or main if necessary</li>
+                        <li>Tag appliance with red warning tag - do not operate</li>
+                        <li>Notify customer in writing - explain hazards clearly</li>
+                        <li>Report to TSSA if required by regulations</li>
+                        <li>Do NOT restore gas service until leak is repaired and retested</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4: Gas Pressure Testing -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2>Phase 4: Gas Pressure Verification</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure inlet gas pressure (manifold pressure)</div>
+                        <div class="item-detail">Use manometer or digital gauge at appliance gas valve test port</div>
+                        <div class="item-values">Natural Gas: 3.5-5.0" W.C. | Propane: 11" W.C. inlet</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check outlet pressure at gas valve</div>
+                        <div class="item-detail">Measure at manifold with all burners firing</div>
+                        <div class="item-values">Natural Gas: 3.5" W.C. | Propane: 10" W.C. typical outlet</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify pressure drop during operation</div>
+                        <div class="item-detail">Pressure should remain stable - excessive drop indicates undersized piping</div>
+                        <div class="item-values">Max pressure drop: 0.5" W.C. from meter to appliance</div>
+                        <div class="code-ref">CSA B149.1 Clause 6.10.1 - Pressure Drop Limits</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test regulator lockup pressure (if applicable)</div>
+                        <div class="item-detail">With all appliances off, pressure should not exceed specified maximum</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="pass-fail-grid">
+                <div class="pass-box">
+                    <div class="pass-box-title">✅ PASS CRITERIA</div>
+                    <div class="box-content">
+                        Pressure within spec range<br>
+                        Stable during operation<br>
+                        Pressure drop <0.5" W.C.<br>
+                        No hunting or fluctuation
+                    </div>
+                </div>
+                <div class="fail-box">
+                    <div class="fail-box-title">❌ FAIL CONDITIONS</div>
+                    <div class="box-content">
+                        Pressure below minimum<br>
+                        Excessive pressure drop<br>
+                        Unstable/hunting pressure<br>
+                        Requires further investigation
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 5: Venting System -->
+        <div class="section critical">
+            <div class="section-header">
+                <span class="section-icon">🌪️</span>
+                <h2>Phase 5: Venting System Inspection</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper vent material for appliance type</div>
+                        <div class="item-detail">Category I: B-vent | Cat II/IV: PVC/CPVC/ABS/PP | Must match manufacturer specs</div>
+                        <div class="code-ref">CSA B149.1 Clause 7.5 - Vent Materials</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check vent pipe slope and support</div>
+                        <div class="item-detail">Natural draft: 1/4" per foot rise | Sidewall: per manufacturer | Proper hangers every 4-6 feet</div>
+                        <div class="code-ref">CSA B149.1 Clause 7.5.8 - Vent Slope Requirements</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect vent termination location and clearances</div>
+                        <div class="item-detail">Check distances from windows, doors, air intakes, property lines, mechanical ventilation</div>
+                        <div class="code-ref">CSA B149.1 Clause 7.5.9 - Termination Clearances (critical)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify vent cap/termination installed correctly</div>
+                        <div class="item-detail">Must be manufacturer-approved cap, not damaged, proper orientation, screens intact</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for vent blockages or restrictions</div>
+                        <div class="item-detail">Birds nests, ice, debris - inspect with flashlight and mirror if accessible</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect vent pipe for deterioration or damage</div>
+                        <div class="item-detail">Rust holes, separated joints, condensate leaking, sagging, crushed pipe</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper vent sizing for appliance</div>
+                        <div class="item-detail">Use CSA B149.1 tables - diameter and height must accommodate BTU input</div>
+                        <div class="code-ref">CSA B149.1 Clause 7.5.7 - Vent Sizing Tables</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test draft pressure (natural draft appliances)</div>
+                        <div class="item-detail">Should be negative (pulling) - typically -0.01 to -0.05" W.C. over fire</div>
+                        <div class="item-values">Positive pressure = backdrafting hazard (RED TAG)</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="redtag-alert">
+                <div class="redtag-title">🚫 IMMEDIATE RED TAG - VENTING DEFECTS</div>
+                <div class="redtag-content">
+                    The following venting issues require immediate red tag and appliance shutdown:
+                    <ul>
+                        <li>Vent disconnected, separated, or has holes allowing spillage into building</li>
+                        <li>Backdrafting observed (spillage switch tripping, products of combustion in space)</li>
+                        <li>Vent termination violates clearances (too close to windows, air intakes)</li>
+                        <li>Blocked or restricted vent preventing proper flow</li>
+                        <li>Improper vent material causing deterioration</li>
+                        <li>Inadequate vent size for appliance load</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 6: Combustion Analysis -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔬</span>
+                <h2>Phase 6: Combustion & CO Testing</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Perform combustion analysis in flue</div>
+                        <div class="item-detail">Use combustion analyzer to measure CO, O2, stack temperature, efficiency</div>
+                        <div class="item-values">Target: CO <100ppm air-free | O2: 6-9% | CO/CO2 ratio <0.004</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test for CO in ambient air near appliance</div>
+                        <div class="item-detail">Measure CO in room while appliance running - should be 0-9ppm</div>
+                        <div class="item-values">0-9ppm: Safe | 9-35ppm: Investigate source | >35ppm: Evacuate</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for flame rollout or abnormal flame</div>
+                        <div class="item-detail">Observe burner flames - should be blue, stable, no yellow tips, no lifting</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test spillage switch operation (if equipped)</div>
+                        <div class="item-detail">Verify switch trips if vent blocked - some appliances have manual reset button</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect heat exchanger for cracks/holes</div>
+                        <div class="item-detail">Visual inspection with flashlight - look for rust, cracks, flame distortion</div>
+                        <div class="item-values">Cracked heat exchanger = immediate shutdown and replacement</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper air shutter adjustment</div>
+                        <div class="item-detail">Adjust for clean blue flame - no yellow, no lifting, quiet operation</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">💡 COMBUSTION ANALYSIS REQUIREMENTS</div>
+                <div class="note-content">
+                    While not required on every service call, combustion analysis is STRONGLY RECOMMENDED for:
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        <li>New installations and modifications</li>
+                        <li>Annual maintenance on commercial equipment</li>
+                        <li>Customer complaints of odors or symptoms</li>
+                        <li>Any suspected combustion or venting problems</li>
+                        <li>After heat exchanger service or repairs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 7: Appliance-Specific Checks -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔥</span>
+                <h2>Phase 7: Appliance-Specific Safety Checks</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify all safety controls functioning</div>
+                        <div class="item-detail">Flame rollout switches, high limit switches, pressure switches - test operation</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check flame sensing system operation</div>
+                        <div class="item-detail">Flame sensor (microamps), thermocouple, thermopile - verify proves flame</div>
+                        <div class="item-values">Flame sensor: 2-10µA good | <0.5µA = clean or replace sensor</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test main gas valve for leakage</div>
+                        <div class="item-detail">With appliance off, check manifold pressure - should be zero (no leak-by)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify pilot safety system (standing pilot)</div>
+                        <div class="item-detail">Test that main valve closes when pilot is extinguished</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check appliance installation clearances</div>
+                        <div class="item-detail">Verify clearances to combustibles per nameplate and code</div>
+                        <div class="code-ref">CSA B149.1 Clause 8.4 - Appliance Clearances</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect burner assembly and orifices</div>
+                        <div class="item-detail">Clean burners, check orifice size matches gas type and altitude</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Phase 8: Documentation & Customer Education -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📝</span>
+                <h2>Phase 8: Documentation & Customer Communication</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document all findings on work order</div>
+                        <div class="item-detail">Record pressures, CO readings, leak test results, condition of equipment</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Take photos of safety concerns</div>
+                        <div class="item-detail">Document red tag conditions, code violations, defects - protect yourself legally</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Issue red tag if required</div>
+                        <div class="item-detail">Complete TSSA red tag form, attach to appliance, provide customer copy</div>
+                        <div class="item-values">Customer must sign acknowledgment - explain hazards clearly</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Report to TSSA if mandatory</div>
+                        <div class="item-detail">Some defects require reporting to Technical Standards & Safety Authority</div>
+                        <div class="code-ref">TSSA Fuels Safety Program - Reporting Requirements</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Educate customer on gas safety</div>
+                        <div class="item-detail">How to recognize gas smell, CO symptoms, when to call for service, emergency procedures</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Recommend CO alarms if not present</div>
+                        <div class="item-detail">Required by law in most jurisdictions - one per floor, near bedrooms</div>
+                        <div class="code-ref">Building Code requires CO alarms in residential with fuel-burning appliances</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">⚖️ LEGAL & PROFESSIONAL RESPONSIBILITY</div>
+                <div class="note-content">
+                    As a licensed gas technician, you have legal and ethical responsibilities:
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        <li>You MUST red tag dangerous appliances - customer cannot override</li>
+                        <li>Document everything - your notes may be used in legal proceedings</li>
+                        <li>You can be held liable for injuries if you fail to identify hazards</li>
+                        <li>Your license is on the line - never compromise on safety</li>
+                        <li>When in doubt, consult with senior tech or TSSA inspector</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Part of the <strong>LARK Labs HVAC Emergency Diagnostic Guides</strong></p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">For Canadian HVAC technicians | Safety is not negotiable - protect lives, including your own</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize checklist functionality
+        const checklistItems = document.querySelectorAll('.checklist-item');
+        const progressBar = document.getElementById('progressBar');
+        const totalItems = checklistItems.length;
+
+        // Load saved state from localStorage
+        function loadState() {
+            checklistItems.forEach((item, index) => {
+                const isChecked = localStorage.getItem(`gas-safety-item-${index}`) === 'true';
+                if (isChecked) {
+                    item.classList.add('checked');
+                }
+            });
+            updateProgress();
+        }
+
+        // Save state to localStorage
+        function saveState(index, isChecked) {
+            localStorage.setItem(`gas-safety-item-${index}`, isChecked);
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const checkedItems = document.querySelectorAll('.checklist-item.checked').length;
+            const percentage = Math.round((checkedItems / totalItems) * 100);
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '% Complete';
+        }
+
+        // Add click handlers
+        checklistItems.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const isChecked = this.classList.contains('checked');
+                saveState(index, isChecked);
+                updateProgress();
+            });
+        });
+
+        // Load state on page load
+        loadState();
+
+        // Reset functionality (Ctrl/Cmd + Shift + R)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'r') {
+                e.preventDefault();
+                if (confirm('Reset all checklist items?')) {
+                    // Clear localStorage
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key && key.startsWith('gas-safety-')) {
+                            localStorage.removeItem(key);
+                        }
+                    }
+                    // Reset UI
+                    checklistItems.forEach(item => item.classList.remove('checked'));
+                    updateProgress();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

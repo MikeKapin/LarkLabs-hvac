@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2ecc71">
+    <title>Preventive Maintenance Checklist - LARK Labs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(39, 174, 96, 0.1));
+            border: 2px solid #2ecc71;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-large {
+            font-size: 4rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        h1 {
+            color: #2ecc71;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #bdc3c7;
+            font-size: 1rem;
+        }
+
+        .info-banner {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .info-banner strong {
+            font-size: 1.1rem;
+        }
+
+        .season-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .season-button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 20px;
+            border: 2px solid #2ecc71;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.05));
+            color: #2ecc71;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .season-button:hover {
+            background: rgba(46, 204, 113, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .season-button.active {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .progress-bar {
+            background: rgba(44, 62, 80, 0.5);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 2px solid #2ecc71;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.05));
+            border: 2px solid #2ecc71;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section.hidden {
+            display: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .section-icon {
+            font-size: 2rem;
+        }
+
+        .section h2 {
+            color: #2ecc71;
+            font-size: 1.4rem;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #2ecc71;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(44, 62, 80, 0.7);
+            transform: translateX(5px);
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #2ecc71;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item:hover .checkbox {
+            background: rgba(46, 204, 113, 0.2);
+        }
+
+        .checklist-item.checked .checkbox {
+            background: #2ecc71;
+            border-color: #2ecc71;
+        }
+
+        .checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .checklist-item.checked .checkbox::after {
+            display: block;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            color: #ecf0f1;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .item-detail {
+            color: #95a5a6;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .item-values {
+            color: #f1c40f;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .frequency-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+
+        .badge-seasonal {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .badge-monthly {
+            background: #3498db;
+            color: white;
+        }
+
+        .badge-annual {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .note {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .note-title {
+            color: #f1c40f;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .tip-box {
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .tip-box-title {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tip-box-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .efficiency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .efficiency-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2ecc71;
+        }
+
+        .efficiency-label {
+            color: #95a5a6;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .efficiency-value {
+            color: #2ecc71;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #2ecc71;
+            text-decoration: none;
+            padding: 12px 20px;
+            border: 2px solid #2ecc71;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            background: rgba(46, 204, 113, 0.2);
+            transform: translateX(-5px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #95a5a6;
+            border-top: 1px solid rgba(46, 204, 113, 0.2);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            .checklist-item {
+                padding: 12px;
+            }
+
+            .season-selector {
+                flex-direction: column;
+            }
+
+            .season-button {
+                min-width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .back-link, .progress-bar, .season-selector {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="hvac-diagnostic-guides.html" class="back-link">← Back to All Guides</a>
+
+        <header>
+            <div class="header-content">
+                <span class="icon-large">✅</span>
+                <div>
+                    <h1>Preventive Maintenance Checklist</h1>
+                    <p class="subtitle">Seasonal maintenance procedures for optimal system performance</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="info-banner">
+            <span style="font-size: 1.5rem;">💡</span>
+            <div>
+                <strong>PREVENTIVE MAINTENANCE PAYS:</strong> Regular maintenance extends equipment life by 40%, reduces energy costs by 15-20%, and prevents 95% of breakdowns. An ounce of prevention is worth a pound of repair.
+            </div>
+        </div>
+
+        <div class="season-selector">
+            <button class="season-button active" data-season="all">All Tasks</button>
+            <button class="season-button" data-season="spring">Spring (Cooling)</button>
+            <button class="season-button" data-season="fall">Fall (Heating)</button>
+            <button class="season-button" data-season="annual">Annual Tasks</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0% Complete</div>
+        </div>
+
+        <!-- Customer Communication -->
+        <div class="section" data-seasons="all spring fall annual">
+            <div class="section-header">
+                <span class="section-icon">💬</span>
+                <h2>Customer Communication & Documentation</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Introduce yourself and explain service<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Review what will be inspected, estimated time, answer any customer questions</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Review system operation with customer</div>
+                        <div class="item-detail">Ask about any issues, unusual sounds, comfort problems since last service</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Protect customer property</div>
+                        <div class="item-detail">Use drop cloths, remove shoes or wear booties, clear work area</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Take before photos of equipment</div>
+                        <div class="item-detail">Document condition before service for records and customer transparency</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Thermostat & Controls -->
+        <div class="section" data-seasons="all spring fall annual">
+            <div class="section-header">
+                <span class="section-icon">🎛️</span>
+                <h2>Thermostat & Control System</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test thermostat operation<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Verify display working, responds to temperature changes, proper mode switching</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Replace thermostat batteries (if applicable)</div>
+                        <div class="item-detail">Many thermostats use AA or AAA batteries - replace annually or as needed</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean thermostat and level if needed</div>
+                        <div class="item-detail">Dust can affect sensors - verify thermostat is level for accurate readings</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify programmable schedule settings</div>
+                        <div class="item-detail">Confirm schedule matches customer's needs, update for daylight saving if needed</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check control voltage at thermostat</div>
+                        <div class="item-detail">Measure 24VAC at R and C terminals - should be 24-28VAC</div>
+                        <div class="item-values">Low voltage indicates transformer or wiring issue</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Indoor Unit - Air Filter -->
+        <div class="section" data-seasons="all spring fall annual">
+            <div class="section-header">
+                <span class="section-icon">🏠</span>
+                <h2>Indoor Unit - Air Filter & Airflow</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect and replace air filter<span class="frequency-badge badge-monthly">Monthly</span></div>
+                        <div class="item-detail">Check filter condition - replace if dirty, document size for customer</div>
+                        <div class="item-values">Standard: 1" pleated 30-90 days | HEPA: 6-12 months | Customer's filter size: _____</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper filter fit and direction</div>
+                        <div class="item-detail">Arrow on filter points toward blower - gaps allow bypassing of unfiltered air</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check return air grilles and registers</div>
+                        <div class="item-detail">Verify all returns open and unobstructed - furniture, curtains can block airflow</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect supply registers throughout house</div>
+                        <div class="item-detail">Verify dampers open, registers not blocked, adjust for balanced airflow</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure static pressure (if equipped)</div>
+                        <div class="item-detail">Check external static pressure across blower - should be per manufacturer specs</div>
+                        <div class="item-values">Typical: 0.3-0.8" W.C. | High static = restricted airflow</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">💡 FILTER RECOMMENDATIONS</div>
+                <div class="note-content">
+                    <strong>Standard 1" pleated:</strong> Change every 30-90 days (higher MERV = more frequent)<br>
+                    <strong>Media filters (4-5"):</strong> Change every 6-12 months<br>
+                    <strong>HEPA filters:</strong> Check monthly, replace per manufacturer (usually 6-12 months)<br>
+                    <strong>Customer education:</strong> Show them how to check and change filters themselves
+                </div>
+            </div>
+        </div>
+
+        <!-- Indoor Unit - Evaporator Coil -->
+        <div class="section" data-seasons="all spring annual">
+            <div class="section-header">
+                <span class="section-icon">❄️</span>
+                <h2>Indoor Unit - Evaporator Coil</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect evaporator coil cleanliness<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Remove panel, inspect coil with flashlight - look for dust, mold, debris</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean evaporator coil (if needed)</div>
+                        <div class="item-detail">Use coil cleaner spray and soft brush - rinse and allow to drain completely</div>
+                        <div class="item-values">Severe buildup may require professional coil cleaning service</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for signs of coil leaks</div>
+                        <div class="item-detail">Look for oil stains, corrosion, refrigerant detector can help identify leaks</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify coil not frozen</div>
+                        <div class="item-detail">Ice on coil indicates low charge, low airflow, or failed TXV</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Blower & Motor -->
+        <div class="section" data-seasons="all spring fall annual">
+            <div class="section-header">
+                <span class="section-icon">🌀</span>
+                <h2>Blower Assembly & Motor</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect blower wheel cleanliness<span class="frequency-badge badge-annual">Annual</span></div>
+                        <div class="item-detail">Dirty blower wheel reduces airflow significantly - clean if dusty</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean blower wheel (if needed)</div>
+                        <div class="item-detail">Remove blower assembly, clean with brush and mild detergent, dry completely</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Lubricate blower motor bearings (if applicable)</div>
+                        <div class="item-detail">Some motors have oil ports - use 3-5 drops of electric motor oil (not all motors need this)</div>
+                        <div class="item-values">Modern sealed bearings don't require lubrication - check label</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test blower motor amp draw</div>
+                        <div class="item-detail">Compare to nameplate FLA - high amps indicate bearing wear or restriction</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Listen for unusual noises</div>
+                        <div class="item-detail">Squealing = bad bearings | Grinding = debris | Humming = capacitor issue</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check blower wheel set screws tight</div>
+                        <div class="item-detail">Loose set screws cause vibration and noise - tighten if loose</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Condensate System -->
+        <div class="section" data-seasons="all spring annual">
+            <div class="section-header">
+                <span class="section-icon">💧</span>
+                <h2>Condensate Drain System</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect condensate drain pan<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Check for standing water, rust, cracks, algae growth</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean drain pan</div>
+                        <div class="item-detail">Remove debris, treat with pan tablets or bleach solution to prevent algae</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clear condensate drain line</div>
+                        <div class="item-detail">Flush with water or compressed air, use wet/dry vac to clear clogs</div>
+                        <div class="item-values">Typical: 3/4" PVC drain line - should flow freely</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify drain line slope</div>
+                        <div class="item-detail">Should have 1/4" per foot slope toward drain - check with level</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test condensate pump (if equipped)</div>
+                        <div class="item-detail">Pour water in reservoir, verify pump activates and discharges properly</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check float switch operation</div>
+                        <div class="item-detail">If equipped, verify float switch cuts off system when drain backs up</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="tip-box">
+                <div class="tip-box-title">💡 CONDENSATE MAINTENANCE TIPS</div>
+                <div class="tip-box-content">
+                    <strong>Prevent clogs:</strong> Pour 1 cup vinegar or bleach down drain line quarterly<br>
+                    <strong>Pan tablets:</strong> Install algae prevention tablets in drain pan - lasts 3-6 months<br>
+                    <strong>Secondary drain:</strong> Check auxiliary drain pan under unit if indoor installation<br>
+                    <strong>Drain line location:</strong> Verify drains to proper location (outside, drain, or condensate pump)
+                </div>
+            </div>
+        </div>
+
+        <!-- Outdoor Unit - Condenser -->
+        <div class="section" data-seasons="all spring annual">
+            <div class="section-header">
+                <span class="section-icon">🌡️</span>
+                <h2>Outdoor Unit - Condenser Coil</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect condenser coil cleanliness<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Remove panels, inspect both sides of coil - look for dirt, cottonwood, grass clippings</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean condenser coil</div>
+                        <div class="item-detail">Use coil cleaner and water spray from inside out - never pressure wash</div>
+                        <div class="item-values">Severe fouling = 30%+ capacity loss and increased operating cost</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Straighten bent coil fins</div>
+                        <div class="item-detail">Use fin comb to straighten bent fins - improves airflow through coil</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clear debris from unit interior</div>
+                        <div class="item-detail">Remove leaves, dirt, grass, insects - clean base pan</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Trim vegetation around unit</div>
+                        <div class="item-detail">Maintain 24" clearance all sides, 60" above - shrubs, grass should not restrict airflow</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Outdoor Unit - Electrical -->
+        <div class="section" data-seasons="all spring fall annual">
+            <div class="section-header">
+                <span class="section-icon">⚡</span>
+                <h2>Outdoor Unit - Electrical Components</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect contactor contacts<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Look for pitting, burning, or welding - clean with contact cleaner or replace</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test run capacitor</div>
+                        <div class="item-detail">Discharge safely, measure microfarads - should be within 6% of rating</div>
+                        <div class="item-values">Weak capacitor causes hard starting, reduced efficiency, motor failure</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Tighten all electrical connections</div>
+                        <div class="item-detail">Check wire terminals, contactors, disconnect - use appropriate torque</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect wiring insulation</div>
+                        <div class="item-detail">Look for cracked, burned, or deteriorated wire insulation - replace if damaged</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test voltage at disconnect</div>
+                        <div class="item-detail">Measure line voltage - should be 240VAC ±10%</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Compressor & Fan Motor -->
+        <div class="section" data-seasons="all spring annual">
+            <div class="section-header">
+                <span class="section-icon">🔧</span>
+                <h2>Compressor & Condenser Fan Motor</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure compressor amp draw<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Compare to nameplate RLA - should be 80-100% of rated amps</div>
+                        <div class="item-values">High amps = dirty coil or overcharge | Low amps = low charge or compressor issue</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Listen for compressor noises</div>
+                        <div class="item-detail">Should run quietly - rattling, grinding, or squealing indicates problem</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure condenser fan motor amps</div>
+                        <div class="item-detail">Should match nameplate FLA ±10% - high amps indicate bearing wear</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect fan blade condition</div>
+                        <div class="item-detail">Check for cracks, chips, proper balance - verify secure to motor shaft</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Lubricate fan motor (if applicable)</div>
+                        <div class="item-detail">Only if motor has oil ports - most modern motors are sealed</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Refrigeration System -->
+        <div class="section" data-seasons="all spring annual">
+            <div class="section-header">
+                <span class="section-icon">❄️</span>
+                <h2>Refrigeration System Check</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Connect manifold gauges<span class="frequency-badge badge-annual">Annual</span></div>
+                        <div class="item-detail">Attach to service ports after system runs 10+ minutes to stabilize</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Record suction and liquid pressures</div>
+                        <div class="item-detail">Document pressures with outdoor/indoor temps for baseline comparison</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate superheat</div>
+                        <div class="item-detail">Measure suction line temp, convert pressure to temp, calculate difference</div>
+                        <div class="item-values">Target: 8-12°F (TXV) or 10-25°F (fixed orifice)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate subcooling</div>
+                        <div class="item-detail">Measure liquid line temp, convert pressure to temp, calculate difference</div>
+                        <div class="item-values">Target: 8-15°F typical</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for refrigerant leaks</div>
+                        <div class="item-detail">Use leak detector on service ports, connections, coils - repair if found</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect refrigerant lines for damage</div>
+                        <div class="item-detail">Check insulation, look for kinks, verify proper support and routing</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Gas Furnace Maintenance (Fall/Heating) -->
+        <div class="section" data-seasons="fall annual all">
+            <div class="section-header">
+                <span class="section-icon">🔥</span>
+                <h2>Gas Furnace - Heating Season Prep</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect heat exchanger visually<span class="frequency-badge badge-annual">Annual</span></div>
+                        <div class="item-detail">Look for cracks, rust, holes - use flashlight and mirror</div>
+                        <div class="item-values">Cracked heat exchanger = carbon monoxide hazard (RED TAG)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean and inspect burners</div>
+                        <div class="item-detail">Remove burners, clean with brush, inspect orifices, verify proper flame</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test ignition sequence</div>
+                        <div class="item-detail">Verify inducer → pressure switch → igniter → gas valve → flame sense sequence</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean flame sensor</div>
+                        <div class="item-detail">Use emery cloth or fine sandpaper - dirty sensor causes short cycling</div>
+                        <div class="item-values">Flame sense current should be 2-10µA</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test and adjust gas pressure</div>
+                        <div class="item-detail">Measure inlet and manifold pressure - adjust gas valve if needed</div>
+                        <div class="item-values">Natural gas: 3.5-5" W.C. inlet, 3.5" manifold | Propane: 11" inlet, 10" manifold</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect venting system</div>
+                        <div class="item-detail">Check vent pipe connections, slope, termination clearances, cap condition</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test for carbon monoxide</div>
+                        <div class="item-detail">Measure CO in flue and ambient air near furnace - should be <9ppm ambient</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean inducer motor and housing</div>
+                        <div class="item-detail">Remove debris from inducer wheel and housing - affects draft</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test all safety controls</div>
+                        <div class="item-detail">Verify high limit, rollout switches, pressure switch all functioning properly</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Performance Testing -->
+        <div class="section" data-seasons="all spring fall annual">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2>System Performance Testing</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure supply air temperature<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Cooling: 55-65°F typical | Heating: 120-140°F (gas) or 85-105°F (heat pump)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate temperature split</div>
+                        <div class="item-detail">Supply minus return temp - Cooling: 15-22°F | Heating: 40-70°F (gas)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify system cycles properly</div>
+                        <div class="item-detail">Run times 10-20 minutes typical - short cycling indicates problem</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test defrost cycle (heat pumps - winter)</div>
+                        <div class="item-detail">Verify outdoor coil defrosts when iced, returns to heating mode after defrost</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document all performance measurements</div>
+                        <div class="item-detail">Record temps, pressures, amps, voltages for future comparison and trending</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="efficiency-grid">
+                <div class="efficiency-item">
+                    <div class="efficiency-label">Temperature Split (Cooling)</div>
+                    <div class="efficiency-value">15-22°F</div>
+                </div>
+                <div class="efficiency-item">
+                    <div class="efficiency-label">Supply Air (Cooling)</div>
+                    <div class="efficiency-value">55-65°F</div>
+                </div>
+                <div class="efficiency-item">
+                    <div class="efficiency-label">Supply Air (Gas Heat)</div>
+                    <div class="efficiency-value">120-140°F</div>
+                </div>
+                <div class="efficiency-item">
+                    <div class="efficiency-label">Typical Run Cycle</div>
+                    <div class="efficiency-value">10-20 min</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Steps -->
+        <div class="section" data-seasons="all spring fall annual">
+            <div class="section-header">
+                <span class="section-icon">✅</span>
+                <h2>Final Steps & Customer Education</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Take after photos of work completed<span class="frequency-badge badge-seasonal">Seasonal</span></div>
+                        <div class="item-detail">Document cleaned coils, replaced parts, condition after service</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Clean up work area</div>
+                        <div class="item-detail">Remove all tools, parts, packaging - leave area cleaner than found</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Review findings with customer</div>
+                        <div class="item-detail">Show photos, explain any issues found, recommend repairs or improvements</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Educate customer on system operation</div>
+                        <div class="item-detail">Filter changes, thermostat use, signs of problems, when to call for service</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Schedule next maintenance visit</div>
+                        <div class="item-detail">Book spring/fall tune-up - remind customer benefits of regular maintenance</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Complete service documentation</div>
+                        <div class="item-detail">Fill out maintenance checklist, record all measurements, customer signature</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="tip-box">
+                <div class="tip-box-title">💡 VALUE-ADDED SERVICE TIPS</div>
+                <div class="tip-box-content">
+                    <strong>Filter stickers:</strong> Leave stickers on filter with date changed and next change due<br>
+                    <strong>System labels:</strong> Label equipment with filter size, refrigerant type, service date<br>
+                    <strong>Customer handout:</strong> Provide maintenance tips sheet or care guide<br>
+                    <strong>Photo report:</strong> Email before/after photos with findings summary<br>
+                    <strong>Maintenance plan:</strong> Offer annual service plan for regular tune-ups
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Part of the <strong>LARK Labs HVAC Emergency Diagnostic Guides</strong></p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">For Canadian HVAC technicians | Preventive maintenance builds customer trust and prevents emergency calls</p>
+        </footer>
+    </div>
+
+    <script>
+        // Season selector functionality
+        const seasonButtons = document.querySelectorAll('.season-button');
+        const sections = document.querySelectorAll('.section[data-seasons]');
+        let currentSeason = 'all';
+
+        seasonButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                seasonButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                currentSeason = this.dataset.season;
+                
+                sections.forEach(section => {
+                    const seasons = section.dataset.seasons.split(' ');
+                    if (currentSeason === 'all' || seasons.includes(currentSeason)) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+                
+                updateProgress();
+                localStorage.setItem('maintenance-selected-season', currentSeason);
+            });
+        });
+
+        // Checklist functionality
+        const checklistItems = document.querySelectorAll('.checklist-item');
+        const progressBar = document.getElementById('progressBar');
+
+        function loadState() {
+            checklistItems.forEach((item, index) => {
+                const isChecked = localStorage.getItem(`maintenance-item-${index}`) === 'true';
+                if (isChecked) {
+                    item.classList.add('checked');
+                }
+            });
+            
+            const savedSeason = localStorage.getItem('maintenance-selected-season');
+            if (savedSeason) {
+                currentSeason = savedSeason;
+                seasonButtons.forEach(btn => {
+                    if (btn.dataset.season === savedSeason) {
+                        btn.click();
+                    }
+                });
+            }
+            
+            updateProgress();
+        }
+
+        function saveState(index, isChecked) {
+            localStorage.setItem(`maintenance-item-${index}`, isChecked);
+        }
+
+        function updateProgress() {
+            const visibleItems = Array.from(checklistItems).filter(item => {
+                const section = item.closest('.section');
+                return !section.classList.contains('hidden');
+            });
+            
+            const visibleCheckedItems = visibleItems.filter(item => item.classList.contains('checked'));
+            const totalItems = visibleItems.length;
+            const checkedItems = visibleCheckedItems.length;
+            const percentage = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+            
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '% Complete';
+        }
+
+        checklistItems.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const isChecked = this.classList.contains('checked');
+                saveState(index, isChecked);
+                updateProgress();
+            });
+        });
+
+        loadState();
+
+        // Reset functionality
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'r') {
+                e.preventDefault();
+                if (confirm('Reset all checklist items and season selection?')) {
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key && key.startsWith('maintenance-')) {
+                            localStorage.removeItem(key);
+                        }
+                    }
+                    checklistItems.forEach(item => item.classList.remove('checked'));
+                    seasonButtons.forEach(btn => btn.classList.remove('active'));
+                    seasonButtons[0].classList.add('active');
+                    currentSeason = 'all';
+                    sections.forEach(section => section.classList.remove('hidden'));
+                    updateProgress();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

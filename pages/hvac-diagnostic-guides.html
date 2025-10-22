@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3498db">
+    <title>HVAC Emergency Diagnostic Guides - LARK Labs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #ecf0f1;
+            opacity: 0.9;
+        }
+
+        .intro {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border-left: 4px solid #3498db;
+        }
+
+        .intro p {
+            line-height: 1.6;
+            color: #ecf0f1;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .guide-card {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(52, 152, 219, 0.05));
+            border: 2px solid #3498db;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guide-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+            border-color: #2980b9;
+        }
+
+        .guide-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .guide-card.emergency {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.05));
+        }
+
+        .guide-card.emergency::before {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+
+        .guide-card.tools {
+            border-color: #f1c40f;
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.15), rgba(241, 196, 15, 0.05));
+        }
+
+        .guide-card.tools::before {
+            background: linear-gradient(90deg, #f1c40f, #f39c12);
+        }
+
+        .guide-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .guide-card h3 {
+            color: #3498db;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .guide-card.emergency h3 {
+            color: #e74c3c;
+        }
+
+        .guide-card.tools h3 {
+            color: #f1c40f;
+        }
+
+        .guide-card p {
+            color: #bdc3c7;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.emergency {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .badge.essential {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .badge.tools {
+            background: linear-gradient(45deg, #f1c40f, #f39c12);
+            color: #2c3e50;
+        }
+
+        .badge.maintenance {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #95a5a6;
+            border-top: 1px solid rgba(52, 152, 219, 0.2);
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 30px 15px;
+            }
+        }
+
+        .coming-soon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 HVAC Emergency Diagnostic Guides</h1>
+            <p class="subtitle">Quick-reference checklists for Canadian HVAC technicians</p>
+        </header>
+
+        <div class="intro">
+            <p><strong>Fast access to critical diagnostic procedures.</strong> These guides are designed to help you quickly diagnose and resolve common HVAC issues in the field. Each checklist follows a systematic approach to troubleshooting, ensuring you don't miss critical steps during emergency service calls.</p>
+        </div>
+
+        <div class="guides-grid">
+            <!-- Emergency Service Call Checklist -->
+            <div class="guide-card emergency" onclick="window.open('emergency-service-call-checklist.html', '_blank')">
+                <span class="guide-icon">🚨</span>
+                <h3>Emergency Service Call Checklist</h3>
+                <p>Initial assessment protocol for emergency calls. Safety checks, customer communication, and diagnostic sequence for urgent situations.</p>
+                <span class="badge emergency">Emergency</span>
+            </div>
+
+            <!-- No Heat Diagnostic -->
+            <div class="guide-card emergency" onclick="window.open('no-heat-diagnostic-checklist.html', '_blank')">
+                <span class="guide-icon">🥶</span>
+                <h3>No Heat Diagnostic</h3>
+                <p>Systematic troubleshooting for heating failures. Covers gas furnaces, heat pumps, and boilers with step-by-step fault isolation.</p>
+                <span class="badge emergency">Emergency</span>
+            </div>
+
+            <!-- No Cool Diagnostic -->
+            <div class="guide-card emergency" onclick="window.open('no-cool-diagnostic-checklist.html', '_blank')">
+                <span class="guide-icon">🔥</span>
+                <h3>No Cool Diagnostic</h3>
+                <p>AC troubleshooting guide for refrigeration system failures. Includes compressor, refrigerant, and airflow diagnostics.</p>
+                <span class="badge emergency">Emergency</span>
+            </div>
+
+            <!-- Tool Pouch Essentials -->
+            <div class="guide-card tools" onclick="window.open('tool-pouch-essentials.html', '_blank')">
+                <span class="guide-icon">🛠️</span>
+                <h3>Tool Pouch Essentials</h3>
+                <p>Complete list of must-have tools for every service call. Basic tools, test equipment, and safety gear requirements.</p>
+                <span class="badge tools">Tools</span>
+            </div>
+
+            <!-- Gas System Safety Checks -->
+            <div class="guide-card" onclick="window.open('gas-safety-checks.html', '_blank')">
+                <span class="guide-icon">⚠️</span>
+                <h3>Gas System Safety Checks</h3>
+                <p>Critical safety procedures for gas appliances. Leak detection, venting inspection, and CSA B149 compliance verification.</p>
+                <span class="badge essential">Essential</span>
+            </div>
+
+            <!-- Electrical Troubleshooting -->
+            <div class="guide-card" onclick="window.open('electrical-troubleshooting.html', '_blank')">
+                <span class="guide-icon">⚡</span>
+                <h3>Electrical Troubleshooting</h3>
+                <p>Diagnostic flowchart for electrical issues. Voltage testing, control circuits, and component testing procedures.</p>
+                <span class="badge essential">Essential</span>
+            </div>
+
+            <!-- Refrigeration System Diagnostics -->
+            <div class="guide-card" onclick="window.open('refrigeration-diagnostics.html', '_blank')">
+                <span class="guide-icon">❄️</span>
+                <h3>Refrigeration Diagnostics</h3>
+                <p>Complete refrigeration cycle analysis. Pressure-temperature relationships, superheat/subcooling calculations, and leak detection.</p>
+                <span class="badge essential">Essential</span>
+            </div>
+
+            <!-- Preventive Maintenance Checklist -->
+            <div class="guide-card" onclick="window.open('preventive-maintenance.html', '_blank')">
+                <span class="guide-icon">✅</span>
+                <h3>Preventive Maintenance</h3>
+                <p>Seasonal maintenance procedures for residential and commercial systems. Inspection points, cleaning protocols, and efficiency testing.</p>
+                <span class="badge maintenance">Maintenance</span>
+            </div>
+        </div>
+
+        <footer>
+            <p>Part of the <a href="https://larklabs.org" target="_blank">LARK Labs</a> professional HVAC tools suite</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Serving Canadian HVAC technicians with practical, field-tested resources</p>
+        </footer>
+    </div>
+</body>
+</html>

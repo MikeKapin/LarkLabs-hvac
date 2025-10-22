@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e74c3c">
+    <title>No Cool Diagnostic Checklist - LARK Labs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(192, 57, 43, 0.1));
+            border: 2px solid #e74c3c;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-large {
+            font-size: 4rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        h1 {
+            color: #e74c3c;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #bdc3c7;
+            font-size: 1rem;
+        }
+
+        .emergency-banner {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .emergency-banner strong {
+            font-size: 1.1rem;
+        }
+
+        .refrigerant-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .refrigerant-button {
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+            color: #3498db;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .refrigerant-button:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .refrigerant-button.active {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .progress-bar {
+            background: rgba(44, 62, 80, 0.5);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 2px solid #3498db;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+            border: 2px solid #3498db;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section.critical {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.05));
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .section.critical .section-header {
+            border-bottom-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .section-icon {
+            font-size: 2rem;
+        }
+
+        .section h2 {
+            color: #3498db;
+            font-size: 1.4rem;
+        }
+
+        .section.critical h2 {
+            color: #e74c3c;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(44, 62, 80, 0.7);
+            transform: translateX(5px);
+        }
+
+        .section.critical .checklist-item {
+            border-left-color: #e74c3c;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .section.critical .checkbox {
+            border-color: #e74c3c;
+        }
+
+        .checklist-item:hover .checkbox {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .section.critical .checklist-item:hover .checkbox {
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        .checklist-item.checked .checkbox {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        .section.critical .checklist-item.checked .checkbox {
+            background: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .checklist-item.checked .checkbox::after {
+            display: block;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            color: #ecf0f1;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .item-detail {
+            color: #95a5a6;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .item-values {
+            color: #f1c40f;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .note {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .note-title {
+            color: #f1c40f;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .diagnostic-path {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .diagnostic-path-title {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diagnostic-path-content {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .pt-chart {
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .pt-chart-title {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .pt-chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .pt-item {
+            background: rgba(44, 62, 80, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .pt-label {
+            color: #95a5a6;
+            font-size: 0.85rem;
+        }
+
+        .pt-value {
+            color: #f1c40f;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            margin-top: 4px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            padding: 12px 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateX(-5px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #95a5a6;
+            border-top: 1px solid rgba(52, 152, 219, 0.2);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            .checklist-item {
+                padding: 12px;
+            }
+
+            .refrigerant-selector {
+                flex-direction: column;
+            }
+
+            .refrigerant-button {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .back-link, .progress-bar, .refrigerant-selector {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="hvac-diagnostic-guides.html" class="back-link">← Back to All Guides</a>
+
+        <header>
+            <div class="header-content">
+                <span class="icon-large">🔥</span>
+                <div>
+                    <h1>No Cool Diagnostic Checklist</h1>
+                    <p class="subtitle">Systematic AC & refrigeration system troubleshooting</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="emergency-banner">
+            <span style="font-size: 1.5rem;">⚠️</span>
+            <div>
+                <strong>ELECTRICAL SAFETY</strong> - Always disconnect power before servicing. High voltage and capacitors can cause serious injury or death. Use proper PPE and lockout/tagout procedures.
+            </div>
+        </div>
+
+        <div class="refrigerant-selector">
+            <div style="color: #95a5a6; font-weight: 600; width: 100%; margin-bottom: 5px;">Common Refrigerants:</div>
+            <button class="refrigerant-button active" data-refrigerant="R-410A">R-410A</button>
+            <button class="refrigerant-button" data-refrigerant="R-22">R-22 (Legacy)</button>
+            <button class="refrigerant-button" data-refrigerant="R-134a">R-134a</button>
+            <button class="refrigerant-button" data-refrigerant="R-32">R-32</button>
+            <button class="refrigerant-button" data-refrigerant="R-454B">R-454B (A2L)</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0% Complete</div>
+        </div>
+
+        <!-- Phase 1: Basic Checks -->
+        <div class="section critical">
+            <div class="section-header">
+                <span class="section-icon">🔌</span>
+                <h2>Phase 1: Basic Power & Thermostat Verification</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify thermostat calling for cooling</div>
+                        <div class="item-detail">Set temp below room temp, mode on COOL, fan to AUTO, check display working</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check thermostat batteries (if applicable)</div>
+                        <div class="item-detail">Replace batteries, wait for reboot, verify proper display and settings retained</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify power at indoor unit</div>
+                        <div class="item-detail">Check breaker ON, disconnect switch ON, measure 120VAC or 240VAC at unit</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify power at outdoor unit</div>
+                        <div class="item-detail">Check breaker ON, disconnect switch ON, measure 240VAC at unit</div>
+                        <div class="item-values">Expected: 240VAC ±10% (216-264VAC acceptable range)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check 24VAC control voltage</div>
+                        <div class="item-detail">Measure at transformer secondary, R to C terminals at thermostat</div>
+                        <div class="item-values">Expected: 24-28VAC | Low = bad transformer or short circuit</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect control board fuses</div>
+                        <div class="item-detail">Check 3A or 5A fuses - replace if blown, investigate cause before powering up</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Phase 2: Indoor Unit -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🏠</span>
+                <h2>Phase 2: Indoor Unit & Airflow Assessment</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check air filter condition</div>
+                        <div class="item-detail">Dirty filter reduces airflow, causes icing, and reduces capacity - replace if restricted</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify blower motor operation</div>
+                        <div class="item-detail">Should run when calling for cool - check for proper speed, listen for noise</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect evaporator coil for ice/frost</div>
+                        <div class="item-detail">Ice indicates low airflow or low refrigerant - must thaw before diagnostics</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check evaporator coil cleanliness</div>
+                        <div class="item-detail">Dirty coil reduces heat transfer - inspect with flashlight, clean if needed</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify all supply registers open</div>
+                        <div class="item-detail">Check for closed dampers, blocked registers, crushed flex duct</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure supply air temperature</div>
+                        <div class="item-detail">Should be 15-22°F below return air temperature (typical split)</div>
+                        <div class="item-values">Target supply temp: 55-65°F | Return temp: 75-80°F (typical)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check condensate drain operation</div>
+                        <div class="item-detail">Verify drain clear, float switch not tripped, condensate pump working (if equipped)</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="diagnostic-path">
+                <div class="diagnostic-path-title">❄️ IF EVAPORATOR COIL IS FROZEN</div>
+                <div class="diagnostic-path-content">
+                    <strong>STOP:</strong> System must be thawed before continuing diagnostics<br>
+                    <strong>Thaw procedure:</strong> Turn off cooling, run fan only for 1-3 hours, or use defrost mode if available<br>
+                    <strong>Causes:</strong> Low airflow (dirty filter/coil), low refrigerant, metering device issue, blower failure
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3: Outdoor Unit -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🌡️</span>
+                <h2>Phase 3: Outdoor Unit Operation</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify outdoor fan motor running</div>
+                        <div class="item-detail">Check for 240VAC at motor, verify proper rotation direction (upward airflow)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check condenser coil cleanliness</div>
+                        <div class="item-detail">Dirty coil causes high head pressure - clean with coil cleaner and water</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify compressor operation</div>
+                        <div class="item-detail">Should run when calling for cool - listen for hum, feel for vibration, check amp draw</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check contactor operation</div>
+                        <div class="item-detail">Verify 24VAC at coil, contacts pull in, 240VAC passes through to compressor/fan</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test run capacitor</div>
+                        <div class="item-detail">Discharge safely, measure µF with meter - should be ±6% of rated value</div>
+                        <div class="item-values">Good: Within 6% of rating | Weak: 7-20% off | Failed: >20% off or shorted/open</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure compressor amp draw</div>
+                        <div class="item-detail">Compare to nameplate RLA (Rated Load Amps) and LRA (Locked Rotor Amps)</div>
+                        <div class="item-values">Normal: 80-100% of RLA | High: >RLA (check airflow/charge) | Low: <50% RLA (issue)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for outdoor obstructions</div>
+                        <div class="item-detail">Verify 24" clearance all sides, no debris in unit, vegetation trimmed back</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">⚡ COMPRESSOR WON'T START</div>
+                <div class="note-content">
+                    <strong>Hums but doesn't start:</strong> Bad capacitor, low voltage, mechanical seizure<br>
+                    <strong>No sound/no amp draw:</strong> No power, bad contactor, internal overload tripped<br>
+                    <strong>Clicking on/off:</strong> Overload cycling due to low voltage, bad cap, or compressor issue<br>
+                    <strong>Hard start kit:</strong> May help marginal compressor start in heat - not a permanent fix
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4: Refrigerant System -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">❄️</span>
+                <h2>Phase 4: Refrigerant Charge & System Diagnostics</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Connect manifold gauges to service ports</div>
+                        <div class="item-detail">Blue hose to suction (large line), red hose to liquid (small line), yellow to vacuum pump/tank</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Record ambient outdoor temperature</div>
+                        <div class="item-detail">Required for proper pressure/charge analysis - measure in shade near unit</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure suction pressure (low side)</div>
+                        <div class="item-detail">With system running 10+ minutes - compare to P-T chart for refrigerant type</div>
+                        <div class="item-values" id="suctionPressure">R-410A typical: 115-135 PSI @ 75°F indoor</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure discharge pressure (high side)</div>
+                        <div class="item-detail">Should correlate with outdoor ambient temp - check P-T chart</div>
+                        <div class="item-values" id="dischargePressure">R-410A typical: 250-300 PSI @ 30°C (86°F) outdoor</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure suction line temperature</div>
+                        <div class="item-detail">Use temp clamp or probe at service port on large line</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate superheat</div>
+                        <div class="item-detail">Superheat = Suction line temp - Saturated temp (from P-T chart at suction pressure)</div>
+                        <div class="item-values">Target: 8-12°F typical TXV | 10-25°F typical fixed orifice (varies by system)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure liquid line temperature</div>
+                        <div class="item-detail">Use temp clamp at service port on small line</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate subcooling</div>
+                        <div class="item-detail">Subcooling = Saturated temp (from P-T chart at liquid pressure) - Liquid line temp</div>
+                        <div class="item-values">Target: 8-15°F typical (varies by system - check manufacturer specs)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect for refrigerant leaks</div>
+                        <div class="item-detail">Use electronic leak detector, soap bubbles, or UV dye at all joints/connections</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="pt-chart" id="ptChart">
+                <div class="pt-chart-title">📊 Quick Reference P-T Values (<span id="currentRefrigerant">R-410A</span>)</div>
+                <div class="pt-chart-grid">
+                    <div class="pt-item">
+                        <div class="pt-label">Suction @ 40°F evap</div>
+                        <div class="pt-value" id="pt40F">118 PSI</div>
+                    </div>
+                    <div class="pt-item">
+                        <div class="pt-label">Suction @ 45°F evap</div>
+                        <div class="pt-value" id="pt45F">133 PSI</div>
+                    </div>
+                    <div class="pt-item">
+                        <div class="pt-label">Discharge @ 80°F</div>
+                        <div class="pt-value" id="pt80F">225 PSI</div>
+                    </div>
+                    <div class="pt-item">
+                        <div class="pt-label">Discharge @ 95°F</div>
+                        <div class="pt-value" id="pt95F">316 PSI</div>
+                    </div>
+                </div>
+            </div>
+            <div class="diagnostic-path">
+                <div class="diagnostic-path-title">🔍 REFRIGERANT CHARGE DIAGNOSIS</div>
+                <div class="diagnostic-path-content">
+                    <strong>Low superheat + Low subcooling:</strong> TXV stuck open, overcharge (rare)<br>
+                    <strong>High superheat + Low subcooling:</strong> Low refrigerant charge (most common)<br>
+                    <strong>High superheat + High subcooling:</strong> Restricted metering device or filter drier<br>
+                    <strong>Low superheat + High subcooling:</strong> Overcharge, restricted airflow, dirty condenser
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 5: Electrical System -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⚡</span>
+                <h2>Phase 5: Electrical System Diagnostics</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test contactor contacts</div>
+                        <div class="item-detail">Check for pitting, burning, or welding - measure voltage drop across contacts (<0.5V)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check compressor windings resistance</div>
+                        <div class="item-detail">Power OFF - measure ohms: Common to Start, Common to Run, Start to Run</div>
+                        <div class="item-values">CS + CR should equal SR | Open circuit = failed winding | Low ohms = short</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test compressor to ground</div>
+                        <div class="item-detail">Measure ohms from each terminal to ground - should be open circuit (OL)</div>
+                        <div class="item-values">Any continuity to ground = FAILED COMPRESSOR (do not operate)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check dual run capacitor</div>
+                        <div class="item-detail">Discharge safely, test HERM and FAN terminals - should match ratings ±6%</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Verify proper wire sizing</div>
+                        <div class="item-detail">Check conductor size matches breaker rating per code (typically 14AWG=15A, 12AWG=20A, 10AWG=30A)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect all electrical connections</div>
+                        <div class="item-detail">Look for burned wires, loose terminals, corrosion - tighten all connections</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test high/low pressure switches (if equipped)</div>
+                        <div class="item-detail">Verify switches closed during normal operation - open on fault condition</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <div class="note-title">💡 CAPACITOR TESTING</div>
+                <div class="note-content">
+                    <strong>ALWAYS discharge:</strong> Use insulated screwdriver across terminals before handling<br>
+                    <strong>Visual inspection:</strong> Bulging top, oil leakage, burn marks = replace immediately<br>
+                    <strong>Testing:</strong> Must use capacitance meter (not multimeter ohms setting)<br>
+                    <strong>Replacement:</strong> Match or slightly higher µF rating OK, voltage must be equal or higher
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 6: Advanced Diagnostics -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔬</span>
+                <h2>Phase 6: Advanced System Analysis</h2>
+            </div>
+            <ul class="checklist">
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check metering device operation</div>
+                        <div class="item-detail">TXV: Should adjust to load | Fixed orifice: Check for restrictions or ice</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Measure airflow (if possible)</div>
+                        <div class="item-detail">Target: 400 CFM per ton of cooling (e.g., 3-ton = 1200 CFM)</div>
+                        <div class="item-values">Use anemometer, flow hood, or temp rise method</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Calculate system capacity</div>
+                        <div class="item-detail">Use temp split and airflow: BTU/hr = 1.08 × CFM × ΔT</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Check for non-condensables in system</div>
+                        <div class="item-detail">High head pressure with low ambient = air in system (requires reclaim/recharge)</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Test reversing valve (heat pump only)</div>
+                        <div class="item-detail">Switch between heat and cool modes - feel lines shift hot/cold</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Inspect compressor oil level/quality (if accessible)</div>
+                        <div class="item-detail">Low oil or acid contamination indicates system failure</div>
+                    </div>
+                </li>
+                <li class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Document all measurements for report</div>
+                        <div class="item-detail">Record pressures, temps, voltages, amps, superheat, subcooling, ambient conditions</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="diagnostic-path">
+                <div class="diagnostic-path-title">🛠️ COMMON AC FAILURE MODES</div>
+                <div class="diagnostic-path-content">
+                    <strong>Low refrigerant:</strong> High superheat, low subcooling, reduced capacity<br>
+                    <strong>Dirty coils:</strong> High head pressure, high amps, reduced capacity<br>
+                    <strong>Bad TXV:</strong> Erratic pressures, hunting, icing, or starved evaporator<br>
+                    <strong>Compressor failure:</strong> No pressure rise, low amps, short cycling<br>
+                    <strong>Restricted filter drier:</strong> High superheat, frost on drier, pressure drop across drier<br>
+                    <strong>Low airflow:</strong> Icing, high superheat, reduced capacity, high suction temp
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Part of the <strong>LARK Labs HVAC Emergency Diagnostic Guides</strong></p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">For Canadian HVAC technicians | Always follow refrigerant regulations and manufacturer specifications</p>
+        </footer>
+    </div>
+
+    <script>
+        // Refrigerant P-T chart data
+        const ptData = {
+            'R-410A': {
+                '40F': '118 PSI',
+                '45F': '133 PSI',
+                '80F': '225 PSI',
+                '95F': '316 PSI',
+                suction: 'R-410A typical: 115-135 PSI @ 75°F indoor',
+                discharge: 'R-410A typical: 250-300 PSI @ 30°C (86°F) outdoor'
+            },
+            'R-22': {
+                '40F': '69 PSI',
+                '45F': '76 PSI',
+                '80F': '158 PSI',
+                '95F': '210 PSI',
+                suction: 'R-22 typical: 65-75 PSI @ 75°F indoor',
+                discharge: 'R-22 typical: 200-250 PSI @ 30°C (86°F) outdoor'
+            },
+            'R-134a': {
+                '40F': '37 PSI',
+                '45F': '42 PSI',
+                '80F': '91 PSI',
+                '95F': '123 PSI',
+                suction: 'R-134a typical: 35-45 PSI @ 75°F indoor',
+                discharge: 'R-134a typical: 140-180 PSI @ 30°C (86°F) outdoor'
+            },
+            'R-32': {
+                '40F': '92 PSI',
+                '45F': '103 PSI',
+                '80F': '191 PSI',
+                '95F': '258 PSI',
+                suction: 'R-32 typical: 90-110 PSI @ 75°F indoor',
+                discharge: 'R-32 typical: 220-270 PSI @ 30°C (86°F) outdoor'
+            },
+            'R-454B': {
+                '40F': '81 PSI',
+                '45F': '91 PSI',
+                '80F': '166 PSI',
+                '95F': '225 PSI',
+                suction: 'R-454B typical: 80-100 PSI @ 75°F indoor',
+                discharge: 'R-454B typical: 200-250 PSI @ 30°C (86°F) outdoor'
+            }
+        };
+
+        // Refrigerant selector functionality
+        const refrigerantButtons = document.querySelectorAll('.refrigerant-button');
+        let currentRefrigerant = 'R-410A';
+
+        refrigerantButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                refrigerantButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Get selected refrigerant
+                currentRefrigerant = this.dataset.refrigerant;
+                
+                // Update P-T chart
+                updatePTChart(currentRefrigerant);
+                
+                // Save selection
+                localStorage.setItem('no-cool-selected-refrigerant', currentRefrigerant);
+            });
+        });
+
+        function updatePTChart(refrigerant) {
+            const data = ptData[refrigerant];
+            document.getElementById('currentRefrigerant').textContent = refrigerant;
+            document.getElementById('pt40F').textContent = data['40F'];
+            document.getElementById('pt45F').textContent = data['45F'];
+            document.getElementById('pt80F').textContent = data['80F'];
+            document.getElementById('pt95F').textContent = data['95F'];
+            document.getElementById('suctionPressure').textContent = data.suction;
+            document.getElementById('dischargePressure').textContent = data.discharge;
+        }
+
+        // Initialize checklist functionality
+        const checklistItems = document.querySelectorAll('.checklist-item');
+        const progressBar = document.getElementById('progressBar');
+        const totalItems = checklistItems.length;
+
+        // Load saved state from localStorage
+        function loadState() {
+            checklistItems.forEach((item, index) => {
+                const isChecked = localStorage.getItem(`no-cool-checklist-item-${index}`) === 'true';
+                if (isChecked) {
+                    item.classList.add('checked');
+                }
+            });
+            
+            // Load selected refrigerant
+            const savedRefrigerant = localStorage.getItem('no-cool-selected-refrigerant');
+            if (savedRefrigerant && ptData[savedRefrigerant]) {
+                currentRefrigerant = savedRefrigerant;
+                refrigerantButtons.forEach(btn => {
+                    if (btn.dataset.refrigerant === savedRefrigerant) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                updatePTChart(savedRefrigerant);
+            }
+            
+            updateProgress();
+        }
+
+        // Save state to localStorage
+        function saveState(index, isChecked) {
+            localStorage.setItem(`no-cool-checklist-item-${index}`, isChecked);
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const checkedItems = document.querySelectorAll('.checklist-item.checked').length;
+            const percentage = Math.round((checkedItems / totalItems) * 100);
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '% Complete';
+        }
+
+        // Add click handlers
+        checklistItems.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const isChecked = this.classList.contains('checked');
+                saveState(index, isChecked);
+                updateProgress();
+            });
+        });
+
+        // Load state on page load
+        loadState();
+
+        // Reset functionality (Ctrl/Cmd + Shift + R)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'r') {
+                e.preventDefault();
+                if (confirm('Reset all checklist items and refrigerant selection?')) {
+                    // Clear localStorage
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key && key.startsWith('no-cool-')) {
+                            localStorage.removeItem(key);
+                        }
+                    }
+                    // Reset UI
+                    checklistItems.forEach(item => item.classList.remove('checked'));
+                    refrigerantButtons.forEach(btn => btn.classList.remove('active'));
+                    refrigerantButtons[0].classList.add('active');
+                    currentRefrigerant = 'R-410A';
+                    updatePTChart('R-410A');
+                    updateProgress();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
