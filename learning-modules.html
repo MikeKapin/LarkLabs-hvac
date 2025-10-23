@@ -252,6 +252,57 @@
             transform: none;
         }
 
+        /* Textbook CTA Section */
+        .textbook-cta {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.15) 0%, rgba(52, 152, 219, 0.05) 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 2px solid rgba(52, 152, 219, 0.3);
+            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .textbook-cta h2 {
+            font-size: 2.2rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+
+        .textbook-cta p {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-dashboard {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 30px rgba(231, 76, 60, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-dashboard:hover {
+            background: linear-gradient(45deg, #c0392b, #e74c3c);
+            box-shadow: 0 12px 40px rgba(231, 76, 60, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .btn-dashboard i {
+            font-size: 1.5rem;
+        }
+
         .module-number {
             display: inline-block;
             background: linear-gradient(45deg, #3498db, #2980b9);
@@ -412,6 +463,18 @@
                 <h1>23 Learning Modules</h1>
                 <p>Complete Canadian Gas Technician Certification Resources. Each chapter from the LARK Labs textbook is an interactive learning module with assessments, case studies and practical assignments. Developed to CSA standards.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Textbook Dashboard CTA -->
+    <section class="textbook-cta">
+        <div class="container">
+            <h2>📖 Complete Textbook Dashboard</h2>
+            <p>Access all 20 chapters of the Canadian Gas Technician Textbook in one comprehensive dashboard. Perfect for structured learning and quick reference.</p>
+            <a href="canadian-gas-technician-textbook.html" class="btn-dashboard">
+                <i class="fas fa-book-open"></i>
+                View Complete Textbook Dashboard
+            </a>
         </div>
     </section>
 

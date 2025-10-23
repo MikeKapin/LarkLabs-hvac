@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete Canadian Gas Technician Textbook by LARK Labs - Comprehensive G2 and G3 certification study guide covering all 20 chapters">
+    <meta name="keywords" content="Canadian Gas Technician, G2 certification, G3 certification, TSSA exam, gas technician textbook, HVAC training, CSA B149">
+    <title>Canadian Gas Technician Textbook - Complete Guide | LARK Labs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(41, 128, 185, 0.1));
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #ecf0f1;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .author {
+            font-size: 1.1rem;
+            color: #95a5a6;
+            font-style: italic;
+        }
+
+        .intro-section {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 5px solid #3498db;
+        }
+
+        .intro-section h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .intro-section p {
+            line-height: 1.8;
+            color: #ecf0f1;
+            margin-bottom: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(41, 128, 185, 0.1));
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            color: #3498db;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #bdc3c7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .download-section {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(231, 76, 60, 0.4);
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: white;
+            color: #e74c3c;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .download-btn i {
+            margin-right: 10px;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .chapter-card {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(52, 152, 219, 0.05));
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(52, 152, 219, 0.3);
+            border-color: #2980b9;
+        }
+
+        .chapter-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .chapter-number {
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .chapter-card h3 {
+            color: #3498db;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .chapter-card p {
+            color: #bdc3c7;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.g3 {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .badge.g2 {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .features-section {
+            background: rgba(46, 204, 113, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border: 2px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .features-section h2 {
+            color: #2ecc71;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: #2ecc71;
+            min-width: 40px;
+        }
+
+        .feature-text h4 {
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .feature-text p {
+            color: #bdc3c7;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #95a5a6;
+            border-top: 1px solid rgba(52, 152, 219, 0.2);
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .chapters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .download-btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Canadian Gas Technician Textbook</h1>
+            <p class="subtitle">Complete Certification Study Guide</p>
+            <p class="author">by Mike Kapin - LARK Labs</p>
+        </header>
+
+        <div class="intro-section">
+            <h2>About This Textbook</h2>
+            <p>The <strong>Canadian Gas Technician Textbook</strong> is a comprehensive resource designed for students pursuing G2 and G3 certification through the Technical Standards and Safety Authority (TSSA) in Ontario, Canada.</p>
+            <p>This textbook covers all essential topics required for gas technician certification, including gas properties, piping systems, appliances, venting, electrical fundamentals, troubleshooting, and safety procedures - all aligned with <strong>CSA B149.1 and B149.2</strong> standards.</p>
+            <p>Whether you're a student, apprentice, or experienced technician looking to upgrade your certification, this textbook provides the knowledge foundation you need to succeed.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">20</span>
+                <span class="stat-label">Chapters</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">G2 & G3</span>
+                <span class="stat-label">Certification</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">CSA Compliant</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">2025</span>
+                <span class="stat-label">Updated</span>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h2 style="color: white; margin-bottom: 20px;">Access All 20 Chapters</h2>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 30px; font-size: 1.1rem;">Click any chapter below to download individual PDFs. All chapters are complete and ready for study!</p>
+        </div>
+
+        <div class="features-section">
+            <h2>✨ What's Included</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="feature-text">
+                        <h4>Comprehensive Coverage</h4>
+                        <p>All 20 chapters covering G3 and G2 certification requirements</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-book"></i></div>
+                    <div class="feature-text">
+                        <h4>CSA Standards</h4>
+                        <p>Aligned with CSA B149.1-25 and B149.2-25 regulations</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="feature-text">
+                        <h4>Clear Explanations</h4>
+                        <p>Complex concepts explained in plain, understandable language</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                    <div class="feature-text">
+                        <h4>Practical Focus</h4>
+                        <p>Real-world applications and field-tested procedures</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                    <div class="feature-text">
+                        <h4>TSSA Exam Prep</h4>
+                        <p>Structured to prepare you for TSSA G2 and G3 exams</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-maple-leaf"></i></div>
+                    <div class="feature-text">
+                        <h4>Canadian Focus</h4>
+                        <p>Specifically written for Canadian gas technicians and regulations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; color: #3498db; margin: 60px 0 40px 0; font-size: 2.5rem;">📖 Complete Chapter List</h2>
+
+        <div class="chapters-grid">
+            <!-- Chapter 1 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 1.pdf', '_blank')">
+                <span class="chapter-number">Chapter 1</span>
+                <h3>Introduction to the Gas Industry</h3>
+                <p>Overview of natural gas and propane, industry structure, regulations, TSSA licensing, and career pathways for gas technicians</p>
+                <span class="badge g3">🎓 G3 Foundation</span>
+            </div>
+
+            <!-- Chapter 2 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 2.pdf', '_blank')">
+                <span class="chapter-number">Chapter 2</span>
+                <h3>Math and Science Fundamentals</h3>
+                <p>Essential math, units of measurement, conversions, basic physics, pressure, temperature, and calculations for gas systems</p>
+                <span class="badge g3">🎓 G3 Foundation</span>
+            </div>
+
+            <!-- Chapter 3 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 3.pdf', '_blank')">
+                <span class="chapter-number">Chapter 3</span>
+                <h3>Gas Properties and Characteristics</h3>
+                <p>Natural gas and propane properties, combustion chemistry, BTU content, specific gravity, gas laws, and safety characteristics</p>
+                <span class="badge g3">🎓 G3 Foundation</span>
+            </div>
+
+            <!-- Chapter 4 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 4.pdf', '_blank')">
+                <span class="chapter-number">Chapter 4</span>
+                <h3>Codes and Standards (CSA B149)</h3>
+                <p>CSA B149.1 (Natural Gas) and B149.2 (Propane), code navigation, installation requirements, and TSSA Act overview</p>
+                <span class="badge g3">🎓 G3 Essential</span>
+            </div>
+
+            <!-- Chapter 5 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 5.pdf', '_blank')">
+                <span class="chapter-number">Chapter 5</span>
+                <h3>Piping Materials and Installation</h3>
+                <p>Pipe materials (steel, copper, CSST), fittings, joining methods, support requirements, and proper installation techniques</p>
+                <span class="badge g3">🎓 G3 Essential</span>
+            </div>
+
+            <!-- Chapter 6 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 6.pdf', '_blank')">
+                <span class="chapter-number">Chapter 6</span>
+                <h3>Gas Piping Design and Sizing</h3>
+                <p>Sizing calculations, pressure drop, load calculations, pipe capacity tables, and system design per CSA B149.1</p>
+                <span class="badge g3">🎓 G3 Essential</span>
+            </div>
+
+            <!-- Chapter 7 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 7.pdf', '_blank')">
+                <span class="chapter-number">Chapter 7</span>
+                <h3>Gas Meters and Regulators</h3>
+                <p>Meter types, regulator operation (1st and 2nd stage), sizing, installation, testing, and overpressure protection</p>
+                <span class="badge g3">🎓 G3 Essential</span>
+            </div>
+
+            <!-- Chapter 8 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 8.pdf', '_blank')">
+                <span class="chapter-number">Chapter 8</span>
+                <h3>Pressure Testing and Purging</h3>
+                <p>CSA B149.1 test requirements, testing procedures, acceptable pressure drop, purging methods, and documentation</p>
+                <span class="badge g3">🎓 G3 Essential</span>
+            </div>
+
+            <!-- Chapter 9 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 9.pdf', '_blank')">
+                <span class="chapter-number">Chapter 9</span>
+                <h3>Introduction to Gas Appliances</h3>
+                <p>Appliance categories, venting categories (I-IV), CSA certification, ratings, installation fundamentals, and clearances</p>
+                <span class="badge g3">🎓 G3 Appliances</span>
+            </div>
+
+            <!-- Chapter 10 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 10.pdf', '_blank')">
+                <span class="chapter-number">Chapter 10</span>
+                <h3>Burners and Combustion Systems</h3>
+                <p>Atmospheric and power burners, orifice sizing, ignition systems, flame sensing, and combustion analysis</p>
+                <span class="badge g3">🎓 G3 Appliances</span>
+            </div>
+
+            <!-- Chapter 11 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 11.pdf', '_blank')">
+                <span class="chapter-number">Chapter 11</span>
+                <h3>Gas Valves and Safety Controls</h3>
+                <p>Manual and automatic valves, safety shut-off systems, limit controls, pressure switches, and sequence of operations</p>
+                <span class="badge g3">🎓 G3 Appliances</span>
+            </div>
+
+            <!-- Chapter 12 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 12.pdf', '_blank')">
+                <span class="chapter-number">Chapter 12</span>
+                <h3>Venting Systems</h3>
+                <p>Natural draft principles, venting materials (Type B, BW, PVC), system design, direct vent, and troubleshooting</p>
+                <span class="badge g3">🎓 G3 Appliances</span>
+            </div>
+
+            <!-- Chapter 13 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 13.pdf', '_blank')">
+                <span class="chapter-number">Chapter 13</span>
+                <h3>Heating Systems</h3>
+                <p>Forced air furnaces, hydronic boilers, radiant heating, heat pumps, installation requirements, and commissioning</p>
+                <span class="badge g2">🔥 G2 Systems</span>
+            </div>
+
+            <!-- Chapter 14 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 14.pdf', '_blank')">
+                <span class="chapter-number">Chapter 14</span>
+                <h3>Electricity for Gas Technicians</h3>
+                <p>Electrical theory (Ohm's Law), safety, multimeter use, control circuits, thermostats, and reading wiring diagrams</p>
+                <span class="badge g2">🔥 G2 Advanced</span>
+            </div>
+
+            <!-- Chapter 15 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 15.pdf', '_blank')">
+                <span class="chapter-number">Chapter 15</span>
+                <h3>Control Systems and Sequences</h3>
+                <p>Control logic (on-off, staged, modulating), heating sequences, zone controls, and advanced building controls</p>
+                <span class="badge g2">🔥 G2 Advanced</span>
+            </div>
+
+            <!-- Chapter 16 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 16.pdf', '_blank')">
+                <span class="chapter-number">Chapter 16</span>
+                <h3>Water Heaters</h3>
+                <p>Storage tank and tankless heaters, components, installation requirements, sizing, T&P relief valves, and troubleshooting</p>
+                <span class="badge g2">🔥 G2 Advanced</span>
+            </div>
+
+            <!-- Chapter 17 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 17.pdf', '_blank')">
+                <span class="chapter-number">Chapter 17</span>
+                <h3>Other Gas Appliances</h3>
+                <p>Cooking appliances, dryers, fireplaces, pool heaters, unit heaters, construction heaters, and infrared heaters</p>
+                <span class="badge g2">🔥 G2 Commercial</span>
+            </div>
+
+            <!-- Chapter 18 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 18.pdf', '_blank')">
+                <span class="chapter-number">Chapter 18</span>
+                <h3>Propane Systems and Installations</h3>
+                <p>Propane system design, DOT/TC tank specifications, regulators, appliance conversion, and storage per CSA B149.2</p>
+                <span class="badge g2">🔥 G2 Commercial</span>
+            </div>
+
+            <!-- Chapter 19 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 19.pdf', '_blank')">
+                <span class="chapter-number">Chapter 19</span>
+                <h3>Troubleshooting and Diagnostics</h3>
+                <p>Systematic troubleshooting approach, diagnostic tools, common problems, gas supply issues, and control failures</p>
+                <span class="badge g2">🔥 G2 Specialty</span>
+            </div>
+
+            <!-- Chapter 20 -->
+            <div class="chapter-card" onclick="window.open('Textbook/Canadian Gas Technician-Chapter 20.pdf', '_blank')">
+                <span class="chapter-number">Chapter 20</span>
+                <h3>Maintenance and Service</h3>
+                <p>Preventive maintenance programs, furnace/water heater/boiler service, combustion testing, and maintenance contracts</p>
+                <span class="badge g2">🔥 G2 Advanced</span>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Canadian Gas Technician Textbook</strong> by Mike Kapin</p>
+            <p style="margin-top: 10px;">Part of the <a href="https://larklabs.org" target="_blank">LARK Labs</a> educational resources</p>
+            <p style="margin-top: 20px; font-size: 0.9rem;">© 2025 LARK Labs. All rights reserved.</p>
+            <p style="margin-top: 10px;">
+                <a href="learning-modules.html">← Back to Learning Modules</a> |
+                <a href="index.html">Home</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
