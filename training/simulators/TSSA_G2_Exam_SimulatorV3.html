@@ -526,21 +526,224 @@
             color: #4A90E2;
         }
 
+        /* Access Gate Overlay Styles */
+        .access-gate-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .access-gate-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .access-gate-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .access-gate-subtitle {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .tier-selection-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .tier-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 30px;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tier-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .tier-button.student {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+        }
+
+        .tier-button.student:hover {
+            box-shadow: 0 6px 25px rgba(78, 205, 196, 0.5);
+        }
+
+        .student-code-entry {
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        .student-code-entry.active {
+            display: block;
+        }
+
+        .passkey-input-container {
+            margin: 30px 0;
+        }
+
+        .passkey-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .passkey-input:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+        }
+
+        .submit-code-button {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-code-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .back-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6268;
+        }
+
+        .error-message {
+            background: #fff5f5;
+            color: #dc3545;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #dc3545;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #28a745;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .code-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .code-info h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .code-info p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
             }
-            
+
             .exam-header {
                 flex-direction: column;
                 gap: 15px;
             }
-            
+
             .progress-info {
                 flex-direction: column;
                 gap: 15px;
             }
-            
+
             .navigation {
                 flex-direction: column;
                 gap: 15px;
@@ -581,10 +784,95 @@
             .footer {
                 padding: 20px 15px;
             }
+
+            .access-gate-content {
+                padding: 30px 20px;
+            }
+
+            .access-gate-title {
+                font-size: 1.6em;
+            }
+
+            .tier-button {
+                padding: 15px 20px;
+                font-size: 1.1em;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Access Gate Overlay -->
+    <div id="accessGateOverlay" class="access-gate-overlay">
+        <div class="access-gate-content">
+            <!-- Tier Selection View -->
+            <div id="tierSelectionView">
+                <div class="access-gate-title">🔥 TSSA G2 Practice Exam Simulator</div>
+                <p class="access-gate-subtitle">
+                    Master your Gas Technician 2 Certification with comprehensive practice exams
+                </p>
+
+                <div class="tier-selection-buttons">
+                    <button class="tier-button student" onclick="showStudentCodeEntry()">
+                        🎓 Student Access
+                        <div style="font-size: 0.85em; font-weight: normal; margin-top: 8px;">
+                            Free access with LARK Labs student code
+                        </div>
+                    </button>
+
+                    <button class="tier-button" onclick="grantGuestAccess()">
+                        👤 Guest Access
+                        <div style="font-size: 0.85em; font-weight: normal; margin-top: 8px;">
+                            Try the simulator with limited features
+                        </div>
+                    </button>
+                </div>
+
+                <div class="code-info">
+                    <h4>📚 For LARK Labs Students</h4>
+                    <p>
+                        If you're enrolled in a LARK Labs training program, contact your instructor
+                        for a student access code (Format: LARK####)
+                    </p>
+                </div>
+            </div>
+
+            <!-- Student Code Entry View -->
+            <div id="studentCodeView" class="student-code-entry">
+                <div class="access-gate-title">🎓 Student Access</div>
+                <p class="access-gate-subtitle">
+                    Enter your LARK Labs student access code
+                </p>
+
+                <div class="passkey-input-container">
+                    <input
+                        type="text"
+                        id="studentPasskey"
+                        class="passkey-input"
+                        placeholder="LARK####"
+                        maxlength="8"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button class="submit-code-button" onclick="validateStudentCode()">
+                    Verify Access Code
+                </button>
+
+                <div id="studentError" class="error-message">
+                    ❌ Invalid access code. Please check your code and try again.
+                </div>
+
+                <div id="studentSuccess" class="success-message">
+                    ✅ Access granted! Loading simulator...
+                </div>
+
+                <button class="back-button" onclick="showTierSelection()">
+                    ← Back to Options
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="main-content">
         <div class="container">
             <div class="header">
@@ -699,9 +987,177 @@
     </div>
 
     <script>
-        // Add premium access localStorage
-        localStorage.setItem('g2PremiumAccess', 'true');
-        localStorage.setItem('g2AccessDate', new Date().toISOString());
+        // G2 Exam Simulator Access Control System
+        class G2ExamAuth {
+            constructor() {
+                this.storageKey = 'g2-exam-access';
+                this.validStudentCodes = [
+                    'LARK0001', 'LARK0002', 'LARK0003', 'LARK0004', 'LARK0005',
+                    'LARK0006', 'LARK0007', 'LARK0008', 'LARK0009', 'LARK0010',
+                    'LARK0011', 'LARK0012', 'LARK0013', 'LARK0014', 'LARK0015',
+                    'LARK0016', 'LARK0017', 'LARK0018', 'LARK0019', 'LARK0020',
+                    'LARK0021', 'LARK0022', 'LARK0023', 'LARK0024', 'LARK0025',
+                    'LARK0026', 'LARK0027', 'LARK0028', 'LARK0029', 'LARK0030',
+                    'LARK0031', 'LARK0032', 'LARK0033', 'LARK0034', 'LARK0035',
+                    'LARK0036', 'LARK0037', 'LARK0038', 'LARK0039', 'LARK0040',
+                    'LARK0041', 'LARK0042', 'LARK0043', 'LARK0044', 'LARK0045',
+                    'LARK0046', 'LARK0047', 'LARK0048', 'LARK0049', 'LARK0050',
+                    'LARK0051', 'LARK0052', 'LARK0053', 'LARK0054', 'LARK0055',
+                    'LARK0056', 'LARK0057', 'LARK0058', 'LARK0059', 'LARK0060',
+                    'LARK0061', 'LARK0062', 'LARK0063', 'LARK0064', 'LARK0065',
+                    'LARK0066', 'LARK0067', 'LARK0068', 'LARK0069', 'LARK0070',
+                    'LARK0071', 'LARK0072', 'LARK0073', 'LARK0074', 'LARK0075',
+                    'LARK0076', 'LARK0077', 'LARK0078', 'LARK0079', 'LARK0080'
+                ];
+                this.init();
+            }
+
+            init() {
+                // Check for existing access
+                const savedAccess = localStorage.getItem(this.storageKey);
+                if (savedAccess) {
+                    const accessData = JSON.parse(savedAccess);
+                    if (this.isAccessValid(accessData)) {
+                        console.log('✅ Valid access found:', accessData.tier);
+                        this.hideAccessGate();
+                        return;
+                    } else {
+                        console.log('⚠️ Access expired or invalid');
+                        localStorage.removeItem(this.storageKey);
+                    }
+                }
+                // Show access gate if no valid access
+                this.showAccessGate();
+            }
+
+            isAccessValid(accessData) {
+                if (!accessData || !accessData.tier || !accessData.grantedAt) {
+                    return false;
+                }
+
+                if (accessData.tier === 'student') {
+                    // Student access valid for 12 months
+                    const grantedDate = new Date(accessData.grantedAt);
+                    const expirationDate = new Date(grantedDate);
+                    expirationDate.setMonth(expirationDate.getMonth() + 12);
+                    return new Date() < expirationDate;
+                }
+
+                if (accessData.tier === 'guest') {
+                    // Guest access valid for 24 hours
+                    const grantedDate = new Date(accessData.grantedAt);
+                    const expirationDate = new Date(grantedDate);
+                    expirationDate.setHours(expirationDate.getHours() + 24);
+                    return new Date() < expirationDate;
+                }
+
+                return false;
+            }
+
+            validateStudentCode(code) {
+                const normalizedCode = code.toUpperCase().trim();
+                return this.validStudentCodes.includes(normalizedCode);
+            }
+
+            grantAccess(tier, metadata = {}) {
+                const accessData = {
+                    tier: tier,
+                    grantedAt: new Date().toISOString(),
+                    ...metadata
+                };
+                localStorage.setItem(this.storageKey, JSON.stringify(accessData));
+                console.log('✅ Access granted:', tier);
+                return accessData;
+            }
+
+            showAccessGate() {
+                document.getElementById('accessGateOverlay').style.display = 'flex';
+            }
+
+            hideAccessGate() {
+                document.getElementById('accessGateOverlay').style.display = 'none';
+            }
+
+            showTierSelection() {
+                document.getElementById('tierSelectionView').style.display = 'block';
+                document.getElementById('studentCodeView').classList.remove('active');
+            }
+
+            showStudentCodeEntry() {
+                document.getElementById('tierSelectionView').style.display = 'none';
+                document.getElementById('studentCodeView').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('studentPasskey').focus();
+                }, 300);
+            }
+        }
+
+        // Initialize authentication system
+        const g2Auth = new G2ExamAuth();
+
+        // UI Control Functions
+        function showTierSelection() {
+            g2Auth.showTierSelection();
+            // Clear any error messages
+            document.getElementById('studentError').classList.remove('show');
+            document.getElementById('studentSuccess').classList.remove('show');
+            document.getElementById('studentPasskey').value = '';
+        }
+
+        function showStudentCodeEntry() {
+            g2Auth.showStudentCodeEntry();
+        }
+
+        function validateStudentCode() {
+            const input = document.getElementById('studentPasskey');
+            const errorElement = document.getElementById('studentError');
+            const successElement = document.getElementById('studentSuccess');
+            const code = input.value.toUpperCase().trim();
+
+            // Clear previous messages
+            errorElement.classList.remove('show');
+            successElement.classList.remove('show');
+
+            if (!code) {
+                input.focus();
+                return;
+            }
+
+            if (!g2Auth.validateStudentCode(code)) {
+                errorElement.classList.add('show');
+                input.value = '';
+                input.focus();
+                console.log('❌ Invalid student code attempted:', code);
+                return;
+            }
+
+            // Valid student code - grant access
+            successElement.classList.add('show');
+            g2Auth.grantAccess('student', { code: code });
+
+            setTimeout(() => {
+                g2Auth.hideAccessGate();
+            }, 1500);
+        }
+
+        function grantGuestAccess() {
+            g2Auth.grantAccess('guest');
+            setTimeout(() => {
+                g2Auth.hideAccessGate();
+            }, 500);
+        }
+
+        // Add Enter key support for student code input
+        document.addEventListener('DOMContentLoaded', function() {
+            const passkeyInput = document.getElementById('studentPasskey');
+            if (passkeyInput) {
+                passkeyInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        validateStudentCode();
+                    }
+                });
+            }
+        });
 
         // Function to normalize question objects
         function normalizeQuestion(q) {
