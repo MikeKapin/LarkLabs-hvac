@@ -70,6 +70,13 @@
             padding: 2rem;
         }
 
+        .pricing-tiers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
         .pricing-card {
             background: linear-gradient(45deg, #2c3e50, #34495e);
             border-radius: 15px;
@@ -78,6 +85,20 @@
             border: 2px solid #3498db;
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(52, 152, 219, 0.3);
+        }
+
+        .pricing-card.student-tier {
+            border-color: #27ae60;
+        }
+
+        .pricing-card.student-tier::before {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
         }
 
         .pricing-card::before {
@@ -197,6 +218,74 @@
             display: none;
         }
 
+        .student-code-entry {
+            display: none;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .student-code-entry.active {
+            display: block;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            text-align: center;
+            font-family: monospace;
+            letter-spacing: 2px;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .code-input:focus {
+            border-color: #27ae60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .code-input::placeholder {
+            color: #95a5a6;
+            letter-spacing: 1px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.show {
+            opacity: 1;
+        }
+
+        .tier-badge {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .tier-badge.student {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+        }
+
         .testimonial {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
@@ -241,7 +330,7 @@
 
         .comparison-row {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 1rem;
             padding: 1rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -301,67 +390,175 @@
 
         <!-- Access Required Section -->
         <div id="accessRequired" class="access-required">
-            <div class="pricing-card">
-                <h2>Premium Access Required</h2>
-                <div class="price">$79.99</div>
-                <div class="price-subtitle">One-time payment • Lifetime access</div>
-                
-                <div class="features-list">
-                    <h3>What You Get:</h3>
-                    <ul>
-                        <li>500+ Official TSSA G2 Practice Questions</li>
-                        <li>Detailed Explanations for Every Answer</li>
-                        <li>Realistic Exam Simulation Environment</li>
-                        <li>Progress Tracking & Performance Analytics</li>
-                        <li>Unlimited Practice Attempts</li>
-                        <li>Mobile & Desktop Compatible</li>
-                        <li>Regular Content Updates</li>
-                        <li>Expert-Verified Question Bank</li>
-                        <li>Lifetime Access - No Subscriptions</li>
-                    </ul>
+            <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">Choose Your Access Tier</h2>
+
+            <div class="pricing-tiers">
+                <!-- Free Tier -->
+                <div class="pricing-card">
+                    <h2>Free Access</h2>
+                    <div class="price">$0</div>
+                    <div class="price-subtitle">Limited features</div>
+
+                    <div class="features-list">
+                        <h3>What You Get:</h3>
+                        <ul>
+                            <li>10 Practice Questions</li>
+                            <li>Basic Exam Format</li>
+                            <li>Limited Explanations</li>
+                        </ul>
+                    </div>
+
+                    <button class="purchase-button" style="background: linear-gradient(45deg, #95a5a6, #7f8c8d);" onclick="activateFreeTier()">
+                        Try Free Version
+                    </button>
                 </div>
 
-                <button class="purchase-button" onclick="redirectToStripe()">
-                    🔐 Get Premium Access Now
-                </button>
+                <!-- Premium Tier -->
+                <div class="pricing-card">
+                    <h2>Premium Access</h2>
+                    <div class="price">$79.99</div>
+                    <div class="price-subtitle">One-time payment • Lifetime access</div>
+                    <div class="tier-badge">BEST VALUE</div>
 
-                <div id="successMessage" class="success-message">
-                    <h3>🎉 Payment Successful!</h3>
-                    <p>Welcome to TSSA G2 Premium! Your access has been activated.</p>
+                    <div class="features-list">
+                        <h3>What You Get:</h3>
+                        <ul>
+                            <li>500+ Official TSSA G2 Practice Questions</li>
+                            <li>Detailed Explanations for Every Answer</li>
+                            <li>Realistic Exam Simulation Environment</li>
+                            <li>Progress Tracking & Performance Analytics</li>
+                            <li>Unlimited Practice Attempts</li>
+                            <li>Mobile & Desktop Compatible</li>
+                            <li>Regular Content Updates</li>
+                            <li>Expert-Verified Question Bank</li>
+                            <li>Lifetime Access - No Subscriptions</li>
+                        </ul>
+                    </div>
+
+                    <button class="purchase-button" onclick="redirectToStripe()">
+                        🔐 Get Premium Access Now
+                    </button>
+
+                    <div id="successMessage" class="success-message">
+                        <h3>🎉 Payment Successful!</h3>
+                        <p>Welcome to TSSA G2 Premium! Your access has been activated.</p>
+                    </div>
+                </div>
+
+                <!-- Student Access Tier -->
+                <div class="pricing-card student-tier">
+                    <h2>🎓 Student Access</h2>
+                    <div class="price">FREE</div>
+                    <div class="price-subtitle">12 months with access code</div>
+                    <div class="tier-badge student">STUDENT EXCLUSIVE</div>
+
+                    <div class="features-list">
+                        <h3>What You Get:</h3>
+                        <ul>
+                            <li>All Premium Features</li>
+                            <li>12 Months Free Access</li>
+                            <li>500+ Practice Questions</li>
+                            <li>Detailed Explanations</li>
+                            <li>Progress Tracking</li>
+                            <li>Unlimited Attempts</li>
+                            <li>LARK Labs Student Code Required</li>
+                        </ul>
+                    </div>
+
+                    <button class="purchase-button" style="background: linear-gradient(45deg, #27ae60, #2ecc71);" onclick="showStudentCodeEntry()">
+                        🎓 Enter Student Code
+                    </button>
+                </div>
+            </div>
+
+            <!-- Student Code Entry Form -->
+            <div id="studentCodeEntry" class="student-code-entry">
+                <h2 style="text-align: center; margin-bottom: 1rem;">🎓 Enter Your Student Access Code</h2>
+                <p style="text-align: center; color: #95a5a6; margin-bottom: 2rem;">
+                    Enter your LARK Labs student access code to unlock 12 months of premium features
+                </p>
+
+                <form onsubmit="validateStudentCode(event)">
+                    <input
+                        type="text"
+                        id="studentCode"
+                        class="code-input"
+                        placeholder="LARK####"
+                        maxlength="8"
+                        autocomplete="off"
+                        required
+                    />
+                    <button type="submit" class="purchase-button" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">
+                        Activate Student Access
+                    </button>
+                </form>
+
+                <div id="codeError" class="error-message">
+                    Invalid access code. Please check your code and try again.
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button class="back-button" onclick="hideStudentCodeEntry()">← Back to Access Options</button>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 10px; margin-top: 2rem; text-align: center;">
+                    <p style="color: #95a5a6; margin-bottom: 0.5rem;">Don't have a student code?</p>
+                    <a href="mailto:lark_labs@outlook.com?subject=G2%20Student%20Access%20Request&body=Hello,%0A%0AI%20would%20like%20to%20request%20student%20access%20to%20the%20TSSA%20G2%20Exam%20Simulator.%0A%0AThank%20you!"
+                       style="color: #3498db; text-decoration: none; font-weight: bold;">
+                        📧 Request Student Access
+                    </a>
                 </div>
             </div>
 
             <div class="comparison-table">
-                <h3>Free vs Premium Comparison</h3>
+                <h3>Tier Comparison</h3>
                 <div class="comparison-row">
                     <div>Feature</div>
                     <div>Free</div>
                     <div>Premium</div>
+                    <div>Student</div>
                 </div>
                 <div class="comparison-row">
                     <div>Practice Questions</div>
                     <div class="cross">10 questions</div>
+                    <div class="check">500+ questions</div>
                     <div class="check">500+ questions</div>
                 </div>
                 <div class="comparison-row">
                     <div>Detailed Explanations</div>
                     <div class="cross">Limited</div>
                     <div class="check">Every answer</div>
+                    <div class="check">Every answer</div>
                 </div>
                 <div class="comparison-row">
                     <div>Progress Tracking</div>
                     <div class="cross">✗</div>
+                    <div class="check">✓</div>
                     <div class="check">✓</div>
                 </div>
                 <div class="comparison-row">
                     <div>Unlimited Attempts</div>
                     <div class="cross">✗</div>
                     <div class="check">✓</div>
+                    <div class="check">✓</div>
                 </div>
                 <div class="comparison-row">
                     <div>Regular Updates</div>
                     <div class="cross">✗</div>
                     <div class="check">✓</div>
+                    <div class="check">✓</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Duration</div>
+                    <div class="cross">Forever (Limited)</div>
+                    <div class="check">Lifetime</div>
+                    <div class="check">12 Months</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Cost</div>
+                    <div class="check">Free</div>
+                    <div class="cross">$79.99 one-time</div>
+                    <div class="check">Free w/ code</div>
                 </div>
             </div>
 
@@ -438,58 +635,183 @@
     </div>
 
     <script>
-        // Simple access control with persistent storage
+        // 3-Tier Access Control System
+        const STORAGE_KEY = 'g2PremiumAccess';
+        const ACCESS_DATE_KEY = 'g2AccessDate';
+        const TIER_KEY = 'g2AccessTier';
+        const EXPIRY_KEY = 'g2ExpiryDate';
+
+        // 80 LARK Labs Student Access Codes - 12 months premium access
+        const VALID_STUDENT_CODES = [
+            'LARK0001', 'LARK0002', 'LARK0003', 'LARK0004', 'LARK0005',
+            'LARK0006', 'LARK0007', 'LARK0008', 'LARK0009', 'LARK0010',
+            'LARK0011', 'LARK0012', 'LARK0013', 'LARK0014', 'LARK0015',
+            'LARK0016', 'LARK0017', 'LARK0018', 'LARK0019', 'LARK0020',
+            'LARK0021', 'LARK0022', 'LARK0023', 'LARK0024', 'LARK0025',
+            'LARK0026', 'LARK0027', 'LARK0028', 'LARK0029', 'LARK0030',
+            'LARK0031', 'LARK0032', 'LARK0033', 'LARK0034', 'LARK0035',
+            'LARK0036', 'LARK0037', 'LARK0038', 'LARK0039', 'LARK0040',
+            'LARK0041', 'LARK0042', 'LARK0043', 'LARK0044', 'LARK0045',
+            'LARK0046', 'LARK0047', 'LARK0048', 'LARK0049', 'LARK0050',
+            'LARK0051', 'LARK0052', 'LARK0053', 'LARK0054', 'LARK0055',
+            'LARK0056', 'LARK0057', 'LARK0058', 'LARK0059', 'LARK0060',
+            'LARK0061', 'LARK0062', 'LARK0063', 'LARK0064', 'LARK0065',
+            'LARK0066', 'LARK0067', 'LARK0068', 'LARK0069', 'LARK0070',
+            'LARK0071', 'LARK0072', 'LARK0073', 'LARK0074', 'LARK0075',
+            'LARK0076', 'LARK0077', 'LARK0078', 'LARK0079', 'LARK0080'
+        ];
+
+        // Check if user has valid access
         function hasAccess() {
-            return localStorage.getItem('g2PremiumAccess') === 'true';
+            const accessGranted = localStorage.getItem(STORAGE_KEY) === 'true';
+            if (!accessGranted) return false;
+
+            const tier = localStorage.getItem(TIER_KEY);
+
+            // Check expiration for student tier
+            if (tier === 'student') {
+                const expiryDate = localStorage.getItem(EXPIRY_KEY);
+                if (expiryDate) {
+                    const expiryTime = new Date(expiryDate).getTime();
+                    const now = new Date().getTime();
+
+                    if (now >= expiryTime) {
+                        // Access expired
+                        clearAccess();
+                        console.log('⏱️ Student access expired');
+                        return false;
+                    }
+
+                    // Log days remaining
+                    const daysRemaining = Math.ceil((expiryTime - now) / (1000 * 60 * 60 * 24));
+                    console.log(`🎓 Student access active: ${daysRemaining} days remaining`);
+                }
+            }
+
+            return true;
         }
 
+        // Check and update UI based on access
         function checkAccess() {
             if (hasAccess()) {
                 document.getElementById('premiumContent').style.display = 'block';
                 document.getElementById('accessRequired').style.display = 'none';
+
+                const tier = localStorage.getItem(TIER_KEY);
+                console.log(`🔓 Access granted: ${tier} tier`);
             } else {
                 document.getElementById('premiumContent').style.display = 'none';
                 document.getElementById('accessRequired').style.display = 'block';
             }
         }
 
-        function grantAccess() {
-            localStorage.setItem('g2PremiumAccess', 'true');
-            localStorage.setItem('g2AccessDate', new Date().toISOString());
+        // Grant access based on tier
+        function grantAccess(tier, expiryDate = null) {
+            localStorage.setItem(STORAGE_KEY, 'true');
+            localStorage.setItem(ACCESS_DATE_KEY, new Date().toISOString());
+            localStorage.setItem(TIER_KEY, tier);
+
+            if (expiryDate) {
+                localStorage.setItem(EXPIRY_KEY, expiryDate.toISOString());
+            }
+
             checkAccess();
         }
 
+        // Clear access
+        function clearAccess() {
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(ACCESS_DATE_KEY);
+            localStorage.removeItem(TIER_KEY);
+            localStorage.removeItem(EXPIRY_KEY);
+        }
+
+        // Activate free tier
+        function activateFreeTier() {
+            grantAccess('free');
+            console.log('✅ Free tier activated');
+        }
+
+        // Redirect to Stripe for premium purchase
         function redirectToStripe() {
-            // Redirect to your Stripe payment page
+            console.log('🚀 Redirecting to Stripe checkout...');
             window.location.href = 'https://buy.stripe.com/28E8wQ1H7brSdL07Wg7ok02';
         }
 
-        function simulatePurchase() {
-            // Show loading state
-            const button = document.querySelector('.purchase-button');
-            const originalText = button.innerHTML;
-            button.innerHTML = '⏳ Processing Payment...';
-            button.disabled = true;
-
-            // Simulate payment processing
-            setTimeout(() => {
-                // Show success message
-                document.getElementById('successMessage').style.display = 'block';
-                
-                // Grant access after a short delay
-                setTimeout(() => {
-                    grantAccess();
-                    // Reset button for next time (in case localStorage is cleared)
-                    button.innerHTML = originalText;
-                    button.disabled = false;
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 2000);
-            }, 2000);
+        // Show student code entry form
+        function showStudentCodeEntry() {
+            document.getElementById('studentCodeEntry').classList.add('active');
+            document.getElementById('studentCode').focus();
         }
 
-        // Check access status when page loads
+        // Hide student code entry form
+        function hideStudentCodeEntry() {
+            document.getElementById('studentCodeEntry').classList.remove('active');
+            document.getElementById('studentCode').value = '';
+            document.getElementById('codeError').classList.remove('show');
+        }
+
+        // Validate student access code
+        function validateStudentCode(event) {
+            event.preventDefault();
+
+            const codeInput = document.getElementById('studentCode');
+            const errorElement = document.getElementById('codeError');
+            const code = codeInput.value.toUpperCase().trim();
+
+            // Check if code is valid
+            if (!VALID_STUDENT_CODES.includes(code)) {
+                errorElement.classList.add('show');
+                codeInput.value = '';
+                console.log('❌ Invalid student code attempted:', code);
+
+                setTimeout(() => {
+                    errorElement.classList.remove('show');
+                }, 3000);
+                return;
+            }
+
+            // Valid student code - grant 12 months access
+            const expiryDate = new Date();
+            expiryDate.setFullYear(expiryDate.getFullYear() + 1); // 12 months from now
+
+            grantAccess('student', expiryDate);
+
+            console.log('✅ Student access granted with code:', code);
+            console.log('📅 Access expires:', expiryDate.toLocaleDateString());
+
+            // Show success message
+            hideStudentCodeEntry();
+            document.getElementById('successMessage').innerHTML = '<h3>🎉 Student Access Activated!</h3><p>You now have 12 months of premium access. Welcome!</p>';
+            document.getElementById('successMessage').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+        }
+
+        // Check for Stripe success redirect
+        function checkStripeSuccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const stripeSuccess = urlParams.get('stripe_success');
+
+            if (stripeSuccess === 'true') {
+                grantAccess('premium');
+                console.log('✅ Premium access granted via Stripe payment');
+
+                document.getElementById('successMessage').style.display = 'block';
+
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            checkStripeSuccess();
             checkAccess();
+
+            console.log('🔧 TSSA G2 Exam Simulator - 3-Tier Access System Initialized');
         });
     </script>
 </body>
