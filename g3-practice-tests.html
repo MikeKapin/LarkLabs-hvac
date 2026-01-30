@@ -1,1 +1,312 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>G3 Exam Simulator - AI-Enhanced Practice Tests | LarkLabs</title><meta name="description" content="Free TSSA G3 practice tests covering all 9 Gas Trade resources units. Comprehensive practice questions with detailed explanations for Gas Technician 3 certification exam prep."><style> * { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #8e44ad 0%, #663399 100%); color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; } .container { max-width: 900px; background: rgba(44, 62, 80, 0.9); border-radius: 20px; padding: 3rem; box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; } h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #9b59b6; } .subtitle { font-size: 1.2rem; color: #bdc3c7; margin-bottom: 2rem; } .content { text-align: left; margin: 2rem 0; line-height: 1.8; } .content h2 { color: #9b59b6; margin-bottom: 1rem; font-size: 1.5rem; } .content ul { margin-left: 2rem; margin-bottom: 1.5rem; } .content li { margin-bottom: 0.8rem; } .cta-button { display: inline-block; background: linear-gradient(45deg, #9b59b6, #8e44ad); color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin: 1rem 0.5rem; transition: all 0.3s; } .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(155, 89, 182, 0.4); } .status { background: rgba(241, 196, 31, 0.2); border: 2px solid #f1c40f; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; } .status h3 { color: #f1c40f; margin-bottom: 0.5rem; } .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; } .feature-card { background: rgba(155, 89, 182, 0.2); border: 2px solid rgba(155, 89, 182, 0.4); border-radius: 12px; padding: 1.5rem; text-align: center; } .feature-card h3 { color: #9b59b6; font-size: 2rem; margin-bottom: 0.5rem; } </style></head><body><div class="container"><h1>📝 G3 Practice Tests</h1><p class="subtitle">Comprehensive Practice Questions for TSSA Gas Technician 3 Certification</p><div class="status"><h3>🚧 Coming Soon!</h3><p>We're currently developing comprehensive G3 practice test resources. This page will be available soon with hundreds of practice questions.</p></div><div class="content"><h2>What You'll Get:</h2><div class="feature-grid"><div class="feature-card"><h3>500+</h3><p>Practice Questions</p></div><div class="feature-card"><h3>9</h3><p>Unit Quizzes</p></div><div class="feature-card"><h3>3</h3><p>Full Practice Exams</p></div><div class="feature-card"><h3>100%</h3><p>Free Access</p></div></div><h2>Practice Test Features:</h2><ul><li>✅ Questions for each of the 9 Gas Trade resources units</li><li>✅ Detailed explanations with CSA B149.1-25 code references</li><li>✅ Timed practice exams mimicking actual TSSA test conditions</li><li>✅ Progress tracking to monitor your improvement</li><li>✅ Question categories: Safety, Combustion, Venting, Codes, Electricity, etc.</li><li>✅ Multiple-choice format matching TSSA exam style</li><li>✅ Instant feedback with correct answers and explanations</li><li>✅ Review mode to study missed questions</li></ul><h2>Available Practice Tests:</h2><ul><li>Unit 1: Safety Practice Questions (50 questions)</li><li>Unit 2: Combustion Fundamentals Quiz (40 questions)</li><li>Unit 3: Venting and Combustion Air Test (45 questions)</li><li>Unit 4 & 4a: Codes and Ontario Regulations (60 questions)</li><li>Unit 5: Basic Electricity Practice (40 questions)</li><li>Unit 6: Technical Drawing and Manuals (30 questions)</li><li>Unit 7: Customer Relations Quiz (25 questions)</li><li>Unit 8: Introduction to Piping Test (50 questions)</li><li>Unit 9: Gas Appliances Practice (45 questions)</li><li>Full-Length G3 Practice Exams (100 questions each)</li></ul></div><div style="margin-top: 2rem;"><a href="/index.html" class="cta-button">← Back to Home</a><a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank" class="cta-button">Try AI Tutor Now</a></div><p style="margin-top: 2rem; color: #95a5a6; font-size: 0.9rem;"> While we develop the practice test platform, use our <a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank" style="color: #9b59b6;">AI Tutor</a> to quiz yourself on G3 topics and get instant feedback! </p></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G3 Exam Simulator - Free Practice Tests | LARK Labs</title>
+    <meta name="description" content="Free TSSA G3 practice tests with 25-question exams randomly generated from verified question bank. Comprehensive G3 certification prep with detailed explanations.">
+    
+    <!-- Claude Dark Mode Styling -->
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #e5e5e5;
+            --text-muted: #a0a0a0;
+            --accent-orange: #ff6b35;
+            --accent-purple: #8b5cf6;
+            --border-color: #404040;
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .available-now {
+            background: linear-gradient(135deg, var(--accent-orange), #e55a2b);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 2px solid var(--accent-orange);
+        }
+
+        .available-now h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .available-now p {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .launch-button {
+            display: inline-block;
+            background: white;
+            color: var(--accent-orange);
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .launch-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .features {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .features h2 {
+            color: var(--accent-orange);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-orange);
+        }
+
+        .feature-card h3 {
+            color: var(--accent-orange);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        .content-section {
+            margin: 2rem 0;
+        }
+
+        .content-section h2 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .content-section ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .navigation-buttons {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border-color: var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 G3 Practice Exam Simulator</h1>
+        <p class="subtitle">Professional TSSA Gas Technician 3 Certification Practice</p>
+
+        <div class="available-now">
+            <h3>🚀 Now Available - Free Practice Exams!</h3>
+            <p>Take comprehensive 25-question practice exams randomly generated from our verified question bank covering all essential G3 topics.</p>
+            <a href="g3_simulator.html" class="launch-button">🎯 Launch Practice Exam →</a>
+        </div>
+
+        <div class="features">
+            <h2>✨ Practice Exam Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>25</h3>
+                    <p>Questions per exam</p>
+                </div>
+                <div class="feature-card">
+                    <h3>100+</h3>
+                    <p>Question bank</p>
+                </div>
+                <div class="feature-card">
+                    <h3>100%</h3>
+                    <p>Free access</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎯</h3>
+                    <p>Instant scoring</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📚 What's Covered</h2>
+            <ul>
+                <li>✅ <strong>Safety Protocols</strong> - PPE, workplace hazards, emergency procedures</li>
+                <li>✅ <strong>Tools & Equipment</strong> - Proper use and maintenance of gas technician tools</li>
+                <li>✅ <strong>Gas Properties</strong> - Natural gas characteristics, BTU content, specific gravity</li>
+                <li>✅ <strong>CSA B149.1-25</strong> - Code requirements, clearances, installation standards</li>
+                <li>✅ <strong>Piping Systems</strong> - Materials, sizing, pressure drop calculations</li>
+                <li>✅ <strong>TSSA Regulations</strong> - Ontario requirements and compliance procedures</li>
+                <li>✅ <strong>Gas Detection</strong> - Leak detection methods and safety protocols</li>
+                <li>✅ <strong>Appliance Connections</strong> - Proper installation and safety devices</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Exam Format</h2>
+            <ul>
+                <li><strong>25 randomly selected questions</strong> from verified question bank</li>
+                <li><strong>Multiple choice format</strong> matching TSSA exam style</li>
+                <li><strong>Progress tracking</strong> with visual progress bar</li>
+                <li><strong>Instant scoring</strong> and performance feedback</li>
+                <li><strong>Mobile responsive</strong> - practice anywhere, anytime</li>
+                <li><strong>No time limits</strong> - study at your own pace</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>📈 Study Strategy</h2>
+            <ul>
+                <li><strong>Take practice exams regularly</strong> to identify weak areas</li>
+                <li><strong>Aim for 85%+</strong> consistently before taking the real exam</li>
+                <li><strong>Review CSA B149.1-25</strong> sections referenced in questions</li>
+                <li><strong>Use our AI Tutor</strong> for additional practice and explanations</li>
+                <li><strong>Focus on safety protocols</strong> - they appear frequently on real exams</li>
+            </ul>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="g3_simulator.html" class="cta-button">🚀 Start Practice Exam</a>
+            <a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank" class="cta-button">🤖 Try AI Tutor</a>
+            <a href="index.html" class="cta-button secondary">← Back to Home</a>
+        </div>
+        
+        <p style="margin-top: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+            Practice exams based on CSA B149.1-25 requirements and TSSA G3 certification standards. 
+            Created by Mike Kapin - HVAC Education Professional.
+        </p>
+    </div>
+</body>
+</html>
