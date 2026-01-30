@@ -1,0 +1,82 @@
+{
+  "name": "A2L Safety Course Resource Manifest",
+  "version": "1.0.0",
+  "description": "Resource manifest for A2L Refrigerant Safety Course - LARK Labs",
+  "last_updated": "2026-01-29",
+  "course_id": "A2L_SAFETY_2026",
+  "resources": {
+    "videos": [
+      {
+        "id": "a2l_intro",
+        "title": "Introduction to A2L Refrigerants", 
+        "duration": "15:30",
+        "description": "Overview of A2L refrigerant classification and safety requirements"
+      },
+      {
+        "id": "a2l_safety",
+        "title": "A2L Safety Protocols",
+        "duration": "22:45", 
+        "description": "Safety procedures for handling mildly flammable A2L refrigerants"
+      },
+      {
+        "id": "a2l_detection",
+        "title": "Leak Detection Systems",
+        "duration": "18:20",
+        "description": "Installation and testing of A2L leak detection systems"
+      }
+    ],
+    "documents": [
+      {
+        "id": "a2l_handbook",
+        "title": "A2L Technician Handbook",
+        "type": "PDF",
+        "pages": 45,
+        "description": "Complete reference guide for A2L refrigerant handling"
+      },
+      {
+        "id": "a2l_checklist", 
+        "title": "A2L Safety Checklist",
+        "type": "PDF",
+        "pages": 3,
+        "description": "Quick reference checklist for A2L installations"
+      }
+    ],
+    "assessments": [
+      {
+        "id": "a2l_quiz",
+        "title": "A2L Knowledge Assessment",
+        "questions": 25,
+        "passing_score": 80,
+        "description": "Comprehensive quiz on A2L refrigerant safety"
+      }
+    ]
+  },
+  "compliance": {
+    "standards": [
+      "ASHRAE Standard 15-2019",
+      "ASHRAE Standard 34-2019", 
+      "CSA B52-18",
+      "TSSA F-20 Guidelines"
+    ],
+    "certifying_body": "LARK Labs",
+    "certificate_validity": "3 years"
+  },
+  "prerequisites": [
+    "Basic HVAC/R knowledge",
+    "Understanding of refrigeration cycles",
+    "Safety awareness training"
+  ],
+  "learning_outcomes": [
+    "Identify A2L refrigerant properties and classifications",
+    "Apply proper safety protocols for A2L handling",
+    "Install and test leak detection systems",
+    "Understand regulatory requirements for A2L systems",
+    "Recognize potential hazards and mitigation strategies"
+  ],
+  "contact": {
+    "provider": "LARK Labs",
+    "email": "lark_labs@outlook.com",
+    "website": "https://larklabs.org",
+    "support": "Available during business hours EST"
+  }
+}

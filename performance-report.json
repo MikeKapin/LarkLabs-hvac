@@ -1,0 +1,1363 @@
+{
+  "timestamp": "2026-01-30T03:30:39.361Z",
+  "filesProcessed": 229,
+  "sizeReduced": 4173175,
+  "optimizations": [
+    {
+      "file": "a2l-pro-privacy-policy.html",
+      "originalSize": 8189,
+      "newSize": 6093,
+      "savings": 2096
+    },
+    {
+      "file": "AI for Coordinators Course\\session1-foundations.html",
+      "originalSize": 22631,
+      "newSize": 13473,
+      "savings": 9158
+    },
+    {
+      "file": "AI for Coordinators Course\\session2-advanced.html",
+      "originalSize": 29043,
+      "newSize": 18574,
+      "savings": 10469
+    },
+    {
+      "file": "AI for Coordinators Course\\session3-claude-code.html",
+      "originalSize": 41880,
+      "newSize": 25651,
+      "savings": 16229
+    },
+    {
+      "file": "AI for Coordinators Course\\session4-bonus.html",
+      "originalSize": 31926,
+      "newSize": 20879,
+      "savings": 11047
+    },
+    {
+      "file": "apps\\calculators\\A2L_refrigerant_calculator.html",
+      "originalSize": 44932,
+      "newSize": 30862,
+      "savings": 14070
+    },
+    {
+      "file": "apps\\calculators\\canadian-gas-piping-calculator.html",
+      "originalSize": 168839,
+      "newSize": 91261,
+      "savings": 77578
+    },
+    {
+      "file": "apps\\calculators\\canadian-gas-venting-calculator.html",
+      "originalSize": 50279,
+      "newSize": 30997,
+      "savings": 19282
+    },
+    {
+      "file": "apps\\calculators\\CanadianGasPipingApp\\app\\src\\main\\assets\\calculator.html",
+      "originalSize": 161627,
+      "newSize": 87071,
+      "savings": 74556
+    },
+    {
+      "file": "apps\\calculators\\duct_sizing_calculator.html",
+      "originalSize": 32680,
+      "newSize": 20782,
+      "savings": 11898
+    },
+    {
+      "file": "apps\\calculators\\hvac-lesson-plan-generator.html",
+      "originalSize": 43197,
+      "newSize": 26314,
+      "savings": 16883
+    },
+    {
+      "file": "apps\\calculators\\hvac-load-calculator.html",
+      "originalSize": 28073,
+      "newSize": 19172,
+      "savings": 8901
+    },
+    {
+      "file": "apps\\calculators\\pipe_sizing_calculator.html",
+      "originalSize": 26075,
+      "newSize": 17176,
+      "savings": 8899
+    },
+    {
+      "file": "apps\\calculators\\psychrometric_calculator.html",
+      "originalSize": 28353,
+      "newSize": 17926,
+      "savings": 10427
+    },
+    {
+      "file": "apps\\calculators\\superheat-subcooling-calculator.html",
+      "originalSize": 32049,
+      "newSize": 20575,
+      "savings": 11474
+    },
+    {
+      "file": "apps\\calculators\\universal_unit_converter.html",
+      "originalSize": 31171,
+      "newSize": 21356,
+      "savings": 9815
+    },
+    {
+      "file": "apps\\electrical-trainer\\index.html",
+      "originalSize": 2243,
+      "newSize": 1967,
+      "savings": 276
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_5.0\\HVAC_Jack_Mobile_Updated.html",
+      "originalSize": 1126,
+      "newSize": 910,
+      "savings": 216
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_5.0\\index.html",
+      "originalSize": 69633,
+      "newSize": 44241,
+      "savings": 25392
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_5.0\\mobile-test.html",
+      "originalSize": 15476,
+      "newSize": 10540,
+      "savings": 4936
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_5.0\\pricing.html",
+      "originalSize": 15643,
+      "newSize": 10000,
+      "savings": 5643
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_Android\\www\\index.html",
+      "originalSize": 46770,
+      "newSize": 29658,
+      "savings": 17112
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_BACKUP_v3\\HVAC_Jack.html",
+      "originalSize": 155397,
+      "newSize": 100726,
+      "savings": 54671
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_BACKUP_v3\\index.html",
+      "originalSize": 20497,
+      "newSize": 12899,
+      "savings": 7598
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_temp_backup\\HVAC_Jack_Mobile_Updated.html",
+      "originalSize": 1126,
+      "newSize": 910,
+      "savings": 216
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_temp_backup\\index.html",
+      "originalSize": 46770,
+      "newSize": 29658,
+      "savings": 17112
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_temp_backup\\mobile-test.html",
+      "originalSize": 15476,
+      "newSize": 10540,
+      "savings": 4936
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_temp_backup\\Old - HVAC_Jack.html",
+      "originalSize": 156886,
+      "newSize": 101720,
+      "savings": 55166
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_temp_backup\\Old - HVAC_Jack_Mobile.html",
+      "originalSize": 123869,
+      "newSize": 78559,
+      "savings": 45310
+    },
+    {
+      "file": "apps\\hvac-jack\\HVAC_Jack_temp_backup\\Old - HVAC_Jack_Mobile_Backup.html",
+      "originalSize": 157458,
+      "newSize": 102015,
+      "savings": 55443
+    },
+    {
+      "file": "apps\\hvac-marketplace\\index.html",
+      "originalSize": 81639,
+      "newSize": 54668,
+      "savings": 26971
+    },
+    {
+      "file": "apps\\hvac-marketplace\\premium.html",
+      "originalSize": 23830,
+      "newSize": 16011,
+      "savings": 7819
+    },
+    {
+      "file": "apps\\hvac-troubleshooting-simulator\\index.html",
+      "originalSize": 70260,
+      "newSize": 43801,
+      "savings": 26459
+    },
+    {
+      "file": "apps\\tools\\HVAC_PRO_Tools.html",
+      "originalSize": 66935,
+      "newSize": 46713,
+      "savings": 20222
+    },
+    {
+      "file": "apps\\tools\\pt-chart-generator.html",
+      "originalSize": 27361,
+      "newSize": 16434,
+      "savings": 10927
+    },
+    {
+      "file": "archived\\community_backup_20250817\\community_original.html",
+      "originalSize": 80765,
+      "newSize": 51865,
+      "savings": 28900
+    },
+    {
+      "file": "assets\\boiler-system-diagram.html",
+      "originalSize": 56222,
+      "newSize": 35452,
+      "savings": 20770
+    },
+    {
+      "file": "assets\\combo-boiler-system.html",
+      "originalSize": 67139,
+      "newSize": 43612,
+      "savings": 23527
+    },
+    {
+      "file": "assets\\parallel_circuit.html",
+      "originalSize": 40816,
+      "newSize": 27635,
+      "savings": 13181
+    },
+    {
+      "file": "assets\\series_circuit.html",
+      "originalSize": 34818,
+      "newSize": 23969,
+      "savings": 10849
+    },
+    {
+      "file": "assets\\templates\\app-template.html",
+      "originalSize": 2858,
+      "newSize": 1887,
+      "savings": 971
+    },
+    {
+      "file": "B149_1_Changes.html",
+      "originalSize": 65841,
+      "newSize": 42130,
+      "savings": 23711
+    },
+    {
+      "file": "canadian-gas-piping-app\\canadian_gas_piping_app.html",
+      "originalSize": 29485,
+      "newSize": 17900,
+      "savings": 11585
+    },
+    {
+      "file": "canadian-gas-technician-ai-tutor.html",
+      "originalSize": 23653,
+      "newSize": 15317,
+      "savings": 8336
+    },
+    {
+      "file": "canadian-gas-technician-textbook.html",
+      "originalSize": 22270,
+      "newSize": 15485,
+      "savings": 6785
+    },
+    {
+      "file": "code-compass-landing.html",
+      "originalSize": 22766,
+      "newSize": 14447,
+      "savings": 8319
+    },
+    {
+      "file": "code-compass.html",
+      "originalSize": 35060,
+      "newSize": 23194,
+      "savings": 11866
+    },
+    {
+      "file": "courses\\ai-educators.html",
+      "originalSize": 2539,
+      "newSize": 1624,
+      "savings": 915
+    },
+    {
+      "file": "courses\\session1-foundations.html",
+      "originalSize": 22631,
+      "newSize": 13473,
+      "savings": 9158
+    },
+    {
+      "file": "courses\\session1-topic1-welcome-setup.html",
+      "originalSize": 16015,
+      "newSize": 10161,
+      "savings": 5854
+    },
+    {
+      "file": "courses\\session1-topic2-compare-ai.html",
+      "originalSize": 17360,
+      "newSize": 10865,
+      "savings": 6495
+    },
+    {
+      "file": "courses\\session1-topic3-create-gamma.html",
+      "originalSize": 14453,
+      "newSize": 9344,
+      "savings": 5109
+    },
+    {
+      "file": "courses\\session1-topic4-pictory-videos.html",
+      "originalSize": 20653,
+      "newSize": 12620,
+      "savings": 8033
+    },
+    {
+      "file": "courses\\session1-topic5-practice-reflection.html",
+      "originalSize": 20389,
+      "newSize": 13328,
+      "savings": 7061
+    },
+    {
+      "file": "courses\\session2-advanced.html",
+      "originalSize": 29043,
+      "newSize": 18574,
+      "savings": 10469
+    },
+    {
+      "file": "courses\\session2-topic1-vscodium-setup.html",
+      "originalSize": 20807,
+      "newSize": 13499,
+      "savings": 7308
+    },
+    {
+      "file": "courses\\session2-topic2-coordinator-portal.html",
+      "originalSize": 21686,
+      "newSize": 14427,
+      "savings": 7259
+    },
+    {
+      "file": "courses\\session2-topic3-weekly-reports.html",
+      "originalSize": 17139,
+      "newSize": 11345,
+      "savings": 5794
+    },
+    {
+      "file": "courses\\session2-topic4-student-hub.html",
+      "originalSize": 11734,
+      "newSize": 9063,
+      "savings": 2671
+    },
+    {
+      "file": "courses\\session2-topic5-integration-navigation.html",
+      "originalSize": 11918,
+      "newSize": 8817,
+      "savings": 3101
+    },
+    {
+      "file": "courses\\session3-claude-code.html",
+      "originalSize": 41880,
+      "newSize": 25651,
+      "savings": 16229
+    },
+    {
+      "file": "courses\\session3-topic1-powershell-intro.html",
+      "originalSize": 11631,
+      "newSize": 8708,
+      "savings": 2923
+    },
+    {
+      "file": "courses\\session3-topic2-nodejs-install.html",
+      "originalSize": 16645,
+      "newSize": 12204,
+      "savings": 4441
+    },
+    {
+      "file": "courses\\session3-topic3-anthropic-console.html",
+      "originalSize": 17700,
+      "newSize": 12294,
+      "savings": 5406
+    },
+    {
+      "file": "courses\\session3-topic4-claude-code-install.html",
+      "originalSize": 16839,
+      "newSize": 12207,
+      "savings": 4632
+    },
+    {
+      "file": "courses\\session3-topic5-custom-project.html",
+      "originalSize": 18676,
+      "newSize": 14125,
+      "savings": 4551
+    },
+    {
+      "file": "courses\\session4-bonus.html",
+      "originalSize": 31926,
+      "newSize": 20879,
+      "savings": 11047
+    },
+    {
+      "file": "courses\\session4-topic1-lmarena.html",
+      "originalSize": 25908,
+      "newSize": 19676,
+      "savings": 6232
+    },
+    {
+      "file": "courses\\session4-topic2-nanobanana.html",
+      "originalSize": 31219,
+      "newSize": 22171,
+      "savings": 9048
+    },
+    {
+      "file": "courses\\session4-topic3-human-body-project.html",
+      "originalSize": 36868,
+      "newSize": 28177,
+      "savings": 8691
+    },
+    {
+      "file": "courses\\session4-topic4-advanced-features.html",
+      "originalSize": 31420,
+      "newSize": 24803,
+      "savings": 6617
+    },
+    {
+      "file": "courses\\session4-topic5-custom-applications.html",
+      "originalSize": 34728,
+      "newSize": 27146,
+      "savings": 7582
+    },
+    {
+      "file": "csa-tutor-app\\dist\\index.html",
+      "originalSize": 2248,
+      "newSize": 1891,
+      "savings": 357
+    },
+    {
+      "file": "csa-tutor-app\\index.html",
+      "originalSize": 2151,
+      "newSize": 1806,
+      "savings": 345
+    },
+    {
+      "file": "csa-tutor-app\\index_complete.html",
+      "originalSize": 17394,
+      "newSize": 11764,
+      "savings": 5630
+    },
+    {
+      "file": "csa-tutor-app\\src\\data\\demo-modular-system.html",
+      "originalSize": 8081,
+      "newSize": 5516,
+      "savings": 2565
+    },
+    {
+      "file": "csa-tutor-app\\src\\data\\g3-tutor-app-modular.html",
+      "originalSize": 48378,
+      "newSize": 32446,
+      "savings": 15932
+    },
+    {
+      "file": "csa-tutor-app\\src\\data\\g3-tutor-app.html",
+      "originalSize": 47090,
+      "newSize": 33401,
+      "savings": 13689
+    },
+    {
+      "file": "csa-tutor-app\\src\\data\\g3-tutor-complete.html",
+      "originalSize": 140225,
+      "newSize": 81460,
+      "savings": 58765
+    },
+    {
+      "file": "csa-tutor-app\\src\\data\\g3-tutor-real-data.html",
+      "originalSize": 61162,
+      "newSize": 43758,
+      "savings": 17404
+    },
+    {
+      "file": "csa-tutor-app\\src\\data\\test-g3-complete.html",
+      "originalSize": 2484,
+      "newSize": 1552,
+      "savings": 932
+    },
+    {
+      "file": "csa-tutor-app\\src\\data\\test-modular.html",
+      "originalSize": 3282,
+      "newSize": 2118,
+      "savings": 1164
+    },
+    {
+      "file": "csa-tutor-app\\TSSA_Adaptive_Exam_System_Complete.html",
+      "originalSize": 50677,
+      "newSize": 30829,
+      "savings": 19848
+    },
+    {
+      "file": "csa-tutor-app\\TSSA_Complete_System_FULL.html",
+      "originalSize": 460859,
+      "newSize": 197055,
+      "savings": 263804
+    },
+    {
+      "file": "CSA_B149_Reference_Guide.html",
+      "originalSize": 15093,
+      "newSize": 12599,
+      "savings": 2494
+    },
+    {
+      "file": "CSA_Unit_10_Chapter_Reviews.html",
+      "originalSize": 82111,
+      "newSize": 46766,
+      "savings": 35345
+    },
+    {
+      "file": "CSA_Unit_11_Chapter_Reviews.html",
+      "originalSize": 78120,
+      "newSize": 44311,
+      "savings": 33809
+    },
+    {
+      "file": "CSA_Unit_12_Chapter_Reviews.html",
+      "originalSize": 96999,
+      "newSize": 51374,
+      "savings": 45625
+    },
+    {
+      "file": "CSA_Unit_13_Chapter_Reviews.html",
+      "originalSize": 98009,
+      "newSize": 54193,
+      "savings": 43816
+    },
+    {
+      "file": "CSA_Unit_14_Chapter_Reviews.html",
+      "originalSize": 100428,
+      "newSize": 56644,
+      "savings": 43784
+    },
+    {
+      "file": "CSA_Unit_15_Chapter_Reviews.html",
+      "originalSize": 78621,
+      "newSize": 43542,
+      "savings": 35079
+    },
+    {
+      "file": "CSA_Unit_16_Chapter_Reviews.html",
+      "originalSize": 88435,
+      "newSize": 48376,
+      "savings": 40059
+    },
+    {
+      "file": "CSA_Unit_17_Chapter_Reviews.html",
+      "originalSize": 67297,
+      "newSize": 38769,
+      "savings": 28528
+    },
+    {
+      "file": "CSA_Unit_18_Chapter_Reviews.html",
+      "originalSize": 88650,
+      "newSize": 47176,
+      "savings": 41474
+    },
+    {
+      "file": "CSA_Unit_19_Chapter_Reviews.html",
+      "originalSize": 73508,
+      "newSize": 42581,
+      "savings": 30927
+    },
+    {
+      "file": "CSA_Unit_1_Chapter_1.html",
+      "originalSize": 57052,
+      "newSize": 38567,
+      "savings": 18485
+    },
+    {
+      "file": "CSA_Unit_1_Chapter_2.html",
+      "originalSize": 63957,
+      "newSize": 40815,
+      "savings": 23142
+    },
+    {
+      "file": "CSA_Unit_1_Chapter_3.html",
+      "originalSize": 80942,
+      "newSize": 52865,
+      "savings": 28077
+    },
+    {
+      "file": "CSA_Unit_1_Chapter_4.html",
+      "originalSize": 46943,
+      "newSize": 32408,
+      "savings": 14535
+    },
+    {
+      "file": "CSA_Unit_1_Safety.html",
+      "originalSize": 167795,
+      "newSize": 91570,
+      "savings": 76225
+    },
+    {
+      "file": "CSA_Unit_1_Safety_Chapter_Reviews.html",
+      "originalSize": 83100,
+      "newSize": 47718,
+      "savings": 35382
+    },
+    {
+      "file": "CSA_Unit_20_Chapter_Reviews.html",
+      "originalSize": 93435,
+      "newSize": 49812,
+      "savings": 43623
+    },
+    {
+      "file": "CSA_Unit_21_Chapter_Reviews.html",
+      "originalSize": 68043,
+      "newSize": 37816,
+      "savings": 30227
+    },
+    {
+      "file": "CSA_Unit_22_Chapter_Reviews.html",
+      "originalSize": 95543,
+      "newSize": 53309,
+      "savings": 42234
+    },
+    {
+      "file": "CSA_Unit_23_Chapter_Reviews.html",
+      "originalSize": 71139,
+      "newSize": 40766,
+      "savings": 30373
+    },
+    {
+      "file": "CSA_Unit_24_Chapter_Reviews.html",
+      "originalSize": 64677,
+      "newSize": 38096,
+      "savings": 26581
+    },
+    {
+      "file": "CSA_Unit_2_Chapter_1.html",
+      "originalSize": 49454,
+      "newSize": 30846,
+      "savings": 18608
+    },
+    {
+      "file": "CSA_Unit_2_Chapter_2.html",
+      "originalSize": 56377,
+      "newSize": 34742,
+      "savings": 21635
+    },
+    {
+      "file": "CSA_Unit_2_Chapter_3.html",
+      "originalSize": 68515,
+      "newSize": 41883,
+      "savings": 26632
+    },
+    {
+      "file": "CSA_Unit_2_Chapter_4.html",
+      "originalSize": 56685,
+      "newSize": 34329,
+      "savings": 22356
+    },
+    {
+      "file": "CSA_Unit_2_Chapter_5.html",
+      "originalSize": 61197,
+      "newSize": 39063,
+      "savings": 22134
+    },
+    {
+      "file": "CSA_Unit_2_Chapter_6.html",
+      "originalSize": 53138,
+      "newSize": 32145,
+      "savings": 20993
+    },
+    {
+      "file": "CSA_Unit_2_Chapter_Reviews.html",
+      "originalSize": 85367,
+      "newSize": 46232,
+      "savings": 39135
+    },
+    {
+      "file": "CSA_Unit_2_Complete_Training_Module.html",
+      "originalSize": 239378,
+      "newSize": 141946,
+      "savings": 97432
+    },
+    {
+      "file": "CSA_Unit_3_Chapter_1.html",
+      "originalSize": 82305,
+      "newSize": 48435,
+      "savings": 33870
+    },
+    {
+      "file": "CSA_Unit_3_Chapter_2.html",
+      "originalSize": 92930,
+      "newSize": 58841,
+      "savings": 34089
+    },
+    {
+      "file": "CSA_Unit_3_Chapter_3.html",
+      "originalSize": 72244,
+      "newSize": 43012,
+      "savings": 29232
+    },
+    {
+      "file": "CSA_Unit_3_Chapter_Reviews.html",
+      "originalSize": 73581,
+      "newSize": 41744,
+      "savings": 31837
+    },
+    {
+      "file": "CSA_Unit_4a_Chapter_1.html",
+      "originalSize": 56047,
+      "newSize": 38015,
+      "savings": 18032
+    },
+    {
+      "file": "CSA_Unit_4a_Chapter_2.html",
+      "originalSize": 75589,
+      "newSize": 53251,
+      "savings": 22338
+    },
+    {
+      "file": "CSA_Unit_4a_Chapter_3.html",
+      "originalSize": 134427,
+      "newSize": 99028,
+      "savings": 35399
+    },
+    {
+      "file": "CSA_Unit_4a_Chapter_4.html",
+      "originalSize": 57513,
+      "newSize": 39980,
+      "savings": 17533
+    },
+    {
+      "file": "CSA_Unit_4_&_4a_Chapter_Reviews.html",
+      "originalSize": 89564,
+      "newSize": 54777,
+      "savings": 34787
+    },
+    {
+      "file": "CSA_Unit_4_Chapter_1.html",
+      "originalSize": 93395,
+      "newSize": 57902,
+      "savings": 35493
+    },
+    {
+      "file": "CSA_Unit_4_Chapter_2.html",
+      "originalSize": 43410,
+      "newSize": 28306,
+      "savings": 15104
+    },
+    {
+      "file": "CSA_Unit_4_Chapter_3.html",
+      "originalSize": 44776,
+      "newSize": 28251,
+      "savings": 16525
+    },
+    {
+      "file": "CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html",
+      "originalSize": 112585,
+      "newSize": 58804,
+      "savings": 53781
+    },
+    {
+      "file": "CSA_Unit_5_Chapter_1.html",
+      "originalSize": 73634,
+      "newSize": 48419,
+      "savings": 25215
+    },
+    {
+      "file": "CSA_Unit_5_Chapter_2.html",
+      "originalSize": 58966,
+      "newSize": 38621,
+      "savings": 20345
+    },
+    {
+      "file": "CSA_Unit_5_Chapter_3.html",
+      "originalSize": 73839,
+      "newSize": 45710,
+      "savings": 28129
+    },
+    {
+      "file": "CSA_Unit_5_Chapter_4.html",
+      "originalSize": 58604,
+      "newSize": 39789,
+      "savings": 18815
+    },
+    {
+      "file": "CSA_Unit_5_Chapter_5.html",
+      "originalSize": 76265,
+      "newSize": 49555,
+      "savings": 26710
+    },
+    {
+      "file": "CSA_Unit_5_Chapter_6.html",
+      "originalSize": 57149,
+      "newSize": 37421,
+      "savings": 19728
+    },
+    {
+      "file": "CSA_Unit_5_Chapter_7.html",
+      "originalSize": 56509,
+      "newSize": 37379,
+      "savings": 19130
+    },
+    {
+      "file": "CSA_Unit_6_Chapter_1.html",
+      "originalSize": 47839,
+      "newSize": 31729,
+      "savings": 16110
+    },
+    {
+      "file": "CSA_Unit_6_Chapter_2.html",
+      "originalSize": 66346,
+      "newSize": 39676,
+      "savings": 26670
+    },
+    {
+      "file": "CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html",
+      "originalSize": 61562,
+      "newSize": 36034,
+      "savings": 25528
+    },
+    {
+      "file": "CSA_Unit_7_Customer_Relations_Chapter_Reviews.html",
+      "originalSize": 57849,
+      "newSize": 35565,
+      "savings": 22284
+    },
+    {
+      "file": "CSA_Unit_8_Intro_to_Piping_Reviews.html",
+      "originalSize": 73159,
+      "newSize": 41518,
+      "savings": 31641
+    },
+    {
+      "file": "CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html",
+      "originalSize": 77685,
+      "newSize": 44338,
+      "savings": 33347
+    },
+    {
+      "file": "g2-practice-tests.html",
+      "originalSize": 7569,
+      "newSize": 5232,
+      "savings": 2337
+    },
+    {
+      "file": "g3-practice-tests.html",
+      "originalSize": 6734,
+      "newSize": 4603,
+      "savings": 2131
+    },
+    {
+      "file": "G3_Exam_Prep_Resource.html",
+      "originalSize": 5310,
+      "newSize": 4877,
+      "savings": 433
+    },
+    {
+      "file": "g3_simulator.html",
+      "originalSize": 10504,
+      "newSize": 6450,
+      "savings": 4054
+    },
+    {
+      "file": "gas-tech-tutor-landing.html",
+      "originalSize": 27034,
+      "newSize": 17061,
+      "savings": 9973
+    },
+    {
+      "file": "gas-tech-tutor-privacy-policy.html",
+      "originalSize": 7459,
+      "newSize": 5748,
+      "savings": 1711
+    },
+    {
+      "file": "Gas_Code_Navigation_Microcredential.html",
+      "originalSize": 95830,
+      "newSize": 66597,
+      "savings": 29233
+    },
+    {
+      "file": "hvac-jack-4-landing.html",
+      "originalSize": 31737,
+      "newSize": 20447,
+      "savings": 11290
+    },
+    {
+      "file": "hvac-jack-40.html",
+      "originalSize": 36692,
+      "newSize": 24339,
+      "savings": 12353
+    },
+    {
+      "file": "hvac-jack-50-landing.html",
+      "originalSize": 27919,
+      "newSize": 17585,
+      "savings": 10334
+    },
+    {
+      "file": "hvac-tools-pro-privacy-policy.html",
+      "originalSize": 9224,
+      "newSize": 6974,
+      "savings": 2250
+    },
+    {
+      "file": "HVAC_Tools\\index.html",
+      "originalSize": 113352,
+      "newSize": 76801,
+      "savings": 36551
+    },
+    {
+      "file": "HVAC_Tools_Archive\\index.html",
+      "originalSize": 211619,
+      "newSize": 142566,
+      "savings": 69053
+    },
+    {
+      "file": "index.html",
+      "originalSize": 32329,
+      "newSize": 21903,
+      "savings": 10426
+    },
+    {
+      "file": "index_backup_.html",
+      "originalSize": 22863,
+      "newSize": 14844,
+      "savings": 8019
+    },
+    {
+      "file": "index_backup_original.html",
+      "originalSize": 130236,
+      "newSize": 90419,
+      "savings": 39817
+    },
+    {
+      "file": "index_backup_refresh.html",
+      "originalSize": 22863,
+      "newSize": 14844,
+      "savings": 8019
+    },
+    {
+      "file": "index_enhanced.html",
+      "originalSize": 32329,
+      "newSize": 21099,
+      "savings": 11230
+    },
+    {
+      "file": "index_new_testing.html",
+      "originalSize": 91932,
+      "newSize": 63980,
+      "savings": 27952
+    },
+    {
+      "file": "larklabs-admin.html",
+      "originalSize": 49509,
+      "newSize": 30234,
+      "savings": 19275
+    },
+    {
+      "file": "learning-modules.html",
+      "originalSize": 43228,
+      "newSize": 28022,
+      "savings": 15206
+    },
+    {
+      "file": "migrate-data.html",
+      "originalSize": 22108,
+      "newSize": 13681,
+      "savings": 8427
+    },
+    {
+      "file": "pages\\blog\\boiler-maintenance-guide-canadian-homes-2025.html",
+      "originalSize": 23373,
+      "newSize": 20238,
+      "savings": 3135
+    },
+    {
+      "file": "pages\\blog\\bridging-traditional-hvac-education-modern-technology-2026.html",
+      "originalSize": 17599,
+      "newSize": 13124,
+      "savings": 4475
+    },
+    {
+      "file": "pages\\blog\\energy-efficiency-hvac-tips-canadian-winters.html",
+      "originalSize": 12338,
+      "newSize": 9728,
+      "savings": 2610
+    },
+    {
+      "file": "pages\\blog\\energy-efficient-hvac-systems-guide-2024.html",
+      "originalSize": 13258,
+      "newSize": 10591,
+      "savings": 2667
+    },
+    {
+      "file": "pages\\blog\\furnace-maintenance-troubleshooting-guide-canada.html",
+      "originalSize": 23804,
+      "newSize": 21221,
+      "savings": 2583
+    },
+    {
+      "file": "pages\\blog\\G2_modules_payment.html",
+      "originalSize": 10192,
+      "newSize": 6700,
+      "savings": 3492
+    },
+    {
+      "file": "pages\\blog\\G2_premium_access.html",
+      "originalSize": 16715,
+      "newSize": 10487,
+      "savings": 6228
+    },
+    {
+      "file": "pages\\blog\\g2_simulator_protected.html",
+      "originalSize": 28932,
+      "newSize": 17655,
+      "savings": 11277
+    },
+    {
+      "file": "pages\\blog\\G3_simulator.html",
+      "originalSize": 116470,
+      "newSize": 91641,
+      "savings": 24829
+    },
+    {
+      "file": "pages\\blog\\heat-pump-efficiency-sub-zero-temperatures-canadian-guide.html",
+      "originalSize": 24099,
+      "newSize": 19605,
+      "savings": 4494
+    },
+    {
+      "file": "pages\\blog\\hvac-winter-preparation-guide-2025.html",
+      "originalSize": 14268,
+      "newSize": 11515,
+      "savings": 2753
+    },
+    {
+      "file": "pages\\blog\\index.html",
+      "originalSize": 30611,
+      "newSize": 19413,
+      "savings": 11198
+    },
+    {
+      "file": "pages\\blog\\indoor-air-quality-hvac-solutions-healthier-homes.html",
+      "originalSize": 23345,
+      "newSize": 20218,
+      "savings": 3127
+    },
+    {
+      "file": "pages\\blog\\preparing-furnace-canadian-winters-homeowner-guide.html",
+      "originalSize": 29624,
+      "newSize": 21886,
+      "savings": 7738
+    },
+    {
+      "file": "pages\\blog\\smart-hvac-systems-modern-home-automation-guide.html",
+      "originalSize": 28712,
+      "newSize": 25667,
+      "savings": 3045
+    },
+    {
+      "file": "pages\\blog\\tssa-g2-exam-guide.html",
+      "originalSize": 51029,
+      "newSize": 37963,
+      "savings": 13066
+    },
+    {
+      "file": "pages\\blog\\tssa-g2-study-guide.html",
+      "originalSize": 17664,
+      "newSize": 11896,
+      "savings": 5768
+    },
+    {
+      "file": "pages\\blog\\tssa-g3-exam-guide.html",
+      "originalSize": 31680,
+      "newSize": 23475,
+      "savings": 8205
+    },
+    {
+      "file": "pages\\blog\\tssa-g3-study-guide.html",
+      "originalSize": 17605,
+      "newSize": 11837,
+      "savings": 5768
+    },
+    {
+      "file": "pages\\blog\\women-in-hvac-breaking-barriers-building-careers.html",
+      "originalSize": 32634,
+      "newSize": 26305,
+      "savings": 6329
+    },
+    {
+      "file": "pages\\community.html",
+      "originalSize": 36817,
+      "newSize": 23656,
+      "savings": 13161
+    },
+    {
+      "file": "pages\\electrical-troubleshooting.html",
+      "originalSize": 47504,
+      "newSize": 30800,
+      "savings": 16704
+    },
+    {
+      "file": "pages\\emergency-service-call-checklist.html",
+      "originalSize": 25465,
+      "newSize": 16011,
+      "savings": 9454
+    },
+    {
+      "file": "pages\\gas-safety-checks.html",
+      "originalSize": 44308,
+      "newSize": 28138,
+      "savings": 16170
+    },
+    {
+      "file": "pages\\hvac-diagnostic-guides.html",
+      "originalSize": 10872,
+      "newSize": 7305,
+      "savings": 3567
+    },
+    {
+      "file": "pages\\no-cool-diagnostic-checklist.html",
+      "originalSize": 45508,
+      "newSize": 29319,
+      "savings": 16189
+    },
+    {
+      "file": "pages\\no-heat-diagnostic-checklist.html",
+      "originalSize": 39604,
+      "newSize": 25440,
+      "savings": 14164
+    },
+    {
+      "file": "pages\\payment\\G2_modules_cancel.html",
+      "originalSize": 13761,
+      "newSize": 8507,
+      "savings": 5254
+    },
+    {
+      "file": "pages\\payment\\G2_modules_payment.html",
+      "originalSize": 10237,
+      "newSize": 6747,
+      "savings": 3490
+    },
+    {
+      "file": "pages\\payment\\G2_modules_premium_access.html",
+      "originalSize": 16770,
+      "newSize": 10900,
+      "savings": 5870
+    },
+    {
+      "file": "pages\\payment\\G2_modules_success.html",
+      "originalSize": 11628,
+      "newSize": 7356,
+      "savings": 4272
+    },
+    {
+      "file": "pages\\payment\\g2_payment.html",
+      "originalSize": 9998,
+      "newSize": 6532,
+      "savings": 3466
+    },
+    {
+      "file": "pages\\payment\\g2_premium_access.html",
+      "originalSize": 30165,
+      "newSize": 19360,
+      "savings": 10805
+    },
+    {
+      "file": "pages\\payment\\g2_premium_access_Backup.html",
+      "originalSize": 16713,
+      "newSize": 10487,
+      "savings": 6226
+    },
+    {
+      "file": "pages\\payment\\g2_simulator.html",
+      "originalSize": 7430,
+      "newSize": 4777,
+      "savings": 2653
+    },
+    {
+      "file": "pages\\payment\\g2_simulator_protected.html",
+      "originalSize": 28932,
+      "newSize": 17655,
+      "savings": 11277
+    },
+    {
+      "file": "pages\\payment\\success.html",
+      "originalSize": 11801,
+      "newSize": 7875,
+      "savings": 3926
+    },
+    {
+      "file": "pages\\preventive-maintenance.html",
+      "originalSize": 55635,
+      "newSize": 35302,
+      "savings": 20333
+    },
+    {
+      "file": "pages\\refrigeration-diagnostics.html",
+      "originalSize": 60750,
+      "newSize": 39560,
+      "savings": 21190
+    },
+    {
+      "file": "pages\\tool-pouch-essentials.html",
+      "originalSize": 44259,
+      "newSize": 28909,
+      "savings": 15350
+    },
+    {
+      "file": "Separation\\Megan\\Megan.html.html",
+      "originalSize": 71283,
+      "newSize": 60256,
+      "savings": 11027
+    },
+    {
+      "file": "Separation\\Mike\\generate_icons.html",
+      "originalSize": 2950,
+      "newSize": 2200,
+      "savings": 750
+    },
+    {
+      "file": "Separation\\Mike\\index.html.html",
+      "originalSize": 53137,
+      "newSize": 41100,
+      "savings": 12037
+    },
+    {
+      "file": "Separation\\Mike\\separation_agreement_search.html",
+      "originalSize": 17488,
+      "newSize": 10684,
+      "savings": 6804
+    },
+    {
+      "file": "Separation\\Mike\\separation_agreement_search_standalone.html",
+      "originalSize": 33888,
+      "newSize": 24291,
+      "savings": 9597
+    },
+    {
+      "file": "tools\\g3-tudor\\index.html",
+      "originalSize": 2248,
+      "newSize": 1891,
+      "savings": 357
+    },
+    {
+      "file": "tools\\g3-tudor-card.html",
+      "originalSize": 4795,
+      "newSize": 3995,
+      "savings": 800
+    },
+    {
+      "file": "tools\\g3-tudor-old-backup\\index.html",
+      "originalSize": 2251,
+      "newSize": 1894,
+      "savings": 357
+    },
+    {
+      "file": "tools\\g3-tudor-old-backup\\landing.html",
+      "originalSize": 15330,
+      "newSize": 9845,
+      "savings": 5485
+    },
+    {
+      "file": "training\\a2l\\a2l-refrigerant-guide.html",
+      "originalSize": 46105,
+      "newSize": 28752,
+      "savings": 17353
+    },
+    {
+      "file": "training\\a2l\\A2L_Calculator_App.html",
+      "originalSize": 60459,
+      "newSize": 41188,
+      "savings": 19271
+    },
+    {
+      "file": "training\\a2l\\index.html",
+      "originalSize": 60522,
+      "newSize": 41235,
+      "savings": 19287
+    },
+    {
+      "file": "training\\a2l\\offline.html",
+      "originalSize": 9034,
+      "newSize": 5669,
+      "savings": 3365
+    },
+    {
+      "file": "training\\courses\\A2L_Course.html",
+      "originalSize": 154094,
+      "newSize": 95873,
+      "savings": 58221
+    },
+    {
+      "file": "training\\courses\\A2L_Safety_Course.html",
+      "originalSize": 126134,
+      "newSize": 74162,
+      "savings": 51972
+    },
+    {
+      "file": "training\\courses\\A2L_Safety_Course_Enhanced.html",
+      "originalSize": 105857,
+      "newSize": 62264,
+      "savings": 43593
+    },
+    {
+      "file": "training\\simulators\\TSSA_G2_Exam_SimulatorV3.html",
+      "originalSize": 241530,
+      "newSize": 197692,
+      "savings": 43838
+    },
+    {
+      "file": "training\\simulators\\TSSA_G3_Exam_SimulatorV3.html",
+      "originalSize": 116468,
+      "newSize": 91641,
+      "savings": 24827
+    },
+    {
+      "file": "tssa-g2-exam-prep.html",
+      "originalSize": 6103,
+      "newSize": 5272,
+      "savings": 831
+    },
+    {
+      "file": "tssa-g2-units-index.html",
+      "originalSize": 33406,
+      "newSize": 24291,
+      "savings": 9115
+    },
+    {
+      "file": "tssa-g3-exam-prep.html",
+      "originalSize": 5875,
+      "newSize": 5044,
+      "savings": 831
+    },
+    {
+      "file": "tssa-g3-units-index.html",
+      "originalSize": 25005,
+      "newSize": 18132,
+      "savings": 6873
+    },
+    {
+      "file": "UNIT_PAGE_TEMPLATE.html",
+      "originalSize": 10756,
+      "newSize": 6073,
+      "savings": 4683
+    },
+    {
+      "file": "yandex_4b726578464dcf2b.html",
+      "originalSize": 166,
+      "newSize": 136,
+      "savings": 30
+    }
+  ]
+}

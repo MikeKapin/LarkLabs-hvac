@@ -1,10 +1,26 @@
 User-agent: *
 Allow: /
 
-# Sitemap
+# Priority pages for crawlers
 Sitemap: https://larklabs.org/sitemap.xml
 
-# Disallow admin and payment processing pages
-Disallow: /larklabs-admin.html
-Disallow: /migrate-data.html
-Disallow: /pages/payment/
+# Prioritize important sections
+Allow: /HVAC_Tools/
+Allow: /tssa-g3-exam-prep.html
+Allow: /tssa-g2-exam-prep.html
+Allow: /apps/
+Allow: /pages/blog/
+
+# Block unnecessary paths
+Disallow: /assets/
+Disallow: /*.json$
+Disallow: /link-check-results.json
+Disallow: /index_backup*
+
+# External app references (for context)
+# https://hvac-jack-5-0.vercel.app/
+# https://codecompassapp.netlify.app/
+# https://gas-technician-ai-tutor-new.vercel.app/
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
