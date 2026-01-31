@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSSA G3 Practice Exam Simulator</title>
+    <title>TSSA G2 Practice Exam Simulator</title>
     <style>
         * {
             margin: 0;
@@ -464,8 +464,8 @@
     <div class="main-content">
         <div class="container">
             <div class="header">
-                <h1>🔥 TSSA G3 Practice Exam Simulator</h1>
-                <p>Master Your Gas Technician 3 Certification</p>
+                <h1>🔥 TSSA G2 Practice Exam Simulator</h1>
+                <p>Master Your Gas Technician 2 Certification</p>
             </div>
             
             <div id="examSelection" class="exam-selection">
@@ -489,12 +489,12 @@
                             • Comprehensive coverage
                         </div>
                     </div>
-                    <div class="exam-option" onclick="startExam(175)">
+                    <div class="exam-option" onclick="startExam(150)">
                         <h3>Full Mock Exam</h3>
-                        <p><strong>175 Questions</strong></p>
+                        <p><strong>150 Questions</strong></p>
                         <div class="details">
-                            • 3.5 hours time limit<br>
-                            • 75% to pass (132/175)<br>
+                            • 3 hours time limit<br>
+                            • 75% to pass (113/150)<br>
                             • Complete exam simulation
                         </div>
                     </div>
@@ -505,7 +505,7 @@
                 <div class="exam-header">
                     <div class="progress-info">
                         <div id="timer" class="timer">3:00:00</div>
-                        <div id="progress" class="progress">Question 1 of 175</div>
+                        <div id="progress" class="progress">Question 1 of 150</div>
                     </div>
                 </div>
                 <div class="question-container">
@@ -539,7 +539,7 @@
     <footer class="footer">
         <div class="footer-content">
             <p><strong>© 2025 Lark Labs Software Development. All Rights Reserved.</strong><br>
-            This software and its content are protected by copyright law. The TSSA G3 Practice Exam Simulator is designed for educational purposes only and is not affiliated with or endorsed by TSSA (Technical Standards and Safety Authority).</p>
+            This software and its content are protected by copyright law. The TSSA G2 Practice Exam Simulator is designed for educational purposes only and is not affiliated with or endorsed by TSSA (Technical Standards and Safety Authority).</p>
         </div>
     </footer>
 
@@ -555,56 +555,56 @@
     </div>
 
     <script>
-        // TSSA G3 Question Bank
+        // TSSA G2 Question Bank (sample questions - extend this with the full bank)
         const questionBank = [
             {
-                question: "What do electrical drawings include?",
-                options: ["Supply Voltage, Internal Wiring, Field Wiring, Location of controls", "Only supply voltage", "Only internal wiring", "Only field wiring"],
+                question: "Only plastic pipe can be used for liquid propane.",
+                options: ["True", "False", "Only if coated with oxide", "PVC pipe only"],
+                correct: 1
+            },
+            {
+                question: "What is the equivalent length in feet and inches of a four inch forged tee?",
+                options: ["Two feet and one inch", "Five feet and four inches", "Fifteen feet one inch", "Fifteen feet"],
+                correct: 2
+            },
+            {
+                question: "Schedule 80 piping is required on a C3H8 system?",
+                options: ["For propane vapour under 125PSIG working pressure", "Whenever two different types of material are to be connected together", "When installed below grade", "For propane vapour over 125 PSIG working pressure"],
+                correct: 3
+            },
+            {
+                question: "When is it necessary to purge a gas line?",
+                options: ["Is it not necessary", "Always", "Only if the branch line is over 4\"NPT", "Only if the working pressure is 7\"wc"],
+                correct: 1
+            },
+            {
+                question: "What is the maximum gas pressure allowed in a commercial building's central boiler room?",
+                options: ["66 psi", "5 psi", "20 psi", "25 psi"],
+                correct: 2
+            },
+            {
+                question: "What is the maximum gas pressure allowed inside a one family dwelling?",
+                options: ["2 psi", "5 psi", "1 psi", "½ psi"],
                 correct: 0
             },
             {
-                question: "What type of pressure is a gas line when no movement is taking place?",
-                options: ["Dynamic Pressure", "Static Pressure", "Working Pressure", "System Pressure"],
-                correct: 1
-            },
-            {
-                question: "What is primary air?",
-                options: ["Air around the appliance", "The air that is mixed with gas prior to ignition", "Air from outside", "Combustion air"],
-                correct: 1
-            },
-            {
-                question: "What is the specific gravity of Propane?",
-                options: ["1.0", "0.6", "1.52", "2.0"],
-                correct: 2
-            },
-            {
-                question: "What is the space ratio for converting propane from liquid to gas?",
-                options: ["100:1", "200:1", "270:1", "300:1"],
-                correct: 2
-            },
-            {
-                question: "What section of the code is for Venting?",
-                options: ["Section 6", "Section 7", "Section 8", "Section 9"],
-                correct: 2
-            },
-            {
-                question: "Who may refuse to grant the authorization or revoke, suspend, or refuse to renew an authorization, if the authorization holder is in contravention of this Act?",
-                options: ["Minister of Consumer and Commercial Relations", "TSSA Fuel Safety Director", "TSSA Fuel Safety Inspector", "Premier of Ontario"],
-                correct: 1
-            },
-            {
-                question: "What is the maximum gas pressure allowed in a building under construction (construction heater application)?",
-                options: ["2 PSIG", "20 PSIG", "25 PSIG", "50 PSIG"],
+                question: "The electrical service supplied to a building is measured in what units?",
+                options: ["Amps", "Volts", "Load requirements", "Watts"],
                 correct: 0
             },
             {
-                question: "What is the ignition temperature of propane?",
-                options: ["800-900°F", "920-1020°F / 493-549°C", "1100-1200°F", "1300-1400°F"],
-                correct: 1
+                question: "What is the purpose of a gas pressure regulator?",
+                options: ["To keep the colour of the flame constant", "To maintain even outlet heated air temperatures", "To maintain a constant gas pressure at the gas valve inlet", "To increase and maintain higher pressures as the load increases"],
+                correct: 2
             },
             {
-                question: "What is the specific gravity of natural gas?",
-                options: ["0.4", "0.6", "0.8", "1.0"],
+                question: "What is the minimum clearance to combustibles on a commercial type clothes dryer?",
+                options: ["18\" above, 18\" back and sides, 18\" front", "24\" above, 18\" back and sides, 36\" front", "30\" above, 18\" back and sides, 24\" front", "6\" above, 6\" back and sides, 24\" front"],
+                correct: 0
+            },
+            {
+                question: "Propane is a?",
+                options: ["Manufactured gas", "Hydrocarbon", "Naptha fuel", "Distillate fuel"],
                 correct: 1
             }
         ];
@@ -650,7 +650,7 @@
             let timeInMinutes;
             if (numQuestions === 50) timeInMinutes = 60;
             else if (numQuestions === 100) timeInMinutes = 120;
-            else timeInMinutes = 210;
+            else timeInMinutes = 180; // 3 hours for 150 questions
 
             timeRemaining = timeInMinutes * 60;
             startTimer();
@@ -908,7 +908,7 @@
 
         // Initialize on page load
         window.onload = function() {
-            console.log(`Question bank loaded with ${questionBank.length} questions`);
+            console.log(`G2 Question bank loaded with ${questionBank.length} questions`);
             document.getElementById('examSelection').style.display = 'block';
             document.getElementById('examContainer').style.display = 'none';
             document.getElementById('results').style.display = 'none';
