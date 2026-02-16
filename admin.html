@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive Access</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1a1a; color: #e5e5e5; min-height: 100vh; padding: 2rem; }
+.login { display: flex; align-items: center; justify-content: center; min-height: 80vh; flex-direction: column; }
+.login input { padding: 12px 20px; font-size: 1.1rem; background: #2a2a2a; border: 1px solid #404040; border-radius: 8px; color: #fff; width: 250px; text-align: center; margin-bottom: 1rem; }
+.login button { padding: 12px 32px; background: #4a9eff; color: #fff; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+.login button:hover { background: #3b82f6; }
+.error { color: #ef4444; margin-top: 0.5rem; display: none; }
+.archive { display: none; max-width: 900px; margin: 0 auto; }
+.archive h1 { font-size: 1.5rem; margin-bottom: 2rem; color: #fff; }
+.section { background: #2a2a2a; border: 1px solid #404040; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.section h2 { font-size: 1rem; color: #4a9eff; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+.section a { display: block; color: #ccc; text-decoration: none; padding: 0.4rem 0; font-size: 0.95rem; }
+.section a:hover { color: #4a9eff; }
+.logout { position: fixed; top: 1rem; right: 1rem; background: #333; color: #aaa; border: 1px solid #555; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<div class="login" id="loginPanel">
+  <input type="password" id="codeInput" placeholder="Access Code" autofocus>
+  <button onclick="tryLogin()">Enter</button>
+  <div class="error" id="errorMsg">Invalid code</div>
+</div>
+
+<div class="archive" id="archivePanel">
+<button class="logout" onclick="logout()">Logout</button>
+<h1>📦 Site Archive — Archival Access</h1>
+
+<div class="section">
+  <h2>🚀 Flagship Apps (External)</h2>
+  <a href="https://hvac-jack-5-0.vercel.app/" target="_blank">HVAC Jack 5.0 (Vercel)</a>
+  <a href="https://codecompassapp.netlify.app/" target="_blank">Code Compass (Netlify)</a>
+  <a href="https://gas-technician-ai-tutor-new.vercel.app/" target="_blank">Gas Tech AI Tutor (Vercel)</a>
+</div>
+
+<div class="section">
+  <h2>📚 CSA Unit Chapter Content</h2>
+  <a href="/CSA_Unit_1_Safety.html">Unit 1 - Safety (Overview)</a>
+  <a href="/CSA_Unit_1_Chapter_1.html">Unit 1 - Chapter 1</a>
+  <a href="/CSA_Unit_1_Chapter_2.html">Unit 1 - Chapter 2</a>
+  <a href="/CSA_Unit_1_Chapter_3.html">Unit 1 - Chapter 3</a>
+  <a href="/CSA_Unit_1_Chapter_4.html">Unit 1 - Chapter 4</a>
+  <a href="/CSA_Unit_1_Safety_Chapter_Reviews.html">Unit 1 - Chapter Reviews</a>
+  <a href="/CSA_Unit_2_Chapter_1.html">Unit 2 - Chapter 1</a>
+  <a href="/CSA_Unit_2_Chapter_2.html">Unit 2 - Chapter 2</a>
+  <a href="/CSA_Unit_2_Chapter_3.html">Unit 2 - Chapter 3</a>
+  <a href="/CSA_Unit_2_Chapter_4.html">Unit 2 - Chapter 4</a>
+  <a href="/CSA_Unit_2_Chapter_5.html">Unit 2 - Chapter 5</a>
+  <a href="/CSA_Unit_2_Chapter_6.html">Unit 2 - Chapter 6</a>
+  <a href="/CSA_Unit_2_Chapter_Reviews.html">Unit 2 - Chapter Reviews</a>
+  <a href="/CSA_Unit_2_Complete_Training_Module.html">Unit 2 - Complete Training Module</a>
+  <a href="/CSA_Unit_3_Chapter_1.html">Unit 3 - Chapter 1</a>
+  <a href="/CSA_Unit_3_Chapter_2.html">Unit 3 - Chapter 2</a>
+  <a href="/CSA_Unit_3_Chapter_3.html">Unit 3 - Chapter 3</a>
+  <a href="/CSA_Unit_3_Chapter_Reviews.html">Unit 3 - Chapter Reviews</a>
+  <a href="/CSA_Unit_4_Chapter_1.html">Unit 4 - Chapter 1</a>
+  <a href="/CSA_Unit_4_Chapter_2.html">Unit 4 - Chapter 2</a>
+  <a href="/CSA_Unit_4_Chapter_3.html">Unit 4 - Chapter 3</a>
+  <a href="/CSA_Unit_4a_Chapter_1.html">Unit 4a - Chapter 1</a>
+  <a href="/CSA_Unit_4a_Chapter_2.html">Unit 4a - Chapter 2</a>
+  <a href="/CSA_Unit_4a_Chapter_3.html">Unit 4a - Chapter 3</a>
+  <a href="/CSA_Unit_4a_Chapter_4.html">Unit 4a - Chapter 4</a>
+  <a href="/CSA_Unit_4_&_4a_Chapter_Reviews.html">Unit 4 & 4a - Chapter Reviews</a>
+  <a href="/CSA_Unit_5_Chapter_1.html">Unit 5 - Chapter 1</a>
+  <a href="/CSA_Unit_5_Chapter_2.html">Unit 5 - Chapter 2</a>
+  <a href="/CSA_Unit_5_Chapter_3.html">Unit 5 - Chapter 3</a>
+  <a href="/CSA_Unit_5_Chapter_4.html">Unit 5 - Chapter 4</a>
+  <a href="/CSA_Unit_5_Chapter_5.html">Unit 5 - Chapter 5</a>
+  <a href="/CSA_Unit_5_Chapter_6.html">Unit 5 - Chapter 6</a>
+  <a href="/CSA_Unit_5_Chapter_7.html">Unit 5 - Chapter 7</a>
+  <a href="/CSA_Unit_5_Basic_Electricity_Chapter_Reviews.html">Unit 5 - Chapter Reviews</a>
+  <a href="/CSA_Unit_6_Chapter_1.html">Unit 6 - Chapter 1</a>
+  <a href="/CSA_Unit_6_Chapter_2.html">Unit 6 - Chapter 2</a>
+  <a href="/CSA_Unit_6_Chapter_3.html">Unit 6 - Chapter 3</a>
+  <a href="/CSA_Unit_6_Technical_Drawing_Manuals_Graphs_Reviews.html">Unit 6 - Chapter Reviews</a>
+  <a href="/CSA_Unit_7_Customer_Relations_Chapter_Reviews.html">Unit 7 - Chapter Reviews</a>
+  <a href="/CSA_Unit_8_Intro_to_Piping_Reviews.html">Unit 8 - Chapter Reviews</a>
+  <a href="/CSA_Unit_9_Intro_to_Gas_Appliances_Reviews.html">Unit 9 - Chapter Reviews</a>
+  <a href="/CSA_Unit_10_Chapter_Reviews.html">Unit 10 - Chapter Reviews</a>
+  <a href="/CSA_Unit_11_Chapter_Reviews.html">Unit 11 - Chapter Reviews</a>
+  <a href="/CSA_Unit_12_Chapter_Reviews.html">Unit 12 - Chapter Reviews</a>
+  <a href="/CSA_Unit_13_Chapter_Reviews.html">Unit 13 - Chapter Reviews</a>
+  <a href="/CSA_Unit_14_Chapter_Reviews.html">Unit 14 - Chapter Reviews</a>
+  <a href="/CSA_Unit_15_Chapter_Reviews.html">Unit 15 - Chapter Reviews</a>
+  <a href="/CSA_Unit_16_Chapter_Reviews.html">Unit 16 - Chapter Reviews</a>
+  <a href="/CSA_Unit_17_Chapter_Reviews.html">Unit 17 - Chapter Reviews</a>
+  <a href="/CSA_Unit_18_Chapter_Reviews.html">Unit 18 - Chapter Reviews</a>
+  <a href="/CSA_Unit_19_Chapter_Reviews.html">Unit 19 - Chapter Reviews</a>
+  <a href="/CSA_Unit_20_Chapter_Reviews.html">Unit 20 - Chapter Reviews</a>
+  <a href="/CSA_Unit_21_Chapter_Reviews.html">Unit 21 - Chapter Reviews</a>
+  <a href="/CSA_Unit_22_Chapter_Reviews.html">Unit 22 - Chapter Reviews</a>
+  <a href="/CSA_Unit_23_Chapter_Reviews.html">Unit 23 - Chapter Reviews</a>
+  <a href="/CSA_Unit_24_Chapter_Reviews.html">Unit 24 - Chapter Reviews</a>
+</div>
+
+<div class="section">
+  <h2>📝 Exam Prep & Practice Tests</h2>
+  <a href="/tssa-g3-exam-prep.html">TSSA G3 Exam Prep</a>
+  <a href="/tssa-g2-exam-prep.html">TSSA G2 Exam Prep</a>
+  <a href="/g3-practice-tests.html">G3 Practice Tests</a>
+  <a href="/g2-practice-tests.html">G2 Practice Tests</a>
+  <a href="/g3_simulator.html">G3 Exam Simulator</a>
+  <a href="/G3_Exam_Prep_Resource.html">G3 Exam Prep Resource</a>
+  <a href="/tssa-g3-units-index.html">G3 Units Index</a>
+  <a href="/tssa-g2-units-index.html">G2 Units Index</a>
+</div>
+
+<div class="section">
+  <h2>🔧 Tools & Calculators</h2>
+  <a href="/HVAC_Tools/">All HVAC Tools & Calculators</a>
+  <a href="/CSA_B149_Reference_Guide.html">CSA B149 Reference Guide</a>
+  <a href="/B149_1_Changes.html">B149.1 Changes Summary</a>
+  <a href="/Gas_Code_Navigation_Microcredential.html">Gas Code Navigation Microcredential</a>
+  <a href="/canadian-gas-piping-app/">Canadian Gas Piping App</a>
+</div>
+
+<div class="section">
+  <h2>📄 Landing Pages & Marketing</h2>
+  <a href="/hvac-jack-50-landing.html">HVAC Jack 5.0 Landing</a>
+  <a href="/hvac-jack-4-landing.html">HVAC Jack 4.0 Landing</a>
+  <a href="/hvac-jack-40.html">HVAC Jack 4.0 Page</a>
+  <a href="/code-compass-landing.html">Code Compass Landing</a>
+  <a href="/code-compass.html">Code Compass Page</a>
+  <a href="/gas-tech-tutor-landing.html">Gas Tech Tutor Landing</a>
+  <a href="/canadian-gas-technician-ai-tutor.html">Canadian Gas Tech AI Tutor</a>
+  <a href="/canadian-gas-technician-textbook.html">Canadian Gas Tech Textbook</a>
+  <a href="/learning-modules.html">Learning Modules</a>
+</div>
+
+<div class="section">
+  <h2>📂 Other Content</h2>
+  <a href="/pages/community.html">Community Page</a>
+  <a href="/pages/blog/">Blog</a>
+  <a href="/a2l-pro-privacy-policy.html">A2L Pro Privacy Policy</a>
+  <a href="/gas-tech-tutor-privacy-policy.html">Gas Tech Tutor Privacy Policy</a>
+  <a href="/hvac-tools-pro-privacy-policy.html">HVAC Tools Pro Privacy Policy</a>
+  <a href="/larklabs-admin.html">Old Admin Dashboard</a>
+  <a href="/index_backup_pre_shutdown.html">Original Homepage (Backup)</a>
+</div>
+
+<div class="section">
+  <h2>📁 Directories</h2>
+  <a href="/HVAC_Tools/">HVAC_Tools/</a>
+  <a href="/apps/">apps/</a>
+  <a href="/courses/">courses/</a>
+  <a href="/tools/">tools/</a>
+  <a href="/training/">training/</a>
+  <a href="/pages/">pages/</a>
+  <a href="/assets/">assets/</a>
+  <a href="/archive/">archive/</a>
+</div>
+
+</div>
+
+<script>
+const CODE = '436277';
+
+function tryLogin() {
+  const input = document.getElementById('codeInput').value.trim();
+  if (input === CODE) {
+    sessionStorage.setItem('archive_auth', 'true');
+    showArchive();
+  } else {
+    document.getElementById('errorMsg').style.display = 'block';
+  }
+}
+
+function showArchive() {
+  document.getElementById('loginPanel').style.display = 'none';
+  document.getElementById('archivePanel').style.display = 'block';
+}
+
+function logout() {
+  sessionStorage.removeItem('archive_auth');
+  location.reload();
+}
+
+document.getElementById('codeInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') tryLogin();
+});
+
+if (sessionStorage.getItem('archive_auth') === 'true') showArchive();
+</script>
+</body>
+</html>

@@ -26,6 +26,12 @@
   status = 301
   force = true
 
+# Catch-all: any path without a matching file shows shutdown page
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 # Headers for security
 [[headers]]
   for = "/*"
